@@ -1,0 +1,2 @@
+pydantic==1.9.1; python_full_version >= "3.6.1"
+typing-extensions==4.2.0; python_version >= "3.7" and python_full_version >= "3.6.1"

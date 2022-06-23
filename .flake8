@@ -1,0 +1,15 @@
+[flake8]
+max-line-length = 120
+max-complexity = 24
+ignore = F401, W503, E203
+exclude =
+    .git,
+    .venv,
+    __pycache__,
+    scripts,
+    logs,
+    upload,
+    build,
+    dist,
+    docs,
+    migrations

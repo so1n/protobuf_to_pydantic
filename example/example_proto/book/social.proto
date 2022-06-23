@@ -1,0 +1,65 @@
+syntax = "proto3";
+package book_social;
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+// user upvote&unlike book
+message LikeBookRequest {
+  string isbn = 1;
+  bool like = 2;
+  string uid = 3;
+}
+
+message LikeBookMapRequest {
+  map<string, bool> like_map = 1;
+  string uid = 2;
+}
+
+// get book likes
+message GetBookLikesRequest {
+  repeated string isbn = 1;
+}
+
+message GetBookLikesResult {
+  string isbn = 1;
+  int32 book_like = 2;
+}
+
+message GetBookLikesListResult {
+  repeated GetBookLikesResult result = 1;
+}
+
+// book comment
+message CommentBookRequest {
+  string isbn = 1;
+  string content = 2;
+  string uid = 3;
+}
+
+// get book comment
+message GetBookCommentRequest {
+  string isbn = 1;
+  optional google.protobuf.Timestamp next_create_time = 2;
+  optional int32 limit = 3;
+}
+
+message GetBookCommentResult {
+  string isbn = 1;
+  string content = 2;
+  string uid = 3;
+  google.protobuf.Timestamp create_time = 4;
+}
+
+message GetBookCommentListResult {
+  repeated GetBookCommentResult result = 1;
+}
+
+service BookSocial {
+  rpc like_book (LikeBookRequest) returns (google.protobuf.Empty);
+  rpc like_multi_book (LikeBookMapRequest) returns (google.protobuf.Empty);
+  // pait: {"http_method": "GET"}
+  rpc get_book_like (GetBookLikesRequest) returns (GetBookLikesListResult);
+  rpc comment_book (CommentBookRequest) returns (google.protobuf.Empty);
+  rpc get_book_comment (GetBookCommentRequest) returns (GetBookCommentListResult);
+
+}
