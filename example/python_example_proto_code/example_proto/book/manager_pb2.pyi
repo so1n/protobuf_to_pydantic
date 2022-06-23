@@ -14,7 +14,6 @@ DESCRIPTOR: google.protobuf.descriptor.FileDescriptor
 
 class CreateBookRequest(google.protobuf.message.Message):
     """create book by admin"""
-
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     ISBN_FIELD_NUMBER: builtins.int
     BOOK_NAME_FIELD_NUMBER: builtins.int
@@ -26,62 +25,41 @@ class CreateBookRequest(google.protobuf.message.Message):
     book_author: typing.Text
     book_desc: typing.Text
     book_url: typing.Text
-    def __init__(
-        self,
+    def __init__(self,
         *,
         isbn: typing.Text = ...,
         book_name: typing.Text = ...,
         book_author: typing.Text = ...,
         book_desc: typing.Text = ...,
         book_url: typing.Text = ...,
-    ) -> None: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "book_author",
-            b"book_author",
-            "book_desc",
-            b"book_desc",
-            "book_name",
-            b"book_name",
-            "book_url",
-            b"book_url",
-            "isbn",
-            b"isbn",
-        ],
-    ) -> None: ...
-
+        ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["book_author",b"book_author","book_desc",b"book_desc","book_name",b"book_name","book_url",b"book_url","isbn",b"isbn"]) -> None: ...
 global___CreateBookRequest = CreateBookRequest
 
 class DeleteBookRequest(google.protobuf.message.Message):
     """delete book by admin"""
-
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     ISBN_FIELD_NUMBER: builtins.int
     isbn: typing.Text
-    def __init__(
-        self,
+    def __init__(self,
         *,
         isbn: typing.Text = ...,
-    ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["isbn", b"isbn"]) -> None: ...
-
+        ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["isbn",b"isbn"]) -> None: ...
 global___DeleteBookRequest = DeleteBookRequest
 
 class GetBookRequest(google.protobuf.message.Message):
     """get book by user"""
-
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     ISBN_FIELD_NUMBER: builtins.int
     isbn: typing.Text
     """pait: {"field": "Query"}"""
-    def __init__(
-        self,
+
+    def __init__(self,
         *,
         isbn: typing.Text = ...,
-    ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["isbn", b"isbn"]) -> None: ...
-
+        ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["isbn",b"isbn"]) -> None: ...
 global___GetBookRequest = GetBookRequest
 
 class GetBookResult(google.protobuf.message.Message):
@@ -102,8 +80,7 @@ class GetBookResult(google.protobuf.message.Message):
     def create_time(self) -> google.protobuf.timestamp_pb2.Timestamp: ...
     @property
     def update_time(self) -> google.protobuf.timestamp_pb2.Timestamp: ...
-    def __init__(
-        self,
+    def __init__(self,
         *,
         isbn: typing.Text = ...,
         book_name: typing.Text = ...,
@@ -112,63 +89,27 @@ class GetBookResult(google.protobuf.message.Message):
         book_url: typing.Text = ...,
         create_time: typing.Optional[google.protobuf.timestamp_pb2.Timestamp] = ...,
         update_time: typing.Optional[google.protobuf.timestamp_pb2.Timestamp] = ...,
-    ) -> None: ...
-    def HasField(
-        self, field_name: typing_extensions.Literal["create_time", b"create_time", "update_time", b"update_time"]
-    ) -> builtins.bool: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "book_author",
-            b"book_author",
-            "book_desc",
-            b"book_desc",
-            "book_name",
-            b"book_name",
-            "book_url",
-            b"book_url",
-            "create_time",
-            b"create_time",
-            "isbn",
-            b"isbn",
-            "update_time",
-            b"update_time",
-        ],
-    ) -> None: ...
-
+        ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["create_time",b"create_time","update_time",b"update_time"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["book_author",b"book_author","book_desc",b"book_desc","book_name",b"book_name","book_url",b"book_url","create_time",b"create_time","isbn",b"isbn","update_time",b"update_time"]) -> None: ...
 global___GetBookResult = GetBookResult
 
 class GetBookListRequest(google.protobuf.message.Message):
     """get book list by user"""
-
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     NEXT_CREATE_TIME_FIELD_NUMBER: builtins.int
     LIMIT_FIELD_NUMBER: builtins.int
     @property
     def next_create_time(self) -> google.protobuf.timestamp_pb2.Timestamp: ...
     limit: builtins.int
-    def __init__(
-        self,
+    def __init__(self,
         *,
         next_create_time: typing.Optional[google.protobuf.timestamp_pb2.Timestamp] = ...,
         limit: builtins.int = ...,
-    ) -> None: ...
-    def HasField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_next_create_time", b"_next_create_time", "next_create_time", b"next_create_time"
-        ],
-    ) -> builtins.bool: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_next_create_time", b"_next_create_time", "limit", b"limit", "next_create_time", b"next_create_time"
-        ],
-    ) -> None: ...
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_next_create_time", b"_next_create_time"]
-    ) -> typing.Optional[typing_extensions.Literal["next_create_time"]]: ...
-
+        ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_next_create_time",b"_next_create_time","next_create_time",b"next_create_time"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_next_create_time",b"_next_create_time","limit",b"limit","next_create_time",b"next_create_time"]) -> None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_next_create_time",b"_next_create_time"]) -> typing.Optional[typing_extensions.Literal["next_create_time"]]: ...
 global___GetBookListRequest = GetBookListRequest
 
 class GetBookListResult(google.protobuf.message.Message):
@@ -176,11 +117,9 @@ class GetBookListResult(google.protobuf.message.Message):
     RESULT_FIELD_NUMBER: builtins.int
     @property
     def result(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___GetBookResult]: ...
-    def __init__(
-        self,
+    def __init__(self,
         *,
         result: typing.Optional[typing.Iterable[global___GetBookResult]] = ...,
-    ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["result", b"result"]) -> None: ...
-
+        ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["result",b"result"]) -> None: ...
 global___GetBookListResult = GetBookListResult

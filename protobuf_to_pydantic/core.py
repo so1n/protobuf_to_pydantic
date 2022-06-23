@@ -184,7 +184,7 @@ def _parse_msg_to_pydantic_model(
     return create_pydantic_model(annotation_dict, class_name=descriptor.name, pydantic_validators=validators or None)
 
 
-def parse_msg_to_pydantic_model(
+def msg_to_pydantic_model(
     msg: Union[Type[Message], Descriptor],
     default_field: Type[FieldInfo] = FieldInfo,
     grpc_timestamp_handler_tuple: Optional[GRPC_TIMESTAMP_HANDLER_TUPLE_T] = None,

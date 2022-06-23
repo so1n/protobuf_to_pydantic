@@ -10,6 +10,8 @@ coverage==5.5; (python_version >= "2.7" and python_full_version < "3.0.0") or (p
 distlib==0.3.4; python_full_version >= "3.6.1"
 filelock==3.7.1; python_version >= "3.7" and python_full_version >= "3.6.1"
 flake8==3.9.2; (python_version >= "2.7" and python_full_version < "3.0.0") or (python_full_version >= "3.5.0")
+grpcio-tools==1.47.0; python_version >= "3.6"
+grpcio==1.47.0; python_version >= "3.6"
 identify==2.5.1; python_version >= "3.7" and python_full_version >= "3.6.1"
 importlib-metadata==4.11.4; python_version < "3.8" and python_version >= "3.7" and python_full_version >= "3.6.1" and (python_version >= "3.7" and python_full_version < "3.0.0" and python_version < "3.8" or python_full_version >= "3.5.0" and python_version < "3.8" and python_version >= "3.7") and (python_version >= "3.7" and python_full_version < "3.0.0" and python_version < "3.8" or python_full_version >= "3.4.0" and python_version >= "3.7" and python_version < "3.8")
 iniconfig==1.1.1; python_version >= "3.5"
@@ -33,7 +35,7 @@ pyparsing==3.0.9; python_full_version >= "3.6.8" and python_version >= "3.6"
 pytest==6.1.2; python_version >= "3.5"
 pyyaml==6.0; python_version >= "3.6" and python_full_version >= "3.6.1"
 regex==2022.6.2; python_version >= "3.6"
-six==1.16.0; python_full_version >= "3.6.1"
+six==1.16.0; python_full_version >= "3.6.1" and python_version >= "3.6"
 toml==0.10.2; python_full_version >= "3.6.1" and python_version >= "3.6"
 typed-ast==1.4.3; python_version >= "3.6"
 types-protobuf==3.19.22; python_version >= "3.6"

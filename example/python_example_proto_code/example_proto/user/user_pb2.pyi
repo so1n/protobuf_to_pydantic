@@ -12,16 +12,12 @@ import typing_extensions
 DESCRIPTOR: google.protobuf.descriptor.FileDescriptor
 
 class _SexType:
-    ValueType = typing.NewType("ValueType", builtins.int)
+    ValueType = typing.NewType('ValueType', builtins.int)
     V: typing_extensions.TypeAlias = ValueType
-
-class _SexTypeEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_SexType.ValueType], builtins.type
-):
+class _SexTypeEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_SexType.ValueType], builtins.type):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
     man: _SexType.ValueType  # 0
     women: _SexType.ValueType  # 1
-
 class SexType(_SexType, metaclass=_SexTypeEnumTypeWrapper):
     pass
 
@@ -29,9 +25,9 @@ man: SexType.ValueType  # 0
 women: SexType.ValueType  # 1
 global___SexType = SexType
 
+
 class CreateUserRequest(google.protobuf.message.Message):
     """create user"""
-
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     UID_FIELD_NUMBER: builtins.int
     USER_NAME_FIELD_NUMBER: builtins.int
@@ -51,54 +47,41 @@ class CreateUserRequest(google.protobuf.message.Message):
     """
 
     sex: global___SexType.ValueType
-    def __init__(
-        self,
+    def __init__(self,
         *,
         uid: typing.Text = ...,
         user_name: typing.Text = ...,
         password: typing.Text = ...,
         sex: global___SexType.ValueType = ...,
-    ) -> None: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "password", b"password", "sex", b"sex", "uid", b"uid", "user_name", b"user_name"
-        ],
-    ) -> None: ...
-
+        ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["password",b"password","sex",b"sex","uid",b"uid","user_name",b"user_name"]) -> None: ...
 global___CreateUserRequest = CreateUserRequest
 
 class DeleteUserRequest(google.protobuf.message.Message):
     """delete user"""
-
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     UID_FIELD_NUMBER: builtins.int
     uid: typing.Text
-    def __init__(
-        self,
+    def __init__(self,
         *,
         uid: typing.Text = ...,
-    ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["uid", b"uid"]) -> None: ...
-
+        ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["uid",b"uid"]) -> None: ...
 global___DeleteUserRequest = DeleteUserRequest
 
 class LoginUserRequest(google.protobuf.message.Message):
     """login user"""
-
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     UID_FIELD_NUMBER: builtins.int
     PASSWORD_FIELD_NUMBER: builtins.int
     uid: typing.Text
     password: typing.Text
-    def __init__(
-        self,
+    def __init__(self,
         *,
         uid: typing.Text = ...,
         password: typing.Text = ...,
-    ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["password", b"password", "uid", b"uid"]) -> None: ...
-
+        ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["password",b"password","uid",b"uid"]) -> None: ...
 global___LoginUserRequest = LoginUserRequest
 
 class LoginUserResult(google.protobuf.message.Message):
@@ -116,60 +99,51 @@ class LoginUserResult(google.protobuf.message.Message):
 
     token: typing.Text
     """pait: {"description": "user token"}"""
-    def __init__(
-        self,
+
+    def __init__(self,
         *,
         uid: typing.Text = ...,
         user_name: typing.Text = ...,
         token: typing.Text = ...,
-    ) -> None: ...
-    def ClearField(
-        self, field_name: typing_extensions.Literal["token", b"token", "uid", b"uid", "user_name", b"user_name"]
-    ) -> None: ...
-
+        ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["token",b"token","uid",b"uid","user_name",b"user_name"]) -> None: ...
 global___LoginUserResult = LoginUserResult
 
 class LogoutUserRequest(google.protobuf.message.Message):
     """logout user"""
-
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     UID_FIELD_NUMBER: builtins.int
     TOKEN_FIELD_NUMBER: builtins.int
     uid: typing.Text
     token: typing.Text
     """pait: {"enable": false}"""
-    def __init__(
-        self,
+
+    def __init__(self,
         *,
         uid: typing.Text = ...,
         token: typing.Text = ...,
-    ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["token", b"token", "uid", b"uid"]) -> None: ...
-
+        ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["token",b"token","uid",b"uid"]) -> None: ...
 global___LogoutUserRequest = LogoutUserRequest
 
 class GetUidByTokenRequest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     TOKEN_FIELD_NUMBER: builtins.int
     token: typing.Text
-    def __init__(
-        self,
+    def __init__(self,
         *,
         token: typing.Text = ...,
-    ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["token", b"token"]) -> None: ...
-
+        ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["token",b"token"]) -> None: ...
 global___GetUidByTokenRequest = GetUidByTokenRequest
 
 class GetUidByTokenResult(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     UID_FIELD_NUMBER: builtins.int
     uid: typing.Text
-    def __init__(
-        self,
+    def __init__(self,
         *,
         uid: typing.Text = ...,
-    ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["uid", b"uid"]) -> None: ...
-
+        ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["uid",b"uid"]) -> None: ...
 global___GetUidByTokenResult = GetUidByTokenResult
