@@ -1,6 +1,6 @@
 import inspect
 from enum import IntEnum
-from typing import Set, Tuple, Type
+from typing import Optional, Set, Tuple, Type
 
 from pydantic import BaseModel
 
@@ -41,14 +41,19 @@ def _pydantic_model_to_py_code(model: Type[BaseModel]) -> Tuple[Set[str], Set[st
     return import_set, depend_set, {class_str}
 
 
-def pydantic_model_to_py_code(*model: Type[BaseModel]) -> str:
+def pydantic_model_to_py_code(
+    *model: Type[BaseModel],
+    customer_import_set: Optional[Set[str]] = None,
+    customer_depend_set: Optional[Set[str]] = None,
+    customer_class_set: Optional[Set[str]] = None,
+) -> str:
     """
     BaseModel objects into corresponding Python code
     (only protobuf-generated pydantic.BaseModel objects are supported, not overly complex pydantic.BaseModel)
     """
-    import_set: Set[str] = set()
-    depend_set: Set[str] = set()
-    class_set: Set[str] = set()
+    import_set: Set[str] = customer_import_set or set()
+    depend_set: Set[str] = customer_depend_set or set()
+    class_set: Set[str] = customer_class_set or set()
     for _model in model:
         _import_set, _depend_set, _class_set = _pydantic_model_to_py_code(_model)
         if _import_set:
@@ -65,5 +70,22 @@ def pydantic_model_to_py_code(*model: Type[BaseModel]) -> str:
     if class_set:
         content_str += "\n\n"
         content_str += "\n\n".join(sorted(class_set))
+
+    try:
+        import isort
+    except ImportError:
+        pass
+    else:
+        content_str = isort.code(content_str)
+
+    try:
+        import autoflake
+    except ImportError:
+        pass
+    else:
+        content_str = autoflake.fix_code(content_str)
+
+    # TODO Waiting for black development API
+    # https://github.com/psf/black/issues/
 
     return content_str
