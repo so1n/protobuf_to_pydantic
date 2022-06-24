@@ -9,13 +9,13 @@ enum SexType {
 
 // create user
 message CreateUserRequest {
-  // pait: {"miss_default": true, "example": "10086", "title": "UID", "description": "user union id"}
+  // p2p: {"miss_default": true, "example": "10086", "title": "UID", "description": "user union id"}
   string uid = 1;
-  // pait: {"description": "user name"}
-  // pait: {"default": "", "min_length": 1, "max_length": "10", "example": "so1n"}
+  // p2p: {"description": "user name"}
+  // p2p: {"default": "", "min_length": 1, "max_length": "10", "example": "so1n"}
   string user_name = 2;
-  // pait: {"description": "user password"}
-  // pait: {"alias": "pw", "min_length": 6, "max_length": 18, "example": "123456"}
+  // p2p: {"description": "user password"}
+  // p2p: {"alias": "pw", "min_length": 6, "max_length": 18, "example": "123456"}
   string password = 3;
   SexType sex = 4;
 }
@@ -31,19 +31,19 @@ message LoginUserRequest {
   string password = 2;
 }
 message LoginUserResult {
-  // pait: {"example": "10086", "title": "UID", "description": "user union id"}
+  // p2p: {"example": "10086", "title": "UID", "description": "user union id"}
   string uid = 1;
-  // pait: {"description": "user name"}
-  // pait: {"default": "", "min_length": 1, "max_length": "10", "example": "so1n"}
+  // p2p: {"description": "user name"}
+  // p2p: {"default": "", "min_length": 1, "max_length": "10", "example": "so1n"}
   string user_name = 2;
-  // pait: {"description": "user token"}
+  // p2p: {"description": "user token"}
   string token = 3;
 }
 
 // logout user
 message LogoutUserRequest {
   string uid = 1;
-  // pait: {"enable": false}
+  // p2p: {"enable": false}
   string token = 2;
 }
 
@@ -54,19 +54,19 @@ message GetUidByTokenResult {
   string uid = 1;
 }
 
-// pait: {"group": "user", "tag": [["grpc-user", "grpc_user_service"]]}
+// p2p: {"group": "user", "tag": [["grpc-user", "grpc_user_service"]]}
 service User {
   // The interface should not be exposed for external use
-  // pait: {"enable": false}
+  // p2p: {"enable": false}
   rpc get_uid_by_token (GetUidByTokenRequest) returns (GetUidByTokenResult);
-  // pait: {"summary": "User exit from the system", "url": "/user/logout"}
+  // p2p: {"summary": "User exit from the system", "url": "/user/logout"}
   rpc logout_user (LogoutUserRequest) returns (google.protobuf.Empty);
-  // pait: {"summary": "User login to system", "url": "/user/login"}
+  // p2p: {"summary": "User login to system", "url": "/user/login"}
   rpc login_user(LoginUserRequest) returns (LoginUserResult);
-  // pait: {"tag": [["grpc-user", "grpc_user_service"], ["grpc-user-system", "grpc_user_service"]]}
-  // pait: {"summary": "Create users through the system", "url": "/user/create"}
+  // p2p: {"tag": [["grpc-user", "grpc_user_service"], ["grpc-user-system", "grpc_user_service"]]}
+  // p2p: {"summary": "Create users through the system", "url": "/user/create"}
   rpc create_user(CreateUserRequest) returns (google.protobuf.Empty);
-  // pait: {"url": "/user/delete", "tag": [["grpc-user", "grpc_user_service"], ["grpc-user-system", "grpc_user_service"]]}
-  // pait: {"desc": "This interface performs a logical delete, not a physical delete"}
+  // p2p: {"url": "/user/delete", "tag": [["grpc-user", "grpc_user_service"], ["grpc-user-system", "grpc_user_service"]]}
+  // p2p: {"desc": "This interface performs a logical delete, not a physical delete"}
   rpc delete_user(DeleteUserRequest) returns (google.protobuf.Empty);
 }

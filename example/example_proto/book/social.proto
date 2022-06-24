@@ -57,7 +57,7 @@ message GetBookCommentListResult {
 service BookSocial {
   rpc like_book (LikeBookRequest) returns (google.protobuf.Empty);
   rpc like_multi_book (LikeBookMapRequest) returns (google.protobuf.Empty);
-  // pait: {"http_method": "GET"}
+  // p2p: {"http_method": "GET"}
   rpc get_book_like (GetBookLikesRequest) returns (GetBookLikesListResult);
   rpc comment_book (CommentBookRequest) returns (google.protobuf.Empty);
   rpc get_book_comment (GetBookCommentRequest) returns (GetBookCommentListResult);

@@ -53,7 +53,7 @@ class GetBookRequest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     ISBN_FIELD_NUMBER: builtins.int
     isbn: typing.Text
-    """pait: {"field": "Query"}"""
+    """p2p: {"field": "Query"}"""
 
     def __init__(self,
         *,

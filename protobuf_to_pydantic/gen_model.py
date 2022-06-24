@@ -1,9 +1,12 @@
 import datetime
+import inspect
 import json
 from dataclasses import MISSING
 from enum import IntEnum
+from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional, Tuple, Type, Union
 
+from get_desc import get_desc_from_proto_file, get_desc_from_pyi_file
 from grpc_types import Descriptor, FieldDescriptor, Message, Timestamp
 from pydantic import BaseModel, Field, validator
 from pydantic.fields import FieldInfo, Undefined
@@ -190,6 +193,7 @@ def msg_to_pydantic_model(
     grpc_timestamp_handler_tuple: Optional[GRPC_TIMESTAMP_HANDLER_TUPLE_T] = None,
     field_dict: Optional[Dict[str, FieldInfo]] = None,
     comment_prefix: str = "p2p:",
+    parse_msg_desc_method: Any = None,
 ) -> Type[BaseModel]:
     """
     Parse a message to a pydantic model
@@ -198,10 +202,38 @@ def msg_to_pydantic_model(
         apply only to the outermost pydantic model
     :param grpc_timestamp_handler_tuple:
     """
+    message_field_dict: Dict[str, Dict[str, str]] = {}
+    if isinstance(parse_msg_desc_method, str) and Path(parse_msg_desc_method).exists():
+        proto_file_name = msg.DESCRIPTOR.file.name
+        if proto_file_name.endswith("empty.proto"):
+            raise ValueError("Not support Empty Message")
+        file_str: str = parse_msg_desc_method
+        if not file_str.endswith("/"):
+            file_str += "/"
+        message_field_dict = get_desc_from_proto_file(file_str + proto_file_name)
+    elif inspect.ismodule(parse_msg_desc_method):
+        if getattr(parse_msg_desc_method, msg.__name__, None) is not msg:
+            raise ValueError(f"Not the module corresponding to {msg}")
+        pyi_file_name = parse_msg_desc_method.__file__ + "i"  # type: ignore
+        if pyi_file_name.endswith("empty_pb2.pyi"):
+            raise ValueError("Not support Empty Message")
+        if not Path(pyi_file_name).exists():
+            raise RuntimeError(f"Can not found {msg} pyi file")
+        message_field_dict = get_desc_from_pyi_file(pyi_file_name)
+    elif parse_msg_desc_method is not None:
+        raise ValueError(
+            f"parse_msg_desc_method param must be exist path or `by_mypy` or `by_pait`, not {parse_msg_desc_method})"
+        )
+
+    if msg.__name__ in message_field_dict:
+        field_doc_dict: Dict[str, str] = message_field_dict[msg.__name__]
+    else:
+        field_doc_dict = {}
+
     return _parse_msg_to_pydantic_model(
         descriptor=msg if isinstance(msg, Descriptor) else msg.DESCRIPTOR,
         grpc_timestamp_handler_tuple=grpc_timestamp_handler_tuple or (str, None),
-        field_doc_dict=getattr(msg, "__field_doc_dict__", {}),
+        field_doc_dict=field_doc_dict,
         field_dict=field_dict or {},
         default_field=default_field,
         comment_prefix=comment_prefix,

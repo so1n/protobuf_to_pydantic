@@ -8,49 +8,49 @@ import google.protobuf.empty_pb2
 import grpc
 
 class UserStub:
-    """pait: {"group": "user", "tag": [["grpc-user", "grpc_user_service"]]}"""
+    """p2p: {"group": "user", "tag": [["grpc-user", "grpc_user_service"]]}"""
     def __init__(self, channel: grpc.Channel) -> None: ...
     get_uid_by_token: grpc.UnaryUnaryMultiCallable[
         example_proto.user.user_pb2.GetUidByTokenRequest,
         example_proto.user.user_pb2.GetUidByTokenResult]
     """The interface should not be exposed for external use
-    pait: {"enable": false}
+    p2p: {"enable": false}
     """
 
     logout_user: grpc.UnaryUnaryMultiCallable[
         example_proto.user.user_pb2.LogoutUserRequest,
         google.protobuf.empty_pb2.Empty]
-    """pait: {"summary": "User exit from the system", "url": "/user/logout"}"""
+    """p2p: {"summary": "User exit from the system", "url": "/user/logout"}"""
 
     login_user: grpc.UnaryUnaryMultiCallable[
         example_proto.user.user_pb2.LoginUserRequest,
         example_proto.user.user_pb2.LoginUserResult]
-    """pait: {"summary": "User login to system", "url": "/user/login"}"""
+    """p2p: {"summary": "User login to system", "url": "/user/login"}"""
 
     create_user: grpc.UnaryUnaryMultiCallable[
         example_proto.user.user_pb2.CreateUserRequest,
         google.protobuf.empty_pb2.Empty]
-    """pait: {"tag": [["grpc-user", "grpc_user_service"], ["grpc-user-system", "grpc_user_service"]]}
-    pait: {"summary": "Create users through the system", "url": "/user/create"}
+    """p2p: {"tag": [["grpc-user", "grpc_user_service"], ["grpc-user-system", "grpc_user_service"]]}
+    p2p: {"summary": "Create users through the system", "url": "/user/create"}
     """
 
     delete_user: grpc.UnaryUnaryMultiCallable[
         example_proto.user.user_pb2.DeleteUserRequest,
         google.protobuf.empty_pb2.Empty]
-    """pait: {"url": "/user/delete", "tag": [["grpc-user", "grpc_user_service"], ["grpc-user-system", "grpc_user_service"]]}
-    pait: {"desc": "This interface performs a logical delete, not a physical delete"}
+    """p2p: {"url": "/user/delete", "tag": [["grpc-user", "grpc_user_service"], ["grpc-user-system", "grpc_user_service"]]}
+    p2p: {"desc": "This interface performs a logical delete, not a physical delete"}
     """
 
 
 class UserServicer(metaclass=abc.ABCMeta):
-    """pait: {"group": "user", "tag": [["grpc-user", "grpc_user_service"]]}"""
+    """p2p: {"group": "user", "tag": [["grpc-user", "grpc_user_service"]]}"""
     @abc.abstractmethod
     def get_uid_by_token(self,
         request: example_proto.user.user_pb2.GetUidByTokenRequest,
         context: grpc.ServicerContext,
     ) -> example_proto.user.user_pb2.GetUidByTokenResult:
         """The interface should not be exposed for external use
-        pait: {"enable": false}
+        p2p: {"enable": false}
         """
         pass
 
@@ -59,7 +59,7 @@ class UserServicer(metaclass=abc.ABCMeta):
         request: example_proto.user.user_pb2.LogoutUserRequest,
         context: grpc.ServicerContext,
     ) -> google.protobuf.empty_pb2.Empty:
-        """pait: {"summary": "User exit from the system", "url": "/user/logout"}"""
+        """p2p: {"summary": "User exit from the system", "url": "/user/logout"}"""
         pass
 
     @abc.abstractmethod
@@ -67,7 +67,7 @@ class UserServicer(metaclass=abc.ABCMeta):
         request: example_proto.user.user_pb2.LoginUserRequest,
         context: grpc.ServicerContext,
     ) -> example_proto.user.user_pb2.LoginUserResult:
-        """pait: {"summary": "User login to system", "url": "/user/login"}"""
+        """p2p: {"summary": "User login to system", "url": "/user/login"}"""
         pass
 
     @abc.abstractmethod
@@ -75,8 +75,8 @@ class UserServicer(metaclass=abc.ABCMeta):
         request: example_proto.user.user_pb2.CreateUserRequest,
         context: grpc.ServicerContext,
     ) -> google.protobuf.empty_pb2.Empty:
-        """pait: {"tag": [["grpc-user", "grpc_user_service"], ["grpc-user-system", "grpc_user_service"]]}
-        pait: {"summary": "Create users through the system", "url": "/user/create"}
+        """p2p: {"tag": [["grpc-user", "grpc_user_service"], ["grpc-user-system", "grpc_user_service"]]}
+        p2p: {"summary": "Create users through the system", "url": "/user/create"}
         """
         pass
 
@@ -85,8 +85,8 @@ class UserServicer(metaclass=abc.ABCMeta):
         request: example_proto.user.user_pb2.DeleteUserRequest,
         context: grpc.ServicerContext,
     ) -> google.protobuf.empty_pb2.Empty:
-        """pait: {"url": "/user/delete", "tag": [["grpc-user", "grpc_user_service"], ["grpc-user-system", "grpc_user_service"]]}
-        pait: {"desc": "This interface performs a logical delete, not a physical delete"}
+        """p2p: {"url": "/user/delete", "tag": [["grpc-user", "grpc_user_service"], ["grpc-user-system", "grpc_user_service"]]}
+        p2p: {"desc": "This interface performs a logical delete, not a physical delete"}
         """
         pass
 
