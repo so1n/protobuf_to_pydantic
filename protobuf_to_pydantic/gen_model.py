@@ -165,13 +165,18 @@ def _parse_msg_to_pydantic_model(
             field_param_dict: dict = msg_pait_model.dict()
             if not field_param_dict.pop("enable"):
                 continue
-            if msg_pait_model.miss_default is not True:
+            if field_param_dict.pop("miss_default") is not True:
                 field_param_dict["default"] = default
             field_param_dict["default_factory"] = default_factory
             if field_param_dict.get("example").__class__ == MISSING.__class__:
                 field_param_dict.pop("example")
-            if field_param_dict["field"]:
-                field = field_param_dict.pop("field")
+
+            _field = field_param_dict.pop("field")
+            if _field:
+                field = field
+            extra = field_param_dict.pop("extra")
+            if extra:
+                field_param_dict.update(extra)
         else:
             field_param_dict = {"default": default, "default_factory": default_factory}
         use_field = field(**field_param_dict)  # type: ignore
@@ -201,6 +206,10 @@ def msg_to_pydantic_model(
     :param default_field: gen pydantic_model default Field,
         apply only to the outermost pydantic model
     :param grpc_timestamp_handler_tuple:
+    :param field_dict: Define which FieldInfo should be used for the parameter (to support the pait framework)
+    :param comment_prefix: Customize the prefixes that need to be parsed for comments
+    :param parse_msg_desc_method: Define the type of comment to be parsed, if the value is a protobuf file path,
+        it will be parsed by protobuf file; if it is a module of message object, it will be parsed by pyi file
     """
     message_field_dict: Dict[str, Dict[str, str]] = {}
     if isinstance(parse_msg_desc_method, str) and Path(parse_msg_desc_method).exists():
