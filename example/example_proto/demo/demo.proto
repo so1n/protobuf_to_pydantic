@@ -25,11 +25,8 @@ message UserMessage {
 }
 
 
-// test map message
-message MapMessage{
-  map<string, UserMessage> user_map=1;
-  map<string, bool> user_flag=2;
-}
+// test map message and bad message
+message MapMessage{map<string, UserMessage>user_map=1;map<string, bool>user_flag=2;}
 
 
 // test repeated msg

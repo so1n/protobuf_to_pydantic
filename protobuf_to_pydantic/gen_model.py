@@ -223,10 +223,11 @@ def msg_to_pydantic_model(
         it will be parsed by protobuf file; if it is a module of message object, it will be parsed by pyi file
     """
     message_field_dict: Dict[str, Dict[str, str]] = {}
+
+    proto_file_name = msg.DESCRIPTOR.file.name
+    if proto_file_name.endswith("empty.proto"):
+        raise ValueError("Not support Empty Message")
     if isinstance(parse_msg_desc_method, str) and Path(parse_msg_desc_method).exists():
-        proto_file_name = msg.DESCRIPTOR.file.name
-        if proto_file_name.endswith("empty.proto"):
-            raise ValueError("Not support Empty Message")
         file_str: str = parse_msg_desc_method
         if not file_str.endswith("/"):
             file_str += "/"
@@ -235,8 +236,6 @@ def msg_to_pydantic_model(
         if getattr(parse_msg_desc_method, msg.__name__, None) is not msg:
             raise ValueError(f"Not the module corresponding to {msg}")
         pyi_file_name = parse_msg_desc_method.__file__ + "i"  # type: ignore
-        if pyi_file_name.endswith("empty_pb2.pyi"):
-            raise ValueError("Not support Empty Message")
         if not Path(pyi_file_name).exists():
             raise RuntimeError(f"Can not found {msg} pyi file")
         message_field_dict = get_desc_from_pyi_file(pyi_file_name)

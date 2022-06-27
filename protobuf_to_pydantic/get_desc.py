@@ -1,5 +1,5 @@
 import re
-from typing import Dict, List, Tuple
+from typing import Any, Dict, List, Tuple
 
 _filename_desc_dict: Dict[str, Dict[str, Dict[str, str]]] = {}
 
@@ -70,50 +70,35 @@ def get_desc_from_pyi_file(filename: str) -> Dict[str, Dict[str, str]]:
     return global_message_field_dict
 
 
-def get_desc_from_proto_file(filename: str) -> Dict[str, Dict[str, str]]:
+def get_desc_from_proto_file(filename: str) -> dict:
     if filename in _filename_desc_dict:
         return _filename_desc_dict[filename]
 
-    with open(filename, "r") as f:
-        protobuf_content: str = f.read()
-    message_stack: List[str] = []
-    message_field_dict: Dict[str, Dict[str, str]] = {}
-    _field: str = ""
-    _doc: str = ""
-    _comment_model: bool = False
+    try:
+        from protoparser import parse_from_file
+    except ImportError:
+        raise RuntimeError("Need to pass proto-parser, e.g. `pip install proto-parser`.")
+    message_field_dict: dict = {}
+    parse_result = parse_from_file(filename)
 
-    for line in protobuf_content.split("\n"):
-        _comment_model = False
-        line_list: List[str] = line.split()
-        for index, column in enumerate(line_list):
-            if _comment_model:
-                _doc += column + " "
-                continue
+    def _parse_message_result(message_result: Any, container: dict) -> None:
+        message_name: str = message_result.name
+        container[message_name] = {}
+        for field in message_result.fields:
+            container[message_name][field.name] = field.comment.content.replace("//", "")
+            for sub_type_str in [field.type, field.key_type, field.val_type]:
+                if sub_type_str in parse_result.messages:
+                    sub_message = parse_result.messages[sub_type_str]
+                elif sub_type_str in message_result.messages:
+                    sub_message = message_result.messages[sub_type_str]
+                else:
+                    continue
+                sub_container: dict = {}
+                container[message_name][sub_type_str] = sub_container
+                _parse_message_result(sub_message, sub_container)
 
-            if column == "message" and line_list[index + 2] == "{":
-                # message parse start
-                message_stack.append(line_list[index + 1])
-                continue
-            if message_stack:
-                if column == "}":
-                    # message parse end
-                    message_stack.pop()
-                elif column == "//":
-                    # comment start
-                    _comment_model = True
-                    _doc += "\n"
-                elif column == "=":
-                    # get field name
-                    _field = line_list[index - 1]
-                elif column[-1] == ";":
-                    # field parse end
-                    if _doc:
-                        message_str: str = message_stack[-1]
-                        if message_str not in message_field_dict:
-                            message_field_dict[message_str] = {}
+    for _, _message_result in parse_result.messages.items():
+        _parse_message_result(_message_result, message_field_dict)
 
-                        message_field_dict[message_str][_field] = _doc
-                    _field = ""
-                    _doc = ""
     _filename_desc_dict[filename] = message_field_dict
     return message_field_dict
