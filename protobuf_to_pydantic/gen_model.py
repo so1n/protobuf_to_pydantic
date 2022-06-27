@@ -23,7 +23,7 @@ type_dict: Dict[str, Type] = {
     FieldDescriptor.TYPE_FIXED32: float,
     FieldDescriptor.TYPE_BOOL: bool,
     FieldDescriptor.TYPE_STRING: str,
-    FieldDescriptor.TYPE_BYTES: str,
+    FieldDescriptor.TYPE_BYTES: bytes,
     FieldDescriptor.TYPE_UINT32: int,
     FieldDescriptor.TYPE_SFIXED32: float,
     FieldDescriptor.TYPE_SFIXED64: float,

@@ -1,0 +1,56 @@
+syntax = "proto3";
+package user;
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+enum SexType {
+  man = 0;
+  women = 1;
+}
+
+
+// user info
+message UserMessage {
+  // p2p: {"miss_default": true, "example": "10086", "title": "UID", "description": "user union id"}
+  string uid=1;
+  // p2p: {"example": 18, "title": "use age", "ge": 0}
+  int32 age=2;
+  // p2p: {"ge": 0, "le": 2.5}
+  float height=3;
+  SexType sex=4;
+  bool is_adult=5;
+  // p2p: {"description": "user name"}
+  // p2p: {"default": "", "min_length": 1, "max_length": "10", "example": "so1n"}
+  string user_name=6;
+}
+
+
+// test map message
+message MapMessage{
+  map<string, UserMessage> user_map=1;
+  map<string, bool> user_flag=2;
+}
+
+
+// test repeated msg
+message RepeatedMessage {
+  // p2p: {"min_items": 3, "max_items": 5}
+  repeated string str_list =1;
+  // p2p: {"min_items": 1, "max_items": 5, "unique_items": true}
+  repeated int32 int_list =2;
+  repeated UserMessage user_list=3;
+}
+
+
+// test nested message
+message NestedMessage{
+  message UserPayMessage {
+    int32 bank_number=1;
+    google.protobuf.Timestamp exp=2;
+  }
+  map<string, RepeatedMessage> user_map=1;
+  UserPayMessage user_pay=2;
+  // p2p: {"enable": false}
+  UserPayMessage not_enable_user_pay=3;
+  google.protobuf.Empty empty=4;
+}
