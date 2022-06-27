@@ -78,11 +78,21 @@ def grpc_timestamp_int_handler(cls: Any, v: int) -> Timestamp:
     return t
 
 
+def _get_field_doc_by_full_name(full_name: str, field_doc_dict: dict) -> Any:
+    key_list = full_name.split(".")[1:]  # ignore package name
+    for key in key_list:
+        if key in field_doc_dict:
+            field_doc_dict = field_doc_dict[key]
+        else:
+            return None
+    return field_doc_dict
+
+
 def _parse_msg_to_pydantic_model(
     *,
     descriptor: Descriptor,
     grpc_timestamp_handler_tuple: GRPC_TIMESTAMP_HANDLER_TUPLE_T,
-    field_doc_dict: Dict[str, str],
+    field_doc_dict: dict,
     field_dict: Dict[str, FieldInfo],
     comment_prefix: str,
     default_field: Type[FieldInfo],
@@ -112,7 +122,7 @@ def _parse_msg_to_pydantic_model(
                     else _parse_msg_to_pydantic_model(
                         descriptor=key.message_type,
                         grpc_timestamp_handler_tuple=grpc_timestamp_handler_tuple,
-                        field_doc_dict={},
+                        field_doc_dict=field_doc_dict,
                         field_dict=field_dict,
                         comment_prefix=comment_prefix,
                         default_field=default_field,
@@ -124,7 +134,7 @@ def _parse_msg_to_pydantic_model(
                     else _parse_msg_to_pydantic_model(
                         descriptor=value.message_type,
                         grpc_timestamp_handler_tuple=grpc_timestamp_handler_tuple,
-                        field_doc_dict={},
+                        field_doc_dict=field_doc_dict,
                         field_dict=field_dict,
                         comment_prefix=comment_prefix,
                         default_field=default_field,
@@ -134,12 +144,14 @@ def _parse_msg_to_pydantic_model(
             elif column.message_type.name == "Struct":
                 # support google.protobuf.Struct
                 type_ = Dict[str, Any]
+            elif column.name == "empty":
+                type_ = Any
             else:
                 # support google.protobuf.Message
                 type_ = _parse_msg_to_pydantic_model(
                     descriptor=column.message_type,
                     grpc_timestamp_handler_tuple=grpc_timestamp_handler_tuple,
-                    field_doc_dict={},
+                    field_doc_dict=field_doc_dict,
                     field_dict=field_dict,
                     comment_prefix=comment_prefix,
                     default_field=default_field,
@@ -158,10 +170,9 @@ def _parse_msg_to_pydantic_model(
                 default = column.default_value
 
         field = default_field
-        if name in field_doc_dict:
-            msg_pait_model: MessagePaitModel = get_pait_info_from_grpc_desc(
-                comment_prefix, field_doc_dict[name], field_dict
-            )
+        field_doc: str = _get_field_doc_by_full_name(column.full_name, field_doc_dict)
+        if field_doc:
+            msg_pait_model: MessagePaitModel = get_pait_info_from_grpc_desc(comment_prefix, field_doc, field_dict)
             field_param_dict: dict = msg_pait_model.dict()
             if not field_param_dict.pop("enable"):
                 continue
@@ -234,15 +245,10 @@ def msg_to_pydantic_model(
             f"parse_msg_desc_method param must be exist path or `by_mypy` or `by_pait`, not {parse_msg_desc_method})"
         )
 
-    if msg.__name__ in message_field_dict:
-        field_doc_dict: Dict[str, str] = message_field_dict[msg.__name__]
-    else:
-        field_doc_dict = {}
-
     return _parse_msg_to_pydantic_model(
         descriptor=msg if isinstance(msg, Descriptor) else msg.DESCRIPTOR,
         grpc_timestamp_handler_tuple=grpc_timestamp_handler_tuple or (str, None),
-        field_doc_dict=field_doc_dict,
+        field_doc_dict=message_field_dict,
         field_dict=field_dict or {},
         default_field=default_field,
         comment_prefix=comment_prefix,
