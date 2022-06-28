@@ -17,7 +17,7 @@ from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1d\x65xample_proto/demo/demo.proto\x12\x04user\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"x\n\x0bUserMessage\x12\x0b\n\x03uid\x18\x01 \x01(\t\x12\x0b\n\x03\x61ge\x18\x02 \x01(\x05\x12\x0e\n\x06height\x18\x03 \x01(\x02\x12\x1a\n\x03sex\x18\x04 \x01(\x0e\x32\r.user.SexType\x12\x10\n\x08is_adult\x18\x05 \x01(\x08\x12\x11\n\tuser_name\x18\x06 \x01(\t\"\xe4\x01\n\nMapMessage\x12/\n\x08user_map\x18\x01 \x03(\x0b\x32\x1d.user.MapMessage.UserMapEntry\x12\x31\n\tuser_flag\x18\x02 \x03(\x0b\x32\x1e.user.MapMessage.UserFlagEntry\x1a\x41\n\x0cUserMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12 \n\x05value\x18\x02 \x01(\x0b\x32\x11.user.UserMessage:\x02\x38\x01\x1a/\n\rUserFlagEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x08:\x02\x38\x01\"[\n\x0fRepeatedMessage\x12\x10\n\x08str_list\x18\x01 \x03(\t\x12\x10\n\x08int_list\x18\x02 \x03(\x05\x12$\n\tuser_list\x18\x03 \x03(\x0b\x32\x11.user.UserMessage\"\xf8\x02\n\rNestedMessage\x12\x32\n\x08user_map\x18\x01 \x03(\x0b\x32 .user.NestedMessage.UserMapEntry\x12\x34\n\x08user_pay\x18\x02 \x01(\x0b\x32\".user.NestedMessage.UserPayMessage\x12?\n\x13not_enable_user_pay\x18\x03 \x01(\x0b\x32\".user.NestedMessage.UserPayMessage\x12%\n\x05\x65mpty\x18\x04 \x01(\x0b\x32\x16.google.protobuf.Empty\x1aN\n\x0eUserPayMessage\x12\x13\n\x0b\x62\x61nk_number\x18\x01 \x01(\x05\x12\'\n\x03\x65xp\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\x45\n\x0cUserMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12$\n\x05value\x18\x02 \x01(\x0b\x32\x15.user.RepeatedMessage:\x02\x38\x01*\x1d\n\x07SexType\x12\x07\n\x03man\x10\x00\x12\t\n\x05women\x10\x01\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1d\x65xample_proto/demo/demo.proto\x12\x04user\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"x\n\x0bUserMessage\x12\x0b\n\x03uid\x18\x01 \x01(\t\x12\x0b\n\x03\x61ge\x18\x02 \x01(\x05\x12\x0e\n\x06height\x18\x03 \x01(\x02\x12\x1a\n\x03sex\x18\x04 \x01(\x0e\x32\r.user.SexType\x12\x10\n\x08is_adult\x18\x05 \x01(\x08\x12\x11\n\tuser_name\x18\x06 \x01(\t\"\xe4\x01\n\nMapMessage\x12/\n\x08user_map\x18\x01 \x03(\x0b\x32\x1d.user.MapMessage.UserMapEntry\x12\x31\n\tuser_flag\x18\x02 \x03(\x0b\x32\x1e.user.MapMessage.UserFlagEntry\x1a\x41\n\x0cUserMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12 \n\x05value\x18\x02 \x01(\x0b\x32\x11.user.UserMessage:\x02\x38\x01\x1a/\n\rUserFlagEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x08:\x02\x38\x01\"[\n\x0fRepeatedMessage\x12\x10\n\x08str_list\x18\x01 \x03(\t\x12\x10\n\x08int_list\x18\x02 \x03(\x05\x12$\n\tuser_list\x18\x03 \x03(\x0b\x32\x11.user.UserMessage\"\xfb\x03\n\rNestedMessage\x12;\n\ruser_list_map\x18\x01 \x03(\x0b\x32$.user.NestedMessage.UserListMapEntry\x12\x32\n\x08user_map\x18\x02 \x03(\x0b\x32 .user.NestedMessage.UserMapEntry\x12\x34\n\x08user_pay\x18\x03 \x01(\x0b\x32\".user.NestedMessage.UserPayMessage\x12?\n\x13not_enable_user_pay\x18\x04 \x01(\x0b\x32\".user.NestedMessage.UserPayMessage\x12%\n\x05\x65mpty\x18\x05 \x01(\x0b\x32\x16.google.protobuf.Empty\x1aN\n\x0eUserPayMessage\x12\x13\n\x0b\x62\x61nk_number\x18\x01 \x01(\x05\x12\'\n\x03\x65xp\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1aI\n\x10UserListMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12$\n\x05value\x18\x02 \x01(\x0b\x32\x15.user.RepeatedMessage:\x02\x38\x01\x1a@\n\x0cUserMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x1f\n\x05value\x18\x02 \x01(\x0b\x32\x10.user.MapMessage:\x02\x38\x01*\x1d\n\x07SexType\x12\x07\n\x03man\x10\x00\x12\t\n\x05women\x10\x01\x62\x06proto3')
 
 _SEXTYPE = DESCRIPTOR.enum_types_by_name['SexType']
 SexType = enum_type_wrapper.EnumTypeWrapper(_SEXTYPE)
@@ -32,6 +32,7 @@ _MAPMESSAGE_USERFLAGENTRY = _MAPMESSAGE.nested_types_by_name['UserFlagEntry']
 _REPEATEDMESSAGE = DESCRIPTOR.message_types_by_name['RepeatedMessage']
 _NESTEDMESSAGE = DESCRIPTOR.message_types_by_name['NestedMessage']
 _NESTEDMESSAGE_USERPAYMESSAGE = _NESTEDMESSAGE.nested_types_by_name['UserPayMessage']
+_NESTEDMESSAGE_USERLISTMAPENTRY = _NESTEDMESSAGE.nested_types_by_name['UserListMapEntry']
 _NESTEDMESSAGE_USERMAPENTRY = _NESTEDMESSAGE.nested_types_by_name['UserMapEntry']
 UserMessage = _reflection.GeneratedProtocolMessageType('UserMessage', (_message.Message,), {
   'DESCRIPTOR' : _USERMESSAGE,
@@ -79,6 +80,13 @@ NestedMessage = _reflection.GeneratedProtocolMessageType('NestedMessage', (_mess
     })
   ,
 
+  'UserListMapEntry' : _reflection.GeneratedProtocolMessageType('UserListMapEntry', (_message.Message,), {
+    'DESCRIPTOR' : _NESTEDMESSAGE_USERLISTMAPENTRY,
+    '__module__' : 'example_proto.demo.demo_pb2'
+    # @@protoc_insertion_point(class_scope:user.NestedMessage.UserListMapEntry)
+    })
+  ,
+
   'UserMapEntry' : _reflection.GeneratedProtocolMessageType('UserMapEntry', (_message.Message,), {
     'DESCRIPTOR' : _NESTEDMESSAGE_USERMAPENTRY,
     '__module__' : 'example_proto.demo.demo_pb2'
@@ -91,6 +99,7 @@ NestedMessage = _reflection.GeneratedProtocolMessageType('NestedMessage', (_mess
   })
 _sym_db.RegisterMessage(NestedMessage)
 _sym_db.RegisterMessage(NestedMessage.UserPayMessage)
+_sym_db.RegisterMessage(NestedMessage.UserListMapEntry)
 _sym_db.RegisterMessage(NestedMessage.UserMapEntry)
 
 if _descriptor._USE_C_DESCRIPTORS == False:
@@ -100,10 +109,12 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _MAPMESSAGE_USERMAPENTRY._serialized_options = b'8\001'
   _MAPMESSAGE_USERFLAGENTRY._options = None
   _MAPMESSAGE_USERFLAGENTRY._serialized_options = b'8\001'
+  _NESTEDMESSAGE_USERLISTMAPENTRY._options = None
+  _NESTEDMESSAGE_USERLISTMAPENTRY._serialized_options = b'8\001'
   _NESTEDMESSAGE_USERMAPENTRY._options = None
   _NESTEDMESSAGE_USERMAPENTRY._serialized_options = b'8\001'
-  _SEXTYPE._serialized_start=926
-  _SEXTYPE._serialized_end=955
+  _SEXTYPE._serialized_start=1057
+  _SEXTYPE._serialized_end=1086
   _USERMESSAGE._serialized_start=101
   _USERMESSAGE._serialized_end=221
   _MAPMESSAGE._serialized_start=224
@@ -115,9 +126,11 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _REPEATEDMESSAGE._serialized_start=454
   _REPEATEDMESSAGE._serialized_end=545
   _NESTEDMESSAGE._serialized_start=548
-  _NESTEDMESSAGE._serialized_end=924
-  _NESTEDMESSAGE_USERPAYMESSAGE._serialized_start=775
-  _NESTEDMESSAGE_USERPAYMESSAGE._serialized_end=853
-  _NESTEDMESSAGE_USERMAPENTRY._serialized_start=855
-  _NESTEDMESSAGE_USERMAPENTRY._serialized_end=924
+  _NESTEDMESSAGE._serialized_end=1055
+  _NESTEDMESSAGE_USERPAYMESSAGE._serialized_start=836
+  _NESTEDMESSAGE_USERPAYMESSAGE._serialized_end=914
+  _NESTEDMESSAGE_USERLISTMAPENTRY._serialized_start=916
+  _NESTEDMESSAGE_USERLISTMAPENTRY._serialized_end=989
+  _NESTEDMESSAGE_USERMAPENTRY._serialized_start=991
+  _NESTEDMESSAGE_USERMAPENTRY._serialized_end=1055
 # @@protoc_insertion_point(module_scope)

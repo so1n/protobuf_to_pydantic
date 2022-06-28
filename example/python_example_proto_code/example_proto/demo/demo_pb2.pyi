@@ -67,7 +67,7 @@ class UserMessage(google.protobuf.message.Message):
 global___UserMessage = UserMessage
 
 class MapMessage(google.protobuf.message.Message):
-    """test map message"""
+    """test map message and bad message"""
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     class UserMapEntry(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
@@ -154,7 +154,7 @@ class NestedMessage(google.protobuf.message.Message):
         def HasField(self, field_name: typing_extensions.Literal["exp",b"exp"]) -> builtins.bool: ...
         def ClearField(self, field_name: typing_extensions.Literal["bank_number",b"bank_number","exp",b"exp"]) -> None: ...
 
-    class UserMapEntry(google.protobuf.message.Message):
+    class UserListMapEntry(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
         KEY_FIELD_NUMBER: builtins.int
         VALUE_FIELD_NUMBER: builtins.int
@@ -169,12 +169,30 @@ class NestedMessage(google.protobuf.message.Message):
         def HasField(self, field_name: typing_extensions.Literal["value",b"value"]) -> builtins.bool: ...
         def ClearField(self, field_name: typing_extensions.Literal["key",b"key","value",b"value"]) -> None: ...
 
+    class UserMapEntry(google.protobuf.message.Message):
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+        KEY_FIELD_NUMBER: builtins.int
+        VALUE_FIELD_NUMBER: builtins.int
+        key: typing.Text
+        @property
+        def value(self) -> global___MapMessage: ...
+        def __init__(self,
+            *,
+            key: typing.Text = ...,
+            value: typing.Optional[global___MapMessage] = ...,
+            ) -> None: ...
+        def HasField(self, field_name: typing_extensions.Literal["value",b"value"]) -> builtins.bool: ...
+        def ClearField(self, field_name: typing_extensions.Literal["key",b"key","value",b"value"]) -> None: ...
+
+    USER_LIST_MAP_FIELD_NUMBER: builtins.int
     USER_MAP_FIELD_NUMBER: builtins.int
     USER_PAY_FIELD_NUMBER: builtins.int
     NOT_ENABLE_USER_PAY_FIELD_NUMBER: builtins.int
     EMPTY_FIELD_NUMBER: builtins.int
     @property
-    def user_map(self) -> google.protobuf.internal.containers.MessageMap[typing.Text, global___RepeatedMessage]: ...
+    def user_list_map(self) -> google.protobuf.internal.containers.MessageMap[typing.Text, global___RepeatedMessage]: ...
+    @property
+    def user_map(self) -> google.protobuf.internal.containers.MessageMap[typing.Text, global___MapMessage]: ...
     @property
     def user_pay(self) -> global___NestedMessage.UserPayMessage: ...
     @property
@@ -185,11 +203,12 @@ class NestedMessage(google.protobuf.message.Message):
     def empty(self) -> google.protobuf.empty_pb2.Empty: ...
     def __init__(self,
         *,
-        user_map: typing.Optional[typing.Mapping[typing.Text, global___RepeatedMessage]] = ...,
+        user_list_map: typing.Optional[typing.Mapping[typing.Text, global___RepeatedMessage]] = ...,
+        user_map: typing.Optional[typing.Mapping[typing.Text, global___MapMessage]] = ...,
         user_pay: typing.Optional[global___NestedMessage.UserPayMessage] = ...,
         not_enable_user_pay: typing.Optional[global___NestedMessage.UserPayMessage] = ...,
         empty: typing.Optional[google.protobuf.empty_pb2.Empty] = ...,
         ) -> None: ...
     def HasField(self, field_name: typing_extensions.Literal["empty",b"empty","not_enable_user_pay",b"not_enable_user_pay","user_pay",b"user_pay"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["empty",b"empty","not_enable_user_pay",b"not_enable_user_pay","user_map",b"user_map","user_pay",b"user_pay"]) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["empty",b"empty","not_enable_user_pay",b"not_enable_user_pay","user_list_map",b"user_list_map","user_map",b"user_map","user_pay",b"user_pay"]) -> None: ...
 global___NestedMessage = NestedMessage
