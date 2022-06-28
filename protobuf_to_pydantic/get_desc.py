@@ -1,5 +1,5 @@
 import re
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
 _filename_desc_dict: Dict[str, Dict[str, Dict[str, str]]] = {}
 
@@ -74,18 +74,19 @@ def get_desc_from_proto_file(filename: str) -> dict:
     if filename in _filename_desc_dict:
         return _filename_desc_dict[filename]
 
-    try:
-        from protoparser import parse_from_file
-    except ImportError:
-        raise RuntimeError("Need to pass proto-parser, e.g. `pip install proto-parser`.")
+    from protobuf_to_pydantic.contrib.proto_parser import ProtoFile, parse_from_file
+
     message_field_dict: dict = {}
-    parse_result = parse_from_file(filename)
+    _parse_result: Optional[ProtoFile] = parse_from_file(filename)
+    if not _parse_result:
+        return message_field_dict
+    parse_result: ProtoFile = _parse_result
 
     def _parse_message_result(message_result: Any, container: dict) -> None:
         message_name: str = message_result.name
         container[message_name] = {}
         for field in message_result.fields:
-            container[message_name][field.name] = field.comment.content.replace("//", "")
+            container[message_name][field.name] = field.comment.content.replace("//", "") if field.comment else ""
             for sub_type_str in [field.type, field.key_type, field.val_type]:
                 if sub_type_str in parse_result.messages:
                     sub_message = parse_result.messages[sub_type_str]
