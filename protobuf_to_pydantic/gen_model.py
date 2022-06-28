@@ -6,12 +6,13 @@ from enum import IntEnum
 from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional, Tuple, Type, Union
 
-from get_desc import get_desc_from_proto_file, get_desc_from_pyi_file
-from grpc_types import Descriptor, FieldDescriptor, Message, Timestamp
 from pydantic import BaseModel, Field, validator
 from pydantic.fields import FieldInfo, Undefined
 from pydantic.typing import NoArgAnyCallable
-from util import create_pydantic_model
+
+from protobuf_to_pydantic.get_desc import get_desc_from_proto_file, get_desc_from_pyi_file
+from protobuf_to_pydantic.grpc_types import Descriptor, FieldDescriptor, Message, Timestamp
+from protobuf_to_pydantic.util import create_pydantic_model
 
 type_dict: Dict[str, Type] = {
     FieldDescriptor.TYPE_DOUBLE: float,
