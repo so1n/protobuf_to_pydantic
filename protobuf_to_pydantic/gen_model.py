@@ -3,6 +3,7 @@ import inspect
 import json
 from dataclasses import MISSING
 from enum import IntEnum
+from importlib import import_module
 from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional, Tuple, Type, Union
 
@@ -39,6 +40,7 @@ class MessagePaitModel(BaseModel):
     field: Optional[Type[FieldInfo]] = Field(None)
     enable: bool = Field(True)
     miss_default: bool = Field(False)
+    default_factory: Optional[Callable] = Field(None)
     example: Any = Field(MISSING)
     alias: Optional[str] = Field(None)
     title: Optional[str] = Field(None)
@@ -55,9 +57,15 @@ class MessagePaitModel(BaseModel):
     multiple_of: Optional[int] = Field(None)
     regex: Optional[str] = Field(None)
     extra: dict = Field(default_factory=dict)
+    type_: Any = Field(None, alias="type")
 
 
-def get_pait_info_from_grpc_desc(comment_prefix: str, desc: str, field_dict: Dict[str, FieldInfo]) -> MessagePaitModel:
+def get_pait_info_from_grpc_desc(
+    comment_prefix: str,
+    desc: str,
+    field_dict: Dict[str, FieldInfo],
+    local_dict: Optional[Dict[str, Any]] = None,
+) -> MessagePaitModel:
     pait_dict: dict = {}
     for line in desc.split("\n"):
         line = line.strip()
@@ -65,6 +73,24 @@ def get_pait_info_from_grpc_desc(comment_prefix: str, desc: str, field_dict: Dic
             continue
         line = line.replace(comment_prefix, "")
         pait_dict.update(json.loads(line))
+    for k, v in pait_dict.items():
+        if not isinstance(v, str):
+            continue
+        try:
+            if v.startswith("p2p@import"):
+                _, var_str, module_str = v.split("|")
+                v = getattr(import_module(module_str.split(".")[0], module_str), var_str)
+            elif v.startswith("p2p@local") and local_dict:
+                _, var_str = v.split("|")
+                v = local_dict[var_str]
+            elif v.startswith("p2p@"):
+                raise ValueError(f"Only support p2p@import, p2p@local prefix. not {v}")
+            else:
+                continue
+            pait_dict[k] = v
+        except Exception as e:
+            raise ValueError(f"parse {v} error: {e}")
+
     field_name: str = pait_dict.pop("field", "")
     if field_name in field_dict:
         pait_dict["field"] = field_dict[field_name]
@@ -97,6 +123,7 @@ def _parse_msg_to_pydantic_model(
     field_dict: Dict[str, FieldInfo],
     comment_prefix: str,
     default_field: Type[FieldInfo],
+    local_dict: Dict[str, Any],
 ) -> Type[BaseModel]:
     annotation_dict: Dict[str, Tuple[Type, Any]] = {}
     validators: Dict[str, classmethod] = {}
@@ -127,6 +154,7 @@ def _parse_msg_to_pydantic_model(
                         field_dict=field_dict,
                         comment_prefix=comment_prefix,
                         default_field=default_field,
+                        local_dict=local_dict,
                     )
                 )
                 value_type: Any = (
@@ -139,6 +167,7 @@ def _parse_msg_to_pydantic_model(
                         field_dict=field_dict,
                         comment_prefix=comment_prefix,
                         default_field=default_field,
+                        local_dict=local_dict,
                     )
                 )
                 type_ = Dict[key_type, value_type]
@@ -156,6 +185,7 @@ def _parse_msg_to_pydantic_model(
                     field_dict=field_dict,
                     comment_prefix=comment_prefix,
                     default_field=default_field,
+                    local_dict=local_dict,
                 )
         elif column.type == FieldDescriptor.TYPE_ENUM:
             # support google.protobuf.Enum
@@ -173,13 +203,14 @@ def _parse_msg_to_pydantic_model(
         field = default_field
         field_doc: str = _get_field_doc_by_full_name(column.full_name, field_doc_dict)
         if field_doc:
-            msg_pait_model: MessagePaitModel = get_pait_info_from_grpc_desc(comment_prefix, field_doc, field_dict)
+            msg_pait_model: MessagePaitModel = get_pait_info_from_grpc_desc(
+                comment_prefix, field_doc, field_dict, local_dict
+            )
             field_param_dict: dict = msg_pait_model.dict()
             if not field_param_dict.pop("enable"):
                 continue
-            if field_param_dict.pop("miss_default") is not True:
+            if field_param_dict.pop("miss_default") is not True or field_param_dict["default_factory"] is None:
                 field_param_dict["default"] = default
-            field_param_dict["default_factory"] = default_factory
             if field_param_dict.get("example").__class__ == MISSING.__class__:
                 field_param_dict.pop("example")
 
@@ -189,6 +220,11 @@ def _parse_msg_to_pydantic_model(
             extra = field_param_dict.pop("extra")
             if extra:
                 field_param_dict.update(extra)
+            field_type = field_param_dict.pop("type_")
+            if field_type:
+                if not issubclass(field_type, str):
+                    raise TypeError(f"{column.full_name} not support {field_type}")
+                type_ = field_type
         else:
             field_param_dict = {"default": default, "default_factory": default_factory}
         use_field = field(**field_param_dict)  # type: ignore
@@ -211,6 +247,7 @@ def msg_to_pydantic_model(
     field_dict: Optional[Dict[str, FieldInfo]] = None,
     comment_prefix: str = "p2p:",
     parse_msg_desc_method: Any = None,
+    local_dict: Optional[Dict[str, Any]] = None,
 ) -> Type[BaseModel]:
     """
     Parse a message to a pydantic model
@@ -222,6 +259,7 @@ def msg_to_pydantic_model(
     :param comment_prefix: Customize the prefixes that need to be parsed for comments
     :param parse_msg_desc_method: Define the type of comment to be parsed, if the value is a protobuf file path,
         it will be parsed by protobuf file; if it is a module of message object, it will be parsed by pyi file
+    :param local_dict: The variables corresponding to the p2p@local template
     """
     message_field_dict: Dict[str, Dict[str, str]] = {}
 
@@ -252,4 +290,5 @@ def msg_to_pydantic_model(
         field_dict=field_dict or {},
         default_field=default_field,
         comment_prefix=comment_prefix,
+        local_dict=local_dict or {},
     )

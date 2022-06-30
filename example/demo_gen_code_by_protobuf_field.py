@@ -1,6 +1,6 @@
 # This is an automatically generated file, please do not change
 # gen by protobuf_to_pydantic(https://github.com/so1n/protobuf_to_pydantic)
-# gen timestamp:1656402833
+# gen timestamp:1656571165
 
 import typing
 from enum import IntEnum
@@ -15,7 +15,7 @@ class SexType(IntEnum):
 
 
 class UserMessage(BaseModel):
-    uid: str = FieldInfo(title="UID", description="user union id", extra={"example": "10086"})
+    uid: str = FieldInfo(default="", title="UID", description="user union id", extra={"example": "10086"})
     age: int = FieldInfo(default=0, title="use age", ge=0, extra={"example": 18})
     height: float = FieldInfo(default=0.0, ge=0, le=2, extra={})
     sex: SexType = FieldInfo(default=0, extra={})
@@ -26,8 +26,8 @@ class UserMessage(BaseModel):
 
 
 class RepeatedMessage(BaseModel):
-    str_list: typing.List[str] = FieldInfo(default_factory=list, min_items=3, max_items=5, extra={})
-    int_list: typing.List[int] = FieldInfo(default_factory=list, min_items=1, max_items=5, extra={})
+    str_list: typing.List[str] = FieldInfo(min_items=3, max_items=5, extra={})
+    int_list: typing.List[int] = FieldInfo(min_items=1, max_items=5, extra={})
     user_list: UserMessage = FieldInfo(extra={})
 
 
@@ -37,7 +37,7 @@ class MapMessage(BaseModel):
 
 
 class UserPayMessage(BaseModel):
-    bank_number: int = FieldInfo(default=0, extra={})
+    bank_number: str = FieldInfo(default="", extra={})
     exp: str = FieldInfo(extra={})
 
 

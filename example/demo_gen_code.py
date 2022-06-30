@@ -1,6 +1,6 @@
 # This is an automatically generated file, please do not change
 # gen by protobuf_to_pydantic(https://github.com/so1n/protobuf_to_pydantic)
-# gen timestamp:1656402832
+# gen timestamp:1656571164
 
 import typing
 from enum import IntEnum
@@ -35,7 +35,7 @@ class MapMessage(BaseModel):
 
 
 class UserPayMessage(BaseModel):
-    bank_number: int = FieldInfo(default=0, extra={})
+    bank_number: str = FieldInfo(default="", extra={})
     exp: str = FieldInfo(extra={})
 
 

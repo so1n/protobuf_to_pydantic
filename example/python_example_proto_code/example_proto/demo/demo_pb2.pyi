@@ -143,12 +143,16 @@ class NestedMessage(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
         BANK_NUMBER_FIELD_NUMBER: builtins.int
         EXP_FIELD_NUMBER: builtins.int
-        bank_number: builtins.int
+        bank_number: typing.Text
+        """p2p: {"type": "p2p@import|PaymentCardNumber|pydantic.types"}"""
+
         @property
-        def exp(self) -> google.protobuf.timestamp_pb2.Timestamp: ...
+        def exp(self) -> google.protobuf.timestamp_pb2.Timestamp:
+            """p2p: {"default_factory": "p2p@local|exp_time"}"""
+            pass
         def __init__(self,
             *,
-            bank_number: builtins.int = ...,
+            bank_number: typing.Text = ...,
             exp: typing.Optional[google.protobuf.timestamp_pb2.Timestamp] = ...,
             ) -> None: ...
         def HasField(self, field_name: typing_extensions.Literal["exp",b"exp"]) -> builtins.bool: ...
