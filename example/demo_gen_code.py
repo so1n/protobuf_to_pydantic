@@ -1,6 +1,6 @@
 # This is an automatically generated file, please do not change
 # gen by protobuf_to_pydantic(https://github.com/so1n/protobuf_to_pydantic)
-# gen timestamp:1656571164
+# gen timestamp:1656577320
 
 import typing
 from enum import IntEnum

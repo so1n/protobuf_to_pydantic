@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "protobuf_to_pydantic"
 version = "0.0.1"
-description = "Pait is a Python api tool. Pait enables your Python web framework to have type checking, parameter type conversion, interface document generation and can display your documents through Redoc or Swagger (power by inspect, pydantic)"
+description = "Convert Protobuf-generated Python objects to Pydantic.BaseModel objects with parameter checksum"
 authors = ["So1n <so1n897046026@gmail.com>"]
 license = "Apache Software License"
 readme = "./README.md"

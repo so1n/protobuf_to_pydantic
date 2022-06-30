@@ -135,6 +135,9 @@ print(
 > 注：该功能需要在通过Protobuf文件生成对应的`Python`代码时使用[mypy-protobuf](https://github.com/nipunn1313/mypy-protobuf)插件，且指定的pyi文件输出路径与生成的`Python`代码路径时，才能生效
 
 #### 2.2.1.1.By Protobuf file
+
+> NOTE: 需要提前安装lark库
+
 如果生成Message的原始Protobuf文件存在与项目中， 那么可以设置`parse_msg_desc_method`的值为Message生成时指定的根目录路径，
 这样`protobuf_to_pydantic`就可以通过Protobuf生成对应`Python`对象时指定的路径来获取到Message对象的protobuf文件路径，再通过解析protobuf文件的注释获取到Message的附带信息。
 
@@ -193,9 +196,65 @@ print(
 `protobuf_to_pydantic`除了支持`FieldInfo`的参数外，还支持下面几种参数:
 - miss_default：默认情况下，生成对应`pydantic.BaseModel`对象中每个字段的默认值与Message中每个字段的默认值是一样的。不过可以通过设置`miss_default`为`true`来取消默认值的设置，需要注意的是在设置`miss_default`为`true`的情况下，`default`参数将失效。
 - enable: 默认情况下， `pydantic.BaseModel`会把Message中的每个字段都进行转换，如果有些字段不想被转换，可以设置`enable`为`false`
+- type: 拓展目前的类型，比如下面的银行卡号码:
+  ```protobuf
+  message UserPayMessage {
+    string bank_number=1; // p2p: {"type": "p2p@import|PaymentCardNumber|pydantic.types"}
+  }
+  ```
 
 > Note `FieldInfo`支持的参数见:https://pydantic-docs.helpmanual.io/usage/types/#constrained-types
 
+### 2.2.4.模板
+有些情况下，我们填写的值是某个库的方法或者函数，比如`type`参数和`default_factory`参数的值，但是Json是不支持的，这时可以使用模板参数。
+目前`protobuf_to_pydantic`支持两种模板参数，第一种是`p2p@import`，使用方法如下：
+```protobuf
+  message UserPayMessage {
+    string bank_number=1; // p2p: {"type": "p2p@import|PaymentCardNumber|pydantic.types"}
+  }
+```
+这里的注释使用的是`{p2p的方法}|{要引入的类或:A}|{类的模块:B}`格式的语法，其中开头的方法`p2p@import`表示这是需要通过`from B import A`引入一个对象，
+通过注释，`protobuf_to_pydantic`会把对应的Message转为如下的`pydantic.BaseModel`:
+```python
+from pydantic import BaseModel
+from pydantic.fields import FieldInfo
+# p2p@import|PaymentCardNumber|pydantic.types
+from pydantic.types import PaymentCardNumber
+
+class UserPayMessage(BaseModel):
+    bank_number: PaymentCardNumber = FieldInfo(default="", extra={})
+```
+
+
+第二种方法是`p2p@local`，这里使用的是`{p2p的方法}|{要使用的本地变量}`格式的语法，如下：
+```protobuf
+message UserPayMessage {
+  google.protobuf.Timestamp exp=1; // p2p: {"default_factory": "p2p@local|exp_time"}
+}
+```
+然后在调用`msg_to_pydantic_model`方法时通过参数`local_dict`注册对应的值，如下：
+```Python
+def exp_time() -> float:
+  return time.time()
+
+msg_to_pydantic_model(
+    demo_pb2.NestedMessage,
+    parse_msg_desc_method="/home/so1n/github/protobuf_to_pydantic/example",
+    local_dict={"exp_time": exp_time},  # <----
+)
+```
+这样一来，`protobuf_to_pydantic`就可以生成符合要求的`pydantic.BaseModel`：
+```python
+from pydantic import BaseModel
+from pydantic.fields import FieldInfo
+
+from example.simple_gen_code import exp_time
+
+class UserPayMessage(BaseModel):
+    exp: str = FieldInfo(default_factory=exp_time, extra={})
+```
+
+> Note: 具体调用和生成方法见示例代码。
 
 ## 2.3.生成对应的Python代码
 除了在运行时生成对应的`pydantic.BaseModel`对象外，`protobuf_to_pydantic`支持将运行时`pydantic.BaseModel`对象转换为`Python`代码文本（仅适用于`protobuf to pydantic`生成的`pydantic .Base Model`对象)。
