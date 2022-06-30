@@ -193,7 +193,16 @@ class ProtoTransformer(Transformer):
                 elif token.type == "FIELDNUMBER":
                     field_number_token = token
                 elif token.type == "COMMENT":
-                    comment = Comment(token.value, {})
+                    if not comment:
+                        comment = Comment(token.value, {})
+                    else:
+                        comment.content += token.value
+                elif token.type == "TAIL" and "//" in token.value:
+                    value = token.value.strip(";").strip()
+                    if not comment:
+                        comment = Comment(value, {})
+                    else:
+                        comment.content += value
         return Field(
             comment,
             type_token.value,

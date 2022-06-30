@@ -65,6 +65,7 @@ def _pydantic_model_to_py_code(model: Type[BaseModel]) -> Tuple[Set[str], Deque]
             value_name: str = repr(v)
             if value_module and value_module.__name__ == "builtins" or inspect.isfunction(v):
                 value_name = v.__name__
+            value_name = value_name.replace("'", '"')
             field_list.append(f"{k}={value_name}")
 
             if inspect.isclass(v):

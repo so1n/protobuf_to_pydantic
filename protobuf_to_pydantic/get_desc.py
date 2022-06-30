@@ -94,9 +94,7 @@ def get_desc_from_proto_file(filename: str) -> dict:
                     sub_message = message_result.messages[sub_type_str]
                 else:
                     continue
-                sub_container: dict = {}
-                container[message_name][sub_type_str] = sub_container
-                _parse_message_result(sub_message, sub_container)
+                _parse_message_result(sub_message, container[message_name])
 
     for _, _message_result in parse_result.messages.items():
         _parse_message_result(_message_result, message_field_dict)
