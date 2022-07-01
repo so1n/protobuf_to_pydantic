@@ -1,15 +1,16 @@
 # This is an automatically generated file, please do not change
 # gen by protobuf_to_pydantic(https://github.com/so1n/protobuf_to_pydantic)
-# gen timestamp:1656577321
+# gen timestamp:1656666295
 
 import typing
 from enum import IntEnum
+from uuid import uuid4
 
 from pydantic import BaseModel
 from pydantic.fields import FieldInfo
 from pydantic.types import PaymentCardNumber
 
-from example.simple_gen_code import exp_time
+from example.text_comment_example.gen_code import exp_time
 
 
 class SexType(IntEnum):
@@ -18,7 +19,7 @@ class SexType(IntEnum):
 
 
 class UserMessage(BaseModel):
-    uid: str = FieldInfo(default="", title="UID", description="user union id", extra={"example": "10086"})
+    uid: str = FieldInfo(title="UID", description="user union id", extra={"example": "10086"})
     age: int = FieldInfo(default=0, title="use age", ge=0, extra={"example": 18})
     height: float = FieldInfo(default=0.0, ge=0, le=2, extra={})
     sex: SexType = FieldInfo(default=0, extra={})
@@ -42,6 +43,7 @@ class MapMessage(BaseModel):
 class UserPayMessage(BaseModel):
     bank_number: PaymentCardNumber = FieldInfo(default="", extra={})
     exp: str = FieldInfo(default_factory=exp_time, extra={})
+    uuid: str = FieldInfo(default_factory=uuid4, extra={})
 
 
 class NestedMessage(BaseModel):

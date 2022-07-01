@@ -44,6 +44,7 @@ message NestedMessage{
   message UserPayMessage {
     string bank_number=1; // p2p: {"type": "p2p@import|PaymentCardNumber|pydantic.types"}
     google.protobuf.Timestamp exp=2; // p2p: {"default_factory": "p2p@local|exp_time"}
+    string uuid=3; // p2p: {"default_factory": "p2p@local|uuid4"}
   }
   map<string, RepeatedMessage> user_list_map=1;
   map<string, MapMessage> user_map=2;

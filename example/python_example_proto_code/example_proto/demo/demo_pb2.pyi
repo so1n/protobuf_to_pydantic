@@ -143,6 +143,7 @@ class NestedMessage(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
         BANK_NUMBER_FIELD_NUMBER: builtins.int
         EXP_FIELD_NUMBER: builtins.int
+        UUID_FIELD_NUMBER: builtins.int
         bank_number: typing.Text
         """p2p: {"type": "p2p@import|PaymentCardNumber|pydantic.types"}"""
 
@@ -150,13 +151,17 @@ class NestedMessage(google.protobuf.message.Message):
         def exp(self) -> google.protobuf.timestamp_pb2.Timestamp:
             """p2p: {"default_factory": "p2p@local|exp_time"}"""
             pass
+        uuid: typing.Text
+        """p2p: {"default_factory": "p2p@local|uuid4"}"""
+
         def __init__(self,
             *,
             bank_number: typing.Text = ...,
             exp: typing.Optional[google.protobuf.timestamp_pb2.Timestamp] = ...,
+            uuid: typing.Text = ...,
             ) -> None: ...
         def HasField(self, field_name: typing_extensions.Literal["exp",b"exp"]) -> builtins.bool: ...
-        def ClearField(self, field_name: typing_extensions.Literal["bank_number",b"bank_number","exp",b"exp"]) -> None: ...
+        def ClearField(self, field_name: typing_extensions.Literal["bank_number",b"bank_number","exp",b"exp","uuid",b"uuid"]) -> None: ...
 
     class UserListMapEntry(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor

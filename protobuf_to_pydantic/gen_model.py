@@ -180,8 +180,11 @@ class M2P(object):
                 field_param_dict: dict = msg_pait_model.dict()
                 if not field_param_dict.pop("enable"):
                     continue
-                if field_param_dict.pop("miss_default") is not True or field_param_dict["default_factory"] is None:
+                if field_param_dict.pop("miss_default") is not True:
                     field_param_dict["default"] = default
+                if field_param_dict["default_factory"]:
+                    field_param_dict.pop("default", "")
+
                 if field_param_dict.get("example").__class__ == MISSING.__class__:
                     field_param_dict.pop("example")
 
