@@ -59,9 +59,9 @@ print(
 #   'user_name': FieldInfo(default='', extra={})
 #  }
 ```
-## 2.2.校验
-根据protobuf文件生成的`Message`对象只携带少量的信息，没有足够的信息使生成的`pydantic.BaseModel`具有更加详细的参数验证功能，需要一些拓展途径来完善`Message`对象的数据。
-目前`protobuf_to_pydantic`通过三种方式来获取Message的其他信息，使得生成的`pydantic.Base_Model`对象具有参数校验的功能。
+## 2.2.参数校验
+根据protobuf文件生成的`Message`对象只携带少量的信息，没有足够的信息使生成的`pydantic.BaseModel`具有更加详细的参数验证功能，需要一些额外的途径来完善`Message`对象的数据。
+目前`protobuf_to_pydantic`支持多种方式来获取Message的其他信息，使得生成的`pydantic.Base_Model`对象具有参数校验的功能。
 
 ### 2.2.1.文本注释
 使用者可以在protobuf文件中为每个字段编写符合`protobuf_to_pydantic`要求的注释来为`protobuf_to_pydantic`提供参数校验信息，比如下面这个例子
@@ -143,7 +143,7 @@ print(
 
 比如`protobuf_to_pydantic`的项目结构如下:
 ```bash
-.protobuf_to_pydantic/
+./protobuf_to_pydantic/
 ├── example/
 │ ├── python_example_proto_code/
 │ └── example_proto/
@@ -152,6 +152,8 @@ print(
 ```
 其中protobuf文件存放在`example/example_proto`文件中，然后在`example`目录下通过如下命令生成protobuf对应的`Python`代码文件:
 ```bash
+cd example
+
 python -m grpc_tools.protoc
   --python_out=./python_example_proto_code \
   --grpc_python_out=./python_example_proto_code \
@@ -257,7 +259,7 @@ class UserPayMessage(BaseModel):
 > Note: 具体调用和生成方法见示例代码。
 
 ## 2.3.生成对应的Python代码
-除了在运行时生成对应的`pydantic.BaseModel`对象外，`protobuf_to_pydantic`支持将运行时`pydantic.BaseModel`对象转换为`Python`代码文本（仅适用于`protobuf to pydantic`生成的`pydantic .Base Model`对象)。
+除了在运行时生成对应的`pydantic.BaseModel`对象外，`protobuf_to_pydantic`支持将运行时的`pydantic.BaseModel`对象转换为`Python`代码文本（仅适用于`protobuf to pydantic`生成的`pydantic .Base Model`对象)。
 
 其中，`protobuf_to_pydantic.pydantic_model_to_py_code`用于生成代码文本，`protobuf_to_pydantic.pydantic_model_to_py_file`用于生成代码文件，`protobuf_to_pydantic.pydantic_model_to_py_file`的示例如下：
 ```Python
