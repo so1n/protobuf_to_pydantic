@@ -61,6 +61,8 @@ def _pydantic_model_to_py_code(model: Type[BaseModel], module_path: str = "") ->
         for k, v in value.field_info.__repr_args__():
             if k == "default" and str(v) == "PydanticUndefined":
                 continue
+            if k == "extra" and not v:
+                continue
             value_module = inspect.getmodule(v)
 
             value_name: str = repr(v)
@@ -100,6 +102,25 @@ def _pydantic_model_to_py_code(model: Type[BaseModel], module_path: str = "") ->
 
         field_str: str = f"{value.field_info.__class__.__name__}({', '.join(field_list)})"
         class_str = class_str + " " * 4 + f"{key}: {value_type_name} = {field_str}\n"
+
+    validator_str: str = ""
+    for key, value in model.__fields__.items():
+        if not value.class_validators:
+            continue
+        for class_validator_key, class_validator_value in value.class_validators.items():
+            if class_validator_value.func.__module__ != "protobuf_to_pydantic.get_desc.from_pgv":
+                # TODO Here currently only consider the support for pgv, the follow-up to fill in
+                continue
+            content_deque.append(inspect.getsource(class_validator_value.func))
+            import_set.add("from pydantic import validator")
+            import_set.add("from typing import Any")
+            validator_str += (
+                f"{' ' * 4}"
+                f"{class_validator_key}_{key} = validator("
+                f"'{key}', allow_reuse=True)({class_validator_value.func.__name__})\n"
+            )
+    if validator_str:
+        class_str += f"\n{validator_str}"
     content_deque.append(class_str)
     return import_set, content_deque
 

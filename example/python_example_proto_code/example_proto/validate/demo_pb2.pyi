@@ -458,44 +458,6 @@ class EnumTest(google.protobuf.message.Message):
     def ClearField(self, field_name: typing_extensions.Literal["const_test",b"const_test","defined_only_test",b"defined_only_test","in_test",b"in_test","not_in_test",b"not_in_test"]) -> None: ...
 global___EnumTest = EnumTest
 
-class MessageTest(google.protobuf.message.Message):
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor
-    SKIP_TEST_FIELD_NUMBER: builtins.int
-    REQUIRED_TEST_FIELD_NUMBER: builtins.int
-    skip_test: typing.Text
-    required_test: typing.Text
-    def __init__(self,
-        *,
-        skip_test: typing.Text = ...,
-        required_test: typing.Text = ...,
-        ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["required_test",b"required_test","skip_test",b"skip_test"]) -> None: ...
-global___MessageTest = MessageTest
-
-class RepeatedTest(google.protobuf.message.Message):
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor
-    RANGE_TEST_FIELD_NUMBER: builtins.int
-    UNIQUE_TEST_FIELD_NUMBER: builtins.int
-    ITEMS_TEST_FIELD_NUMBER: builtins.int
-    IGNORE_TEST_FIELD_NUMBER: builtins.int
-    @property
-    def range_test(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[typing.Text]: ...
-    @property
-    def unique_test(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[typing.Text]: ...
-    @property
-    def items_test(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[typing.Text]: ...
-    @property
-    def ignore_test(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[typing.Text]: ...
-    def __init__(self,
-        *,
-        range_test: typing.Optional[typing.Iterable[typing.Text]] = ...,
-        unique_test: typing.Optional[typing.Iterable[typing.Text]] = ...,
-        items_test: typing.Optional[typing.Iterable[typing.Text]] = ...,
-        ignore_test: typing.Optional[typing.Iterable[typing.Text]] = ...,
-        ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["ignore_test",b"ignore_test","items_test",b"items_test","range_test",b"range_test","unique_test",b"unique_test"]) -> None: ...
-global___RepeatedTest = RepeatedTest
-
 class MapTest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     class PairTestEntry(google.protobuf.message.Message):
@@ -588,6 +550,44 @@ class MapTest(google.protobuf.message.Message):
         ) -> None: ...
     def ClearField(self, field_name: typing_extensions.Literal["ignore_test",b"ignore_test","keys_test",b"keys_test","no_parse_test",b"no_parse_test","pair_test",b"pair_test","values_test",b"values_test"]) -> None: ...
 global___MapTest = MapTest
+
+class MessageTest(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    SKIP_TEST_FIELD_NUMBER: builtins.int
+    REQUIRED_TEST_FIELD_NUMBER: builtins.int
+    skip_test: typing.Text
+    required_test: typing.Text
+    def __init__(self,
+        *,
+        skip_test: typing.Text = ...,
+        required_test: typing.Text = ...,
+        ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["required_test",b"required_test","skip_test",b"skip_test"]) -> None: ...
+global___MessageTest = MessageTest
+
+class RepeatedTest(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    RANGE_TEST_FIELD_NUMBER: builtins.int
+    UNIQUE_TEST_FIELD_NUMBER: builtins.int
+    ITEMS_TEST_FIELD_NUMBER: builtins.int
+    IGNORE_TEST_FIELD_NUMBER: builtins.int
+    @property
+    def range_test(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[typing.Text]: ...
+    @property
+    def unique_test(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[typing.Text]: ...
+    @property
+    def items_test(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[typing.Text]: ...
+    @property
+    def ignore_test(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[typing.Text]: ...
+    def __init__(self,
+        *,
+        range_test: typing.Optional[typing.Iterable[typing.Text]] = ...,
+        unique_test: typing.Optional[typing.Iterable[typing.Text]] = ...,
+        items_test: typing.Optional[typing.Iterable[typing.Text]] = ...,
+        ignore_test: typing.Optional[typing.Iterable[typing.Text]] = ...,
+        ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["ignore_test",b"ignore_test","items_test",b"items_test","range_test",b"range_test","unique_test",b"unique_test"]) -> None: ...
+global___RepeatedTest = RepeatedTest
 
 class AnyTest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor

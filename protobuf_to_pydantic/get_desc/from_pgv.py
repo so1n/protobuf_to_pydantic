@@ -1,5 +1,5 @@
 import logging
-from typing import Any, Callable, Dict, List, Optional, Set, Type
+from typing import Any, Dict, List, Optional, Set, Type
 
 from pydantic import validator
 
@@ -41,10 +41,65 @@ def has_validate(field: Any) -> bool:
     return False
 
 
+def _in_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
+    field_name: str = kwargs["field"].name
+    field_value: Any = kwargs["field"].field_info.extra["in"]
+    if v not in field_value:
+        raise ValueError(f"{field_name} not in {field_value}")
+    return v
+
+
+def _not_in_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
+    field_name: str = kwargs["field"].name
+    field_value: Any = kwargs["field"].field_info.extra["not_in"]
+    if v in field_value:
+        raise ValueError(f"{field_name} in {field_value}")
+    return v
+
+
+def _len_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
+    field_name: str = kwargs["field"].name
+    field_value: Any = kwargs["field"].field_info.extra["len"]
+    if len(v) != field_value:
+        raise ValueError(f"{field_name} length does not equal {field_value}")
+    return v
+
+
+def _prefix_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
+    field_name: str = kwargs["field"].name
+    field_value: Any = kwargs["field"].field_info.extra["prefix"]
+    if not v.startswith(field_value):
+        raise ValueError(f"{field_name} does not start with prefix {field_value}")
+    return v
+
+
+def _suffix_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
+    field_name: str = kwargs["field"].name
+    field_value: Any = kwargs["field"].field_info.extra["suffix"]
+    if not v.startswith(field_value):
+        raise ValueError(f"{field_name} does not end with suffix {field_value}")
+    return v
+
+
+def _contains_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
+    field_name: str = kwargs["field"].name
+    field_value: Any = kwargs["field"].field_info.extra["contains"]
+    if v not in field_value:
+        raise ValueError(f"{field_name} not contain {field_value}")
+    return v
+
+
+def _not_contains_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
+    field_name: str = kwargs["field"].name
+    field_value: Any = kwargs["field"].field_info.extra["not_contains"]
+    if v in field_value:
+        raise ValueError(f"{field_name} contain {field_value}")
+    return v
+
+
 # flake8: noqa: C901
 def option_descriptor_to_desc_dict(option_descriptor_list: list, field: Any) -> dict:
-    desc_dict: dict = {}
-    validator_fn_list: List[Callable[[Any], Any]] = []
+    desc_dict: dict = {"extra": {}, "validator": {}}
     for option_descriptor in option_descriptor_list:
         for column in option_descriptor.__dir__():
             if column.startswith("_"):
@@ -66,37 +121,60 @@ def option_descriptor_to_desc_dict(option_descriptor_list: list, field: Any) -> 
             if column in ("ignore_empty", "defined_only"):
                 _logger.warning(f"P2p not support `{column}`, please reset {field.full_name} `{column}` value")
                 continue
-            # elif column == "const":
-            #     # const: this argument must be the same as the field's default value if present.
-            #     column = "default"
-            #     desc_dict["const"] = True
-            elif column == "in":
-
-                def _in_validator(v: Any) -> Any:
-                    if v not in value:
-                        raise ValueError(f"{field.name} not in {value}")
-                    return v
-
-                validator_fn_list.append(_in_validator)
+            elif column in ("in", "not_in", "len", "len_bytes", "prefix", "suffix", "contains", "not_contains"):
+                if column == "len_bytes":
+                    column = "len"
+                if "extra" not in desc_dict:
+                    desc_dict["extra"] = {}
+                if "validator" not in desc_dict:
+                    desc_dict["validator"] = {}
+                desc_dict["extra"][column] = value
+                desc_dict["validator"][field.name + f"_{column}_validator"] = validator(field.name, allow_reuse=True)(
+                    globals().get(f"_{column}_validator")
+                )
                 continue
-            elif column == "not_in":
-
-                def _in_validator(v: Any) -> Any:
-                    if v in value:
-                        raise ValueError(f"{field.name} in {value}")
-                    return v
-
-                validator_fn_list.append(_in_validator)
-                continue
-            elif column in ("len", "len_bytes"):
-
-                def _len_validator(v: Any) -> Any:
-                    if len(v) != value:
-                        raise ValueError(f"{field.name} length does not equal {value}")
-                    return v
-
-                validator_fn_list.append(_len_validator)
-                continue
+            # elif column == "in":
+            #     desc_dict["extra"][column] = value
+            #     desc_dict["validator"][field.name + "_in_validator"] = validator(
+            #         field.name, allow_reuse=True
+            #     )(_in_validator)
+            #     continue
+            # elif column == "not_in":
+            #     desc_dict["extra"][column] = value
+            #     desc_dict["validator"][field.name + "_not_in_validator"] = validator(
+            #         field.name, allow_reuse=True
+            #     )(_not_in_validator)
+            #     continue
+            # elif column in ("len", "len_bytes"):
+            #     desc_dict["extra"]["len"] = value
+            #     desc_dict["validator"][field.name + "_len_validator"] = validator(
+            #         field.name, allow_reuse=True
+            #     )(_len_validator)
+            #     continue
+            # elif column == "prefix":
+            #     desc_dict["extra"][column] = value
+            #     desc_dict["validator"][field.name + "_prefix_validator"] = validator(
+            #         field.name, allow_reuse=True
+            #     )(_prefix_validator)
+            #     continue
+            # elif column == "suffix":
+            #     desc_dict["extra"][column] = value
+            #     desc_dict["validator"][field.name + "_suffix_validator"] = validator(
+            #         field.name, allow_reuse=True
+            #     )(_prefix_validator)
+            #     continue
+            # elif column == "contains":
+            #     desc_dict["extra"][column] = value
+            #     desc_dict["validator"][field.name + "_contains_validator"] = validator(
+            #         field.name, allow_reuse=True
+            #     )(_contain_validator)
+            #     continue
+            # elif column == "not_contains":
+            #     desc_dict["extra"][column] = value
+            #     desc_dict["validator"][field.name + "_not_contains_validator"] = validator(
+            #         field.name, allow_reuse=True
+            #     )(_not_contain_validator)
+            #     continue
             elif column in ("min_len", "min_bytes"):
                 column = "min_length"
             elif column in ("max_len", "max_bytes"):
@@ -109,42 +187,6 @@ def option_descriptor_to_desc_dict(option_descriptor_list: list, field: Any) -> 
                 column = "ge"
             elif column == "lte":
                 column = "le"
-            elif column == "prefix":
-
-                def _prefix_validator(v: Any) -> Any:
-                    if not v.startswith(value):
-                        raise ValueError(f"{field.name} does not start with prefix {value}")
-                    return v
-
-                validator_fn_list.append(_prefix_validator)
-                continue
-            elif column == "suffix":
-
-                def _suffix_validator(v: Any) -> Any:
-                    if not v.startswith(value):
-                        raise ValueError(f"{field.name} does not end with suffix {value}")
-                    return v
-
-                validator_fn_list.append(_suffix_validator)
-                continue
-            elif column == "contains":
-
-                def _contain_validator(v: Any) -> Any:
-                    if v not in value:
-                        raise ValueError(f"{field.name} not contain {value}")
-                    return v
-
-                validator_fn_list.append(_contain_validator)
-                continue
-            elif column == "not_contains":
-
-                def _contain_validator(v: Any) -> Any:
-                    if v in value:
-                        raise ValueError(f"{field.name} contain {value}")
-                    return v
-
-                validator_fn_list.append(_contain_validator)
-                continue
             # TODO
             # support strging rule well know
             # support Repeated items
@@ -152,15 +194,6 @@ def option_descriptor_to_desc_dict(option_descriptor_list: list, field: Any) -> 
             # support TimestampRules
 
             desc_dict[column] = value
-    if validator_fn_list:
-
-        @validator(field.name, allow_reuse=True)
-        def auto_validator_fn(cls: Any, v: Any) -> Any:
-            for fn in validator_fn_list:
-                v = fn(v)
-            return v
-
-        desc_dict["validator"] = auto_validator_fn
     return desc_dict
 
 

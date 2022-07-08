@@ -59,6 +59,7 @@ class MessagePaitModel(BaseModel):
     regex: Optional[str] = Field(None)
     extra: dict = Field(default_factory=dict)
     type_: Any = Field(None, alias="type")
+    validator: Optional[Dict[str, Any]] = Field(None)
 
 
 def grpc_timestamp_int_handler(cls: Any, v: int) -> Timestamp:
@@ -215,6 +216,10 @@ class M2P(object):
                     if not issubclass(field_type, str):
                         raise TypeError(f"{column.full_name} not support {field_type}")
                     type_ = field_type
+
+                validator_dict = field_param_dict.pop("validator")
+                if validator_dict:
+                    validators.update(validator_dict)
             else:
                 field_param_dict = {"default": default, "default_factory": default_factory}
             use_field = field(**field_param_dict)  # type: ignore
@@ -227,9 +232,12 @@ class M2P(object):
                 check_fields=True,
                 always=True,
             )(_grpc_timestamp_handler)
-        return create_pydantic_model(
-            annotation_dict, class_name=descriptor.name, pydantic_validators=validators or None
-        )
+
+        class_name: str = descriptor.name
+        # Message.Any and typing.Any with the same name, you need to change the name of Message.
+        if class_name == "Any":
+            class_name = "AnyMessage"
+        return create_pydantic_model(annotation_dict, class_name=class_name, pydantic_validators=validators or None)
 
     def _get_pait_info_from_grpc_desc(self, desc: str) -> MessagePaitModel:
         pait_dict: dict = {}

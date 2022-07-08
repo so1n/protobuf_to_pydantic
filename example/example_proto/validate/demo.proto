@@ -13,7 +13,7 @@ message FloatTest {
   float range_e_test = 2 [(validate.rules).float = {gte: 1, lte: 10}];
   float range_test = 3[(validate.rules).float = {gt: 1, lt: 10}];
   float in_test = 4[(validate.rules).float = {in: [1,2,3]}];
-  float not_in_test = 5[(validate.rules).float = {in: [1,2,3]}];
+  float not_in_test = 5[(validate.rules).float = {not_in: [1,2,3]}];
   float ignore_test = 6[(validate.rules).float.ignore_empty = true];
 }
 
