@@ -1,0 +1,230 @@
+syntax = "proto3";
+package validate_test;
+
+
+import "google/protobuf/any.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "example_proto/common/validate.proto";
+
+
+message FloatTest {
+  float const_test = 1 [(validate.rules).float.const = 1];
+  float range_e_test = 2 [(validate.rules).float = {gte: 1, lte: 10}];
+  float range_test = 3[(validate.rules).float = {gt: 1, lt: 10}];
+  float in_test = 4[(validate.rules).float = {in: [1,2,3]}];
+  float not_in_test = 5[(validate.rules).float = {in: [1,2,3]}];
+  float ignore_test = 6[(validate.rules).float.ignore_empty = true];
+}
+
+message DoubleTest {
+  double const_test = 1 [(validate.rules).float.const = 1];
+  double range_e_test = 2 [(validate.rules).float = {gte: 1, lte: 10}];
+  double range_test = 3[(validate.rules).float = {gt: 1, lt: 10}];
+  double in_test = 4[(validate.rules).float = {in: [1,2,3]}];
+  double not_in_test = 5[(validate.rules).float = {in: [1,2,3]}];
+  double ignore_test = 6[(validate.rules).float.ignore_empty = true];
+}
+
+message Int32Test {
+  int32 const_test = 1 [(validate.rules).float.const = 1];
+  int32 range_e_test = 2 [(validate.rules).float = {gte: 1, lte: 10}];
+  int32 range_test = 3[(validate.rules).float = {gt: 1, lt: 10}];
+  int32 in_test = 4[(validate.rules).float = {in: [1,2,3]}];
+  int32 not_in_test = 5[(validate.rules).float = {in: [1,2,3]}];
+  int32 ignore_test = 6[(validate.rules).float.ignore_empty = true];
+}
+
+message Uint32Test {
+  uint32 const_test = 1 [(validate.rules).float.const = 1];
+  uint32 range_e_test = 2 [(validate.rules).float = {gte: 1, lte: 10}];
+  uint32 range_test = 3[(validate.rules).float = {gt: 1, lt: 10}];
+  uint32 in_test = 4[(validate.rules).float = {in: [1,2,3]}];
+  uint32 not_in_test = 5[(validate.rules).float = {in: [1,2,3]}];
+  uint32 ignore_test = 6[(validate.rules).float.ignore_empty = true];
+}
+
+message Sint32Test {
+  sint32 const_test = 1 [(validate.rules).float.const = 1];
+  sint32 range_e_test = 2 [(validate.rules).float = {gte: 1, lte: 10}];
+  sint32 range_test = 3[(validate.rules).float = {gt: 1, lt: 10}];
+  sint32 in_test = 4[(validate.rules).float = {in: [1,2,3]}];
+  sint32 not_in_test = 5[(validate.rules).float = {in: [1,2,3]}];
+  sint32 ignore_test = 6[(validate.rules).float.ignore_empty = true];
+}
+
+message Int64Test {
+  int64 const_test = 1 [(validate.rules).float.const = 1];
+  int64 range_e_test = 2 [(validate.rules).float = {gte: 1, lte: 10}];
+  int64 range_test = 3[(validate.rules).float = {gt: 1, lt: 10}];
+  int64 in_test = 4[(validate.rules).float = {in: [1,2,3]}];
+  int64 not_in_test = 5[(validate.rules).float = {in: [1,2,3]}];
+  int64 ignore_test = 6[(validate.rules).float.ignore_empty = true];
+}
+
+message Uint64Test {
+  uint64 const_test = 1 [(validate.rules).float.const = 1];
+  uint64 range_e_test = 2 [(validate.rules).float = {gte: 1, lte: 10}];
+  uint64 range_test = 3[(validate.rules).float = {gt: 1, lt: 10}];
+  uint64 in_test = 4[(validate.rules).float = {in: [1,2,3]}];
+  uint64 not_in_test = 5[(validate.rules).float = {in: [1,2,3]}];
+  uint64 ignore_test = 6[(validate.rules).float.ignore_empty = true];
+}
+
+message Sint64Test {
+  sint64 const_test = 1 [(validate.rules).float.const = 1];
+  sint64 range_e_test = 2 [(validate.rules).float = {gte: 1, lte: 10}];
+  sint64 range_test = 3[(validate.rules).float = {gt: 1, lt: 10}];
+  sint64 in_test = 4[(validate.rules).float = {in: [1,2,3]}];
+  sint64 not_in_test = 5[(validate.rules).float = {in: [1,2,3]}];
+  sint64 ignore_test = 6[(validate.rules).float.ignore_empty = true];
+}
+
+message Fixed32Test {
+  fixed32 const_test = 1 [(validate.rules).float.const = 1];
+  fixed32 range_e_test = 2 [(validate.rules).float = {gte: 1, lte: 10}];
+  fixed32 range_test = 3[(validate.rules).float = {gt: 1, lt: 10}];
+  fixed32 in_test = 4[(validate.rules).float = {in: [1,2,3]}];
+  fixed32 not_in_test = 5[(validate.rules).float = {in: [1,2,3]}];
+  fixed32 ignore_test = 6[(validate.rules).float.ignore_empty = true];
+}
+
+message Sfixed32Test {
+  sfixed32 const_test = 1 [(validate.rules).float.const = 1];
+  sfixed32 range_e_test = 2 [(validate.rules).float = {gte: 1, lte: 10}];
+  sfixed32 range_test = 3[(validate.rules).float = {gt: 1, lt: 10}];
+  sfixed32 in_test = 4[(validate.rules).float = {in: [1,2,3]}];
+  sfixed32 not_in_test = 5[(validate.rules).float = {in: [1,2,3]}];
+  sfixed32 ignore_test = 6[(validate.rules).float.ignore_empty = true];
+}
+
+message Sfixed64Test {
+  sfixed64 const_test = 1 [(validate.rules).float.const = 1];
+  sfixed64 range_e_test = 2 [(validate.rules).float = {gte: 1, lte: 10}];
+  sfixed64 range_test = 3[(validate.rules).float = {gt: 1, lt: 10}];
+  sfixed64 in_test = 4[(validate.rules).float = {in: [1,2,3]}];
+  sfixed64 not_in_test = 5[(validate.rules).float = {in: [1,2,3]}];
+  sfixed64 ignore_test = 6[(validate.rules).float.ignore_empty = true];
+}
+
+message BoolTest {
+  bool bool_1_test =1 [(validate.rules).bool.const = true];
+  bool bool_2_test =2 [(validate.rules).bool.const = false];
+}
+
+message StringTest {
+  string const_test = 1 [(validate.rules).string.const = "aaa"];
+  string len_test = 2 [(validate.rules).string.len = 3];
+  string s_range_len_test =3 [(validate.rules).string = {min_len:1, max_len:3}];
+  string b_range_len_test =4 [(validate.rules).string = {min_bytes:1, max_bytes:3}];
+  string pattern_test = 5 [(validate.rules).string.pattern = "^test"];
+  string prefix_test = 6 [(validate.rules).string.prefix = "prefix"];
+  string suffix_test = 7 [(validate.rules).string.suffix = "suffix"];
+  string contains_test = 8 [(validate.rules).string.contains = "contains"];
+  string not_contains_test = 9 [(validate.rules).string.not_contains = "not_contains"];
+  string in_test = 10 [(validate.rules).string = {in: ["a", "b", "c"]}];
+  string not_in_test = 11 [(validate.rules).string = {not_in: ["a", "b", "c"]}];
+  string email_test = 12 [(validate.rules).string.email = true];
+  string hostname_test = 13 [(validate.rules).string.hostname = true];
+  string ip_test = 14 [(validate.rules).string.ip = true];
+  string ipv4_test = 15 [(validate.rules).string.ipv4 = true];
+  string ipv6_test = 16 [(validate.rules).string.ipv6 = true];
+  string uri_test = 17 [(validate.rules).string.uri = true];
+  string uri_ref_test = 18 [(validate.rules).string.uri_ref = true];
+  string address_test = 19 [(validate.rules).string.address = true];
+  string uuid_test = 20 [(validate.rules).string.uuid = true];
+  string ignore_test = 21 [(validate.rules).string.ignore_empty = true];
+}
+
+
+message BytesTest {
+  bytes const_test = 1 [(validate.rules).bytes.const = "demo"];
+  bytes len_test = 2 [(validate.rules).bytes.len = 4];
+  bytes range_len_test = 3 [(validate.rules).bytes = {min_len: 1, max_len: 4}];
+  bytes pattern_test = 4 [(validate.rules).bytes.pattern = "^test"];
+  bytes prefix_test = 5 [(validate.rules).bytes.prefix = "prefix"];
+  bytes suffix_test = 6 [(validate.rules).bytes.suffix = "suffix"];
+  bytes contains_test = 7 [(validate.rules).bytes.contains = "contains"];
+  bytes in_test = 8 [(validate.rules).bytes= {in: ["a", "b", "c"]}];
+  bytes not_in_test = 9 [(validate.rules).bytes= {not_in: ["a", "b", "c"]}];
+}
+
+enum State {
+  INACTIVE = 0;
+  PENDING  = 1;
+  ACTIVE   = 2;
+}
+
+message EnumTest {
+  State const_test = 1 [(validate.rules).enum.const = 2];
+  State defined_only_test = 2 [(validate.rules).enum.defined_only = true];
+  State in_test = 3 [(validate.rules).enum = {in: [0, 2]}];
+  State not_in_test = 4 [(validate.rules).enum = {in: [0, 2]}];
+}
+
+message MessageTest {
+  string skip_test = 1 [(validate.rules).message.skip = true];
+  string required_test = 2 [(validate.rules).message.required = true];
+}
+
+message RepeatedTest {
+  repeated string range_test = 1[(validate.rules).repeated = {min_items: 1, max_items: 5}];
+  repeated string unique_test = 2 [(validate.rules).repeated.unique = true];
+  repeated string items_test = 3 [(validate.rules).repeated.items.string = {min_len:1, max_len: 5}];
+  repeated string ignore_test = 4 [(validate.rules).repeated.ignore_empty = true];
+}
+
+message MapTest {
+  map<string, int32> pair_test = 1 [(validate.rules).map = {min_pairs:1, max_pairs:5}];
+  map<string, int32> no_parse_test = 2 [(validate.rules).map.no_sparse = true];
+  map<string, int32> keys_test = 3 [(validate.rules).map.keys.string.min_len = 0];
+  map<string, int32> values_test = 4 [(validate.rules).map.values.int32.lt = 0];
+  map<string, int32> ignore_test = 5[(validate.rules).map.ignore_empty = true];
+}
+
+message AnyTest {
+  google.protobuf.Any required_test = 1 [(validate.rules).any.required = true];
+  google.protobuf.Any x = 2 [(validate.rules).any = {
+    not_in: [
+      "type.googleapis.com/google.protobuf.Duration",
+      "type.googleapis.com/google.protobuf.Timestamp"
+    ],
+  }];
+}
+
+message DurationTest {
+  google.protobuf.Duration required_test =1 [(validate.rules).duration.required = true];
+  google.protobuf.Duration const_test =2 [(validate.rules).duration.const = {seconds: 1, nanos: 500000000}];
+  google.protobuf.Duration range_test = 3 [(validate.rules).duration = {lt: {seconds: 10}, gt: {seconds: 5}}];
+  google.protobuf.Duration range_e_test = 4 [(validate.rules).duration = {lte: {seconds: 10}, gte: {seconds: 5}}];
+  google.protobuf.Duration in_test = 5 [(validate.rules).duration = {in: [{seconds: 1}, {seconds:3}]}];
+  google.protobuf.Duration not_in_test = 6 [(validate.rules).duration = {in: [{seconds: 1}, {seconds:3}]}];
+}
+
+message TimestampTest {
+  google.protobuf.Timestamp required_test = 1 [(validate.rules).timestamp.required = true];
+  google.protobuf.Timestamp const_test = 2 [(validate.rules).timestamp.const = {seconds: 1600000000}];
+  google.protobuf.Timestamp range_test = 3 [(validate.rules).timestamp = {gt: {seconds: 1600000000}, lt: {seconds: 1600000010}}];
+  google.protobuf.Timestamp range_e_test = 4 [(validate.rules).timestamp = {gte: {seconds: 1600000000}, lte: {seconds: 1600000010}}];
+  google.protobuf.Timestamp lt_now_test = 5 [(validate.rules).timestamp.lt_now = true];
+  google.protobuf.Timestamp gt_now_test = 6 [(validate.rules).timestamp.gt_now = true];
+  google.protobuf.Timestamp within_test = 7 [(validate.rules).timestamp.within.seconds = 1];
+  google.protobuf.Timestamp within_and_gt_now_test = 8 [(validate.rules).timestamp = {
+    gt_now: true,
+    within: {seconds: 3600}
+  }];
+}
+
+message MessageDisabledTest {
+  option (validate.disabled) = true;
+  sint32 const_test = 1 [(validate.rules).float.const = 1];
+  sint32 range_e_test = 2 [(validate.rules).float = {gte: 1, lte: 10}];
+  sint32 range_test = 3[(validate.rules).float = {gt: 1, lt: 10}];
+}
+
+message MessageIgnoredTest {
+  option (validate.ignored) = true;
+  sint32 const_test = 1 [(validate.rules).float.const = 1];
+  sint32 range_e_test = 2 [(validate.rules).float = {gte: 1, lte: 10}];
+  sint32 range_test = 3[(validate.rules).float = {gt: 1, lt: 10}];
+}

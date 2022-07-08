@@ -14,7 +14,7 @@ target_p='python_example_proto_code'
 # project proto path
 source_p='example_proto'
 # service
-service_list=("demo")
+service_list=("demo" "validate" "common")
 
 rm -r "${target_p:?}/${source_p:?}"*
 mkdir -p "${target_p:?}/${source_p:?}"
@@ -34,5 +34,5 @@ do
   touch $target_p/$source_p/"$service"/__init__.py
   # fix grpc tools bug
   sed -i "s/from protos.$service import/from . import/" $target_p/$source_p/$service/*.py
-  sed -i "s/from example_proto./from example.example_grpc.python_example_proto_code.example_proto./" $target_p/$source_p/$service/*.py
+  sed -i "s/from example_proto./from example.python_example_proto_code.example_proto./" $target_p/$source_p/$service/*.py
 done

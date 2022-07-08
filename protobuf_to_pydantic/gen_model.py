@@ -11,7 +11,7 @@ from pydantic import BaseModel, Field, validator
 from pydantic.fields import FieldInfo, Undefined
 from pydantic.typing import NoArgAnyCallable
 
-from protobuf_to_pydantic.get_desc import get_desc_from_proto_file, get_desc_from_pyi_file
+from protobuf_to_pydantic.get_desc import get_desc_from_pgv, get_desc_from_proto_file, get_desc_from_pyi_file
 from protobuf_to_pydantic.grpc_types import Descriptor, FieldDescriptor, Message, Timestamp
 from protobuf_to_pydantic.util import create_pydantic_model
 
@@ -54,6 +54,7 @@ class MessagePaitModel(BaseModel):
     max_length: Optional[int] = Field(None)
     min_items: Optional[int] = Field(None)
     max_items: Optional[int] = Field(None)
+    unique_items: Optional[List[str]] = Field(None)
     multiple_of: Optional[int] = Field(None)
     regex: Optional[str] = Field(None)
     extra: dict = Field(default_factory=dict)
@@ -96,9 +97,12 @@ class M2P(object):
             if not Path(pyi_file_name).exists():
                 raise RuntimeError(f"Can not found {msg} pyi file")
             message_field_dict = get_desc_from_pyi_file(pyi_file_name)
+        elif parse_msg_desc_method == "PGV":
+            message_field_dict = get_desc_from_pgv(message=msg)
         elif parse_msg_desc_method is not None:
             raise ValueError(
-                f"parse_msg_desc_method param must be exist path or `by_mypy`, not {parse_msg_desc_method})"
+                f"parse_msg_desc_method param must be exist path or `PGV` or message model,"
+                f" not {parse_msg_desc_method})"
             )
         self._grpc_timestamp_handler_tuple = grpc_timestamp_handler_tuple or (str, None)
         self._field_doc_dict = message_field_dict

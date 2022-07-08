@@ -205,7 +205,10 @@ print(
   }
   ```
 
-> Note `FieldInfo`支持的参数见:https://pydantic-docs.helpmanual.io/usage/types/#constrained-types
+> Note
+>   `FieldInfo`支持的参数见:
+>     https://pydantic-docs.helpmanual.io/usage/types/#constrained-types
+>     https://pydantic-docs.helpmanual.io/usage/schema/#field-customization
 
 ### 2.2.4.模板
 有些情况下，我们填写的值是某个库的方法或者函数，比如`type`参数和`default_factory`参数的值，但是Json是不支持的，这时可以使用模板参数。
