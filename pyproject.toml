@@ -24,10 +24,17 @@ pre-commit = "2.14.0"
 autoflake = "1.4"
 flake8 = "3.9.2"
 mypy-protobuf = "^3.2.0"
+yapf = "^0.32.0"
 
 [tool.black]
 line-length = 120
 target-version = ['py37']
+
+[tool.yapf]
+based_on_style = "google"
+COLUMN_LIMIT = 120
+spaces_before_comment = 4
+# split_before_logical_operator = true
 
 [tool.isort]
 profile = "black"

@@ -130,6 +130,9 @@ def pydantic_model_to_py_code(
     customer_import_set: Optional[Set[str]] = None,
     customer_deque: Optional[Deque] = None,
     module_path: str = "",
+    enable_autoflake: bool = True,
+    enable_isort: bool = True,
+    enable_yapf: bool = True,
 ) -> str:
     """
     BaseModel objects into corresponding Python code
@@ -175,23 +178,32 @@ def pydantic_model_to_py_code(
             _content_set.add(content)
             content_str += f"\n\n{content}"
 
-    try:
-        import isort
-    except ImportError:
-        pass
-    else:
-        content_str = isort.code(content_str)
+    if enable_isort:
+        try:
+            import isort
+        except ImportError:
+            pass
+        else:
+            content_str = isort.code(content_str)
 
-    try:
-        import autoflake
-    except ImportError:
-        pass
-    else:
-        content_str = autoflake.fix_code(content_str)
+    if enable_autoflake:
+        try:
+            import autoflake
+        except ImportError:
+            pass
+        else:
+            content_str = autoflake.fix_code(content_str)
+
+    if enable_yapf:
+        try:
+            from yapf.yapflib.yapf_api import FormatCode
+        except ImportError:
+            pass
+        else:
+            content_str, _ = FormatCode(content_str)
 
     # TODO Waiting for black development API
     # https://github.com/psf/black/issues/779
-
     return content_str
 
 
