@@ -1,6 +1,6 @@
 # This is an automatically generated file, please do not change
 # gen by protobuf_to_pydantic(https://github.com/so1n/protobuf_to_pydantic)
-# gen timestamp:1656993491
+# gen timestamp:1657275844
 
 import typing
 from enum import IntEnum
@@ -10,106 +10,106 @@ from pydantic.fields import FieldInfo
 
 
 class FloatTest(BaseModel):
-    const_test: float = FieldInfo(default=0.0, extra={})
-    range_e_test: float = FieldInfo(default=0.0, extra={})
-    range_test: float = FieldInfo(default=0.0, extra={})
+    const_test: float = FieldInfo(default=1.0, const=True, extra={})
+    range_e_test: float = FieldInfo(default=0.0, ge=1, le=10, extra={})
+    range_test: float = FieldInfo(default=0.0, gt=1, lt=10, extra={})
     in_test: float = FieldInfo(default=0.0, extra={})
     not_in_test: float = FieldInfo(default=0.0, extra={})
     ignore_test: float = FieldInfo(default=0.0, extra={})
 
 
 class DoubleTest(BaseModel):
-    const_test: float = FieldInfo(default=0.0, extra={})
-    range_e_test: float = FieldInfo(default=0.0, extra={})
-    range_test: float = FieldInfo(default=0.0, extra={})
+    const_test: float = FieldInfo(default=1.0, const=True, extra={})
+    range_e_test: float = FieldInfo(default=0.0, ge=1, le=10, extra={})
+    range_test: float = FieldInfo(default=0.0, gt=1, lt=10, extra={})
     in_test: float = FieldInfo(default=0.0, extra={})
     not_in_test: float = FieldInfo(default=0.0, extra={})
     ignore_test: float = FieldInfo(default=0.0, extra={})
 
 
 class Int32Test(BaseModel):
-    const_test: int = FieldInfo(default=0, extra={})
-    range_e_test: int = FieldInfo(default=0, extra={})
-    range_test: int = FieldInfo(default=0, extra={})
+    const_test: int = FieldInfo(default=1, const=True, extra={})
+    range_e_test: int = FieldInfo(default=0, ge=1, le=10, extra={})
+    range_test: int = FieldInfo(default=0, gt=1, lt=10, extra={})
     in_test: int = FieldInfo(default=0, extra={})
     not_in_test: int = FieldInfo(default=0, extra={})
     ignore_test: int = FieldInfo(default=0, extra={})
 
 
 class Uint32Test(BaseModel):
-    const_test: int = FieldInfo(default=0, extra={})
-    range_e_test: int = FieldInfo(default=0, extra={})
-    range_test: int = FieldInfo(default=0, extra={})
+    const_test: int = FieldInfo(default=1, const=True, extra={})
+    range_e_test: int = FieldInfo(default=0, ge=1, le=10, extra={})
+    range_test: int = FieldInfo(default=0, gt=1, lt=10, extra={})
     in_test: int = FieldInfo(default=0, extra={})
     not_in_test: int = FieldInfo(default=0, extra={})
     ignore_test: int = FieldInfo(default=0, extra={})
 
 
 class Sfixed32Test(BaseModel):
-    const_test: float = FieldInfo(default=0, extra={})
-    range_e_test: float = FieldInfo(default=0, extra={})
-    range_test: float = FieldInfo(default=0, extra={})
+    const_test: float = FieldInfo(default=1, const=True, extra={})
+    range_e_test: float = FieldInfo(default=0, ge=1, le=10, extra={})
+    range_test: float = FieldInfo(default=0, gt=1, lt=10, extra={})
     in_test: float = FieldInfo(default=0, extra={})
     not_in_test: float = FieldInfo(default=0, extra={})
     ignore_test: float = FieldInfo(default=0, extra={})
 
 
 class Int64Test(BaseModel):
-    const_test: int = FieldInfo(default=0, extra={})
-    range_e_test: int = FieldInfo(default=0, extra={})
-    range_test: int = FieldInfo(default=0, extra={})
+    const_test: int = FieldInfo(default=1, const=True, extra={})
+    range_e_test: int = FieldInfo(default=0, ge=1, le=10, extra={})
+    range_test: int = FieldInfo(default=0, gt=1, lt=10, extra={})
     in_test: int = FieldInfo(default=0, extra={})
     not_in_test: int = FieldInfo(default=0, extra={})
     ignore_test: int = FieldInfo(default=0, extra={})
 
 
 class Uint64Test(BaseModel):
-    const_test: int = FieldInfo(default=0, extra={})
-    range_e_test: int = FieldInfo(default=0, extra={})
-    range_test: int = FieldInfo(default=0, extra={})
+    const_test: int = FieldInfo(default=1, const=True, extra={})
+    range_e_test: int = FieldInfo(default=0, ge=1, le=10, extra={})
+    range_test: int = FieldInfo(default=0, gt=1, lt=10, extra={})
     in_test: int = FieldInfo(default=0, extra={})
     not_in_test: int = FieldInfo(default=0, extra={})
     ignore_test: int = FieldInfo(default=0, extra={})
 
 
 class Sfixed64Test(BaseModel):
-    const_test: float = FieldInfo(default=0, extra={})
-    range_e_test: float = FieldInfo(default=0, extra={})
-    range_test: float = FieldInfo(default=0, extra={})
+    const_test: float = FieldInfo(default=1, const=True, extra={})
+    range_e_test: float = FieldInfo(default=0, ge=1, le=10, extra={})
+    range_test: float = FieldInfo(default=0, gt=1, lt=10, extra={})
     in_test: float = FieldInfo(default=0, extra={})
     not_in_test: float = FieldInfo(default=0, extra={})
     ignore_test: float = FieldInfo(default=0, extra={})
 
 
 class Fixed32Test(BaseModel):
-    const_test: float = FieldInfo(default=0, extra={})
-    range_e_test: float = FieldInfo(default=0, extra={})
-    range_test: float = FieldInfo(default=0, extra={})
+    const_test: float = FieldInfo(default=1, const=True, extra={})
+    range_e_test: float = FieldInfo(default=0, ge=1, le=10, extra={})
+    range_test: float = FieldInfo(default=0, gt=1, lt=10, extra={})
     in_test: float = FieldInfo(default=0, extra={})
     not_in_test: float = FieldInfo(default=0, extra={})
     ignore_test: float = FieldInfo(default=0, extra={})
 
 
 class Sint64Test(BaseModel):
-    const_test: int = FieldInfo(default=0, extra={})
-    range_e_test: int = FieldInfo(default=0, extra={})
-    range_test: int = FieldInfo(default=0, extra={})
+    const_test: int = FieldInfo(default=1, const=True, extra={})
+    range_e_test: int = FieldInfo(default=0, ge=1, le=10, extra={})
+    range_test: int = FieldInfo(default=0, gt=1, lt=10, extra={})
     in_test: int = FieldInfo(default=0, extra={})
     not_in_test: int = FieldInfo(default=0, extra={})
     ignore_test: int = FieldInfo(default=0, extra={})
 
 
 class BoolTest(BaseModel):
-    bool_1_test: bool = FieldInfo(default=False, extra={})
-    bool_2_test: bool = FieldInfo(default=False, extra={})
+    bool_1_test: bool = FieldInfo(default=True, const=True, extra={})
+    bool_2_test: bool = FieldInfo(default=False, const=True, extra={})
 
 
 class StringTest(BaseModel):
-    const_test: str = FieldInfo(default="", extra={})
+    const_test: str = FieldInfo(default="aaa", const=True, extra={})
     len_test: str = FieldInfo(default="", extra={})
-    s_range_len_test: str = FieldInfo(default="", extra={})
+    s_range_len_test: str = FieldInfo(default="", min_length=1, max_length=3, extra={})
     b_range_len_test: str = FieldInfo(default="", extra={})
-    pattern_test: str = FieldInfo(default="", extra={})
+    pattern_test: str = FieldInfo(default="", regex="^test", extra={})
     prefix_test: str = FieldInfo(default="", extra={})
     suffix_test: str = FieldInfo(default="", extra={})
     contains_test: str = FieldInfo(default="", extra={})
@@ -129,9 +129,9 @@ class StringTest(BaseModel):
 
 
 class BytesTest(BaseModel):
-    const_test: bytes = FieldInfo(default=b"", extra={})
+    const_test: bytes = FieldInfo(default=b"demo", const=True, extra={})
     len_test: bytes = FieldInfo(default=b"", extra={})
-    range_len_test: bytes = FieldInfo(default=b"", extra={})
+    range_len_test: bytes = FieldInfo(default=b"", min_length=1, max_length=4, extra={})
     pattern_test: bytes = FieldInfo(default=b"", extra={})
     prefix_test: bytes = FieldInfo(default=b"", extra={})
     suffix_test: bytes = FieldInfo(default=b"", extra={})
@@ -163,14 +163,14 @@ class MapTest(BaseModel):
 
 class MessageTest(BaseModel):
     skip_test: str = FieldInfo(default="", extra={})
-    required_test: str = FieldInfo(default="", extra={})
+    required_test: str = FieldInfo(extra={})
 
 
 class RepeatedTest(BaseModel):
-    range_test: typing.List[str] = FieldInfo(default_factory=list, extra={})
-    unique_test: typing.List[str] = FieldInfo(default_factory=list, extra={})
-    items_test: typing.List[str] = FieldInfo(default_factory=list, extra={})
-    ignore_test: typing.List[str] = FieldInfo(default_factory=list, extra={})
+    range_test: typing.List[str] = FieldInfo(extra={})
+    unique_test: typing.List[str] = FieldInfo(extra={})
+    items_test: typing.List[str] = FieldInfo(extra={})
+    ignore_test: typing.List[str] = FieldInfo(extra={})
 
 
 class Any(BaseModel):

@@ -45,7 +45,7 @@ class MessagePaitModel(BaseModel):
     alias: Optional[str] = Field(None)
     title: Optional[str] = Field(None)
     description: Optional[str] = Field(None)
-    const: Optional[bool] = Field(None)
+    const: Any = Field(MISSING)
     gt: Union[int, float, None] = Field(None)
     ge: Union[int, float, None] = Field(None)
     lt: Union[int, float, None] = Field(None)
@@ -104,6 +104,7 @@ class M2P(object):
                 f"parse_msg_desc_method param must be exist path or `PGV` or message model,"
                 f" not {parse_msg_desc_method})"
             )
+        self._parse_msg_desc_method: Optional[str] = parse_msg_desc_method
         self._grpc_timestamp_handler_tuple = grpc_timestamp_handler_tuple or (str, None)
         self._field_doc_dict = message_field_dict
         self._field_dict = field_dict or {}
@@ -178,16 +179,27 @@ class M2P(object):
                     default = column.default_value
 
             field = self._default_field
-            field_doc: str = self._get_field_doc_by_full_name(column.full_name)
+            field_doc: Union[str, dict] = self._get_field_doc_by_full_name(column.full_name)
             if field_doc:
-                msg_pait_model: MessagePaitModel = self._get_pait_info_from_grpc_desc(field_doc)
+                if isinstance(field_doc, str):
+                    msg_pait_model: MessagePaitModel = self._get_pait_info_from_grpc_desc(field_doc)
+                else:
+                    # support from pgv
+                    msg_pait_model = MessagePaitModel(**field_doc)
+
                 field_param_dict: dict = msg_pait_model.dict()
                 if not field_param_dict.pop("enable"):
                     continue
+
                 if field_param_dict.pop("miss_default") is not True:
                     field_param_dict["default"] = default
                 if field_param_dict["default_factory"]:
                     field_param_dict.pop("default", "")
+                if field_param_dict.get("const").__class__ != MISSING.__class__:
+                    field_param_dict["default"] = field_param_dict["const"]
+                    field_param_dict["const"] = True
+                else:
+                    field_param_dict.pop("const")
 
                 if field_param_dict.get("example").__class__ == MISSING.__class__:
                     field_param_dict.pop("example")

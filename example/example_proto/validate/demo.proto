@@ -18,93 +18,93 @@ message FloatTest {
 }
 
 message DoubleTest {
-  double const_test = 1 [(validate.rules).float.const = 1];
-  double range_e_test = 2 [(validate.rules).float = {gte: 1, lte: 10}];
-  double range_test = 3[(validate.rules).float = {gt: 1, lt: 10}];
-  double in_test = 4[(validate.rules).float = {in: [1,2,3]}];
-  double not_in_test = 5[(validate.rules).float = {in: [1,2,3]}];
-  double ignore_test = 6[(validate.rules).float.ignore_empty = true];
+  double const_test = 1 [(validate.rules).double.const = 1];
+  double range_e_test = 2 [(validate.rules).double= {gte: 1, lte: 10}];
+  double range_test = 3[(validate.rules).double = {gt: 1, lt: 10}];
+  double in_test = 4[(validate.rules).double = {in: [1,2,3]}];
+  double not_in_test = 5[(validate.rules).double = {in: [1,2,3]}];
+  double ignore_test = 6[(validate.rules).double.ignore_empty = true];
 }
 
 message Int32Test {
-  int32 const_test = 1 [(validate.rules).float.const = 1];
-  int32 range_e_test = 2 [(validate.rules).float = {gte: 1, lte: 10}];
-  int32 range_test = 3[(validate.rules).float = {gt: 1, lt: 10}];
-  int32 in_test = 4[(validate.rules).float = {in: [1,2,3]}];
-  int32 not_in_test = 5[(validate.rules).float = {in: [1,2,3]}];
-  int32 ignore_test = 6[(validate.rules).float.ignore_empty = true];
+  int32 const_test = 1 [(validate.rules).int32.const = 1];
+  int32 range_e_test = 2 [(validate.rules).int32 = {gte: 1, lte: 10}];
+  int32 range_test = 3[(validate.rules).int32 = {gt: 1, lt: 10}];
+  int32 in_test = 4[(validate.rules).int32 = {in: [1,2,3]}];
+  int32 not_in_test = 5[(validate.rules).int32 = {in: [1,2,3]}];
+  int32 ignore_test = 6[(validate.rules).int32.ignore_empty = true];
 }
 
 message Uint32Test {
-  uint32 const_test = 1 [(validate.rules).float.const = 1];
-  uint32 range_e_test = 2 [(validate.rules).float = {gte: 1, lte: 10}];
-  uint32 range_test = 3[(validate.rules).float = {gt: 1, lt: 10}];
-  uint32 in_test = 4[(validate.rules).float = {in: [1,2,3]}];
-  uint32 not_in_test = 5[(validate.rules).float = {in: [1,2,3]}];
-  uint32 ignore_test = 6[(validate.rules).float.ignore_empty = true];
+  uint32 const_test = 1 [(validate.rules).uint32.const = 1];
+  uint32 range_e_test = 2 [(validate.rules).uint32 = {gte: 1, lte: 10}];
+  uint32 range_test = 3[(validate.rules).uint32 = {gt: 1, lt: 10}];
+  uint32 in_test = 4[(validate.rules).uint32 = {in: [1,2,3]}];
+  uint32 not_in_test = 5[(validate.rules).uint32 = {in: [1,2,3]}];
+  uint32 ignore_test = 6[(validate.rules).uint32.ignore_empty = true];
 }
 
 message Sint32Test {
-  sint32 const_test = 1 [(validate.rules).float.const = 1];
-  sint32 range_e_test = 2 [(validate.rules).float = {gte: 1, lte: 10}];
-  sint32 range_test = 3[(validate.rules).float = {gt: 1, lt: 10}];
-  sint32 in_test = 4[(validate.rules).float = {in: [1,2,3]}];
-  sint32 not_in_test = 5[(validate.rules).float = {in: [1,2,3]}];
-  sint32 ignore_test = 6[(validate.rules).float.ignore_empty = true];
+  sint32 const_test = 1 [(validate.rules).sint32.const = 1];
+  sint32 range_e_test = 2 [(validate.rules).sint32 = {gte: 1, lte: 10}];
+  sint32 range_test = 3[(validate.rules).sint32 = {gt: 1, lt: 10}];
+  sint32 in_test = 4[(validate.rules).sint32 = {in: [1,2,3]}];
+  sint32 not_in_test = 5[(validate.rules).sint32 = {in: [1,2,3]}];
+  sint32 ignore_test = 6[(validate.rules).sint32.ignore_empty = true];
 }
 
 message Int64Test {
-  int64 const_test = 1 [(validate.rules).float.const = 1];
-  int64 range_e_test = 2 [(validate.rules).float = {gte: 1, lte: 10}];
-  int64 range_test = 3[(validate.rules).float = {gt: 1, lt: 10}];
-  int64 in_test = 4[(validate.rules).float = {in: [1,2,3]}];
-  int64 not_in_test = 5[(validate.rules).float = {in: [1,2,3]}];
-  int64 ignore_test = 6[(validate.rules).float.ignore_empty = true];
+  int64 const_test = 1 [(validate.rules).int64.const = 1];
+  int64 range_e_test = 2 [(validate.rules).int64 = {gte: 1, lte: 10}];
+  int64 range_test = 3[(validate.rules).int64 = {gt: 1, lt: 10}];
+  int64 in_test = 4[(validate.rules).int64 = {in: [1,2,3]}];
+  int64 not_in_test = 5[(validate.rules).int64 = {in: [1,2,3]}];
+  int64 ignore_test = 6[(validate.rules).int64.ignore_empty = true];
 }
 
 message Uint64Test {
-  uint64 const_test = 1 [(validate.rules).float.const = 1];
-  uint64 range_e_test = 2 [(validate.rules).float = {gte: 1, lte: 10}];
-  uint64 range_test = 3[(validate.rules).float = {gt: 1, lt: 10}];
-  uint64 in_test = 4[(validate.rules).float = {in: [1,2,3]}];
-  uint64 not_in_test = 5[(validate.rules).float = {in: [1,2,3]}];
-  uint64 ignore_test = 6[(validate.rules).float.ignore_empty = true];
+  uint64 const_test = 1 [(validate.rules).uint64.const = 1];
+  uint64 range_e_test = 2 [(validate.rules).uint64 = {gte: 1, lte: 10}];
+  uint64 range_test = 3[(validate.rules).uint64 = {gt: 1, lt: 10}];
+  uint64 in_test = 4[(validate.rules).uint64 = {in: [1,2,3]}];
+  uint64 not_in_test = 5[(validate.rules).uint64 = {in: [1,2,3]}];
+  uint64 ignore_test = 6[(validate.rules).uint64.ignore_empty = true];
 }
 
 message Sint64Test {
-  sint64 const_test = 1 [(validate.rules).float.const = 1];
-  sint64 range_e_test = 2 [(validate.rules).float = {gte: 1, lte: 10}];
-  sint64 range_test = 3[(validate.rules).float = {gt: 1, lt: 10}];
-  sint64 in_test = 4[(validate.rules).float = {in: [1,2,3]}];
-  sint64 not_in_test = 5[(validate.rules).float = {in: [1,2,3]}];
-  sint64 ignore_test = 6[(validate.rules).float.ignore_empty = true];
+  sint64 const_test = 1 [(validate.rules).sint64.const = 1];
+  sint64 range_e_test = 2 [(validate.rules).sint64 = {gte: 1, lte: 10}];
+  sint64 range_test = 3[(validate.rules).sint64 = {gt: 1, lt: 10}];
+  sint64 in_test = 4[(validate.rules).sint64 = {in: [1,2,3]}];
+  sint64 not_in_test = 5[(validate.rules).sint64 = {in: [1,2,3]}];
+  sint64 ignore_test = 6[(validate.rules).sint64.ignore_empty = true];
 }
 
 message Fixed32Test {
-  fixed32 const_test = 1 [(validate.rules).float.const = 1];
-  fixed32 range_e_test = 2 [(validate.rules).float = {gte: 1, lte: 10}];
-  fixed32 range_test = 3[(validate.rules).float = {gt: 1, lt: 10}];
-  fixed32 in_test = 4[(validate.rules).float = {in: [1,2,3]}];
-  fixed32 not_in_test = 5[(validate.rules).float = {in: [1,2,3]}];
-  fixed32 ignore_test = 6[(validate.rules).float.ignore_empty = true];
+  fixed32 const_test = 1 [(validate.rules).fixed32.const = 1];
+  fixed32 range_e_test = 2 [(validate.rules).fixed32 = {gte: 1, lte: 10}];
+  fixed32 range_test = 3[(validate.rules).fixed32 = {gt: 1, lt: 10}];
+  fixed32 in_test = 4[(validate.rules).fixed32 = {in: [1,2,3]}];
+  fixed32 not_in_test = 5[(validate.rules).fixed32 = {in: [1,2,3]}];
+  fixed32 ignore_test = 6[(validate.rules).fixed32.ignore_empty = true];
 }
 
 message Sfixed32Test {
-  sfixed32 const_test = 1 [(validate.rules).float.const = 1];
-  sfixed32 range_e_test = 2 [(validate.rules).float = {gte: 1, lte: 10}];
-  sfixed32 range_test = 3[(validate.rules).float = {gt: 1, lt: 10}];
-  sfixed32 in_test = 4[(validate.rules).float = {in: [1,2,3]}];
-  sfixed32 not_in_test = 5[(validate.rules).float = {in: [1,2,3]}];
-  sfixed32 ignore_test = 6[(validate.rules).float.ignore_empty = true];
+  sfixed32 const_test = 1 [(validate.rules).sfixed32.const = 1];
+  sfixed32 range_e_test = 2 [(validate.rules).sfixed32 = {gte: 1, lte: 10}];
+  sfixed32 range_test = 3[(validate.rules).sfixed32 = {gt: 1, lt: 10}];
+  sfixed32 in_test = 4[(validate.rules).sfixed32 = {in: [1,2,3]}];
+  sfixed32 not_in_test = 5[(validate.rules).sfixed32 = {in: [1,2,3]}];
+  sfixed32 ignore_test = 6[(validate.rules).sfixed32.ignore_empty = true];
 }
 
 message Sfixed64Test {
-  sfixed64 const_test = 1 [(validate.rules).float.const = 1];
-  sfixed64 range_e_test = 2 [(validate.rules).float = {gte: 1, lte: 10}];
-  sfixed64 range_test = 3[(validate.rules).float = {gt: 1, lt: 10}];
-  sfixed64 in_test = 4[(validate.rules).float = {in: [1,2,3]}];
-  sfixed64 not_in_test = 5[(validate.rules).float = {in: [1,2,3]}];
-  sfixed64 ignore_test = 6[(validate.rules).float.ignore_empty = true];
+  sfixed64 const_test = 1 [(validate.rules).sfixed64.const = 1];
+  sfixed64 range_e_test = 2 [(validate.rules).sfixed64 = {gte: 1, lte: 10}];
+  sfixed64 range_test = 3[(validate.rules).sfixed64 = {gt: 1, lt: 10}];
+  sfixed64 in_test = 4[(validate.rules).sfixed64 = {in: [1,2,3]}];
+  sfixed64 not_in_test = 5[(validate.rules).sfixed64 = {in: [1,2,3]}];
+  sfixed64 ignore_test = 6[(validate.rules).sfixed64.ignore_empty = true];
 }
 
 message BoolTest {
@@ -162,6 +162,16 @@ message EnumTest {
   State not_in_test = 4 [(validate.rules).enum = {in: [0, 2]}];
 }
 
+
+message MapTest {
+  map<string, int32> pair_test = 1 [(validate.rules).map = {min_pairs:1, max_pairs:5}];
+  map<string, int32> no_parse_test = 2 [(validate.rules).map.no_sparse = true];
+  map<string, int32> keys_test = 3 [(validate.rules).map.keys.string.min_len = 0];
+  map<string, int32> values_test = 4 [(validate.rules).map.values.int32.lt = 0];
+  map<string, int32> ignore_test = 5[(validate.rules).map.ignore_empty = true];
+}
+
+
 message MessageTest {
   string skip_test = 1 [(validate.rules).message.skip = true];
   string required_test = 2 [(validate.rules).message.required = true];
@@ -174,13 +184,6 @@ message RepeatedTest {
   repeated string ignore_test = 4 [(validate.rules).repeated.ignore_empty = true];
 }
 
-message MapTest {
-  map<string, int32> pair_test = 1 [(validate.rules).map = {min_pairs:1, max_pairs:5}];
-  map<string, int32> no_parse_test = 2 [(validate.rules).map.no_sparse = true];
-  map<string, int32> keys_test = 3 [(validate.rules).map.keys.string.min_len = 0];
-  map<string, int32> values_test = 4 [(validate.rules).map.values.int32.lt = 0];
-  map<string, int32> ignore_test = 5[(validate.rules).map.ignore_empty = true];
-}
 
 message AnyTest {
   google.protobuf.Any required_test = 1 [(validate.rules).any.required = true];

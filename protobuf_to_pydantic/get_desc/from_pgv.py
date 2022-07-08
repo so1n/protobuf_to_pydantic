@@ -1,29 +1,34 @@
 import logging
-from typing import Any, Callable, Dict, List, Optional, Type
+from typing import Any, Callable, Dict, List, Optional, Set, Type
 
 from pydantic import validator
 
 from protobuf_to_pydantic.grpc_types import Descriptor, FieldDescriptor, Message
 
 _logger: logging.Logger = logging.getLogger(__name__)
-_message_desc_dict: Dict[Type[Message], Dict[str, Dict[str, str]]] = {}
+_message_desc_dict: Dict[str, Dict[str, Dict[str, str]]] = {}
 
 type_dict: Dict[str, str] = {
     FieldDescriptor.TYPE_DOUBLE: "double",
     FieldDescriptor.TYPE_FLOAT: "float",
     FieldDescriptor.TYPE_INT64: "int64",
-    FieldDescriptor.TYPE_UINT64: "unit64",
+    FieldDescriptor.TYPE_UINT64: "uint64",
     FieldDescriptor.TYPE_INT32: "int32",
     FieldDescriptor.TYPE_FIXED64: "fixed64",
     FieldDescriptor.TYPE_FIXED32: "fixed32",
     FieldDescriptor.TYPE_BOOL: "bool",
-    FieldDescriptor.TYPE_STRING: "str",
+    FieldDescriptor.TYPE_STRING: "string",
     FieldDescriptor.TYPE_BYTES: "bytes",
     FieldDescriptor.TYPE_UINT32: "uint32",
     FieldDescriptor.TYPE_SFIXED32: "sfixed32",
     FieldDescriptor.TYPE_SFIXED64: "sfixed64",
     FieldDescriptor.TYPE_SINT32: "sint32",
     FieldDescriptor.TYPE_SINT64: "sint64",
+}
+
+type_not_support_dict: Dict[str, Set[str]] = {
+    FieldDescriptor.TYPE_BYTES: {"pattern"},
+    FieldDescriptor.TYPE_STRING: {"min_bytes", "max_bytes"},
 }
 
 
@@ -50,18 +55,21 @@ def option_descriptor_to_desc_dict(option_descriptor_list: list, field: Any) -> 
                 if not option_descriptor.HasField(column):
                     continue
             except ValueError:
-                print(field.name, column, getattr(option_descriptor, column))
                 if not getattr(option_descriptor, column):
                     continue
 
+            if column in type_not_support_dict.get(field.type, set()):
+                _logger.warning(f"P2p not support `{column}`, please reset {field.full_name} `{column}` value")
+                continue
+
             value = getattr(option_descriptor, column)
             if column in ("ignore_empty", "defined_only"):
-                _logger.warning(f"Not support `{column}`")
+                _logger.warning(f"P2p not support `{column}`, please reset {field.full_name} `{column}` value")
                 continue
-            elif column == "const":
-                # const: this argument must be the same as the field's default value if present.
-                column = "default"
-                desc_dict["const"] = True
+            # elif column == "const":
+            #     # const: this argument must be the same as the field's default value if present.
+            #     column = "default"
+            #     desc_dict["const"] = True
             elif column == "in":
 
                 def _in_validator(v: Any) -> Any:
@@ -97,6 +105,10 @@ def option_descriptor_to_desc_dict(option_descriptor_list: list, field: Any) -> 
                 column = "regex"
             elif column == "unique":
                 column = "unique_items"
+            elif column == "gte":
+                column = "ge"
+            elif column == "lte":
+                column = "le"
             elif column == "prefix":
 
                 def _prefix_validator(v: Any) -> Any:
@@ -154,10 +166,10 @@ def option_descriptor_to_desc_dict(option_descriptor_list: list, field: Any) -> 
 
 def get_desc_from_pgv(message: Type[Message]) -> dict:
     if message in _message_desc_dict:
-        return _message_desc_dict[message]
+        return _message_desc_dict[message.__name__]
 
     message_field_dict: dict = {}
-    _message_desc_dict[message] = message_field_dict
+    _message_desc_dict[message.__name__] = message_field_dict
 
     for option_descriptor, option_value in message.DESCRIPTOR.GetOptions().ListFields():
         if (option_descriptor.full_name == "validate.disabled" and option_value) or (
@@ -165,6 +177,9 @@ def get_desc_from_pgv(message: Type[Message]) -> dict:
         ):
             return message_field_dict
     for field in message.DESCRIPTOR.fields:
+        if field.type not in type_dict:
+            print(field.type, "ignore")
+            continue
         type_name: str = type_dict[field.type]
         option_value_list: List = []
         miss_default: bool = False
@@ -174,15 +189,16 @@ def get_desc_from_pgv(message: Type[Message]) -> dict:
                     rule_message: Any = option_value.message
                     if rule_message:
                         if getattr(rule_message, "skip", None):
-                            continue
+                            _logger.warning(f"P2p not support `skip`, please reset {field.full_name} `skip` value")
                         if getattr(rule_message, "required", None):
                             miss_default = True
                     type_value: Optional[Descriptor] = getattr(option_value, type_name, None)
                     if not type_value:
-                        _logger.warning(f"Can not found {type_name} from {option_value}")
+                        _logger.warning(f"Can not found {field.full_name}'s {type_name} from {option_value}")
                         continue
                     option_value_list.append(type_value)
         field_dict = option_descriptor_to_desc_dict(option_value_list, field)
         field_dict["miss_default"] = miss_default
         message_field_dict[field.name] = field_dict
-    return message_field_dict
+        _message_desc_dict[message.__name__] = message_field_dict
+    return _message_desc_dict

@@ -198,6 +198,7 @@ print(
 `protobuf_to_pydantic`除了支持`FieldInfo`的参数外，还支持下面几种参数:
 - miss_default：默认情况下，生成对应`pydantic.BaseModel`对象中每个字段的默认值与Message中每个字段的默认值是一样的。不过可以通过设置`miss_default`为`true`来取消默认值的设置，需要注意的是在设置`miss_default`为`true`的情况下，`default`参数将失效。
 - enable: 默认情况下， `pydantic.BaseModel`会把Message中的每个字段都进行转换，如果有些字段不想被转换，可以设置`enable`为`false`
+- const: 指定字段的常量的值。注：`pydantic.BaseModel`的const只支持bool变量，当`const`为`True`时，接受的值只能是`default`设定的值，而protobuf生成的Message携带的默认值为对应类型的空值与`pydantic.BaseModel`不匹配，所以`protobuf_to_pydantic`对这个值的输入进行了一些变动。
 - type: 拓展目前的类型，比如下面的银行卡号码:
   ```protobuf
   message UserPayMessage {
