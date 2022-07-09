@@ -23,6 +23,7 @@ type_dict: Dict[str, str] = {
     FieldDescriptor.TYPE_STRING: "string",
     FieldDescriptor.TYPE_BYTES: "bytes",
     FieldDescriptor.TYPE_UINT32: "uint32",
+    FieldDescriptor.TYPE_ENUM: "enum",
     FieldDescriptor.TYPE_SFIXED32: "sfixed32",
     FieldDescriptor.TYPE_SFIXED64: "sfixed64",
     FieldDescriptor.TYPE_SINT32: "sint32",
@@ -104,7 +105,6 @@ def option_descriptor_to_desc_dict(option_descriptor_list: list, field: Any) -> 
                 desc_dict["type"] = column_pydantic_type_dict[column]
                 continue
             # TODO
-            # support strging rule well know
             # support Repeated items
             # support MapRules
             # support TimestampRules

@@ -1,6 +1,6 @@
 # This is an automatically generated file, please do not change
 # gen by protobuf_to_pydantic(https://github.com/so1n/protobuf_to_pydantic)
-# gen timestamp:1657375129
+# gen timestamp:1657375776
 
 import typing
 from enum import IntEnum
@@ -206,10 +206,13 @@ class State(IntEnum):
 
 
 class EnumTest(BaseModel):
-    const_test: State = FieldInfo(default=0)
+    const_test: State = FieldInfo(default=2, const=True)
     defined_only_test: State = FieldInfo(default=0)
-    in_test: State = FieldInfo(default=0)
-    not_in_test: State = FieldInfo(default=0)
+    in_test: State = FieldInfo(default=0, extra={"in": [0, 2]})
+    not_in_test: State = FieldInfo(default=0, extra={"in": [0, 2]})
+
+    in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
+    in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(in_validator)
 
 
 class MapTest(BaseModel):
