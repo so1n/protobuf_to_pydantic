@@ -1,29 +1,26 @@
 # This is an automatically generated file, please do not change
 # gen by protobuf_to_pydantic(https://github.com/so1n/protobuf_to_pydantic)
-# gen timestamp:1657362577
+# gen timestamp:1657375129
 
 import typing
 from enum import IntEnum
-from typing import Any
+from ipaddress import IPv4Address, IPv6Address
+from uuid import UUID
 
 from pydantic import BaseModel, validator
 from pydantic.fields import FieldInfo
+from pydantic.networks import AnyUrl, EmailStr, IPvAnyAddress
 
-
-def _in_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
-    field_name: str = kwargs["field"].name
-    field_value: Any = kwargs["field"].field_info.extra["in"]
-    if v not in field_value:
-        raise ValueError(f"{field_name} not in {field_value}")
-    return v
-
-
-def _not_in_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
-    field_name: str = kwargs["field"].name
-    field_value: Any = kwargs["field"].field_info.extra["not_in"]
-    if v in field_value:
-        raise ValueError(f"{field_name} in {field_value}")
-    return v
+from protobuf_to_pydantic.get_desc.from_pgv.customer_validator import (
+    contains_validator,
+    in_validator,
+    len_validator,
+    not_contains_validator,
+    not_in_validator,
+    prefix_validator,
+    suffix_validator,
+)
+from protobuf_to_pydantic.get_desc.from_pgv.types import HostNameStr, UriRefStr
 
 
 class FloatTest(BaseModel):
@@ -34,8 +31,8 @@ class FloatTest(BaseModel):
     not_in_test: float = FieldInfo(default=0.0, extra={"not_in": [1.0, 2.0, 3.0]})
     ignore_test: float = FieldInfo(default=0.0)
 
-    _in_validator_in_test = validator("in_test", allow_reuse=True)(_in_validator)
-    _not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(_not_in_validator)
+    in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
+    not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
 
 
 class DoubleTest(BaseModel):
@@ -46,8 +43,8 @@ class DoubleTest(BaseModel):
     not_in_test: float = FieldInfo(default=0.0, extra={"in": [1.0, 2.0, 3.0]})
     ignore_test: float = FieldInfo(default=0.0)
 
-    _in_validator_in_test = validator("in_test", allow_reuse=True)(_in_validator)
-    _in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(_in_validator)
+    in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
+    in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(in_validator)
 
 
 class Int32Test(BaseModel):
@@ -58,8 +55,8 @@ class Int32Test(BaseModel):
     not_in_test: int = FieldInfo(default=0, extra={"in": [1, 2, 3]})
     ignore_test: int = FieldInfo(default=0)
 
-    _in_validator_in_test = validator("in_test", allow_reuse=True)(_in_validator)
-    _in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(_in_validator)
+    in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
+    in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(in_validator)
 
 
 class Uint32Test(BaseModel):
@@ -70,8 +67,8 @@ class Uint32Test(BaseModel):
     not_in_test: int = FieldInfo(default=0, extra={"in": [1, 2, 3]})
     ignore_test: int = FieldInfo(default=0)
 
-    _in_validator_in_test = validator("in_test", allow_reuse=True)(_in_validator)
-    _in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(_in_validator)
+    in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
+    in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(in_validator)
 
 
 class Sfixed32Test(BaseModel):
@@ -82,8 +79,8 @@ class Sfixed32Test(BaseModel):
     not_in_test: float = FieldInfo(default=0, extra={"in": [1, 2, 3]})
     ignore_test: float = FieldInfo(default=0)
 
-    _in_validator_in_test = validator("in_test", allow_reuse=True)(_in_validator)
-    _in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(_in_validator)
+    in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
+    in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(in_validator)
 
 
 class Int64Test(BaseModel):
@@ -94,8 +91,8 @@ class Int64Test(BaseModel):
     not_in_test: int = FieldInfo(default=0, extra={"in": [1, 2, 3]})
     ignore_test: int = FieldInfo(default=0)
 
-    _in_validator_in_test = validator("in_test", allow_reuse=True)(_in_validator)
-    _in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(_in_validator)
+    in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
+    in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(in_validator)
 
 
 class Uint64Test(BaseModel):
@@ -106,8 +103,8 @@ class Uint64Test(BaseModel):
     not_in_test: int = FieldInfo(default=0, extra={"in": [1, 2, 3]})
     ignore_test: int = FieldInfo(default=0)
 
-    _in_validator_in_test = validator("in_test", allow_reuse=True)(_in_validator)
-    _in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(_in_validator)
+    in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
+    in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(in_validator)
 
 
 class Sfixed64Test(BaseModel):
@@ -118,8 +115,8 @@ class Sfixed64Test(BaseModel):
     not_in_test: float = FieldInfo(default=0, extra={"in": [1, 2, 3]})
     ignore_test: float = FieldInfo(default=0)
 
-    _in_validator_in_test = validator("in_test", allow_reuse=True)(_in_validator)
-    _in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(_in_validator)
+    in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
+    in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(in_validator)
 
 
 class Fixed32Test(BaseModel):
@@ -130,8 +127,8 @@ class Fixed32Test(BaseModel):
     not_in_test: float = FieldInfo(default=0, extra={"in": [1, 2, 3]})
     ignore_test: float = FieldInfo(default=0)
 
-    _in_validator_in_test = validator("in_test", allow_reuse=True)(_in_validator)
-    _in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(_in_validator)
+    in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
+    in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(in_validator)
 
 
 class Sint64Test(BaseModel):
@@ -142,53 +139,13 @@ class Sint64Test(BaseModel):
     not_in_test: int = FieldInfo(default=0, extra={"in": [1, 2, 3]})
     ignore_test: int = FieldInfo(default=0)
 
-    _in_validator_in_test = validator("in_test", allow_reuse=True)(_in_validator)
-    _in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(_in_validator)
+    in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
+    in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(in_validator)
 
 
 class BoolTest(BaseModel):
     bool_1_test: bool = FieldInfo(default=True, const=True)
     bool_2_test: bool = FieldInfo(default=False, const=True)
-
-
-def _len_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
-    field_name: str = kwargs["field"].name
-    field_value: Any = kwargs["field"].field_info.extra["len"]
-    if len(v) != field_value:
-        raise ValueError(f"{field_name} length does not equal {field_value}")
-    return v
-
-
-def _prefix_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
-    field_name: str = kwargs["field"].name
-    field_value: Any = kwargs["field"].field_info.extra["prefix"]
-    if not v.startswith(field_value):
-        raise ValueError(f"{field_name} does not start with prefix {field_value}")
-    return v
-
-
-def _suffix_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
-    field_name: str = kwargs["field"].name
-    field_value: Any = kwargs["field"].field_info.extra["suffix"]
-    if not v.startswith(field_value):
-        raise ValueError(f"{field_name} does not end with suffix {field_value}")
-    return v
-
-
-def _contains_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
-    field_name: str = kwargs["field"].name
-    field_value: Any = kwargs["field"].field_info.extra["contains"]
-    if v not in field_value:
-        raise ValueError(f"{field_name} not contain {field_value}")
-    return v
-
-
-def _not_contains_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
-    field_name: str = kwargs["field"].name
-    field_value: Any = kwargs["field"].field_info.extra["not_contains"]
-    if v in field_value:
-        raise ValueError(f"{field_name} contain {field_value}")
-    return v
 
 
 class StringTest(BaseModel):
@@ -203,26 +160,24 @@ class StringTest(BaseModel):
     not_contains_test: str = FieldInfo(default="", extra={"not_contains": "not_contains"})
     in_test: str = FieldInfo(default="", extra={"in": ["a", "b", "c"]})
     not_in_test: str = FieldInfo(default="", extra={"not_in": ["a", "b", "c"]})
-    email_test: str = FieldInfo(default="")
-    hostname_test: str = FieldInfo(default="")
-    ip_test: str = FieldInfo(default="")
-    ipv4_test: str = FieldInfo(default="")
-    ipv6_test: str = FieldInfo(default="")
-    uri_test: str = FieldInfo(default="")
-    uri_ref_test: str = FieldInfo(default="")
-    address_test: str = FieldInfo(default="")
-    uuid_test: str = FieldInfo(default="")
+    email_test: EmailStr = FieldInfo(default="")
+    hostname_test: HostNameStr = FieldInfo(default="")
+    ip_test: IPvAnyAddress = FieldInfo(default="")
+    ipv4_test: IPv4Address = FieldInfo(default="")
+    ipv6_test: IPv6Address = FieldInfo(default="")
+    uri_test: AnyUrl = FieldInfo(default="")
+    uri_ref_test: UriRefStr = FieldInfo(default="")
+    address_test: IPvAnyAddress = FieldInfo(default="")
+    uuid_test: UUID = FieldInfo(default="")
     ignore_test: str = FieldInfo(default="")
 
-    _len_validator_len_test = validator("len_test", allow_reuse=True)(_len_validator)
-    _prefix_validator_prefix_test = validator("prefix_test", allow_reuse=True)(_prefix_validator)
-    _suffix_validator_suffix_test = validator("suffix_test", allow_reuse=True)(_suffix_validator)
-    _contains_validator_contains_test = validator("contains_test", allow_reuse=True)(_contains_validator)
-    _not_contains_validator_not_contains_test = validator("not_contains_test", allow_reuse=True)(
-        _not_contains_validator
-    )
-    _in_validator_in_test = validator("in_test", allow_reuse=True)(_in_validator)
-    _not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(_not_in_validator)
+    len_validator_len_test = validator("len_test", allow_reuse=True)(len_validator)
+    prefix_validator_prefix_test = validator("prefix_test", allow_reuse=True)(prefix_validator)
+    suffix_validator_suffix_test = validator("suffix_test", allow_reuse=True)(suffix_validator)
+    contains_validator_contains_test = validator("contains_test", allow_reuse=True)(contains_validator)
+    not_contains_validator_not_contains_test = validator("not_contains_test", allow_reuse=True)(not_contains_validator)
+    in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
+    not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
 
 
 class BytesTest(BaseModel):
@@ -236,12 +191,12 @@ class BytesTest(BaseModel):
     in_test: bytes = FieldInfo(default=b"", extra={"in": [b"a", b"b", b"c"]})
     not_in_test: bytes = FieldInfo(default=b"", extra={"not_in": [b"a", b"b", b"c"]})
 
-    _len_validator_len_test = validator("len_test", allow_reuse=True)(_len_validator)
-    _prefix_validator_prefix_test = validator("prefix_test", allow_reuse=True)(_prefix_validator)
-    _suffix_validator_suffix_test = validator("suffix_test", allow_reuse=True)(_suffix_validator)
-    _contains_validator_contains_test = validator("contains_test", allow_reuse=True)(_contains_validator)
-    _in_validator_in_test = validator("in_test", allow_reuse=True)(_in_validator)
-    _not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(_not_in_validator)
+    len_validator_len_test = validator("len_test", allow_reuse=True)(len_validator)
+    prefix_validator_prefix_test = validator("prefix_test", allow_reuse=True)(prefix_validator)
+    suffix_validator_suffix_test = validator("suffix_test", allow_reuse=True)(suffix_validator)
+    contains_validator_contains_test = validator("contains_test", allow_reuse=True)(contains_validator)
+    in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
+    not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
 
 
 class State(IntEnum):
@@ -322,3 +277,16 @@ class MessageIgnoredTest(BaseModel):
     const_test: int = FieldInfo(default=0)
     range_e_test: int = FieldInfo(default=0)
     range_test: int = FieldInfo(default=0)
+
+
+class UserPayMessage(BaseModel):
+    bank_number: str = FieldInfo(default="")
+    exp: str = FieldInfo()
+    uuid: str = FieldInfo(default="")
+
+
+class NestedMessage(BaseModel):
+    string_in_map_test: typing.Dict[str, StringTest] = FieldInfo()
+    map_in_map_test: typing.Dict[str, MapTest] = FieldInfo()
+    user_pay: UserPayMessage = FieldInfo()
+    empty: None = FieldInfo()

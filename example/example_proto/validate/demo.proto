@@ -3,6 +3,7 @@ package validate_test;
 
 
 import "google/protobuf/any.proto";
+import "google/protobuf/empty.proto";
 import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 import "example_proto/common/validate.proto";
@@ -230,4 +231,17 @@ message MessageIgnoredTest {
   sint32 const_test = 1 [(validate.rules).float.const = 1];
   sint32 range_e_test = 2 [(validate.rules).float = {gte: 1, lte: 10}];
   sint32 range_test = 3[(validate.rules).float = {gt: 1, lt: 10}];
+}
+
+// test nested message
+message NestedMessage{
+  message UserPayMessage {
+    string bank_number=1; // p2p: {"type": "p2p@import|PaymentCardNumber|pydantic.types"}
+    google.protobuf.Timestamp exp=2; // p2p: {"default_factory": "p2p@local|exp_time"}
+    string uuid=3; // p2p: {"default_factory": "p2p@local|uuid4"}
+  }
+  map<string, StringTest> string_in_map_test=1;
+  map<string, MapTest> map_in_map_test=2;
+  UserPayMessage user_pay=3;
+  google.protobuf.Empty empty=4;
 }

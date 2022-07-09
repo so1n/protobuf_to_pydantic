@@ -13,6 +13,7 @@ from example.python_example_proto_code.example_proto.validate.demo_pb2 import (
     MessageDisabledTest,
     MessageIgnoredTest,
     MessageTest,
+    NestedMessage,
     RepeatedTest,
     Sfixed32Test,
     Sfixed64Test,
@@ -53,6 +54,7 @@ if __name__ == "__main__":
                 TimestampTest,
                 MessageDisabledTest,
                 MessageIgnoredTest,
+                NestedMessage,
             )
         ],
         module_path="../",

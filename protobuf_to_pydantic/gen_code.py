@@ -9,6 +9,8 @@ from typing import Any, Deque, Optional, Set, Tuple, Type
 
 from pydantic import BaseModel
 
+from protobuf_to_pydantic.get_desc.from_pgv import customer_validator
+
 
 def _parse_base_model_class(value_type: Any, import_set: Set[str], content_deque: Deque, module_path: str) -> None:
     def _parse_to_set(real_type: Any) -> None:
@@ -108,12 +110,12 @@ def _pydantic_model_to_py_code(model: Type[BaseModel], module_path: str = "") ->
         if not value.class_validators:
             continue
         for class_validator_key, class_validator_value in value.class_validators.items():
-            if class_validator_value.func.__module__ != "protobuf_to_pydantic.get_desc.from_pgv":
+            if class_validator_value.func.__module__ != customer_validator.__name__:
                 # TODO Here currently only consider the support for pgv, the follow-up to fill in
                 continue
-            content_deque.append(inspect.getsource(class_validator_value.func))
             import_set.add("from pydantic import validator")
             import_set.add("from typing import Any")
+            import_set.add(f"from {class_validator_value.func.__module__} import {class_validator_value.func.__name__}")
             validator_str += (
                 f"{' ' * 4}"
                 f"{class_validator_key}_{key} = validator("

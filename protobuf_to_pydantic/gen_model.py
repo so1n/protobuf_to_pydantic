@@ -213,8 +213,8 @@ class M2P(object):
                     field_param_dict.update(extra)
                 field_type = field_param_dict.pop("type_")
                 if field_type:
-                    if not issubclass(field_type, str):
-                        raise TypeError(f"{column.full_name} not support {field_type}")
+                    # if not issubclass(field_type, str):
+                    #     raise TypeError(f"{column.full_name} not support {field_type}")
                     type_ = field_type
 
                 validator_dict = field_param_dict.pop("validator")

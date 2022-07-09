@@ -10,9 +10,9 @@ homepage = "https://github.com/so1n/protobuf_to_pydantic"
 
 [tool.poetry.dependencies]
 python = "^3.7"
-pydantic = "^1.7.3"
 grpcio-tools = "^1.47.0"
 lark = { version = "^1.1.2", optional = true }
+pydantic = "^1.9.1"
 
 [tool.poetry.dev-dependencies]
 black = "20.8b1"
@@ -25,6 +25,7 @@ autoflake = "1.4"
 flake8 = "3.9.2"
 mypy-protobuf = "^3.2.0"
 yapf = "^0.32.0"
+email-validator = "^1.2.1"
 
 [tool.black]
 line-length = 120

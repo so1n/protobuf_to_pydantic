@@ -5,6 +5,9 @@ from pydantic import validator
 
 from protobuf_to_pydantic.grpc_types import Descriptor, FieldDescriptor, Message
 
+from .customer_validator import validate_validator_dict
+from .types import column_pydantic_type_dict
+
 _logger: logging.Logger = logging.getLogger(__name__)
 _message_desc_dict: Dict[str, Dict[str, Dict[str, str]]] = {}
 
@@ -53,60 +56,18 @@ def has_validate(field: Any) -> bool:
     return False
 
 
-def _in_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
-    field_name: str = kwargs["field"].name
-    field_value: Any = kwargs["field"].field_info.extra["in"]
-    if v not in field_value:
-        raise ValueError(f"{field_name} not in {field_value}")
-    return v
-
-
-def _not_in_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
-    field_name: str = kwargs["field"].name
-    field_value: Any = kwargs["field"].field_info.extra["not_in"]
-    if v in field_value:
-        raise ValueError(f"{field_name} in {field_value}")
-    return v
-
-
-def _len_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
-    field_name: str = kwargs["field"].name
-    field_value: Any = kwargs["field"].field_info.extra["len"]
-    if len(v) != field_value:
-        raise ValueError(f"{field_name} length does not equal {field_value}")
-    return v
-
-
-def _prefix_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
-    field_name: str = kwargs["field"].name
-    field_value: Any = kwargs["field"].field_info.extra["prefix"]
-    if not v.startswith(field_value):
-        raise ValueError(f"{field_name} does not start with prefix {field_value}")
-    return v
-
-
-def _suffix_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
-    field_name: str = kwargs["field"].name
-    field_value: Any = kwargs["field"].field_info.extra["suffix"]
-    if not v.startswith(field_value):
-        raise ValueError(f"{field_name} does not end with suffix {field_value}")
-    return v
-
-
-def _contains_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
-    field_name: str = kwargs["field"].name
-    field_value: Any = kwargs["field"].field_info.extra["contains"]
-    if v not in field_value:
-        raise ValueError(f"{field_name} not contain {field_value}")
-    return v
-
-
-def _not_contains_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
-    field_name: str = kwargs["field"].name
-    field_value: Any = kwargs["field"].field_info.extra["not_contains"]
-    if v in field_value:
-        raise ValueError(f"{field_name} contain {field_value}")
-    return v
+def _has_field(column: str, message: Message) -> bool:
+    if column.startswith("_"):
+        return False
+    if getattr(Message, column, None):
+        return False
+    try:
+        if not message.HasField(column):
+            return False
+    except ValueError:
+        if not getattr(message, column, None):
+            return False
+    return True
 
 
 def option_descriptor_to_desc_dict(option_descriptor_list: list, field: Any) -> dict:
@@ -114,16 +75,8 @@ def option_descriptor_to_desc_dict(option_descriptor_list: list, field: Any) -> 
     for option_descriptor in option_descriptor_list:
         for column in option_descriptor.__dir__():
             # Removing internal methods
-            if column.startswith("_"):
+            if not _has_field(column, option_descriptor):
                 continue
-            if getattr(Message, column, None):
-                continue
-            try:
-                if not option_descriptor.HasField(column):
-                    continue
-            except ValueError:
-                if not getattr(option_descriptor, column, None):
-                    continue
 
             # Exclude unsupported fields
             if column in type_not_support_dict.get(field.type, type_not_support_dict["Any"]):
@@ -141,12 +94,15 @@ def option_descriptor_to_desc_dict(option_descriptor_list: list, field: Any) -> 
                     desc_dict["validator"] = {}
                 desc_dict["extra"][column] = value
                 desc_dict["validator"][f"{field.name}_{column}_validator"] = validator(field.name, allow_reuse=True)(
-                    globals().get(f"_{column}_validator")
+                    validate_validator_dict.get(f"{column}_validator")
                 )
                 continue
             elif column in column_pydantic_dict:
                 # Field Conversion
                 column = column_pydantic_dict[column]
+            elif column in column_pydantic_type_dict:
+                desc_dict["type"] = column_pydantic_type_dict[column]
+                continue
             # TODO
             # support strging rule well know
             # support Repeated items
@@ -191,6 +147,8 @@ def get_desc_from_pgv(message: Type[Message]) -> dict:
                     _logger.warning(f"{__name__}Can not found {field.full_name}'s {type_name} from {option_value}")
                     continue
                 option_value_list.append(type_value)
+        else:
+            _logger.warning(f"{__name__} not support field.message_type is not None. ({field.full_name})")
 
         field_dict = option_descriptor_to_desc_dict(option_value_list, field)
         field_dict["miss_default"] = miss_default
