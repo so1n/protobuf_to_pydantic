@@ -234,8 +234,8 @@ class M2P(object):
             )(_grpc_timestamp_handler)
 
         class_name: str = descriptor.name
-        # Message.Any and typing.Any with the same name, you need to change the name of Message.
         if class_name == "Any":
+            # Message.Any and typing.Any with the same name, need to change the name of Message.Any.
             class_name = "AnyMessage"
         return create_pydantic_model(annotation_dict, class_name=class_name, pydantic_validators=validators or None)
 

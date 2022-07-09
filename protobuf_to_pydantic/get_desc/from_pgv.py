@@ -29,6 +29,18 @@ type_dict: Dict[str, str] = {
 type_not_support_dict: Dict[str, Set[str]] = {
     FieldDescriptor.TYPE_BYTES: {"pattern"},
     FieldDescriptor.TYPE_STRING: {"min_bytes", "max_bytes"},
+    "Any": {"ignore_empty", "defined_only"},
+}
+
+column_pydantic_dict: Dict[str, str] = {
+    "min_len": "min_length",
+    "min_bytes": "min_length",
+    "max_len": "max_length",
+    "max_bytes": "max_length",
+    "pattern": "regex",
+    "unique": "unique_items",
+    "gte": "ge",
+    "lte": "le",
 }
 
 
@@ -97,31 +109,30 @@ def _not_contains_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
     return v
 
 
-# flake8: noqa: C901
 def option_descriptor_to_desc_dict(option_descriptor_list: list, field: Any) -> dict:
-    desc_dict: dict = {"extra": {}, "validator": {}}
+    desc_dict: dict = {}
     for option_descriptor in option_descriptor_list:
         for column in option_descriptor.__dir__():
+            # Removing internal methods
             if column.startswith("_"):
                 continue
-            if column[0] != column[0].lower():
+            if getattr(Message, column, None):
                 continue
             try:
                 if not option_descriptor.HasField(column):
                     continue
             except ValueError:
-                if not getattr(option_descriptor, column):
+                if not getattr(option_descriptor, column, None):
                     continue
 
-            if column in type_not_support_dict.get(field.type, set()):
-                _logger.warning(f"P2p not support `{column}`, please reset {field.full_name} `{column}` value")
+            # Exclude unsupported fields
+            if column in type_not_support_dict.get(field.type, type_not_support_dict["Any"]):
+                _logger.warning(f"{__name__} not support `{column}`, please reset {field.full_name} `{column}` value")
                 continue
 
             value = getattr(option_descriptor, column)
-            if column in ("ignore_empty", "defined_only"):
-                _logger.warning(f"P2p not support `{column}`, please reset {field.full_name} `{column}` value")
-                continue
-            elif column in ("in", "not_in", "len", "len_bytes", "prefix", "suffix", "contains", "not_contains"):
+            if column in ("in", "not_in", "len", "len_bytes", "prefix", "suffix", "contains", "not_contains"):
+                # Compatible with PGV attributes that are not supported by pydantic
                 if column == "len_bytes":
                     column = "len"
                 if "extra" not in desc_dict:
@@ -129,64 +140,13 @@ def option_descriptor_to_desc_dict(option_descriptor_list: list, field: Any) -> 
                 if "validator" not in desc_dict:
                     desc_dict["validator"] = {}
                 desc_dict["extra"][column] = value
-                desc_dict["validator"][field.name + f"_{column}_validator"] = validator(field.name, allow_reuse=True)(
+                desc_dict["validator"][f"{field.name}_{column}_validator"] = validator(field.name, allow_reuse=True)(
                     globals().get(f"_{column}_validator")
                 )
                 continue
-            # elif column == "in":
-            #     desc_dict["extra"][column] = value
-            #     desc_dict["validator"][field.name + "_in_validator"] = validator(
-            #         field.name, allow_reuse=True
-            #     )(_in_validator)
-            #     continue
-            # elif column == "not_in":
-            #     desc_dict["extra"][column] = value
-            #     desc_dict["validator"][field.name + "_not_in_validator"] = validator(
-            #         field.name, allow_reuse=True
-            #     )(_not_in_validator)
-            #     continue
-            # elif column in ("len", "len_bytes"):
-            #     desc_dict["extra"]["len"] = value
-            #     desc_dict["validator"][field.name + "_len_validator"] = validator(
-            #         field.name, allow_reuse=True
-            #     )(_len_validator)
-            #     continue
-            # elif column == "prefix":
-            #     desc_dict["extra"][column] = value
-            #     desc_dict["validator"][field.name + "_prefix_validator"] = validator(
-            #         field.name, allow_reuse=True
-            #     )(_prefix_validator)
-            #     continue
-            # elif column == "suffix":
-            #     desc_dict["extra"][column] = value
-            #     desc_dict["validator"][field.name + "_suffix_validator"] = validator(
-            #         field.name, allow_reuse=True
-            #     )(_prefix_validator)
-            #     continue
-            # elif column == "contains":
-            #     desc_dict["extra"][column] = value
-            #     desc_dict["validator"][field.name + "_contains_validator"] = validator(
-            #         field.name, allow_reuse=True
-            #     )(_contain_validator)
-            #     continue
-            # elif column == "not_contains":
-            #     desc_dict["extra"][column] = value
-            #     desc_dict["validator"][field.name + "_not_contains_validator"] = validator(
-            #         field.name, allow_reuse=True
-            #     )(_not_contain_validator)
-            #     continue
-            elif column in ("min_len", "min_bytes"):
-                column = "min_length"
-            elif column in ("max_len", "max_bytes"):
-                column = "max_length"
-            elif column == "pattern":
-                column = "regex"
-            elif column == "unique":
-                column = "unique_items"
-            elif column == "gte":
-                column = "ge"
-            elif column == "lte":
-                column = "le"
+            elif column in column_pydantic_dict:
+                # Field Conversion
+                column = column_pydantic_dict[column]
             # TODO
             # support strging rule well know
             # support Repeated items
@@ -211,25 +171,27 @@ def get_desc_from_pgv(message: Type[Message]) -> dict:
             return message_field_dict
     for field in message.DESCRIPTOR.fields:
         if field.type not in type_dict:
-            print(field.type, "ignore")
+            _logger.warning(f"{__name__} not support protobuf type id:{field.type} from field name{field.full_name}")
             continue
         type_name: str = type_dict[field.type]
         option_value_list: List = []
         miss_default: bool = False
         if has_validate(field) and field.message_type is None:
             for option_descriptor, option_value in field.GetOptions().ListFields():
-                if option_descriptor.full_name == "validate.rules":
-                    rule_message: Any = option_value.message
-                    if rule_message:
-                        if getattr(rule_message, "skip", None):
-                            _logger.warning(f"P2p not support `skip`, please reset {field.full_name} `skip` value")
-                        if getattr(rule_message, "required", None):
-                            miss_default = True
-                    type_value: Optional[Descriptor] = getattr(option_value, type_name, None)
-                    if not type_value:
-                        _logger.warning(f"Can not found {field.full_name}'s {type_name} from {option_value}")
-                        continue
-                    option_value_list.append(type_value)
+                if option_descriptor.full_name != "validate.rules":
+                    continue
+                rule_message: Any = option_value.message
+                if rule_message:
+                    if getattr(rule_message, "skip", None):
+                        _logger.warning(f"{__name__} not support `skip`, please reset {field.full_name} `skip` value")
+                    if getattr(rule_message, "required", None):
+                        miss_default = True
+                type_value: Optional[Descriptor] = getattr(option_value, type_name, None)
+                if not type_value:
+                    _logger.warning(f"{__name__}Can not found {field.full_name}'s {type_name} from {option_value}")
+                    continue
+                option_value_list.append(type_value)
+
         field_dict = option_descriptor_to_desc_dict(option_value_list, field)
         field_dict["miss_default"] = miss_default
         message_field_dict[field.name] = field_dict
