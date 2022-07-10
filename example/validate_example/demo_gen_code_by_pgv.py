@@ -1,8 +1,10 @@
 # This is an automatically generated file, please do not change
 # gen by protobuf_to_pydantic(https://github.com/so1n/protobuf_to_pydantic)
-# gen timestamp:1657375776
+# gen timestamp:1657439872
 
+import datetime
 import typing
+from datetime import timedelta
 from enum import IntEnum
 from ipaddress import IPv4Address, IPv6Address
 from uuid import UUID
@@ -13,6 +15,11 @@ from pydantic.networks import AnyUrl, EmailStr, IPvAnyAddress
 
 from protobuf_to_pydantic.get_desc.from_pgv.customer_validator import (
     contains_validator,
+    duration_const_validator,
+    duration_ge_validator,
+    duration_gt_validator,
+    duration_le_validator,
+    duration_lt_validator,
     in_validator,
     len_validator,
     not_contains_validator,
@@ -245,18 +252,21 @@ class AnyTest(BaseModel):
     x: AnyMessage = FieldInfo()
 
 
-class Duration(BaseModel):
-    seconds: int = FieldInfo(default=0)
-    nanos: int = FieldInfo(default=0)
-
-
 class DurationTest(BaseModel):
-    required_test: Duration = FieldInfo()
-    const_test: Duration = FieldInfo()
-    range_test: Duration = FieldInfo()
-    range_e_test: Duration = FieldInfo()
-    in_test: Duration = FieldInfo()
-    not_in_test: Duration = FieldInfo()
+    required_test: timedelta = FieldInfo()
+    const_test: timedelta = FieldInfo(extra={"duration_const": 1500000})
+    range_test: timedelta = FieldInfo(extra={"duration_lt": 10000000, "duration_gt": 5000000})
+    range_e_test: timedelta = FieldInfo(extra={"duration_le": 10000000, "duration_ge": 5000000})
+    in_test: timedelta = FieldInfo(extra={"in": [datetime.timedelta(seconds=1), datetime.timedelta(seconds=3)]})
+    not_in_test: timedelta = FieldInfo(extra={"in": [datetime.timedelta(seconds=1), datetime.timedelta(seconds=3)]})
+
+    duration_const_validator_const_test = validator("const_test", allow_reuse=True)(duration_const_validator)
+    duration_lt_validator_range_test = validator("range_test", allow_reuse=True)(duration_lt_validator)
+    duration_gt_validator_range_test = validator("range_test", allow_reuse=True)(duration_gt_validator)
+    duration_le_validator_range_e_test = validator("range_e_test", allow_reuse=True)(duration_le_validator)
+    duration_ge_validator_range_e_test = validator("range_e_test", allow_reuse=True)(duration_ge_validator)
+    in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
+    in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(in_validator)
 
 
 class TimestampTest(BaseModel):

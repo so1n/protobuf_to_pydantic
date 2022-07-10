@@ -1,9 +1,11 @@
 import logging
+from datetime import timedelta
 from typing import Any, Dict, List, Optional, Set, Type
 
 from pydantic import validator
 
-from protobuf_to_pydantic.grpc_types import Descriptor, FieldDescriptor, Message
+from protobuf_to_pydantic.grpc_types import Descriptor, Duration, FieldDescriptor, Message
+from protobuf_to_pydantic.util import replace_type
 
 from .customer_validator import validate_validator_dict
 from .types import column_pydantic_type_dict
@@ -66,13 +68,14 @@ def _has_field(column: str, message: Message) -> bool:
         if not message.HasField(column):
             return False
     except ValueError:
-        if not getattr(message, column, None):
+        if not getattr(message, column, None) or column[0].lower() != column[0]:
             return False
     return True
 
 
 def option_descriptor_to_desc_dict(option_descriptor_list: list, field: Any) -> dict:
-    desc_dict: dict = {}
+    desc_dict: dict = {"extra": {}}
+
     for option_descriptor in option_descriptor_list:
         for column in option_descriptor.__dir__():
             # Removing internal methods
@@ -85,15 +88,14 @@ def option_descriptor_to_desc_dict(option_descriptor_list: list, field: Any) -> 
                 continue
 
             value = getattr(option_descriptor, column)
+
             if column in ("in", "not_in", "len", "len_bytes", "prefix", "suffix", "contains", "not_contains"):
                 # Compatible with PGV attributes that are not supported by pydantic
                 if column == "len_bytes":
                     column = "len"
-                if "extra" not in desc_dict:
-                    desc_dict["extra"] = {}
                 if "validator" not in desc_dict:
                     desc_dict["validator"] = {}
-                desc_dict["extra"][column] = value
+                desc_dict["extra"][column] = replace_type(value)
                 desc_dict["validator"][f"{field.name}_{column}_validator"] = validator(field.name, allow_reuse=True)(
                     validate_validator_dict.get(f"{column}_validator")
                 )
@@ -104,6 +106,17 @@ def option_descriptor_to_desc_dict(option_descriptor_list: list, field: Any) -> 
             elif column in column_pydantic_type_dict:
                 desc_dict["type"] = column_pydantic_type_dict[column]
                 continue
+
+            if isinstance(value, Duration):
+                if column in ("lt", "le", "gt", "ge", "const"):
+                    if "validator" not in desc_dict:
+                        desc_dict["validator"] = {}
+                    desc_dict["extra"][f"duration_{column}"] = value.ToMicroseconds()
+                    desc_dict["validator"][f"{field.name}_d_{column}_validator"] = validator(
+                        field.name, allow_reuse=True
+                    )(validate_validator_dict.get(f"duration_{column}_validator"))
+                    continue
+
             # TODO
             # support Repeated items
             # support MapRules
@@ -126,29 +139,36 @@ def get_desc_from_pgv(message: Type[Message]) -> dict:
         ):
             return message_field_dict
     for field in message.DESCRIPTOR.fields:
-        if field.type not in type_dict:
-            _logger.warning(f"{__name__} not support protobuf type id:{field.type} from field name{field.full_name}")
-            continue
-        type_name: str = type_dict[field.type]
+        type_name: str = type_dict.get(field.type, "")
+        if not type_name:
+            message_type_name: str = field.message_type.name
+            # if message_type_name.endswith("Entry"):
+            #     type_name = "map"
+            # elif message_type_name == "Any":
+            #     type_name = "any"
+            if message_type_name == "Duration":
+                type_name = "duration"
+            else:
+                _logger.warning(
+                    f"{__name__} not support protobuf type id:{field.type} from field name{field.full_name}"
+                )
+                continue
         option_value_list: List = []
         miss_default: bool = False
-        if has_validate(field) and field.message_type is None:
-            for option_descriptor, option_value in field.GetOptions().ListFields():
-                if option_descriptor.full_name != "validate.rules":
-                    continue
-                rule_message: Any = option_value.message
-                if rule_message:
-                    if getattr(rule_message, "skip", None):
-                        _logger.warning(f"{__name__} not support `skip`, please reset {field.full_name} `skip` value")
-                    if getattr(rule_message, "required", None):
-                        miss_default = True
-                type_value: Optional[Descriptor] = getattr(option_value, type_name, None)
-                if not type_value:
-                    _logger.warning(f"{__name__}Can not found {field.full_name}'s {type_name} from {option_value}")
-                    continue
-                option_value_list.append(type_value)
-        else:
-            _logger.warning(f"{__name__} not support field.message_type is not None. ({field.full_name})")
+        for option_descriptor, option_value in field.GetOptions().ListFields():
+            if option_descriptor.full_name != "validate.rules":
+                continue
+            rule_message: Any = option_value.message
+            if rule_message:
+                if getattr(rule_message, "skip", None):
+                    _logger.warning(f"{__name__} not support `skip`, please reset {field.full_name} `skip` value")
+                if getattr(rule_message, "required", None):
+                    miss_default = True
+            type_value: Optional[Descriptor] = getattr(option_value, type_name, None)
+            if not type_value:
+                _logger.warning(f"{__name__}Can not found {field.full_name}'s {type_name} from {option_value}")
+                continue
+            option_value_list.append(type_value)
 
         field_dict = option_descriptor_to_desc_dict(option_value_list, field)
         field_dict["miss_default"] = miss_default

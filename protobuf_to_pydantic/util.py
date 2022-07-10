@@ -1,6 +1,9 @@
+from datetime import timedelta
 from typing import Any, Dict, Tuple, Type
 
 from pydantic import BaseConfig, BaseModel, create_model
+
+from protobuf_to_pydantic.grpc_types import Duration, RepeatedCompositeContainer
 
 
 def create_pydantic_model(
@@ -23,3 +26,11 @@ def create_pydantic_model(
         __validators__=pydantic_validators,
         **annotation_dict,
     )
+
+
+def replace_type(value: Any) -> Any:
+    if isinstance(value, Duration):
+        return timedelta(microseconds=value.ToMicroseconds())
+    elif isinstance(value, (list, RepeatedCompositeContainer)):
+        return [replace_type(i) for i in value]
+    return value

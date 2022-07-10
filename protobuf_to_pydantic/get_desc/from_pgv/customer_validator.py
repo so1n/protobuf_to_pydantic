@@ -57,4 +57,44 @@ def not_contains_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
     return v
 
 
+def duration_lt_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
+    field_name: str = kwargs["field"].name
+    field_value: Any = kwargs["field"].field_info.extra["duration_lt"]
+    if not (v > field_value):
+        raise ValueError(f"{field_name} must > {v}, not {field_value}")
+    return v
+
+
+def duration_le_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
+    field_name: str = kwargs["field"].name
+    field_value: Any = kwargs["field"].field_info.extra["duration_le"]
+    if not (v >= field_value):
+        raise ValueError(f"{field_name} must >= {v}, not {field_value}")
+    return v
+
+
+def duration_gt_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
+    field_name: str = kwargs["field"].name
+    field_value: Any = kwargs["field"].field_info.extra["duration_gt"]
+    if not (v < field_value):
+        raise ValueError(f"{field_name} must < {v}, not {field_value}")
+    return v
+
+
+def duration_ge_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
+    field_name: str = kwargs["field"].name
+    field_value: Any = kwargs["field"].field_info.extra["duration_ge"]
+    if not (v <= field_value):
+        raise ValueError(f"{field_name} must <= {v}, not {field_value}")
+    return v
+
+
+def duration_const_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
+    field_name: str = kwargs["field"].name
+    field_value: Any = kwargs["field"].field_info.extra["duration_const"]
+    if v != field_value:
+        raise ValueError(f"{field_name} must {v}, not {field_value}")
+    return v
+
+
 validate_validator_dict: Dict[str, Callable] = globals()
