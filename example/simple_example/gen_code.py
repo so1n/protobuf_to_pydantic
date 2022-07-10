@@ -12,4 +12,5 @@ if __name__ == "__main__":
     pydantic_model_to_py_file(
         "./demo_gen_code.py",
         msg_to_pydantic_model(demo_pb2.NestedMessage),
+        enable_yapf=False,
     )

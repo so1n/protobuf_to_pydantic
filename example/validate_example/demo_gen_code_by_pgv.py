@@ -1,8 +1,7 @@
 # This is an automatically generated file, please do not change
 # gen by protobuf_to_pydantic(https://github.com/so1n/protobuf_to_pydantic)
-# gen timestamp:1657439872
+# gen timestamp:1657445118
 
-import datetime
 import typing
 from datetime import timedelta
 from enum import IntEnum
@@ -255,10 +254,14 @@ class AnyTest(BaseModel):
 class DurationTest(BaseModel):
     required_test: timedelta = FieldInfo()
     const_test: timedelta = FieldInfo(extra={"duration_const": 1500000})
-    range_test: timedelta = FieldInfo(extra={"duration_lt": 10000000, "duration_gt": 5000000})
-    range_e_test: timedelta = FieldInfo(extra={"duration_le": 10000000, "duration_ge": 5000000})
-    in_test: timedelta = FieldInfo(extra={"in": [datetime.timedelta(seconds=1), datetime.timedelta(seconds=3)]})
-    not_in_test: timedelta = FieldInfo(extra={"in": [datetime.timedelta(seconds=1), datetime.timedelta(seconds=3)]})
+    range_test: timedelta = FieldInfo(extra={"duration_lt": 10500000, "duration_gt": 5500000})
+    range_e_test: timedelta = FieldInfo(extra={"duration_le": 10500000, "duration_ge": 5500000})
+    in_test: timedelta = FieldInfo(
+        extra={"in": [timedelta(seconds=1, microseconds=500000), timedelta(seconds=3, microseconds=500000)]}
+    )
+    not_in_test: timedelta = FieldInfo(
+        extra={"in": [timedelta(seconds=1, microseconds=500000), timedelta(seconds=3, microseconds=500000)]}
+    )
 
     duration_const_validator_const_test = validator("const_test", allow_reuse=True)(duration_const_validator)
     duration_lt_validator_range_test = validator("range_test", allow_reuse=True)(duration_lt_validator)

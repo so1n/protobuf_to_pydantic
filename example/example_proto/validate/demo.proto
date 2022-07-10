@@ -199,10 +199,10 @@ message AnyTest {
 message DurationTest {
   google.protobuf.Duration required_test =1 [(validate.rules).duration.required = true];
   google.protobuf.Duration const_test =2 [(validate.rules).duration.const = {seconds: 1, nanos: 500000000}];
-  google.protobuf.Duration range_test = 3 [(validate.rules).duration = {lt: {seconds: 10}, gt: {seconds: 5}}];
-  google.protobuf.Duration range_e_test = 4 [(validate.rules).duration = {lte: {seconds: 10}, gte: {seconds: 5}}];
-  google.protobuf.Duration in_test = 5 [(validate.rules).duration = {in: [{seconds: 1}, {seconds:3}]}];
-  google.protobuf.Duration not_in_test = 6 [(validate.rules).duration = {in: [{seconds: 1}, {seconds:3}]}];
+  google.protobuf.Duration range_test = 3 [(validate.rules).duration = {lt: {seconds: 10, nanos: 500000000}, gt: {seconds: 5, nanos: 500000000}}];
+  google.protobuf.Duration range_e_test = 4 [(validate.rules).duration = {lte: {seconds: 10, nanos: 500000000}, gte: {seconds: 5, nanos: 500000000}}];
+  google.protobuf.Duration in_test = 5 [(validate.rules).duration = {in: [{seconds: 1, nanos: 500000000}, {seconds:3, nanos: 500000000}]}];
+  google.protobuf.Duration not_in_test = 6 [(validate.rules).duration = {in: [{seconds: 1, nanos: 500000000}, {seconds:3, nanos: 500000000}]}];
 }
 
 message TimestampTest {

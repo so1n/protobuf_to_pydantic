@@ -58,4 +58,5 @@ if __name__ == "__main__":
             )
         ],
         module_path="../",
+        enable_yapf=False,
     )

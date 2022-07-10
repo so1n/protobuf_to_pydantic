@@ -2,7 +2,6 @@ import datetime
 import inspect
 import json
 from dataclasses import MISSING
-from datetime import timedelta
 from enum import IntEnum
 from importlib import import_module
 from pathlib import Path
@@ -163,7 +162,7 @@ class M2P(object):
                 elif column.name == "empty":
                     type_ = Any
                 elif column.message_type.name == "Duration":
-                    type_ = timedelta
+                    type_ = datetime.timedelta
                 else:
                     # support google.protobuf.Message
                     type_ = self._parse_msg_to_pydantic_model(descriptor=column.message_type)
