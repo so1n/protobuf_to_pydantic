@@ -6,9 +6,6 @@ from protobuf_to_pydantic.grpc_types import AnyMessage
 def in_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
     field_name: str = kwargs["field"].name
     field_value: Any = kwargs["field"].field_info.extra["extra"]["in"]
-    if isinstance(v, AnyMessage):
-        if v.type_url in field_value:
-            raise ValueError(f"{field_name}.type_url:{v.type_url} not in {field_value}")
     if v not in field_value:
         raise ValueError(f"{field_name} not in {field_value}")
     return v
@@ -17,11 +14,26 @@ def in_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
 def not_in_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
     field_name: str = kwargs["field"].name
     field_value: Any = kwargs["field"].field_info.extra["extra"]["not_in"]
+    if v in field_value:
+        raise ValueError(f"{field_name} in {field_value}")
+    return v
+
+
+def any_in_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
+    field_name: str = kwargs["field"].name
+    field_value: Any = kwargs["field"].field_info.extra["extra"]["any_in"]
+    if isinstance(v, AnyMessage):
+        if v.type_url in field_value:
+            raise ValueError(f"{field_name}.type_url:{v.type_url} not in {field_value}")
+    return v
+
+
+def any_not_in_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
+    field_name: str = kwargs["field"].name
+    field_value: Any = kwargs["field"].field_info.extra["extra"]["any_in"]
     if isinstance(v, AnyMessage):
         if v.type_url in field_value:
             raise ValueError(f"{field_name}.type_url:{v.type_url} in {field_value}")
-    elif v in field_value:
-        raise ValueError(f"{field_name} in {field_value}")
     return v
 
 
@@ -104,5 +116,8 @@ def duration_const_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
         raise ValueError(f"{field_name} must {v}, not {field_value}")
     return v
 
+
+duration_in_validator = in_validator
+duration_not_in_validator = not_in_validator
 
 validate_validator_dict: Dict[str, Callable] = globals()

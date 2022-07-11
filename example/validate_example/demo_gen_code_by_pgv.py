@@ -1,6 +1,6 @@
 # This is an automatically generated file, please do not change
 # gen by protobuf_to_pydantic(https://github.com/so1n/protobuf_to_pydantic)
-# gen timestamp:1657512034
+# gen timestamp:1657519282
 
 import typing
 from datetime import timedelta
@@ -14,6 +14,7 @@ from pydantic.fields import FieldInfo
 from pydantic.networks import AnyUrl, EmailStr, IPvAnyAddress
 
 from protobuf_to_pydantic.get_desc.from_pgv.customer_validator import (
+    any_not_in_validator,
     contains_validator,
     duration_const_validator,
     duration_ge_validator,
@@ -246,23 +247,36 @@ class AnyTest(BaseModel):
     required_test: Any = FieldInfo()
     x: Any = FieldInfo(
         extra={
-            "not_in": ["type.googleapis.com/google.protobuf.Duration", "type.googleapis.com/google.protobuf.Timestamp"]
+            "any_not_in": [
+                "type.googleapis.com/google.protobuf.Duration",
+                "type.googleapis.com/google.protobuf.Timestamp",
+            ]
         }
     )
 
-    not_in_validator_x = validator("x", allow_reuse=True)(not_in_validator)
+    any_not_in_validator_x = validator("x", allow_reuse=True)(any_not_in_validator)
 
 
 class DurationTest(BaseModel):
     required_test: timedelta = FieldInfo()
-    const_test: timedelta = FieldInfo(extra={"duration_const": 1500000})
-    range_test: timedelta = FieldInfo(extra={"duration_lt": 10500000, "duration_gt": 5500000})
-    range_e_test: timedelta = FieldInfo(extra={"duration_le": 10500000, "duration_ge": 5500000})
+    const_test: timedelta = FieldInfo(extra={"duration_const": timedelta(seconds=1, microseconds=500000)})
+    range_test: timedelta = FieldInfo(
+        extra={
+            "duration_lt": timedelta(seconds=10, microseconds=500000),
+            "duration_gt": timedelta(seconds=5, microseconds=500000),
+        }
+    )
+    range_e_test: timedelta = FieldInfo(
+        extra={
+            "duration_le": timedelta(seconds=10, microseconds=500000),
+            "duration_ge": timedelta(seconds=5, microseconds=500000),
+        }
+    )
     in_test: timedelta = FieldInfo(
-        extra={"in": [timedelta(seconds=1, microseconds=500000), timedelta(seconds=3, microseconds=500000)]}
+        extra={"duration_in": [timedelta(seconds=1, microseconds=500000), timedelta(seconds=3, microseconds=500000)]}
     )
     not_in_test: timedelta = FieldInfo(
-        extra={"in": [timedelta(seconds=1, microseconds=500000), timedelta(seconds=3, microseconds=500000)]}
+        extra={"duration_in": [timedelta(seconds=1, microseconds=500000), timedelta(seconds=3, microseconds=500000)]}
     )
 
     duration_const_validator_const_test = validator("const_test", allow_reuse=True)(duration_const_validator)
