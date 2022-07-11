@@ -7,12 +7,12 @@ from importlib import import_module
 from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional, Tuple, Type, Union
 
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseConfig, BaseModel, Field, validator
 from pydantic.fields import FieldInfo, Undefined
 from pydantic.typing import NoArgAnyCallable
 
 from protobuf_to_pydantic.get_desc import get_desc_from_pgv, get_desc_from_proto_file, get_desc_from_pyi_file
-from protobuf_to_pydantic.grpc_types import Descriptor, FieldDescriptor, Message, Timestamp
+from protobuf_to_pydantic.grpc_types import AnyMessage, Descriptor, FieldDescriptor, Message, Timestamp
 from protobuf_to_pydantic.util import create_pydantic_model
 
 type_dict: Dict[str, Type] = {
@@ -121,6 +121,7 @@ class M2P(object):
     def model(self) -> Type[BaseModel]:
         return self._gen_model
 
+    # flake8: noqa: C901
     def _parse_msg_to_pydantic_model(
         self,
         *,
@@ -130,6 +131,8 @@ class M2P(object):
         validators: Dict[str, classmethod] = {}
         timestamp_handler_field_silt: List[str] = []
         timestamp_type, _grpc_timestamp_handler = self._grpc_timestamp_handler_tuple
+        pydantic_model_config: Type[BaseConfig] = BaseConfig
+        pydantic_model_config.__p2p_dict__ = {}
 
         for column in descriptor.fields:
             type_: Any = type_dict.get(column.type, None)
@@ -163,6 +166,10 @@ class M2P(object):
                     type_ = Any
                 elif column.message_type.name == "Duration":
                     type_ = datetime.timedelta
+                elif column.message_type.name == "Any":
+                    type_ = AnyMessage
+                    pydantic_model_config.arbitrary_types_allowed = True
+                    pydantic_model_config.__p2p_dict__["arbitrary_types_allowed"] = True
                 else:
                     # support google.protobuf.Message
                     type_ = self._parse_msg_to_pydantic_model(descriptor=column.message_type)
@@ -239,7 +246,12 @@ class M2P(object):
         if class_name == "Any":
             # Message.Any and typing.Any with the same name, need to change the name of Message.Any.
             class_name = "AnyMessage"
-        return create_pydantic_model(annotation_dict, class_name=class_name, pydantic_validators=validators or None)
+        return create_pydantic_model(
+            annotation_dict,
+            class_name=class_name,
+            pydantic_validators=validators or None,
+            pydantic_config=pydantic_model_config if hasattr(pydantic_model_config, "__p2p_dict__") else None,
+        )
 
     def _get_pait_info_from_grpc_desc(self, desc: str) -> MessagePaitModel:
         pait_dict: dict = {}

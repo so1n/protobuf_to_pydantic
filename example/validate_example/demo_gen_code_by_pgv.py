@@ -1,6 +1,6 @@
 # This is an automatically generated file, please do not change
 # gen by protobuf_to_pydantic(https://github.com/so1n/protobuf_to_pydantic)
-# gen timestamp:1657445118
+# gen timestamp:1657512034
 
 import typing
 from datetime import timedelta
@@ -8,6 +8,7 @@ from enum import IntEnum
 from ipaddress import IPv4Address, IPv6Address
 from uuid import UUID
 
+from google.protobuf.any_pb2 import Any  # type: ignore
 from pydantic import BaseModel, validator
 from pydantic.fields import FieldInfo
 from pydantic.networks import AnyUrl, EmailStr, IPvAnyAddress
@@ -241,14 +242,15 @@ class RepeatedTest(BaseModel):
     ignore_test: typing.List[str] = FieldInfo()
 
 
-class AnyMessage(BaseModel):
-    type_url: str = FieldInfo(default="")
-    value: bytes = FieldInfo(default=b"")
-
-
 class AnyTest(BaseModel):
-    required_test: AnyMessage = FieldInfo()
-    x: AnyMessage = FieldInfo()
+    required_test: Any = FieldInfo()
+    x: Any = FieldInfo(
+        extra={
+            "not_in": ["type.googleapis.com/google.protobuf.Duration", "type.googleapis.com/google.protobuf.Timestamp"]
+        }
+    )
+
+    not_in_validator_x = validator("x", allow_reuse=True)(not_in_validator)
 
 
 class DurationTest(BaseModel):

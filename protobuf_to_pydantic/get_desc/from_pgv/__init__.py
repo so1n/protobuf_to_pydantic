@@ -1,5 +1,4 @@
 import logging
-from datetime import timedelta
 from typing import Any, Dict, List, Optional, Set, Type
 
 from pydantic import validator
@@ -47,6 +46,7 @@ column_pydantic_dict: Dict[str, str] = {
     "unique": "unique_items",
     "gte": "ge",
     "lte": "le",
+    "required": "miss_default",
 }
 
 
@@ -144,10 +144,10 @@ def get_desc_from_pgv(message: Type[Message]) -> dict:
             message_type_name: str = field.message_type.name
             # if message_type_name.endswith("Entry"):
             #     type_name = "map"
-            # elif message_type_name == "Any":
-            #     type_name = "any"
             if message_type_name == "Duration":
                 type_name = "duration"
+            elif message_type_name == "Any":
+                type_name = "any"
             else:
                 _logger.warning(
                     f"{__name__} not support protobuf type id:{field.type} from field name{field.full_name}"
@@ -171,7 +171,8 @@ def get_desc_from_pgv(message: Type[Message]) -> dict:
             option_value_list.append(type_value)
 
         field_dict = option_descriptor_to_desc_dict(option_value_list, field)
-        field_dict["miss_default"] = miss_default
+        if miss_default:
+            field_dict["miss_default"] = miss_default
         message_field_dict[field.name] = field_dict
         _message_desc_dict[message.__name__] = message_field_dict
     return _message_desc_dict

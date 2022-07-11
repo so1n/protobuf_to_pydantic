@@ -114,9 +114,23 @@ class P2C(object):
         # https://github.com/psf/black/issues/779
         return content_str
 
+    @staticmethod
+    def _pydantic_config_handle(model: Type[BaseModel], indent: int = 0) -> str:
+        config_str: str = ""
+        if not getattr(model.Config, "__p2p_dict__", None):
+            return config_str
+        for key, value in model.Config.__p2p_dict__.items():
+            config_str += f"{' ' * (indent + 4)}{key} = {value}\n"
+        if config_str:
+            config_str = f"{' ' * indent}class Config:\n" + config_str
+        return config_str
+
     def _gen_pydantic_model_py_code(self, model: Type[BaseModel]) -> None:
         self._import_set.add("from pydantic import BaseModel")
         class_str: str = f"class {model.__name__}(BaseModel):\n"
+        config_class: str = self._pydantic_config_handle(model, indent=4)
+        if config_class:
+            class_str += config_class + "\n"
         for key, value in model.__fields__.items():
             value_type = value.outer_type_
             value_type_name: str = getattr(value_type, "__name__", None)
@@ -199,7 +213,10 @@ class P2C(object):
                 else:
                     class_name = type_.__name__
 
-            self._import_set.add(f"from {module_name} import {class_name}")
+            if module_name.startswith("google.protobuf"):
+                self._import_set.add(f"from {module_name} import {class_name}  # type: ignore")
+            else:
+                self._import_set.add(f"from {module_name} import {class_name}")
 
     def _field_info_handle(self, field_info: FieldInfo) -> str:
         # Introduce the corresponding class for FieldInfo's properties
@@ -229,7 +246,6 @@ class P2C(object):
                     # TODO Here currently only consider the support for pgv, the follow-up to fill in
                     continue
                 self._import_set.add("from pydantic import validator")
-                self._import_set.add("from typing import Any")
                 self._import_set.add(
                     f"from {class_validator_value.func.__module__} import {class_validator_value.func.__name__}"
                 )
