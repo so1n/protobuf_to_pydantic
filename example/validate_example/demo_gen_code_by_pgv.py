@@ -1,6 +1,6 @@
 # This is an automatically generated file, please do not change
 # gen by protobuf_to_pydantic(https://github.com/so1n/protobuf_to_pydantic)
-# gen timestamp:1657519282
+# gen timestamp:1657522976
 
 import typing
 from datetime import timedelta
@@ -9,6 +9,7 @@ from ipaddress import IPv4Address, IPv6Address
 from uuid import UUID
 
 from google.protobuf.any_pb2 import Any  # type: ignore
+from google.protobuf.pyext._message import RepeatedScalarContainer  # type: ignore
 from pydantic import BaseModel, validator
 from pydantic.fields import FieldInfo
 from pydantic.networks import AnyUrl, EmailStr, IPvAnyAddress
@@ -27,6 +28,14 @@ from protobuf_to_pydantic.get_desc.from_pgv.customer_validator import (
     not_in_validator,
     prefix_validator,
     suffix_validator,
+    timestamp_const_validator,
+    timestamp_ge_validator,
+    timestamp_gt_now_validator,
+    timestamp_gt_validator,
+    timestamp_le_validator,
+    timestamp_lt_now_validator,
+    timestamp_lt_validator,
+    timestamp_within_validator,
 )
 from protobuf_to_pydantic.get_desc.from_pgv.types import HostNameStr, UriRefStr
 
@@ -290,13 +299,30 @@ class DurationTest(BaseModel):
 
 class TimestampTest(BaseModel):
     required_test: str = FieldInfo()
-    const_test: str = FieldInfo()
-    range_test: str = FieldInfo()
-    range_e_test: str = FieldInfo()
-    lt_now_test: str = FieldInfo()
-    gt_now_test: str = FieldInfo()
-    within_test: str = FieldInfo()
-    within_and_gt_now_test: str = FieldInfo()
+    const_test: str = FieldInfo(extra={"timestamp_const": 1600000000.0})
+    range_test: str = FieldInfo(extra={"timestamp_lt": 1600000010.0, "timestamp_gt": 1600000000.0})
+    range_e_test: str = FieldInfo(extra={"timestamp_le": 1600000010.0, "timestamp_ge": 1600000000.0})
+    lt_now_test: str = FieldInfo(extra={"timestamp_lt_now": True})
+    gt_now_test: str = FieldInfo(extra={"timestamp_gt_now": True})
+    within_test: str = FieldInfo(extra={"timestamp_within": timedelta(seconds=1)})
+    within_and_gt_now_test: str = FieldInfo(
+        extra={"timestamp_gt_now": True, "timestamp_within": timedelta(seconds=3600)}
+    )
+
+    timestamp_const_validator_const_test = validator("const_test", allow_reuse=True)(timestamp_const_validator)
+    timestamp_lt_validator_range_test = validator("range_test", allow_reuse=True)(timestamp_lt_validator)
+    timestamp_gt_validator_range_test = validator("range_test", allow_reuse=True)(timestamp_gt_validator)
+    timestamp_le_validator_range_e_test = validator("range_e_test", allow_reuse=True)(timestamp_le_validator)
+    timestamp_ge_validator_range_e_test = validator("range_e_test", allow_reuse=True)(timestamp_ge_validator)
+    timestamp_lt_now_validator_lt_now_test = validator("lt_now_test", allow_reuse=True)(timestamp_lt_now_validator)
+    timestamp_gt_now_validator_gt_now_test = validator("gt_now_test", allow_reuse=True)(timestamp_gt_now_validator)
+    timestamp_within_validator_within_test = validator("within_test", allow_reuse=True)(timestamp_within_validator)
+    timestamp_gt_now_validator_within_and_gt_now_test = validator("within_and_gt_now_test", allow_reuse=True)(
+        timestamp_gt_now_validator
+    )
+    timestamp_within_validator_within_and_gt_now_test = validator("within_and_gt_now_test", allow_reuse=True)(
+        timestamp_within_validator
+    )
 
 
 class MessageDisabledTest(BaseModel):

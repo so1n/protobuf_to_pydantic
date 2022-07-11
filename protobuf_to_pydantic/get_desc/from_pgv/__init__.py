@@ -91,7 +91,18 @@ def option_descriptor_to_desc_dict(option_descriptor: Descriptor, field: Any, de
             # Field Conversion
             column = column_pydantic_dict[column]
 
-        if type_name in ("duration", "any") and column in ("lt", "le", "gt", "ge", "const", "in", "not_in"):
+        if type_name in ("duration", "any", "timestamp") and column in (
+            "lt",
+            "le",
+            "gt",
+            "ge",
+            "const",
+            "in",
+            "not_in",
+            "lt_now",
+            "gt_now",
+            "within",
+        ):
             # Types of priority treatment for special cases
             if "validator" not in desc_dict:
                 desc_dict["validator"] = {}
@@ -104,6 +115,7 @@ def option_descriptor_to_desc_dict(option_descriptor: Descriptor, field: Any, de
             # Compatible with PGV attributes that are not supported by pydantic
             if "validator" not in desc_dict:
                 desc_dict["validator"] = {}
+            print("a ha")
             desc_dict["extra"][column] = replace_type(value)
             desc_dict["validator"][f"{field.name}_{column}_validator"] = validator(field.name, allow_reuse=True)(
                 validate_validator_dict.get(f"{column}_validator")
@@ -143,6 +155,8 @@ def get_desc_from_pgv(message: Type[Message]) -> dict:
                 type_name = "duration"
             elif message_type_name == "Any":
                 type_name = "any"
+            elif message_type_name == "Timestamp":
+                type_name = "timestamp"
             else:
                 _logger.warning(
                     f"{__name__} not support protobuf type id:{field.type} from field name{field.full_name}"

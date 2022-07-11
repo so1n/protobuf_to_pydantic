@@ -175,8 +175,10 @@ class P2C(object):
                 for i in type_.values():
                     self._parse_type(i)
             else:
-                return
+                type_module = inspect.getmodule(type_.__class__)
 
+        if not type_module:
+            return
         elif getattr(type_module, "__name__", "builtins") == "builtins":
             return
         elif isinstance(type_, _GenericAlias):
