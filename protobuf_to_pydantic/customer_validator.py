@@ -1,22 +1,31 @@
 import time
 from datetime import datetime
-from typing import Any, Callable, Dict
+from typing import Any, Callable, Dict, Tuple
+
+from pydantic.fields import ModelField
 
 from protobuf_to_pydantic.grpc_types import AnyMessage, Timestamp
 
 
+def _get_name_value_from_kwargs(key: str, field: ModelField) -> Tuple[str, Any]:
+    field_name: str = field.name
+    if field.field_info.extra:
+        field_value: Any = field.field_info.extra["extra"].get(key, None)
+    else:
+        field_value = getattr(field.type_, key, None)
+    return field_name, field_value
+
+
 def in_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
-    field_name: str = kwargs["field"].name
-    field_value: Any = kwargs["field"].field_info.extra["extra"]["in"]
-    if v not in field_value:
+    field_name, field_value = _get_name_value_from_kwargs("in", kwargs["field"])
+    if field_value is not None and v not in field_value:
         raise ValueError(f"{field_name} not in {field_value}")
     return v
 
 
 def not_in_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
-    field_name: str = kwargs["field"].name
-    field_value: Any = kwargs["field"].field_info.extra["extra"]["not_in"]
-    if v in field_value:
+    field_name, field_value = _get_name_value_from_kwargs("not_in", kwargs["field"])
+    if field_value is not None and v in field_value:
         raise ValueError(f"{field_name} in {field_value}")
     return v
 
@@ -83,41 +92,36 @@ def not_contains_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
 # duration support #
 ####################
 def duration_lt_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
-    field_name: str = kwargs["field"].name
-    field_value: Any = kwargs["field"].field_info.extra["extra"]["duration_lt"]
-    if not (v > field_value):
-        raise ValueError(f"{field_name} must > {field_value}, not {v}")
-    return v
-
-
-def duration_le_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
-    field_name: str = kwargs["field"].name
-    field_value: Any = kwargs["field"].field_info.extra["extra"]["duration_le"]
-    if not (v >= field_value):
-        raise ValueError(f"{field_name} must >= {field_value}, not {v}")
-    return v
-
-
-def duration_gt_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
-    field_name: str = kwargs["field"].name
-    field_value: Any = kwargs["field"].field_info.extra["extra"]["duration_gt"]
-    if not (v < field_value):
+    field_name, field_value = _get_name_value_from_kwargs("duration_lt", kwargs["field"])
+    if field_value is not None and not (v < field_value):
         raise ValueError(f"{field_name} must < {field_value}, not {v}")
     return v
 
 
-def duration_ge_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
-    field_name: str = kwargs["field"].name
-    field_value: Any = kwargs["field"].field_info.extra["extra"]["duration_ge"]
-    if not (v <= field_value):
+def duration_le_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
+    field_name, field_value = _get_name_value_from_kwargs("duration_le", kwargs["field"])
+    if field_value is not None and not (v <= field_value):
         raise ValueError(f"{field_name} must <= {field_value}, not {v}")
     return v
 
 
+def duration_gt_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
+    field_name, field_value = _get_name_value_from_kwargs("duration_gt", kwargs["field"])
+    if field_value is not None and not (v > field_value):
+        raise ValueError(f"{field_name} must > {field_value}, not {v}")
+    return v
+
+
+def duration_ge_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
+    field_name, field_value = _get_name_value_from_kwargs("duration_ge", kwargs["field"])
+    if field_value is not None and not (v >= field_value):
+        raise ValueError(f"{field_name} must >= {field_value}, not {v}")
+    return v
+
+
 def duration_const_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
-    field_name: str = kwargs["field"].name
-    field_value: Any = kwargs["field"].field_info.extra["extra"]["duration_const"]
-    if v != field_value:
+    field_name, field_value = _get_name_value_from_kwargs("duration_const", kwargs["field"])
+    if field_value is not None and v != field_value:
         raise ValueError(f"{field_name} must {field_value}, not {v}")
     return v
 
@@ -154,7 +158,7 @@ def timestamp_lt_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
 
 def timestamp_lt_now_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
     field_name: str = kwargs["field"].name
-    field_value: Any = kwargs["field"].field_info.extra["extra"]["timestamp_lt"]
+    field_value: Any = kwargs["field"].field_info.extra["extra"]["timestamp_lt_now"]
     now_time: float = time.time()
     if not (timestamp_handle(v) > now_time and field_value):
         raise ValueError(f"{field_name} must > {now_time}, not {v}")
@@ -179,7 +183,7 @@ def timestamp_gt_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
 
 def timestamp_gt_now_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
     field_name: str = kwargs["field"].name
-    field_value: Any = kwargs["field"].field_info.extra["extra"]["timestamp_gt"]
+    field_value: Any = kwargs["field"].field_info.extra["extra"]["timestamp_gt_now"]
     now_time: float = time.time()
     if not (timestamp_handle(v) < now_time and field_value):
         raise ValueError(f"{field_name} must < {now_time}, not {v}")
@@ -188,7 +192,7 @@ def timestamp_gt_now_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
 
 def timestamp_within_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
     field_name: str = kwargs["field"].name
-    field_value: Any = kwargs["field"].field_info.extra["extra"]["timestamp_gt"].total_seconds()
+    field_value: Any = kwargs["field"].field_info.extra["extra"]["timestamp_within"].total_seconds()
     now_time: float = time.time()
     if not ((now_time - field_value) <= timestamp_handle(v) <= (now_time - field_value)):
         raise ValueError(f"{field_name} must < {now_time}, not {v}")

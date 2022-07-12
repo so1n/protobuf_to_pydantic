@@ -1,12 +1,11 @@
 import logging
 from typing import Any, Dict, List, Optional, Set, Type
 
-from pydantic import validator
-
-from protobuf_to_pydantic.grpc_types import Descriptor, FieldDescriptor, Message, RepeatedCompositeContainer
+from protobuf_to_pydantic.customer_con_type import confloat, conint, conlist, constr, contimedelta, validator
+from protobuf_to_pydantic.customer_validator import validate_validator_dict
+from protobuf_to_pydantic.grpc_types import Descriptor, FieldDescriptor, Message
 from protobuf_to_pydantic.util import replace_type
 
-from .customer_validator import validate_validator_dict
 from .types import column_pydantic_type_dict
 
 _logger: logging.Logger = logging.getLogger(__name__)
@@ -115,7 +114,6 @@ def option_descriptor_to_desc_dict(option_descriptor: Descriptor, field: Any, de
             # Compatible with PGV attributes that are not supported by pydantic
             if "validator" not in desc_dict:
                 desc_dict["validator"] = {}
-            print("a ha")
             desc_dict["extra"][column] = replace_type(value)
             desc_dict["validator"][f"{field.name}_{column}_validator"] = validator(field.name, allow_reuse=True)(
                 validate_validator_dict.get(f"{column}_validator")
@@ -124,11 +122,26 @@ def option_descriptor_to_desc_dict(option_descriptor: Descriptor, field: Any, de
         elif column in column_pydantic_type_dict:
             desc_dict["type"] = column_pydantic_type_dict[column]
             continue
-
+        elif column == "items":
+            sub_dict: dict = {"extra": {}}
+            type_name = value.ListFields()[0][0].full_name.split(".")[-1]
+            if type_name == "string":
+                sub_dict["type"] = constr
+            elif "double" in type_name or "float" in type_name:
+                sub_dict["type"] = confloat
+            elif "int" in type_name:
+                sub_dict["type"] = conint
+            elif type_name == "duration":
+                sub_dict["type"] = contimedelta
+            else:
+                _logger.warning(f"{__name__} not support sub type `{type_name}`, please reset {field.full_name}")
+                desc_dict["type"] = List
+                continue
+            option_descriptor_to_desc_dict(getattr(value, type_name), field, sub_dict, type_name)
+            desc_dict["type"] = conlist
+            desc_dict["sub"] = sub_dict
         # TODO
-        # support Repeated items
         # support MapRules
-        # support TimestampRules
 
         desc_dict[column] = value
 
@@ -147,6 +160,8 @@ def get_desc_from_pgv(message: Type[Message]) -> dict:
             return message_field_dict
     for field in message.DESCRIPTOR.fields:
         type_name: str = type_dict.get(field.type, "")
+        if field.label == FieldDescriptor.LABEL_REPEATED:
+            type_name = "repeated"
         if not type_name:
             message_type_name: str = field.message_type.name
             # if message_type_name.endswith("Entry"):

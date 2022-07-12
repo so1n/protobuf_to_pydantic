@@ -1,6 +1,7 @@
 # This is an automatically generated file, please do not change
 # gen by protobuf_to_pydantic(https://github.com/so1n/protobuf_to_pydantic)
-# gen timestamp:1657522976
+# gen timestamp:1657617538
+# type: ignore
 
 import typing
 from datetime import timedelta
@@ -13,8 +14,10 @@ from google.protobuf.pyext._message import RepeatedScalarContainer  # type: igno
 from pydantic import BaseModel, validator
 from pydantic.fields import FieldInfo
 from pydantic.networks import AnyUrl, EmailStr, IPvAnyAddress
+from pydantic.types import confloat, conint, conlist, constr
 
-from protobuf_to_pydantic.get_desc.from_pgv.customer_validator import (
+from protobuf_to_pydantic.customer_con_type import contimedelta
+from protobuf_to_pydantic.customer_validator import (
     any_not_in_validator,
     contains_validator,
     duration_const_validator,
@@ -246,9 +249,19 @@ class MessageTest(BaseModel):
 
 
 class RepeatedTest(BaseModel):
-    range_test: typing.List[str] = FieldInfo()
-    unique_test: typing.List[str] = FieldInfo()
-    items_test: typing.List[str] = FieldInfo()
+    range_test: typing.List[str] = FieldInfo(min_items=1, max_items=5)
+    unique_test: typing.List[str] = FieldInfo(unique_items=True)
+    items_string_test: conlist(item_type=constr(min_length=1, max_length=5), min_items=1, max_items=5) = FieldInfo()
+    items_double_test: conlist(item_type=confloat(gt=1, lt=5), min_items=1, max_items=5) = FieldInfo()
+    items_int32_test: conlist(item_type=conint(gt=1, lt=5), min_items=1, max_items=5) = FieldInfo()
+    items_timestamp_test: typing.List = FieldInfo(min_items=1, max_items=5)
+    items_duration_test: conlist(
+        item_type=contimedelta(
+            duration_gt=timedelta(days=18518, seconds=44800), duration_lt=timedelta(days=18518, seconds=44810)
+        ),
+        min_items=1,
+        max_items=5,
+    ) = FieldInfo()
     ignore_test: typing.List[str] = FieldInfo()
 
 

@@ -570,24 +570,40 @@ class RepeatedTest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     RANGE_TEST_FIELD_NUMBER: builtins.int
     UNIQUE_TEST_FIELD_NUMBER: builtins.int
-    ITEMS_TEST_FIELD_NUMBER: builtins.int
+    ITEMS_STRING_TEST_FIELD_NUMBER: builtins.int
+    ITEMS_DOUBLE_TEST_FIELD_NUMBER: builtins.int
+    ITEMS_INT32_TEST_FIELD_NUMBER: builtins.int
+    ITEMS_TIMESTAMP_TEST_FIELD_NUMBER: builtins.int
+    ITEMS_DURATION_TEST_FIELD_NUMBER: builtins.int
     IGNORE_TEST_FIELD_NUMBER: builtins.int
     @property
     def range_test(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[typing.Text]: ...
     @property
     def unique_test(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[typing.Text]: ...
     @property
-    def items_test(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[typing.Text]: ...
+    def items_string_test(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[typing.Text]: ...
+    @property
+    def items_double_test(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[builtins.float]: ...
+    @property
+    def items_int32_test(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[builtins.int]: ...
+    @property
+    def items_timestamp_test(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[google.protobuf.timestamp_pb2.Timestamp]: ...
+    @property
+    def items_duration_test(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[google.protobuf.duration_pb2.Duration]: ...
     @property
     def ignore_test(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[typing.Text]: ...
     def __init__(self,
         *,
         range_test: typing.Optional[typing.Iterable[typing.Text]] = ...,
         unique_test: typing.Optional[typing.Iterable[typing.Text]] = ...,
-        items_test: typing.Optional[typing.Iterable[typing.Text]] = ...,
+        items_string_test: typing.Optional[typing.Iterable[typing.Text]] = ...,
+        items_double_test: typing.Optional[typing.Iterable[builtins.float]] = ...,
+        items_int32_test: typing.Optional[typing.Iterable[builtins.int]] = ...,
+        items_timestamp_test: typing.Optional[typing.Iterable[google.protobuf.timestamp_pb2.Timestamp]] = ...,
+        items_duration_test: typing.Optional[typing.Iterable[google.protobuf.duration_pb2.Duration]] = ...,
         ignore_test: typing.Optional[typing.Iterable[typing.Text]] = ...,
         ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["ignore_test",b"ignore_test","items_test",b"items_test","range_test",b"range_test","unique_test",b"unique_test"]) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["ignore_test",b"ignore_test","items_double_test",b"items_double_test","items_duration_test",b"items_duration_test","items_int32_test",b"items_int32_test","items_string_test",b"items_string_test","items_timestamp_test",b"items_timestamp_test","range_test",b"range_test","unique_test",b"unique_test"]) -> None: ...
 global___RepeatedTest = RepeatedTest
 
 class AnyTest(google.protobuf.message.Message):

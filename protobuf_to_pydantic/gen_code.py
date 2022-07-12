@@ -3,15 +3,18 @@ import pathlib
 import sys
 import time
 from collections import deque
+from datetime import timedelta
 from enum import IntEnum
 from types import ModuleType
 from typing import _GenericAlias  # type: ignore
-from typing import Any, Deque, Optional, Set, Tuple, Type
+from typing import Any, Callable, Deque, List, Optional, Set, Tuple, Type
 
 from pydantic import BaseModel
 from pydantic.fields import FieldInfo
+from pydantic.types import ConstrainedList
 
-from protobuf_to_pydantic.get_desc.from_pgv import customer_validator
+from protobuf_to_pydantic import customer_validator
+from protobuf_to_pydantic.customer_con_type import pydantic_con_dict
 
 
 def _get_type_name(type_: Type) -> str:
@@ -73,7 +76,8 @@ class P2C(object):
         content_str: str = (
             "# This is an automatically generated file, please do not change\n"
             "# gen by protobuf_to_pydantic(https://github.com/so1n/protobuf_to_pydantic)\n"
-            f"# gen timestamp:{int(time.time())}\n\n"
+            f"# gen timestamp:{int(time.time())}\n"
+            "# type: ignore\n\n"
         )
 
         content_str += "\n".join(sorted(self._import_set))
@@ -125,6 +129,24 @@ class P2C(object):
             config_str = f"{' ' * indent}class Config:\n" + config_str
         return config_str
 
+    def pydantic_con_type_handle(self, type_: Any) -> str:
+        con_func: Callable = pydantic_con_dict[type_.__mro__[1]]
+
+        param_str_list: List[str] = []
+        for _key in inspect.signature(con_func).parameters.keys():
+            _value = getattr(type_, _key, None)
+            if not _value:
+                continue
+            if inspect.isclass(_value) and _value.__mro__[1] in pydantic_con_dict:
+                _value = self.pydantic_con_type_handle(_value)
+            self._parse_type(_value)
+            if isinstance(_value, timedelta):
+                self._parse_type(_value)
+                _value = _value.__repr__().strip("'").replace("datetime.", "")
+            param_str_list.append(f"{_key}={_value}")
+        self._parse_type(con_func)
+        return f"{con_func.__name__}({', '.join(param_str_list)})"
+
     def _gen_pydantic_model_py_code(self, model: Type[BaseModel]) -> None:
         self._import_set.add("from pydantic import BaseModel")
         class_str: str = f"class {model.__name__}(BaseModel):\n"
@@ -151,9 +173,14 @@ class P2C(object):
                     self._parse_type(value_type)
                 # Extracting the exact Type Hint text
                 if isinstance(value_type, _GenericAlias):
-                    value_type_name = (
-                        f"typing.{value_type._name}[{', '.join([i.__name__ for i in value_type.__args__])}]"
-                    )
+                    sub_type_str = ", ".join([i.__name__ for i in value_type.__args__ if i.__name__ != "T"])
+                    if sub_type_str:
+                        value_type_name = f"typing.{value_type._name}[{sub_type_str}]"
+                    else:
+                        value_type_name = f"typing.{value_type._name}"
+                elif inspect.isclass(value_type) and issubclass(value_type, ConstrainedList):
+                    # support like repeated[string]
+                    value_type_name = self.pydantic_con_type_handle(value_type)
                 else:
                     value_type_name = getattr(value_type, "__name__", None)
 
@@ -212,6 +239,8 @@ class P2C(object):
                     class_name = type_.__name__
                 elif not inspect.isfunction(type_):
                     class_name = type_.__class__.__name__
+                    if class_name == "cython_function_or_method":
+                        class_name = type_.__name__
                 else:
                     class_name = type_.__name__
 

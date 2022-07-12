@@ -181,8 +181,31 @@ message MessageTest {
 message RepeatedTest {
   repeated string range_test = 1[(validate.rules).repeated = {min_items: 1, max_items: 5}];
   repeated string unique_test = 2 [(validate.rules).repeated.unique = true];
-  repeated string items_test = 3 [(validate.rules).repeated.items.string = {min_len:1, max_len: 5}];
-  repeated string ignore_test = 4 [(validate.rules).repeated.ignore_empty = true];
+  repeated string items_string_test = 3 [
+    (validate.rules).repeated = {min_items: 1, max_items: 5},
+    (validate.rules).repeated.items.string = {min_len:1, max_len: 5}
+  ];
+  repeated double items_double_test = 4 [
+    (validate.rules).repeated = {min_items: 1, max_items: 5},
+    (validate.rules).repeated.items.double = {gt:1, lt: 5}
+  ];
+  repeated int32  items_int32_test = 5 [
+    (validate.rules).repeated = {min_items: 1, max_items: 5},
+    (validate.rules).repeated.items.int32 = {gt:1, lt: 5}
+  ];
+  repeated google.protobuf.Timestamp items_timestamp_test = 6 [
+    (validate.rules).repeated = {min_items: 1, max_items: 5},
+    (validate.rules).repeated.items.timestamp = {gt: {seconds: 1600000000}, lt: {seconds: 1600000010}}
+  ];
+  repeated google.protobuf.Duration items_duration_test = 7 [
+    (validate.rules).repeated = {min_items: 1, max_items: 5},
+    (validate.rules).repeated.items.duration = {gt: {seconds: 10}, lt: {seconds: 10}}
+  ];
+  repeated bytes items_bytes_test = 8 [
+    (validate.rules).repeated = {min_items: 1, max_items: 5},
+    (validate.rules).repeated.items.bytes= {min_len: 1, max_len: 5}
+  ];
+  repeated string ignore_test = 9 [(validate.rules).repeated.ignore_empty = true];
 }
 
 

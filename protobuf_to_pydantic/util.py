@@ -17,7 +17,6 @@ def create_pydantic_model(
     """pydantic self.pait_response_model helper
     if use create_model('DynamicModel', **annotation_dict), mypy will tip error
     """
-
     return create_model(
         class_name,
         __config__=pydantic_config,

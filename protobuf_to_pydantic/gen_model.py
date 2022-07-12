@@ -5,6 +5,7 @@ from dataclasses import MISSING
 from enum import IntEnum
 from importlib import import_module
 from pathlib import Path
+from types import ModuleType
 from typing import Any, Callable, Dict, List, Optional, Tuple, Type, Union
 
 from pydantic import BaseConfig, BaseModel, Field, validator
@@ -54,12 +55,13 @@ class MessagePaitModel(BaseModel):
     max_length: Optional[int] = Field(None)
     min_items: Optional[int] = Field(None)
     max_items: Optional[int] = Field(None)
-    unique_items: Optional[List[str]] = Field(None)
+    unique_items: Optional[bool] = Field(None)
     multiple_of: Optional[int] = Field(None)
     regex: Optional[str] = Field(None)
     extra: dict = Field(default_factory=dict)
     type_: Any = Field(None, alias="type")
     validator: Optional[Dict[str, Any]] = Field(None)
+    sub: Optional["MessagePaitModel"] = Field(None)
 
 
 def grpc_timestamp_int_handler(cls: Any, v: int) -> Timestamp:
@@ -120,6 +122,50 @@ class M2P(object):
     @property
     def model(self) -> Type[BaseModel]:
         return self._gen_model
+
+    def _field_param_dict_handle(self, field_param_dict: dict, default: Any) -> None:
+        if field_param_dict.pop("miss_default") is not True:
+            field_param_dict["default"] = default
+        if field_param_dict["default_factory"]:
+            field_param_dict.pop("default", "")
+        if field_param_dict.get("const").__class__ != MISSING.__class__:
+            field_param_dict["default"] = field_param_dict["const"]
+            field_param_dict["const"] = True
+        else:
+            field_param_dict.pop("const")
+
+        if field_param_dict.get("example").__class__ == MISSING.__class__:
+            field_param_dict.pop("example")
+
+        extra = field_param_dict.pop("extra")
+        if extra:
+            field_param_dict.update(extra)
+
+        field_type = field_param_dict.get("type_")
+        sub_field_param_dict: Optional[dict] = field_param_dict.pop("sub", None)
+        field_type_model: Optional[ModuleType] = inspect.getmodule(field_type)
+        if (
+            field_type
+            and field_type_model
+            and field_type_model.__name__
+            in (
+                "pydantic.types",
+                "protobuf_to_pydantic.customer_con_type",
+            )
+        ):
+            # support https://pydantic-docs.helpmanual.io/usage/types/#constrained-types
+            # Parameters needed to extract `constrained-types`
+            type_param_dict: dict = {}
+            for key in inspect.signature(field_type).parameters.keys():
+                if key in field_param_dict:
+                    type_param_dict[key] = field_param_dict.pop(key)
+
+            if sub_field_param_dict and "type_" in sub_field_param_dict:
+                # If a nested type is found, use the same treatment
+                self._field_param_dict_handle(sub_field_param_dict, default)
+                field_param_dict["type_"] = field_type(sub_field_param_dict["type_"], **type_param_dict)
+            else:
+                field_param_dict["type_"] = field_type(**type_param_dict)
 
     # flake8: noqa: C901
     def _parse_msg_to_pydantic_model(
@@ -198,37 +244,22 @@ class M2P(object):
                     msg_pait_model = MessagePaitModel(**field_doc)
 
                 field_param_dict: dict = msg_pait_model.dict()
+                # Nested types do not include the `enable`, `field` and `validator`  attributes
                 if not field_param_dict.pop("enable"):
                     continue
-
-                if field_param_dict.pop("miss_default") is not True:
-                    field_param_dict["default"] = default
-                if field_param_dict["default_factory"]:
-                    field_param_dict.pop("default", "")
-                if field_param_dict.get("const").__class__ != MISSING.__class__:
-                    field_param_dict["default"] = field_param_dict["const"]
-                    field_param_dict["const"] = True
-                else:
-                    field_param_dict.pop("const")
-
-                if field_param_dict.get("example").__class__ == MISSING.__class__:
-                    field_param_dict.pop("example")
-
                 _field = field_param_dict.pop("field")
                 if _field:
                     field = field
-                extra = field_param_dict.pop("extra")
-                if extra:
-                    field_param_dict.update(extra)
-                field_type = field_param_dict.pop("type_")
-                if field_type:
-                    # if not issubclass(field_type, str):
-                    #     raise TypeError(f"{column.full_name} not support {field_type}")
-                    type_ = field_type
-
                 validator_dict = field_param_dict.pop("validator")
                 if validator_dict:
                     validators.update(validator_dict)
+
+                # Unified field parameter handling
+                self._field_param_dict_handle(field_param_dict, default)
+                field_type = field_param_dict.pop("type_")
+                if field_type:
+                    type_ = field_type
+
             else:
                 field_param_dict = {"default": default, "default_factory": default_factory}
             use_field = field(**field_param_dict)  # type: ignore
