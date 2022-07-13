@@ -1,7 +1,17 @@
+import inspect
 import logging
 from typing import Any, Dict, List, Optional, Set, Type
 
-from protobuf_to_pydantic.customer_con_type import confloat, conint, conlist, constr, contimedelta, validator
+from protobuf_to_pydantic.customer_con_type import (
+    conbytes,
+    confloat,
+    conint,
+    conlist,
+    constr,
+    contimedelta,
+    contimestamp,
+    validator,
+)
 from protobuf_to_pydantic.customer_validator import validate_validator_dict
 from protobuf_to_pydantic.grpc_types import Descriptor, FieldDescriptor, Message
 from protobuf_to_pydantic.util import replace_type
@@ -33,7 +43,7 @@ type_dict: Dict[str, str] = {
 type_not_support_dict: Dict[str, Set[str]] = {
     FieldDescriptor.TYPE_BYTES: {"pattern"},
     FieldDescriptor.TYPE_STRING: {"min_bytes", "max_bytes"},
-    "Any": {"ignore_empty", "defined_only"},
+    "Any": {"ignore_empty", "defined_only", "no_sparse"},
 }
 
 column_pydantic_dict: Dict[str, str] = {
@@ -73,6 +83,7 @@ def _has_field(column: str, message: Message) -> bool:
     return True
 
 
+# flake8: noqa: C901
 def option_descriptor_to_desc_dict(option_descriptor: Descriptor, field: Any, desc_dict: dict, type_name: str) -> None:
 
     for column in option_descriptor.__dir__():
@@ -90,7 +101,7 @@ def option_descriptor_to_desc_dict(option_descriptor: Descriptor, field: Any, de
             # Field Conversion
             column = column_pydantic_dict[column]
 
-        if type_name in ("duration", "any", "timestamp") and column in (
+        if type_name in ("duration", "any", "timestamp", "map") and column in (
             "lt",
             "le",
             "gt",
@@ -101,6 +112,8 @@ def option_descriptor_to_desc_dict(option_descriptor: Descriptor, field: Any, de
             "lt_now",
             "gt_now",
             "within",
+            "min_pairs",
+            "max_pairs",
         ):
             # Types of priority treatment for special cases
             if "validator" not in desc_dict:
@@ -122,8 +135,38 @@ def option_descriptor_to_desc_dict(option_descriptor: Descriptor, field: Any, de
         elif column in column_pydantic_type_dict:
             desc_dict["type"] = column_pydantic_type_dict[column]
             continue
-        elif column == "items":
+        elif column in ("keys", "values"):
+            type_name = value.ListFields()[0][0].full_name.split(".")[-1]
+            if type_name == "string":
+                con_type = constr
+            elif "double" in type_name or "float" in type_name:
+                con_type = confloat
+            elif "int" in type_name:
+                con_type = conint
+            elif type_name == "duration":
+                con_type = contimedelta
+            elif type_name == "timestamp":
+                con_type = contimestamp
+            elif type_name == "bytes":
+                con_type = conbytes
+            else:
+                # TODO nested message
+                _logger.warning(f"{__name__} not support sub type `{type_name}`, please reset {field.full_name}")
+                continue
             sub_dict: dict = {"extra": {}}
+            option_descriptor_to_desc_dict(getattr(value, type_name), field, sub_dict, type_name)
+            con_type_param_dict: dict = {}
+            for _key in inspect.signature(con_type).parameters.keys():
+                _value = sub_dict.get(_key, None)
+                if _value is None:
+                    continue
+                con_type_param_dict[_key] = _value
+            if "map_type" not in desc_dict:
+                desc_dict["map_type"] = {}
+            desc_dict["map_type"][column] = con_type(**con_type_param_dict)
+            continue
+        elif column == "items":
+            sub_dict = {"extra": {}}
             type_name = value.ListFields()[0][0].full_name.split(".")[-1]
             if type_name == "string":
                 sub_dict["type"] = constr
@@ -133,7 +176,12 @@ def option_descriptor_to_desc_dict(option_descriptor: Descriptor, field: Any, de
                 sub_dict["type"] = conint
             elif type_name == "duration":
                 sub_dict["type"] = contimedelta
+            elif type_name == "timestamp":
+                sub_dict["type"] = contimestamp
+            elif type_name == "bytes":
+                sub_dict["type"] = conbytes
             else:
+                # TODO nested message
                 _logger.warning(f"{__name__} not support sub type `{type_name}`, please reset {field.full_name}")
                 desc_dict["type"] = List
                 continue
@@ -159,10 +207,8 @@ def get_desc_from_pgv(message: Type[Message]) -> dict:
         ):
             return message_field_dict
     for field in message.DESCRIPTOR.fields:
-        type_name: str = type_dict.get(field.type, "")
-        if field.label == FieldDescriptor.LABEL_REPEATED:
-            type_name = "repeated"
-        if not type_name:
+        type_name: str = ""
+        if field.type == FieldDescriptor.TYPE_MESSAGE:
             message_type_name: str = field.message_type.name
             # if message_type_name.endswith("Entry"):
             #     type_name = "map"
@@ -172,11 +218,18 @@ def get_desc_from_pgv(message: Type[Message]) -> dict:
                 type_name = "any"
             elif message_type_name == "Timestamp":
                 type_name = "timestamp"
+            elif field.message_type.name.endswith("Entry"):
+                type_name = "map"
             else:
-                _logger.warning(
-                    f"{__name__} not support protobuf type id:{field.type} from field name{field.full_name}"
-                )
-                continue
+                type_name = type_dict.get(field.type, "")
+        if field.label == FieldDescriptor.LABEL_REPEATED:
+            if not (field.message_type and field.message_type.name.endswith("Entry")):
+                type_name = "repeated"
+        if not type_name:
+            type_name = type_dict.get(field.type, "")
+        if not type_name:
+            _logger.warning(f"{__name__} not support protobuf type id:{field.type} from field name{field.full_name}")
+            continue
         field_dict: dict = {"extra": {}}
         miss_default: bool = False
         for option_descriptor, option_value in field.GetOptions().ListFields():

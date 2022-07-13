@@ -1,5 +1,5 @@
-from datetime import timedelta
-from typing import TYPE_CHECKING, Any, Callable, Dict, Optional, Type
+from datetime import datetime, timedelta
+from typing import TYPE_CHECKING, Any, Callable, Dict, Optional, Type, Union
 
 from pydantic import (
     ConstrainedBytes,
@@ -28,13 +28,14 @@ __all__ = [
     "confloat",
     "constr",
     "conbytes",
-    "ConTimedelta",
+    "ConstrainedTimedelta",
     "contimedelta",
     "pydantic_con_dict",
 ]
 
 
-class ConTimedelta(timedelta):
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Duration[timedelta] TYPE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class ConstrainedTimedelta(timedelta):
     duration_const: Optional[timedelta] = None
     duration_ge: Optional[timedelta] = None
     duration_gt: Optional[timedelta] = None
@@ -89,7 +90,83 @@ def contimedelta(
         duration_in=duration_in,
         duration_not_in=duration_not_in,
     )
-    return type("ConstrainedTimedeltaValue", (ConTimedelta,), namespace)  # type: ignore
+    return type("ConstrainedTimedeltaValue", (ConstrainedTimedelta,), namespace)  # type: ignore
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Timestamp TYPE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+TIMESTAMP_ANT_TYPE = Union[int, float, str, datetime]
+
+
+class ConstrainedTimestamp(object):
+    timestamp_const: Optional[TIMESTAMP_ANT_TYPE] = None
+    timestamp_ge: Optional[TIMESTAMP_ANT_TYPE] = None
+    timestamp_gt: Optional[TIMESTAMP_ANT_TYPE] = None
+    timestamp_gt_now: Optional[TIMESTAMP_ANT_TYPE] = None
+    timestamp_le: Optional[TIMESTAMP_ANT_TYPE] = None
+    timestamp_lt: Optional[TIMESTAMP_ANT_TYPE] = None
+    timestamp_lt_now: Optional[TIMESTAMP_ANT_TYPE] = None
+    timestamp_in: Optional[TIMESTAMP_ANT_TYPE] = None
+    timestamp_not_in: Optional[TIMESTAMP_ANT_TYPE] = None
+    timestamp_within: Optional[TIMESTAMP_ANT_TYPE] = None
+
+    @classmethod
+    def __modify_schema__(cls, field_schema: Dict[str, Any]) -> None:
+        update_not_none(
+            field_schema,
+            extra=dict(
+                timestamp_const=cls.timestamp_const,
+                timestamp_ge=cls.timestamp_ge,
+                timestamp_gt=cls.timestamp_gt,
+                timestamp_gt_now=cls.timestamp_gt_now,
+                timestamp_le=cls.timestamp_le,
+                timestamp_lt=cls.timestamp_lt,
+                timestamp_lt_now=cls.timestamp_lt_now,
+                timestamp_in=cls.timestamp_in,
+                timestamp_not_in=cls.timestamp_not_in,
+                timestamp_within=cls.timestamp_within,
+            ),
+        )
+
+    @classmethod
+    def __get_validators__(cls) -> "CallableGenerator":
+        yield customer_validator.timestamp_const_validator
+        yield customer_validator.timestamp_ge_validator
+        yield customer_validator.timestamp_gt_validator
+        yield customer_validator.timestamp_gt_now_validator
+        yield customer_validator.timestamp_le_validator
+        yield customer_validator.timestamp_lt_validator
+        yield customer_validator.timestamp_lt_now_validator
+        yield customer_validator.timestamp_in_validator
+        yield customer_validator.timestamp_not_in_validator
+        yield customer_validator.timestamp_within_validator
+
+
+def contimestamp(
+    *,
+    timestamp_const: Optional[TIMESTAMP_ANT_TYPE] = None,
+    timestamp_ge: Optional[TIMESTAMP_ANT_TYPE] = None,
+    timestamp_gt: Optional[TIMESTAMP_ANT_TYPE] = None,
+    timestamp_gt_now: Optional[TIMESTAMP_ANT_TYPE] = None,
+    timestamp_le: Optional[TIMESTAMP_ANT_TYPE] = None,
+    timestamp_lt: Optional[TIMESTAMP_ANT_TYPE] = None,
+    timestamp_lt_now: Optional[TIMESTAMP_ANT_TYPE] = None,
+    timestamp_in: Optional[TIMESTAMP_ANT_TYPE] = None,
+    timestamp_not_in: Optional[TIMESTAMP_ANT_TYPE] = None,
+    timestamp_within: Optional[TIMESTAMP_ANT_TYPE] = None,
+) -> TIMESTAMP_ANT_TYPE:
+    namespace = dict(
+        timestamp_const=timestamp_const,
+        timestamp_ge=timestamp_ge,
+        timestamp_gt=timestamp_gt,
+        timestamp_gt_now=timestamp_gt_now,
+        timestamp_le=timestamp_le,
+        timestamp_lt=timestamp_lt,
+        timestamp_lt_now=timestamp_lt_now,
+        timestamp_in=timestamp_in,
+        timestamp_not_in=timestamp_not_in,
+        timestamp_within=timestamp_within,
+    )
+    return type("ConstrainedTimestampValue", (ConstrainedTimestamp,), namespace)  # type: ignore
 
 
 pydantic_con_dict: Dict[Type, Callable] = {
@@ -98,5 +175,6 @@ pydantic_con_dict: Dict[Type, Callable] = {
     ConstrainedBytes: conbytes,
     ConstrainedStr: constr,
     ConstrainedList: conlist,
-    ConTimedelta: contimedelta,
+    ConstrainedTimedelta: contimedelta,
+    ConstrainedTimestamp: contimestamp,
 }

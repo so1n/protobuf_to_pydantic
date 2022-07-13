@@ -167,9 +167,20 @@ message EnumTest {
 message MapTest {
   map<string, int32> pair_test = 1 [(validate.rules).map = {min_pairs:1, max_pairs:5}];
   map<string, int32> no_parse_test = 2 [(validate.rules).map.no_sparse = true];
-  map<string, int32> keys_test = 3 [(validate.rules).map.keys.string.min_len = 0];
-  map<string, int32> values_test = 4 [(validate.rules).map.values.int32.lt = 0];
-  map<string, int32> ignore_test = 5[(validate.rules).map.ignore_empty = true];
+  map<string, int32> keys_test = 3 [
+    (validate.rules).map.keys.string.min_len = 1,
+    (validate.rules).map.keys.string.max_len = 5
+  ];
+  map<string, int32> values_test = 4 [
+    (validate.rules).map.values.int32.gt= 5,
+    (validate.rules).map.values.int32.lt = 5
+  ];
+  map<string, google.protobuf.Timestamp> keys_values_test = 5 [
+    (validate.rules).map.keys.string.min_len = 1,
+    (validate.rules).map.keys.string.max_len = 5,
+    (validate.rules).map.values.timestamp.gt_now = true
+  ];
+  map<string, int32> ignore_test = 6[(validate.rules).map.ignore_empty = true];
 }
 
 

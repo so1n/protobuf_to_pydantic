@@ -31,59 +31,50 @@ def not_in_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
 
 
 def any_in_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
-    field_name: str = kwargs["field"].name
-    field_value: Any = kwargs["field"].field_info.extra["extra"]["any_in"]
-    if isinstance(v, AnyMessage):
-        if v.type_url in field_value:
-            raise ValueError(f"{field_name}.type_url:{v.type_url} not in {field_value}")
+    field_name, field_value = _get_name_value_from_kwargs("any_in", kwargs["field"])
+    if field_value is not None and isinstance(v, AnyMessage) and v.type_url not in field_value:
+        raise ValueError(f"{field_name}.type_url:{v.type_url} not in {field_value}")
     return v
 
 
 def any_not_in_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
-    field_name: str = kwargs["field"].name
-    field_value: Any = kwargs["field"].field_info.extra["extra"]["any_in"]
-    if isinstance(v, AnyMessage):
-        if v.type_url in field_value:
-            raise ValueError(f"{field_name}.type_url:{v.type_url} in {field_value}")
+    field_name, field_value = _get_name_value_from_kwargs("any_not_in", kwargs["field"])
+    if field_value is not None and isinstance(v, AnyMessage) and v.type_url in field_value:
+        raise ValueError(f"{field_name}.type_url:{v.type_url} in {field_value}")
     return v
 
 
 def len_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
-    field_name: str = kwargs["field"].name
-    field_value: Any = kwargs["field"].field_info.extra["extra"]["len"]
-    if len(v) != field_value:
+    field_name, field_value = _get_name_value_from_kwargs("len", kwargs["field"])
+    if field_value is not None and len(v) != field_value:
         raise ValueError(f"{field_name} length does not equal {field_value}")
     return v
 
 
 def prefix_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
-    field_name: str = kwargs["field"].name
-    field_value: Any = kwargs["field"].field_info.extra["extra"]["prefix"]
-    if not v.startswith(field_value):
+    field_name, field_value = _get_name_value_from_kwargs("prefix", kwargs["field"])
+    if field_value is not None and not v.startswith(field_value):
         raise ValueError(f"{field_name} does not start with prefix {field_value}")
     return v
 
 
 def suffix_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
-    field_name: str = kwargs["field"].name
-    field_value: Any = kwargs["field"].field_info.extra["extra"]["suffix"]
-    if not v.startswith(field_value):
+    field_name, field_value = _get_name_value_from_kwargs("suffix", kwargs["field"])
+    if field_value is not None and not v.endswith(field_value):
         raise ValueError(f"{field_name} does not end with suffix {field_value}")
     return v
 
 
 def contains_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
-    field_name: str = kwargs["field"].name
-    field_value: Any = kwargs["field"].field_info.extra["extra"]["contains"]
-    if v not in field_value:
+    field_name, field_value = _get_name_value_from_kwargs("contains", kwargs["field"])
+    if field_value is not None and v not in field_value:
         raise ValueError(f"{field_name} not contain {field_value}")
     return v
 
 
 def not_contains_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
-    field_name: str = kwargs["field"].name
-    field_value: Any = kwargs["field"].field_info.extra["extra"]["not_contains"]
-    if v in field_value:
+    field_name, field_value = _get_name_value_from_kwargs("not_contains", kwargs["field"])
+    if field_value is not None and v in field_value:
         raise ValueError(f"{field_name} contain {field_value}")
     return v
 
@@ -149,85 +140,92 @@ def timestamp_handle(v: Any) -> float:
 
 
 def timestamp_lt_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
-    field_name: str = kwargs["field"].name
-    field_value: Any = kwargs["field"].field_info.extra["extra"]["timestamp_lt"]
-    if not (timestamp_handle(v) > field_value):
-        raise ValueError(f"{field_name} must > {field_value}, not {v}")
-    return v
-
-
-def timestamp_lt_now_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
-    field_name: str = kwargs["field"].name
-    field_value: Any = kwargs["field"].field_info.extra["extra"]["timestamp_lt_now"]
-    now_time: float = time.time()
-    if not (timestamp_handle(v) > now_time and field_value):
-        raise ValueError(f"{field_name} must > {now_time}, not {v}")
-    return v
-
-
-def timestamp_le_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
-    field_name: str = kwargs["field"].name
-    field_value: Any = kwargs["field"].field_info.extra["extra"]["timestamp_le"]
-    if not (timestamp_handle(v) >= field_value):
-        raise ValueError(f"{field_name} must >= {field_value}, not {v}")
-    return v
-
-
-def timestamp_gt_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
-    field_name: str = kwargs["field"].name
-    field_value: Any = kwargs["field"].field_info.extra["extra"]["timestamp_gt"]
-    if not (timestamp_handle(v) < field_value):
+    field_name, field_value = _get_name_value_from_kwargs("timestamp_lt", kwargs["field"])
+    if field_value is not None and not (timestamp_handle(v) < field_value):
         raise ValueError(f"{field_name} must < {field_value}, not {v}")
     return v
 
 
-def timestamp_gt_now_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
-    field_name: str = kwargs["field"].name
-    field_value: Any = kwargs["field"].field_info.extra["extra"]["timestamp_gt_now"]
+def timestamp_lt_now_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
+    field_name, field_value = _get_name_value_from_kwargs("timestamp_lt_now", kwargs["field"])
     now_time: float = time.time()
-    if not (timestamp_handle(v) < now_time and field_value):
+    if field_value is not None and not (timestamp_handle(v) < now_time):
         raise ValueError(f"{field_name} must < {now_time}, not {v}")
     return v
 
 
-def timestamp_within_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
-    field_name: str = kwargs["field"].name
-    field_value: Any = kwargs["field"].field_info.extra["extra"]["timestamp_within"].total_seconds()
-    now_time: float = time.time()
-    if not ((now_time - field_value) <= timestamp_handle(v) <= (now_time - field_value)):
-        raise ValueError(f"{field_name} must < {now_time}, not {v}")
-    return v
-
-
-def timestamp_ge_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
-    field_name: str = kwargs["field"].name
-    field_value: Any = kwargs["field"].field_info.extra["extra"]["timestamp_ge"]
-    if not (timestamp_handle(v) <= field_value):
+def timestamp_le_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
+    field_name, field_value = _get_name_value_from_kwargs("timestamp_le", kwargs["field"])
+    if field_value is not None and not (timestamp_handle(v) <= field_value):
         raise ValueError(f"{field_name} must <= {field_value}, not {v}")
     return v
 
 
+def timestamp_gt_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
+    field_name, field_value = _get_name_value_from_kwargs("timestamp_gt", kwargs["field"])
+    if field_value is not None and not (timestamp_handle(v) > field_value):
+        raise ValueError(f"{field_name} must > {field_value}, not {v}")
+    return v
+
+
+def timestamp_gt_now_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
+    field_name, field_value = _get_name_value_from_kwargs("timestamp_gt_now", kwargs["field"])
+    now_time: float = time.time()
+    if field_value is not None and not (timestamp_handle(v) > now_time):
+        raise ValueError(f"{field_name} must > {now_time}, not {v}")
+    return v
+
+
+def timestamp_within_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
+    field_name, field_value = _get_name_value_from_kwargs("timestamp_within_now", kwargs["field"])
+    now_time: float = time.time()
+    if field_value is not None and not ((now_time - field_value) <= timestamp_handle(v) <= (now_time + field_value)):
+        raise ValueError(f"{field_name} must between {now_time -field_value} and {now_time + field_value}, not {v}")
+    return v
+
+
+def timestamp_ge_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
+    field_name, field_value = _get_name_value_from_kwargs("timestamp_ge", kwargs["field"])
+    if field_value is not None and not (timestamp_handle(v) >= field_value):
+        raise ValueError(f"{field_name} must >= {field_value}, not {v}")
+    return v
+
+
 def timestamp_const_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
-    field_name: str = kwargs["field"].name
-    field_value: Any = kwargs["field"].field_info.extra["extra"]["timestamp_const"]
-    if timestamp_handle(v) != field_value:
+    field_name, field_value = _get_name_value_from_kwargs("timestamp_const", kwargs["field"])
+    if field_value is not None and timestamp_handle(v) != field_value:
         raise ValueError(f"{field_name} must {field_value}, not {v}")
     return v
 
 
 def timestamp_in_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
-    field_name: str = kwargs["field"].name
-    field_value: Any = kwargs["field"].field_info.extra["extra"]["timestamp_in"]
-    if timestamp_handle(v) not in field_value:
+    field_name, field_value = _get_name_value_from_kwargs("timestamp_in", kwargs["field"])
+    if field_value is not None and timestamp_handle(v) not in field_value:
         raise ValueError(f"{field_name} not in {field_value}")
     return v
 
 
 def timestamp_not_in_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
-    field_name: str = kwargs["field"].name
-    field_value: Any = kwargs["field"].field_info.extra["extra"]["timestamp_not_in"]
-    if timestamp_handle(v) in field_value:
+    field_name, field_value = _get_name_value_from_kwargs("timestamp_not_in", kwargs["field"])
+    if field_value is not None and timestamp_handle(v) in field_value:
         raise ValueError(f"{field_name} in {field_value}")
+    return v
+
+
+###############
+# map support #
+###############
+def map_min_pairs_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
+    field_name, field_value = _get_name_value_from_kwargs("map_min_pairs", kwargs["field"])
+    if field_value is not None and len(v) < field_value:
+        raise ValueError(f"{field_name} length must >= {field_value}")
+    return v
+
+
+def map_max_pairs_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
+    field_name, field_value = _get_name_value_from_kwargs("map_max_pairs", kwargs["field"])
+    if field_value is not None and len(v) > field_value:
+        raise ValueError(f"{field_name} length must <= {field_value}")
     return v
 
 

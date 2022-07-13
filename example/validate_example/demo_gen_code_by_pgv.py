@@ -1,6 +1,6 @@
 # This is an automatically generated file, please do not change
 # gen by protobuf_to_pydantic(https://github.com/so1n/protobuf_to_pydantic)
-# gen timestamp:1657617538
+# gen timestamp:1657726821
 # type: ignore
 
 import typing
@@ -14,9 +14,9 @@ from google.protobuf.pyext._message import RepeatedScalarContainer  # type: igno
 from pydantic import BaseModel, validator
 from pydantic.fields import FieldInfo
 from pydantic.networks import AnyUrl, EmailStr, IPvAnyAddress
-from pydantic.types import confloat, conint, conlist, constr
+from pydantic.types import conbytes, confloat, conint, conlist, constr
 
-from protobuf_to_pydantic.customer_con_type import contimedelta
+from protobuf_to_pydantic.customer_con_type import contimedelta, contimestamp
 from protobuf_to_pydantic.customer_validator import (
     any_not_in_validator,
     contains_validator,
@@ -27,6 +27,8 @@ from protobuf_to_pydantic.customer_validator import (
     duration_lt_validator,
     in_validator,
     len_validator,
+    map_max_pairs_validator,
+    map_min_pairs_validator,
     not_contains_validator,
     not_in_validator,
     prefix_validator,
@@ -235,12 +237,21 @@ class EnumTest(BaseModel):
     in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(in_validator)
 
 
+class Timestamp(BaseModel):
+    seconds: int = FieldInfo(default=0)
+    nanos: int = FieldInfo(default=0)
+
+
 class MapTest(BaseModel):
-    pair_test: typing.Dict[str, int] = FieldInfo()
+    pair_test: typing.Dict[str, int] = FieldInfo(extra={"map_min_pairs": 1, "map_max_pairs": 5})
     no_parse_test: typing.Dict[str, int] = FieldInfo()
-    keys_test: typing.Dict[str, int] = FieldInfo()
-    values_test: typing.Dict[str, int] = FieldInfo()
+    keys_test: typing.Dict[constr(min_length=1, max_length=5), int] = FieldInfo()
+    values_test: typing.Dict[str, conint(gt=5, lt=5)] = FieldInfo()
+    keys_values_test: typing.Dict[constr(min_length=1, max_length=5), Timestamp] = FieldInfo()
     ignore_test: typing.Dict[str, int] = FieldInfo()
+
+    map_min_pairs_validator_pair_test = validator("pair_test", allow_reuse=True)(map_min_pairs_validator)
+    map_max_pairs_validator_pair_test = validator("pair_test", allow_reuse=True)(map_max_pairs_validator)
 
 
 class MessageTest(BaseModel):
@@ -254,14 +265,15 @@ class RepeatedTest(BaseModel):
     items_string_test: conlist(item_type=constr(min_length=1, max_length=5), min_items=1, max_items=5) = FieldInfo()
     items_double_test: conlist(item_type=confloat(gt=1, lt=5), min_items=1, max_items=5) = FieldInfo()
     items_int32_test: conlist(item_type=conint(gt=1, lt=5), min_items=1, max_items=5) = FieldInfo()
-    items_timestamp_test: typing.List = FieldInfo(min_items=1, max_items=5)
+    items_timestamp_test: conlist(
+        item_type=contimestamp(timestamp_gt=1600000000.0, timestamp_lt=1600000010.0), min_items=1, max_items=5
+    ) = FieldInfo()
     items_duration_test: conlist(
-        item_type=contimedelta(
-            duration_gt=timedelta(days=18518, seconds=44800), duration_lt=timedelta(days=18518, seconds=44810)
-        ),
+        item_type=contimedelta(duration_gt=timedelta(seconds=10), duration_lt=timedelta(seconds=10)),
         min_items=1,
         max_items=5,
     ) = FieldInfo()
+    items_bytes_test: conlist(item_type=conbytes(min_length=1, max_length=5), min_items=1, max_items=5) = FieldInfo()
     ignore_test: typing.List[str] = FieldInfo()
 
 

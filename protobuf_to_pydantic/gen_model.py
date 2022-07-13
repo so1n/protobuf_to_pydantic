@@ -228,11 +228,16 @@ class M2P(object):
             else:
                 if column.label == FieldDescriptor.LABEL_REQUIRED:
                     default = Undefined
-                elif column.label == FieldDescriptor.LABEL_REPEATED:
-                    type_ = List[type_]  # type: ignore
-                    default_factory = list
                 else:
                     default = column.default_value
+
+            if column.label == FieldDescriptor.LABEL_REPEATED:
+                if not (column.message_type and column.message_type.name.endswith("Entry")):
+                    type_ = List[type_]  # type: ignore
+                    default_factory = list
+                    # TODO support lambda
+                    if default is not Undefined:
+                        default = Undefined
 
             field = self._default_field
             field_doc: Union[str, dict] = self._get_field_doc_by_full_name(column.full_name)
@@ -242,6 +247,18 @@ class M2P(object):
                 else:
                     # support from pgv
                     msg_pait_model = MessagePaitModel(**field_doc)
+                    # TODO support
+                    if "map_type" in field_doc and type_._name == "Dict":
+                        raw_keys_type, raw_values_type = type_.__args__
+                        if "keys" in field_doc["map_type"]:
+                            new_keys_type = field_doc["map_type"]["keys"]
+                            if issubclass(new_keys_type, raw_keys_type):
+                                raw_keys_type = new_keys_type
+                        if "values" in field_doc["map_type"]:
+                            new_values_type = field_doc["map_type"]["values"]
+                            if issubclass(new_values_type, raw_values_type):
+                                raw_values_type = new_values_type
+                        type_ = Dict[raw_keys_type, raw_values_type]  # type: ignore
 
                 field_param_dict: dict = msg_pait_model.dict()
                 # Nested types do not include the `enable`, `field` and `validator`  attributes
@@ -259,7 +276,6 @@ class M2P(object):
                 field_type = field_param_dict.pop("type_")
                 if field_type:
                     type_ = field_type
-
             else:
                 field_param_dict = {"default": default, "default_factory": default_factory}
             use_field = field(**field_param_dict)  # type: ignore

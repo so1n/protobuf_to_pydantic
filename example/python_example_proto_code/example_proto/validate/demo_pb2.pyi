@@ -513,6 +513,21 @@ class MapTest(google.protobuf.message.Message):
             ) -> None: ...
         def ClearField(self, field_name: typing_extensions.Literal["key",b"key","value",b"value"]) -> None: ...
 
+    class KeysValuesTestEntry(google.protobuf.message.Message):
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+        KEY_FIELD_NUMBER: builtins.int
+        VALUE_FIELD_NUMBER: builtins.int
+        key: typing.Text
+        @property
+        def value(self) -> google.protobuf.timestamp_pb2.Timestamp: ...
+        def __init__(self,
+            *,
+            key: typing.Text = ...,
+            value: typing.Optional[google.protobuf.timestamp_pb2.Timestamp] = ...,
+            ) -> None: ...
+        def HasField(self, field_name: typing_extensions.Literal["value",b"value"]) -> builtins.bool: ...
+        def ClearField(self, field_name: typing_extensions.Literal["key",b"key","value",b"value"]) -> None: ...
+
     class IgnoreTestEntry(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
         KEY_FIELD_NUMBER: builtins.int
@@ -530,6 +545,7 @@ class MapTest(google.protobuf.message.Message):
     NO_PARSE_TEST_FIELD_NUMBER: builtins.int
     KEYS_TEST_FIELD_NUMBER: builtins.int
     VALUES_TEST_FIELD_NUMBER: builtins.int
+    KEYS_VALUES_TEST_FIELD_NUMBER: builtins.int
     IGNORE_TEST_FIELD_NUMBER: builtins.int
     @property
     def pair_test(self) -> google.protobuf.internal.containers.ScalarMap[typing.Text, builtins.int]: ...
@@ -540,6 +556,8 @@ class MapTest(google.protobuf.message.Message):
     @property
     def values_test(self) -> google.protobuf.internal.containers.ScalarMap[typing.Text, builtins.int]: ...
     @property
+    def keys_values_test(self) -> google.protobuf.internal.containers.MessageMap[typing.Text, google.protobuf.timestamp_pb2.Timestamp]: ...
+    @property
     def ignore_test(self) -> google.protobuf.internal.containers.ScalarMap[typing.Text, builtins.int]: ...
     def __init__(self,
         *,
@@ -547,9 +565,10 @@ class MapTest(google.protobuf.message.Message):
         no_parse_test: typing.Optional[typing.Mapping[typing.Text, builtins.int]] = ...,
         keys_test: typing.Optional[typing.Mapping[typing.Text, builtins.int]] = ...,
         values_test: typing.Optional[typing.Mapping[typing.Text, builtins.int]] = ...,
+        keys_values_test: typing.Optional[typing.Mapping[typing.Text, google.protobuf.timestamp_pb2.Timestamp]] = ...,
         ignore_test: typing.Optional[typing.Mapping[typing.Text, builtins.int]] = ...,
         ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["ignore_test",b"ignore_test","keys_test",b"keys_test","no_parse_test",b"no_parse_test","pair_test",b"pair_test","values_test",b"values_test"]) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["ignore_test",b"ignore_test","keys_test",b"keys_test","keys_values_test",b"keys_values_test","no_parse_test",b"no_parse_test","pair_test",b"pair_test","values_test",b"values_test"]) -> None: ...
 global___MapTest = MapTest
 
 class MessageTest(google.protobuf.message.Message):
@@ -575,6 +594,7 @@ class RepeatedTest(google.protobuf.message.Message):
     ITEMS_INT32_TEST_FIELD_NUMBER: builtins.int
     ITEMS_TIMESTAMP_TEST_FIELD_NUMBER: builtins.int
     ITEMS_DURATION_TEST_FIELD_NUMBER: builtins.int
+    ITEMS_BYTES_TEST_FIELD_NUMBER: builtins.int
     IGNORE_TEST_FIELD_NUMBER: builtins.int
     @property
     def range_test(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[typing.Text]: ...
@@ -591,6 +611,8 @@ class RepeatedTest(google.protobuf.message.Message):
     @property
     def items_duration_test(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[google.protobuf.duration_pb2.Duration]: ...
     @property
+    def items_bytes_test(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[builtins.bytes]: ...
+    @property
     def ignore_test(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[typing.Text]: ...
     def __init__(self,
         *,
@@ -601,9 +623,10 @@ class RepeatedTest(google.protobuf.message.Message):
         items_int32_test: typing.Optional[typing.Iterable[builtins.int]] = ...,
         items_timestamp_test: typing.Optional[typing.Iterable[google.protobuf.timestamp_pb2.Timestamp]] = ...,
         items_duration_test: typing.Optional[typing.Iterable[google.protobuf.duration_pb2.Duration]] = ...,
+        items_bytes_test: typing.Optional[typing.Iterable[builtins.bytes]] = ...,
         ignore_test: typing.Optional[typing.Iterable[typing.Text]] = ...,
         ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["ignore_test",b"ignore_test","items_double_test",b"items_double_test","items_duration_test",b"items_duration_test","items_int32_test",b"items_int32_test","items_string_test",b"items_string_test","items_timestamp_test",b"items_timestamp_test","range_test",b"range_test","unique_test",b"unique_test"]) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["ignore_test",b"ignore_test","items_bytes_test",b"items_bytes_test","items_double_test",b"items_double_test","items_duration_test",b"items_duration_test","items_int32_test",b"items_int32_test","items_string_test",b"items_string_test","items_timestamp_test",b"items_timestamp_test","range_test",b"range_test","unique_test",b"unique_test"]) -> None: ...
 global___RepeatedTest = RepeatedTest
 
 class AnyTest(google.protobuf.message.Message):
