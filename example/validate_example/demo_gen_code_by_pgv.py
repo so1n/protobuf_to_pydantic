@@ -1,6 +1,5 @@
 # This is an automatically generated file, please do not change
 # gen by protobuf_to_pydantic(https://github.com/so1n/protobuf_to_pydantic)
-# gen timestamp:1657726821
 # type: ignore
 
 import typing
@@ -362,7 +361,7 @@ class MessageIgnoredTest(BaseModel):
     range_test: int = FieldInfo(default=0)
 
 
-class UserPayMessage(BaseModel):
+class NestedMessageUserPayMessage(BaseModel):
     bank_number: str = FieldInfo(default="")
     exp: str = FieldInfo()
     uuid: str = FieldInfo(default="")
@@ -371,5 +370,5 @@ class UserPayMessage(BaseModel):
 class NestedMessage(BaseModel):
     string_in_map_test: typing.Dict[str, StringTest] = FieldInfo()
     map_in_map_test: typing.Dict[str, MapTest] = FieldInfo()
-    user_pay: UserPayMessage = FieldInfo()
+    user_pay: NestedMessageUserPayMessage = FieldInfo()
     empty: None = FieldInfo()

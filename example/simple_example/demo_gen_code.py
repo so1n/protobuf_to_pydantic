@@ -1,6 +1,6 @@
 # This is an automatically generated file, please do not change
 # gen by protobuf_to_pydantic(https://github.com/so1n/protobuf_to_pydantic)
-# gen timestamp:1657445940
+# type: ignore
 
 import typing
 from enum import IntEnum
@@ -23,18 +23,18 @@ class UserMessage(BaseModel):
     user_name: str = FieldInfo(default="")
 
 
-class RepeatedMessage(BaseModel):
-    str_list: typing.List[str] = FieldInfo(default_factory=list)
-    int_list: typing.List[int] = FieldInfo(default_factory=list)
-    user_list: UserMessage = FieldInfo()
-
-
 class MapMessage(BaseModel):
     user_map: typing.Dict[str, UserMessage] = FieldInfo()
     user_flag: typing.Dict[str, bool] = FieldInfo()
 
 
-class UserPayMessage(BaseModel):
+class RepeatedMessage(BaseModel):
+    str_list: typing.List[str] = FieldInfo(default_factory=list)
+    int_list: typing.List[int] = FieldInfo(default_factory=list)
+    user_list: typing.List[UserMessage] = FieldInfo(default_factory=list)
+
+
+class NestedMessageUserPayMessage(BaseModel):
     bank_number: str = FieldInfo(default="")
     exp: str = FieldInfo()
     uuid: str = FieldInfo(default="")
@@ -43,6 +43,6 @@ class UserPayMessage(BaseModel):
 class NestedMessage(BaseModel):
     user_list_map: typing.Dict[str, RepeatedMessage] = FieldInfo()
     user_map: typing.Dict[str, MapMessage] = FieldInfo()
-    user_pay: UserPayMessage = FieldInfo()
-    not_enable_user_pay: UserPayMessage = FieldInfo()
+    user_pay: NestedMessageUserPayMessage = FieldInfo()
+    not_enable_user_pay: NestedMessageUserPayMessage = FieldInfo()
     empty: None = FieldInfo()

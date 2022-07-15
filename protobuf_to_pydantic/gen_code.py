@@ -1,7 +1,6 @@
 import inspect
 import pathlib
 import sys
-import time
 from collections import deque
 from datetime import timedelta
 from enum import IntEnum
@@ -65,7 +64,6 @@ class P2C(object):
         content_str: str = (
             "# This is an automatically generated file, please do not change\n"
             "# gen by protobuf_to_pydantic(https://github.com/so1n/protobuf_to_pydantic)\n"
-            f"# gen timestamp:{int(time.time())}\n"
             "# type: ignore\n\n"
         )
 
@@ -115,7 +113,7 @@ class P2C(object):
             return
         self._import_set.add(f"from {module_name} import {class_name}{extra_str}")
 
-    def _get_value_code(self, type_: Type) -> str:
+    def _get_value_code(self, type_: Type, is_first: bool = False) -> str:
         if isinstance(type_, dict):
             type_name: str = ", ".join(
                 [f"{self._get_value_code(k)}: {self._get_value_code(v)}" for k, v in type_.items()]
@@ -128,16 +126,19 @@ class P2C(object):
             else:
                 return "(" + type_name + ")"
         elif inspect.isfunction(type_) or "cyfunction" in str(type_):
-            self._parse_type_to_import_code(type_)
+            if not is_first:
+                self._parse_type_to_import_code(type_)
             return type_.__name__
         elif inspect.isclass(type_):
             if type_.__mro__[1] in pydantic_con_dict:
                 return self.pydantic_con_type_handle(type_)
             else:
-                self._parse_type_to_import_code(type_)
+                if not is_first:
+                    self._parse_type_to_import_code(type_)
                 return getattr(type_, "__name__", None)
         else:
-            self._parse_type_to_import_code(type_)
+            if not is_first:
+                self._parse_type_to_import_code(type_)
             type_name = repr(type_)
             type_module = inspect.getmodule(type_)
 
@@ -264,7 +265,7 @@ class P2C(object):
                         module_name = start_path.split("/")[-1] + type_module.__file__.replace(start_path, "")
                 module_name = module_name.replace("/", ".").replace(".py", "")
 
-                class_name: str = self._get_value_code(type_)
+                class_name: str = self._get_value_code(type_, is_first=True)
             else:
                 module_name = type_module.__name__
                 if inspect.isclass(type_):

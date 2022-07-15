@@ -30,6 +30,8 @@ __all__ = [
     "conbytes",
     "ConstrainedTimedelta",
     "contimedelta",
+    "contimestamp",
+    "ConstrainedTimestamp",
     "pydantic_con_dict",
 ]
 

@@ -146,6 +146,7 @@ class M2P(object):
         field_type_model: Optional[ModuleType] = inspect.getmodule(field_type)
         if (
             field_type
+            and not inspect.isclass(field_type)
             and field_type_model
             and field_type_model.__name__
             in (
@@ -168,11 +169,7 @@ class M2P(object):
                 field_param_dict["type_"] = field_type(**type_param_dict)
 
     # flake8: noqa: C901
-    def _parse_msg_to_pydantic_model(
-        self,
-        *,
-        descriptor: Descriptor,
-    ) -> Type[BaseModel]:
+    def _parse_msg_to_pydantic_model(self, *, descriptor: Descriptor, class_name: str = "") -> Type[BaseModel]:
         annotation_dict: Dict[str, Tuple[Type, Any]] = {}
         validators: Dict[str, classmethod] = {}
         timestamp_handler_field_silt: List[str] = []
@@ -218,7 +215,14 @@ class M2P(object):
                     pydantic_model_config.__p2p_dict__["arbitrary_types_allowed"] = True
                 else:
                     # support google.protobuf.Message
-                    type_ = self._parse_msg_to_pydantic_model(descriptor=column.message_type)
+                    if column.message_type.full_name.startswith(".".join(column.full_name.split(".")[:-1])):
+                        # A dynamically generated class cannot be a subclass of a class,
+                        # so it can only be distinguished by adding the beginning of the subclass name
+                        _class_name: str = "".join(column.message_type.full_name.split(".")[-2:])
+                    else:
+                        _class_name = column.message_type.name
+                    type_ = self._parse_msg_to_pydantic_model(descriptor=column.message_type, class_name=_class_name)
+
             elif column.type == FieldDescriptor.TYPE_ENUM:
                 # support google.protobuf.Enum
                 type_ = IntEnum(  # type: ignore
@@ -289,10 +293,11 @@ class M2P(object):
                 always=True,
             )(_grpc_timestamp_handler)
 
-        class_name: str = descriptor.name
-        if class_name == "Any":
+        if descriptor.name == "Any":
             # Message.Any and typing.Any with the same name, need to change the name of Message.Any.
             class_name = "AnyMessage"
+        elif not class_name:
+            class_name = descriptor.name
         return create_pydantic_model(
             annotation_dict,
             class_name=class_name,

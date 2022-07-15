@@ -25,11 +25,12 @@ from example.python_example_proto_code.example_proto.validate.demo_pb2 import (
 )
 from protobuf_to_pydantic import msg_to_pydantic_model, pydantic_model_to_py_file
 
-if __name__ == "__main__":
+
+def gen_code() -> None:
     pydantic_model_to_py_file(
         "./demo_gen_code_by_pgv.py",
         *[
-            msg_to_pydantic_model(model, parse_msg_desc_method="PGV", local_dict=locals())
+            msg_to_pydantic_model(model, parse_msg_desc_method="PGV")
             for model in (
                 FloatTest,
                 DoubleTest,
@@ -60,3 +61,7 @@ if __name__ == "__main__":
         module_path="../",
         enable_yapf=False,
     )
+
+
+if __name__ == "__main__":
+    gen_code()
