@@ -6,10 +6,11 @@ import typing
 from enum import IntEnum
 from uuid import uuid4
 
-from examplegen_code import exp_time
 from pydantic import BaseModel
 from pydantic.fields import FieldInfo
 from pydantic.types import PaymentCardNumber
+
+from example.text_comment_example.gen_code import exp_time
 
 
 class SexType(IntEnum):

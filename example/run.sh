@@ -9,7 +9,7 @@ fi
 echo 'use venv path:' ${VENV_PREFIX}
 
 echo "=====> run $(pwd)/gen_rpc.sh"
-chmod u+x gen_rpc.sh
+chmod +x gen_rpc.sh
 bash ./gen_rpc.sh
 
 directory_list=("simple_example" "text_comment_example" "validate_example")

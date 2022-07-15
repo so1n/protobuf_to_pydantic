@@ -255,7 +255,11 @@ class P2C(object):
             if type_module.__name__ == "__main__":
                 start_path: str = sys.path[0]
                 if self._module_path:
-                    module_name = self._module_path.split("/")[-1] + type_module.__file__.replace(self._module_path, "")
+                    if not type_module.__file__.startswith(self._module_path):
+                        type_module_file: str = start_path + "/" + type_module.__file__
+                    else:
+                        type_module_file = type_module.__file__
+                    module_name = self._module_path.split("/")[-1] + type_module_file.replace(self._module_path, "")
                 else:
                     # Find the name of the module for the variable that starts the code file
                     if not type_module.__file__.startswith(start_path):
