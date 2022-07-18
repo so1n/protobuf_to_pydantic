@@ -632,18 +632,22 @@ global___RepeatedTest = RepeatedTest
 class AnyTest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     REQUIRED_TEST_FIELD_NUMBER: builtins.int
-    X_FIELD_NUMBER: builtins.int
+    NOT_IN_TEST_FIELD_NUMBER: builtins.int
+    IN_TEST_FIELD_NUMBER: builtins.int
     @property
     def required_test(self) -> google.protobuf.any_pb2.Any: ...
     @property
-    def x(self) -> google.protobuf.any_pb2.Any: ...
+    def not_in_test(self) -> google.protobuf.any_pb2.Any: ...
+    @property
+    def in_test(self) -> google.protobuf.any_pb2.Any: ...
     def __init__(self,
         *,
         required_test: typing.Optional[google.protobuf.any_pb2.Any] = ...,
-        x: typing.Optional[google.protobuf.any_pb2.Any] = ...,
+        not_in_test: typing.Optional[google.protobuf.any_pb2.Any] = ...,
+        in_test: typing.Optional[google.protobuf.any_pb2.Any] = ...,
         ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["required_test",b"required_test","x",b"x"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["required_test",b"required_test","x",b"x"]) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["in_test",b"in_test","not_in_test",b"not_in_test","required_test",b"required_test"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["in_test",b"in_test","not_in_test",b"not_in_test","required_test",b"required_test"]) -> None: ...
 global___AnyTest = AnyTest
 
 class DurationTest(google.protobuf.message.Message):
@@ -753,6 +757,44 @@ class MessageIgnoredTest(google.protobuf.message.Message):
         ) -> None: ...
     def ClearField(self, field_name: typing_extensions.Literal["const_test",b"const_test","range_e_test",b"range_e_test","range_test",b"range_test"]) -> None: ...
 global___MessageIgnoredTest = MessageIgnoredTest
+
+class OneOfTest(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    HEADER_FIELD_NUMBER: builtins.int
+    X_FIELD_NUMBER: builtins.int
+    Y_FIELD_NUMBER: builtins.int
+    header: typing.Text
+    x: typing.Text
+    y: builtins.int
+    def __init__(self,
+        *,
+        header: typing.Text = ...,
+        x: typing.Text = ...,
+        y: builtins.int = ...,
+        ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["id",b"id","x",b"x","y",b"y"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["header",b"header","id",b"id","x",b"x","y",b"y"]) -> None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["id",b"id"]) -> typing.Optional[typing_extensions.Literal["x","y"]]: ...
+global___OneOfTest = OneOfTest
+
+class OneOfNotTest(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    HEADER_FIELD_NUMBER: builtins.int
+    X_FIELD_NUMBER: builtins.int
+    Y_FIELD_NUMBER: builtins.int
+    header: typing.Text
+    x: typing.Text
+    y: builtins.int
+    def __init__(self,
+        *,
+        header: typing.Text = ...,
+        x: typing.Text = ...,
+        y: builtins.int = ...,
+        ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["id",b"id","x",b"x","y",b"y"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["header",b"header","id",b"id","x",b"x","y",b"y"]) -> None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["id",b"id"]) -> typing.Optional[typing_extensions.Literal["x","y"]]: ...
+global___OneOfNotTest = OneOfNotTest
 
 class NestedMessage(google.protobuf.message.Message):
     """test nested message"""

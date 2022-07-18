@@ -222,8 +222,14 @@ message RepeatedTest {
 
 message AnyTest {
   google.protobuf.Any required_test = 1 [(validate.rules).any.required = true];
-  google.protobuf.Any x = 2 [(validate.rules).any = {
+  google.protobuf.Any not_in_test = 2 [(validate.rules).any = {
     not_in: [
+      "type.googleapis.com/google.protobuf.Duration",
+      "type.googleapis.com/google.protobuf.Timestamp"
+    ],
+  }];
+  google.protobuf.Any in_test = 3 [(validate.rules).any = {
+    in: [
       "type.googleapis.com/google.protobuf.Duration",
       "type.googleapis.com/google.protobuf.Timestamp"
     ],
@@ -265,6 +271,24 @@ message MessageIgnoredTest {
   sint32 const_test = 1 [(validate.rules).float.const = 1];
   sint32 range_e_test = 2 [(validate.rules).float = {gte: 1, lte: 10}];
   sint32 range_test = 3[(validate.rules).float = {gt: 1, lt: 10}];
+}
+
+
+message OneOfTest {
+  string header = 1;
+  oneof id {
+    option (validate.required) = true;
+
+    string x = 2;
+    int32  y = 3;
+  }
+}
+message OneOfNotTest {
+  string header = 1;
+  oneof id {
+    string x = 2;
+    int32  y = 3;
+  }
 }
 
 // test nested message

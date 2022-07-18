@@ -19,7 +19,7 @@ from protobuf_to_pydantic.util import replace_type
 from .types import column_pydantic_type_dict
 
 _logger: logging.Logger = logging.getLogger(__name__)
-_message_desc_dict: Dict[str, Dict[str, Dict[str, str]]] = {}
+_message_desc_dict: Dict[str, Any] = {}
 
 type_dict: Dict[str, str] = {
     FieldDescriptor.TYPE_DOUBLE: "double",
@@ -42,7 +42,7 @@ type_dict: Dict[str, str] = {
 
 type_not_support_dict: Dict[str, Set[str]] = {
     FieldDescriptor.TYPE_BYTES: {"pattern"},
-    FieldDescriptor.TYPE_STRING: {"min_bytes", "max_bytes"},
+    FieldDescriptor.TYPE_STRING: {"min_bytes", "max_bytes", "well_known_regex", "strict"},
     "Any": {"ignore_empty", "defined_only", "no_sparse"},
 }
 
@@ -219,6 +219,12 @@ def _get_desc_from_pgv(descriptor: Descriptor) -> dict:
         ):
             _message_desc_dict[descriptor.name] = message_field_dict
             return message_field_dict
+    for one_of in descriptor.oneofs:
+        for one_of_descriptor, one_ov_value in one_of.GetOptions().ListFields():
+            if one_of_descriptor.full_name == "validate.required":
+                if one_of.full_name in _message_desc_dict:
+                    continue
+                _message_desc_dict[one_of.full_name] = {"required": True}
     for field in descriptor.fields:
         type_name: str = ""
         if field.type == FieldDescriptor.TYPE_MESSAGE:

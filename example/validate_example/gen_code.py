@@ -14,6 +14,8 @@ from example.python_example_proto_code.example_proto.validate.demo_pb2 import (
     MessageIgnoredTest,
     MessageTest,
     NestedMessage,
+    OneOfNotTest,
+    OneOfTest,
     RepeatedTest,
     Sfixed32Test,
     Sfixed64Test,
@@ -55,6 +57,8 @@ def gen_code() -> None:
                 MessageDisabledTest,
                 MessageIgnoredTest,
                 NestedMessage,
+                OneOfTest,
+                OneOfNotTest,
             )
         ],
         module_path="../",

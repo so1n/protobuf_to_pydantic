@@ -7,6 +7,19 @@ from pydantic.fields import ModelField
 from protobuf_to_pydantic.grpc_types import AnyMessage, Timestamp
 
 
+#################
+# pre validator #
+#################
+def check_one_of(cls: Any, values: tuple) -> tuple:
+    for one_of_name, one_of_dict in getattr(cls, "_one_of_dict", {}).items():
+        have_value_name = sum([1 for one_of_field_name in one_of_dict["fields"] if one_of_field_name in values])
+        if have_value_name >= 2:
+            raise ValueError(f"OneOf:{one_of_name} has {have_value_name} value")
+        if one_of_dict.get("required", False) and have_value_name == 0:
+            raise ValueError(f"OneOf:{one_of_name} must set value")
+    return values
+
+
 def _get_name_value_from_kwargs(key: str, field: ModelField) -> Tuple[str, Any]:
     field_name: str = field.name
     if field.field_info.extra:

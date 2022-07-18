@@ -162,6 +162,13 @@ class P2C(object):
             config_str = f"{' ' * indent}class Config:\n" + config_str
         return config_str
 
+    def _p2p_attribute_handle(self, model: Type[BaseModel], indent: int = 0) -> str:
+        attribute_str: str = ""
+        for key in ("_one_of_dict",):
+            model_attribute_dict = getattr(model, key, {})
+            attribute_str += f"{' ' * indent}{key} = {self._get_value_code(model_attribute_dict)}\n"
+        return attribute_str
+
     def pydantic_con_type_handle(self, type_: Any) -> str:
         con_func: Callable = pydantic_con_dict[type_.__mro__[1]]
         self._parse_type_to_import_code(con_func)
@@ -187,6 +194,9 @@ class P2C(object):
         config_class: str = self._pydantic_config_handle(model, indent=4)
         if config_class:
             class_str += config_class + "\n"
+        attribute_str = self._p2p_attribute_handle(model, indent=4)
+        if attribute_str:
+            class_str += attribute_str + "\n"
         for key, value in model.__fields__.items():
             value_type = value.outer_type_
             value_type_name: str = getattr(value_type, "__name__", None)
@@ -308,12 +318,23 @@ class P2C(object):
 
     def _pgv_validator_handle(self, model: Type[BaseModel]) -> str:
         validator_str: str = ""
+
+        # TODO Here currently only consider the support for pgv, the follow-up to fill in
+        for root_validator in model.__pre_root_validators__:
+            if root_validator.__module__ != customer_validator.__name__:
+                continue
+            self._import_set.add("from pydantic import root_validator")
+            self._add_import_code(root_validator.__module__, root_validator.__name__)
+            validator_str += (
+                f"{' ' * 4}"
+                f"_{root_validator.__name__} = root_validator(pre=True, allow_reuse=True)({root_validator.__name__})\n"
+            )
+
         for key, value in model.__fields__.items():
             if not value.class_validators:
                 continue
             for class_validator_key, class_validator_value in value.class_validators.items():
                 if class_validator_value.func.__module__ != customer_validator.__name__:
-                    # TODO Here currently only consider the support for pgv, the follow-up to fill in
                     continue
                 self._import_set.add("from pydantic import validator")
                 self._add_import_code(class_validator_value.func.__module__, class_validator_value.func.__name__)

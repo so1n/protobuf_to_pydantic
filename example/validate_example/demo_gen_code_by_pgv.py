@@ -9,14 +9,16 @@ from ipaddress import IPv4Address, IPv6Address
 from uuid import UUID
 
 from google.protobuf.any_pb2 import Any  # type: ignore
-from pydantic import BaseModel, validator
+from pydantic import BaseModel, root_validator, validator
 from pydantic.fields import FieldInfo
 from pydantic.networks import AnyUrl, EmailStr, IPvAnyAddress
 from pydantic.types import conbytes, confloat, conint, conlist, constr
 
 from protobuf_to_pydantic.customer_con_type import contimedelta, contimestamp
 from protobuf_to_pydantic.customer_validator import (
+    any_in_validator,
     any_not_in_validator,
+    check_one_of,
     contains_validator,
     duration_const_validator,
     duration_ge_validator,
@@ -44,6 +46,8 @@ from protobuf_to_pydantic.get_desc.from_pgv.types import HostNameStr, UriRefStr
 
 
 class FloatTest(BaseModel):
+    _one_of_dict = {}
+
     const_test: float = FieldInfo(default=1.0, const=True)
     range_e_test: float = FieldInfo(default=0.0, ge=1, le=10)
     range_test: float = FieldInfo(default=0.0, gt=1, lt=10)
@@ -56,6 +60,8 @@ class FloatTest(BaseModel):
 
 
 class DoubleTest(BaseModel):
+    _one_of_dict = {}
+
     const_test: float = FieldInfo(default=1.0, const=True)
     range_e_test: float = FieldInfo(default=0.0, ge=1, le=10)
     range_test: float = FieldInfo(default=0.0, gt=1, lt=10)
@@ -68,6 +74,8 @@ class DoubleTest(BaseModel):
 
 
 class Int32Test(BaseModel):
+    _one_of_dict = {}
+
     const_test: int = FieldInfo(default=1, const=True)
     range_e_test: int = FieldInfo(default=0, ge=1, le=10)
     range_test: int = FieldInfo(default=0, gt=1, lt=10)
@@ -80,6 +88,8 @@ class Int32Test(BaseModel):
 
 
 class Uint32Test(BaseModel):
+    _one_of_dict = {}
+
     const_test: int = FieldInfo(default=1, const=True)
     range_e_test: int = FieldInfo(default=0, ge=1, le=10)
     range_test: int = FieldInfo(default=0, gt=1, lt=10)
@@ -92,6 +102,8 @@ class Uint32Test(BaseModel):
 
 
 class Sfixed32Test(BaseModel):
+    _one_of_dict = {}
+
     const_test: float = FieldInfo(default=1, const=True)
     range_e_test: float = FieldInfo(default=0, ge=1, le=10)
     range_test: float = FieldInfo(default=0, gt=1, lt=10)
@@ -104,6 +116,8 @@ class Sfixed32Test(BaseModel):
 
 
 class Int64Test(BaseModel):
+    _one_of_dict = {}
+
     const_test: int = FieldInfo(default=1, const=True)
     range_e_test: int = FieldInfo(default=0, ge=1, le=10)
     range_test: int = FieldInfo(default=0, gt=1, lt=10)
@@ -116,6 +130,8 @@ class Int64Test(BaseModel):
 
 
 class Sint64Test(BaseModel):
+    _one_of_dict = {}
+
     const_test: int = FieldInfo(default=1, const=True)
     range_e_test: int = FieldInfo(default=0, ge=1, le=10)
     range_test: int = FieldInfo(default=0, gt=1, lt=10)
@@ -128,6 +144,8 @@ class Sint64Test(BaseModel):
 
 
 class Uint64Test(BaseModel):
+    _one_of_dict = {}
+
     const_test: int = FieldInfo(default=1, const=True)
     range_e_test: int = FieldInfo(default=0, ge=1, le=10)
     range_test: int = FieldInfo(default=0, gt=1, lt=10)
@@ -140,6 +158,8 @@ class Uint64Test(BaseModel):
 
 
 class Sfixed64Test(BaseModel):
+    _one_of_dict = {}
+
     const_test: float = FieldInfo(default=1, const=True)
     range_e_test: float = FieldInfo(default=0, ge=1, le=10)
     range_test: float = FieldInfo(default=0, gt=1, lt=10)
@@ -152,6 +172,8 @@ class Sfixed64Test(BaseModel):
 
 
 class Fixed32Test(BaseModel):
+    _one_of_dict = {}
+
     const_test: float = FieldInfo(default=1, const=True)
     range_e_test: float = FieldInfo(default=0, ge=1, le=10)
     range_test: float = FieldInfo(default=0, gt=1, lt=10)
@@ -164,11 +186,15 @@ class Fixed32Test(BaseModel):
 
 
 class BoolTest(BaseModel):
+    _one_of_dict = {}
+
     bool_1_test: bool = FieldInfo(default=True, const=True)
     bool_2_test: bool = FieldInfo(default=False, const=True)
 
 
 class StringTest(BaseModel):
+    _one_of_dict = {}
+
     const_test: str = FieldInfo(default="aaa", const=True)
     len_test: str = FieldInfo(default="", extra={"len": 3})
     s_range_len_test: str = FieldInfo(default="", min_length=1, max_length=3)
@@ -201,6 +227,8 @@ class StringTest(BaseModel):
 
 
 class BytesTest(BaseModel):
+    _one_of_dict = {}
+
     const_test: bytes = FieldInfo(default=b"demo", const=True)
     len_test: bytes = FieldInfo(default=b"", extra={"len": 4})
     range_len_test: bytes = FieldInfo(default=b"", min_length=1, max_length=4)
@@ -226,6 +254,8 @@ class State(IntEnum):
 
 
 class EnumTest(BaseModel):
+    _one_of_dict = {}
+
     const_test: State = FieldInfo(default=2, const=True)
     defined_only_test: State = FieldInfo(default=0)
     in_test: State = FieldInfo(default=0, extra={"in": [0, 2]})
@@ -236,11 +266,15 @@ class EnumTest(BaseModel):
 
 
 class Timestamp(BaseModel):
+    _one_of_dict = {}
+
     seconds: int = FieldInfo(default=0)
     nanos: int = FieldInfo(default=0)
 
 
 class MapTest(BaseModel):
+    _one_of_dict = {}
+
     pair_test: typing.Dict[str, int] = FieldInfo(extra={"map_min_pairs": 1, "map_max_pairs": 5})
     no_parse_test: typing.Dict[str, int] = FieldInfo()
     keys_test: typing.Dict[constr(min_length=1, max_length=5), int] = FieldInfo()
@@ -253,11 +287,15 @@ class MapTest(BaseModel):
 
 
 class MessageTest(BaseModel):
+    _one_of_dict = {}
+
     skip_test: str = FieldInfo(default="")
     required_test: str = FieldInfo()
 
 
 class RepeatedTest(BaseModel):
+    _one_of_dict = {}
+
     range_test: typing.List[str] = FieldInfo(min_items=1, max_items=5)
     unique_test: typing.List[str] = FieldInfo(unique_items=True)
     items_string_test: conlist(item_type=constr(min_length=1, max_length=5), min_items=1, max_items=5) = FieldInfo()
@@ -276,8 +314,10 @@ class RepeatedTest(BaseModel):
 
 
 class AnyTest(BaseModel):
+    _one_of_dict = {}
+
     required_test: Any = FieldInfo()
-    x: Any = FieldInfo(
+    not_in_test: Any = FieldInfo(
         extra={
             "any_not_in": [
                 "type.googleapis.com/google.protobuf.Duration",
@@ -285,11 +325,19 @@ class AnyTest(BaseModel):
             ]
         }
     )
+    in_test: Any = FieldInfo(
+        extra={
+            "any_in": ["type.googleapis.com/google.protobuf.Duration", "type.googleapis.com/google.protobuf.Timestamp"]
+        }
+    )
 
-    any_not_in_validator_x = validator("x", allow_reuse=True)(any_not_in_validator)
+    any_not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(any_not_in_validator)
+    any_in_validator_in_test = validator("in_test", allow_reuse=True)(any_in_validator)
 
 
 class DurationTest(BaseModel):
+    _one_of_dict = {}
+
     required_test: timedelta = FieldInfo()
     const_test: timedelta = FieldInfo(extra={"duration_const": timedelta(seconds=1, microseconds=500000)})
     range_test: timedelta = FieldInfo(
@@ -321,6 +369,8 @@ class DurationTest(BaseModel):
 
 
 class TimestampTest(BaseModel):
+    _one_of_dict = {}
+
     required_test: str = FieldInfo()
     const_test: str = FieldInfo(extra={"timestamp_const": 1600000000.0})
     range_test: str = FieldInfo(extra={"timestamp_lt": 1600000010.0, "timestamp_gt": 1600000000.0})
@@ -349,18 +399,24 @@ class TimestampTest(BaseModel):
 
 
 class MessageDisabledTest(BaseModel):
+    _one_of_dict = {}
+
     const_test: int = FieldInfo(default=0)
     range_e_test: int = FieldInfo(default=0)
     range_test: int = FieldInfo(default=0)
 
 
 class MessageIgnoredTest(BaseModel):
+    _one_of_dict = {}
+
     const_test: int = FieldInfo(default=0)
     range_e_test: int = FieldInfo(default=0)
     range_test: int = FieldInfo(default=0)
 
 
 class NestedMessageUserPayMessage(BaseModel):
+    _one_of_dict = {}
+
     bank_number: str = FieldInfo(default="", min_length=13, max_length=19)
     exp: str = FieldInfo(extra={"timestamp_gt_now": True})
     uuid: UUID = FieldInfo(default="")
@@ -369,14 +425,38 @@ class NestedMessageUserPayMessage(BaseModel):
 
 
 class NestedMessageNotEnableUserPayMessage(BaseModel):
+    _one_of_dict = {}
+
     bank_number: str = FieldInfo(default="")
     exp: str = FieldInfo()
     uuid: str = FieldInfo(default="")
 
 
 class NestedMessage(BaseModel):
+    _one_of_dict = {}
+
     string_in_map_test: typing.Dict[str, StringTest] = FieldInfo()
     map_in_map_test: typing.Dict[str, MapTest] = FieldInfo()
     user_pay: NestedMessageUserPayMessage = FieldInfo()
     not_enable_user_pay: NestedMessageNotEnableUserPayMessage = FieldInfo()
     empty: None = FieldInfo()
+
+
+class OneOfTest(BaseModel):
+    _one_of_dict = {"validate_test.OneOfTest.id": {"required": True, "fields": {"x", "y"}}}
+
+    header: str = FieldInfo(default="")
+    x: str = FieldInfo(default="")
+    y: int = FieldInfo(default=0)
+
+    _check_one_of = root_validator(pre=True, allow_reuse=True)(check_one_of)
+
+
+class OneOfNotTest(BaseModel):
+    _one_of_dict = {"validate_test.OneOfNotTest.id": {"required": False, "fields": {"x", "y"}}}
+
+    header: str = FieldInfo(default="")
+    x: str = FieldInfo(default="")
+    y: int = FieldInfo(default=0)
+
+    _check_one_of = root_validator(pre=True, allow_reuse=True)(check_one_of)

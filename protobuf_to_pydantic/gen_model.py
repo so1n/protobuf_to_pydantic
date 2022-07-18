@@ -8,10 +8,11 @@ from pathlib import Path
 from types import ModuleType
 from typing import Any, Callable, Dict, List, Optional, Tuple, Type, Union
 
-from pydantic import BaseConfig, BaseModel, Field, validator
+from pydantic import BaseConfig, BaseModel, Field, root_validator, validator
 from pydantic.fields import FieldInfo, Undefined
 from pydantic.typing import NoArgAnyCallable
 
+from protobuf_to_pydantic.customer_validator import check_one_of
 from protobuf_to_pydantic.get_desc import get_desc_from_pgv, get_desc_from_proto_file, get_desc_from_pyi_file
 from protobuf_to_pydantic.grpc_types import AnyMessage, Descriptor, FieldDescriptor, Message, Timestamp
 from protobuf_to_pydantic.util import create_pydantic_model
@@ -180,7 +181,17 @@ class M2P(object):
         timestamp_type, _grpc_timestamp_handler = self._grpc_timestamp_handler_tuple
         pydantic_model_config: Type[BaseConfig] = BaseConfig
         pydantic_model_config.__p2p_dict__ = {}
+        one_of_dict: Dict[str, Any] = {}
 
+        for one_of in descriptor.oneofs:
+            if one_of.full_name not in one_of_dict:
+                one_of_dict[one_of.full_name] = {"required": False, "fields": set()}
+            if one_of.full_name in self._field_doc_dict:
+                one_of_dict[one_of.full_name]["required"] = self._field_doc_dict[one_of.full_name].get(
+                    "required", False
+                )
+            for _field in one_of.fields:
+                one_of_dict[one_of.full_name]["fields"].add(_field.name)
         for column in descriptor.fields:
             type_: Any = type_dict.get(column.type, None)
             name: str = column.name
@@ -296,6 +307,8 @@ class M2P(object):
                 check_fields=True,
                 always=True,
             )(_grpc_timestamp_handler)
+        if one_of_dict:
+            validators["one_of_validator"] = root_validator(pre=True, allow_reuse=True)(check_one_of)
 
         if descriptor.name == "Any":
             # Message.Any and typing.Any with the same name, need to change the name of Message.Any.
@@ -308,6 +321,7 @@ class M2P(object):
             pydantic_validators=validators or None,
             pydantic_config=pydantic_model_config if hasattr(pydantic_model_config, "__p2p_dict__") else None,
         )
+        setattr(pydantic_model, "_one_of_dict", one_of_dict)
         self._creat_cache[descriptor] = pydantic_model
         return pydantic_model
 
