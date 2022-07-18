@@ -270,12 +270,18 @@ message MessageIgnoredTest {
 // test nested message
 message NestedMessage{
   message UserPayMessage {
-    string bank_number=1; // p2p: {"type": "p2p@import|PaymentCardNumber|pydantic.types"}
-    google.protobuf.Timestamp exp=2; // p2p: {"default_factory": "p2p@local|exp_time"}
-    string uuid=3; // p2p: {"default_factory": "p2p@local|uuid4"}
+    string bank_number=1 [(validate.rules).string = {min_len:13, max_len:19}];
+    google.protobuf.Timestamp exp=2[(validate.rules).timestamp.gt_now = true];
+    string uuid=3[(validate.rules).string.uuid = true];
+  }
+  message NotEnableUserPayMessage {
+    string bank_number=1 [(validate.rules).string = {min_len:13, max_len:19}];
+    google.protobuf.Timestamp exp=2[(validate.rules).timestamp.gt_now = true];
+    string uuid=3[(validate.rules).string.uuid = true];
   }
   map<string, StringTest> string_in_map_test=1;
   map<string, MapTest> map_in_map_test=2;
   UserPayMessage user_pay=3;
-  google.protobuf.Empty empty=4;
+  NotEnableUserPayMessage not_enable_user_pay=4[(validate.rules).message.skip = true];
+  google.protobuf.Empty empty=5;
 }

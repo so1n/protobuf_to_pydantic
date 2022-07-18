@@ -114,6 +114,7 @@ class M2P(object):
         self._default_field = default_field
         self._comment_prefix = comment_prefix
         self._local_dict = local_dict
+        self._creat_cache: Dict[Union[Type[Message], Descriptor], Type[BaseModel]] = {}
 
         self._gen_model: Type[BaseModel] = self._parse_msg_to_pydantic_model(
             descriptor=msg if isinstance(msg, Descriptor) else msg.DESCRIPTOR,
@@ -170,6 +171,9 @@ class M2P(object):
 
     # flake8: noqa: C901
     def _parse_msg_to_pydantic_model(self, *, descriptor: Descriptor, class_name: str = "") -> Type[BaseModel]:
+        if descriptor in self._creat_cache:
+            return self._creat_cache[descriptor]
+
         annotation_dict: Dict[str, Tuple[Type, Any]] = {}
         validators: Dict[str, classmethod] = {}
         timestamp_handler_field_silt: List[str] = []
@@ -298,12 +302,14 @@ class M2P(object):
             class_name = "AnyMessage"
         elif not class_name:
             class_name = descriptor.name
-        return create_pydantic_model(
+        pydantic_model: Type[BaseModel] = create_pydantic_model(
             annotation_dict,
             class_name=class_name,
             pydantic_validators=validators or None,
             pydantic_config=pydantic_model_config if hasattr(pydantic_model_config, "__p2p_dict__") else None,
         )
+        self._creat_cache[descriptor] = pydantic_model
+        return pydantic_model
 
     def _get_pait_info_from_grpc_desc(self, desc: str) -> MessagePaitModel:
         pait_dict: dict = {}

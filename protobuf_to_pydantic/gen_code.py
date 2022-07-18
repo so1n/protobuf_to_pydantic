@@ -14,6 +14,7 @@ from pydantic.types import ConstrainedList
 
 from protobuf_to_pydantic import customer_validator, gen_model
 from protobuf_to_pydantic.customer_con_type import pydantic_con_dict
+from protobuf_to_pydantic.grpc_types import RepeatedScalarContainer
 
 
 class P2C(object):
@@ -35,6 +36,7 @@ class P2C(object):
         self._model_list: Tuple[Type[BaseModel], ...] = model
         self._import_set: Set[str] = customer_import_set or set()
         self._content_deque: Deque = customer_deque or deque()
+        self._create_set: Set[Type[BaseModel]] = set()
 
         # init module_path
         if module_path:
@@ -178,6 +180,8 @@ class P2C(object):
         return f"{con_func.__name__}({', '.join(param_str_list)})"
 
     def _gen_pydantic_model_py_code(self, model: Type[BaseModel]) -> None:
+        if model in self._create_set:
+            return None
         self._import_set.add("from pydantic import BaseModel")
         class_str: str = f"class {model.__name__}(BaseModel):\n"
         config_class: str = self._pydantic_config_handle(model, indent=4)
@@ -224,11 +228,12 @@ class P2C(object):
         if validator_str:
             class_str += f"\n{validator_str}"
         self._content_deque.append(class_str)
+        self._create_set.add(model)
 
     def _parse_type_to_import_code(self, type_: Any) -> None:
         type_module: Optional[ModuleType] = inspect.getmodule(type_)
         if not type_module:
-            if isinstance(type_, list):
+            if isinstance(type_, list) or isinstance(type_, RepeatedScalarContainer):
                 for i in type_:
                     self._parse_type_to_import_code(i)
             elif isinstance(type_, dict):
@@ -351,15 +356,14 @@ def pydantic_model_to_py_file(
     enable_isort: bool = True,
     enable_yapf: bool = True,
 ) -> None:
+    py_code_content: str = pydantic_model_to_py_code(
+        *model,
+        customer_import_set=customer_import_set,
+        customer_deque=customer_deque,
+        module_path=module_path,
+        enable_autoflake=enable_autoflake,
+        enable_isort=enable_isort,
+        enable_yapf=enable_yapf,
+    )
     with open(filename, mode=open_mode) as f:
-        f.write(
-            pydantic_model_to_py_code(
-                *model,
-                customer_import_set=customer_import_set,
-                customer_deque=customer_deque,
-                module_path=module_path,
-                enable_autoflake=enable_autoflake,
-                enable_isort=enable_isort,
-                enable_yapf=enable_yapf,
-            )
-        )
+        f.write(py_code_content)

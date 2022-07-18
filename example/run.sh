@@ -6,14 +6,14 @@ if [ -d '../.venv' ] ; then
     export VENV_PREFIX="../.venv/bin/"
 fi
 
-echo 'use venv path:' ${VENV_PREFIX}
 
 echo "=====> run $(pwd)/gen_rpc.sh"
-chmod +x gen_rpc.sh
 bash ./gen_rpc.sh
 
 directory_list=("simple_example" "text_comment_example" "validate_example")
+echo ""
 VENV_PREFIX="../${VENV_PREFIX}"
+echo 'use venv path:' ${VENV_PREFIX}
 for directory in "${directory_list[@]}"
 do
   cd "$(pwd)/$directory" || exit

@@ -9,7 +9,6 @@ from ipaddress import IPv4Address, IPv6Address
 from uuid import UUID
 
 from google.protobuf.any_pb2 import Any  # type: ignore
-from google.protobuf.pyext._message import RepeatedScalarContainer  # type: ignore
 from pydantic import BaseModel, validator
 from pydantic.fields import FieldInfo
 from pydantic.networks import AnyUrl, EmailStr, IPvAnyAddress
@@ -116,6 +115,18 @@ class Int64Test(BaseModel):
     in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(in_validator)
 
 
+class Sint64Test(BaseModel):
+    const_test: int = FieldInfo(default=1, const=True)
+    range_e_test: int = FieldInfo(default=0, ge=1, le=10)
+    range_test: int = FieldInfo(default=0, gt=1, lt=10)
+    in_test: int = FieldInfo(default=0, extra={"in": [1, 2, 3]})
+    not_in_test: int = FieldInfo(default=0, extra={"in": [1, 2, 3]})
+    ignore_test: int = FieldInfo(default=0)
+
+    in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
+    in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(in_validator)
+
+
 class Uint64Test(BaseModel):
     const_test: int = FieldInfo(default=1, const=True)
     range_e_test: int = FieldInfo(default=0, ge=1, le=10)
@@ -147,18 +158,6 @@ class Fixed32Test(BaseModel):
     in_test: float = FieldInfo(default=0, extra={"in": [1, 2, 3]})
     not_in_test: float = FieldInfo(default=0, extra={"in": [1, 2, 3]})
     ignore_test: float = FieldInfo(default=0)
-
-    in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
-    in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(in_validator)
-
-
-class Sint64Test(BaseModel):
-    const_test: int = FieldInfo(default=1, const=True)
-    range_e_test: int = FieldInfo(default=0, ge=1, le=10)
-    range_test: int = FieldInfo(default=0, gt=1, lt=10)
-    in_test: int = FieldInfo(default=0, extra={"in": [1, 2, 3]})
-    not_in_test: int = FieldInfo(default=0, extra={"in": [1, 2, 3]})
-    ignore_test: int = FieldInfo(default=0)
 
     in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
     in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(in_validator)
@@ -362,6 +361,14 @@ class MessageIgnoredTest(BaseModel):
 
 
 class NestedMessageUserPayMessage(BaseModel):
+    bank_number: str = FieldInfo(default="", min_length=13, max_length=19)
+    exp: str = FieldInfo(extra={"timestamp_gt_now": True})
+    uuid: UUID = FieldInfo(default="")
+
+    timestamp_gt_now_validator_exp = validator("exp", allow_reuse=True)(timestamp_gt_now_validator)
+
+
+class NestedMessageNotEnableUserPayMessage(BaseModel):
     bank_number: str = FieldInfo(default="")
     exp: str = FieldInfo()
     uuid: str = FieldInfo(default="")
@@ -371,4 +378,5 @@ class NestedMessage(BaseModel):
     string_in_map_test: typing.Dict[str, StringTest] = FieldInfo()
     map_in_map_test: typing.Dict[str, MapTest] = FieldInfo()
     user_pay: NestedMessageUserPayMessage = FieldInfo()
+    not_enable_user_pay: NestedMessageNotEnableUserPayMessage = FieldInfo()
     empty: None = FieldInfo()
