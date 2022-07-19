@@ -8,7 +8,7 @@ from pathlib import Path
 from types import ModuleType
 from typing import Any, Callable, Dict, List, Optional, Tuple, Type, Union
 
-from pydantic import BaseConfig, BaseModel, Field, root_validator
+from pydantic import BaseModel, Field, root_validator
 from pydantic.fields import FieldInfo, Undefined
 from pydantic.typing import NoArgAnyCallable
 
@@ -73,6 +73,8 @@ class M2P(object):
         field_dict: Optional[Dict[str, FieldInfo]] = None,
         comment_prefix: str = "p2p:",
         parse_msg_desc_method: Any = None,
+        pydantic_base: Optional[Type["BaseModel"]] = None,
+        pydantic_module: Optional[str] = None,
         local_dict: Optional[Dict[str, Any]] = None,
     ):
         message_field_dict: Dict[str, Dict[str, str]] = {}
@@ -106,6 +108,8 @@ class M2P(object):
         self._comment_prefix = comment_prefix
         self._local_dict = local_dict
         self._creat_cache: Dict[Union[Type[Message], Descriptor], Type[BaseModel]] = {}
+        self._pydantic_base: Type["BaseModel"] = pydantic_base or BaseModel
+        self._pydantic_module: str = pydantic_module or __name__
 
         self._gen_model: Type[BaseModel] = self._parse_msg_to_pydantic_model(
             descriptor=msg if isinstance(msg, Descriptor) else msg.DESCRIPTOR,
@@ -167,8 +171,7 @@ class M2P(object):
 
         annotation_dict: Dict[str, Tuple[Type, Any]] = {}
         validators: Dict[str, classmethod] = {}
-        pydantic_model_config: Type[BaseConfig] = BaseConfig
-        pydantic_model_config.__p2p_dict__ = {}
+        pydantic_model_config_dict: Dict[str, Any] = {}
         one_of_dict: Dict[str, Any] = {}
 
         for one_of in descriptor.oneofs:
@@ -213,8 +216,8 @@ class M2P(object):
                     type_ = datetime.timedelta
                 elif column.message_type.name == "Any":
                     type_ = AnyMessage
-                    pydantic_model_config.arbitrary_types_allowed = True
-                    pydantic_model_config.__p2p_dict__["arbitrary_types_allowed"] = True
+                    if not self._pydantic_base.Config.arbitrary_types_allowed:
+                        pydantic_model_config_dict["arbitrary_types_allowed"] = True
                 else:
                     # support google.protobuf.Message
                     if column.message_type.full_name.startswith(".".join(column.full_name.split(".")[:-1])):
@@ -295,11 +298,26 @@ class M2P(object):
             class_name = "AnyMessage"
         elif not class_name:
             class_name = descriptor.name
+
+        if pydantic_model_config_dict:
+            # Changing the configuration of Config by inheritance
+            pydantic_base: Type[BaseModel] = type(  # type: ignore
+                self._pydantic_base.__name__,
+                (self._pydantic_base,),
+                {
+                    "Config": type(
+                        self._pydantic_base.Config.__name__, (self._pydantic_base.Config,), pydantic_model_config_dict
+                    )
+                },
+            )
+        else:
+            pydantic_base = self._pydantic_base
         pydantic_model: Type[BaseModel] = create_pydantic_model(
             annotation_dict,
             class_name=class_name,
             pydantic_validators=validators or None,
-            pydantic_config=pydantic_model_config if hasattr(pydantic_model_config, "__p2p_dict__") else None,
+            pydantic_module=self._pydantic_module,
+            pydantic_base=pydantic_base,
         )
         setattr(pydantic_model, "_one_of_dict", one_of_dict)
         self._creat_cache[descriptor] = pydantic_model
@@ -354,6 +372,8 @@ def msg_to_pydantic_model(
     comment_prefix: str = "p2p:",
     parse_msg_desc_method: Any = None,
     local_dict: Optional[Dict[str, Any]] = None,
+    pydantic_base: Optional[Type["BaseModel"]] = None,
+    pydantic_module: Optional[str] = None,
 ) -> Type[BaseModel]:
     """
     Parse a message to a pydantic model
@@ -373,4 +393,6 @@ def msg_to_pydantic_model(
         comment_prefix=comment_prefix,
         parse_msg_desc_method=parse_msg_desc_method,
         local_dict=local_dict,
+        pydantic_module=pydantic_module,
+        pydantic_base=pydantic_base,
     ).model

@@ -7,7 +7,7 @@ from types import ModuleType
 from typing import _GenericAlias  # type: ignore
 from typing import Any, Callable, Deque, List, Optional, Set, Tuple, Type
 
-from pydantic import BaseModel
+from pydantic import BaseConfig, BaseModel
 from pydantic.fields import FieldInfo
 from pydantic.types import ConstrainedList
 
@@ -153,9 +153,12 @@ class P2C(object):
     @staticmethod
     def _pydantic_config_handle(model: Type[BaseModel], indent: int = 0) -> str:
         config_str: str = ""
-        if not getattr(model.Config, "__p2p_dict__", None):
-            return config_str
-        for key, value in model.Config.__p2p_dict__.items():
+        for key in dir(model.Config):
+            if key.startswith("_"):
+                continue
+            value = getattr(model.Config, key)
+            if value == getattr(BaseConfig, key) or inspect.isfunction(value) or inspect.ismethod(value):
+                continue
             config_str += f"{' ' * (indent + 4)}{key} = {value}\n"
         if config_str:
             config_str = f"{' ' * indent}class Config:\n" + config_str
@@ -164,7 +167,9 @@ class P2C(object):
     def _p2p_attribute_handle(self, model: Type[BaseModel], indent: int = 0) -> str:
         attribute_str: str = ""
         for key in ("_one_of_dict",):
-            model_attribute_dict = getattr(model, key, {})
+            model_attribute_dict = getattr(model, key, None)
+            if not model_attribute_dict:
+                continue
             attribute_str += f"{' ' * indent}{key} = {self._get_value_code(model_attribute_dict)}\n"
         return attribute_str
 
