@@ -3,6 +3,7 @@
 # type: ignore
 
 import typing
+from datetime import datetime
 from enum import IntEnum
 
 from pydantic import BaseModel
@@ -44,7 +45,7 @@ class NestedMessageUserPayMessage(BaseModel):
     _one_of_dict = {}
 
     bank_number: str = FieldInfo(default="")
-    exp: str = FieldInfo()
+    exp: datetime = FieldInfo()
     uuid: str = FieldInfo(default="")
 
 

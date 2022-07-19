@@ -2,7 +2,6 @@ import inspect
 import pathlib
 import sys
 from collections import deque
-from datetime import timedelta
 from enum import IntEnum
 from types import ModuleType
 from typing import _GenericAlias  # type: ignore
@@ -180,9 +179,9 @@ class P2C(object):
                 continue
             if inspect.isclass(_value) and _value.__mro__[1] in pydantic_con_dict:
                 _value = self.pydantic_con_type_handle(_value)
-            self._parse_type_to_import_code(_value)
-            if isinstance(_value, timedelta):
-                _value = _value.__repr__().strip("'").replace("datetime.", "")
+                # self._parse_type_to_import_code(_value)
+            else:
+                _value = self._get_value_code(_value)
             param_str_list.append(f"{_key}={_value}")
         return f"{con_func.__name__}({', '.join(param_str_list)})"
 

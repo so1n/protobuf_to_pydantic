@@ -31,7 +31,7 @@ def replace_type(value: Any) -> Any:
     if isinstance(value, Duration):
         return timedelta(microseconds=value.ToMicroseconds())
     elif isinstance(value, Timestamp):
-        return value.ToMicroseconds() / 1000000
+        return value.ToDatetime()
     elif isinstance(value, (list, RepeatedCompositeContainer)):
         return [replace_type(i) for i in value]
     else:

@@ -3,6 +3,7 @@
 # type: ignore
 
 import typing
+from datetime import datetime
 from enum import IntEnum
 from uuid import uuid4
 
@@ -50,7 +51,7 @@ class NestedMessageUserPayMessage(BaseModel):
     _one_of_dict = {}
 
     bank_number: PaymentCardNumber = FieldInfo(default="")
-    exp: str = FieldInfo(default_factory=exp_time)
+    exp: datetime = FieldInfo(default_factory=exp_time)
     uuid: str = FieldInfo(default_factory=uuid4)
 
 

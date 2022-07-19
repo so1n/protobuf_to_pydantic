@@ -8,7 +8,7 @@ from pathlib import Path
 from types import ModuleType
 from typing import Any, Callable, Dict, List, Optional, Tuple, Type, Union
 
-from pydantic import BaseConfig, BaseModel, Field, root_validator, validator
+from pydantic import BaseConfig, BaseModel, Field, root_validator
 from pydantic.fields import FieldInfo, Undefined
 from pydantic.typing import NoArgAnyCallable
 
@@ -65,20 +65,11 @@ class MessagePaitModel(BaseModel):
     sub: Optional["MessagePaitModel"] = Field(None)
 
 
-def grpc_timestamp_int_handler(cls: Any, v: int) -> Timestamp:
-    t: Timestamp = Timestamp()
-
-    if v:
-        t.FromDatetime(datetime.datetime.fromtimestamp(v))
-    return t
-
-
 class M2P(object):
     def __init__(
         self,
         msg: Union[Type[Message], Descriptor],
         default_field: Type[FieldInfo] = FieldInfo,
-        grpc_timestamp_handler_tuple: Optional[GRPC_TIMESTAMP_HANDLER_TUPLE_T] = None,
         field_dict: Optional[Dict[str, FieldInfo]] = None,
         comment_prefix: str = "p2p:",
         parse_msg_desc_method: Any = None,
@@ -109,7 +100,6 @@ class M2P(object):
                 f" not {parse_msg_desc_method})"
             )
         self._parse_msg_desc_method: Optional[str] = parse_msg_desc_method
-        self._grpc_timestamp_handler_tuple = grpc_timestamp_handler_tuple or (str, None)
         self._field_doc_dict = message_field_dict
         self._field_dict = field_dict or {}
         self._default_field = default_field
@@ -177,8 +167,6 @@ class M2P(object):
 
         annotation_dict: Dict[str, Tuple[Type, Any]] = {}
         validators: Dict[str, classmethod] = {}
-        timestamp_handler_field_silt: List[str] = []
-        timestamp_type, _grpc_timestamp_handler = self._grpc_timestamp_handler_tuple
         pydantic_model_config: Type[BaseConfig] = BaseConfig
         pydantic_model_config.__p2p_dict__ = {}
         one_of_dict: Dict[str, Any] = {}
@@ -201,8 +189,7 @@ class M2P(object):
             if column.type == FieldDescriptor.TYPE_MESSAGE:
                 if column.message_type.name == "Timestamp":
                     # support google.protobuf.Timestamp
-                    type_ = timestamp_type
-                    timestamp_handler_field_silt.append(column.name)
+                    type_ = datetime.datetime
                 elif column.message_type.name.endswith("Entry"):
                     # support google.protobuf.MapEntry
                     key, value = column.message_type.fields
@@ -300,13 +287,6 @@ class M2P(object):
             use_field = field(**field_param_dict)  # type: ignore
             annotation_dict[name] = (type_, use_field)
 
-        if timestamp_handler_field_silt and _grpc_timestamp_handler:
-            validators["timestamp_validator"] = validator(
-                *timestamp_handler_field_silt,
-                allow_reuse=True,
-                check_fields=True,
-                always=True,
-            )(_grpc_timestamp_handler)
         if one_of_dict:
             validators["one_of_validator"] = root_validator(pre=True, allow_reuse=True)(check_one_of)
 
@@ -370,7 +350,6 @@ class M2P(object):
 def msg_to_pydantic_model(
     msg: Union[Type[Message], Descriptor],
     default_field: Type[FieldInfo] = FieldInfo,
-    grpc_timestamp_handler_tuple: Optional[GRPC_TIMESTAMP_HANDLER_TUPLE_T] = None,
     field_dict: Optional[Dict[str, FieldInfo]] = None,
     comment_prefix: str = "p2p:",
     parse_msg_desc_method: Any = None,
@@ -381,7 +360,6 @@ def msg_to_pydantic_model(
     :param msg: grpc Message or descriptor
     :param default_field: gen pydantic_model default Field,
         apply only to the outermost pydantic model
-    :param grpc_timestamp_handler_tuple:
     :param field_dict: Define which FieldInfo should be used for the parameter (to support the pait framework)
     :param comment_prefix: Customize the prefixes that need to be parsed for comments
     :param parse_msg_desc_method: Define the type of comment to be parsed, if the value is a protobuf file path,
@@ -391,7 +369,6 @@ def msg_to_pydantic_model(
     return M2P(
         msg=msg,
         default_field=default_field,
-        grpc_timestamp_handler_tuple=grpc_timestamp_handler_tuple,
         field_dict=field_dict,
         comment_prefix=comment_prefix,
         parse_msg_desc_method=parse_msg_desc_method,

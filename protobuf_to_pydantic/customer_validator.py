@@ -4,7 +4,7 @@ from typing import Any, Callable, Dict, Tuple
 
 from pydantic.fields import ModelField
 
-from protobuf_to_pydantic.grpc_types import AnyMessage, Timestamp
+from protobuf_to_pydantic.grpc_types import AnyMessage
 
 
 #################
@@ -29,6 +29,9 @@ def _get_name_value_from_kwargs(key: str, field: ModelField) -> Tuple[str, Any]:
     return field_name, field_value
 
 
+##################
+# data validator #
+##################
 def in_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
     field_name, field_value = _get_name_value_from_kwargs("in", kwargs["field"])
     if field_value is not None and v not in field_value:
@@ -137,24 +140,9 @@ duration_not_in_validator = not_in_validator
 #####################
 # timestamp support #
 #####################
-def timestamp_handle(v: Any) -> float:
-    if isinstance(v, str):
-        t: Timestamp = Timestamp()
-        t.FromJsonString(v)
-        return t.ToMicroseconds() / 1000000
-    elif isinstance(v, int):
-        return float(v)
-    elif isinstance(v, float):
-        return v
-    elif isinstance(v, datetime):
-        return v.timestamp()
-    else:
-        raise TypeError(f"Not support type:{type(v)}")
-
-
 def timestamp_lt_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
     field_name, field_value = _get_name_value_from_kwargs("timestamp_lt", kwargs["field"])
-    if field_value is not None and not (timestamp_handle(v) < field_value):
+    if field_value is not None and not (v < field_value):
         raise ValueError(f"{field_name} must < {field_value}, not {v}")
     return v
 
@@ -162,65 +150,65 @@ def timestamp_lt_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
 def timestamp_lt_now_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
     field_name, field_value = _get_name_value_from_kwargs("timestamp_lt_now", kwargs["field"])
     now_time: float = time.time()
-    if field_value is not None and not (timestamp_handle(v) < now_time):
+    if field_value is not None and not (v < now_time):
         raise ValueError(f"{field_name} must < {now_time}, not {v}")
     return v
 
 
 def timestamp_le_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
     field_name, field_value = _get_name_value_from_kwargs("timestamp_le", kwargs["field"])
-    if field_value is not None and not (timestamp_handle(v) <= field_value):
+    if field_value is not None and not (v <= field_value):
         raise ValueError(f"{field_name} must <= {field_value}, not {v}")
     return v
 
 
 def timestamp_gt_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
     field_name, field_value = _get_name_value_from_kwargs("timestamp_gt", kwargs["field"])
-    if field_value is not None and not (timestamp_handle(v) > field_value):
+    if field_value is not None and not (v > field_value):
         raise ValueError(f"{field_name} must > {field_value}, not {v}")
     return v
 
 
 def timestamp_gt_now_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
     field_name, field_value = _get_name_value_from_kwargs("timestamp_gt_now", kwargs["field"])
-    now_time: float = time.time()
-    if field_value is not None and not (timestamp_handle(v) > now_time):
+    now_time: datetime = datetime.now()
+    if field_value is not None and not (v > now_time):
         raise ValueError(f"{field_name} must > {now_time}, not {v}")
     return v
 
 
 def timestamp_within_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
     field_name, field_value = _get_name_value_from_kwargs("timestamp_within_now", kwargs["field"])
-    now_time: float = time.time()
-    if field_value is not None and not ((now_time - field_value) <= timestamp_handle(v) <= (now_time + field_value)):
+    now_time: datetime = datetime.now()
+    if field_value is not None and not ((now_time - field_value) <= v <= (now_time + field_value)):
         raise ValueError(f"{field_name} must between {now_time -field_value} and {now_time + field_value}, not {v}")
     return v
 
 
 def timestamp_ge_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
     field_name, field_value = _get_name_value_from_kwargs("timestamp_ge", kwargs["field"])
-    if field_value is not None and not (timestamp_handle(v) >= field_value):
+    if field_value is not None and not (v >= field_value):
         raise ValueError(f"{field_name} must >= {field_value}, not {v}")
     return v
 
 
 def timestamp_const_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
     field_name, field_value = _get_name_value_from_kwargs("timestamp_const", kwargs["field"])
-    if field_value is not None and timestamp_handle(v) != field_value:
+    if field_value is not None and v != field_value:
         raise ValueError(f"{field_name} must {field_value}, not {v}")
     return v
 
 
 def timestamp_in_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
     field_name, field_value = _get_name_value_from_kwargs("timestamp_in", kwargs["field"])
-    if field_value is not None and timestamp_handle(v) not in field_value:
+    if field_value is not None and v not in field_value:
         raise ValueError(f"{field_name} not in {field_value}")
     return v
 
 
 def timestamp_not_in_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
     field_name, field_value = _get_name_value_from_kwargs("timestamp_not_in", kwargs["field"])
-    if field_value is not None and timestamp_handle(v) in field_value:
+    if field_value is not None and v in field_value:
         raise ValueError(f"{field_name} in {field_value}")
     return v
 

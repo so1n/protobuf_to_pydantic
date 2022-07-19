@@ -3,7 +3,7 @@
 # type: ignore
 
 import typing
-from datetime import timedelta
+from datetime import datetime, timedelta
 from enum import IntEnum
 from ipaddress import IPv4Address, IPv6Address
 from uuid import UUID
@@ -302,7 +302,11 @@ class RepeatedTest(BaseModel):
     items_double_test: conlist(item_type=confloat(gt=1, lt=5), min_items=1, max_items=5) = FieldInfo()
     items_int32_test: conlist(item_type=conint(gt=1, lt=5), min_items=1, max_items=5) = FieldInfo()
     items_timestamp_test: conlist(
-        item_type=contimestamp(timestamp_gt=1600000000.0, timestamp_lt=1600000010.0), min_items=1, max_items=5
+        item_type=contimestamp(
+            timestamp_gt=datetime(2020, 9, 13, 12, 26, 40), timestamp_lt=datetime(2020, 9, 13, 12, 26, 50)
+        ),
+        min_items=1,
+        max_items=5,
     ) = FieldInfo()
     items_duration_test: conlist(
         item_type=contimedelta(duration_gt=timedelta(seconds=10), duration_lt=timedelta(seconds=10)),
@@ -371,14 +375,18 @@ class DurationTest(BaseModel):
 class TimestampTest(BaseModel):
     _one_of_dict = {}
 
-    required_test: str = FieldInfo()
-    const_test: str = FieldInfo(extra={"timestamp_const": 1600000000.0})
-    range_test: str = FieldInfo(extra={"timestamp_lt": 1600000010.0, "timestamp_gt": 1600000000.0})
-    range_e_test: str = FieldInfo(extra={"timestamp_le": 1600000010.0, "timestamp_ge": 1600000000.0})
-    lt_now_test: str = FieldInfo(extra={"timestamp_lt_now": True})
-    gt_now_test: str = FieldInfo(extra={"timestamp_gt_now": True})
-    within_test: str = FieldInfo(extra={"timestamp_within": timedelta(seconds=1)})
-    within_and_gt_now_test: str = FieldInfo(
+    required_test: datetime = FieldInfo()
+    const_test: datetime = FieldInfo(extra={"timestamp_const": datetime(2020, 9, 13, 12, 26, 40)})
+    range_test: datetime = FieldInfo(
+        extra={"timestamp_lt": datetime(2020, 9, 13, 12, 26, 50), "timestamp_gt": datetime(2020, 9, 13, 12, 26, 40)}
+    )
+    range_e_test: datetime = FieldInfo(
+        extra={"timestamp_le": datetime(2020, 9, 13, 12, 26, 50), "timestamp_ge": datetime(2020, 9, 13, 12, 26, 40)}
+    )
+    lt_now_test: datetime = FieldInfo(extra={"timestamp_lt_now": True})
+    gt_now_test: datetime = FieldInfo(extra={"timestamp_gt_now": True})
+    within_test: datetime = FieldInfo(extra={"timestamp_within": timedelta(seconds=1)})
+    within_and_gt_now_test: datetime = FieldInfo(
         extra={"timestamp_gt_now": True, "timestamp_within": timedelta(seconds=3600)}
     )
 
@@ -418,7 +426,7 @@ class NestedMessageUserPayMessage(BaseModel):
     _one_of_dict = {}
 
     bank_number: str = FieldInfo(default="", min_length=13, max_length=19)
-    exp: str = FieldInfo(extra={"timestamp_gt_now": True})
+    exp: datetime = FieldInfo(extra={"timestamp_gt_now": True})
     uuid: UUID = FieldInfo(default="")
 
     timestamp_gt_now_validator_exp = validator("exp", allow_reuse=True)(timestamp_gt_now_validator)
@@ -428,7 +436,7 @@ class NestedMessageNotEnableUserPayMessage(BaseModel):
     _one_of_dict = {}
 
     bank_number: str = FieldInfo(default="")
-    exp: str = FieldInfo()
+    exp: datetime = FieldInfo()
     uuid: str = FieldInfo(default="")
 
 
