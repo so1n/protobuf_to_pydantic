@@ -15,7 +15,7 @@ from pydantic.typing import NoArgAnyCallable
 from protobuf_to_pydantic.customer_validator import check_one_of
 from protobuf_to_pydantic.get_desc import get_desc_from_pgv, get_desc_from_proto_file, get_desc_from_pyi_file
 from protobuf_to_pydantic.grpc_types import AnyMessage, Descriptor, FieldDescriptor, Message, Timestamp
-from protobuf_to_pydantic.util import create_pydantic_model
+from protobuf_to_pydantic.util import Timedelta, create_pydantic_model
 
 type_dict: Dict[str, Type] = {
     FieldDescriptor.TYPE_DOUBLE: float,
@@ -213,7 +213,7 @@ class M2P(object):
                 elif column.name == "empty":
                     type_ = Any
                 elif column.message_type.name == "Duration":
-                    type_ = datetime.timedelta
+                    type_ = Timedelta
                 elif column.message_type.name == "Any":
                     type_ = AnyMessage
                     if not self._pydantic_base.Config.arbitrary_types_allowed:

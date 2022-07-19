@@ -1,9 +1,23 @@
 from datetime import timedelta
-from typing import Any, Dict, Tuple, Type
+from typing import Any, Callable, Dict, Generator, Tuple, Type, Union
 
 from pydantic import BaseConfig, BaseModel, create_model
 
 from protobuf_to_pydantic.grpc_types import Duration, RepeatedCompositeContainer, Timestamp
+
+
+class Timedelta(timedelta):
+    @classmethod
+    def __get_validators__(cls) -> Generator[Callable, None, None]:
+        yield cls.validate
+
+    @classmethod
+    def validate(cls, v: Union[int, float, str]) -> timedelta:
+        if isinstance(v, str):
+            if v.endswith("s") and v[:-1].isdigit():
+                v = v[:-1]
+            v = float(v)
+        return timedelta(seconds=v)
 
 
 def create_pydantic_model(

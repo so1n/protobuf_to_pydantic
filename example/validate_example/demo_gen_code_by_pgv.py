@@ -43,6 +43,7 @@ from protobuf_to_pydantic.customer_validator import (
     timestamp_within_validator,
 )
 from protobuf_to_pydantic.get_desc.from_pgv.types import HostNameStr, UriRefStr
+from protobuf_to_pydantic.util import Timedelta
 
 
 class FloatTest(BaseModel):
@@ -305,24 +306,24 @@ class AnyTest(BaseModel):
 
 
 class DurationTest(BaseModel):
-    required_test: timedelta = FieldInfo()
-    const_test: timedelta = FieldInfo(extra={"duration_const": timedelta(seconds=1, microseconds=500000)})
-    range_test: timedelta = FieldInfo(
+    required_test: Timedelta = FieldInfo()
+    const_test: Timedelta = FieldInfo(extra={"duration_const": timedelta(seconds=1, microseconds=500000)})
+    range_test: Timedelta = FieldInfo(
         extra={
             "duration_lt": timedelta(seconds=10, microseconds=500000),
             "duration_gt": timedelta(seconds=5, microseconds=500000),
         }
     )
-    range_e_test: timedelta = FieldInfo(
+    range_e_test: Timedelta = FieldInfo(
         extra={
             "duration_le": timedelta(seconds=10, microseconds=500000),
             "duration_ge": timedelta(seconds=5, microseconds=500000),
         }
     )
-    in_test: timedelta = FieldInfo(
+    in_test: Timedelta = FieldInfo(
         extra={"duration_in": [timedelta(seconds=1, microseconds=500000), timedelta(seconds=3, microseconds=500000)]}
     )
-    not_in_test: timedelta = FieldInfo(
+    not_in_test: Timedelta = FieldInfo(
         extra={"duration_in": [timedelta(seconds=1, microseconds=500000), timedelta(seconds=3, microseconds=500000)]}
     )
 
