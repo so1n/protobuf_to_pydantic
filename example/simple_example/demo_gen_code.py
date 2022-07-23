@@ -16,8 +16,6 @@ class SexType(IntEnum):
 
 
 class UserMessage(BaseModel):
-    _one_of_dict = {}
-
     uid: str = FieldInfo(default="")
     age: int = FieldInfo(default=0)
     height: float = FieldInfo(default=0.0)
@@ -27,31 +25,23 @@ class UserMessage(BaseModel):
 
 
 class MapMessage(BaseModel):
-    _one_of_dict = {}
-
     user_map: typing.Dict[str, UserMessage] = FieldInfo()
     user_flag: typing.Dict[str, bool] = FieldInfo()
 
 
 class RepeatedMessage(BaseModel):
-    _one_of_dict = {}
-
     str_list: typing.List[str] = FieldInfo(default_factory=list)
     int_list: typing.List[int] = FieldInfo(default_factory=list)
     user_list: typing.List[UserMessage] = FieldInfo(default_factory=list)
 
 
 class NestedMessageUserPayMessage(BaseModel):
-    _one_of_dict = {}
-
     bank_number: str = FieldInfo(default="")
     exp: datetime = FieldInfo()
     uuid: str = FieldInfo(default="")
 
 
 class NestedMessage(BaseModel):
-    _one_of_dict = {}
-
     user_list_map: typing.Dict[str, RepeatedMessage] = FieldInfo()
     user_map: typing.Dict[str, MapMessage] = FieldInfo()
     user_pay: NestedMessageUserPayMessage = FieldInfo()

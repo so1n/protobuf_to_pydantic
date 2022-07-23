@@ -7,6 +7,8 @@ from protobuf_to_pydantic.grpc_types import Duration, RepeatedCompositeContainer
 
 
 class Timedelta(timedelta):
+    """Timedelta object supporting Protobuf.Duration of pydantic.field."""
+
     @classmethod
     def __get_validators__(cls) -> Generator[Callable, None, None]:
         yield cls.validate

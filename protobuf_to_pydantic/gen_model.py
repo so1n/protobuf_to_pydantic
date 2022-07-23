@@ -14,7 +14,7 @@ from pydantic.typing import NoArgAnyCallable
 
 from protobuf_to_pydantic.customer_validator import check_one_of
 from protobuf_to_pydantic.get_desc import get_desc_from_pgv, get_desc_from_proto_file, get_desc_from_pyi_file
-from protobuf_to_pydantic.grpc_types import AnyMessage, Descriptor, FieldDescriptor, Message, Timestamp
+from protobuf_to_pydantic.grpc_types import AnyMessage, Descriptor, FieldDescriptor, Message
 from protobuf_to_pydantic.util import Timedelta, create_pydantic_model
 
 type_dict: Dict[str, Type] = {
@@ -34,8 +34,6 @@ type_dict: Dict[str, Type] = {
     FieldDescriptor.TYPE_SINT32: int,
     FieldDescriptor.TYPE_SINT64: int,
 }
-
-GRPC_TIMESTAMP_HANDLER_TUPLE_T = Tuple[Any, Optional[Callable[[Any, Any], Timestamp]]]
 
 
 class MessagePaitModel(BaseModel):
@@ -124,6 +122,8 @@ class M2P(object):
             field_param_dict["default"] = default
         if field_param_dict["default_factory"]:
             field_param_dict.pop("default", "")
+
+        # PGV const handler
         if field_param_dict.get("const").__class__ != MISSING.__class__:
             field_param_dict["default"] = field_param_dict["const"]
             field_param_dict["const"] = True
@@ -164,16 +164,8 @@ class M2P(object):
             else:
                 field_param_dict["type_"] = field_type(**type_param_dict)
 
-    # flake8: noqa: C901
-    def _parse_msg_to_pydantic_model(self, *, descriptor: Descriptor, class_name: str = "") -> Type[BaseModel]:
-        if descriptor in self._creat_cache:
-            return self._creat_cache[descriptor]
-
-        annotation_dict: Dict[str, Tuple[Type, Any]] = {}
-        validators: Dict[str, classmethod] = {}
-        pydantic_model_config_dict: Dict[str, Any] = {}
+    def _one_of_handle(self, descriptor: Descriptor) -> Dict[str, Any]:
         one_of_dict: Dict[str, Any] = {}
-
         for one_of in descriptor.oneofs:
             if one_of.full_name not in one_of_dict:
                 one_of_dict[one_of.full_name] = {"required": False, "fields": set()}
@@ -183,6 +175,37 @@ class M2P(object):
                 )
             for _field in one_of.fields:
                 one_of_dict[one_of.full_name]["fields"].add(_field.name)
+        return one_of_dict
+
+    def _get_pydantic_base(self, pydantic_model_config_dict: Dict[str, Any]) -> Type[BaseModel]:
+        if pydantic_model_config_dict:
+            # Changing the configuration of Config by inheritance
+            pydantic_base: Type[BaseModel] = type(  # type: ignore
+                self._pydantic_base.__name__,
+                (self._pydantic_base,),
+                {
+                    "Config": type(
+                        self._pydantic_base.Config.__name__, (self._pydantic_base.Config,), pydantic_model_config_dict
+                    )
+                },
+            )
+        else:
+            pydantic_base = self._pydantic_base
+        return pydantic_base
+
+    # flake8: noqa: C901
+    def _parse_msg_to_pydantic_model(self, *, descriptor: Descriptor, class_name: str = "") -> Type[BaseModel]:
+        if descriptor in self._creat_cache:
+            return self._creat_cache[descriptor]
+
+        annotation_dict: Dict[str, Tuple[Type, Any]] = {}
+        validators: Dict[str, classmethod] = {}
+        pydantic_model_config_dict: Dict[str, Any] = {}
+        one_of_dict: Dict[str, Any] = self._one_of_handle(descriptor)
+        if one_of_dict:
+            validators["one_of_validator"] = root_validator(pre=True, allow_reuse=True)(check_one_of)
+
+        # parse field
         for column in descriptor.fields:
             type_: Any = type_dict.get(column.type, None)
             name: str = column.name
@@ -227,7 +250,6 @@ class M2P(object):
                     else:
                         _class_name = column.message_type.name
                     type_ = self._parse_msg_to_pydantic_model(descriptor=column.message_type, class_name=_class_name)
-
             elif column.type == FieldDescriptor.TYPE_ENUM:
                 # support google.protobuf.Enum
                 type_ = IntEnum(  # type: ignore
@@ -251,26 +273,27 @@ class M2P(object):
             field = self._default_field
             field_doc: Union[str, dict] = self._get_field_doc_by_full_name(column.full_name)
             if field_doc:
+                # Refine field properties with data from desc
                 if isinstance(field_doc, str):
-                    msg_pait_model: MessagePaitModel = self._get_pait_info_from_grpc_desc(field_doc)
+                    field_doc_dict = self._get_pait_info_from_grpc_desc(field_doc)
                 else:
                     # support from pgv
-                    msg_pait_model = MessagePaitModel(**field_doc)
-                    # TODO support
-                    if "map_type" in field_doc and type_._name == "Dict":
-                        raw_keys_type, raw_values_type = type_.__args__
-                        if "keys" in field_doc["map_type"]:
-                            new_keys_type = field_doc["map_type"]["keys"]
-                            if issubclass(new_keys_type, raw_keys_type):
-                                raw_keys_type = new_keys_type
-                        if "values" in field_doc["map_type"]:
-                            new_values_type = field_doc["map_type"]["values"]
-                            if issubclass(new_values_type, raw_values_type):
-                                raw_values_type = new_values_type
-                        type_ = Dict[raw_keys_type, raw_values_type]  # type: ignore
+                    field_doc_dict = field_doc
+                msg_pait_model = MessagePaitModel(**field_doc_dict)
+                if "map_type" in field_doc_dict and type_._name == "Dict":
+                    raw_keys_type, raw_values_type = type_.__args__
+                    if "keys" in field_doc_dict["map_type"]:
+                        new_keys_type = field_doc_dict["map_type"]["keys"]
+                        if issubclass(new_keys_type, raw_keys_type):
+                            raw_keys_type = new_keys_type
+                    if "values" in field_doc_dict["map_type"]:
+                        new_values_type = field_doc_dict["map_type"]["values"]
+                        if issubclass(new_values_type, raw_values_type):
+                            raw_values_type = new_values_type
+                    type_ = Dict[raw_keys_type, raw_values_type]  # type: ignore
 
                 field_param_dict: dict = msg_pait_model.dict()
-                # Nested types do not include the `enable`, `field` and `validator`  attributes
+                # Nested types do not include the `enable`, `field`, `validator` and `type`  attributes
                 if not field_param_dict.pop("enable"):
                     continue
                 _field = field_param_dict.pop("field")
@@ -282,6 +305,8 @@ class M2P(object):
 
                 # Unified field parameter handling
                 self._field_param_dict_handle(field_param_dict, default)
+
+                # Type will change in the unified processing logic
                 field_type = field_param_dict.pop("type_")
                 if field_type:
                     type_ = field_type
@@ -290,40 +315,18 @@ class M2P(object):
             use_field = field(**field_param_dict)  # type: ignore
             annotation_dict[name] = (type_, use_field)
 
-        if one_of_dict:
-            validators["one_of_validator"] = root_validator(pre=True, allow_reuse=True)(check_one_of)
-
-        if descriptor.name == "Any":
-            # Message.Any and typing.Any with the same name, need to change the name of Message.Any.
-            class_name = "AnyMessage"
-        elif not class_name:
-            class_name = descriptor.name
-
-        if pydantic_model_config_dict:
-            # Changing the configuration of Config by inheritance
-            pydantic_base: Type[BaseModel] = type(  # type: ignore
-                self._pydantic_base.__name__,
-                (self._pydantic_base,),
-                {
-                    "Config": type(
-                        self._pydantic_base.Config.__name__, (self._pydantic_base.Config,), pydantic_model_config_dict
-                    )
-                },
-            )
-        else:
-            pydantic_base = self._pydantic_base
         pydantic_model: Type[BaseModel] = create_pydantic_model(
             annotation_dict,
-            class_name=class_name,
+            class_name=class_name or descriptor.name,
             pydantic_validators=validators or None,
             pydantic_module=self._pydantic_module,
-            pydantic_base=pydantic_base,
+            pydantic_base=self._get_pydantic_base(pydantic_model_config_dict),
         )
         setattr(pydantic_model, "_one_of_dict", one_of_dict)
         self._creat_cache[descriptor] = pydantic_model
         return pydantic_model
 
-    def _get_pait_info_from_grpc_desc(self, desc: str) -> MessagePaitModel:
+    def _get_pait_info_from_grpc_desc(self, desc: str) -> dict:
         pait_dict: dict = {}
         for line in desc.split("\n"):
             line = line.strip()
@@ -352,7 +355,7 @@ class M2P(object):
         field_name: str = pait_dict.pop("field", "")
         if field_name in self._field_dict:
             pait_dict["field"] = self._field_dict[field_name]
-        return MessagePaitModel(**pait_dict)
+        return pait_dict
 
     def _get_field_doc_by_full_name(self, full_name: str) -> Any:
         field_doc_dict: dict = self._field_doc_dict
