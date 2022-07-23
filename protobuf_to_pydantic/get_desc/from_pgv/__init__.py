@@ -160,15 +160,15 @@ def option_descriptor_to_desc_dict(option_descriptor: Descriptor, field: Any, de
                 continue
             sub_dict: dict = {"extra": {}}
             option_descriptor_to_desc_dict(getattr(value, type_name), field, sub_dict, type_name)
-            con_type_param_dict: dict = {}
-            for _key in inspect.signature(con_type).parameters.keys():
-                _value = sub_dict.get(_key, None)
-                if _value is None:
-                    continue
-                con_type_param_dict[_key] = _value
             if "map_type" not in desc_dict:
                 desc_dict["map_type"] = {}
-            desc_dict["map_type"][column] = con_type(**con_type_param_dict)
+            desc_dict["map_type"][column] = con_type(
+                **{
+                    _key: sub_dict.get(_key, None)
+                    for _key in inspect.signature(con_type).parameters.keys()
+                    if sub_dict.get(_key, None) is not None
+                }
+            )
             continue
         elif column == "items":
             type_name = value.ListFields()[0][0].full_name.split(".")[-1]
@@ -199,7 +199,7 @@ def field_optional_handle(type_name: str, field: FieldDescriptor) -> dict:
                 miss_default = True
         type_value: Optional[Descriptor] = getattr(option_value, type_name, None)
         if not type_value:
-            _logger.warning(f"{__name__}Can not found {field.full_name}'s {type_name} from {option_value}")
+            _logger.warning(f"{__name__} Can not found {field.full_name}'s {type_name} from {option_value}")
             continue
         option_descriptor_to_desc_dict(type_value, field, field_dict, type_name)
 
@@ -261,6 +261,7 @@ def _get_desc_from_pgv(descriptor: Descriptor) -> dict:
                 for sub_field in field.message_type.fields:
                     if not sub_field.message_type:
                         continue
+                    # keys and values
                     message_field_dict[sub_field.message_type.name] = _get_desc_from_pgv(sub_field.message_type)
     _message_desc_dict[descriptor.name] = message_field_dict
     return message_field_dict
