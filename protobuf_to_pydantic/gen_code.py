@@ -119,7 +119,7 @@ class P2C(object):
     def _get_value_code(self, type_: Type, is_first: bool = False) -> str:
         if isinstance(type_, dict):
             type_name: str = ", ".join(
-                [f"{self._get_value_code(k)}: {self._get_value_code(v)}" for k, v in type_.items()]
+                sorted([f"{self._get_value_code(k)}: {self._get_value_code(v)}" for k, v in type_.items()])
             )
             return "{" + type_name + "}"
         elif isinstance(type_, (list, tuple, set)):

@@ -244,7 +244,7 @@ class Timestamp(BaseModel):
 
 
 class MapTest(BaseModel):
-    pair_test: typing.Dict[str, int] = FieldInfo(extra={"map_min_pairs": 1, "map_max_pairs": 5})
+    pair_test: typing.Dict[str, int] = FieldInfo(extra={"map_max_pairs": 5, "map_min_pairs": 1})
     no_parse_test: typing.Dict[str, int] = FieldInfo()
     keys_test: typing.Dict[constr(min_length=1, max_length=5), int] = FieldInfo()
     values_test: typing.Dict[str, conint(gt=5, lt=5)] = FieldInfo()
@@ -310,14 +310,14 @@ class DurationTest(BaseModel):
     const_test: Timedelta = FieldInfo(extra={"duration_const": timedelta(seconds=1, microseconds=500000)})
     range_test: Timedelta = FieldInfo(
         extra={
-            "duration_lt": timedelta(seconds=10, microseconds=500000),
             "duration_gt": timedelta(seconds=5, microseconds=500000),
+            "duration_lt": timedelta(seconds=10, microseconds=500000),
         }
     )
     range_e_test: Timedelta = FieldInfo(
         extra={
-            "duration_le": timedelta(seconds=10, microseconds=500000),
             "duration_ge": timedelta(seconds=5, microseconds=500000),
+            "duration_le": timedelta(seconds=10, microseconds=500000),
         }
     )
     in_test: Timedelta = FieldInfo(
@@ -340,10 +340,10 @@ class TimestampTest(BaseModel):
     required_test: datetime = FieldInfo()
     const_test: datetime = FieldInfo(extra={"timestamp_const": datetime(2020, 9, 13, 12, 26, 40)})
     range_test: datetime = FieldInfo(
-        extra={"timestamp_lt": datetime(2020, 9, 13, 12, 26, 50), "timestamp_gt": datetime(2020, 9, 13, 12, 26, 40)}
+        extra={"timestamp_gt": datetime(2020, 9, 13, 12, 26, 40), "timestamp_lt": datetime(2020, 9, 13, 12, 26, 50)}
     )
     range_e_test: datetime = FieldInfo(
-        extra={"timestamp_le": datetime(2020, 9, 13, 12, 26, 50), "timestamp_ge": datetime(2020, 9, 13, 12, 26, 40)}
+        extra={"timestamp_ge": datetime(2020, 9, 13, 12, 26, 40), "timestamp_le": datetime(2020, 9, 13, 12, 26, 50)}
     )
     lt_now_test: datetime = FieldInfo(extra={"timestamp_lt_now": True})
     gt_now_test: datetime = FieldInfo(extra={"timestamp_gt_now": True})
@@ -403,7 +403,7 @@ class NestedMessage(BaseModel):
 
 
 class OneOfTest(BaseModel):
-    _one_of_dict = {"validate_test.OneOfTest.id": {"required": True, "fields": {"y", "x"}}}
+    _one_of_dict = {"validate_test.OneOfTest.id": {"fields": {"y", "x"}, "required": True}}
 
     header: str = FieldInfo(default="")
     x: str = FieldInfo(default="")
@@ -413,7 +413,7 @@ class OneOfTest(BaseModel):
 
 
 class OneOfNotTest(BaseModel):
-    _one_of_dict = {"validate_test.OneOfNotTest.id": {"required": False, "fields": {"y", "x"}}}
+    _one_of_dict = {"validate_test.OneOfNotTest.id": {"fields": {"y", "x"}, "required": False}}
 
     header: str = FieldInfo(default="")
     x: str = FieldInfo(default="")

@@ -22,26 +22,26 @@ def get_desc_from_pyi_file(filename: str) -> Dict[str, Dict[str, str]]:
 
     for index, line in enumerate(line_list):
         if "class" in line:
-            if line.endswith("google.protobuf.message.Message):"):
-                match_list = re.findall(r"class (.+)\(google.protobuf.message.Message", line)
-                if not match_list:
-                    continue
-                message_str: str = match_list[0]
-                new_indent: int = line.index("class")
-                if message_str_stack and message_str != message_str_stack[-1][0] and new_indent <= indent:
-                    # When you encounter the same indentation of different classes,
-                    # need to pop off the previous one and insert the current one
-                    message_str_stack.pop()
-                message_field_dict: dict = {}
-                if message_str_stack:
-                    parent_message_field_dict = message_str_stack[-1][2]
-                    parent_message_field_dict[message_str] = message_field_dict
-                else:
-                    global_message_field_dict[message_str] = message_field_dict
+            if not line.endswith("google.protobuf.message.Message):"):
+                continue
+            match_list = re.findall(r"class (.+)\(google.protobuf.message.Message", line)
+            if not match_list:
+                continue
+            message_str: str = match_list[0]
+            new_indent: int = line.index("class")
+            if message_str_stack and message_str != message_str_stack[-1][0] and new_indent <= indent:
+                # When you encounter the same indentation of different classes,
+                # need to pop off the previous one and insert the current one
+                message_str_stack.pop()
+            message_field_dict: dict = {}
+            if message_str_stack:
+                parent_message_field_dict = message_str_stack[-1][2]
+                parent_message_field_dict[message_str] = message_field_dict
+            else:
+                global_message_field_dict[message_str] = message_field_dict
 
-                indent = new_indent
-                message_str_stack.append((message_str, indent, message_field_dict))
-            continue
+            indent = new_indent
+            message_str_stack.append((message_str, indent, message_field_dict))
         elif indent:
             if line and message_str_stack and line[indent] != " ":
                 # The current class has been scanned, go back to the previous class
