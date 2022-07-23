@@ -327,6 +327,7 @@ class M2P(object):
             pydantic_base=self._get_pydantic_base(pydantic_model_config_dict),
         )
         setattr(pydantic_model, "_one_of_dict", one_of_dict)
+        setattr(pydantic_model, "_base_model", self._pydantic_base)
         self._creat_cache[descriptor] = pydantic_model
         return pydantic_model
 
