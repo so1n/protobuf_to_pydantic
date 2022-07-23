@@ -34,6 +34,13 @@ type_dict: Dict[str, Type] = {
     FieldDescriptor.TYPE_SINT32: int,
     FieldDescriptor.TYPE_SINT64: int,
 }
+message_type_dict_by_type_name: Dict[str, Any] = {
+    "Timestamp": datetime.datetime,
+    "Struct": Dict[str, Any],
+    "Empty": Any,
+    "Duration": Timedelta,
+    "Any": AnyMessage,
+}
 
 
 class MessagePaitModel(BaseModel):
@@ -61,6 +68,7 @@ class MessagePaitModel(BaseModel):
     type_: Any = Field(None, alias="type")
     validator: Optional[Dict[str, Any]] = Field(None)
     sub: Optional["MessagePaitModel"] = Field(None)
+    map_type: Optional[Dict[str, type]] = Field(None)
 
 
 class M2P(object):
@@ -170,6 +178,9 @@ class M2P(object):
             if one_of.full_name not in one_of_dict:
                 one_of_dict[one_of.full_name] = {"required": False, "fields": set()}
             if one_of.full_name in self._field_doc_dict:
+                # only PGV support
+                # The use of full name here and the use of name elsewhere will lead to confusion in the storage
+                # range of field_doc_dict, which must be changed later.
                 one_of_dict[one_of.full_name]["required"] = self._field_doc_dict[one_of.full_name].get(
                     "required", False
                 )
@@ -213,9 +224,8 @@ class M2P(object):
             default_factory: Optional[NoArgAnyCallable] = None
 
             if column.type == FieldDescriptor.TYPE_MESSAGE:
-                if column.message_type.name == "Timestamp":
-                    # support google.protobuf.Timestamp
-                    type_ = datetime.datetime
+                if column.message_type.name in message_type_dict_by_type_name:
+                    type_ = message_type_dict_by_type_name[column.message_type.name]
                 elif column.message_type.name.endswith("Entry"):
                     # support google.protobuf.MapEntry
                     key, value = column.message_type.fields
@@ -230,17 +240,6 @@ class M2P(object):
                         else self._parse_msg_to_pydantic_model(descriptor=value.message_type)
                     )
                     type_ = Dict[key_type, value_type]
-                elif column.message_type.name == "Struct":
-                    # support google.protobuf.Struct
-                    type_ = Dict[str, Any]
-                elif column.name == "empty":
-                    type_ = Any
-                elif column.message_type.name == "Duration":
-                    type_ = Timedelta
-                elif column.message_type.name == "Any":
-                    type_ = AnyMessage
-                    if not self._pydantic_base.Config.arbitrary_types_allowed:
-                        pydantic_model_config_dict["arbitrary_types_allowed"] = True
                 else:
                     # support google.protobuf.Message
                     if column.message_type.full_name.startswith(".".join(column.full_name.split(".")[:-1])):
@@ -275,24 +274,14 @@ class M2P(object):
             if field_doc:
                 # Refine field properties with data from desc
                 if isinstance(field_doc, str):
-                    field_doc_dict = self._get_pait_info_from_grpc_desc(field_doc)
+                    # support protobuf optional by comment
+                    field_doc_dict = self._gen_dict_from_desc_str(field_doc)
                 else:
-                    # support from pgv
                     field_doc_dict = field_doc
-                msg_pait_model = MessagePaitModel(**field_doc_dict)
-                if "map_type" in field_doc_dict and type_._name == "Dict":
-                    raw_keys_type, raw_values_type = type_.__args__
-                    if "keys" in field_doc_dict["map_type"]:
-                        new_keys_type = field_doc_dict["map_type"]["keys"]
-                        if issubclass(new_keys_type, raw_keys_type):
-                            raw_keys_type = new_keys_type
-                    if "values" in field_doc_dict["map_type"]:
-                        new_values_type = field_doc_dict["map_type"]["values"]
-                        if issubclass(new_values_type, raw_values_type):
-                            raw_values_type = new_values_type
-                    type_ = Dict[raw_keys_type, raw_values_type]  # type: ignore
-
-                field_param_dict: dict = msg_pait_model.dict()
+                if self._parse_msg_desc_method != "PGV":
+                    # pgv method not support template var
+                    self._field_dict_handle(field_doc_dict)
+                field_param_dict: dict = MessagePaitModel(**field_doc_dict).dict()
                 # Nested types do not include the `enable`, `field`, `validator` and `type`  attributes
                 if not field_param_dict.pop("enable"):
                     continue
@@ -307,13 +296,28 @@ class M2P(object):
                 self._field_param_dict_handle(field_param_dict, default)
 
                 # Type will change in the unified processing logic
-                field_type = field_param_dict.pop("type_")
+                field_type = field_param_dict.pop("type_", type_)
+                map_type_dict = field_param_dict.pop("map_type", {})
                 if field_type:
                     type_ = field_type
+                elif map_type_dict and type_._name == "Dict":
+                    raw_keys_type, raw_values_type = type_.__args__
+                    if "keys" in map_type_dict:
+                        new_keys_type = map_type_dict["keys"]
+                        if issubclass(new_keys_type, raw_keys_type):
+                            raw_keys_type = new_keys_type
+                    if "values" in map_type_dict:
+                        new_values_type = map_type_dict["values"]
+                        if issubclass(new_values_type, raw_values_type):
+                            raw_values_type = new_values_type
+                    type_ = Dict[raw_keys_type, raw_values_type]  # type: ignore
             else:
                 field_param_dict = {"default": default, "default_factory": default_factory}
             use_field = field(**field_param_dict)  # type: ignore
             annotation_dict[name] = (type_, use_field)
+
+            if type_ in (AnyMessage,) and not self._pydantic_base.Config.arbitrary_types_allowed:
+                pydantic_model_config_dict["arbitrary_types_allowed"] = True
 
         pydantic_model: Type[BaseModel] = create_pydantic_model(
             annotation_dict,
@@ -326,7 +330,7 @@ class M2P(object):
         self._creat_cache[descriptor] = pydantic_model
         return pydantic_model
 
-    def _get_pait_info_from_grpc_desc(self, desc: str) -> dict:
+    def _gen_dict_from_desc_str(self, desc: str) -> dict:
         pait_dict: dict = {}
         for line in desc.split("\n"):
             line = line.strip()
@@ -334,6 +338,9 @@ class M2P(object):
                 continue
             line = line.replace(self._comment_prefix, "")
             pait_dict.update(json.loads(line))
+        return pait_dict
+
+    def _field_dict_handle(self, pait_dict: dict) -> None:
         for k, v in pait_dict.items():
             if not isinstance(v, str):
                 continue
@@ -355,7 +362,7 @@ class M2P(object):
         field_name: str = pait_dict.pop("field", "")
         if field_name in self._field_dict:
             pait_dict["field"] = self._field_dict[field_name]
-        return pait_dict
+        return
 
     def _get_field_doc_by_full_name(self, full_name: str) -> Any:
         field_doc_dict: dict = self._field_doc_dict
@@ -388,6 +395,8 @@ def msg_to_pydantic_model(
     :param parse_msg_desc_method: Define the type of comment to be parsed, if the value is a protobuf file path,
         it will be parsed by protobuf file; if it is a module of message object, it will be parsed by pyi file
     :param local_dict: The variables corresponding to the p2p@local template
+    :param pydantic_base: custom pydantic.BaseModel
+    :param pydantic_module: custom create model's module name
     """
     return M2P(
         msg=msg,
