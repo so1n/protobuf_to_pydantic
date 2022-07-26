@@ -90,6 +90,15 @@ message Fixed32Test {
   fixed32 ignore_test = 6[(validate.rules).fixed32.ignore_empty = true];
 }
 
+message Fixed64Test {
+  fixed64 const_test = 1 [(validate.rules).fixed64.const = 1];
+  fixed64 range_e_test = 2 [(validate.rules).fixed64 = {gte: 1, lte: 10}];
+  fixed64 range_test = 3[(validate.rules).fixed64 = {gt: 1, lt: 10}];
+  fixed64 in_test = 4[(validate.rules).fixed64 = {in: [1,2,3]}];
+  fixed64 not_in_test = 5[(validate.rules).fixed64 = {in: [1,2,3]}];
+  fixed64 ignore_test = 6[(validate.rules).fixed64.ignore_empty = true];
+}
+
 message Sfixed32Test {
   sfixed32 const_test = 1 [(validate.rules).sfixed32.const = 1];
   sfixed32 range_e_test = 2 [(validate.rules).sfixed32 = {gte: 1, lte: 10}];

@@ -19,7 +19,6 @@ from protobuf_to_pydantic.util import replace_type
 from .types import column_pydantic_type_dict
 
 _logger: logging.Logger = logging.getLogger(__name__)
-_message_desc_dict: Dict[str, Any] = {}
 
 type_dict: Dict[str, str] = {
     FieldDescriptor.TYPE_DOUBLE: "double",
@@ -58,15 +57,6 @@ column_pydantic_dict: Dict[str, str] = {
     "len_bytes": "len",
     "required": "miss_default",
 }
-
-
-def has_validate(field: Any) -> bool:
-    if field.GetOptions() is None:
-        return False
-    for option_descriptor, option_value in field.GetOptions().ListFields():
-        if option_descriptor.full_name == "validate.rules":
-            return True
-    return False
 
 
 def _has_field(column: str, message: Message) -> bool:
@@ -185,92 +175,108 @@ def option_descriptor_to_desc_dict(option_descriptor: Descriptor, field: Any, de
         desc_dict[column] = value
 
 
-def field_optional_handle(type_name: str, field: FieldDescriptor) -> dict:
-    field_dict: dict = {"extra": {}, "skip": False}
-    miss_default: bool = False
-    for option_descriptor, option_value in field.GetOptions().ListFields():
-        if option_descriptor.full_name != "validate.rules":
-            continue
-        rule_message: Any = option_value.message
-        if rule_message:
-            if getattr(rule_message, "skip", None):
-                field_dict["skip"] = True
-            if getattr(rule_message, "required", None):
-                miss_default = True
-        type_value: Optional[Descriptor] = getattr(option_value, type_name, None)
-        if not type_value:
-            _logger.warning(f"{__name__} Can not found {field.full_name}'s {type_name} from {option_value}")
-            continue
-        option_descriptor_to_desc_dict(type_value, field, field_dict, type_name)
-
-    if miss_default:
-        field_dict["miss_default"] = miss_default
-    return field_dict
+_global_desc_dict: Dict[str, Dict[str, Any]] = {}
 
 
-def _get_desc_from_pgv(descriptor: Descriptor) -> dict:
-    if descriptor.name in _message_desc_dict:
-        return _message_desc_dict[descriptor.name]
-    message_field_dict: dict = {}
+class ParseFromPbOption(object):
+    protobuf_pkg: str
 
-    for option_descriptor, option_value in descriptor.GetOptions().ListFields():
-        if (option_descriptor.full_name == "validate.disabled" and option_value) or (
-            option_descriptor.full_name == "validate.ignored" and option_value
-        ):
-            _message_desc_dict[descriptor.name] = message_field_dict
-            return message_field_dict
-    for one_of in descriptor.oneofs:
-        for one_of_descriptor, one_ov_value in one_of.GetOptions().ListFields():
-            if one_of_descriptor.full_name == "validate.required":
-                if one_of.full_name in _message_desc_dict:
-                    continue
-                _message_desc_dict[one_of.full_name] = {"required": True}
-    for field in descriptor.fields:
-        type_name: str = ""
-        if field.type == FieldDescriptor.TYPE_MESSAGE:
-            message_type_name: str = field.message_type.name
-            # if message_type_name.endswith("Entry"):
-            #     type_name = "map"
-            if message_type_name == "Duration":
-                type_name = "duration"
-            elif message_type_name == "Any":
-                type_name = "any"
-            elif message_type_name == "Timestamp":
-                type_name = "timestamp"
-            elif message_type_name.endswith("Entry"):
-                type_name = "map"
-            elif message_type_name == "Empty":
-                continue
-            else:
-                type_name = "message"
-        if field.label == FieldDescriptor.LABEL_REPEATED:
-            if not (field.message_type and field.message_type.name.endswith("Entry")):
-                type_name = "repeated"
-        if not type_name:
-            type_name = type_dict.get(field.type, "")
-        if not type_name:
-            _logger.warning(f"{__name__} not support protobuf type id:{field.type} from field name{field.full_name}")
-            continue
-        field_dict: dict = field_optional_handle(type_name, field)
-        if not field_dict["skip"]:
-            # If skip is True, the corresponding validation rule is not applied
-            message_field_dict[field.name] = field_dict
-            if type_name == "message":
-                message_field_dict[field.message_type.name] = _get_desc_from_pgv(field.message_type)
-            elif type_name == "map":
-                for sub_field in field.message_type.fields:
-                    if not sub_field.message_type:
+    def __init__(self, message: Type[Message]):
+        self.message = message
+        self._msg_desc_dict: Dict[str, Any] = {}
+        if self.protobuf_pkg not in _global_desc_dict:
+            _global_desc_dict[self.protobuf_pkg] = self._msg_desc_dict
+        else:
+            self._msg_desc_dict = _global_desc_dict[self.protobuf_pkg]
+
+    def parse(self) -> Dict[str, Any]:
+        descriptor: Descriptor = self.message.DESCRIPTOR
+        if descriptor.name in self._msg_desc_dict:
+            return self._msg_desc_dict[descriptor.name]
+
+        self._msg_desc_dict[descriptor.name] = self.get_desc_from_options(descriptor)
+        return self._msg_desc_dict
+
+    def get_desc_from_options(self, descriptor: Descriptor) -> dict:
+        if descriptor.name in self._msg_desc_dict:
+            return self._msg_desc_dict[descriptor.name]
+        message_field_dict: dict = {}
+
+        for option_descriptor, option_value in descriptor.GetOptions().ListFields():
+            if (option_descriptor.full_name == f"{self.protobuf_pkg}.disabled" and option_value) or (
+                option_descriptor.full_name == f"{self.protobuf_pkg}.ignored" and option_value
+            ):
+                self._msg_desc_dict[descriptor.name] = message_field_dict
+                return message_field_dict
+        for one_of in descriptor.oneofs:
+            for one_of_descriptor, one_ov_value in one_of.GetOptions().ListFields():
+                if one_of_descriptor.full_name == f"{self.protobuf_pkg}.required":
+                    if one_of.full_name in self._msg_desc_dict:
                         continue
-                    # keys and values
-                    message_field_dict[sub_field.message_type.name] = _get_desc_from_pgv(sub_field.message_type)
-    _message_desc_dict[descriptor.name] = message_field_dict
-    return message_field_dict
+                    self._msg_desc_dict[one_of.full_name] = {"required": True}
+        for field in descriptor.fields:
+            type_name: str = ""
+            if field.type == FieldDescriptor.TYPE_MESSAGE:
+                message_type_name: str = field.message_type.name
+                # if message_type_name.endswith("Entry"):
+                #     type_name = "map"
+                if message_type_name == "Duration":
+                    type_name = "duration"
+                elif message_type_name == "Any":
+                    type_name = "any"
+                elif message_type_name == "Timestamp":
+                    type_name = "timestamp"
+                elif message_type_name.endswith("Entry"):
+                    type_name = "map"
+                elif message_type_name == "Empty":
+                    continue
+                else:
+                    type_name = "message"
+            if field.label == FieldDescriptor.LABEL_REPEATED:
+                if not (field.message_type and field.message_type.name.endswith("Entry")):
+                    type_name = "repeated"
+            if not type_name:
+                type_name = type_dict.get(field.type, "")
+            if not type_name:
+                _logger.warning(
+                    f"{__name__} not support protobuf type id:{field.type} from field name{field.full_name}"
+                )
+                continue
+            field_dict: dict = self.field_optional_handle(type_name, field)
+            if not field_dict["skip"]:
+                # If skip is True, the corresponding validation rule is not applied
+                message_field_dict[field.name] = field_dict
+                if type_name == "message":
+                    message_field_dict[field.message_type.name] = self.get_desc_from_options(field.message_type)
+                elif type_name == "map":
+                    for sub_field in field.message_type.fields:
+                        if not sub_field.message_type:
+                            continue
+                        # keys and values
+                        message_field_dict[sub_field.message_type.name] = self.get_desc_from_options(
+                            sub_field.message_type
+                        )
+        self._msg_desc_dict[descriptor.name] = message_field_dict
+        return message_field_dict
 
+    def field_optional_handle(self, type_name: str, field: FieldDescriptor) -> dict:
+        field_dict: dict = {"extra": {}, "skip": False}
+        miss_default: bool = False
+        for option_descriptor, option_value in field.GetOptions().ListFields():
+            if option_descriptor.full_name != f"{self.protobuf_pkg}.rules":
+                continue
+            rule_message: Any = option_value.message
+            if rule_message:
+                if getattr(rule_message, "skip", None):
+                    field_dict["skip"] = True
+                if getattr(rule_message, "required", None):
+                    miss_default = True
+            type_value: Optional[Descriptor] = getattr(option_value, type_name, None)
+            if not type_value:
+                _logger.warning(f"{__name__} Can not found {field.full_name}'s {type_name} from {option_value}")
+                continue
+            option_descriptor_to_desc_dict(type_value, field, field_dict, type_name)
 
-def get_desc_from_pgv(message: Type[Message]) -> dict:
-    descriptor: Descriptor = message.DESCRIPTOR
-    if descriptor.name in _message_desc_dict:
-        return _message_desc_dict[descriptor.name]
-
-    _message_desc_dict[descriptor.name] = _get_desc_from_pgv(descriptor)
-    return _message_desc_dict
+        if miss_default:
+            field_dict["miss_default"] = miss_default
+        return field_dict

@@ -9,7 +9,6 @@ from typing import Any, Callable, Deque, List, Optional, Set, Tuple, Type
 
 from pydantic import BaseConfig, BaseModel
 from pydantic.fields import FieldInfo
-from pydantic.types import ConstrainedList
 
 from protobuf_to_pydantic import customer_validator, gen_model
 from protobuf_to_pydantic.customer_con_type import pydantic_con_dict
@@ -211,7 +210,7 @@ class P2C(object):
                     else:
                         value_type_name = f"typing.{value_type._name}"
                     self._import_set.add("import typing")
-                elif inspect.isclass(value_type) and issubclass(value_type, ConstrainedList):
+                elif inspect.isclass(value_type) and value_type.__mro__[1] in pydantic_con_dict:
                     # only support like repeated[string]
                     value_type_name = self.pydantic_con_type_handle(value_type)
                 else:
@@ -260,7 +259,7 @@ class P2C(object):
             class_str += field_str + "\n"
         validator_str: str = self._model_validator_handle(model, indent=indent + self.code_indent)
         if validator_str:
-            class_str += f"\n{validator_str}"
+            class_str += f"{validator_str}\n"
 
         self._content_deque.append(class_str)
         self._create_set.add(model)
@@ -325,7 +324,7 @@ class P2C(object):
 
     def _field_info_handle(self, field_info: FieldInfo) -> str:
         # Introduce the corresponding class for FieldInfo's properties
-        self._add_import_code(field_info.__module__, field_info.__class__.__name__)
+        self._parse_type_to_import_code(field_info.__class__)
         field_list = []
         for k, v in field_info.__repr_args__():
             if k == "default" and str(v) == "PydanticUndefined":

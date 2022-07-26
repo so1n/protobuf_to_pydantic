@@ -36,8 +36,8 @@ class MapMessage(BaseModel):
 
 
 class RepeatedMessage(BaseModel):
-    str_list: typing.List[str] = FieldInfo(min_items=3, max_items=5)
-    int_list: typing.List[int] = FieldInfo(min_items=1, max_items=5, unique_items=True)
+    str_list: typing.List[str] = FieldInfo(default_factory=list, min_items=3, max_items=5)
+    int_list: typing.List[int] = FieldInfo(default_factory=list, min_items=1, max_items=5, unique_items=True)
     user_list: typing.List[UserMessage] = FieldInfo(default_factory=list)
 
 

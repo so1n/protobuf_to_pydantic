@@ -10,7 +10,7 @@ fi
 echo "=====> run $(pwd)/gen_rpc.sh"
 bash ./gen_rpc.sh
 
-directory_list=("simple_example" "text_comment_example" "validate_example")
+directory_list=("simple_example" "text_comment_example" "validate_example" "p2p_validate_example")
 echo ""
 VENV_PREFIX="../${VENV_PREFIX}"
 echo 'use venv path:' ${VENV_PREFIX}

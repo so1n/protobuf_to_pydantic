@@ -267,6 +267,32 @@ class Fixed32Test(google.protobuf.message.Message):
     def ClearField(self, field_name: typing_extensions.Literal["const_test",b"const_test","ignore_test",b"ignore_test","in_test",b"in_test","not_in_test",b"not_in_test","range_e_test",b"range_e_test","range_test",b"range_test"]) -> None: ...
 global___Fixed32Test = Fixed32Test
 
+class Fixed64Test(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    CONST_TEST_FIELD_NUMBER: builtins.int
+    RANGE_E_TEST_FIELD_NUMBER: builtins.int
+    RANGE_TEST_FIELD_NUMBER: builtins.int
+    IN_TEST_FIELD_NUMBER: builtins.int
+    NOT_IN_TEST_FIELD_NUMBER: builtins.int
+    IGNORE_TEST_FIELD_NUMBER: builtins.int
+    const_test: builtins.int
+    range_e_test: builtins.int
+    range_test: builtins.int
+    in_test: builtins.int
+    not_in_test: builtins.int
+    ignore_test: builtins.int
+    def __init__(self,
+        *,
+        const_test: builtins.int = ...,
+        range_e_test: builtins.int = ...,
+        range_test: builtins.int = ...,
+        in_test: builtins.int = ...,
+        not_in_test: builtins.int = ...,
+        ignore_test: builtins.int = ...,
+        ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["const_test",b"const_test","ignore_test",b"ignore_test","in_test",b"in_test","not_in_test",b"not_in_test","range_e_test",b"range_e_test","range_test",b"range_test"]) -> None: ...
+global___Fixed64Test = Fixed64Test
+
 class Sfixed32Test(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     CONST_TEST_FIELD_NUMBER: builtins.int

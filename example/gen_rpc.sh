@@ -14,7 +14,8 @@ target_p='python_example_proto_code'
 # project proto path
 source_p='example_proto'
 # service
-service_list=("demo" "validate" "common")
+service_list=("demo" "validate" "p2p_validate" "common")
+
 
 rm -r "${target_p:?}/${source_p:?}"*
 mkdir -p "${target_p:?}/${source_p:?}"

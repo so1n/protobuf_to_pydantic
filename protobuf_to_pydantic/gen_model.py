@@ -13,7 +13,12 @@ from pydantic.fields import FieldInfo, Undefined
 from pydantic.typing import NoArgAnyCallable
 
 from protobuf_to_pydantic.customer_validator import check_one_of
-from protobuf_to_pydantic.get_desc import get_desc_from_pgv, get_desc_from_proto_file, get_desc_from_pyi_file
+from protobuf_to_pydantic.get_desc import (
+    get_desc_from_p2p,
+    get_desc_from_pgv,
+    get_desc_from_proto_file,
+    get_desc_from_pyi_file,
+)
 from protobuf_to_pydantic.grpc_types import AnyMessage, Descriptor, FieldDescriptor, Message
 from protobuf_to_pydantic.util import Timedelta, create_pydantic_model
 
@@ -43,12 +48,29 @@ message_type_dict_by_type_name: Dict[str, Any] = {
 }
 
 
+def check_dict_one_of(desc_dict: dict, key_list: List[str]) -> bool:
+    if (
+        len(
+            [
+                desc_dict.get(key, None)
+                for key in key_list
+                if desc_dict.get(key, None) and desc_dict[key].__class__ != MISSING.__class__
+            ]
+        )
+        > 1
+    ):
+        raise RuntimeError(f"Field:{key_list} cannot have both values")
+    return True
+
+
 class MessagePaitModel(BaseModel):
     field: Optional[Type[FieldInfo]] = Field(None)
     enable: bool = Field(True)
     miss_default: bool = Field(False)
+    default: Optional[Any] = Field(None)
     default_factory: Optional[Callable] = Field(None)
     example: Any = Field(MISSING)
+    example_factory: Optional[Callable] = Field(None)
     alias: Optional[str] = Field(None)
     title: Optional[str] = Field(None)
     description: Optional[str] = Field(None)
@@ -83,8 +105,6 @@ class M2P(object):
         pydantic_module: Optional[str] = None,
         local_dict: Optional[Dict[str, Any]] = None,
     ):
-        message_field_dict: Dict[str, Dict[str, str]] = {}
-
         proto_file_name = msg.DESCRIPTOR.file.name
         if proto_file_name.endswith("empty.proto"):
             raise ValueError("Not support Empty Message")
@@ -92,7 +112,7 @@ class M2P(object):
             file_str: str = parse_msg_desc_method
             if not file_str.endswith("/"):
                 file_str += "/"
-            message_field_dict = get_desc_from_proto_file(file_str + proto_file_name)
+            message_field_dict: Dict[str, Dict[str, str]] = get_desc_from_proto_file(file_str + proto_file_name)
         elif inspect.ismodule(parse_msg_desc_method):
             if getattr(parse_msg_desc_method, msg.__name__, None) is not msg:
                 raise ValueError(f"Not the module corresponding to {msg}")
@@ -107,6 +127,9 @@ class M2P(object):
                 f"parse_msg_desc_method param must be exist path or `PGV` or message model,"
                 f" not {parse_msg_desc_method})"
             )
+        else:
+            message_field_dict = get_desc_from_p2p(message=msg)
+
         self._parse_msg_desc_method: Optional[str] = parse_msg_desc_method
         self._field_doc_dict = message_field_dict
         self._field_dict = field_dict or {}
@@ -125,12 +148,7 @@ class M2P(object):
     def model(self) -> Type[BaseModel]:
         return self._gen_model
 
-    def _field_param_dict_handle(self, field_param_dict: dict, default: Any) -> None:
-        if field_param_dict.pop("miss_default") is not True:
-            field_param_dict["default"] = default
-        if field_param_dict["default_factory"]:
-            field_param_dict.pop("default", "")
-
+    def _field_param_dict_handle(self, field_param_dict: dict) -> None:
         # PGV const handler
         if field_param_dict.get("const").__class__ != MISSING.__class__:
             field_param_dict["default"] = field_param_dict["const"]
@@ -140,6 +158,9 @@ class M2P(object):
 
         if field_param_dict.get("example").__class__ == MISSING.__class__:
             field_param_dict.pop("example")
+        example_factory = field_param_dict.pop("example_factory")
+        if example_factory:
+            field_param_dict["example"] = example_factory
 
         extra = field_param_dict.pop("extra")
         if extra:
@@ -167,7 +188,7 @@ class M2P(object):
 
             if sub_field_param_dict and "type_" in sub_field_param_dict:
                 # If a nested type is found, use the same treatment
-                self._field_param_dict_handle(sub_field_param_dict, default)
+                self._field_param_dict_handle(sub_field_param_dict)
                 field_param_dict["type_"] = field_type(sub_field_param_dict["type_"], **type_param_dict)
             else:
                 field_param_dict["type_"] = field_type(**type_param_dict)
@@ -287,13 +308,22 @@ class M2P(object):
                     continue
                 _field = field_param_dict.pop("field")
                 if _field:
-                    field = field
+                    field = _field
                 validator_dict = field_param_dict.pop("validator")
                 if validator_dict:
                     validators.update(validator_dict)
 
+                check_dict_one_of(field_param_dict, ["miss_default", "default", "default_factory"])
+                check_dict_one_of(field_param_dict, ["example", "example_factory"])
+                if field_param_dict.pop("miss_default") is not True and not field_param_dict["default"]:
+                    field_param_dict["default"] = default
+                if field_param_dict["default_factory"]:
+                    field_param_dict.pop("default", "")
+                if field_param_dict.get("default", None) is default:
+                    field_param_dict["default_factory"] = default_factory
+
                 # Unified field parameter handling
-                self._field_param_dict_handle(field_param_dict, default)
+                self._field_param_dict_handle(field_param_dict)
 
                 # Type will change in the unified processing logic
                 field_type = field_param_dict.pop("type_", type_)
@@ -352,17 +382,23 @@ class M2P(object):
                 elif v.startswith("p2p@local") and self._local_dict:
                     _, var_str = v.split("|")
                     v = self._local_dict[var_str]
+                elif v.startswith("p2p@builtin"):
+                    _, var_str = v.split("|")
+                    v = __builtins__.get(var_str)  # type: ignore
                 elif v.startswith("p2p@"):
                     raise ValueError(f"Only support p2p@import, p2p@local prefix. not {v}")
                 else:
                     continue
                 pait_dict[k] = v
             except Exception as e:
-                raise ValueError(f"parse {v} error: {e}")
+                raise ValueError(f"parse {v} error: {e}") from e
 
-        field_name: str = pait_dict.pop("field", "")
-        if field_name in self._field_dict:
-            pait_dict["field"] = self._field_dict[field_name]
+        _field: Any = pait_dict.pop("field", "")
+        if isinstance(_field, str):
+            if _field in self._field_dict:
+                pait_dict["field"] = self._field_dict[_field]
+        else:
+            pait_dict["field"] = _field
         return
 
     def _get_field_doc_by_full_name(self, full_name: str) -> Any:

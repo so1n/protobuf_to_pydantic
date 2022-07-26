@@ -1,0 +1,238 @@
+syntax = "proto3";
+package p2p_validate_test;
+
+
+import "google/protobuf/any.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "example_proto/common/p2p_validate.proto";
+
+
+message FloatTest {
+  float const_test = 1 [(p2p_validate.rules).float.const = 1];
+  float range_e_test = 2 [(p2p_validate.rules).float = {ge: 1, le: 10}];
+  float range_test = 3[(p2p_validate.rules).float = {gt: 1, lt: 10}];
+  float in_test = 4[(p2p_validate.rules).float = {in: [1,2,3]}];
+  float not_in_test = 5[(p2p_validate.rules).float = {not_in: [1,2,3]}];
+  float default_test = 6[(p2p_validate.rules).float.default = 1.0];
+  float not_enable_test = 7[(p2p_validate.rules).float.enable = false];
+  float default_factory_test = 8[(p2p_validate.rules).float.default_factory = "p2p@builtin|float"];
+  float miss_default_test = 9[(p2p_validate.rules).float.miss_default = true];
+  float alias_test = 10 [(p2p_validate.rules).float.alias = "alias"];
+  float desc_test = 11 [(p2p_validate.rules).float.description = "test desc"];
+  float multiple_of_test = 12 [(p2p_validate.rules).float.multiple_of = 3.0];
+  float example_test = 13 [(p2p_validate.rules).float.example = 1.0];
+  float example_factory = 14 [(p2p_validate.rules).float.example_factory = "p2p@builtin|float"];
+  float field_test = 15[(p2p_validate.rules).float.field = "p2p@local|CustomerField"];
+  float type_test = 16[(p2p_validate.rules).float.type = "p2p@local|confloat"];
+}
+
+message DoubleTest {
+  double const_test = 1 [(p2p_validate.rules).double.const = 1];
+  double range_e_test = 2 [(p2p_validate.rules).double = {ge: 1, le: 10}];
+  double range_test = 3[(p2p_validate.rules).double = {gt: 1, lt: 10}];
+  double in_test = 4[(p2p_validate.rules).double = {in: [1,2,3]}];
+  double not_in_test = 5[(p2p_validate.rules).double = {not_in: [1,2,3]}];
+  double default_test = 6[(p2p_validate.rules).double.default = 1.0];
+  double not_enable_test = 7[(p2p_validate.rules).double.enable = false];
+  double default_factory_test = 8[(p2p_validate.rules).double.default_factory = "p2p@builtin|float"];
+  double miss_default_test = 9[(p2p_validate.rules).double.miss_default = true];
+  double alias_test = 10 [(p2p_validate.rules).double.alias = "alias"];
+  double desc_test = 11 [(p2p_validate.rules).double.description = "test desc"];
+  double multiple_of_test = 12 [(p2p_validate.rules).double.multiple_of = 3.0];
+  double example_test = 13 [(p2p_validate.rules).double.example = 1.0];
+  double example_factory = 14 [(p2p_validate.rules).double.example_factory = "p2p@builtin|float"];
+  double field_test = 15[(p2p_validate.rules).double.field = "p2p@local|CustomerField"];
+  double type_test = 16[(p2p_validate.rules).double.type = "p2p@local|confloat"];
+}
+
+message Int32Test {
+  int32 const_test = 1 [(p2p_validate.rules).int32.const = 1];
+  int32 range_e_test = 2 [(p2p_validate.rules).int32 = {ge: 1, le: 10}];
+  int32 range_test = 3[(p2p_validate.rules).int32 = {gt: 1, lt: 10}];
+  int32 in_test = 4[(p2p_validate.rules).int32 = {in: [1,2,3]}];
+  int32 not_in_test = 5[(p2p_validate.rules).int32 = {not_in: [1,2,3]}];
+  int32 default_test = 6[(p2p_validate.rules).int32.default = 1.0];
+  int32 not_enable_test = 7[(p2p_validate.rules).int32.enable = false];
+  int32 default_factory_test = 8[(p2p_validate.rules).int32.default_factory = "p2p@builtin|int"];
+  int32 miss_default_test = 9[(p2p_validate.rules).int32.miss_default = true];
+  int32 alias_test = 10 [(p2p_validate.rules).int32.alias = "alias"];
+  int32 desc_test = 11 [(p2p_validate.rules).int32.description = "test desc"];
+  int32 multiple_of_test = 12 [(p2p_validate.rules).int32.multiple_of = 3.0];
+  int32 example_test = 13 [(p2p_validate.rules).int32.example = 1.0];
+  int32 example_factory = 14 [(p2p_validate.rules).int32.example_factory = "p2p@builtin|int"];
+  int32 field_test = 15[(p2p_validate.rules).int32.field = "p2p@local|CustomerField"];
+  int32 type_test = 16[(p2p_validate.rules).int32.type = "p2p@local|confloat"];
+}
+
+message Int64Test {
+  int64 const_test = 1 [(p2p_validate.rules).int64.const = 1];
+  int64 range_e_test = 2 [(p2p_validate.rules).int64 = {ge: 1, le: 10}];
+  int64 range_test = 3[(p2p_validate.rules).int64 = {gt: 1, lt: 10}];
+  int64 in_test = 4[(p2p_validate.rules).int64 = {in: [1,2,3]}];
+  int64 not_in_test = 5[(p2p_validate.rules).int64 = {not_in: [1,2,3]}];
+  int64 default_test = 6[(p2p_validate.rules).int64.default = 1.0];
+  int64 not_enable_test = 7[(p2p_validate.rules).int64.enable = false];
+  int64 default_factory_test = 8[(p2p_validate.rules).int64.default_factory = "p2p@builtin|int"];
+  int64 miss_default_test = 9[(p2p_validate.rules).int64.miss_default = true];
+  int64 alias_test = 10 [(p2p_validate.rules).int64.alias = "alias"];
+  int64 desc_test = 11 [(p2p_validate.rules).int64.description = "test desc"];
+  int64 multiple_of_test = 12 [(p2p_validate.rules).int64.multiple_of = 3.0];
+  int64 example_test = 13 [(p2p_validate.rules).int64.example = 1.0];
+  int64 example_factory = 14 [(p2p_validate.rules).int64.example_factory = "p2p@builtin|int"];
+  int64 field_test = 15[(p2p_validate.rules).int64.field = "p2p@local|CustomerField"];
+  int64 type_test = 16[(p2p_validate.rules).int64.type = "p2p@local|confloat"];
+}
+
+message Uint32Test {
+  uint32 const_test = 1 [(p2p_validate.rules).uint32.const = 1];
+  uint32 range_e_test = 2 [(p2p_validate.rules).uint32 = {ge: 1, le: 10}];
+  uint32 range_test = 3[(p2p_validate.rules).uint32 = {gt: 1, lt: 10}];
+  uint32 in_test = 4[(p2p_validate.rules).uint32 = {in: [1,2,3]}];
+  uint32 not_in_test = 5[(p2p_validate.rules).uint32 = {not_in: [1,2,3]}];
+  uint32 default_test = 6[(p2p_validate.rules).uint32.default = 1.0];
+  uint32 not_enable_test = 7[(p2p_validate.rules).uint32.enable = false];
+  uint32 default_factory_test = 8[(p2p_validate.rules).uint32.default_factory = "p2p@builtin|int"];
+  uint32 miss_default_test = 9[(p2p_validate.rules).uint32.miss_default = true];
+  uint32 alias_test = 10 [(p2p_validate.rules).uint32.alias = "alias"];
+  uint32 desc_test = 11 [(p2p_validate.rules).uint32.description = "test desc"];
+  uint32 multiple_of_test = 12 [(p2p_validate.rules).uint32.multiple_of = 3.0];
+  uint32 example_test = 13 [(p2p_validate.rules).uint32.example = 1.0];
+  uint32 example_factory = 14 [(p2p_validate.rules).uint32.example_factory = "p2p@builtin|int"];
+  uint32 field_test = 15[(p2p_validate.rules).uint32.field = "p2p@local|CustomerField"];
+  uint32 type_test = 16[(p2p_validate.rules).uint32.type = "p2p@local|conint"];
+}
+
+message Sint32Test {
+  sint32 const_test = 1 [(p2p_validate.rules).sint32.const = 1];
+  sint32 range_e_test = 2 [(p2p_validate.rules).sint32 = {ge: 1, le: 10}];
+  sint32 range_test = 3[(p2p_validate.rules).sint32 = {gt: 1, lt: 10}];
+  sint32 in_test = 4[(p2p_validate.rules).sint32 = {in: [1,2,3]}];
+  sint32 not_in_test = 5[(p2p_validate.rules).sint32 = {not_in: [1,2,3]}];
+  sint32 default_test = 6[(p2p_validate.rules).sint32.default = 1.0];
+  sint32 not_enable_test = 7[(p2p_validate.rules).sint32.enable = false];
+  sint32 default_factory_test = 8[(p2p_validate.rules).sint32.default_factory = "p2p@builtin|int"];
+  sint32 miss_default_test = 9[(p2p_validate.rules).sint32.miss_default = true];
+  sint32 alias_test = 10 [(p2p_validate.rules).sint32.alias = "alias"];
+  sint32 desc_test = 11 [(p2p_validate.rules).sint32.description = "test desc"];
+  sint32 multiple_of_test = 12 [(p2p_validate.rules).sint32.multiple_of = 3.0];
+  sint32 example_test = 13 [(p2p_validate.rules).sint32.example = 1.0];
+  sint32 example_factory = 14 [(p2p_validate.rules).sint32.example_factory = "p2p@builtin|int"];
+  sint32 field_test = 15[(p2p_validate.rules).sint32.field = "p2p@local|CustomerField"];
+  sint32 type_test = 16[(p2p_validate.rules).sint32.type = "p2p@local|conint"];
+}
+
+message Uint64Test {
+  uint64 const_test = 1 [(p2p_validate.rules).uint64.const = 1];
+  uint64 range_e_test = 2 [(p2p_validate.rules).uint64 = {ge: 1, le: 10}];
+  uint64 range_test = 3[(p2p_validate.rules).uint64 = {gt: 1, lt: 10}];
+  uint64 in_test = 4[(p2p_validate.rules).uint64 = {in: [1,2,3]}];
+  uint64 not_in_test = 5[(p2p_validate.rules).uint64 = {not_in: [1,2,3]}];
+  uint64 default_test = 6[(p2p_validate.rules).uint64.default = 1.0];
+  uint64 not_enable_test = 7[(p2p_validate.rules).uint64.enable = false];
+  uint64 default_factory_test = 8[(p2p_validate.rules).uint64.default_factory = "p2p@builtin|int"];
+  uint64 miss_default_test = 9[(p2p_validate.rules).uint64.miss_default = true];
+  uint64 alias_test = 10 [(p2p_validate.rules).uint64.alias = "alias"];
+  uint64 desc_test = 11 [(p2p_validate.rules).uint64.description = "test desc"];
+  uint64 multiple_of_test = 12 [(p2p_validate.rules).uint64.multiple_of = 3.0];
+  uint64 example_test = 13 [(p2p_validate.rules).uint64.example = 1.0];
+  uint64 example_factory = 14 [(p2p_validate.rules).uint64.example_factory = "p2p@builtin|int"];
+  uint64 field_test = 15[(p2p_validate.rules).uint64.field = "p2p@local|CustomerField"];
+  uint64 type_test = 16[(p2p_validate.rules).uint64.type = "p2p@local|conint"];
+}
+
+message Sint64Test {
+  sint64 const_test = 1 [(p2p_validate.rules).sint64.const = 1];
+  sint64 range_e_test = 2 [(p2p_validate.rules).sint64 = {ge: 1, le: 10}];
+  sint64 range_test = 3[(p2p_validate.rules).sint64 = {gt: 1, lt: 10}];
+  sint64 in_test = 4[(p2p_validate.rules).sint64 = {in: [1,2,3]}];
+  sint64 not_in_test = 5[(p2p_validate.rules).sint64 = {not_in: [1,2,3]}];
+  sint64 default_test = 6[(p2p_validate.rules).sint64.default = 1.0];
+  sint64 not_enable_test = 7[(p2p_validate.rules).sint64.enable = false];
+  sint64 default_factory_test = 8[(p2p_validate.rules).sint64.default_factory = "p2p@builtin|int"];
+  sint64 miss_default_test = 9[(p2p_validate.rules).sint64.miss_default = true];
+  sint64 alias_test = 10 [(p2p_validate.rules).sint64.alias = "alias"];
+  sint64 desc_test = 11 [(p2p_validate.rules).sint64.description = "test desc"];
+  sint64 multiple_of_test = 12 [(p2p_validate.rules).sint64.multiple_of = 3.0];
+  sint64 example_test = 13 [(p2p_validate.rules).sint64.example = 1.0];
+  sint64 example_factory = 14 [(p2p_validate.rules).sint64.example_factory = "p2p@builtin|int"];
+  sint64 field_test = 15[(p2p_validate.rules).sint64.field = "p2p@local|CustomerField"];
+  sint64 type_test = 16[(p2p_validate.rules).sint64.type = "p2p@local|conint"];
+}
+
+message Fixed32Test {
+  fixed32 const_test = 1 [(p2p_validate.rules).fixed32.const = 1];
+  fixed32 range_e_test = 2 [(p2p_validate.rules).fixed32 = {ge: 1, le: 10}];
+  fixed32 range_test = 3[(p2p_validate.rules).fixed32 = {gt: 1, lt: 10}];
+  fixed32 in_test = 4[(p2p_validate.rules).fixed32 = {in: [1,2,3]}];
+  fixed32 not_in_test = 5[(p2p_validate.rules).fixed32 = {not_in: [1,2,3]}];
+  fixed32 default_test = 6[(p2p_validate.rules).fixed32.default = 1.0];
+  fixed32 not_enable_test = 7[(p2p_validate.rules).fixed32.enable = false];
+  fixed32 default_factory_test = 8[(p2p_validate.rules).fixed32.default_factory = "p2p@builtin|float"];
+  fixed32 miss_default_test = 9[(p2p_validate.rules).fixed32.miss_default = true];
+  fixed32 alias_test = 10 [(p2p_validate.rules).fixed32.alias = "alias"];
+  fixed32 desc_test = 11 [(p2p_validate.rules).fixed32.description = "test desc"];
+  fixed32 multiple_of_test = 12 [(p2p_validate.rules).fixed32.multiple_of = 3.0];
+  fixed32 example_test = 13 [(p2p_validate.rules).fixed32.example = 1.0];
+  fixed32 example_factory = 14 [(p2p_validate.rules).fixed32.example_factory = "p2p@builtin|float"];
+  fixed32 field_test = 15[(p2p_validate.rules).fixed32.field = "p2p@local|CustomerField"];
+  fixed32 type_test = 16[(p2p_validate.rules).fixed32.type = "p2p@local|confloat"];
+}
+
+message Fixed64Test {
+  fixed64 const_test = 1 [(p2p_validate.rules).fixed32.const = 1];
+  fixed64 range_e_test = 2 [(p2p_validate.rules).fixed64 = {ge: 1, le: 10}];
+  fixed64 range_test = 3[(p2p_validate.rules).fixed64 = {gt: 1, lt: 10}];
+  fixed64 in_test = 4[(p2p_validate.rules).fixed64 = {in: [1,2,3]}];
+  fixed64 not_in_test = 5[(p2p_validate.rules).fixed64 = {not_in: [1,2,3]}];
+  fixed64 default_test = 6[(p2p_validate.rules).fixed64.default = 1.0];
+  fixed64 not_enable_test = 7[(p2p_validate.rules).fixed64.enable = false];
+  fixed64 default_factory_test = 8[(p2p_validate.rules).fixed64.default_factory = "p2p@builtin|float"];
+  fixed64 miss_default_test = 9[(p2p_validate.rules).fixed64.miss_default = true];
+  fixed64 alias_test = 10 [(p2p_validate.rules).fixed64.alias = "alias"];
+  fixed64 desc_test = 11 [(p2p_validate.rules).fixed64.description = "test desc"];
+  fixed64 multiple_of_test = 12 [(p2p_validate.rules).fixed64.multiple_of = 3.0];
+  fixed64 example_test = 13 [(p2p_validate.rules).fixed64.example = 1.0];
+  fixed64 example_factory = 14 [(p2p_validate.rules).fixed64.example_factory = "p2p@builtin|float"];
+  fixed64 field_test = 15[(p2p_validate.rules).fixed64.field = "p2p@local|CustomerField"];
+  fixed64 type_test = 16[(p2p_validate.rules).fixed64.type = "p2p@local|confloat"];
+}
+
+message Sfixed32Test {
+  sfixed32 const_test = 1 [(p2p_validate.rules).fixed32.const = 1];
+  sfixed32 range_e_test = 2 [(p2p_validate.rules).sfixed32 = {ge: 1, le: 10}];
+  sfixed32 range_test = 3[(p2p_validate.rules).sfixed32 = {gt: 1, lt: 10}];
+  sfixed32 in_test = 4[(p2p_validate.rules).sfixed32 = {in: [1,2,3]}];
+  sfixed32 not_in_test = 5[(p2p_validate.rules).sfixed32 = {not_in: [1,2,3]}];
+  sfixed32 default_test = 6[(p2p_validate.rules).sfixed32.default = 1.0];
+  sfixed32 not_enable_test = 7[(p2p_validate.rules).sfixed32.enable = false];
+  sfixed32 default_factory_test = 8[(p2p_validate.rules).sfixed32.default_factory = "p2p@builtin|float"];
+  sfixed32 miss_default_test = 9[(p2p_validate.rules).sfixed32.miss_default = true];
+  sfixed32 alias_test = 10 [(p2p_validate.rules).sfixed32.alias = "alias"];
+  sfixed32 desc_test = 11 [(p2p_validate.rules).sfixed32.description = "test desc"];
+  sfixed32 multiple_of_test = 12 [(p2p_validate.rules).sfixed32.multiple_of = 3.0];
+  sfixed32 example_test = 13 [(p2p_validate.rules).sfixed32.example = 1.0];
+  sfixed32 example_factory = 14 [(p2p_validate.rules).sfixed32.example_factory = "p2p@builtin|float"];
+  sfixed32 field_test = 15[(p2p_validate.rules).sfixed32.field = "p2p@local|CustomerField"];
+  sfixed32 type_test = 16[(p2p_validate.rules).sfixed32.type = "p2p@local|confloat"];
+}
+
+message Sfixed64Test {
+  sfixed64 const_test = 1 [(p2p_validate.rules).fixed32.const = 1];
+  sfixed64 range_e_test = 2 [(p2p_validate.rules).sfixed64 = {ge: 1, le: 10}];
+  sfixed64 range_test = 3[(p2p_validate.rules).sfixed64 = {gt: 1, lt: 10}];
+  sfixed64 in_test = 4[(p2p_validate.rules).sfixed64 = {in: [1,2,3]}];
+  sfixed64 not_in_test = 5[(p2p_validate.rules).sfixed64 = {not_in: [1,2,3]}];
+  sfixed64 default_test = 6[(p2p_validate.rules).sfixed64.default = 1.0];
+  sfixed64 not_enable_test = 7[(p2p_validate.rules).sfixed64.enable = false];
+  sfixed64 default_factory_test = 8[(p2p_validate.rules).sfixed64.default_factory = "p2p@builtin|float"];
+  sfixed64 miss_default_test = 9[(p2p_validate.rules).sfixed64.miss_default = true];
+  sfixed64 alias_test = 10 [(p2p_validate.rules).sfixed64.alias = "alias"];
+  sfixed64 desc_test = 11 [(p2p_validate.rules).sfixed64.description = "test desc"];
+  sfixed64 multiple_of_test = 12 [(p2p_validate.rules).sfixed64.multiple_of = 3.0];
+  sfixed64 example_test = 13 [(p2p_validate.rules).sfixed64.example = 1.0];
+  sfixed64 example_factory = 14 [(p2p_validate.rules).sfixed64.example_factory = "p2p@builtin|float"];
+  sfixed64 field_test = 15[(p2p_validate.rules).sfixed64.field = "p2p@local|CustomerField"];
+  sfixed64 type_test = 16[(p2p_validate.rules).sfixed64.type = "p2p@local|confloat"];
+}

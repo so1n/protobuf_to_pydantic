@@ -42,7 +42,7 @@ from protobuf_to_pydantic.customer_validator import (
     timestamp_lt_validator,
     timestamp_within_validator,
 )
-from protobuf_to_pydantic.get_desc.from_pgv.types import HostNameStr, UriRefStr
+from protobuf_to_pydantic.get_desc.from_pb_option.types import HostNameStr, UriRefStr
 from protobuf_to_pydantic.util import Timedelta
 
 
@@ -166,6 +166,18 @@ class Fixed32Test(BaseModel):
     in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(in_validator)
 
 
+class Fixed64Test(BaseModel):
+    const_test: float = FieldInfo(default=1, const=True)
+    range_e_test: float = FieldInfo(default=0, ge=1, le=10)
+    range_test: float = FieldInfo(default=0, gt=1, lt=10)
+    in_test: float = FieldInfo(default=0, extra={"in": [1, 2, 3]})
+    not_in_test: float = FieldInfo(default=0, extra={"in": [1, 2, 3]})
+    ignore_test: float = FieldInfo(default=0)
+
+    in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
+    in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(in_validator)
+
+
 class BoolTest(BaseModel):
     bool_1_test: bool = FieldInfo(default=True, const=True)
     bool_2_test: bool = FieldInfo(default=False, const=True)
@@ -261,25 +273,31 @@ class MessageTest(BaseModel):
 
 
 class RepeatedTest(BaseModel):
-    range_test: typing.List[str] = FieldInfo(min_items=1, max_items=5)
-    unique_test: typing.List[str] = FieldInfo(unique_items=True)
-    items_string_test: conlist(item_type=constr(min_length=1, max_length=5), min_items=1, max_items=5) = FieldInfo()
-    items_double_test: conlist(item_type=confloat(gt=1, lt=5), min_items=1, max_items=5) = FieldInfo()
-    items_int32_test: conlist(item_type=conint(gt=1, lt=5), min_items=1, max_items=5) = FieldInfo()
+    range_test: typing.List[str] = FieldInfo(default_factory=list, min_items=1, max_items=5)
+    unique_test: typing.List[str] = FieldInfo(default_factory=list, unique_items=True)
+    items_string_test: conlist(item_type=constr(min_length=1, max_length=5), min_items=1, max_items=5) = FieldInfo(
+        default_factory=list
+    )
+    items_double_test: conlist(item_type=confloat(gt=1, lt=5), min_items=1, max_items=5) = FieldInfo(
+        default_factory=list
+    )
+    items_int32_test: conlist(item_type=conint(gt=1, lt=5), min_items=1, max_items=5) = FieldInfo(default_factory=list)
     items_timestamp_test: conlist(
         item_type=contimestamp(
             timestamp_gt=datetime(2020, 9, 13, 12, 26, 40), timestamp_lt=datetime(2020, 9, 13, 12, 26, 50)
         ),
         min_items=1,
         max_items=5,
-    ) = FieldInfo()
+    ) = FieldInfo(default_factory=list)
     items_duration_test: conlist(
         item_type=contimedelta(duration_gt=timedelta(seconds=10), duration_lt=timedelta(seconds=10)),
         min_items=1,
         max_items=5,
-    ) = FieldInfo()
-    items_bytes_test: conlist(item_type=conbytes(min_length=1, max_length=5), min_items=1, max_items=5) = FieldInfo()
-    ignore_test: typing.List[str] = FieldInfo()
+    ) = FieldInfo(default_factory=list)
+    items_bytes_test: conlist(item_type=conbytes(min_length=1, max_length=5), min_items=1, max_items=5) = FieldInfo(
+        default_factory=list
+    )
+    ignore_test: typing.List[str] = FieldInfo(default_factory=list)
 
 
 class AnyTest(BaseModel):
