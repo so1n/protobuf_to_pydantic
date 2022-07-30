@@ -7,7 +7,6 @@ import google.protobuf.descriptor
 import google.protobuf.descriptor_pb2
 import google.protobuf.duration_pb2
 import google.protobuf.internal.containers
-import google.protobuf.internal.enum_type_wrapper
 import google.protobuf.internal.extension_dict
 import google.protobuf.message
 import google.protobuf.timestamp_pb2
@@ -15,32 +14,6 @@ import typing
 import typing_extensions
 
 DESCRIPTOR: google.protobuf.descriptor.FileDescriptor
-
-class _KnownRegex:
-    ValueType = typing.NewType('ValueType', builtins.int)
-    V: typing_extensions.TypeAlias = ValueType
-class _KnownRegexEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_KnownRegex.ValueType], builtins.type):
-    DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
-    UNKNOWN: _KnownRegex.ValueType  # 0
-    HTTP_HEADER_NAME: _KnownRegex.ValueType  # 1
-    """HTTP header name as defined by RFC 7230."""
-
-    HTTP_HEADER_VALUE: _KnownRegex.ValueType  # 2
-    """HTTP header value as defined by RFC 7230."""
-
-class KnownRegex(_KnownRegex, metaclass=_KnownRegexEnumTypeWrapper):
-    """WellKnownRegex contain some well-known patterns."""
-    pass
-
-UNKNOWN: KnownRegex.ValueType  # 0
-HTTP_HEADER_NAME: KnownRegex.ValueType  # 1
-"""HTTP header name as defined by RFC 7230."""
-
-HTTP_HEADER_VALUE: KnownRegex.ValueType  # 2
-"""HTTP header value as defined by RFC 7230."""
-
-global___KnownRegex = KnownRegex
-
 
 class FieldRules(google.protobuf.message.Message):
     """FieldRules encapsulates the rules for each type of field. Depending on the
@@ -173,6 +146,7 @@ class FloatRules(google.protobuf.message.Message):
     EXAMPLE_FACTORY_FIELD_NUMBER: builtins.int
     FIELD_FIELD_NUMBER: builtins.int
     TYPE_FIELD_NUMBER: builtins.int
+    TITLE_FIELD_NUMBER: builtins.int
     const: builtins.float
     """Const specifies that this field must be exactly the specified value"""
 
@@ -241,6 +215,9 @@ class FloatRules(google.protobuf.message.Message):
     type: typing.Text
     """Set the type object corresponding to the field, support template variables"""
 
+    title: typing.Text
+    """The title corresponding to the field"""
+
     def __init__(self,
         *,
         const: typing.Optional[builtins.float] = ...,
@@ -260,9 +237,10 @@ class FloatRules(google.protobuf.message.Message):
         example_factory: typing.Text = ...,
         field: typing.Optional[typing.Text] = ...,
         type: typing.Optional[typing.Text] = ...,
+        title: typing.Optional[typing.Text] = ...,
         ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_multiple_of",b"_multiple_of","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","le",b"le","lt",b"lt","miss_default",b"miss_default","multiple_of",b"multiple_of","type",b"type"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_multiple_of",b"_multiple_of","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","in",b"in","le",b"le","lt",b"lt","miss_default",b"miss_default","multiple_of",b"multiple_of","not_in",b"not_in","type",b"type"]) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_multiple_of",b"_multiple_of","_title",b"_title","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","le",b"le","lt",b"lt","miss_default",b"miss_default","multiple_of",b"multiple_of","title",b"title","type",b"type"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_multiple_of",b"_multiple_of","_title",b"_title","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","in",b"in","le",b"le","lt",b"lt","miss_default",b"miss_default","multiple_of",b"multiple_of","not_in",b"not_in","title",b"title","type",b"type"]) -> None: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_alias",b"_alias"]) -> typing.Optional[typing_extensions.Literal["alias"]]: ...
     @typing.overload
@@ -283,6 +261,8 @@ class FloatRules(google.protobuf.message.Message):
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_lt",b"_lt"]) -> typing.Optional[typing_extensions.Literal["lt"]]: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_multiple_of",b"_multiple_of"]) -> typing.Optional[typing_extensions.Literal["multiple_of"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_title",b"_title"]) -> typing.Optional[typing_extensions.Literal["title"]]: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_type",b"_type"]) -> typing.Optional[typing_extensions.Literal["type"]]: ...
     @typing.overload
@@ -312,6 +292,7 @@ class DoubleRules(google.protobuf.message.Message):
     EXAMPLE_FACTORY_FIELD_NUMBER: builtins.int
     FIELD_FIELD_NUMBER: builtins.int
     TYPE_FIELD_NUMBER: builtins.int
+    TITLE_FIELD_NUMBER: builtins.int
     const: builtins.float
     """Const specifies that this field must be exactly the specified value"""
 
@@ -380,6 +361,9 @@ class DoubleRules(google.protobuf.message.Message):
     type: typing.Text
     """Set the type object corresponding to the field, support template variables"""
 
+    title: typing.Text
+    """The title corresponding to the field"""
+
     def __init__(self,
         *,
         const: typing.Optional[builtins.float] = ...,
@@ -399,9 +383,10 @@ class DoubleRules(google.protobuf.message.Message):
         example_factory: typing.Text = ...,
         field: typing.Optional[typing.Text] = ...,
         type: typing.Optional[typing.Text] = ...,
+        title: typing.Optional[typing.Text] = ...,
         ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_multiple_of",b"_multiple_of","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","le",b"le","lt",b"lt","miss_default",b"miss_default","multiple_of",b"multiple_of","type",b"type"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_multiple_of",b"_multiple_of","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","in",b"in","le",b"le","lt",b"lt","miss_default",b"miss_default","multiple_of",b"multiple_of","not_in",b"not_in","type",b"type"]) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_multiple_of",b"_multiple_of","_title",b"_title","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","le",b"le","lt",b"lt","miss_default",b"miss_default","multiple_of",b"multiple_of","title",b"title","type",b"type"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_multiple_of",b"_multiple_of","_title",b"_title","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","in",b"in","le",b"le","lt",b"lt","miss_default",b"miss_default","multiple_of",b"multiple_of","not_in",b"not_in","title",b"title","type",b"type"]) -> None: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_alias",b"_alias"]) -> typing.Optional[typing_extensions.Literal["alias"]]: ...
     @typing.overload
@@ -422,6 +407,8 @@ class DoubleRules(google.protobuf.message.Message):
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_lt",b"_lt"]) -> typing.Optional[typing_extensions.Literal["lt"]]: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_multiple_of",b"_multiple_of"]) -> typing.Optional[typing_extensions.Literal["multiple_of"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_title",b"_title"]) -> typing.Optional[typing_extensions.Literal["title"]]: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_type",b"_type"]) -> typing.Optional[typing_extensions.Literal["type"]]: ...
     @typing.overload
@@ -451,6 +438,7 @@ class Int32Rules(google.protobuf.message.Message):
     EXAMPLE_FACTORY_FIELD_NUMBER: builtins.int
     FIELD_FIELD_NUMBER: builtins.int
     TYPE_FIELD_NUMBER: builtins.int
+    TITLE_FIELD_NUMBER: builtins.int
     const: builtins.int
     """Const specifies that this field must be exactly the specified value"""
 
@@ -519,6 +507,9 @@ class Int32Rules(google.protobuf.message.Message):
     type: typing.Text
     """Set the type object corresponding to the field, support template variables"""
 
+    title: typing.Text
+    """The title corresponding to the field"""
+
     def __init__(self,
         *,
         const: typing.Optional[builtins.int] = ...,
@@ -538,9 +529,10 @@ class Int32Rules(google.protobuf.message.Message):
         example_factory: typing.Text = ...,
         field: typing.Optional[typing.Text] = ...,
         type: typing.Optional[typing.Text] = ...,
+        title: typing.Optional[typing.Text] = ...,
         ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_multiple_of",b"_multiple_of","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","le",b"le","lt",b"lt","miss_default",b"miss_default","multiple_of",b"multiple_of","type",b"type"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_multiple_of",b"_multiple_of","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","in",b"in","le",b"le","lt",b"lt","miss_default",b"miss_default","multiple_of",b"multiple_of","not_in",b"not_in","type",b"type"]) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_multiple_of",b"_multiple_of","_title",b"_title","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","le",b"le","lt",b"lt","miss_default",b"miss_default","multiple_of",b"multiple_of","title",b"title","type",b"type"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_multiple_of",b"_multiple_of","_title",b"_title","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","in",b"in","le",b"le","lt",b"lt","miss_default",b"miss_default","multiple_of",b"multiple_of","not_in",b"not_in","title",b"title","type",b"type"]) -> None: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_alias",b"_alias"]) -> typing.Optional[typing_extensions.Literal["alias"]]: ...
     @typing.overload
@@ -561,6 +553,8 @@ class Int32Rules(google.protobuf.message.Message):
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_lt",b"_lt"]) -> typing.Optional[typing_extensions.Literal["lt"]]: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_multiple_of",b"_multiple_of"]) -> typing.Optional[typing_extensions.Literal["multiple_of"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_title",b"_title"]) -> typing.Optional[typing_extensions.Literal["title"]]: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_type",b"_type"]) -> typing.Optional[typing_extensions.Literal["type"]]: ...
     @typing.overload
@@ -590,6 +584,7 @@ class Int64Rules(google.protobuf.message.Message):
     EXAMPLE_FACTORY_FIELD_NUMBER: builtins.int
     FIELD_FIELD_NUMBER: builtins.int
     TYPE_FIELD_NUMBER: builtins.int
+    TITLE_FIELD_NUMBER: builtins.int
     const: builtins.int
     """Const specifies that this field must be exactly the specified value"""
 
@@ -658,6 +653,9 @@ class Int64Rules(google.protobuf.message.Message):
     type: typing.Text
     """Set the type object corresponding to the field, support template variables"""
 
+    title: typing.Text
+    """The title corresponding to the field"""
+
     def __init__(self,
         *,
         const: typing.Optional[builtins.int] = ...,
@@ -677,9 +675,10 @@ class Int64Rules(google.protobuf.message.Message):
         example_factory: typing.Text = ...,
         field: typing.Optional[typing.Text] = ...,
         type: typing.Optional[typing.Text] = ...,
+        title: typing.Optional[typing.Text] = ...,
         ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_multiple_of",b"_multiple_of","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","le",b"le","lt",b"lt","miss_default",b"miss_default","multiple_of",b"multiple_of","type",b"type"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_multiple_of",b"_multiple_of","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","in",b"in","le",b"le","lt",b"lt","miss_default",b"miss_default","multiple_of",b"multiple_of","not_in",b"not_in","type",b"type"]) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_multiple_of",b"_multiple_of","_title",b"_title","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","le",b"le","lt",b"lt","miss_default",b"miss_default","multiple_of",b"multiple_of","title",b"title","type",b"type"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_multiple_of",b"_multiple_of","_title",b"_title","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","in",b"in","le",b"le","lt",b"lt","miss_default",b"miss_default","multiple_of",b"multiple_of","not_in",b"not_in","title",b"title","type",b"type"]) -> None: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_alias",b"_alias"]) -> typing.Optional[typing_extensions.Literal["alias"]]: ...
     @typing.overload
@@ -700,6 +699,8 @@ class Int64Rules(google.protobuf.message.Message):
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_lt",b"_lt"]) -> typing.Optional[typing_extensions.Literal["lt"]]: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_multiple_of",b"_multiple_of"]) -> typing.Optional[typing_extensions.Literal["multiple_of"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_title",b"_title"]) -> typing.Optional[typing_extensions.Literal["title"]]: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_type",b"_type"]) -> typing.Optional[typing_extensions.Literal["type"]]: ...
     @typing.overload
@@ -729,6 +730,7 @@ class UInt32Rules(google.protobuf.message.Message):
     EXAMPLE_FACTORY_FIELD_NUMBER: builtins.int
     FIELD_FIELD_NUMBER: builtins.int
     TYPE_FIELD_NUMBER: builtins.int
+    TITLE_FIELD_NUMBER: builtins.int
     const: builtins.int
     """Const specifies that this field must be exactly the specified value"""
 
@@ -797,6 +799,9 @@ class UInt32Rules(google.protobuf.message.Message):
     type: typing.Text
     """Set the type object corresponding to the field, support template variables"""
 
+    title: typing.Text
+    """The title corresponding to the field"""
+
     def __init__(self,
         *,
         const: typing.Optional[builtins.int] = ...,
@@ -816,9 +821,10 @@ class UInt32Rules(google.protobuf.message.Message):
         example_factory: typing.Text = ...,
         field: typing.Optional[typing.Text] = ...,
         type: typing.Optional[typing.Text] = ...,
+        title: typing.Optional[typing.Text] = ...,
         ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_multiple_of",b"_multiple_of","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","le",b"le","lt",b"lt","miss_default",b"miss_default","multiple_of",b"multiple_of","type",b"type"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_multiple_of",b"_multiple_of","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","in",b"in","le",b"le","lt",b"lt","miss_default",b"miss_default","multiple_of",b"multiple_of","not_in",b"not_in","type",b"type"]) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_multiple_of",b"_multiple_of","_title",b"_title","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","le",b"le","lt",b"lt","miss_default",b"miss_default","multiple_of",b"multiple_of","title",b"title","type",b"type"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_multiple_of",b"_multiple_of","_title",b"_title","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","in",b"in","le",b"le","lt",b"lt","miss_default",b"miss_default","multiple_of",b"multiple_of","not_in",b"not_in","title",b"title","type",b"type"]) -> None: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_alias",b"_alias"]) -> typing.Optional[typing_extensions.Literal["alias"]]: ...
     @typing.overload
@@ -839,6 +845,8 @@ class UInt32Rules(google.protobuf.message.Message):
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_lt",b"_lt"]) -> typing.Optional[typing_extensions.Literal["lt"]]: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_multiple_of",b"_multiple_of"]) -> typing.Optional[typing_extensions.Literal["multiple_of"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_title",b"_title"]) -> typing.Optional[typing_extensions.Literal["title"]]: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_type",b"_type"]) -> typing.Optional[typing_extensions.Literal["type"]]: ...
     @typing.overload
@@ -868,6 +876,7 @@ class UInt64Rules(google.protobuf.message.Message):
     EXAMPLE_FACTORY_FIELD_NUMBER: builtins.int
     FIELD_FIELD_NUMBER: builtins.int
     TYPE_FIELD_NUMBER: builtins.int
+    TITLE_FIELD_NUMBER: builtins.int
     const: builtins.int
     """Const specifies that this field must be exactly the specified value"""
 
@@ -936,6 +945,9 @@ class UInt64Rules(google.protobuf.message.Message):
     type: typing.Text
     """Set the type object corresponding to the field, support template variables"""
 
+    title: typing.Text
+    """The title corresponding to the field"""
+
     def __init__(self,
         *,
         const: typing.Optional[builtins.int] = ...,
@@ -955,9 +967,10 @@ class UInt64Rules(google.protobuf.message.Message):
         example_factory: typing.Text = ...,
         field: typing.Optional[typing.Text] = ...,
         type: typing.Optional[typing.Text] = ...,
+        title: typing.Optional[typing.Text] = ...,
         ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_multiple_of",b"_multiple_of","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","le",b"le","lt",b"lt","miss_default",b"miss_default","multiple_of",b"multiple_of","type",b"type"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_multiple_of",b"_multiple_of","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","in",b"in","le",b"le","lt",b"lt","miss_default",b"miss_default","multiple_of",b"multiple_of","not_in",b"not_in","type",b"type"]) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_multiple_of",b"_multiple_of","_title",b"_title","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","le",b"le","lt",b"lt","miss_default",b"miss_default","multiple_of",b"multiple_of","title",b"title","type",b"type"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_multiple_of",b"_multiple_of","_title",b"_title","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","in",b"in","le",b"le","lt",b"lt","miss_default",b"miss_default","multiple_of",b"multiple_of","not_in",b"not_in","title",b"title","type",b"type"]) -> None: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_alias",b"_alias"]) -> typing.Optional[typing_extensions.Literal["alias"]]: ...
     @typing.overload
@@ -978,6 +991,8 @@ class UInt64Rules(google.protobuf.message.Message):
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_lt",b"_lt"]) -> typing.Optional[typing_extensions.Literal["lt"]]: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_multiple_of",b"_multiple_of"]) -> typing.Optional[typing_extensions.Literal["multiple_of"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_title",b"_title"]) -> typing.Optional[typing_extensions.Literal["title"]]: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_type",b"_type"]) -> typing.Optional[typing_extensions.Literal["type"]]: ...
     @typing.overload
@@ -1007,6 +1022,7 @@ class SInt32Rules(google.protobuf.message.Message):
     EXAMPLE_FACTORY_FIELD_NUMBER: builtins.int
     FIELD_FIELD_NUMBER: builtins.int
     TYPE_FIELD_NUMBER: builtins.int
+    TITLE_FIELD_NUMBER: builtins.int
     const: builtins.int
     """Const specifies that this field must be exactly the specified value"""
 
@@ -1075,6 +1091,9 @@ class SInt32Rules(google.protobuf.message.Message):
     type: typing.Text
     """Set the type object corresponding to the field, support template variables"""
 
+    title: typing.Text
+    """The title corresponding to the field"""
+
     def __init__(self,
         *,
         const: typing.Optional[builtins.int] = ...,
@@ -1094,9 +1113,10 @@ class SInt32Rules(google.protobuf.message.Message):
         example_factory: typing.Text = ...,
         field: typing.Optional[typing.Text] = ...,
         type: typing.Optional[typing.Text] = ...,
+        title: typing.Optional[typing.Text] = ...,
         ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_multiple_of",b"_multiple_of","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","le",b"le","lt",b"lt","miss_default",b"miss_default","multiple_of",b"multiple_of","type",b"type"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_multiple_of",b"_multiple_of","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","in",b"in","le",b"le","lt",b"lt","miss_default",b"miss_default","multiple_of",b"multiple_of","not_in",b"not_in","type",b"type"]) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_multiple_of",b"_multiple_of","_title",b"_title","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","le",b"le","lt",b"lt","miss_default",b"miss_default","multiple_of",b"multiple_of","title",b"title","type",b"type"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_multiple_of",b"_multiple_of","_title",b"_title","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","in",b"in","le",b"le","lt",b"lt","miss_default",b"miss_default","multiple_of",b"multiple_of","not_in",b"not_in","title",b"title","type",b"type"]) -> None: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_alias",b"_alias"]) -> typing.Optional[typing_extensions.Literal["alias"]]: ...
     @typing.overload
@@ -1117,6 +1137,8 @@ class SInt32Rules(google.protobuf.message.Message):
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_lt",b"_lt"]) -> typing.Optional[typing_extensions.Literal["lt"]]: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_multiple_of",b"_multiple_of"]) -> typing.Optional[typing_extensions.Literal["multiple_of"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_title",b"_title"]) -> typing.Optional[typing_extensions.Literal["title"]]: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_type",b"_type"]) -> typing.Optional[typing_extensions.Literal["type"]]: ...
     @typing.overload
@@ -1146,6 +1168,7 @@ class SInt64Rules(google.protobuf.message.Message):
     EXAMPLE_FACTORY_FIELD_NUMBER: builtins.int
     FIELD_FIELD_NUMBER: builtins.int
     TYPE_FIELD_NUMBER: builtins.int
+    TITLE_FIELD_NUMBER: builtins.int
     const: builtins.int
     """Const specifies that this field must be exactly the specified value"""
 
@@ -1214,6 +1237,9 @@ class SInt64Rules(google.protobuf.message.Message):
     type: typing.Text
     """Set the type object corresponding to the field, support template variables"""
 
+    title: typing.Text
+    """The title corresponding to the field"""
+
     def __init__(self,
         *,
         const: typing.Optional[builtins.int] = ...,
@@ -1233,9 +1259,10 @@ class SInt64Rules(google.protobuf.message.Message):
         example_factory: typing.Text = ...,
         field: typing.Optional[typing.Text] = ...,
         type: typing.Optional[typing.Text] = ...,
+        title: typing.Optional[typing.Text] = ...,
         ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_multiple_of",b"_multiple_of","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","le",b"le","lt",b"lt","miss_default",b"miss_default","multiple_of",b"multiple_of","type",b"type"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_multiple_of",b"_multiple_of","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","in",b"in","le",b"le","lt",b"lt","miss_default",b"miss_default","multiple_of",b"multiple_of","not_in",b"not_in","type",b"type"]) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_multiple_of",b"_multiple_of","_title",b"_title","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","le",b"le","lt",b"lt","miss_default",b"miss_default","multiple_of",b"multiple_of","title",b"title","type",b"type"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_multiple_of",b"_multiple_of","_title",b"_title","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","in",b"in","le",b"le","lt",b"lt","miss_default",b"miss_default","multiple_of",b"multiple_of","not_in",b"not_in","title",b"title","type",b"type"]) -> None: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_alias",b"_alias"]) -> typing.Optional[typing_extensions.Literal["alias"]]: ...
     @typing.overload
@@ -1256,6 +1283,8 @@ class SInt64Rules(google.protobuf.message.Message):
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_lt",b"_lt"]) -> typing.Optional[typing_extensions.Literal["lt"]]: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_multiple_of",b"_multiple_of"]) -> typing.Optional[typing_extensions.Literal["multiple_of"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_title",b"_title"]) -> typing.Optional[typing_extensions.Literal["title"]]: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_type",b"_type"]) -> typing.Optional[typing_extensions.Literal["type"]]: ...
     @typing.overload
@@ -1285,6 +1314,7 @@ class Fixed32Rules(google.protobuf.message.Message):
     EXAMPLE_FACTORY_FIELD_NUMBER: builtins.int
     FIELD_FIELD_NUMBER: builtins.int
     TYPE_FIELD_NUMBER: builtins.int
+    TITLE_FIELD_NUMBER: builtins.int
     const: builtins.int
     """Const specifies that this field must be exactly the specified value"""
 
@@ -1353,6 +1383,9 @@ class Fixed32Rules(google.protobuf.message.Message):
     type: typing.Text
     """Set the type object corresponding to the field, support template variables"""
 
+    title: typing.Text
+    """The title corresponding to the field"""
+
     def __init__(self,
         *,
         const: typing.Optional[builtins.int] = ...,
@@ -1372,9 +1405,10 @@ class Fixed32Rules(google.protobuf.message.Message):
         example_factory: typing.Text = ...,
         field: typing.Optional[typing.Text] = ...,
         type: typing.Optional[typing.Text] = ...,
+        title: typing.Optional[typing.Text] = ...,
         ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_multiple_of",b"_multiple_of","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","le",b"le","lt",b"lt","miss_default",b"miss_default","multiple_of",b"multiple_of","type",b"type"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_multiple_of",b"_multiple_of","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","in",b"in","le",b"le","lt",b"lt","miss_default",b"miss_default","multiple_of",b"multiple_of","not_in",b"not_in","type",b"type"]) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_multiple_of",b"_multiple_of","_title",b"_title","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","le",b"le","lt",b"lt","miss_default",b"miss_default","multiple_of",b"multiple_of","title",b"title","type",b"type"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_multiple_of",b"_multiple_of","_title",b"_title","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","in",b"in","le",b"le","lt",b"lt","miss_default",b"miss_default","multiple_of",b"multiple_of","not_in",b"not_in","title",b"title","type",b"type"]) -> None: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_alias",b"_alias"]) -> typing.Optional[typing_extensions.Literal["alias"]]: ...
     @typing.overload
@@ -1395,6 +1429,8 @@ class Fixed32Rules(google.protobuf.message.Message):
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_lt",b"_lt"]) -> typing.Optional[typing_extensions.Literal["lt"]]: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_multiple_of",b"_multiple_of"]) -> typing.Optional[typing_extensions.Literal["multiple_of"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_title",b"_title"]) -> typing.Optional[typing_extensions.Literal["title"]]: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_type",b"_type"]) -> typing.Optional[typing_extensions.Literal["type"]]: ...
     @typing.overload
@@ -1424,6 +1460,7 @@ class Fixed64Rules(google.protobuf.message.Message):
     EXAMPLE_FACTORY_FIELD_NUMBER: builtins.int
     FIELD_FIELD_NUMBER: builtins.int
     TYPE_FIELD_NUMBER: builtins.int
+    TITLE_FIELD_NUMBER: builtins.int
     const: builtins.int
     """Const specifies that this field must be exactly the specified value"""
 
@@ -1492,6 +1529,9 @@ class Fixed64Rules(google.protobuf.message.Message):
     type: typing.Text
     """Set the type object corresponding to the field, support template variables"""
 
+    title: typing.Text
+    """The title corresponding to the field"""
+
     def __init__(self,
         *,
         const: typing.Optional[builtins.int] = ...,
@@ -1511,9 +1551,10 @@ class Fixed64Rules(google.protobuf.message.Message):
         example_factory: typing.Text = ...,
         field: typing.Optional[typing.Text] = ...,
         type: typing.Optional[typing.Text] = ...,
+        title: typing.Optional[typing.Text] = ...,
         ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_multiple_of",b"_multiple_of","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","le",b"le","lt",b"lt","miss_default",b"miss_default","multiple_of",b"multiple_of","type",b"type"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_multiple_of",b"_multiple_of","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","in",b"in","le",b"le","lt",b"lt","miss_default",b"miss_default","multiple_of",b"multiple_of","not_in",b"not_in","type",b"type"]) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_multiple_of",b"_multiple_of","_title",b"_title","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","le",b"le","lt",b"lt","miss_default",b"miss_default","multiple_of",b"multiple_of","title",b"title","type",b"type"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_multiple_of",b"_multiple_of","_title",b"_title","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","in",b"in","le",b"le","lt",b"lt","miss_default",b"miss_default","multiple_of",b"multiple_of","not_in",b"not_in","title",b"title","type",b"type"]) -> None: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_alias",b"_alias"]) -> typing.Optional[typing_extensions.Literal["alias"]]: ...
     @typing.overload
@@ -1534,6 +1575,8 @@ class Fixed64Rules(google.protobuf.message.Message):
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_lt",b"_lt"]) -> typing.Optional[typing_extensions.Literal["lt"]]: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_multiple_of",b"_multiple_of"]) -> typing.Optional[typing_extensions.Literal["multiple_of"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_title",b"_title"]) -> typing.Optional[typing_extensions.Literal["title"]]: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_type",b"_type"]) -> typing.Optional[typing_extensions.Literal["type"]]: ...
     @typing.overload
@@ -1563,6 +1606,7 @@ class SFixed32Rules(google.protobuf.message.Message):
     EXAMPLE_FACTORY_FIELD_NUMBER: builtins.int
     FIELD_FIELD_NUMBER: builtins.int
     TYPE_FIELD_NUMBER: builtins.int
+    TITLE_FIELD_NUMBER: builtins.int
     const: builtins.int
     """Const specifies that this field must be exactly the specified value"""
 
@@ -1631,6 +1675,9 @@ class SFixed32Rules(google.protobuf.message.Message):
     type: typing.Text
     """Set the type object corresponding to the field, support template variables"""
 
+    title: typing.Text
+    """The title corresponding to the field"""
+
     def __init__(self,
         *,
         const: typing.Optional[builtins.int] = ...,
@@ -1650,9 +1697,10 @@ class SFixed32Rules(google.protobuf.message.Message):
         example_factory: typing.Text = ...,
         field: typing.Optional[typing.Text] = ...,
         type: typing.Optional[typing.Text] = ...,
+        title: typing.Optional[typing.Text] = ...,
         ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_multiple_of",b"_multiple_of","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","le",b"le","lt",b"lt","miss_default",b"miss_default","multiple_of",b"multiple_of","type",b"type"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_multiple_of",b"_multiple_of","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","in",b"in","le",b"le","lt",b"lt","miss_default",b"miss_default","multiple_of",b"multiple_of","not_in",b"not_in","type",b"type"]) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_multiple_of",b"_multiple_of","_title",b"_title","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","le",b"le","lt",b"lt","miss_default",b"miss_default","multiple_of",b"multiple_of","title",b"title","type",b"type"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_multiple_of",b"_multiple_of","_title",b"_title","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","in",b"in","le",b"le","lt",b"lt","miss_default",b"miss_default","multiple_of",b"multiple_of","not_in",b"not_in","title",b"title","type",b"type"]) -> None: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_alias",b"_alias"]) -> typing.Optional[typing_extensions.Literal["alias"]]: ...
     @typing.overload
@@ -1673,6 +1721,8 @@ class SFixed32Rules(google.protobuf.message.Message):
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_lt",b"_lt"]) -> typing.Optional[typing_extensions.Literal["lt"]]: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_multiple_of",b"_multiple_of"]) -> typing.Optional[typing_extensions.Literal["multiple_of"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_title",b"_title"]) -> typing.Optional[typing_extensions.Literal["title"]]: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_type",b"_type"]) -> typing.Optional[typing_extensions.Literal["type"]]: ...
     @typing.overload
@@ -1702,6 +1752,7 @@ class SFixed64Rules(google.protobuf.message.Message):
     EXAMPLE_FACTORY_FIELD_NUMBER: builtins.int
     FIELD_FIELD_NUMBER: builtins.int
     TYPE_FIELD_NUMBER: builtins.int
+    TITLE_FIELD_NUMBER: builtins.int
     const: builtins.int
     """Const specifies that this field must be exactly the specified value"""
 
@@ -1770,6 +1821,9 @@ class SFixed64Rules(google.protobuf.message.Message):
     type: typing.Text
     """Set the type object corresponding to the field, support template variables"""
 
+    title: typing.Text
+    """The title corresponding to the field"""
+
     def __init__(self,
         *,
         const: typing.Optional[builtins.int] = ...,
@@ -1789,9 +1843,10 @@ class SFixed64Rules(google.protobuf.message.Message):
         example_factory: typing.Text = ...,
         field: typing.Optional[typing.Text] = ...,
         type: typing.Optional[typing.Text] = ...,
+        title: typing.Optional[typing.Text] = ...,
         ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_multiple_of",b"_multiple_of","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","le",b"le","lt",b"lt","miss_default",b"miss_default","multiple_of",b"multiple_of","type",b"type"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_multiple_of",b"_multiple_of","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","in",b"in","le",b"le","lt",b"lt","miss_default",b"miss_default","multiple_of",b"multiple_of","not_in",b"not_in","type",b"type"]) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_multiple_of",b"_multiple_of","_title",b"_title","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","le",b"le","lt",b"lt","miss_default",b"miss_default","multiple_of",b"multiple_of","title",b"title","type",b"type"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_multiple_of",b"_multiple_of","_title",b"_title","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","in",b"in","le",b"le","lt",b"lt","miss_default",b"miss_default","multiple_of",b"multiple_of","not_in",b"not_in","title",b"title","type",b"type"]) -> None: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_alias",b"_alias"]) -> typing.Optional[typing_extensions.Literal["alias"]]: ...
     @typing.overload
@@ -1813,6 +1868,8 @@ class SFixed64Rules(google.protobuf.message.Message):
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_multiple_of",b"_multiple_of"]) -> typing.Optional[typing_extensions.Literal["multiple_of"]]: ...
     @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_title",b"_title"]) -> typing.Optional[typing_extensions.Literal["title"]]: ...
+    @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_type",b"_type"]) -> typing.Optional[typing_extensions.Literal["type"]]: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["default_config",b"default_config"]) -> typing.Optional[typing_extensions.Literal["default","default_factory","miss_default"]]: ...
@@ -1824,16 +1881,80 @@ class BoolRules(google.protobuf.message.Message):
     """BoolRules describes the constraints applied to `bool` values"""
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     CONST_FIELD_NUMBER: builtins.int
+    ENABLE_FIELD_NUMBER: builtins.int
+    DEFAULT_FIELD_NUMBER: builtins.int
+    MISS_DEFAULT_FIELD_NUMBER: builtins.int
+    ALIAS_FIELD_NUMBER: builtins.int
+    DESCRIPTION_FIELD_NUMBER: builtins.int
+    EXAMPLE_FIELD_NUMBER: builtins.int
+    FIELD_FIELD_NUMBER: builtins.int
+    TYPE_FIELD_NUMBER: builtins.int
+    TITLE_FIELD_NUMBER: builtins.int
     const: builtins.bool
     """Const specifies that this field must be exactly the specified value"""
+
+    enable: builtins.bool
+    """Whether to enable this field, if not, the generated Model will not carry this field"""
+
+    default: builtins.bool
+    """The default value corresponding to the field, if not set,
+    the default value is the default value of the corresponding type of the field
+    """
+
+    miss_default: builtins.bool
+    """Set field required"""
+
+    alias: typing.Text
+    """Set the alias of the field in the pydantic.Base Model"""
+
+    description: typing.Text
+    """Set the description of the field"""
+
+    example: builtins.bool
+    """Set the corresponding sample value"""
+
+    field: typing.Text
+    """Set the Field object corresponding to the field, support template variables"""
+
+    type: typing.Text
+    """Set the type object corresponding to the field, support template variables"""
+
+    title: typing.Text
+    """The title corresponding to the field"""
 
     def __init__(self,
         *,
         const: typing.Optional[builtins.bool] = ...,
+        enable: typing.Optional[builtins.bool] = ...,
+        default: builtins.bool = ...,
+        miss_default: builtins.bool = ...,
+        alias: typing.Optional[typing.Text] = ...,
+        description: typing.Optional[typing.Text] = ...,
+        example: typing.Optional[builtins.bool] = ...,
+        field: typing.Optional[typing.Text] = ...,
+        type: typing.Optional[typing.Text] = ...,
+        title: typing.Optional[typing.Text] = ...,
         ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["_const",b"_const","const",b"const"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["_const",b"_const","const",b"const"]) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_example",b"_example","_field",b"_field","_title",b"_title","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","description",b"description","enable",b"enable","example",b"example","field",b"field","miss_default",b"miss_default","title",b"title","type",b"type"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_example",b"_example","_field",b"_field","_title",b"_title","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","description",b"description","enable",b"enable","example",b"example","field",b"field","miss_default",b"miss_default","title",b"title","type",b"type"]) -> None: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_alias",b"_alias"]) -> typing.Optional[typing_extensions.Literal["alias"]]: ...
+    @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_const",b"_const"]) -> typing.Optional[typing_extensions.Literal["const"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_description",b"_description"]) -> typing.Optional[typing_extensions.Literal["description"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_enable",b"_enable"]) -> typing.Optional[typing_extensions.Literal["enable"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_example",b"_example"]) -> typing.Optional[typing_extensions.Literal["example"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_field",b"_field"]) -> typing.Optional[typing_extensions.Literal["field"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_title",b"_title"]) -> typing.Optional[typing_extensions.Literal["title"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_type",b"_type"]) -> typing.Optional[typing_extensions.Literal["type"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["default_config",b"default_config"]) -> typing.Optional[typing_extensions.Literal["default","miss_default"]]: ...
 global___BoolRules = BoolRules
 
 class StringRules(google.protobuf.message.Message):
@@ -1841,11 +1962,8 @@ class StringRules(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     CONST_FIELD_NUMBER: builtins.int
     LEN_FIELD_NUMBER: builtins.int
-    MIN_LEN_FIELD_NUMBER: builtins.int
-    MAX_LEN_FIELD_NUMBER: builtins.int
-    LEN_BYTES_FIELD_NUMBER: builtins.int
-    MIN_BYTES_FIELD_NUMBER: builtins.int
-    MAX_BYTES_FIELD_NUMBER: builtins.int
+    MIN_LENGTH_FIELD_NUMBER: builtins.int
+    MAX_LENGTH_FIELD_NUMBER: builtins.int
     PATTERN_FIELD_NUMBER: builtins.int
     PREFIX_FIELD_NUMBER: builtins.int
     SUFFIX_FIELD_NUMBER: builtins.int
@@ -1862,8 +1980,18 @@ class StringRules(google.protobuf.message.Message):
     URI_REF_FIELD_NUMBER: builtins.int
     ADDRESS_FIELD_NUMBER: builtins.int
     UUID_FIELD_NUMBER: builtins.int
-    WELL_KNOWN_REGEX_FIELD_NUMBER: builtins.int
-    IGNORE_EMPTY_FIELD_NUMBER: builtins.int
+    PYDANTIC_TYPE_FIELD_NUMBER: builtins.int
+    ENABLE_FIELD_NUMBER: builtins.int
+    DEFAULT_FIELD_NUMBER: builtins.int
+    DEFAULT_FACTORY_FIELD_NUMBER: builtins.int
+    MISS_DEFAULT_FIELD_NUMBER: builtins.int
+    ALIAS_FIELD_NUMBER: builtins.int
+    DESCRIPTION_FIELD_NUMBER: builtins.int
+    EXAMPLE_FIELD_NUMBER: builtins.int
+    EXAMPLE_FACTORY_FIELD_NUMBER: builtins.int
+    FIELD_FIELD_NUMBER: builtins.int
+    TYPE_FIELD_NUMBER: builtins.int
+    TITLE_FIELD_NUMBER: builtins.int
     const: typing.Text
     """Const specifies that this field must be exactly the specified value"""
 
@@ -1873,29 +2001,16 @@ class StringRules(google.protobuf.message.Message):
     characters may differ from the number of bytes in the string.
     """
 
-    min_len: builtins.int
+    min_length: builtins.int
     """MinLen specifies that this field must be the specified number of
     characters (Unicode code points) at a minimum. Note that the number of
     characters may differ from the number of bytes in the string.
     """
 
-    max_len: builtins.int
+    max_length: builtins.int
     """MaxLen specifies that this field must be the specified number of
     characters (Unicode code points) at a maximum. Note that the number of
     characters may differ from the number of bytes in the string.
-    """
-
-    len_bytes: builtins.int
-    """LenBytes specifies that this field must be the specified number of bytes"""
-
-    min_bytes: builtins.int
-    """MinBytes specifies that this field must be the specified number of bytes
-    at a minimum
-    """
-
-    max_bytes: builtins.int
-    """MaxBytes specifies that this field must be the specified number of bytes
-    at a maximum
     """
 
     pattern: typing.Text
@@ -1975,23 +2090,55 @@ class StringRules(google.protobuf.message.Message):
     RFC 4122
     """
 
-    well_known_regex: global___KnownRegex.ValueType
-    """WellKnownRegex specifies a common well known pattern defined as a regex."""
-
-    ignore_empty: builtins.bool
-    """IgnoreEmpty specifies that the validation rules of this field should be
-    evaluated only if the field is not empty
+    pydantic_type: typing.Text
+    """If you want to use the property of pydantic.type, you can directly
+    set the value to the string of the corresponding property,
+    and then the program will automatically introduce the type of the corresponding string
     """
+
+    enable: builtins.bool
+    """Whether to enable this field, if not, the generated Model will not carry this field"""
+
+    default: typing.Text
+    """The default value corresponding to the field, if not set,
+    the default value is the default value of the corresponding type of the field
+    """
+
+    default_factory: typing.Text
+    """The default value factory function corresponding to the field, supports template variables,
+    such as `p2p@import|uuid|uuid 4`
+    """
+
+    miss_default: builtins.bool
+    """Set field required"""
+
+    alias: typing.Text
+    """Set the alias of the field in the pydantic.Base Model"""
+
+    description: typing.Text
+    """Set the description of the field"""
+
+    example: typing.Text
+    """Set the corresponding sample value"""
+
+    example_factory: typing.Text
+    """Set the corresponding sample value factory function, support template variables"""
+
+    field: typing.Text
+    """Set the Field object corresponding to the field, support template variables"""
+
+    type: typing.Text
+    """Set the type object corresponding to the field, support template variables"""
+
+    title: typing.Text
+    """The title corresponding to the field"""
 
     def __init__(self,
         *,
         const: typing.Optional[typing.Text] = ...,
         len: typing.Optional[builtins.int] = ...,
-        min_len: typing.Optional[builtins.int] = ...,
-        max_len: typing.Optional[builtins.int] = ...,
-        len_bytes: typing.Optional[builtins.int] = ...,
-        min_bytes: typing.Optional[builtins.int] = ...,
-        max_bytes: typing.Optional[builtins.int] = ...,
+        min_length: typing.Optional[builtins.int] = ...,
+        max_length: typing.Optional[builtins.int] = ...,
         pattern: typing.Optional[typing.Text] = ...,
         prefix: typing.Optional[typing.Text] = ...,
         suffix: typing.Optional[typing.Text] = ...,
@@ -2007,29 +2154,39 @@ class StringRules(google.protobuf.message.Message):
         uri_ref: builtins.bool = ...,
         address: builtins.bool = ...,
         uuid: builtins.bool = ...,
-        well_known_regex: global___KnownRegex.ValueType = ...,
-        ignore_empty: typing.Optional[builtins.bool] = ...,
+        pydantic_type: typing.Text = ...,
+        enable: typing.Optional[builtins.bool] = ...,
+        default: typing.Text = ...,
+        default_factory: typing.Text = ...,
+        miss_default: builtins.bool = ...,
+        alias: typing.Optional[typing.Text] = ...,
+        description: typing.Optional[typing.Text] = ...,
+        example: typing.Text = ...,
+        example_factory: typing.Text = ...,
+        field: typing.Optional[typing.Text] = ...,
+        type: typing.Optional[typing.Text] = ...,
+        title: typing.Optional[typing.Text] = ...,
         ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["_const",b"_const","_contains",b"_contains","_ignore_empty",b"_ignore_empty","_len",b"_len","_len_bytes",b"_len_bytes","_max_bytes",b"_max_bytes","_max_len",b"_max_len","_min_bytes",b"_min_bytes","_min_len",b"_min_len","_not_contains",b"_not_contains","_pattern",b"_pattern","_prefix",b"_prefix","_suffix",b"_suffix","address",b"address","const",b"const","contains",b"contains","email",b"email","hostname",b"hostname","ignore_empty",b"ignore_empty","ip",b"ip","ipv4",b"ipv4","ipv6",b"ipv6","len",b"len","len_bytes",b"len_bytes","max_bytes",b"max_bytes","max_len",b"max_len","min_bytes",b"min_bytes","min_len",b"min_len","not_contains",b"not_contains","pattern",b"pattern","prefix",b"prefix","suffix",b"suffix","uri",b"uri","uri_ref",b"uri_ref","uuid",b"uuid","well_known",b"well_known","well_known_regex",b"well_known_regex"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["_const",b"_const","_contains",b"_contains","_ignore_empty",b"_ignore_empty","_len",b"_len","_len_bytes",b"_len_bytes","_max_bytes",b"_max_bytes","_max_len",b"_max_len","_min_bytes",b"_min_bytes","_min_len",b"_min_len","_not_contains",b"_not_contains","_pattern",b"_pattern","_prefix",b"_prefix","_suffix",b"_suffix","address",b"address","const",b"const","contains",b"contains","email",b"email","hostname",b"hostname","ignore_empty",b"ignore_empty","in",b"in","ip",b"ip","ipv4",b"ipv4","ipv6",b"ipv6","len",b"len","len_bytes",b"len_bytes","max_bytes",b"max_bytes","max_len",b"max_len","min_bytes",b"min_bytes","min_len",b"min_len","not_contains",b"not_contains","not_in",b"not_in","pattern",b"pattern","prefix",b"prefix","suffix",b"suffix","uri",b"uri","uri_ref",b"uri_ref","uuid",b"uuid","well_known",b"well_known","well_known_regex",b"well_known_regex"]) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_contains",b"_contains","_description",b"_description","_enable",b"_enable","_field",b"_field","_len",b"_len","_max_length",b"_max_length","_min_length",b"_min_length","_not_contains",b"_not_contains","_pattern",b"_pattern","_prefix",b"_prefix","_suffix",b"_suffix","_title",b"_title","_type",b"_type","address",b"address","alias",b"alias","const",b"const","contains",b"contains","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","email",b"email","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","hostname",b"hostname","ip",b"ip","ipv4",b"ipv4","ipv6",b"ipv6","len",b"len","max_length",b"max_length","min_length",b"min_length","miss_default",b"miss_default","not_contains",b"not_contains","pattern",b"pattern","prefix",b"prefix","pydantic_type",b"pydantic_type","suffix",b"suffix","title",b"title","type",b"type","uri",b"uri","uri_ref",b"uri_ref","uuid",b"uuid","well_known",b"well_known"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_contains",b"_contains","_description",b"_description","_enable",b"_enable","_field",b"_field","_len",b"_len","_max_length",b"_max_length","_min_length",b"_min_length","_not_contains",b"_not_contains","_pattern",b"_pattern","_prefix",b"_prefix","_suffix",b"_suffix","_title",b"_title","_type",b"_type","address",b"address","alias",b"alias","const",b"const","contains",b"contains","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","email",b"email","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","hostname",b"hostname","in",b"in","ip",b"ip","ipv4",b"ipv4","ipv6",b"ipv6","len",b"len","max_length",b"max_length","min_length",b"min_length","miss_default",b"miss_default","not_contains",b"not_contains","not_in",b"not_in","pattern",b"pattern","prefix",b"prefix","pydantic_type",b"pydantic_type","suffix",b"suffix","title",b"title","type",b"type","uri",b"uri","uri_ref",b"uri_ref","uuid",b"uuid","well_known",b"well_known"]) -> None: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_alias",b"_alias"]) -> typing.Optional[typing_extensions.Literal["alias"]]: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_const",b"_const"]) -> typing.Optional[typing_extensions.Literal["const"]]: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_contains",b"_contains"]) -> typing.Optional[typing_extensions.Literal["contains"]]: ...
     @typing.overload
-    def WhichOneof(self, oneof_group: typing_extensions.Literal["_ignore_empty",b"_ignore_empty"]) -> typing.Optional[typing_extensions.Literal["ignore_empty"]]: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_description",b"_description"]) -> typing.Optional[typing_extensions.Literal["description"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_enable",b"_enable"]) -> typing.Optional[typing_extensions.Literal["enable"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_field",b"_field"]) -> typing.Optional[typing_extensions.Literal["field"]]: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_len",b"_len"]) -> typing.Optional[typing_extensions.Literal["len"]]: ...
     @typing.overload
-    def WhichOneof(self, oneof_group: typing_extensions.Literal["_len_bytes",b"_len_bytes"]) -> typing.Optional[typing_extensions.Literal["len_bytes"]]: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_max_length",b"_max_length"]) -> typing.Optional[typing_extensions.Literal["max_length"]]: ...
     @typing.overload
-    def WhichOneof(self, oneof_group: typing_extensions.Literal["_max_bytes",b"_max_bytes"]) -> typing.Optional[typing_extensions.Literal["max_bytes"]]: ...
-    @typing.overload
-    def WhichOneof(self, oneof_group: typing_extensions.Literal["_max_len",b"_max_len"]) -> typing.Optional[typing_extensions.Literal["max_len"]]: ...
-    @typing.overload
-    def WhichOneof(self, oneof_group: typing_extensions.Literal["_min_bytes",b"_min_bytes"]) -> typing.Optional[typing_extensions.Literal["min_bytes"]]: ...
-    @typing.overload
-    def WhichOneof(self, oneof_group: typing_extensions.Literal["_min_len",b"_min_len"]) -> typing.Optional[typing_extensions.Literal["min_len"]]: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_min_length",b"_min_length"]) -> typing.Optional[typing_extensions.Literal["min_length"]]: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_not_contains",b"_not_contains"]) -> typing.Optional[typing_extensions.Literal["not_contains"]]: ...
     @typing.overload
@@ -2039,38 +2196,53 @@ class StringRules(google.protobuf.message.Message):
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_suffix",b"_suffix"]) -> typing.Optional[typing_extensions.Literal["suffix"]]: ...
     @typing.overload
-    def WhichOneof(self, oneof_group: typing_extensions.Literal["well_known",b"well_known"]) -> typing.Optional[typing_extensions.Literal["email","hostname","ip","ipv4","ipv6","uri","uri_ref","address","uuid","well_known_regex"]]: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_title",b"_title"]) -> typing.Optional[typing_extensions.Literal["title"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_type",b"_type"]) -> typing.Optional[typing_extensions.Literal["type"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["default_config",b"default_config"]) -> typing.Optional[typing_extensions.Literal["default","default_factory","miss_default"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["example_config",b"example_config"]) -> typing.Optional[typing_extensions.Literal["example","example_factory"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["well_known",b"well_known"]) -> typing.Optional[typing_extensions.Literal["email","hostname","ip","ipv4","ipv6","uri","uri_ref","address","uuid","pydantic_type"]]: ...
 global___StringRules = StringRules
 
 class BytesRules(google.protobuf.message.Message):
     """BytesRules describe the constraints applied to `bytes` values"""
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     CONST_FIELD_NUMBER: builtins.int
-    LEN_FIELD_NUMBER: builtins.int
-    MIN_LEN_FIELD_NUMBER: builtins.int
-    MAX_LEN_FIELD_NUMBER: builtins.int
+    MIN_LENGTH_FIELD_NUMBER: builtins.int
+    MAX_LENGTH_FIELD_NUMBER: builtins.int
     PATTERN_FIELD_NUMBER: builtins.int
     PREFIX_FIELD_NUMBER: builtins.int
     SUFFIX_FIELD_NUMBER: builtins.int
     CONTAINS_FIELD_NUMBER: builtins.int
     IN_FIELD_NUMBER: builtins.int
     NOT_IN_FIELD_NUMBER: builtins.int
+    ENABLE_FIELD_NUMBER: builtins.int
+    DEFAULT_FIELD_NUMBER: builtins.int
+    DEFAULT_FACTORY_FIELD_NUMBER: builtins.int
+    MISS_DEFAULT_FIELD_NUMBER: builtins.int
+    ALIAS_FIELD_NUMBER: builtins.int
+    DESCRIPTION_FIELD_NUMBER: builtins.int
+    MULTIPLE_OF_FIELD_NUMBER: builtins.int
+    EXAMPLE_FIELD_NUMBER: builtins.int
+    EXAMPLE_FACTORY_FIELD_NUMBER: builtins.int
+    FIELD_FIELD_NUMBER: builtins.int
+    TYPE_FIELD_NUMBER: builtins.int
     IP_FIELD_NUMBER: builtins.int
     IPV4_FIELD_NUMBER: builtins.int
     IPV6_FIELD_NUMBER: builtins.int
-    IGNORE_EMPTY_FIELD_NUMBER: builtins.int
+    TITLE_FIELD_NUMBER: builtins.int
     const: builtins.bytes
     """Const specifies that this field must be exactly the specified value"""
 
-    len: builtins.int
-    """Len specifies that this field must be the specified number of bytes"""
-
-    min_len: builtins.int
+    min_length: builtins.int
     """MinLen specifies that this field must be the specified number of bytes
     at a minimum
     """
 
-    max_len: builtins.int
+    max_length: builtins.int
     """MaxLen specifies that this field must be the specified number of bytes
     at a maximum
     """
@@ -2102,6 +2274,43 @@ class BytesRules(google.protobuf.message.Message):
         values
         """
         pass
+    enable: builtins.bool
+    """Whether to enable this field, if not, the generated Model will not carry this field"""
+
+    default: typing.Text
+    """The default value corresponding to the field, if not set,
+    the default value is the default value of the corresponding type of the field
+    """
+
+    default_factory: typing.Text
+    """The default value factory function corresponding to the field, supports template variables,
+    such as `p2p@import|uuid|uuid 4`
+    """
+
+    miss_default: builtins.bool
+    """Set field required"""
+
+    alias: typing.Text
+    """Set the alias of the field in the pydantic.Base Model"""
+
+    description: typing.Text
+    """Set the description of the field"""
+
+    multiple_of: builtins.float
+    """Corresponding multiple validation of the set value"""
+
+    example: typing.Text
+    """Set the corresponding sample value"""
+
+    example_factory: typing.Text
+    """Set the corresponding sample value factory function, support template variables"""
+
+    field: typing.Text
+    """Set the Field object corresponding to the field, support template variables"""
+
+    type: typing.Text
+    """Set the type object corresponding to the field, support template variables"""
+
     ip: builtins.bool
     """Ip specifies that the field must be a valid IP (v4 or v6) address in
     byte format
@@ -2117,47 +2326,69 @@ class BytesRules(google.protobuf.message.Message):
     format
     """
 
-    ignore_empty: builtins.bool
-    """IgnoreEmpty specifies that the validation rules of this field should be
-    evaluated only if the field is not empty
-    """
+    title: typing.Text
+    """The title corresponding to the field"""
 
     def __init__(self,
         *,
         const: typing.Optional[builtins.bytes] = ...,
-        len: typing.Optional[builtins.int] = ...,
-        min_len: typing.Optional[builtins.int] = ...,
-        max_len: typing.Optional[builtins.int] = ...,
+        min_length: typing.Optional[builtins.int] = ...,
+        max_length: typing.Optional[builtins.int] = ...,
         pattern: typing.Optional[typing.Text] = ...,
         prefix: typing.Optional[builtins.bytes] = ...,
         suffix: typing.Optional[builtins.bytes] = ...,
         contains: typing.Optional[builtins.bytes] = ...,
         not_in: typing.Optional[typing.Iterable[builtins.bytes]] = ...,
+        enable: typing.Optional[builtins.bool] = ...,
+        default: typing.Text = ...,
+        default_factory: typing.Text = ...,
+        miss_default: builtins.bool = ...,
+        alias: typing.Optional[typing.Text] = ...,
+        description: typing.Optional[typing.Text] = ...,
+        multiple_of: typing.Optional[builtins.float] = ...,
+        example: typing.Text = ...,
+        example_factory: typing.Text = ...,
+        field: typing.Optional[typing.Text] = ...,
+        type: typing.Optional[typing.Text] = ...,
         ip: builtins.bool = ...,
         ipv4: builtins.bool = ...,
         ipv6: builtins.bool = ...,
-        ignore_empty: typing.Optional[builtins.bool] = ...,
+        title: typing.Optional[typing.Text] = ...,
         ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["_const",b"_const","_contains",b"_contains","_ignore_empty",b"_ignore_empty","_len",b"_len","_max_len",b"_max_len","_min_len",b"_min_len","_pattern",b"_pattern","_prefix",b"_prefix","_suffix",b"_suffix","const",b"const","contains",b"contains","ignore_empty",b"ignore_empty","ip",b"ip","ipv4",b"ipv4","ipv6",b"ipv6","len",b"len","max_len",b"max_len","min_len",b"min_len","pattern",b"pattern","prefix",b"prefix","suffix",b"suffix","well_known",b"well_known"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["_const",b"_const","_contains",b"_contains","_ignore_empty",b"_ignore_empty","_len",b"_len","_max_len",b"_max_len","_min_len",b"_min_len","_pattern",b"_pattern","_prefix",b"_prefix","_suffix",b"_suffix","const",b"const","contains",b"contains","ignore_empty",b"ignore_empty","in",b"in","ip",b"ip","ipv4",b"ipv4","ipv6",b"ipv6","len",b"len","max_len",b"max_len","min_len",b"min_len","not_in",b"not_in","pattern",b"pattern","prefix",b"prefix","suffix",b"suffix","well_known",b"well_known"]) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_contains",b"_contains","_description",b"_description","_enable",b"_enable","_field",b"_field","_max_length",b"_max_length","_min_length",b"_min_length","_multiple_of",b"_multiple_of","_pattern",b"_pattern","_prefix",b"_prefix","_suffix",b"_suffix","_title",b"_title","_type",b"_type","alias",b"alias","const",b"const","contains",b"contains","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ip",b"ip","ipv4",b"ipv4","ipv6",b"ipv6","max_length",b"max_length","min_length",b"min_length","miss_default",b"miss_default","multiple_of",b"multiple_of","pattern",b"pattern","prefix",b"prefix","suffix",b"suffix","title",b"title","type",b"type","well_known",b"well_known"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_contains",b"_contains","_description",b"_description","_enable",b"_enable","_field",b"_field","_max_length",b"_max_length","_min_length",b"_min_length","_multiple_of",b"_multiple_of","_pattern",b"_pattern","_prefix",b"_prefix","_suffix",b"_suffix","_title",b"_title","_type",b"_type","alias",b"alias","const",b"const","contains",b"contains","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","in",b"in","ip",b"ip","ipv4",b"ipv4","ipv6",b"ipv6","max_length",b"max_length","min_length",b"min_length","miss_default",b"miss_default","multiple_of",b"multiple_of","not_in",b"not_in","pattern",b"pattern","prefix",b"prefix","suffix",b"suffix","title",b"title","type",b"type","well_known",b"well_known"]) -> None: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_alias",b"_alias"]) -> typing.Optional[typing_extensions.Literal["alias"]]: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_const",b"_const"]) -> typing.Optional[typing_extensions.Literal["const"]]: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_contains",b"_contains"]) -> typing.Optional[typing_extensions.Literal["contains"]]: ...
     @typing.overload
-    def WhichOneof(self, oneof_group: typing_extensions.Literal["_ignore_empty",b"_ignore_empty"]) -> typing.Optional[typing_extensions.Literal["ignore_empty"]]: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_description",b"_description"]) -> typing.Optional[typing_extensions.Literal["description"]]: ...
     @typing.overload
-    def WhichOneof(self, oneof_group: typing_extensions.Literal["_len",b"_len"]) -> typing.Optional[typing_extensions.Literal["len"]]: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_enable",b"_enable"]) -> typing.Optional[typing_extensions.Literal["enable"]]: ...
     @typing.overload
-    def WhichOneof(self, oneof_group: typing_extensions.Literal["_max_len",b"_max_len"]) -> typing.Optional[typing_extensions.Literal["max_len"]]: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_field",b"_field"]) -> typing.Optional[typing_extensions.Literal["field"]]: ...
     @typing.overload
-    def WhichOneof(self, oneof_group: typing_extensions.Literal["_min_len",b"_min_len"]) -> typing.Optional[typing_extensions.Literal["min_len"]]: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_max_length",b"_max_length"]) -> typing.Optional[typing_extensions.Literal["max_length"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_min_length",b"_min_length"]) -> typing.Optional[typing_extensions.Literal["min_length"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_multiple_of",b"_multiple_of"]) -> typing.Optional[typing_extensions.Literal["multiple_of"]]: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_pattern",b"_pattern"]) -> typing.Optional[typing_extensions.Literal["pattern"]]: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_prefix",b"_prefix"]) -> typing.Optional[typing_extensions.Literal["prefix"]]: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_suffix",b"_suffix"]) -> typing.Optional[typing_extensions.Literal["suffix"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_title",b"_title"]) -> typing.Optional[typing_extensions.Literal["title"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_type",b"_type"]) -> typing.Optional[typing_extensions.Literal["type"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["default_config",b"default_config"]) -> typing.Optional[typing_extensions.Literal["default","default_factory","miss_default"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["example_config",b"example_config"]) -> typing.Optional[typing_extensions.Literal["example","example_factory"]]: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["well_known",b"well_known"]) -> typing.Optional[typing_extensions.Literal["ip","ipv4","ipv6"]]: ...
 global___BytesRules = BytesRules
@@ -2169,6 +2400,16 @@ class EnumRules(google.protobuf.message.Message):
     DEFINED_ONLY_FIELD_NUMBER: builtins.int
     IN_FIELD_NUMBER: builtins.int
     NOT_IN_FIELD_NUMBER: builtins.int
+    ENABLE_FIELD_NUMBER: builtins.int
+    DEFAULT_FIELD_NUMBER: builtins.int
+    DEFAULT_FACTORY_FIELD_NUMBER: builtins.int
+    MISS_DEFAULT_FIELD_NUMBER: builtins.int
+    ALIAS_FIELD_NUMBER: builtins.int
+    DESCRIPTION_FIELD_NUMBER: builtins.int
+    EXAMPLE_FIELD_NUMBER: builtins.int
+    EXAMPLE_FACTORY_FIELD_NUMBER: builtins.int
+    FIELD_FIELD_NUMBER: builtins.int
+    TITLE_FIELD_NUMBER: builtins.int
     const: builtins.int
     """Const specifies that this field must be exactly the specified value"""
 
@@ -2183,18 +2424,76 @@ class EnumRules(google.protobuf.message.Message):
         values
         """
         pass
+    enable: builtins.bool
+    """Whether to enable this field, if not, the generated Model will not carry this field"""
+
+    default: builtins.int
+    """The default value corresponding to the field, if not set,
+    the default value is the default value of the corresponding type of the field
+    """
+
+    default_factory: typing.Text
+    """The default value factory function corresponding to the field, supports template variables,
+    such as `p2p@import|uuid|uuid 4`
+    """
+
+    miss_default: builtins.bool
+    """Set field required"""
+
+    alias: typing.Text
+    """Set the alias of the field in the pydantic.Base Model"""
+
+    description: typing.Text
+    """Set the description of the field"""
+
+    example: builtins.int
+    """Set the corresponding sample value"""
+
+    example_factory: typing.Text
+    """Set the corresponding sample value factory function, support template variables"""
+
+    field: typing.Text
+    """Set the Field object corresponding to the field, support template variables"""
+
+    title: typing.Text
+    """The title corresponding to the field"""
+
     def __init__(self,
         *,
         const: typing.Optional[builtins.int] = ...,
         defined_only: typing.Optional[builtins.bool] = ...,
         not_in: typing.Optional[typing.Iterable[builtins.int]] = ...,
+        enable: typing.Optional[builtins.bool] = ...,
+        default: builtins.int = ...,
+        default_factory: typing.Text = ...,
+        miss_default: builtins.bool = ...,
+        alias: typing.Optional[typing.Text] = ...,
+        description: typing.Optional[typing.Text] = ...,
+        example: builtins.int = ...,
+        example_factory: typing.Text = ...,
+        field: typing.Optional[typing.Text] = ...,
+        title: typing.Optional[typing.Text] = ...,
         ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["_const",b"_const","_defined_only",b"_defined_only","const",b"const","defined_only",b"defined_only"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["_const",b"_const","_defined_only",b"_defined_only","const",b"const","defined_only",b"defined_only","in",b"in","not_in",b"not_in"]) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_defined_only",b"_defined_only","_description",b"_description","_enable",b"_enable","_field",b"_field","_title",b"_title","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","defined_only",b"defined_only","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","miss_default",b"miss_default","title",b"title"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_defined_only",b"_defined_only","_description",b"_description","_enable",b"_enable","_field",b"_field","_title",b"_title","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","defined_only",b"defined_only","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","in",b"in","miss_default",b"miss_default","not_in",b"not_in","title",b"title"]) -> None: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_alias",b"_alias"]) -> typing.Optional[typing_extensions.Literal["alias"]]: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_const",b"_const"]) -> typing.Optional[typing_extensions.Literal["const"]]: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_defined_only",b"_defined_only"]) -> typing.Optional[typing_extensions.Literal["defined_only"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_description",b"_description"]) -> typing.Optional[typing_extensions.Literal["description"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_enable",b"_enable"]) -> typing.Optional[typing_extensions.Literal["enable"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_field",b"_field"]) -> typing.Optional[typing_extensions.Literal["field"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_title",b"_title"]) -> typing.Optional[typing_extensions.Literal["title"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["default_config",b"default_config"]) -> typing.Optional[typing_extensions.Literal["default","default_factory","miss_default"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["example_config",b"example_config"]) -> typing.Optional[typing_extensions.Literal["example","example_factory"]]: ...
 global___EnumRules = EnumRules
 
 class MessageRules(google.protobuf.message.Message):
@@ -2204,6 +2503,17 @@ class MessageRules(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     SKIP_FIELD_NUMBER: builtins.int
     REQUIRED_FIELD_NUMBER: builtins.int
+    ENABLE_FIELD_NUMBER: builtins.int
+    DEFAULT_FIELD_NUMBER: builtins.int
+    DEFAULT_FACTORY_FIELD_NUMBER: builtins.int
+    MISS_DEFAULT_FIELD_NUMBER: builtins.int
+    ALIAS_FIELD_NUMBER: builtins.int
+    DESCRIPTION_FIELD_NUMBER: builtins.int
+    EXAMPLE_FIELD_NUMBER: builtins.int
+    EXAMPLE_FACTORY_FIELD_NUMBER: builtins.int
+    FIELD_FIELD_NUMBER: builtins.int
+    TYPE_FIELD_NUMBER: builtins.int
+    TITLE_FIELD_NUMBER: builtins.int
     skip: builtins.bool
     """Skip specifies that the validation rules of this field should not be
     evaluated
@@ -2212,17 +2522,81 @@ class MessageRules(google.protobuf.message.Message):
     required: builtins.bool
     """Required specifies that this field must be set"""
 
+    enable: builtins.bool
+    """Whether to enable this field, if not, the generated Model will not carry this field"""
+
+    default: builtins.float
+    """The default value corresponding to the field, if not set,
+    the default value is the default value of the corresponding type of the field
+    """
+
+    default_factory: typing.Text
+    """The default value factory function corresponding to the field, supports template variables,
+    such as `p2p@import|uuid|uuid 4`
+    """
+
+    miss_default: builtins.bool
+    """Set field required"""
+
+    alias: typing.Text
+    """Set the alias of the field in the pydantic.Base Model"""
+
+    description: typing.Text
+    """Set the description of the field"""
+
+    example: builtins.float
+    """Set the corresponding sample value"""
+
+    example_factory: typing.Text
+    """Set the corresponding sample value factory function, support template variables"""
+
+    field: typing.Text
+    """Set the Field object corresponding to the field, support template variables"""
+
+    type: typing.Text
+    """Set the type object corresponding to the field, support template variables"""
+
+    title: typing.Text
+    """The title corresponding to the field"""
+
     def __init__(self,
         *,
         skip: typing.Optional[builtins.bool] = ...,
         required: typing.Optional[builtins.bool] = ...,
+        enable: typing.Optional[builtins.bool] = ...,
+        default: builtins.float = ...,
+        default_factory: typing.Text = ...,
+        miss_default: builtins.bool = ...,
+        alias: typing.Optional[typing.Text] = ...,
+        description: typing.Optional[typing.Text] = ...,
+        example: builtins.float = ...,
+        example_factory: typing.Text = ...,
+        field: typing.Optional[typing.Text] = ...,
+        type: typing.Optional[typing.Text] = ...,
+        title: typing.Optional[typing.Text] = ...,
         ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["_required",b"_required","_skip",b"_skip","required",b"required","skip",b"skip"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["_required",b"_required","_skip",b"_skip","required",b"required","skip",b"skip"]) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_description",b"_description","_enable",b"_enable","_field",b"_field","_required",b"_required","_skip",b"_skip","_title",b"_title","_type",b"_type","alias",b"alias","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","miss_default",b"miss_default","required",b"required","skip",b"skip","title",b"title","type",b"type"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_description",b"_description","_enable",b"_enable","_field",b"_field","_required",b"_required","_skip",b"_skip","_title",b"_title","_type",b"_type","alias",b"alias","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","miss_default",b"miss_default","required",b"required","skip",b"skip","title",b"title","type",b"type"]) -> None: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_alias",b"_alias"]) -> typing.Optional[typing_extensions.Literal["alias"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_description",b"_description"]) -> typing.Optional[typing_extensions.Literal["description"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_enable",b"_enable"]) -> typing.Optional[typing_extensions.Literal["enable"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_field",b"_field"]) -> typing.Optional[typing_extensions.Literal["field"]]: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_required",b"_required"]) -> typing.Optional[typing_extensions.Literal["required"]]: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_skip",b"_skip"]) -> typing.Optional[typing_extensions.Literal["skip"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_title",b"_title"]) -> typing.Optional[typing_extensions.Literal["title"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_type",b"_type"]) -> typing.Optional[typing_extensions.Literal["type"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["default_config",b"default_config"]) -> typing.Optional[typing_extensions.Literal["default","default_factory","miss_default"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["example_config",b"example_config"]) -> typing.Optional[typing_extensions.Literal["example","example_factory"]]: ...
 global___MessageRules = MessageRules
 
 class RepeatedRules(google.protobuf.message.Message):
@@ -2232,7 +2606,15 @@ class RepeatedRules(google.protobuf.message.Message):
     MAX_ITEMS_FIELD_NUMBER: builtins.int
     UNIQUE_FIELD_NUMBER: builtins.int
     ITEMS_FIELD_NUMBER: builtins.int
-    IGNORE_EMPTY_FIELD_NUMBER: builtins.int
+    ENABLE_FIELD_NUMBER: builtins.int
+    DEFAULT_FACTORY_FIELD_NUMBER: builtins.int
+    MISS_DEFAULT_FIELD_NUMBER: builtins.int
+    ALIAS_FIELD_NUMBER: builtins.int
+    DESCRIPTION_FIELD_NUMBER: builtins.int
+    EXAMPLE_FACTORY_FIELD_NUMBER: builtins.int
+    FIELD_FIELD_NUMBER: builtins.int
+    TYPE_FIELD_NUMBER: builtins.int
+    TITLE_FIELD_NUMBER: builtins.int
     min_items: builtins.int
     """MinItems specifies that this field must have the specified number of
     items at a minimum
@@ -2256,10 +2638,34 @@ class RepeatedRules(google.protobuf.message.Message):
         unless skip is specified here.
         """
         pass
-    ignore_empty: builtins.bool
-    """IgnoreEmpty specifies that the validation rules of this field should be
-    evaluated only if the field is not empty
+    enable: builtins.bool
+    """Whether to enable this field, if not, the generated Model will not carry this field"""
+
+    default_factory: typing.Text
+    """The default value factory function corresponding to the field, supports template variables,
+    such as `p2p@import|uuid|uuid 4`
     """
+
+    miss_default: builtins.bool
+    """Set field required"""
+
+    alias: typing.Text
+    """Set the alias of the field in the pydantic.Base Model"""
+
+    description: typing.Text
+    """Set the description of the field"""
+
+    example_factory: typing.Text
+    """Set the corresponding sample value factory function, support template variables"""
+
+    field: typing.Text
+    """Set the Field object corresponding to the field, support template variables"""
+
+    type: typing.Text
+    """Set the type object corresponding to the field, support template variables"""
+
+    title: typing.Text
+    """The title corresponding to the field"""
 
     def __init__(self,
         *,
@@ -2267,12 +2673,26 @@ class RepeatedRules(google.protobuf.message.Message):
         max_items: typing.Optional[builtins.int] = ...,
         unique: typing.Optional[builtins.bool] = ...,
         items: typing.Optional[global___FieldRules] = ...,
-        ignore_empty: typing.Optional[builtins.bool] = ...,
+        enable: typing.Optional[builtins.bool] = ...,
+        default_factory: typing.Text = ...,
+        miss_default: builtins.bool = ...,
+        alias: typing.Optional[typing.Text] = ...,
+        description: typing.Optional[typing.Text] = ...,
+        example_factory: typing.Text = ...,
+        field: typing.Optional[typing.Text] = ...,
+        type: typing.Optional[typing.Text] = ...,
+        title: typing.Optional[typing.Text] = ...,
         ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["_ignore_empty",b"_ignore_empty","_items",b"_items","_max_items",b"_max_items","_min_items",b"_min_items","_unique",b"_unique","ignore_empty",b"ignore_empty","items",b"items","max_items",b"max_items","min_items",b"min_items","unique",b"unique"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["_ignore_empty",b"_ignore_empty","_items",b"_items","_max_items",b"_max_items","_min_items",b"_min_items","_unique",b"_unique","ignore_empty",b"ignore_empty","items",b"items","max_items",b"max_items","min_items",b"min_items","unique",b"unique"]) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_description",b"_description","_enable",b"_enable","_field",b"_field","_items",b"_items","_max_items",b"_max_items","_min_items",b"_min_items","_title",b"_title","_type",b"_type","_unique",b"_unique","alias",b"alias","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example_config",b"example_config","example_factory",b"example_factory","field",b"field","items",b"items","max_items",b"max_items","min_items",b"min_items","miss_default",b"miss_default","title",b"title","type",b"type","unique",b"unique"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_description",b"_description","_enable",b"_enable","_field",b"_field","_items",b"_items","_max_items",b"_max_items","_min_items",b"_min_items","_title",b"_title","_type",b"_type","_unique",b"_unique","alias",b"alias","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example_config",b"example_config","example_factory",b"example_factory","field",b"field","items",b"items","max_items",b"max_items","min_items",b"min_items","miss_default",b"miss_default","title",b"title","type",b"type","unique",b"unique"]) -> None: ...
     @typing.overload
-    def WhichOneof(self, oneof_group: typing_extensions.Literal["_ignore_empty",b"_ignore_empty"]) -> typing.Optional[typing_extensions.Literal["ignore_empty"]]: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_alias",b"_alias"]) -> typing.Optional[typing_extensions.Literal["alias"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_description",b"_description"]) -> typing.Optional[typing_extensions.Literal["description"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_enable",b"_enable"]) -> typing.Optional[typing_extensions.Literal["enable"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_field",b"_field"]) -> typing.Optional[typing_extensions.Literal["field"]]: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_items",b"_items"]) -> typing.Optional[typing_extensions.Literal["items"]]: ...
     @typing.overload
@@ -2280,7 +2700,15 @@ class RepeatedRules(google.protobuf.message.Message):
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_min_items",b"_min_items"]) -> typing.Optional[typing_extensions.Literal["min_items"]]: ...
     @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_title",b"_title"]) -> typing.Optional[typing_extensions.Literal["title"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_type",b"_type"]) -> typing.Optional[typing_extensions.Literal["type"]]: ...
+    @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_unique",b"_unique"]) -> typing.Optional[typing_extensions.Literal["unique"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["default_config",b"default_config"]) -> typing.Optional[typing_extensions.Literal["default_factory","miss_default"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["example_config",b"example_config"]) -> typing.Optional[typing_extensions.Literal["example_factory"]]: ...
 global___RepeatedRules = RepeatedRules
 
 class MapRules(google.protobuf.message.Message):
@@ -2291,7 +2719,15 @@ class MapRules(google.protobuf.message.Message):
     NO_SPARSE_FIELD_NUMBER: builtins.int
     KEYS_FIELD_NUMBER: builtins.int
     VALUES_FIELD_NUMBER: builtins.int
-    IGNORE_EMPTY_FIELD_NUMBER: builtins.int
+    ENABLE_FIELD_NUMBER: builtins.int
+    DEFAULT_FACTORY_FIELD_NUMBER: builtins.int
+    MISS_DEFAULT_FIELD_NUMBER: builtins.int
+    ALIAS_FIELD_NUMBER: builtins.int
+    DESCRIPTION_FIELD_NUMBER: builtins.int
+    EXAMPLE_FACTORY_FIELD_NUMBER: builtins.int
+    FIELD_FIELD_NUMBER: builtins.int
+    TYPE_FIELD_NUMBER: builtins.int
+    TITLE_FIELD_NUMBER: builtins.int
     min_pairs: builtins.int
     """MinPairs specifies that this field must have the specified number of
     KVs at a minimum
@@ -2318,10 +2754,34 @@ class MapRules(google.protobuf.message.Message):
         unless skip is specified here.
         """
         pass
-    ignore_empty: builtins.bool
-    """IgnoreEmpty specifies that the validation rules of this field should be
-    evaluated only if the field is not empty
+    enable: builtins.bool
+    """Whether to enable this field, if not, the generated Model will not carry this field"""
+
+    default_factory: typing.Text
+    """The default value factory function corresponding to the field, supports template variables,
+    such as `p2p@import|uuid|uuid 4`
     """
+
+    miss_default: builtins.bool
+    """Set field required"""
+
+    alias: typing.Text
+    """Set the alias of the field in the pydantic.Base Model"""
+
+    description: typing.Text
+    """Set the description of the field"""
+
+    example_factory: typing.Text
+    """Set the corresponding sample value factory function, support template variables"""
+
+    field: typing.Text
+    """Set the Field object corresponding to the field, support template variables"""
+
+    type: typing.Text
+    """Set the type object corresponding to the field, support template variables"""
+
+    title: typing.Text
+    """The title corresponding to the field"""
 
     def __init__(self,
         *,
@@ -2330,12 +2790,26 @@ class MapRules(google.protobuf.message.Message):
         no_sparse: typing.Optional[builtins.bool] = ...,
         keys: typing.Optional[global___FieldRules] = ...,
         values: typing.Optional[global___FieldRules] = ...,
-        ignore_empty: typing.Optional[builtins.bool] = ...,
+        enable: typing.Optional[builtins.bool] = ...,
+        default_factory: typing.Text = ...,
+        miss_default: builtins.bool = ...,
+        alias: typing.Optional[typing.Text] = ...,
+        description: typing.Optional[typing.Text] = ...,
+        example_factory: typing.Text = ...,
+        field: typing.Optional[typing.Text] = ...,
+        type: typing.Optional[typing.Text] = ...,
+        title: typing.Optional[typing.Text] = ...,
         ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["_ignore_empty",b"_ignore_empty","_keys",b"_keys","_max_pairs",b"_max_pairs","_min_pairs",b"_min_pairs","_no_sparse",b"_no_sparse","_values",b"_values","ignore_empty",b"ignore_empty","keys",b"keys","max_pairs",b"max_pairs","min_pairs",b"min_pairs","no_sparse",b"no_sparse","values",b"values"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["_ignore_empty",b"_ignore_empty","_keys",b"_keys","_max_pairs",b"_max_pairs","_min_pairs",b"_min_pairs","_no_sparse",b"_no_sparse","_values",b"_values","ignore_empty",b"ignore_empty","keys",b"keys","max_pairs",b"max_pairs","min_pairs",b"min_pairs","no_sparse",b"no_sparse","values",b"values"]) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_description",b"_description","_enable",b"_enable","_field",b"_field","_keys",b"_keys","_max_pairs",b"_max_pairs","_min_pairs",b"_min_pairs","_no_sparse",b"_no_sparse","_title",b"_title","_type",b"_type","_values",b"_values","alias",b"alias","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example_config",b"example_config","example_factory",b"example_factory","field",b"field","keys",b"keys","max_pairs",b"max_pairs","min_pairs",b"min_pairs","miss_default",b"miss_default","no_sparse",b"no_sparse","title",b"title","type",b"type","values",b"values"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_description",b"_description","_enable",b"_enable","_field",b"_field","_keys",b"_keys","_max_pairs",b"_max_pairs","_min_pairs",b"_min_pairs","_no_sparse",b"_no_sparse","_title",b"_title","_type",b"_type","_values",b"_values","alias",b"alias","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example_config",b"example_config","example_factory",b"example_factory","field",b"field","keys",b"keys","max_pairs",b"max_pairs","min_pairs",b"min_pairs","miss_default",b"miss_default","no_sparse",b"no_sparse","title",b"title","type",b"type","values",b"values"]) -> None: ...
     @typing.overload
-    def WhichOneof(self, oneof_group: typing_extensions.Literal["_ignore_empty",b"_ignore_empty"]) -> typing.Optional[typing_extensions.Literal["ignore_empty"]]: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_alias",b"_alias"]) -> typing.Optional[typing_extensions.Literal["alias"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_description",b"_description"]) -> typing.Optional[typing_extensions.Literal["description"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_enable",b"_enable"]) -> typing.Optional[typing_extensions.Literal["enable"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_field",b"_field"]) -> typing.Optional[typing_extensions.Literal["field"]]: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_keys",b"_keys"]) -> typing.Optional[typing_extensions.Literal["keys"]]: ...
     @typing.overload
@@ -2345,7 +2819,15 @@ class MapRules(google.protobuf.message.Message):
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_no_sparse",b"_no_sparse"]) -> typing.Optional[typing_extensions.Literal["no_sparse"]]: ...
     @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_title",b"_title"]) -> typing.Optional[typing_extensions.Literal["title"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_type",b"_type"]) -> typing.Optional[typing_extensions.Literal["type"]]: ...
+    @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_values",b"_values"]) -> typing.Optional[typing_extensions.Literal["values"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["default_config",b"default_config"]) -> typing.Optional[typing_extensions.Literal["default_factory","miss_default"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["example_config",b"example_config"]) -> typing.Optional[typing_extensions.Literal["example_factory"]]: ...
 global___MapRules = MapRules
 
 class AnyRules(google.protobuf.message.Message):
@@ -2356,6 +2838,16 @@ class AnyRules(google.protobuf.message.Message):
     REQUIRED_FIELD_NUMBER: builtins.int
     IN_FIELD_NUMBER: builtins.int
     NOT_IN_FIELD_NUMBER: builtins.int
+    ENABLE_FIELD_NUMBER: builtins.int
+    DEFAULT_FIELD_NUMBER: builtins.int
+    DEFAULT_FACTORY_FIELD_NUMBER: builtins.int
+    MISS_DEFAULT_FIELD_NUMBER: builtins.int
+    ALIAS_FIELD_NUMBER: builtins.int
+    DESCRIPTION_FIELD_NUMBER: builtins.int
+    EXAMPLE_FIELD_NUMBER: builtins.int
+    EXAMPLE_FACTORY_FIELD_NUMBER: builtins.int
+    FIELD_FIELD_NUMBER: builtins.int
+    TITLE_FIELD_NUMBER: builtins.int
     required: builtins.bool
     """Required specifies that this field must be set"""
 
@@ -2365,14 +2857,73 @@ class AnyRules(google.protobuf.message.Message):
         the specified values.
         """
         pass
+    enable: builtins.bool
+    """Whether to enable this field, if not, the generated Model will not carry this field"""
+
+    default: typing.Text
+    """The default value corresponding to the field, if not set,
+    the default value is the default value of the corresponding type of the field
+    """
+
+    default_factory: typing.Text
+    """The default value factory function corresponding to the field, supports template variables,
+    such as `p2p@import|uuid|uuid 4`
+    """
+
+    miss_default: builtins.bool
+    """Set field required"""
+
+    alias: typing.Text
+    """Set the alias of the field in the pydantic.Base Model"""
+
+    description: typing.Text
+    """Set the description of the field"""
+
+    example: typing.Text
+    """Set the corresponding sample value"""
+
+    example_factory: typing.Text
+    """Set the corresponding sample value factory function, support template variables"""
+
+    field: typing.Text
+    """Set the Field object corresponding to the field, support template variables"""
+
+    title: typing.Text
+    """The title corresponding to the field"""
+
     def __init__(self,
         *,
         required: typing.Optional[builtins.bool] = ...,
         not_in: typing.Optional[typing.Iterable[typing.Text]] = ...,
+        enable: typing.Optional[builtins.bool] = ...,
+        default: typing.Text = ...,
+        default_factory: typing.Text = ...,
+        miss_default: builtins.bool = ...,
+        alias: typing.Optional[typing.Text] = ...,
+        description: typing.Optional[typing.Text] = ...,
+        example: typing.Text = ...,
+        example_factory: typing.Text = ...,
+        field: typing.Optional[typing.Text] = ...,
+        title: typing.Optional[typing.Text] = ...,
         ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["_required",b"_required","required",b"required"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["_required",b"_required","in",b"in","not_in",b"not_in","required",b"required"]) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_description",b"_description","_enable",b"_enable","_field",b"_field","_required",b"_required","_title",b"_title","alias",b"alias","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","miss_default",b"miss_default","required",b"required","title",b"title"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_description",b"_description","_enable",b"_enable","_field",b"_field","_required",b"_required","_title",b"_title","alias",b"alias","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","in",b"in","miss_default",b"miss_default","not_in",b"not_in","required",b"required","title",b"title"]) -> None: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_alias",b"_alias"]) -> typing.Optional[typing_extensions.Literal["alias"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_description",b"_description"]) -> typing.Optional[typing_extensions.Literal["description"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_enable",b"_enable"]) -> typing.Optional[typing_extensions.Literal["enable"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_field",b"_field"]) -> typing.Optional[typing_extensions.Literal["field"]]: ...
+    @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_required",b"_required"]) -> typing.Optional[typing_extensions.Literal["required"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_title",b"_title"]) -> typing.Optional[typing_extensions.Literal["title"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["default_config",b"default_config"]) -> typing.Optional[typing_extensions.Literal["default","default_factory","miss_default"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["example_config",b"example_config"]) -> typing.Optional[typing_extensions.Literal["example","example_factory"]]: ...
 global___AnyRules = AnyRules
 
 class DurationRules(google.protobuf.message.Message):
@@ -2388,6 +2939,17 @@ class DurationRules(google.protobuf.message.Message):
     GTE_FIELD_NUMBER: builtins.int
     IN_FIELD_NUMBER: builtins.int
     NOT_IN_FIELD_NUMBER: builtins.int
+    ENABLE_FIELD_NUMBER: builtins.int
+    DEFAULT_FIELD_NUMBER: builtins.int
+    DEFAULT_FACTORY_FIELD_NUMBER: builtins.int
+    MISS_DEFAULT_FIELD_NUMBER: builtins.int
+    ALIAS_FIELD_NUMBER: builtins.int
+    DESCRIPTION_FIELD_NUMBER: builtins.int
+    EXAMPLE_FIELD_NUMBER: builtins.int
+    EXAMPLE_FACTORY_FIELD_NUMBER: builtins.int
+    FIELD_FIELD_NUMBER: builtins.int
+    TYPE_FIELD_NUMBER: builtins.int
+    TITLE_FIELD_NUMBER: builtins.int
     required: builtins.bool
     """Required specifies that this field must be set"""
 
@@ -2425,6 +2987,45 @@ class DurationRules(google.protobuf.message.Message):
         values
         """
         pass
+    enable: builtins.bool
+    """Whether to enable this field, if not, the generated Model will not carry this field"""
+
+    @property
+    def default(self) -> google.protobuf.duration_pb2.Duration:
+        """The default value corresponding to the field, if not set,
+        the default value is the default value of the corresponding type of the field
+        """
+        pass
+    default_factory: typing.Text
+    """The default value factory function corresponding to the field, supports template variables,
+    such as `p2p@import|uuid|uuid 4`
+    """
+
+    miss_default: builtins.bool
+    """Set field required"""
+
+    alias: typing.Text
+    """Set the alias of the field in the pydantic.Base Model"""
+
+    description: typing.Text
+    """Set the description of the field"""
+
+    @property
+    def example(self) -> google.protobuf.duration_pb2.Duration:
+        """Set the corresponding sample value"""
+        pass
+    example_factory: typing.Text
+    """Set the corresponding sample value factory function, support template variables"""
+
+    field: typing.Text
+    """Set the Field object corresponding to the field, support template variables"""
+
+    type: typing.Text
+    """Set the type object corresponding to the field, support template variables"""
+
+    title: typing.Text
+    """The title corresponding to the field"""
+
     def __init__(self,
         *,
         required: typing.Optional[builtins.bool] = ...,
@@ -2434,11 +3035,30 @@ class DurationRules(google.protobuf.message.Message):
         gt: typing.Optional[google.protobuf.duration_pb2.Duration] = ...,
         gte: typing.Optional[google.protobuf.duration_pb2.Duration] = ...,
         not_in: typing.Optional[typing.Iterable[google.protobuf.duration_pb2.Duration]] = ...,
+        enable: typing.Optional[builtins.bool] = ...,
+        default: typing.Optional[google.protobuf.duration_pb2.Duration] = ...,
+        default_factory: typing.Text = ...,
+        miss_default: builtins.bool = ...,
+        alias: typing.Optional[typing.Text] = ...,
+        description: typing.Optional[typing.Text] = ...,
+        example: typing.Optional[google.protobuf.duration_pb2.Duration] = ...,
+        example_factory: typing.Text = ...,
+        field: typing.Optional[typing.Text] = ...,
+        type: typing.Optional[typing.Text] = ...,
+        title: typing.Optional[typing.Text] = ...,
         ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["_const",b"_const","_gt",b"_gt","_gte",b"_gte","_lt",b"_lt","_lte",b"_lte","_required",b"_required","const",b"const","gt",b"gt","gte",b"gte","lt",b"lt","lte",b"lte","required",b"required"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["_const",b"_const","_gt",b"_gt","_gte",b"_gte","_lt",b"_lt","_lte",b"_lte","_required",b"_required","const",b"const","gt",b"gt","gte",b"gte","in",b"in","lt",b"lt","lte",b"lte","not_in",b"not_in","required",b"required"]) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_gt",b"_gt","_gte",b"_gte","_lt",b"_lt","_lte",b"_lte","_required",b"_required","_title",b"_title","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","gt",b"gt","gte",b"gte","lt",b"lt","lte",b"lte","miss_default",b"miss_default","required",b"required","title",b"title","type",b"type"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_gt",b"_gt","_gte",b"_gte","_lt",b"_lt","_lte",b"_lte","_required",b"_required","_title",b"_title","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","gt",b"gt","gte",b"gte","in",b"in","lt",b"lt","lte",b"lte","miss_default",b"miss_default","not_in",b"not_in","required",b"required","title",b"title","type",b"type"]) -> None: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_alias",b"_alias"]) -> typing.Optional[typing_extensions.Literal["alias"]]: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_const",b"_const"]) -> typing.Optional[typing_extensions.Literal["const"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_description",b"_description"]) -> typing.Optional[typing_extensions.Literal["description"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_enable",b"_enable"]) -> typing.Optional[typing_extensions.Literal["enable"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_field",b"_field"]) -> typing.Optional[typing_extensions.Literal["field"]]: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_gt",b"_gt"]) -> typing.Optional[typing_extensions.Literal["gt"]]: ...
     @typing.overload
@@ -2449,6 +3069,14 @@ class DurationRules(google.protobuf.message.Message):
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_lte",b"_lte"]) -> typing.Optional[typing_extensions.Literal["lte"]]: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_required",b"_required"]) -> typing.Optional[typing_extensions.Literal["required"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_title",b"_title"]) -> typing.Optional[typing_extensions.Literal["title"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_type",b"_type"]) -> typing.Optional[typing_extensions.Literal["type"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["default_config",b"default_config"]) -> typing.Optional[typing_extensions.Literal["default","default_factory","miss_default"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["example_config",b"example_config"]) -> typing.Optional[typing_extensions.Literal["example","example_factory"]]: ...
 global___DurationRules = DurationRules
 
 class TimestampRules(google.protobuf.message.Message):
@@ -2459,12 +3087,23 @@ class TimestampRules(google.protobuf.message.Message):
     REQUIRED_FIELD_NUMBER: builtins.int
     CONST_FIELD_NUMBER: builtins.int
     LT_FIELD_NUMBER: builtins.int
-    LTE_FIELD_NUMBER: builtins.int
+    LE_FIELD_NUMBER: builtins.int
     GT_FIELD_NUMBER: builtins.int
-    GTE_FIELD_NUMBER: builtins.int
+    GE_FIELD_NUMBER: builtins.int
     LT_NOW_FIELD_NUMBER: builtins.int
     GT_NOW_FIELD_NUMBER: builtins.int
     WITHIN_FIELD_NUMBER: builtins.int
+    ENABLE_FIELD_NUMBER: builtins.int
+    DEFAULT_FIELD_NUMBER: builtins.int
+    DEFAULT_FACTORY_FIELD_NUMBER: builtins.int
+    MISS_DEFAULT_FIELD_NUMBER: builtins.int
+    ALIAS_FIELD_NUMBER: builtins.int
+    DESCRIPTION_FIELD_NUMBER: builtins.int
+    EXAMPLE_FIELD_NUMBER: builtins.int
+    EXAMPLE_FACTORY_FIELD_NUMBER: builtins.int
+    FIELD_FIELD_NUMBER: builtins.int
+    TYPE_FIELD_NUMBER: builtins.int
+    TITLE_FIELD_NUMBER: builtins.int
     required: builtins.bool
     """Required specifies that this field must be set"""
 
@@ -2479,7 +3118,7 @@ class TimestampRules(google.protobuf.message.Message):
         """
         pass
     @property
-    def lte(self) -> google.protobuf.timestamp_pb2.Timestamp:
+    def le(self) -> google.protobuf.timestamp_pb2.Timestamp:
         """Lte specifies that this field must be less than the specified value,
         inclusive
         """
@@ -2491,7 +3130,7 @@ class TimestampRules(google.protobuf.message.Message):
         """
         pass
     @property
-    def gte(self) -> google.protobuf.timestamp_pb2.Timestamp:
+    def ge(self) -> google.protobuf.timestamp_pb2.Timestamp:
         """Gte specifies that this field must be greater than the specified value,
         inclusive
         """
@@ -2513,38 +3152,104 @@ class TimestampRules(google.protobuf.message.Message):
         GtNow rules.
         """
         pass
+    enable: builtins.bool
+    """Whether to enable this field, if not, the generated Model will not carry this field"""
+
+    @property
+    def default(self) -> google.protobuf.timestamp_pb2.Timestamp:
+        """The default value corresponding to the field, if not set,
+        the default value is the default value of the corresponding type of the field
+        """
+        pass
+    default_factory: typing.Text
+    """The default value factory function corresponding to the field, supports template variables,
+    such as `p2p@import|uuid|uuid 4`
+    """
+
+    miss_default: builtins.bool
+    """Set field required"""
+
+    alias: typing.Text
+    """Set the alias of the field in the pydantic.Base Model"""
+
+    description: typing.Text
+    """Set the description of the field"""
+
+    @property
+    def example(self) -> google.protobuf.timestamp_pb2.Timestamp:
+        """Set the corresponding sample value"""
+        pass
+    example_factory: typing.Text
+    """Set the corresponding sample value factory function, support template variables"""
+
+    field: typing.Text
+    """Set the Field object corresponding to the field, support template variables"""
+
+    type: typing.Text
+    """Set the type object corresponding to the field, support template variables"""
+
+    title: typing.Text
+    """The title corresponding to the field"""
+
     def __init__(self,
         *,
         required: typing.Optional[builtins.bool] = ...,
         const: typing.Optional[google.protobuf.timestamp_pb2.Timestamp] = ...,
         lt: typing.Optional[google.protobuf.timestamp_pb2.Timestamp] = ...,
-        lte: typing.Optional[google.protobuf.timestamp_pb2.Timestamp] = ...,
+        le: typing.Optional[google.protobuf.timestamp_pb2.Timestamp] = ...,
         gt: typing.Optional[google.protobuf.timestamp_pb2.Timestamp] = ...,
-        gte: typing.Optional[google.protobuf.timestamp_pb2.Timestamp] = ...,
+        ge: typing.Optional[google.protobuf.timestamp_pb2.Timestamp] = ...,
         lt_now: typing.Optional[builtins.bool] = ...,
         gt_now: typing.Optional[builtins.bool] = ...,
         within: typing.Optional[google.protobuf.duration_pb2.Duration] = ...,
+        enable: typing.Optional[builtins.bool] = ...,
+        default: typing.Optional[google.protobuf.timestamp_pb2.Timestamp] = ...,
+        default_factory: typing.Text = ...,
+        miss_default: builtins.bool = ...,
+        alias: typing.Optional[typing.Text] = ...,
+        description: typing.Optional[typing.Text] = ...,
+        example: typing.Optional[google.protobuf.timestamp_pb2.Timestamp] = ...,
+        example_factory: typing.Text = ...,
+        field: typing.Optional[typing.Text] = ...,
+        type: typing.Optional[typing.Text] = ...,
+        title: typing.Optional[typing.Text] = ...,
         ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["_const",b"_const","_gt",b"_gt","_gt_now",b"_gt_now","_gte",b"_gte","_lt",b"_lt","_lt_now",b"_lt_now","_lte",b"_lte","_required",b"_required","_within",b"_within","const",b"const","gt",b"gt","gt_now",b"gt_now","gte",b"gte","lt",b"lt","lt_now",b"lt_now","lte",b"lte","required",b"required","within",b"within"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["_const",b"_const","_gt",b"_gt","_gt_now",b"_gt_now","_gte",b"_gte","_lt",b"_lt","_lt_now",b"_lt_now","_lte",b"_lte","_required",b"_required","_within",b"_within","const",b"const","gt",b"gt","gt_now",b"gt_now","gte",b"gte","lt",b"lt","lt_now",b"lt_now","lte",b"lte","required",b"required","within",b"within"]) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_gt_now",b"_gt_now","_le",b"_le","_lt",b"_lt","_lt_now",b"_lt_now","_required",b"_required","_title",b"_title","_type",b"_type","_within",b"_within","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","gt_now",b"gt_now","le",b"le","lt",b"lt","lt_now",b"lt_now","miss_default",b"miss_default","required",b"required","title",b"title","type",b"type","within",b"within"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_gt_now",b"_gt_now","_le",b"_le","_lt",b"_lt","_lt_now",b"_lt_now","_required",b"_required","_title",b"_title","_type",b"_type","_within",b"_within","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","gt_now",b"gt_now","le",b"le","lt",b"lt","lt_now",b"lt_now","miss_default",b"miss_default","required",b"required","title",b"title","type",b"type","within",b"within"]) -> None: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_alias",b"_alias"]) -> typing.Optional[typing_extensions.Literal["alias"]]: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_const",b"_const"]) -> typing.Optional[typing_extensions.Literal["const"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_description",b"_description"]) -> typing.Optional[typing_extensions.Literal["description"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_enable",b"_enable"]) -> typing.Optional[typing_extensions.Literal["enable"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_field",b"_field"]) -> typing.Optional[typing_extensions.Literal["field"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_ge",b"_ge"]) -> typing.Optional[typing_extensions.Literal["ge"]]: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_gt",b"_gt"]) -> typing.Optional[typing_extensions.Literal["gt"]]: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_gt_now",b"_gt_now"]) -> typing.Optional[typing_extensions.Literal["gt_now"]]: ...
     @typing.overload
-    def WhichOneof(self, oneof_group: typing_extensions.Literal["_gte",b"_gte"]) -> typing.Optional[typing_extensions.Literal["gte"]]: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_le",b"_le"]) -> typing.Optional[typing_extensions.Literal["le"]]: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_lt",b"_lt"]) -> typing.Optional[typing_extensions.Literal["lt"]]: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_lt_now",b"_lt_now"]) -> typing.Optional[typing_extensions.Literal["lt_now"]]: ...
     @typing.overload
-    def WhichOneof(self, oneof_group: typing_extensions.Literal["_lte",b"_lte"]) -> typing.Optional[typing_extensions.Literal["lte"]]: ...
-    @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_required",b"_required"]) -> typing.Optional[typing_extensions.Literal["required"]]: ...
     @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_title",b"_title"]) -> typing.Optional[typing_extensions.Literal["title"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_type",b"_type"]) -> typing.Optional[typing_extensions.Literal["type"]]: ...
+    @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_within",b"_within"]) -> typing.Optional[typing_extensions.Literal["within"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["default_config",b"default_config"]) -> typing.Optional[typing_extensions.Literal["default","default_factory","miss_default"]]: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["example_config",b"example_config"]) -> typing.Optional[typing_extensions.Literal["example","example_factory"]]: ...
 global___TimestampRules = TimestampRules
 
 IGNORED_FIELD_NUMBER: builtins.int

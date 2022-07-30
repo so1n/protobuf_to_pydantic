@@ -13,6 +13,7 @@ from pydantic.fields import FieldInfo
 from protobuf_to_pydantic import customer_validator, gen_model
 from protobuf_to_pydantic.customer_con_type import pydantic_con_dict
 from protobuf_to_pydantic.grpc_types import RepeatedScalarContainer
+from protobuf_to_pydantic.util import replace_type
 
 
 class P2C(object):
@@ -116,6 +117,7 @@ class P2C(object):
         self._import_set.add(f"from {module_name} import {class_name}{extra_str}")
 
     def _get_value_code(self, type_: Type, is_first: bool = False) -> str:
+        type_ = replace_type(type_)
         if isinstance(type_, dict):
             type_name: str = ", ".join(
                 sorted([f"{self._get_value_code(k)}: {self._get_value_code(v)}" for k, v in type_.items()])

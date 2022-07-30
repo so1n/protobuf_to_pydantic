@@ -26,6 +26,7 @@ message FloatTest {
   float example_factory = 14 [(p2p_validate.rules).float.example_factory = "p2p@builtin|float"];
   float field_test = 15[(p2p_validate.rules).float.field = "p2p@local|CustomerField"];
   float type_test = 16[(p2p_validate.rules).float.type = "p2p@local|confloat"];
+  float title_test = 17 [(p2p_validate.rules).float.title = "title_test"];
 }
 
 message DoubleTest {
@@ -45,6 +46,7 @@ message DoubleTest {
   double example_factory = 14 [(p2p_validate.rules).double.example_factory = "p2p@builtin|float"];
   double field_test = 15[(p2p_validate.rules).double.field = "p2p@local|CustomerField"];
   double type_test = 16[(p2p_validate.rules).double.type = "p2p@local|confloat"];
+  double title_test = 17 [(p2p_validate.rules).double.title = "title_test"];
 }
 
 message Int32Test {
@@ -64,6 +66,7 @@ message Int32Test {
   int32 example_factory = 14 [(p2p_validate.rules).int32.example_factory = "p2p@builtin|int"];
   int32 field_test = 15[(p2p_validate.rules).int32.field = "p2p@local|CustomerField"];
   int32 type_test = 16[(p2p_validate.rules).int32.type = "p2p@local|confloat"];
+  int32 title_test = 17 [(p2p_validate.rules).int32.title = "title_test"];
 }
 
 message Int64Test {
@@ -83,6 +86,7 @@ message Int64Test {
   int64 example_factory = 14 [(p2p_validate.rules).int64.example_factory = "p2p@builtin|int"];
   int64 field_test = 15[(p2p_validate.rules).int64.field = "p2p@local|CustomerField"];
   int64 type_test = 16[(p2p_validate.rules).int64.type = "p2p@local|confloat"];
+  int64 title_test = 17 [(p2p_validate.rules).int64.title = "title_test"];
 }
 
 message Uint32Test {
@@ -102,6 +106,7 @@ message Uint32Test {
   uint32 example_factory = 14 [(p2p_validate.rules).uint32.example_factory = "p2p@builtin|int"];
   uint32 field_test = 15[(p2p_validate.rules).uint32.field = "p2p@local|CustomerField"];
   uint32 type_test = 16[(p2p_validate.rules).uint32.type = "p2p@local|conint"];
+  uint32 title_test = 17 [(p2p_validate.rules).uint32.title = "title_test"];
 }
 
 message Sint32Test {
@@ -121,6 +126,7 @@ message Sint32Test {
   sint32 example_factory = 14 [(p2p_validate.rules).sint32.example_factory = "p2p@builtin|int"];
   sint32 field_test = 15[(p2p_validate.rules).sint32.field = "p2p@local|CustomerField"];
   sint32 type_test = 16[(p2p_validate.rules).sint32.type = "p2p@local|conint"];
+  sint32 title_test = 17 [(p2p_validate.rules).sint32.title = "title_test"];
 }
 
 message Uint64Test {
@@ -140,6 +146,7 @@ message Uint64Test {
   uint64 example_factory = 14 [(p2p_validate.rules).uint64.example_factory = "p2p@builtin|int"];
   uint64 field_test = 15[(p2p_validate.rules).uint64.field = "p2p@local|CustomerField"];
   uint64 type_test = 16[(p2p_validate.rules).uint64.type = "p2p@local|conint"];
+  uint64 title_test = 17 [(p2p_validate.rules).uint64.title = "title_test"];
 }
 
 message Sint64Test {
@@ -159,6 +166,7 @@ message Sint64Test {
   sint64 example_factory = 14 [(p2p_validate.rules).sint64.example_factory = "p2p@builtin|int"];
   sint64 field_test = 15[(p2p_validate.rules).sint64.field = "p2p@local|CustomerField"];
   sint64 type_test = 16[(p2p_validate.rules).sint64.type = "p2p@local|conint"];
+  sint64 title_test = 17 [(p2p_validate.rules).sint64.title = "title_test"];
 }
 
 message Fixed32Test {
@@ -178,6 +186,7 @@ message Fixed32Test {
   fixed32 example_factory = 14 [(p2p_validate.rules).fixed32.example_factory = "p2p@builtin|float"];
   fixed32 field_test = 15[(p2p_validate.rules).fixed32.field = "p2p@local|CustomerField"];
   fixed32 type_test = 16[(p2p_validate.rules).fixed32.type = "p2p@local|confloat"];
+  fixed32 title_test = 17 [(p2p_validate.rules).fixed32.title = "title_test"];
 }
 
 message Fixed64Test {
@@ -197,6 +206,7 @@ message Fixed64Test {
   fixed64 example_factory = 14 [(p2p_validate.rules).fixed64.example_factory = "p2p@builtin|float"];
   fixed64 field_test = 15[(p2p_validate.rules).fixed64.field = "p2p@local|CustomerField"];
   fixed64 type_test = 16[(p2p_validate.rules).fixed64.type = "p2p@local|confloat"];
+  fixed64 title_test = 17 [(p2p_validate.rules).fixed64.title = "title_test"];
 }
 
 message Sfixed32Test {
@@ -216,6 +226,7 @@ message Sfixed32Test {
   sfixed32 example_factory = 14 [(p2p_validate.rules).sfixed32.example_factory = "p2p@builtin|float"];
   sfixed32 field_test = 15[(p2p_validate.rules).sfixed32.field = "p2p@local|CustomerField"];
   sfixed32 type_test = 16[(p2p_validate.rules).sfixed32.type = "p2p@local|confloat"];
+  sfixed32 title_test = 17 [(p2p_validate.rules).sfixed32.title = "title_test"];
 }
 
 message Sfixed64Test {
@@ -235,4 +246,285 @@ message Sfixed64Test {
   sfixed64 example_factory = 14 [(p2p_validate.rules).sfixed64.example_factory = "p2p@builtin|float"];
   sfixed64 field_test = 15[(p2p_validate.rules).sfixed64.field = "p2p@local|CustomerField"];
   sfixed64 type_test = 16[(p2p_validate.rules).sfixed64.type = "p2p@local|confloat"];
+  sfixed64 title_test = 17 [(p2p_validate.rules).sfixed64.title = "title_test"];
+}
+
+message BoolTest {
+  bool bool_1_test =1 [(p2p_validate.rules).bool.const = true];
+  bool bool_2_test =2 [(p2p_validate.rules).bool.const = false];
+  bool enable_test =3 [(p2p_validate.rules).bool.enable = false];
+  bool default_test =4 [(p2p_validate.rules).bool.default = true];
+  bool miss_default_test=5 [(p2p_validate.rules).bool.miss_default = true];
+  bool alias_test = 10 [(p2p_validate.rules).bool.alias = "alias"];
+  bool desc_test = 11 [(p2p_validate.rules).bool.description = "test desc"];
+  bool example_test = 13 [(p2p_validate.rules).bool.example = true];
+  bool field_test = 15[(p2p_validate.rules).bool.field = "p2p@local|CustomerField"];
+  bool title_test = 17 [(p2p_validate.rules).bool.title = "title_test"];
+}
+
+message StringTest {
+  string const_test = 1 [(p2p_validate.rules).string.const = "aaa"];
+  string len_test = 2 [(p2p_validate.rules).string.len = 3];
+  string s_range_len_test =3 [(p2p_validate.rules).string = {min_length:1, max_length:3}];
+  string pattern_test = 5 [(p2p_validate.rules).string.pattern = "^test"];
+  string prefix_test = 6 [(p2p_validate.rules).string.prefix = "prefix"];
+  string suffix_test = 7 [(p2p_validate.rules).string.suffix = "suffix"];
+  string contains_test = 8 [(p2p_validate.rules).string.contains = "contains"];
+  string not_contains_test = 9 [(p2p_validate.rules).string.not_contains = "not_contains"];
+  string in_test = 10 [(p2p_validate.rules).string = {in: ["a", "b", "c"]}];
+  string not_in_test = 11 [(p2p_validate.rules).string = {not_in: ["a", "b", "c"]}];
+  string email_test = 12 [(p2p_validate.rules).string.email = true];
+  string hostname_test = 13 [(p2p_validate.rules).string.hostname = true];
+  string ip_test = 14 [(p2p_validate.rules).string.ip = true];
+  string ipv4_test = 15 [(p2p_validate.rules).string.ipv4 = true];
+  string ipv6_test = 16 [(p2p_validate.rules).string.ipv6 = true];
+  string uri_test = 17 [(p2p_validate.rules).string.uri = true];
+  string uri_ref_test = 18 [(p2p_validate.rules).string.uri_ref = true];
+  string address_test = 19 [(p2p_validate.rules).string.address = true];
+  string uuid_test = 20 [(p2p_validate.rules).string.uuid = true];
+  string pydantic_type_test = 21 [(p2p_validate.rules).string.pydantic_type = "UUID1"];
+  string enable_test = 22 [(p2p_validate.rules).string.enable = true];
+  string default_test = 23 [(p2p_validate.rules).string.default = "default"];
+  string default_factory_test = 24 [(p2p_validate.rules).string.default_factory = "p2p@import|uuid4|uuid"];
+  string miss_default_test=25 [(p2p_validate.rules).string.miss_default = true];
+  string alias_test = 26 [(p2p_validate.rules).string.alias = "alias"];
+  string desc_test = 27 [(p2p_validate.rules).string.description = "test desc"];
+  string example_test = 28 [(p2p_validate.rules).string.example = "example"];
+  string example_factory_test = 29 [(p2p_validate.rules).string.example_factory= "p2p@import|uuid4|uuid"];
+  string field_test = 30[(p2p_validate.rules).string.field = "p2p@local|CustomerField"];
+  string title_test = 31 [(p2p_validate.rules).string.title = "title_test"];
+  string type_test = 32 [(p2p_validate.rules).string.type = "p2p@import|constr|pydantic"];
+}
+
+
+message BytesTest {
+  bytes const_test = 1 [(p2p_validate.rules).bytes.const = "demo"];
+  bytes range_len_test = 3 [(p2p_validate.rules).bytes = {min_length: 1, max_length: 4}];
+  bytes pattern_test = 4 [(p2p_validate.rules).bytes.pattern = "^test"];
+  bytes prefix_test = 5 [(p2p_validate.rules).bytes.prefix = "prefix"];
+  bytes suffix_test = 6 [(p2p_validate.rules).bytes.suffix = "suffix"];
+  bytes contains_test = 7 [(p2p_validate.rules).bytes.contains = "contains"];
+  bytes in_test = 8 [(p2p_validate.rules).bytes= {in: ["a", "b", "c"]}];
+  bytes not_in_test = 9 [(p2p_validate.rules).bytes= {not_in: ["a", "b", "c"]}];
+  bytes enable_test = 22 [(p2p_validate.rules).bytes.enable = true];
+  bytes default_test = 23 [(p2p_validate.rules).bytes.default = "default"];
+  bytes default_factory_test = 24 [(p2p_validate.rules).bytes.default_factory = "p2p@import|uuid4|uuid"];
+  bytes miss_default_test=25 [(p2p_validate.rules).bytes.miss_default = true];
+  bytes alias_test = 26 [(p2p_validate.rules).bytes.alias = "alias"];
+  bytes desc_test = 27 [(p2p_validate.rules).bytes.description = "test desc"];
+  bytes example_test = 28 [(p2p_validate.rules).bytes.example = "example"];
+  bytes example_factory_test = 29 [(p2p_validate.rules).bytes.example_factory= "p2p@import|uuid4|uuid"];
+  bytes field_test = 30[(p2p_validate.rules).bytes.field = "p2p@local|CustomerField"];
+  bytes title_test = 31 [(p2p_validate.rules).bytes.title = "title_test"];
+  bytes type_test = 32 [(p2p_validate.rules).bytes.type = "p2p@import|constr|pydantic"];
+}
+
+enum State {
+  INACTIVE = 0;
+  PENDING  = 1;
+  ACTIVE   = 2;
+}
+
+message EnumTest {
+  State const_test = 1 [(p2p_validate.rules).enum.const = 2];
+  State defined_only_test = 2 [(p2p_validate.rules).enum.defined_only = true];
+  State in_test = 3 [(p2p_validate.rules).enum = {in: [0, 2]}];
+  State not_in_test = 4 [(p2p_validate.rules).enum = {in: [0, 2]}];
+  State enable_test = 22 [(p2p_validate.rules).enum.enable = true];
+  State default_test = 23 [(p2p_validate.rules).enum.default = 1];
+  State miss_default_test=25 [(p2p_validate.rules).enum.miss_default = true];
+  State alias_test = 26 [(p2p_validate.rules).enum.alias = "alias"];
+  State desc_test = 27 [(p2p_validate.rules).enum.description = "test desc"];
+  State example_test = 28 [(p2p_validate.rules).enum.example = 2];
+  State field_test = 30[(p2p_validate.rules).enum.field = "p2p@local|CustomerField"];
+  State title_test = 31 [(p2p_validate.rules).enum.title = "title_test"];
+}
+
+
+message MapTest {
+  map<string, int32> pair_test = 1 [(p2p_validate.rules).map = {min_pairs:1, max_pairs:5}];
+  map<string, int32> no_parse_test = 2 [(p2p_validate.rules).map.no_sparse = true];
+  map<string, int32> keys_test = 3 [
+    (p2p_validate.rules).map.keys.string.min_length = 1,
+    (p2p_validate.rules).map.keys.string.max_length = 5
+  ];
+  map<string, int32> values_test = 4 [
+    (p2p_validate.rules).map.values.int32.gt= 5,
+    (p2p_validate.rules).map.values.int32.lt = 5
+  ];
+  map<string, google.protobuf.Timestamp> keys_values_test = 5 [
+    (p2p_validate.rules).map.keys.string.min_length = 1,
+    (p2p_validate.rules).map.keys.string.max_length = 5,
+    (p2p_validate.rules).map.values.timestamp.gt_now = true
+  ];
+  map<string, int32> enable_test = 6[(p2p_validate.rules).map.enable = true];
+  map<string, int32> default_factory_test = 24 [(p2p_validate.rules).map.default_factory = "p2p@builtin|dict"];
+  map<string, int32> miss_default_test=25 [(p2p_validate.rules).map.miss_default = true];
+  map<string, int32> alias_test = 26 [(p2p_validate.rules).map.alias = "alias"];
+  map<string, int32> desc_test = 27 [(p2p_validate.rules).map.description = "test desc"];
+  map<string, int32> example_factory_test = 29 [(p2p_validate.rules).map.example_factory= "p2p@builtin|dict"];
+  map<string, int32> field_test = 30[(p2p_validate.rules).map.field = "p2p@local|CustomerField"];
+  map<string, int32> title_test = 31 [(p2p_validate.rules).map.title = "title_test"];
+  map<string, int32> type_test = 32 [(p2p_validate.rules).map.type = "p2p@builtin|dict"];
+}
+
+
+message MessageTest {
+  string skip_test = 1 [(p2p_validate.rules).message.skip = true];
+  string required_test = 2 [(p2p_validate.rules).message.required = true];
+}
+
+message RepeatedTest {
+  repeated string range_test = 1[(p2p_validate.rules).repeated = {min_items: 1, max_items: 5}];
+  repeated string unique_test = 2 [(p2p_validate.rules).repeated.unique = true];
+  repeated string items_string_test = 3 [
+    (p2p_validate.rules).repeated = {min_items: 1, max_items: 5},
+    (p2p_validate.rules).repeated.items.string = {min_length:1, max_length: 5}
+  ];
+  repeated double items_double_test = 4 [
+    (p2p_validate.rules).repeated = {min_items: 1, max_items: 5},
+    (p2p_validate.rules).repeated.items.double = {gt:1, lt: 5}
+  ];
+  repeated int32  items_int32_test = 5 [
+    (p2p_validate.rules).repeated = {min_items: 1, max_items: 5},
+    (p2p_validate.rules).repeated.items.int32 = {gt:1, lt: 5}
+  ];
+  repeated google.protobuf.Timestamp items_timestamp_test = 6 [
+    (p2p_validate.rules).repeated = {min_items: 1, max_items: 5},
+    (p2p_validate.rules).repeated.items.timestamp = {gt: {seconds: 1600000000}, lt: {seconds: 1600000010}}
+  ];
+  repeated google.protobuf.Duration items_duration_test = 7 [
+    (p2p_validate.rules).repeated = {min_items: 1, max_items: 5},
+    (p2p_validate.rules).repeated.items.duration = {gt: {seconds: 10}, lt: {seconds: 10}}
+  ];
+  repeated bytes items_bytes_test = 8 [
+    (p2p_validate.rules).repeated = {min_items: 1, max_items: 5},
+    (p2p_validate.rules).repeated.items.bytes= {min_length: 1, max_length: 5}
+  ];
+  repeated string enable_test = 9 [(p2p_validate.rules).repeated.enable = true];
+  repeated string default_factory_test = 24 [(p2p_validate.rules).repeated.default_factory = "p2p@builtin|list"];
+  repeated string miss_default_test=25 [(p2p_validate.rules).repeated.miss_default = true];
+  repeated string alias_test = 26 [(p2p_validate.rules).repeated.alias = "alias"];
+  repeated string desc_test = 27 [(p2p_validate.rules).repeated.description = "test desc"];
+  repeated string example_factory_test = 29 [(p2p_validate.rules).repeated.example_factory= "p2p@builtin|list"];
+  repeated string field_test = 30[(p2p_validate.rules).repeated.field = "p2p@local|CustomerField"];
+  repeated string title_test = 31 [(p2p_validate.rules).repeated.title = "title_test"];
+  repeated string type_test = 32 [(p2p_validate.rules).repeated.type = "p2p@builtin|list"];
+}
+
+
+message AnyTest {
+  google.protobuf.Any required_test = 1 [(p2p_validate.rules).any.required = true];
+  google.protobuf.Any not_in_test = 2 [(p2p_validate.rules).any = {
+    not_in: [
+      "type.googleapis.com/google.protobuf.Duration",
+      "type.googleapis.com/google.protobuf.Timestamp"
+    ],
+  }];
+  google.protobuf.Any in_test = 3 [(p2p_validate.rules).any = {
+    in: [
+      "type.googleapis.com/google.protobuf.Duration",
+      "type.googleapis.com/google.protobuf.Timestamp"
+    ],
+  }];
+  google.protobuf.Any enable_test = 4 [(p2p_validate.rules).any.enable = true];
+  google.protobuf.Any default_test = 23 [(p2p_validate.rules).any.default = "type.googleapis.com/google.protobuf.Duration"];
+  google.protobuf.Any default_factory_test = 24 [(p2p_validate.rules).any.default_factory = "p2p@local|customer_any"];
+  google.protobuf.Any miss_default_test=25 [(p2p_validate.rules).any.miss_default = true];
+  google.protobuf.Any alias_test = 26 [(p2p_validate.rules).any.alias = "alias"];
+  google.protobuf.Any desc_test = 27 [(p2p_validate.rules).any.description = "test desc"];
+  google.protobuf.Any example_test = 28 [(p2p_validate.rules).any.example = "type.googleapis.com/google.protobuf.Duration"];
+  google.protobuf.Any example_factory_test = 29 [(p2p_validate.rules).any.example_factory= "p2p@local|customer_any"];
+  google.protobuf.Any field_test = 30[(p2p_validate.rules).any.field = "p2p@local|CustomerField"];
+  google.protobuf.Any title_test = 31 [(p2p_validate.rules).any.title = "title_test"];
+}
+
+message DurationTest {
+  google.protobuf.Duration required_test =1 [(p2p_validate.rules).duration.required = true];
+  google.protobuf.Duration const_test =2 [(p2p_validate.rules).duration.const = {seconds: 1, nanos: 500000000}];
+  google.protobuf.Duration range_test = 3 [(p2p_validate.rules).duration = {lt: {seconds: 10, nanos: 500000000}, gt: {seconds: 5, nanos: 500000000}}];
+  google.protobuf.Duration range_e_test = 4 [(p2p_validate.rules).duration = {lte: {seconds: 10, nanos: 500000000}, gte: {seconds: 5, nanos: 500000000}}];
+  google.protobuf.Duration in_test = 5 [(p2p_validate.rules).duration = {in: [{seconds: 1, nanos: 500000000}, {seconds:3, nanos: 500000000}]}];
+  google.protobuf.Duration not_in_test = 6 [(p2p_validate.rules).duration = {in: [{seconds: 1, nanos: 500000000}, {seconds:3, nanos: 500000000}]}];
+  google.protobuf.Duration enable_test = 22 [(p2p_validate.rules).duration.enable = true];
+  google.protobuf.Duration default_test = 23 [(p2p_validate.rules).duration.default = {seconds: 1, nanos:500000000}];
+  google.protobuf.Duration default_factory_test = 24 [(p2p_validate.rules).duration.default_factory = "p2p@import|timedelta|datetime"];
+  google.protobuf.Duration miss_default_test=25 [(p2p_validate.rules).duration.miss_default = true];
+  google.protobuf.Duration alias_test = 26 [(p2p_validate.rules).duration.alias = "alias"];
+  google.protobuf.Duration desc_test = 27 [(p2p_validate.rules).duration.description = "test desc"];
+  google.protobuf.Duration example_test = 28 [(p2p_validate.rules).duration.example = {seconds: 1, nanos:500000000}];
+  google.protobuf.Duration example_factory_test = 29 [(p2p_validate.rules).duration.example_factory= "p2p@import|timedelta|datetime"];
+  google.protobuf.Duration field_test = 30[(p2p_validate.rules).duration.field = "p2p@local|CustomerField"];
+  google.protobuf.Duration title_test = 31 [(p2p_validate.rules).duration.title = "title_test"];
+  google.protobuf.Duration type_test = 32 [(p2p_validate.rules).duration.type = "p2p@import|timedelta|datetime"];
+}
+
+message TimestampTest {
+  google.protobuf.Timestamp required_test = 1 [(p2p_validate.rules).timestamp.required = true];
+  google.protobuf.Timestamp const_test = 2 [(p2p_validate.rules).timestamp.const = {seconds: 1600000000}];
+  google.protobuf.Timestamp range_test = 3 [(p2p_validate.rules).timestamp = {gt: {seconds: 1600000000}, lt: {seconds: 1600000010}}];
+  google.protobuf.Timestamp range_e_test = 4 [(p2p_validate.rules).timestamp = {ge: {seconds: 1600000000}, le: {seconds: 1600000010}}];
+  google.protobuf.Timestamp lt_now_test = 5 [(p2p_validate.rules).timestamp.lt_now = true];
+  google.protobuf.Timestamp gt_now_test = 6 [(p2p_validate.rules).timestamp.gt_now = true];
+  google.protobuf.Timestamp within_test = 7 [(p2p_validate.rules).timestamp.within.seconds = 1];
+  google.protobuf.Timestamp within_and_gt_now_test = 8 [(p2p_validate.rules).timestamp = {
+    gt_now: true,
+    within: {seconds: 3600}
+  }];
+  google.protobuf.Timestamp enable_test = 22 [(p2p_validate.rules).timestamp.enable = true];
+  google.protobuf.Timestamp default_test = 23 [(p2p_validate.rules).timestamp.default = {seconds: 1, nanos:500000000}];
+  google.protobuf.Timestamp default_factory_test = 24 [(p2p_validate.rules).timestamp.default_factory = "p2p@import|datetime|datetime"];
+  google.protobuf.Timestamp miss_default_test=25 [(p2p_validate.rules).timestamp.miss_default = true];
+  google.protobuf.Timestamp alias_test = 26 [(p2p_validate.rules).timestamp.alias = "alias"];
+  google.protobuf.Timestamp desc_test = 27 [(p2p_validate.rules).timestamp.description = "test desc"];
+  google.protobuf.Timestamp example_test = 28 [(p2p_validate.rules).timestamp.example = {seconds: 1, nanos:500000000}];
+  google.protobuf.Timestamp example_factory_test = 29 [(p2p_validate.rules).timestamp.example_factory= "p2p@import|datetime|datetime"];
+  google.protobuf.Timestamp field_test = 30[(p2p_validate.rules).timestamp.field = "p2p@local|CustomerField"];
+  google.protobuf.Timestamp title_test = 31 [(p2p_validate.rules).timestamp.title = "title_test"];
+  google.protobuf.Timestamp type_test = 32 [(p2p_validate.rules).timestamp.example_factory= "p2p@import|datetime|datetime"];
+}
+
+
+message MessageIgnoredTest {
+  option (p2p_validate.ignored) = true;
+  sint32 const_test = 1 [(p2p_validate.rules).float.const = 1];
+  sint32 range_e_test = 2 [(p2p_validate.rules).float = {ge: 1, le: 10}];
+  sint32 range_test = 3[(p2p_validate.rules).float = {gt: 1, lt: 10}];
+}
+
+
+message OneOfTest {
+  string header = 1;
+  oneof id {
+    option (p2p_validate.required) = true;
+
+    string x = 2;
+    int32  y = 3;
+  }
+}
+message OneOfNotTest {
+  string header = 1;
+  oneof id {
+    string x = 2;
+    int32  y = 3;
+  }
+}
+
+// test nested message
+message NestedMessage{
+  message UserPayMessage {
+    string bank_number=1 [(p2p_validate.rules).string = {min_length:13, max_length:19}];
+    google.protobuf.Timestamp exp=2[(p2p_validate.rules).timestamp.gt_now = true];
+    string uuid=3[(p2p_validate.rules).string.uuid = true];
+  }
+  message NotEnableUserPayMessage {
+    string bank_number=1 [(p2p_validate.rules).string = {min_length:13, max_length:19}];
+    google.protobuf.Timestamp exp=2[(p2p_validate.rules).timestamp.gt_now = true];
+    string uuid=3[(p2p_validate.rules).string.uuid = true];
+  }
+  map<string, StringTest> string_in_map_test=1;
+  map<string, MapTest> map_in_map_test=2;
+  UserPayMessage user_pay=3;
+  NotEnableUserPayMessage not_enable_user_pay=4[(p2p_validate.rules).message.skip = true];
+  google.protobuf.Empty empty=5;
 }

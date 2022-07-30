@@ -378,7 +378,7 @@ class M2P(object):
             try:
                 if v.startswith("p2p@import"):
                     _, var_str, module_str = v.split("|")
-                    v = getattr(import_module(module_str.split(".")[0], module_str), var_str)
+                    v = getattr(import_module(module_str, module_str), var_str)
                 elif v.startswith("p2p@local") and self._local_dict:
                     _, var_str = v.split("|")
                     v = self._local_dict[var_str]
