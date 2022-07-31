@@ -283,7 +283,7 @@ message StringTest {
   string address_test = 19 [(p2p_validate.rules).string.address = true];
   string uuid_test = 20 [(p2p_validate.rules).string.uuid = true];
   string pydantic_type_test = 21 [(p2p_validate.rules).string.pydantic_type = "UUID1"];
-  string enable_test = 22 [(p2p_validate.rules).string.enable = true];
+  string enable_test = 22 [(p2p_validate.rules).string.enable = false];
   string default_test = 23 [(p2p_validate.rules).string.default = "default"];
   string default_factory_test = 24 [(p2p_validate.rules).string.default_factory = "p2p@import|uuid4|uuid"];
   string miss_default_test=25 [(p2p_validate.rules).string.miss_default = true];
@@ -300,20 +300,19 @@ message StringTest {
 message BytesTest {
   bytes const_test = 1 [(p2p_validate.rules).bytes.const = "demo"];
   bytes range_len_test = 3 [(p2p_validate.rules).bytes = {min_length: 1, max_length: 4}];
-  bytes pattern_test = 4 [(p2p_validate.rules).bytes.pattern = "^test"];
   bytes prefix_test = 5 [(p2p_validate.rules).bytes.prefix = "prefix"];
   bytes suffix_test = 6 [(p2p_validate.rules).bytes.suffix = "suffix"];
   bytes contains_test = 7 [(p2p_validate.rules).bytes.contains = "contains"];
   bytes in_test = 8 [(p2p_validate.rules).bytes= {in: ["a", "b", "c"]}];
   bytes not_in_test = 9 [(p2p_validate.rules).bytes= {not_in: ["a", "b", "c"]}];
-  bytes enable_test = 22 [(p2p_validate.rules).bytes.enable = true];
+  bytes enable_test = 22 [(p2p_validate.rules).bytes.enable = false];
   bytes default_test = 23 [(p2p_validate.rules).bytes.default = "default"];
-  bytes default_factory_test = 24 [(p2p_validate.rules).bytes.default_factory = "p2p@import|uuid4|uuid"];
+  bytes default_factory_test = 24 [(p2p_validate.rules).bytes.default_factory = "p2p@builtin|bytes"];
   bytes miss_default_test=25 [(p2p_validate.rules).bytes.miss_default = true];
   bytes alias_test = 26 [(p2p_validate.rules).bytes.alias = "alias"];
   bytes desc_test = 27 [(p2p_validate.rules).bytes.description = "test desc"];
   bytes example_test = 28 [(p2p_validate.rules).bytes.example = "example"];
-  bytes example_factory_test = 29 [(p2p_validate.rules).bytes.example_factory= "p2p@import|uuid4|uuid"];
+  bytes example_factory_test = 29 [(p2p_validate.rules).bytes.example_factory= "p2p@builtin|bytes"];
   bytes field_test = 30[(p2p_validate.rules).bytes.field = "p2p@local|CustomerField"];
   bytes title_test = 31 [(p2p_validate.rules).bytes.title = "title_test"];
   bytes type_test = 32 [(p2p_validate.rules).bytes.type = "p2p@import|constr|pydantic"];
@@ -327,10 +326,9 @@ enum State {
 
 message EnumTest {
   State const_test = 1 [(p2p_validate.rules).enum.const = 2];
-  State defined_only_test = 2 [(p2p_validate.rules).enum.defined_only = true];
   State in_test = 3 [(p2p_validate.rules).enum = {in: [0, 2]}];
   State not_in_test = 4 [(p2p_validate.rules).enum = {in: [0, 2]}];
-  State enable_test = 22 [(p2p_validate.rules).enum.enable = true];
+  State enable_test = 22 [(p2p_validate.rules).enum.enable = false];
   State default_test = 23 [(p2p_validate.rules).enum.default = 1];
   State miss_default_test=25 [(p2p_validate.rules).enum.miss_default = true];
   State alias_test = 26 [(p2p_validate.rules).enum.alias = "alias"];
@@ -343,7 +341,6 @@ message EnumTest {
 
 message MapTest {
   map<string, int32> pair_test = 1 [(p2p_validate.rules).map = {min_pairs:1, max_pairs:5}];
-  map<string, int32> no_parse_test = 2 [(p2p_validate.rules).map.no_sparse = true];
   map<string, int32> keys_test = 3 [
     (p2p_validate.rules).map.keys.string.min_length = 1,
     (p2p_validate.rules).map.keys.string.max_length = 5
@@ -357,7 +354,7 @@ message MapTest {
     (p2p_validate.rules).map.keys.string.max_length = 5,
     (p2p_validate.rules).map.values.timestamp.gt_now = true
   ];
-  map<string, int32> enable_test = 6[(p2p_validate.rules).map.enable = true];
+  map<string, int32> enable_test = 6[(p2p_validate.rules).map.enable = false];
   map<string, int32> default_factory_test = 24 [(p2p_validate.rules).map.default_factory = "p2p@builtin|dict"];
   map<string, int32> miss_default_test=25 [(p2p_validate.rules).map.miss_default = true];
   map<string, int32> alias_test = 26 [(p2p_validate.rules).map.alias = "alias"];
@@ -401,7 +398,7 @@ message RepeatedTest {
     (p2p_validate.rules).repeated = {min_items: 1, max_items: 5},
     (p2p_validate.rules).repeated.items.bytes= {min_length: 1, max_length: 5}
   ];
-  repeated string enable_test = 9 [(p2p_validate.rules).repeated.enable = true];
+  repeated string enable_test = 9 [(p2p_validate.rules).repeated.enable = false];
   repeated string default_factory_test = 24 [(p2p_validate.rules).repeated.default_factory = "p2p@builtin|list"];
   repeated string miss_default_test=25 [(p2p_validate.rules).repeated.miss_default = true];
   repeated string alias_test = 26 [(p2p_validate.rules).repeated.alias = "alias"];
@@ -427,7 +424,7 @@ message AnyTest {
       "type.googleapis.com/google.protobuf.Timestamp"
     ],
   }];
-  google.protobuf.Any enable_test = 4 [(p2p_validate.rules).any.enable = true];
+  google.protobuf.Any enable_test = 4 [(p2p_validate.rules).any.enable = false];
   google.protobuf.Any default_test = 23 [(p2p_validate.rules).any.default = "type.googleapis.com/google.protobuf.Duration"];
   google.protobuf.Any default_factory_test = 24 [(p2p_validate.rules).any.default_factory = "p2p@local|customer_any"];
   google.protobuf.Any miss_default_test=25 [(p2p_validate.rules).any.miss_default = true];
@@ -440,13 +437,12 @@ message AnyTest {
 }
 
 message DurationTest {
-  google.protobuf.Duration required_test =1 [(p2p_validate.rules).duration.required = true];
   google.protobuf.Duration const_test =2 [(p2p_validate.rules).duration.const = {seconds: 1, nanos: 500000000}];
   google.protobuf.Duration range_test = 3 [(p2p_validate.rules).duration = {lt: {seconds: 10, nanos: 500000000}, gt: {seconds: 5, nanos: 500000000}}];
   google.protobuf.Duration range_e_test = 4 [(p2p_validate.rules).duration = {lte: {seconds: 10, nanos: 500000000}, gte: {seconds: 5, nanos: 500000000}}];
   google.protobuf.Duration in_test = 5 [(p2p_validate.rules).duration = {in: [{seconds: 1, nanos: 500000000}, {seconds:3, nanos: 500000000}]}];
   google.protobuf.Duration not_in_test = 6 [(p2p_validate.rules).duration = {in: [{seconds: 1, nanos: 500000000}, {seconds:3, nanos: 500000000}]}];
-  google.protobuf.Duration enable_test = 22 [(p2p_validate.rules).duration.enable = true];
+  google.protobuf.Duration enable_test = 22 [(p2p_validate.rules).duration.enable = false];
   google.protobuf.Duration default_test = 23 [(p2p_validate.rules).duration.default = {seconds: 1, nanos:500000000}];
   google.protobuf.Duration default_factory_test = 24 [(p2p_validate.rules).duration.default_factory = "p2p@import|timedelta|datetime"];
   google.protobuf.Duration miss_default_test=25 [(p2p_validate.rules).duration.miss_default = true];
@@ -460,7 +456,6 @@ message DurationTest {
 }
 
 message TimestampTest {
-  google.protobuf.Timestamp required_test = 1 [(p2p_validate.rules).timestamp.required = true];
   google.protobuf.Timestamp const_test = 2 [(p2p_validate.rules).timestamp.const = {seconds: 1600000000}];
   google.protobuf.Timestamp range_test = 3 [(p2p_validate.rules).timestamp = {gt: {seconds: 1600000000}, lt: {seconds: 1600000010}}];
   google.protobuf.Timestamp range_e_test = 4 [(p2p_validate.rules).timestamp = {ge: {seconds: 1600000000}, le: {seconds: 1600000010}}];
@@ -471,7 +466,7 @@ message TimestampTest {
     gt_now: true,
     within: {seconds: 3600}
   }];
-  google.protobuf.Timestamp enable_test = 22 [(p2p_validate.rules).timestamp.enable = true];
+  google.protobuf.Timestamp enable_test = 22 [(p2p_validate.rules).timestamp.enable = false];
   google.protobuf.Timestamp default_test = 23 [(p2p_validate.rules).timestamp.default = {seconds: 1, nanos:500000000}];
   google.protobuf.Timestamp default_factory_test = 24 [(p2p_validate.rules).timestamp.default_factory = "p2p@import|datetime|datetime"];
   google.protobuf.Timestamp miss_default_test=25 [(p2p_validate.rules).timestamp.miss_default = true];

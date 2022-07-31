@@ -302,7 +302,6 @@ class StringTest(BaseModel):
     address_test: IPvAnyAddress = FieldInfo(default="")
     uuid_test: UUID = FieldInfo(default="")
     pydantic_type_test: str = FieldInfo(default="")
-    enable_test: str = FieldInfo(default="")
     default_test: str = FieldInfo(default="default")
     default_factory_test: str = FieldInfo(default_factory=uuid4)
     miss_default_test: str = FieldInfo()
@@ -326,20 +325,18 @@ class StringTest(BaseModel):
 class BytesTest(BaseModel):
     const_test: bytes = FieldInfo(default=b"demo", const=True)
     range_len_test: bytes = FieldInfo(default=b"", min_length=1, max_length=4)
-    pattern_test: bytes = FieldInfo(default=b"")
     prefix_test: bytes = FieldInfo(default=b"", extra={"prefix": b"prefix"})
     suffix_test: bytes = FieldInfo(default=b"", extra={"suffix": b"suffix"})
     contains_test: bytes = FieldInfo(default=b"", extra={"contains": b"contains"})
     in_test: bytes = FieldInfo(default=b"", extra={"in": [b"a", b"b", b"c"]})
     not_in_test: bytes = FieldInfo(default=b"", extra={"not_in": [b"a", b"b", b"c"]})
-    enable_test: bytes = FieldInfo(default=b"")
-    default_test: bytes = FieldInfo(default="default")
-    default_factory_test: bytes = FieldInfo(default_factory=uuid4)
+    default_test: bytes = FieldInfo(default=b"default")
+    default_factory_test: bytes = FieldInfo(default_factory=bytes)
     miss_default_test: bytes = FieldInfo()
     alias_test: bytes = FieldInfo(default=b"", alias="alias", alias_priority=2)
     desc_test: bytes = FieldInfo(default=b"", description="test desc")
-    example_test: bytes = FieldInfo(default=b"", extra={"example": "example"})
-    example_factory_test: bytes = FieldInfo(default=b"", extra={"example": uuid4})
+    example_test: bytes = FieldInfo(default=b"", extra={"example": b"example"})
+    example_factory_test: bytes = FieldInfo(default=b"", extra={"example": bytes})
     field_test: bytes = CustomerField(default=b"")
     title_test: bytes = FieldInfo(default=b"", title="title_test")
     type_test: constr() = FieldInfo(default=b"")
@@ -359,10 +356,8 @@ class State(IntEnum):
 
 class EnumTest(BaseModel):
     const_test: State = FieldInfo(default=2, const=True)
-    defined_only_test: State = FieldInfo(default=0)
     in_test: State = FieldInfo(default=0, extra={"in": [0, 2]})
     not_in_test: State = FieldInfo(default=0, extra={"in": [0, 2]})
-    enable_test: State = FieldInfo(default=0)
     default_test: State = FieldInfo(default=1)
     miss_default_test: State = FieldInfo()
     alias_test: State = FieldInfo(default=0, alias="alias", alias_priority=2)
@@ -377,11 +372,9 @@ class EnumTest(BaseModel):
 
 class MapTest(BaseModel):
     pair_test: typing.Dict[str, int] = FieldInfo(extra={"map_max_pairs": 5, "map_min_pairs": 1})
-    no_parse_test: typing.Dict[str, int] = FieldInfo()
-    keys_test: typing.Dict[constr(min_length=1, max_length=5), int] = FieldInfo()
-    values_test: typing.Dict[str, conint(gt=5, lt=5)] = FieldInfo()
-    keys_values_test: typing.Dict[constr(min_length=1, max_length=5), Timestamp] = FieldInfo()
-    enable_test: typing.Dict[str, int] = FieldInfo()
+    keys_test: typing.Dict[constr(), int] = FieldInfo()
+    values_test: typing.Dict[str, conint()] = FieldInfo()
+    keys_values_test: typing.Dict[constr(), contimestamp(timestamp_gt_now=True)] = FieldInfo()
     default_factory_test: typing.Dict[str, int] = FieldInfo(default_factory=dict)
     miss_default_test: typing.Dict[str, int] = FieldInfo()
     alias_test: typing.Dict[str, int] = FieldInfo(alias="alias", alias_priority=2)
@@ -425,7 +418,6 @@ class RepeatedTest(BaseModel):
     items_bytes_test: conlist(item_type=conbytes(min_length=1, max_length=5), min_items=1, max_items=5) = FieldInfo(
         default_factory=list
     )
-    enable_test: typing.List[str] = FieldInfo(default_factory=list)
     default_factory_test: typing.List[str] = FieldInfo(default_factory=list)
     miss_default_test: typing.List[str] = FieldInfo()
     alias_test: typing.List[str] = FieldInfo(default_factory=list, alias="alias", alias_priority=2)
@@ -454,7 +446,6 @@ class AnyTest(BaseModel):
             "any_in": ["type.googleapis.com/google.protobuf.Duration", "type.googleapis.com/google.protobuf.Timestamp"]
         }
     )
-    enable_test: Any = FieldInfo()
     default_test: Any = FieldInfo(default="type.googleapis.com/google.protobuf.Duration")
     default_factory_test: Any = FieldInfo(default_factory=customer_any)
     miss_default_test: Any = FieldInfo()
@@ -465,12 +456,12 @@ class AnyTest(BaseModel):
     field_test: Any = CustomerField()
     title_test: Any = FieldInfo(title="title_test")
 
+    any_not_in_validator_default_test = validator("default_test", allow_reuse=True)(any_not_in_validator)
     any_not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(any_not_in_validator)
     any_in_validator_in_test = validator("in_test", allow_reuse=True)(any_in_validator)
 
 
 class DurationTest(BaseModel):
-    required_test: Timedelta = FieldInfo()
     const_test: Timedelta = FieldInfo(extra={"duration_const": timedelta(seconds=1, microseconds=500000)})
     range_test: Timedelta = FieldInfo(
         extra={
@@ -490,7 +481,6 @@ class DurationTest(BaseModel):
     not_in_test: Timedelta = FieldInfo(
         extra={"duration_in": [timedelta(seconds=1, microseconds=500000), timedelta(seconds=3, microseconds=500000)]}
     )
-    enable_test: Timedelta = FieldInfo()
     default_test: Timedelta = FieldInfo(default=timedelta(seconds=1, microseconds=500000))
     default_factory_test: Timedelta = FieldInfo(default_factory=timedelta)
     miss_default_test: Timedelta = FieldInfo()
@@ -512,7 +502,6 @@ class DurationTest(BaseModel):
 
 
 class TimestampTest(BaseModel):
-    required_test: datetime = FieldInfo()
     const_test: datetime = FieldInfo(extra={"timestamp_const": datetime(2020, 9, 13, 12, 26, 40)})
     range_test: datetime = FieldInfo(
         extra={"timestamp_gt": datetime(2020, 9, 13, 12, 26, 40), "timestamp_lt": datetime(2020, 9, 13, 12, 26, 50)}
@@ -526,7 +515,6 @@ class TimestampTest(BaseModel):
     within_and_gt_now_test: datetime = FieldInfo(
         extra={"timestamp_gt_now": True, "timestamp_within": timedelta(seconds=3600)}
     )
-    enable_test: datetime = FieldInfo()
     default_test: datetime = FieldInfo(default=datetime(1970, 1, 1, 0, 0, 1, 500000))
     default_factory_test: datetime = FieldInfo(default_factory=datetime)
     miss_default_test: datetime = FieldInfo()
@@ -583,7 +571,7 @@ class NestedMessage(BaseModel):
 
 
 class OneOfTest(BaseModel):
-    _one_of_dict = {"p2p_validate_test.OneOfTest.id": {"fields": {"y", "x"}, "required": True}}
+    _one_of_dict = {"p2p_validate_test.OneOfTest.id": {"fields": {"x", "y"}, "required": True}}
 
     header: str = FieldInfo(default="")
     x: str = FieldInfo(default="")
@@ -593,7 +581,7 @@ class OneOfTest(BaseModel):
 
 
 class OneOfNotTest(BaseModel):
-    _one_of_dict = {"p2p_validate_test.OneOfNotTest.id": {"fields": {"y", "x"}, "required": False}}
+    _one_of_dict = {"p2p_validate_test.OneOfNotTest.id": {"fields": {"x", "y"}, "required": False}}
 
     header: str = FieldInfo(default="")
     x: str = FieldInfo(default="")

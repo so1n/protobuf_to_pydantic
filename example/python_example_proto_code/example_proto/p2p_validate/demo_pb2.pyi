@@ -884,7 +884,6 @@ class BytesTest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     CONST_TEST_FIELD_NUMBER: builtins.int
     RANGE_LEN_TEST_FIELD_NUMBER: builtins.int
-    PATTERN_TEST_FIELD_NUMBER: builtins.int
     PREFIX_TEST_FIELD_NUMBER: builtins.int
     SUFFIX_TEST_FIELD_NUMBER: builtins.int
     CONTAINS_TEST_FIELD_NUMBER: builtins.int
@@ -903,7 +902,6 @@ class BytesTest(google.protobuf.message.Message):
     TYPE_TEST_FIELD_NUMBER: builtins.int
     const_test: builtins.bytes
     range_len_test: builtins.bytes
-    pattern_test: builtins.bytes
     prefix_test: builtins.bytes
     suffix_test: builtins.bytes
     contains_test: builtins.bytes
@@ -924,7 +922,6 @@ class BytesTest(google.protobuf.message.Message):
         *,
         const_test: builtins.bytes = ...,
         range_len_test: builtins.bytes = ...,
-        pattern_test: builtins.bytes = ...,
         prefix_test: builtins.bytes = ...,
         suffix_test: builtins.bytes = ...,
         contains_test: builtins.bytes = ...,
@@ -942,13 +939,12 @@ class BytesTest(google.protobuf.message.Message):
         title_test: builtins.bytes = ...,
         type_test: builtins.bytes = ...,
         ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["alias_test",b"alias_test","const_test",b"const_test","contains_test",b"contains_test","default_factory_test",b"default_factory_test","default_test",b"default_test","desc_test",b"desc_test","enable_test",b"enable_test","example_factory_test",b"example_factory_test","example_test",b"example_test","field_test",b"field_test","in_test",b"in_test","miss_default_test",b"miss_default_test","not_in_test",b"not_in_test","pattern_test",b"pattern_test","prefix_test",b"prefix_test","range_len_test",b"range_len_test","suffix_test",b"suffix_test","title_test",b"title_test","type_test",b"type_test"]) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["alias_test",b"alias_test","const_test",b"const_test","contains_test",b"contains_test","default_factory_test",b"default_factory_test","default_test",b"default_test","desc_test",b"desc_test","enable_test",b"enable_test","example_factory_test",b"example_factory_test","example_test",b"example_test","field_test",b"field_test","in_test",b"in_test","miss_default_test",b"miss_default_test","not_in_test",b"not_in_test","prefix_test",b"prefix_test","range_len_test",b"range_len_test","suffix_test",b"suffix_test","title_test",b"title_test","type_test",b"type_test"]) -> None: ...
 global___BytesTest = BytesTest
 
 class EnumTest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     CONST_TEST_FIELD_NUMBER: builtins.int
-    DEFINED_ONLY_TEST_FIELD_NUMBER: builtins.int
     IN_TEST_FIELD_NUMBER: builtins.int
     NOT_IN_TEST_FIELD_NUMBER: builtins.int
     ENABLE_TEST_FIELD_NUMBER: builtins.int
@@ -960,7 +956,6 @@ class EnumTest(google.protobuf.message.Message):
     FIELD_TEST_FIELD_NUMBER: builtins.int
     TITLE_TEST_FIELD_NUMBER: builtins.int
     const_test: global___State.ValueType
-    defined_only_test: global___State.ValueType
     in_test: global___State.ValueType
     not_in_test: global___State.ValueType
     enable_test: global___State.ValueType
@@ -974,7 +969,6 @@ class EnumTest(google.protobuf.message.Message):
     def __init__(self,
         *,
         const_test: global___State.ValueType = ...,
-        defined_only_test: global___State.ValueType = ...,
         in_test: global___State.ValueType = ...,
         not_in_test: global___State.ValueType = ...,
         enable_test: global___State.ValueType = ...,
@@ -986,25 +980,12 @@ class EnumTest(google.protobuf.message.Message):
         field_test: global___State.ValueType = ...,
         title_test: global___State.ValueType = ...,
         ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["alias_test",b"alias_test","const_test",b"const_test","default_test",b"default_test","defined_only_test",b"defined_only_test","desc_test",b"desc_test","enable_test",b"enable_test","example_test",b"example_test","field_test",b"field_test","in_test",b"in_test","miss_default_test",b"miss_default_test","not_in_test",b"not_in_test","title_test",b"title_test"]) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["alias_test",b"alias_test","const_test",b"const_test","default_test",b"default_test","desc_test",b"desc_test","enable_test",b"enable_test","example_test",b"example_test","field_test",b"field_test","in_test",b"in_test","miss_default_test",b"miss_default_test","not_in_test",b"not_in_test","title_test",b"title_test"]) -> None: ...
 global___EnumTest = EnumTest
 
 class MapTest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     class PairTestEntry(google.protobuf.message.Message):
-        DESCRIPTOR: google.protobuf.descriptor.Descriptor
-        KEY_FIELD_NUMBER: builtins.int
-        VALUE_FIELD_NUMBER: builtins.int
-        key: typing.Text
-        value: builtins.int
-        def __init__(self,
-            *,
-            key: typing.Text = ...,
-            value: builtins.int = ...,
-            ) -> None: ...
-        def ClearField(self, field_name: typing_extensions.Literal["key",b"key","value",b"value"]) -> None: ...
-
-    class NoParseTestEntry(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
         KEY_FIELD_NUMBER: builtins.int
         VALUE_FIELD_NUMBER: builtins.int
@@ -1176,7 +1157,6 @@ class MapTest(google.protobuf.message.Message):
         def ClearField(self, field_name: typing_extensions.Literal["key",b"key","value",b"value"]) -> None: ...
 
     PAIR_TEST_FIELD_NUMBER: builtins.int
-    NO_PARSE_TEST_FIELD_NUMBER: builtins.int
     KEYS_TEST_FIELD_NUMBER: builtins.int
     VALUES_TEST_FIELD_NUMBER: builtins.int
     KEYS_VALUES_TEST_FIELD_NUMBER: builtins.int
@@ -1191,8 +1171,6 @@ class MapTest(google.protobuf.message.Message):
     TYPE_TEST_FIELD_NUMBER: builtins.int
     @property
     def pair_test(self) -> google.protobuf.internal.containers.ScalarMap[typing.Text, builtins.int]: ...
-    @property
-    def no_parse_test(self) -> google.protobuf.internal.containers.ScalarMap[typing.Text, builtins.int]: ...
     @property
     def keys_test(self) -> google.protobuf.internal.containers.ScalarMap[typing.Text, builtins.int]: ...
     @property
@@ -1220,7 +1198,6 @@ class MapTest(google.protobuf.message.Message):
     def __init__(self,
         *,
         pair_test: typing.Optional[typing.Mapping[typing.Text, builtins.int]] = ...,
-        no_parse_test: typing.Optional[typing.Mapping[typing.Text, builtins.int]] = ...,
         keys_test: typing.Optional[typing.Mapping[typing.Text, builtins.int]] = ...,
         values_test: typing.Optional[typing.Mapping[typing.Text, builtins.int]] = ...,
         keys_values_test: typing.Optional[typing.Mapping[typing.Text, google.protobuf.timestamp_pb2.Timestamp]] = ...,
@@ -1234,7 +1211,7 @@ class MapTest(google.protobuf.message.Message):
         title_test: typing.Optional[typing.Mapping[typing.Text, builtins.int]] = ...,
         type_test: typing.Optional[typing.Mapping[typing.Text, builtins.int]] = ...,
         ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["alias_test",b"alias_test","default_factory_test",b"default_factory_test","desc_test",b"desc_test","enable_test",b"enable_test","example_factory_test",b"example_factory_test","field_test",b"field_test","keys_test",b"keys_test","keys_values_test",b"keys_values_test","miss_default_test",b"miss_default_test","no_parse_test",b"no_parse_test","pair_test",b"pair_test","title_test",b"title_test","type_test",b"type_test","values_test",b"values_test"]) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["alias_test",b"alias_test","default_factory_test",b"default_factory_test","desc_test",b"desc_test","enable_test",b"enable_test","example_factory_test",b"example_factory_test","field_test",b"field_test","keys_test",b"keys_test","keys_values_test",b"keys_values_test","miss_default_test",b"miss_default_test","pair_test",b"pair_test","title_test",b"title_test","type_test",b"type_test","values_test",b"values_test"]) -> None: ...
 global___MapTest = MapTest
 
 class MessageTest(google.protobuf.message.Message):
@@ -1390,7 +1367,6 @@ global___AnyTest = AnyTest
 
 class DurationTest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
-    REQUIRED_TEST_FIELD_NUMBER: builtins.int
     CONST_TEST_FIELD_NUMBER: builtins.int
     RANGE_TEST_FIELD_NUMBER: builtins.int
     RANGE_E_TEST_FIELD_NUMBER: builtins.int
@@ -1407,8 +1383,6 @@ class DurationTest(google.protobuf.message.Message):
     FIELD_TEST_FIELD_NUMBER: builtins.int
     TITLE_TEST_FIELD_NUMBER: builtins.int
     TYPE_TEST_FIELD_NUMBER: builtins.int
-    @property
-    def required_test(self) -> google.protobuf.duration_pb2.Duration: ...
     @property
     def const_test(self) -> google.protobuf.duration_pb2.Duration: ...
     @property
@@ -1443,7 +1417,6 @@ class DurationTest(google.protobuf.message.Message):
     def type_test(self) -> google.protobuf.duration_pb2.Duration: ...
     def __init__(self,
         *,
-        required_test: typing.Optional[google.protobuf.duration_pb2.Duration] = ...,
         const_test: typing.Optional[google.protobuf.duration_pb2.Duration] = ...,
         range_test: typing.Optional[google.protobuf.duration_pb2.Duration] = ...,
         range_e_test: typing.Optional[google.protobuf.duration_pb2.Duration] = ...,
@@ -1461,13 +1434,12 @@ class DurationTest(google.protobuf.message.Message):
         title_test: typing.Optional[google.protobuf.duration_pb2.Duration] = ...,
         type_test: typing.Optional[google.protobuf.duration_pb2.Duration] = ...,
         ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["alias_test",b"alias_test","const_test",b"const_test","default_factory_test",b"default_factory_test","default_test",b"default_test","desc_test",b"desc_test","enable_test",b"enable_test","example_factory_test",b"example_factory_test","example_test",b"example_test","field_test",b"field_test","in_test",b"in_test","miss_default_test",b"miss_default_test","not_in_test",b"not_in_test","range_e_test",b"range_e_test","range_test",b"range_test","required_test",b"required_test","title_test",b"title_test","type_test",b"type_test"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["alias_test",b"alias_test","const_test",b"const_test","default_factory_test",b"default_factory_test","default_test",b"default_test","desc_test",b"desc_test","enable_test",b"enable_test","example_factory_test",b"example_factory_test","example_test",b"example_test","field_test",b"field_test","in_test",b"in_test","miss_default_test",b"miss_default_test","not_in_test",b"not_in_test","range_e_test",b"range_e_test","range_test",b"range_test","required_test",b"required_test","title_test",b"title_test","type_test",b"type_test"]) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["alias_test",b"alias_test","const_test",b"const_test","default_factory_test",b"default_factory_test","default_test",b"default_test","desc_test",b"desc_test","enable_test",b"enable_test","example_factory_test",b"example_factory_test","example_test",b"example_test","field_test",b"field_test","in_test",b"in_test","miss_default_test",b"miss_default_test","not_in_test",b"not_in_test","range_e_test",b"range_e_test","range_test",b"range_test","title_test",b"title_test","type_test",b"type_test"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["alias_test",b"alias_test","const_test",b"const_test","default_factory_test",b"default_factory_test","default_test",b"default_test","desc_test",b"desc_test","enable_test",b"enable_test","example_factory_test",b"example_factory_test","example_test",b"example_test","field_test",b"field_test","in_test",b"in_test","miss_default_test",b"miss_default_test","not_in_test",b"not_in_test","range_e_test",b"range_e_test","range_test",b"range_test","title_test",b"title_test","type_test",b"type_test"]) -> None: ...
 global___DurationTest = DurationTest
 
 class TimestampTest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
-    REQUIRED_TEST_FIELD_NUMBER: builtins.int
     CONST_TEST_FIELD_NUMBER: builtins.int
     RANGE_TEST_FIELD_NUMBER: builtins.int
     RANGE_E_TEST_FIELD_NUMBER: builtins.int
@@ -1486,8 +1458,6 @@ class TimestampTest(google.protobuf.message.Message):
     FIELD_TEST_FIELD_NUMBER: builtins.int
     TITLE_TEST_FIELD_NUMBER: builtins.int
     TYPE_TEST_FIELD_NUMBER: builtins.int
-    @property
-    def required_test(self) -> google.protobuf.timestamp_pb2.Timestamp: ...
     @property
     def const_test(self) -> google.protobuf.timestamp_pb2.Timestamp: ...
     @property
@@ -1526,7 +1496,6 @@ class TimestampTest(google.protobuf.message.Message):
     def type_test(self) -> google.protobuf.timestamp_pb2.Timestamp: ...
     def __init__(self,
         *,
-        required_test: typing.Optional[google.protobuf.timestamp_pb2.Timestamp] = ...,
         const_test: typing.Optional[google.protobuf.timestamp_pb2.Timestamp] = ...,
         range_test: typing.Optional[google.protobuf.timestamp_pb2.Timestamp] = ...,
         range_e_test: typing.Optional[google.protobuf.timestamp_pb2.Timestamp] = ...,
@@ -1546,8 +1515,8 @@ class TimestampTest(google.protobuf.message.Message):
         title_test: typing.Optional[google.protobuf.timestamp_pb2.Timestamp] = ...,
         type_test: typing.Optional[google.protobuf.timestamp_pb2.Timestamp] = ...,
         ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["alias_test",b"alias_test","const_test",b"const_test","default_factory_test",b"default_factory_test","default_test",b"default_test","desc_test",b"desc_test","enable_test",b"enable_test","example_factory_test",b"example_factory_test","example_test",b"example_test","field_test",b"field_test","gt_now_test",b"gt_now_test","lt_now_test",b"lt_now_test","miss_default_test",b"miss_default_test","range_e_test",b"range_e_test","range_test",b"range_test","required_test",b"required_test","title_test",b"title_test","type_test",b"type_test","within_and_gt_now_test",b"within_and_gt_now_test","within_test",b"within_test"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["alias_test",b"alias_test","const_test",b"const_test","default_factory_test",b"default_factory_test","default_test",b"default_test","desc_test",b"desc_test","enable_test",b"enable_test","example_factory_test",b"example_factory_test","example_test",b"example_test","field_test",b"field_test","gt_now_test",b"gt_now_test","lt_now_test",b"lt_now_test","miss_default_test",b"miss_default_test","range_e_test",b"range_e_test","range_test",b"range_test","required_test",b"required_test","title_test",b"title_test","type_test",b"type_test","within_and_gt_now_test",b"within_and_gt_now_test","within_test",b"within_test"]) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["alias_test",b"alias_test","const_test",b"const_test","default_factory_test",b"default_factory_test","default_test",b"default_test","desc_test",b"desc_test","enable_test",b"enable_test","example_factory_test",b"example_factory_test","example_test",b"example_test","field_test",b"field_test","gt_now_test",b"gt_now_test","lt_now_test",b"lt_now_test","miss_default_test",b"miss_default_test","range_e_test",b"range_e_test","range_test",b"range_test","title_test",b"title_test","type_test",b"type_test","within_and_gt_now_test",b"within_and_gt_now_test","within_test",b"within_test"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["alias_test",b"alias_test","const_test",b"const_test","default_factory_test",b"default_factory_test","default_test",b"default_test","desc_test",b"desc_test","enable_test",b"enable_test","example_factory_test",b"example_factory_test","example_test",b"example_test","field_test",b"field_test","gt_now_test",b"gt_now_test","lt_now_test",b"lt_now_test","miss_default_test",b"miss_default_test","range_e_test",b"range_e_test","range_test",b"range_test","title_test",b"title_test","type_test",b"type_test","within_and_gt_now_test",b"within_and_gt_now_test","within_test",b"within_test"]) -> None: ...
 global___TimestampTest = TimestampTest
 
 class MessageIgnoredTest(google.protobuf.message.Message):

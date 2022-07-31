@@ -250,16 +250,19 @@ class M2P(object):
                 elif column.message_type.name.endswith("Entry"):
                     # support google.protobuf.MapEntry
                     key, value = column.message_type.fields
-                    key_type: Any = (
-                        type_dict[key.type]
-                        if not key.message_type
-                        else self._parse_msg_to_pydantic_model(descriptor=key.message_type)
-                    )
-                    value_type: Any = (
-                        type_dict[value.type]
-                        if not value.message_type
-                        else self._parse_msg_to_pydantic_model(descriptor=value.message_type)
-                    )
+
+                    if not key.message_type:
+                        key_type: Any = type_dict[key.type]
+                    elif key.message_type.name in message_type_dict_by_type_name:
+                        key_type = message_type_dict_by_type_name[key.message_type.name]
+                    else:
+                        key_type = self._parse_msg_to_pydantic_model(descriptor=key.message_type)
+                    if not value.message_type:
+                        value_type: Any = type_dict[value.type]
+                    elif value.message_type.name in message_type_dict_by_type_name:
+                        value_type = message_type_dict_by_type_name[value.message_type.name]
+                    else:
+                        value_type = self._parse_msg_to_pydantic_model(descriptor=value.message_type)
                     type_ = Dict[key_type, value_type]
                 else:
                     # support google.protobuf.Message
@@ -334,12 +337,13 @@ class M2P(object):
                     raw_keys_type, raw_values_type = type_.__args__
                     if "keys" in map_type_dict:
                         new_keys_type = map_type_dict["keys"]
-                        if issubclass(new_keys_type, raw_keys_type):
+                        if issubclass(new_keys_type, raw_keys_type) or raw_keys_type is datetime.datetime:
                             raw_keys_type = new_keys_type
                     if "values" in map_type_dict:
                         new_values_type = map_type_dict["values"]
-                        if issubclass(new_values_type, raw_values_type):
+                        if issubclass(new_values_type, raw_values_type) or raw_values_type is datetime.datetime:
                             raw_values_type = new_values_type
+
                     type_ = Dict[raw_keys_type, raw_values_type]  # type: ignore
             else:
                 field_param_dict = {"default": default, "default_factory": default_factory}

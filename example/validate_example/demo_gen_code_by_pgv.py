@@ -250,17 +250,12 @@ class EnumTest(BaseModel):
     in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(in_validator)
 
 
-class Timestamp(BaseModel):
-    seconds: int = FieldInfo(default=0)
-    nanos: int = FieldInfo(default=0)
-
-
 class MapTest(BaseModel):
     pair_test: typing.Dict[str, int] = FieldInfo(extra={"map_max_pairs": 5, "map_min_pairs": 1})
     no_parse_test: typing.Dict[str, int] = FieldInfo()
-    keys_test: typing.Dict[constr(min_length=1, max_length=5), int] = FieldInfo()
-    values_test: typing.Dict[str, conint(gt=5, lt=5)] = FieldInfo()
-    keys_values_test: typing.Dict[constr(min_length=1, max_length=5), Timestamp] = FieldInfo()
+    keys_test: typing.Dict[constr(), int] = FieldInfo()
+    values_test: typing.Dict[str, conint()] = FieldInfo()
+    keys_values_test: typing.Dict[constr(), contimestamp(timestamp_gt_now=True)] = FieldInfo()
     ignore_test: typing.Dict[str, int] = FieldInfo()
 
     map_min_pairs_validator_pair_test = validator("pair_test", allow_reuse=True)(map_min_pairs_validator)

@@ -154,9 +154,9 @@ def option_descriptor_to_desc_dict(option_descriptor: Descriptor, field: Any, de
                 desc_dict["map_type"] = {}
             desc_dict["map_type"][column] = con_type(
                 **{
-                    _key: sub_dict.get(_key, None)
+                    _key: sub_dict["extra"].get(_key, None)
                     for _key in inspect.signature(con_type).parameters.keys()
-                    if sub_dict.get(_key, None) is not None
+                    if sub_dict["extra"].get(_key, None) is not None
                 }
             )
             continue

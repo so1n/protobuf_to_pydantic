@@ -995,11 +995,6 @@ message BytesRules {
     // at a maximum
     optional uint64 max_length = 3;
 
-    // Pattern specifes that this field must match against the specified
-    // regular expression (RE2 syntax). The included expression should elide
-    // any delimiters.
-    optional string pattern  = 4;
-
     // Prefix specifies that this field must have the specified bytes at the
     // beginning of the string.
     optional bytes  prefix   = 5;
@@ -1026,7 +1021,7 @@ message BytesRules {
     oneof default_config {
         // The default value corresponding to the field, if not set,
         // the default value is the default value of the corresponding type of the field
-        string default = 11;
+        bytes default = 11;
         // The default value factory function corresponding to the field, supports template variables,
         // such as `p2p@import|uuid|uuid 4`
         string  default_factory = 12;
@@ -1041,7 +1036,7 @@ message BytesRules {
     optional float multiple_of = 16;
     oneof example_config {
         // Set the corresponding sample value
-        string example = 17;
+        bytes example = 17;
         // Set the corresponding sample value factory function, support template variables
         string example_factory = 18;
     }
@@ -1073,10 +1068,6 @@ message BytesRules {
 message EnumRules {
     // Const specifies that this field must be exactly the specified value
     optional int32 const        = 1;
-
-    // DefinedOnly specifies that this field must be only one of the defined
-    // values for this enum, failing on any undefined value.
-    optional bool  defined_only = 2;
 
     // In specifies that this field must be equal to one of the specified
     // values
@@ -1211,10 +1202,6 @@ message MapRules {
     // KVs at a maximum
     optional uint64 max_pairs = 2;
 
-    // NoSparse specifies values in this field cannot be unset. This only
-    // applies to map's with message value types.
-    optional bool no_sparse = 3;
-
     // Keys specifies the constraints to be applied to each key in the field.
     optional FieldRules keys   = 4;
 
@@ -1293,9 +1280,6 @@ message AnyRules {
 // DurationRules describe the constraints applied exclusively to the
 // `google.protobuf.Duration` well-known type
 message DurationRules {
-    // Required specifies that this field must be set
-    optional bool required = 1;
-
     // Const specifies that this field must be exactly the specified value
     optional google.protobuf.Duration const = 2;
 
@@ -1356,9 +1340,6 @@ message DurationRules {
 // TimestampRules describe the constraints applied exclusively to the
 // `google.protobuf.Timestamp` well-known type
 message TimestampRules {
-    // Required specifies that this field must be set
-    optional bool required = 1;
-
     // Const specifies that this field must be exactly the specified value
     optional google.protobuf.Timestamp const = 2;
 
