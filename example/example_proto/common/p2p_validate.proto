@@ -99,7 +99,7 @@ message FloatRules {
         // the default value is the default value of the corresponding type of the field
         float default = 9;
         // The default value factory function corresponding to the field, supports template variables,
-        // such as `p2p@import|uuid|uuid 4`
+        // such as `p2p@import|uuid|uuid4`
         string  default_factory = 10;
         // Set field required
         bool miss_default = 11;
@@ -163,7 +163,7 @@ message DoubleRules {
         // the default value is the default value of the corresponding type of the field
         float default = 9;
         // The default value factory function corresponding to the field, supports template variables,
-        // such as `p2p@import|uuid|uuid 4`
+        // such as `p2p@import|uuid|uuid4`
         string  default_factory = 10;
         // Set field required
         bool miss_default = 11;
@@ -227,7 +227,7 @@ message Int32Rules {
         // the default value is the default value of the corresponding type of the field
         float default = 9;
         // The default value factory function corresponding to the field, supports template variables,
-        // such as `p2p@import|uuid|uuid 4`
+        // such as `p2p@import|uuid|uuid4`
         string  default_factory = 10;
         // Set field required
         bool miss_default = 11;
@@ -291,7 +291,7 @@ message Int64Rules {
         // the default value is the default value of the corresponding type of the field
         float default = 9;
         // The default value factory function corresponding to the field, supports template variables,
-        // such as `p2p@import|uuid|uuid 4`
+        // such as `p2p@import|uuid|uuid4`
         string  default_factory = 10;
         // Set field required
         bool miss_default = 11;
@@ -355,7 +355,7 @@ message UInt32Rules {
         // the default value is the default value of the corresponding type of the field
         float default = 9;
         // The default value factory function corresponding to the field, supports template variables,
-        // such as `p2p@import|uuid|uuid 4`
+        // such as `p2p@import|uuid|uuid4`
         string  default_factory = 10;
         // Set field required
         bool miss_default = 11;
@@ -419,7 +419,7 @@ message UInt64Rules {
         // the default value is the default value of the corresponding type of the field
         float default = 9;
         // The default value factory function corresponding to the field, supports template variables,
-        // such as `p2p@import|uuid|uuid 4`
+        // such as `p2p@import|uuid|uuid4`
         string  default_factory = 10;
         // Set field required
         bool miss_default = 11;
@@ -483,7 +483,7 @@ message SInt32Rules {
         // the default value is the default value of the corresponding type of the field
         float default = 9;
         // The default value factory function corresponding to the field, supports template variables,
-        // such as `p2p@import|uuid|uuid 4`
+        // such as `p2p@import|uuid|uuid4`
         string  default_factory = 10;
         // Set field required
         bool miss_default = 11;
@@ -547,7 +547,7 @@ message SInt64Rules {
         // the default value is the default value of the corresponding type of the field
         float default = 9;
         // The default value factory function corresponding to the field, supports template variables,
-        // such as `p2p@import|uuid|uuid 4`
+        // such as `p2p@import|uuid|uuid4`
         string  default_factory = 10;
         // Set field required
         bool miss_default = 11;
@@ -611,7 +611,7 @@ message Fixed32Rules {
         // the default value is the default value of the corresponding type of the field
         float default = 9;
         // The default value factory function corresponding to the field, supports template variables,
-        // such as `p2p@import|uuid|uuid 4`
+        // such as `p2p@import|uuid|uuid4`
         string  default_factory = 10;
         // Set field required
         bool miss_default = 11;
@@ -675,7 +675,7 @@ message Fixed64Rules {
         // the default value is the default value of the corresponding type of the field
         float default = 9;
         // The default value factory function corresponding to the field, supports template variables,
-        // such as `p2p@import|uuid|uuid 4`
+        // such as `p2p@import|uuid|uuid4`
         string  default_factory = 10;
         // Set field required
         bool miss_default = 11;
@@ -739,7 +739,7 @@ message SFixed32Rules {
         // the default value is the default value of the corresponding type of the field
         float default = 9;
         // The default value factory function corresponding to the field, supports template variables,
-        // such as `p2p@import|uuid|uuid 4`
+        // such as `p2p@import|uuid|uuid4`
         string  default_factory = 10;
         // Set field required
         bool miss_default = 11;
@@ -803,7 +803,7 @@ message SFixed64Rules {
         // the default value is the default value of the corresponding type of the field
         float default = 9;
         // The default value factory function corresponding to the field, supports template variables,
-        // such as `p2p@import|uuid|uuid 4`
+        // such as `p2p@import|uuid|uuid4`
         string  default_factory = 10;
         // Set field required
         bool miss_default = 11;
@@ -958,7 +958,7 @@ message StringRules {
         // the default value is the default value of the corresponding type of the field
         string default = 24;
         // The default value factory function corresponding to the field, supports template variables,
-        // such as `p2p@import|uuid|uuid 4`
+        // such as `p2p@import|uuid|uuid4`
         string  default_factory = 25;
         // Set field required
         bool miss_default = 26;
@@ -1023,7 +1023,7 @@ message BytesRules {
         // the default value is the default value of the corresponding type of the field
         bytes default = 11;
         // The default value factory function corresponding to the field, supports template variables,
-        // such as `p2p@import|uuid|uuid 4`
+        // such as `p2p@import|uuid|uuid4`
         string  default_factory = 12;
         // Set field required
         bool miss_default = 13;
@@ -1084,7 +1084,7 @@ message EnumRules {
         // the default value is the default value of the corresponding type of the field
         int32 default = 9;
         // The default value factory function corresponding to the field, supports template variables,
-        // such as `p2p@import|uuid|uuid 4`
+        // such as `p2p@import|uuid|uuid4`
         string  default_factory = 10;
         // Set field required
         bool miss_default = 11;
@@ -1123,7 +1123,7 @@ message MessageRules {
         // the default value is the default value of the corresponding type of the field
         float default = 9;
         // The default value factory function corresponding to the field, supports template variables,
-        // such as `p2p@import|uuid|uuid 4`
+        // such as `p2p@import|uuid|uuid4`
         string  default_factory = 10;
         // Set field required
         bool miss_default = 11;
@@ -1171,7 +1171,7 @@ message RepeatedRules {
 
     oneof default_config {
         // The default value factory function corresponding to the field, supports template variables,
-        // such as `p2p@import|uuid|uuid 4`
+        // such as `p2p@import|uuid|uuid4`
         string  default_factory = 10;
         // Set field required
         bool miss_default = 11;
@@ -1215,7 +1215,7 @@ message MapRules {
 
     oneof default_config {
         // The default value factory function corresponding to the field, supports template variables,
-        // such as `p2p@import|uuid|uuid 4`
+        // such as `p2p@import|uuid|uuid4`
         string  default_factory = 10;
         // Set field required
         bool miss_default = 11;
@@ -1256,7 +1256,7 @@ message AnyRules {
         // the default value is the default value of the corresponding type of the field
         string default = 9;
         // The default value factory function corresponding to the field, supports template variables,
-        // such as `p2p@import|uuid|uuid 4`
+        // such as `p2p@import|uuid|uuid4`
         string  default_factory = 10;
         // Set field required
         bool miss_default = 11;
@@ -1314,7 +1314,7 @@ message DurationRules {
         // the default value is the default value of the corresponding type of the field
         google.protobuf.Duration default = 9;
         // The default value factory function corresponding to the field, supports template variables,
-        // such as `p2p@import|uuid|uuid 4`
+        // such as `p2p@import|uuid|uuid4`
         string  default_factory = 10;
         // Set field required
         bool miss_default = 11;
@@ -1380,7 +1380,7 @@ message TimestampRules {
         // the default value is the default value of the corresponding type of the field
         google.protobuf.Timestamp default = 11;
         // The default value factory function corresponding to the field, supports template variables,
-        // such as `p2p@import|uuid|uuid 4`
+        // such as `p2p@import|uuid|uuid4`
         string  default_factory = 12;
         // Set field required
         bool miss_default = 13;

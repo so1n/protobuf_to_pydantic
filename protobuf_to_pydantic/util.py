@@ -43,12 +43,12 @@ def create_pydantic_model(
     )
 
 
-def replace_type(value: Any) -> Any:
+def replace_protobuf_type_to_python_type(value: Any) -> Any:
     if isinstance(value, Duration):
         return timedelta(microseconds=value.ToMicroseconds())
     elif isinstance(value, Timestamp):
         return value.ToDatetime()
     elif isinstance(value, (list, RepeatedCompositeContainer)):
-        return [replace_type(i) for i in value]
+        return [replace_protobuf_type_to_python_type(i) for i in value]
     else:
         return value

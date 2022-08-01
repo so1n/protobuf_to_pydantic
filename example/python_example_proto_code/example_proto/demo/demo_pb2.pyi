@@ -145,7 +145,7 @@ class NestedMessage(google.protobuf.message.Message):
         EXP_FIELD_NUMBER: builtins.int
         UUID_FIELD_NUMBER: builtins.int
         bank_number: typing.Text
-        """p2p: {"type": "p2p@import|PaymentCardNumber|pydantic.types"}"""
+        """p2p: {"type": "p2p@import|pydantic.types|PaymentCardNumber"}"""
 
         @property
         def exp(self) -> google.protobuf.timestamp_pb2.Timestamp:

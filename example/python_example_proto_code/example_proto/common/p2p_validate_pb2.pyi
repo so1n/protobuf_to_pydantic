@@ -188,7 +188,7 @@ class FloatRules(google.protobuf.message.Message):
 
     default_factory: typing.Text
     """The default value factory function corresponding to the field, supports template variables,
-    such as `p2p@import|uuid|uuid 4`
+    such as `p2p@import|uuid|uuid4`
     """
 
     miss_default: builtins.bool
@@ -334,7 +334,7 @@ class DoubleRules(google.protobuf.message.Message):
 
     default_factory: typing.Text
     """The default value factory function corresponding to the field, supports template variables,
-    such as `p2p@import|uuid|uuid 4`
+    such as `p2p@import|uuid|uuid4`
     """
 
     miss_default: builtins.bool
@@ -480,7 +480,7 @@ class Int32Rules(google.protobuf.message.Message):
 
     default_factory: typing.Text
     """The default value factory function corresponding to the field, supports template variables,
-    such as `p2p@import|uuid|uuid 4`
+    such as `p2p@import|uuid|uuid4`
     """
 
     miss_default: builtins.bool
@@ -626,7 +626,7 @@ class Int64Rules(google.protobuf.message.Message):
 
     default_factory: typing.Text
     """The default value factory function corresponding to the field, supports template variables,
-    such as `p2p@import|uuid|uuid 4`
+    such as `p2p@import|uuid|uuid4`
     """
 
     miss_default: builtins.bool
@@ -772,7 +772,7 @@ class UInt32Rules(google.protobuf.message.Message):
 
     default_factory: typing.Text
     """The default value factory function corresponding to the field, supports template variables,
-    such as `p2p@import|uuid|uuid 4`
+    such as `p2p@import|uuid|uuid4`
     """
 
     miss_default: builtins.bool
@@ -918,7 +918,7 @@ class UInt64Rules(google.protobuf.message.Message):
 
     default_factory: typing.Text
     """The default value factory function corresponding to the field, supports template variables,
-    such as `p2p@import|uuid|uuid 4`
+    such as `p2p@import|uuid|uuid4`
     """
 
     miss_default: builtins.bool
@@ -1064,7 +1064,7 @@ class SInt32Rules(google.protobuf.message.Message):
 
     default_factory: typing.Text
     """The default value factory function corresponding to the field, supports template variables,
-    such as `p2p@import|uuid|uuid 4`
+    such as `p2p@import|uuid|uuid4`
     """
 
     miss_default: builtins.bool
@@ -1210,7 +1210,7 @@ class SInt64Rules(google.protobuf.message.Message):
 
     default_factory: typing.Text
     """The default value factory function corresponding to the field, supports template variables,
-    such as `p2p@import|uuid|uuid 4`
+    such as `p2p@import|uuid|uuid4`
     """
 
     miss_default: builtins.bool
@@ -1356,7 +1356,7 @@ class Fixed32Rules(google.protobuf.message.Message):
 
     default_factory: typing.Text
     """The default value factory function corresponding to the field, supports template variables,
-    such as `p2p@import|uuid|uuid 4`
+    such as `p2p@import|uuid|uuid4`
     """
 
     miss_default: builtins.bool
@@ -1502,7 +1502,7 @@ class Fixed64Rules(google.protobuf.message.Message):
 
     default_factory: typing.Text
     """The default value factory function corresponding to the field, supports template variables,
-    such as `p2p@import|uuid|uuid 4`
+    such as `p2p@import|uuid|uuid4`
     """
 
     miss_default: builtins.bool
@@ -1648,7 +1648,7 @@ class SFixed32Rules(google.protobuf.message.Message):
 
     default_factory: typing.Text
     """The default value factory function corresponding to the field, supports template variables,
-    such as `p2p@import|uuid|uuid 4`
+    such as `p2p@import|uuid|uuid4`
     """
 
     miss_default: builtins.bool
@@ -1794,7 +1794,7 @@ class SFixed64Rules(google.protobuf.message.Message):
 
     default_factory: typing.Text
     """The default value factory function corresponding to the field, supports template variables,
-    such as `p2p@import|uuid|uuid 4`
+    such as `p2p@import|uuid|uuid4`
     """
 
     miss_default: builtins.bool
@@ -2106,7 +2106,7 @@ class StringRules(google.protobuf.message.Message):
 
     default_factory: typing.Text
     """The default value factory function corresponding to the field, supports template variables,
-    such as `p2p@import|uuid|uuid 4`
+    such as `p2p@import|uuid|uuid4`
     """
 
     miss_default: builtins.bool
@@ -2277,7 +2277,7 @@ class BytesRules(google.protobuf.message.Message):
 
     default_factory: typing.Text
     """The default value factory function corresponding to the field, supports template variables,
-    such as `p2p@import|uuid|uuid 4`
+    such as `p2p@import|uuid|uuid4`
     """
 
     miss_default: builtins.bool
@@ -2418,7 +2418,7 @@ class EnumRules(google.protobuf.message.Message):
 
     default_factory: typing.Text
     """The default value factory function corresponding to the field, supports template variables,
-    such as `p2p@import|uuid|uuid 4`
+    such as `p2p@import|uuid|uuid4`
     """
 
     miss_default: builtins.bool
@@ -2513,7 +2513,7 @@ class MessageRules(google.protobuf.message.Message):
 
     default_factory: typing.Text
     """The default value factory function corresponding to the field, supports template variables,
-    such as `p2p@import|uuid|uuid 4`
+    such as `p2p@import|uuid|uuid4`
     """
 
     miss_default: builtins.bool
@@ -2624,7 +2624,7 @@ class RepeatedRules(google.protobuf.message.Message):
 
     default_factory: typing.Text
     """The default value factory function corresponding to the field, supports template variables,
-    such as `p2p@import|uuid|uuid 4`
+    such as `p2p@import|uuid|uuid4`
     """
 
     miss_default: builtins.bool
@@ -2734,7 +2734,7 @@ class MapRules(google.protobuf.message.Message):
 
     default_factory: typing.Text
     """The default value factory function corresponding to the field, supports template variables,
-    such as `p2p@import|uuid|uuid 4`
+    such as `p2p@import|uuid|uuid4`
     """
 
     miss_default: builtins.bool
@@ -2839,7 +2839,7 @@ class AnyRules(google.protobuf.message.Message):
 
     default_factory: typing.Text
     """The default value factory function corresponding to the field, supports template variables,
-    such as `p2p@import|uuid|uuid 4`
+    such as `p2p@import|uuid|uuid4`
     """
 
     miss_default: builtins.bool
@@ -2966,7 +2966,7 @@ class DurationRules(google.protobuf.message.Message):
         pass
     default_factory: typing.Text
     """The default value factory function corresponding to the field, supports template variables,
-    such as `p2p@import|uuid|uuid 4`
+    such as `p2p@import|uuid|uuid4`
     """
 
     miss_default: builtins.bool
@@ -3124,7 +3124,7 @@ class TimestampRules(google.protobuf.message.Message):
         pass
     default_factory: typing.Text
     """The default value factory function corresponding to the field, supports template variables,
-    such as `p2p@import|uuid|uuid 4`
+    such as `p2p@import|uuid|uuid4`
     """
 
     miss_default: builtins.bool

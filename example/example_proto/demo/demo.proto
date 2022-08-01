@@ -42,7 +42,7 @@ message RepeatedMessage {
 // test nested message
 message NestedMessage{
   message UserPayMessage {
-    string bank_number=1; // p2p: {"type": "p2p@import|PaymentCardNumber|pydantic.types"}
+    string bank_number=1; // p2p: {"type": "p2p@import|pydantic.types|PaymentCardNumber"}
     google.protobuf.Timestamp exp=2; // p2p: {"default_factory": "p2p@local|exp_time"}
     string uuid=3; // p2p: {"default_factory": "p2p@local|uuid4"}
   }

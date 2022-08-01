@@ -443,10 +443,13 @@ class AnyTest(BaseModel):
     )
     in_test: Any = FieldInfo(
         extra={
-            "any_in": ["type.googleapis.com/google.protobuf.Duration", "type.googleapis.com/google.protobuf.Timestamp"]
+            "any_in": [
+                Any(type_url="type.googleapis.com/google.protobuf.Duration"),
+                "type.googleapis.com/google.protobuf.Timestamp",
+            ]
         }
     )
-    default_test: Any = FieldInfo(default="type.googleapis.com/google.protobuf.Duration")
+    default_test: Any = FieldInfo(default=Any(type_url="type.googleapis.com/google.protobuf.Duration"))
     default_factory_test: Any = FieldInfo(default_factory=customer_any)
     miss_default_test: Any = FieldInfo()
     alias_test: Any = FieldInfo(alias="alias", alias_priority=2)
@@ -456,7 +459,6 @@ class AnyTest(BaseModel):
     field_test: Any = CustomerField()
     title_test: Any = FieldInfo(title="title_test")
 
-    any_not_in_validator_default_test = validator("default_test", allow_reuse=True)(any_not_in_validator)
     any_not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(any_not_in_validator)
     any_in_validator_in_test = validator("in_test", allow_reuse=True)(any_in_validator)
 
@@ -516,15 +518,15 @@ class TimestampTest(BaseModel):
         extra={"timestamp_gt_now": True, "timestamp_within": timedelta(seconds=3600)}
     )
     default_test: datetime = FieldInfo(default=datetime(1970, 1, 1, 0, 0, 1, 500000))
-    default_factory_test: datetime = FieldInfo(default_factory=datetime)
+    default_factory_test: datetime = FieldInfo(default_factory=datetime.now)
     miss_default_test: datetime = FieldInfo()
     alias_test: datetime = FieldInfo(alias="alias", alias_priority=2)
     desc_test: datetime = FieldInfo(description="test desc")
     example_test: datetime = FieldInfo(extra={"example": datetime(1970, 1, 1, 0, 0, 1, 500000)})
-    example_factory_test: datetime = FieldInfo(extra={"example": datetime})
+    example_factory_test: datetime = FieldInfo(extra={"example": datetime.now})
     field_test: datetime = CustomerField()
     title_test: datetime = FieldInfo(title="title_test")
-    type_test: datetime = FieldInfo(extra={"example": datetime})
+    type_test: datetime = FieldInfo()
 
     timestamp_const_validator_const_test = validator("const_test", allow_reuse=True)(timestamp_const_validator)
     timestamp_lt_validator_range_test = validator("range_test", allow_reuse=True)(timestamp_lt_validator)
@@ -571,7 +573,7 @@ class NestedMessage(BaseModel):
 
 
 class OneOfTest(BaseModel):
-    _one_of_dict = {"p2p_validate_test.OneOfTest.id": {"fields": {"x", "y"}, "required": True}}
+    _one_of_dict = {"p2p_validate_test.OneOfTest.id": {"fields": {"y", "x"}, "required": True}}
 
     header: str = FieldInfo(default="")
     x: str = FieldInfo(default="")
@@ -581,7 +583,7 @@ class OneOfTest(BaseModel):
 
 
 class OneOfNotTest(BaseModel):
-    _one_of_dict = {"p2p_validate_test.OneOfNotTest.id": {"fields": {"x", "y"}, "required": False}}
+    _one_of_dict = {"p2p_validate_test.OneOfNotTest.id": {"fields": {"y", "x"}, "required": False}}
 
     header: str = FieldInfo(default="")
     x: str = FieldInfo(default="")

@@ -14,7 +14,7 @@ from protobuf_to_pydantic.customer_con_type import (
 )
 from protobuf_to_pydantic.customer_validator import validate_validator_dict
 from protobuf_to_pydantic.grpc_types import Descriptor, FieldDescriptor, Message
-from protobuf_to_pydantic.util import replace_type
+from protobuf_to_pydantic.util import replace_protobuf_type_to_python_type
 
 from .types import column_pydantic_type_dict
 
@@ -124,7 +124,7 @@ def option_descriptor_to_desc_dict(option_descriptor: Descriptor, field: Any, de
             # Types of priority treatment for special cases
             if "validator" not in desc_dict:
                 desc_dict["validator"] = {}
-            desc_dict["extra"][f"{type_name}_{column}"] = replace_type(value)
+            desc_dict["extra"][f"{type_name}_{column}"] = replace_protobuf_type_to_python_type(value)
             desc_dict["validator"][f"{field.name}_{type_name}_{column}_validator"] = validator(
                 field.name, allow_reuse=True
             )(validate_validator_dict.get(f"{type_name}_{column}_validator"))
@@ -133,7 +133,7 @@ def option_descriptor_to_desc_dict(option_descriptor: Descriptor, field: Any, de
             # Compatible with PGV attributes that are not supported by pydantic
             if "validator" not in desc_dict:
                 desc_dict["validator"] = {}
-            desc_dict["extra"][column] = replace_type(value)
+            desc_dict["extra"][column] = replace_protobuf_type_to_python_type(value)
             desc_dict["validator"][f"{field.name}_{column}_validator"] = validator(field.name, allow_reuse=True)(
                 validate_validator_dict.get(f"{column}_validator")
             )

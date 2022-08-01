@@ -285,15 +285,15 @@ message StringTest {
   string pydantic_type_test = 21 [(p2p_validate.rules).string.pydantic_type = "UUID1"];
   string enable_test = 22 [(p2p_validate.rules).string.enable = false];
   string default_test = 23 [(p2p_validate.rules).string.default = "default"];
-  string default_factory_test = 24 [(p2p_validate.rules).string.default_factory = "p2p@import|uuid4|uuid"];
+  string default_factory_test = 24 [(p2p_validate.rules).string.default_factory = "p2p@import|uuid|uuid4"];
   string miss_default_test=25 [(p2p_validate.rules).string.miss_default = true];
   string alias_test = 26 [(p2p_validate.rules).string.alias = "alias"];
   string desc_test = 27 [(p2p_validate.rules).string.description = "test desc"];
   string example_test = 28 [(p2p_validate.rules).string.example = "example"];
-  string example_factory_test = 29 [(p2p_validate.rules).string.example_factory= "p2p@import|uuid4|uuid"];
+  string example_factory_test = 29 [(p2p_validate.rules).string.example_factory= "p2p@import|uuid|uuid4"];
   string field_test = 30[(p2p_validate.rules).string.field = "p2p@local|CustomerField"];
   string title_test = 31 [(p2p_validate.rules).string.title = "title_test"];
-  string type_test = 32 [(p2p_validate.rules).string.type = "p2p@import|constr|pydantic"];
+  string type_test = 32 [(p2p_validate.rules).string.type = "p2p@import|pydantic|constr"];
 }
 
 
@@ -315,7 +315,7 @@ message BytesTest {
   bytes example_factory_test = 29 [(p2p_validate.rules).bytes.example_factory= "p2p@builtin|bytes"];
   bytes field_test = 30[(p2p_validate.rules).bytes.field = "p2p@local|CustomerField"];
   bytes title_test = 31 [(p2p_validate.rules).bytes.title = "title_test"];
-  bytes type_test = 32 [(p2p_validate.rules).bytes.type = "p2p@import|constr|pydantic"];
+  bytes type_test = 32 [(p2p_validate.rules).bytes.type = "p2p@import|pydantic|constr"];
 }
 
 enum State {
@@ -420,12 +420,15 @@ message AnyTest {
   }];
   google.protobuf.Any in_test = 3 [(p2p_validate.rules).any = {
     in: [
-      "type.googleapis.com/google.protobuf.Duration",
+      'p2p@import_instance|google.protobuf.any_pb2|Any|{"type_url": "type.googleapis.com/google.protobuf.Duration"}',
       "type.googleapis.com/google.protobuf.Timestamp"
     ],
   }];
   google.protobuf.Any enable_test = 4 [(p2p_validate.rules).any.enable = false];
-  google.protobuf.Any default_test = 23 [(p2p_validate.rules).any.default = "type.googleapis.com/google.protobuf.Duration"];
+  google.protobuf.Any default_test = 23 [
+    (p2p_validate.rules).any.default = 'p2p@import_instance|google.protobuf.any_pb2|Any|{"type_url": "type.googleapis.com/google.protobuf.Duration"}'
+
+  ];
   google.protobuf.Any default_factory_test = 24 [(p2p_validate.rules).any.default_factory = "p2p@local|customer_any"];
   google.protobuf.Any miss_default_test=25 [(p2p_validate.rules).any.miss_default = true];
   google.protobuf.Any alias_test = 26 [(p2p_validate.rules).any.alias = "alias"];
@@ -444,15 +447,15 @@ message DurationTest {
   google.protobuf.Duration not_in_test = 6 [(p2p_validate.rules).duration = {in: [{seconds: 1, nanos: 500000000}, {seconds:3, nanos: 500000000}]}];
   google.protobuf.Duration enable_test = 22 [(p2p_validate.rules).duration.enable = false];
   google.protobuf.Duration default_test = 23 [(p2p_validate.rules).duration.default = {seconds: 1, nanos:500000000}];
-  google.protobuf.Duration default_factory_test = 24 [(p2p_validate.rules).duration.default_factory = "p2p@import|timedelta|datetime"];
+  google.protobuf.Duration default_factory_test = 24 [(p2p_validate.rules).duration.default_factory = "p2p@import|datetime|timedelta"];
   google.protobuf.Duration miss_default_test=25 [(p2p_validate.rules).duration.miss_default = true];
   google.protobuf.Duration alias_test = 26 [(p2p_validate.rules).duration.alias = "alias"];
   google.protobuf.Duration desc_test = 27 [(p2p_validate.rules).duration.description = "test desc"];
   google.protobuf.Duration example_test = 28 [(p2p_validate.rules).duration.example = {seconds: 1, nanos:500000000}];
-  google.protobuf.Duration example_factory_test = 29 [(p2p_validate.rules).duration.example_factory= "p2p@import|timedelta|datetime"];
+  google.protobuf.Duration example_factory_test = 29 [(p2p_validate.rules).duration.example_factory= "p2p@import|datetime|timedelta"];
   google.protobuf.Duration field_test = 30[(p2p_validate.rules).duration.field = "p2p@local|CustomerField"];
   google.protobuf.Duration title_test = 31 [(p2p_validate.rules).duration.title = "title_test"];
-  google.protobuf.Duration type_test = 32 [(p2p_validate.rules).duration.type = "p2p@import|timedelta|datetime"];
+  google.protobuf.Duration type_test = 32 [(p2p_validate.rules).duration.type = "p2p@import|datetime|timedelta"];
 }
 
 message TimestampTest {
@@ -468,15 +471,15 @@ message TimestampTest {
   }];
   google.protobuf.Timestamp enable_test = 22 [(p2p_validate.rules).timestamp.enable = false];
   google.protobuf.Timestamp default_test = 23 [(p2p_validate.rules).timestamp.default = {seconds: 1, nanos:500000000}];
-  google.protobuf.Timestamp default_factory_test = 24 [(p2p_validate.rules).timestamp.default_factory = "p2p@import|datetime|datetime"];
+  google.protobuf.Timestamp default_factory_test = 24 [(p2p_validate.rules).timestamp.default_factory = "p2p@import|datetime|datetime.now"];
   google.protobuf.Timestamp miss_default_test=25 [(p2p_validate.rules).timestamp.miss_default = true];
   google.protobuf.Timestamp alias_test = 26 [(p2p_validate.rules).timestamp.alias = "alias"];
   google.protobuf.Timestamp desc_test = 27 [(p2p_validate.rules).timestamp.description = "test desc"];
   google.protobuf.Timestamp example_test = 28 [(p2p_validate.rules).timestamp.example = {seconds: 1, nanos:500000000}];
-  google.protobuf.Timestamp example_factory_test = 29 [(p2p_validate.rules).timestamp.example_factory= "p2p@import|datetime|datetime"];
+  google.protobuf.Timestamp example_factory_test = 29 [(p2p_validate.rules).timestamp.example_factory= "p2p@import|datetime|datetime.now"];
   google.protobuf.Timestamp field_test = 30[(p2p_validate.rules).timestamp.field = "p2p@local|CustomerField"];
   google.protobuf.Timestamp title_test = 31 [(p2p_validate.rules).timestamp.title = "title_test"];
-  google.protobuf.Timestamp type_test = 32 [(p2p_validate.rules).timestamp.example_factory= "p2p@import|datetime|datetime"];
+  google.protobuf.Timestamp type_test = 32 [(p2p_validate.rules).timestamp.type = "p2p@import|datetime|datetime"];
 }
 
 

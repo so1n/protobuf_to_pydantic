@@ -2,6 +2,7 @@ import inspect
 import pathlib
 import sys
 from collections import deque
+from datetime import datetime
 from enum import IntEnum
 from types import ModuleType
 from typing import _GenericAlias  # type: ignore
@@ -13,7 +14,7 @@ from pydantic.fields import FieldInfo
 from protobuf_to_pydantic import customer_validator, gen_model
 from protobuf_to_pydantic.customer_con_type import pydantic_con_dict
 from protobuf_to_pydantic.grpc_types import RepeatedScalarContainer
-from protobuf_to_pydantic.util import replace_type
+from protobuf_to_pydantic.util import replace_protobuf_type_to_python_type
 
 
 class P2C(object):
@@ -117,7 +118,7 @@ class P2C(object):
         self._import_set.add(f"from {module_name} import {class_name}{extra_str}")
 
     def _get_value_code(self, type_: Type, is_first: bool = False) -> str:
-        type_ = replace_type(type_)
+        type_ = replace_protobuf_type_to_python_type(type_)
         if isinstance(type_, dict):
             type_name: str = ", ".join(
                 sorted([f"{self._get_value_code(k)}: {self._get_value_code(v)}" for k, v in type_.items()])
@@ -144,18 +145,37 @@ class P2C(object):
                 if not is_first:
                     self._parse_type_to_import_code(type_)
                 return getattr(type_, "__name__", None)
+        elif getattr(type_, "DESCRIPTOR", None):
+            # protobuf message support
+            message_name: str = type_.__class__.__name__
+            attr_str: str = " ,".join([f"{i[0].name}={repr(i[1])}" for i in type_.ListFields()])
+            if not is_first:
+                self._parse_type_to_import_code(type_)
+            return f"{message_name}({attr_str})"
         else:
             if not is_first:
                 self._parse_type_to_import_code(type_)
             type_module = inspect.getmodule(type_)
 
-            if type_module and type_module.__name__ == "builtins" or inspect.isfunction(type_module):
-                type_name = type_.__name__
+            qualname: str = getattr(type_, "__qualname__", "")
+            if (
+                qualname
+                and qualname.startswith("datetime")
+                and (
+                    (getattr(type_, "__objclass__", None) is datetime) or (getattr(type_, "__self__", None) is datetime)
+                )
+            ):
+                # support datetime.datetime.xxx
+                type_name = qualname
+                self._parse_type_to_import_code(datetime)
             else:
-                type_name = repr(type_)
+                if type_module and type_module.__name__ == "builtins" or inspect.isfunction(type_module):
+                    type_name = type_.__name__
+                else:
+                    type_name = repr(type_)
 
-            # Compatible with datetime.* name
-            type_name = type_name.replace("'", '"').replace("datetime.", "")
+                # Compatible with datetime.* name
+                type_name = type_name.replace("'", '"').replace("datetime.", "")
             return type_name
 
     def _model_config_handle(self, model: Type[BaseModel], indent: int = 0) -> str:
@@ -263,6 +283,8 @@ class P2C(object):
         if validator_str:
             class_str += f"{validator_str}\n"
 
+        if class_str.endswith("\n\n"):
+            class_str = class_str[:-1]
         self._content_deque.append(class_str)
         self._create_set.add(model)
 

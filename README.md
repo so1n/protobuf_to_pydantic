@@ -209,7 +209,7 @@ In addition to the parameters of `FieldInfo`, `protobuf_to_pydantic` also suppor
 - type: Expand the current type, such as the following bank card number:
   ```protobuf
   message UserPayMessage {
-    string bank_number=1; // p2p: {"type": "p2p@import|PaymentCardNumber|pydantic.types"}
+    string bank_number=1; // p2p: {"type": "p2p@import|pydantic.types|PaymentCardNumber"}
   }
   ```
 
@@ -220,7 +220,7 @@ In some cases, the value we fill in is a method or function of a library, such a
 Currently `protobuf to pydantic` supports two template parameters, the first one is `p 2 p@import`, the usage is as follows：
 ```protobuf
   message UserPayMessage {
-    string bank_number=1; // p2p: {"type": "p2p@import|PaymentCardNumber|pydantic.types"}
+    string bank_number=1; // p2p: {"type": "p2p@import|pydantic.types|PaymentCardNumber"}
   }
 ```
 The comments here use the syntax of the `{p2p method}|{class to be imported or:A}|{class module:B}` format, where the method `p2p@import` at the beginning indicates that this needs to be passed ` from B import A` introduces an object，
@@ -228,7 +228,7 @@ By commenting, `protobuf to pydantic` will convert the corresponding Message to 
 ```python
 from pydantic import BaseModel
 from pydantic.fields import FieldInfo
-# p2p@import|PaymentCardNumber|pydantic.types
+# p2p@import|pydantic.types|PaymentCardNumber
 from pydantic.types import PaymentCardNumber
 
 class UserPayMessage(BaseModel):

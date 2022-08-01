@@ -202,7 +202,7 @@ print(
 - type: 拓展目前的类型，比如下面的银行卡号码:
   ```protobuf
   message UserPayMessage {
-    string bank_number=1; // p2p: {"type": "p2p@import|PaymentCardNumber|pydantic.types"}
+    string bank_number=1; // p2p: {"type": "p2p@import|pydantic.types|PaymentCardNumber"}
   }
   ```
 
@@ -216,7 +216,7 @@ print(
 目前`protobuf_to_pydantic`支持两种模板参数，第一种是`p2p@import`，使用方法如下：
 ```protobuf
   message UserPayMessage {
-    string bank_number=1; // p2p: {"type": "p2p@import|PaymentCardNumber|pydantic.types"}
+    string bank_number=1; // p2p: {"type": "p2p@import|pydantic.types|PaymentCardNumber"}
   }
 ```
 这里的注释使用的是`{p2p的方法}|{要引入的类或:A}|{类的模块:B}`格式的语法，其中开头的方法`p2p@import`表示这是需要通过`from B import A`引入一个对象，
@@ -224,7 +224,7 @@ print(
 ```python
 from pydantic import BaseModel
 from pydantic.fields import FieldInfo
-# p2p@import|PaymentCardNumber|pydantic.types
+# p2p@import|pydantic.types|PaymentCardNumber
 from pydantic.types import PaymentCardNumber
 
 class UserPayMessage(BaseModel):

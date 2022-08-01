@@ -48,14 +48,18 @@ def not_in_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
 
 def any_in_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
     field_name, field_value = _get_name_value_from_kwargs("any_in", kwargs["field"])
-    if field_value is not None and isinstance(v, AnyMessage) and v.type_url not in field_value:
+    if (
+        field_value is not None
+        and isinstance(v, AnyMessage)
+        and (v.type_url not in field_value or v not in field_value)
+    ):
         raise ValueError(f"{field_name}.type_url:{v.type_url} not in {field_value}")
     return v
 
 
 def any_not_in_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
     field_name, field_value = _get_name_value_from_kwargs("any_not_in", kwargs["field"])
-    if field_value is not None and isinstance(v, AnyMessage) and v.type_url in field_value:
+    if field_value is not None and isinstance(v, AnyMessage) and (v.type_url in field_value or v in field_value):
         raise ValueError(f"{field_name}.type_url:{v.type_url} in {field_value}")
     return v
 

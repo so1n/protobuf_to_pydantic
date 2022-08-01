@@ -19,7 +19,14 @@ from protobuf_to_pydantic.get_desc import (
     get_desc_from_proto_file,
     get_desc_from_pyi_file,
 )
-from protobuf_to_pydantic.grpc_types import AnyMessage, Descriptor, FieldDescriptor, Message
+from protobuf_to_pydantic.grpc_types import (
+    AnyMessage,
+    Descriptor,
+    FieldDescriptor,
+    Message,
+    RepeatedCompositeContainer,
+    RepeatedScalarContainer,
+)
 from protobuf_to_pydantic.util import Timedelta, create_pydantic_model
 
 type_dict: Dict[str, Type] = {
@@ -304,7 +311,7 @@ class M2P(object):
                     field_doc_dict = field_doc
                 if self._parse_msg_desc_method != "PGV":
                     # pgv method not support template var
-                    self._field_dict_handle(field_doc_dict)
+                    field_doc_dict = self._field_dict_handle(field_doc_dict)
                 field_param_dict: dict = MessagePaitModel(**field_doc_dict).dict()
                 # Nested types do not include the `enable`, `field`, `validator` and `type`  attributes
                 if not field_param_dict.pop("enable"):
@@ -375,27 +382,49 @@ class M2P(object):
             pait_dict.update(json.loads(line))
         return pait_dict
 
-    def _field_dict_handle(self, pait_dict: dict) -> None:
-        for k, v in pait_dict.items():
-            if not isinstance(v, str):
-                continue
-            try:
-                if v.startswith("p2p@import"):
-                    _, var_str, module_str = v.split("|")
-                    v = getattr(import_module(module_str, module_str), var_str)
-                elif v.startswith("p2p@local") and self._local_dict:
-                    _, var_str = v.split("|")
-                    v = self._local_dict[var_str]
-                elif v.startswith("p2p@builtin"):
-                    _, var_str = v.split("|")
-                    v = __builtins__.get(var_str)  # type: ignore
-                elif v.startswith("p2p@"):
-                    raise ValueError(f"Only support p2p@import, p2p@local prefix. not {v}")
-                else:
-                    continue
-                pait_dict[k] = v
-            except Exception as e:
-                raise ValueError(f"parse {v} error: {e}") from e
+    def _field_dict_handle(self, pait_dict: dict) -> dict:
+        def temple_handle(container: Any) -> Any:
+            if isinstance(container, (list, RepeatedCompositeContainer, RepeatedScalarContainer)):
+                return [temple_handle(i) for i in container]
+            elif isinstance(container, dict):
+                return {k: temple_handle(v) for k, v in container.items()}
+            elif isinstance(container, str):
+                raw_container = container
+                try:
+                    if container.startswith("p2p@import_instance"):
+                        _, module_str, var_str, json_param = container.split("|")
+                        module: Any = import_module(module_str, module_str)
+                        for sub_var_str in var_str.split("."):
+                            module = getattr(module, sub_var_str)
+                        if json_param:
+                            container = module(**json.loads(json_param))  # type: ignore
+                        else:
+                            container = module
+                    elif container.startswith("p2p@import"):
+                        _, module_str, var_str = container.split("|")
+                        module = import_module(module_str, module_str)
+                        for sub_var_str in var_str.split("."):
+                            module = getattr(module, sub_var_str)
+                        container = module
+                    elif container.startswith("p2p@local") and self._local_dict:
+                        _, var_str = container.split("|")
+                        container = self._local_dict[var_str]
+                    elif container.startswith("p2p@builtin"):
+                        _, var_str = container.split("|")
+                        container = __builtins__.get(var_str)  # type: ignore
+                    elif container.startswith("p2p@"):
+                        raise ValueError(
+                            f"Only support p2p@import, p2p@local, p2p@import_instance prefix. not {container}"
+                        )
+                    else:
+                        return container
+                    return container
+                except Exception as e:
+                    raise ValueError(f"parse {raw_container} error: {e}") from e
+            else:
+                return container
+
+        pait_dict = temple_handle(pait_dict)
 
         _field: Any = pait_dict.pop("field", "")
         if isinstance(_field, str):
@@ -403,7 +432,7 @@ class M2P(object):
                 pait_dict["field"] = self._field_dict[_field]
         else:
             pait_dict["field"] = _field
-        return
+        return pait_dict
 
     def _get_field_doc_by_full_name(self, full_name: str) -> Any:
         field_doc_dict: dict = self._field_doc_dict
