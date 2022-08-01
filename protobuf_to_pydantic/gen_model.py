@@ -100,17 +100,71 @@ class MessagePaitModel(BaseModel):
     map_type: Optional[Dict[str, type]] = Field(None)
 
 
+class DescTemplate(object):
+    def __init__(self, local_dict: dict, comment_prefix: str) -> None:
+        self._local_dict: dict = local_dict
+        self._comment_prefix: str = comment_prefix
+        self._support_template_list: List[str] = [i for i in dir(self) if i.startswith("template")]
+
+    def template_import_instance(self, template_var_list: List[str]) -> Any:
+        module_str, var_str, json_param = template_var_list
+        module: Any = import_module(module_str, module_str)
+        for sub_var_str in var_str.split("."):
+            module = getattr(module, sub_var_str)
+        if json_param:
+            var = module(**json.loads(json_param))  # type: ignore
+        else:
+            var = module
+        return var
+
+    def template_import(self, template_var_list: List[str]) -> Any:
+        module_str, var_str = template_var_list
+        module = import_module(module_str, module_str)
+        for sub_var_str in var_str.split("."):
+            module = getattr(module, sub_var_str)
+        return module
+
+    def template_local(self, template_var_list: List[str]) -> Any:
+        return self._local_dict[template_var_list[0]]
+
+    def template_builtin(self, template_var_list: List[str]) -> Any:
+        return __builtins__.get(template_var_list[0])  # type: ignore
+
+    def _template_str_handler(self, template_str: str) -> Any:
+        try:
+            template_str_list: List[str] = template_str.split("|")
+            template_rule, *template_var_list = template_str_list
+            template_fn: Optional[Callable] = getattr(self, f"template_{template_rule}", None)
+            if not template_fn:
+                raise ValueError(f"Only support {' ,'.join(self._support_template_list)}. not {template_str}")
+            return template_fn(template_var_list)
+        except Exception as e:
+            raise ValueError(f"parse {template_str} error: {e}") from e
+
+    def get_value(self, container: Any) -> Any:
+        if isinstance(container, (list, RepeatedCompositeContainer, RepeatedScalarContainer)):
+            return [self.get_value(i) for i in container]
+        elif isinstance(container, dict):
+            return {k: self.get_value(v) for k, v in container.items()}
+        elif isinstance(container, str) and container.startswith(f"{self._comment_prefix}@"):
+            container = container.replace(f"{self._comment_prefix}@", "")
+            return self._template_str_handler(container)
+        else:
+            return container
+
+
 class M2P(object):
     def __init__(
         self,
         msg: Union[Type[Message], Descriptor],
         default_field: Type[FieldInfo] = FieldInfo,
         field_dict: Optional[Dict[str, FieldInfo]] = None,
-        comment_prefix: str = "p2p:",
+        comment_prefix: str = "p2p",
         parse_msg_desc_method: Any = None,
         pydantic_base: Optional[Type["BaseModel"]] = None,
         pydantic_module: Optional[str] = None,
         local_dict: Optional[Dict[str, Any]] = None,
+        desc_template: Optional[Type[DescTemplate]] = None,
     ):
         proto_file_name = msg.DESCRIPTOR.file.name
         if proto_file_name.endswith("empty.proto"):
@@ -142,10 +196,11 @@ class M2P(object):
         self._field_dict = field_dict or {}
         self._default_field = default_field
         self._comment_prefix = comment_prefix
-        self._local_dict = local_dict
+        self._local_dict = local_dict or {}
         self._creat_cache: Dict[Union[Type[Message], Descriptor], Type[BaseModel]] = {}
         self._pydantic_base: Type["BaseModel"] = pydantic_base or BaseModel
         self._pydantic_module: str = pydantic_module or __name__
+        self._desc_template: DescTemplate = (desc_template or DescTemplate)(self._local_dict, self._comment_prefix)
 
         self._gen_model: Type[BaseModel] = self._parse_msg_to_pydantic_model(
             descriptor=msg if isinstance(msg, Descriptor) else msg.DESCRIPTOR,
@@ -311,7 +366,14 @@ class M2P(object):
                     field_doc_dict = field_doc
                 if self._parse_msg_desc_method != "PGV":
                     # pgv method not support template var
-                    field_doc_dict = self._field_dict_handle(field_doc_dict)
+                    field_doc_dict = self._desc_template.get_value(field_doc_dict)
+                    _field: Any = field_doc_dict.pop("field", "")
+                    if isinstance(_field, str):
+                        if _field in self._field_dict:
+                            field_doc_dict["field"] = self._field_dict[_field]
+                    else:
+                        field_doc_dict["field"] = _field
+
                 field_param_dict: dict = MessagePaitModel(**field_doc_dict).dict()
                 # Nested types do not include the `enable`, `field`, `validator` and `type`  attributes
                 if not field_param_dict.pop("enable"):
@@ -376,62 +438,10 @@ class M2P(object):
         pait_dict: dict = {}
         for line in desc.split("\n"):
             line = line.strip()
-            if not line.startswith(self._comment_prefix):
+            if not line.startswith(f"{self._comment_prefix}:"):
                 continue
-            line = line.replace(self._comment_prefix, "")
+            line = line.replace(f"{self._comment_prefix}:", "")
             pait_dict.update(json.loads(line))
-        return pait_dict
-
-    def _field_dict_handle(self, pait_dict: dict) -> dict:
-        def temple_handle(container: Any) -> Any:
-            if isinstance(container, (list, RepeatedCompositeContainer, RepeatedScalarContainer)):
-                return [temple_handle(i) for i in container]
-            elif isinstance(container, dict):
-                return {k: temple_handle(v) for k, v in container.items()}
-            elif isinstance(container, str):
-                raw_container = container
-                try:
-                    if container.startswith("p2p@import_instance"):
-                        _, module_str, var_str, json_param = container.split("|")
-                        module: Any = import_module(module_str, module_str)
-                        for sub_var_str in var_str.split("."):
-                            module = getattr(module, sub_var_str)
-                        if json_param:
-                            container = module(**json.loads(json_param))  # type: ignore
-                        else:
-                            container = module
-                    elif container.startswith("p2p@import"):
-                        _, module_str, var_str = container.split("|")
-                        module = import_module(module_str, module_str)
-                        for sub_var_str in var_str.split("."):
-                            module = getattr(module, sub_var_str)
-                        container = module
-                    elif container.startswith("p2p@local") and self._local_dict:
-                        _, var_str = container.split("|")
-                        container = self._local_dict[var_str]
-                    elif container.startswith("p2p@builtin"):
-                        _, var_str = container.split("|")
-                        container = __builtins__.get(var_str)  # type: ignore
-                    elif container.startswith("p2p@"):
-                        raise ValueError(
-                            f"Only support p2p@import, p2p@local, p2p@import_instance prefix. not {container}"
-                        )
-                    else:
-                        return container
-                    return container
-                except Exception as e:
-                    raise ValueError(f"parse {raw_container} error: {e}") from e
-            else:
-                return container
-
-        pait_dict = temple_handle(pait_dict)
-
-        _field: Any = pait_dict.pop("field", "")
-        if isinstance(_field, str):
-            if _field in self._field_dict:
-                pait_dict["field"] = self._field_dict[_field]
-        else:
-            pait_dict["field"] = _field
         return pait_dict
 
     def _get_field_doc_by_full_name(self, full_name: str) -> Any:
@@ -449,11 +459,12 @@ def msg_to_pydantic_model(
     msg: Union[Type[Message], Descriptor],
     default_field: Type[FieldInfo] = FieldInfo,
     field_dict: Optional[Dict[str, FieldInfo]] = None,
-    comment_prefix: str = "p2p:",
+    comment_prefix: str = "p2p",
     parse_msg_desc_method: Any = None,
     local_dict: Optional[Dict[str, Any]] = None,
     pydantic_base: Optional[Type["BaseModel"]] = None,
     pydantic_module: Optional[str] = None,
+    desc_template: Optional[Type[DescTemplate]] = None,
 ) -> Type[BaseModel]:
     """
     Parse a message to a pydantic model
@@ -467,6 +478,7 @@ def msg_to_pydantic_model(
     :param local_dict: The variables corresponding to the p2p@local template
     :param pydantic_base: custom pydantic.BaseModel
     :param pydantic_module: custom create model's module name
+    :param desc_template: Template object, which can extend and modify template adaptation rules through inheritance
     """
     return M2P(
         msg=msg,
@@ -477,4 +489,5 @@ def msg_to_pydantic_model(
         local_dict=local_dict,
         pydantic_module=pydantic_module,
         pydantic_base=pydantic_base,
+        desc_template=desc_template,
     ).model

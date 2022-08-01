@@ -416,7 +416,7 @@ class NestedMessage(BaseModel):
 
 
 class OneOfTest(BaseModel):
-    _one_of_dict = {"validate_test.OneOfTest.id": {"fields": {"y", "x"}, "required": True}}
+    _one_of_dict = {"validate_test.OneOfTest.id": {"fields": {"x", "y"}, "required": True}}
 
     header: str = FieldInfo(default="")
     x: str = FieldInfo(default="")
@@ -426,7 +426,7 @@ class OneOfTest(BaseModel):
 
 
 class OneOfNotTest(BaseModel):
-    _one_of_dict = {"validate_test.OneOfNotTest.id": {"fields": {"y", "x"}, "required": False}}
+    _one_of_dict = {"validate_test.OneOfNotTest.id": {"fields": {"x", "y"}, "required": False}}
 
     header: str = FieldInfo(default="")
     x: str = FieldInfo(default="")
