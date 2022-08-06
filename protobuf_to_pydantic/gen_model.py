@@ -158,7 +158,6 @@ class M2P(object):
         self,
         msg: Union[Type[Message], Descriptor],
         default_field: Type[FieldInfo] = FieldInfo,
-        field_dict: Optional[Dict[str, FieldInfo]] = None,
         comment_prefix: str = "p2p",
         parse_msg_desc_method: Any = None,
         pydantic_base: Optional[Type["BaseModel"]] = None,
@@ -193,7 +192,6 @@ class M2P(object):
 
         self._parse_msg_desc_method: Optional[str] = parse_msg_desc_method
         self._field_doc_dict = message_field_dict
-        self._field_dict = field_dict or {}
         self._default_field = default_field
         self._comment_prefix = comment_prefix
         self._local_dict = local_dict or {}
@@ -367,12 +365,6 @@ class M2P(object):
                 if self._parse_msg_desc_method != "PGV":
                     # pgv method not support template var
                     field_doc_dict = self._desc_template.get_value(field_doc_dict)
-                    _field: Any = field_doc_dict.pop("field", "")
-                    if isinstance(_field, str):
-                        if _field in self._field_dict:
-                            field_doc_dict["field"] = self._field_dict[_field]
-                    else:
-                        field_doc_dict["field"] = _field
 
                 field_param_dict: dict = MessagePaitModel(**field_doc_dict).dict()
                 # Nested types do not include the `enable`, `field`, `validator` and `type`  attributes
@@ -458,7 +450,6 @@ class M2P(object):
 def msg_to_pydantic_model(
     msg: Union[Type[Message], Descriptor],
     default_field: Type[FieldInfo] = FieldInfo,
-    field_dict: Optional[Dict[str, FieldInfo]] = None,
     comment_prefix: str = "p2p",
     parse_msg_desc_method: Any = None,
     local_dict: Optional[Dict[str, Any]] = None,
@@ -471,7 +462,6 @@ def msg_to_pydantic_model(
     :param msg: grpc Message or descriptor
     :param default_field: gen pydantic_model default Field,
         apply only to the outermost pydantic model
-    :param field_dict: Define which FieldInfo should be used for the parameter (to support the pait framework)
     :param comment_prefix: Customize the prefixes that need to be parsed for comments
     :param parse_msg_desc_method: Define the type of comment to be parsed, if the value is a protobuf file path,
         it will be parsed by protobuf file; if it is a module of message object, it will be parsed by pyi file
@@ -483,7 +473,6 @@ def msg_to_pydantic_model(
     return M2P(
         msg=msg,
         default_field=default_field,
-        field_dict=field_dict,
         comment_prefix=comment_prefix,
         parse_msg_desc_method=parse_msg_desc_method,
         local_dict=local_dict,
