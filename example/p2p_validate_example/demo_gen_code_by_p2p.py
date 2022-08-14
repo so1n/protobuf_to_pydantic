@@ -444,8 +444,8 @@ class AnyTest(BaseModel):
     in_test: Any = FieldInfo(
         extra={
             "any_in": [
-                Any(type_url="type.googleapis.com/google.protobuf.Duration"),
                 "type.googleapis.com/google.protobuf.Timestamp",
+                Any(type_url="type.googleapis.com/google.protobuf.Duration"),
             ]
         }
     )
@@ -573,7 +573,7 @@ class NestedMessage(BaseModel):
 
 
 class OneOfTest(BaseModel):
-    _one_of_dict = {"p2p_validate_test.OneOfTest.id": {"fields": {"y", "x"}, "required": True}}
+    _one_of_dict = {"p2p_validate_test.OneOfTest.id": {"fields": {"x", "y"}, "required": True}}
 
     header: str = FieldInfo(default="")
     x: str = FieldInfo(default="")
@@ -583,7 +583,7 @@ class OneOfTest(BaseModel):
 
 
 class OneOfNotTest(BaseModel):
-    _one_of_dict = {"p2p_validate_test.OneOfNotTest.id": {"fields": {"y", "x"}, "required": False}}
+    _one_of_dict = {"p2p_validate_test.OneOfNotTest.id": {"fields": {"x", "y"}, "required": False}}
 
     header: str = FieldInfo(default="")
     x: str = FieldInfo(default="")

@@ -120,12 +120,16 @@ class P2C(object):
     def _get_value_code(self, type_: Type, is_first: bool = False) -> str:
         type_ = replace_protobuf_type_to_python_type(type_)
         if isinstance(type_, dict):
+            sort_list = [(k, v) for k, v in type_.items()]
+            sort_list.sort()
             type_name: str = ", ".join(
-                sorted([f"{self._get_value_code(k)}: {self._get_value_code(v)}" for k, v in type_.items()])
+                sorted([f"{self._get_value_code(k)}: {self._get_value_code(v)}" for k, v in sort_list])
             )
             return "{" + type_name + "}"
         elif isinstance(type_, (list, tuple, set)):
-            type_name = ", ".join([self._get_value_code(i) for i in type_])
+            sort_list = [self._get_value_code(i) for i in type_]
+            sort_list.sort()
+            type_name = ", ".join(sort_list)
             if isinstance(type_, list):
                 return "[" + type_name + "]"
             elif isinstance(type_, set):

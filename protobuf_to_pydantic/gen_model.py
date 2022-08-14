@@ -189,7 +189,6 @@ class M2P(object):
             )
         else:
             message_field_dict = get_desc_from_p2p(message=msg)
-
         self._parse_msg_desc_method: Optional[str] = parse_msg_desc_method
         self._field_doc_dict = message_field_dict
         self._default_field = default_field

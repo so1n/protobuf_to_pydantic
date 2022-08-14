@@ -192,7 +192,7 @@ class ParseFromPbOption(object):
     def parse(self) -> Dict[str, Any]:
         descriptor: Descriptor = self.message.DESCRIPTOR
         if descriptor.name in self._msg_desc_dict:
-            return self._msg_desc_dict[descriptor.name]
+            return self._msg_desc_dict
 
         self._msg_desc_dict[descriptor.name] = self.get_desc_from_options(descriptor)
         return self._msg_desc_dict

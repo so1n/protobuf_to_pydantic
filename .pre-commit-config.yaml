@@ -13,12 +13,12 @@ repos:
     rev: 21.7b0
     hooks:
       - id: black
-        exclude: "^example/python_example_proto_code/example_proto"
+        exclude: "^example/python_example_proto_code/example_proto|^tests"
   - repo: https://github.com/PyCQA/flake8
     rev: 3.9.2
     hooks:
       - id: flake8
-        exclude: "^example/python_example_proto_code/example_proto"
+        exclude: "^example/python_example_proto_code/example_proto|^tests"
   - repo: https://github.com/myint/autoflake
     rev: v1.4
     hooks:
