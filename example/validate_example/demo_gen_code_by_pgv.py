@@ -23,8 +23,10 @@ from protobuf_to_pydantic.customer_validator import (
     duration_const_validator,
     duration_ge_validator,
     duration_gt_validator,
+    duration_in_validator,
     duration_le_validator,
     duration_lt_validator,
+    duration_not_in_validator,
     in_validator,
     len_validator,
     map_max_pairs_validator,
@@ -337,7 +339,9 @@ class DurationTest(BaseModel):
         extra={"duration_in": [timedelta(seconds=1, microseconds=500000), timedelta(seconds=3, microseconds=500000)]}
     )
     not_in_test: Timedelta = FieldInfo(
-        extra={"duration_in": [timedelta(seconds=1, microseconds=500000), timedelta(seconds=3, microseconds=500000)]}
+        extra={
+            "duration_not_in": [timedelta(seconds=1, microseconds=500000), timedelta(seconds=3, microseconds=500000)]
+        }
     )
 
     duration_const_validator_const_test = validator("const_test", allow_reuse=True)(duration_const_validator)
@@ -345,8 +349,8 @@ class DurationTest(BaseModel):
     duration_gt_validator_range_test = validator("range_test", allow_reuse=True)(duration_gt_validator)
     duration_le_validator_range_e_test = validator("range_e_test", allow_reuse=True)(duration_le_validator)
     duration_ge_validator_range_e_test = validator("range_e_test", allow_reuse=True)(duration_ge_validator)
-    in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
-    in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(in_validator)
+    duration_in_validator_in_test = validator("in_test", allow_reuse=True)(duration_in_validator)
+    duration_not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(duration_not_in_validator)
 
 
 class TimestampTest(BaseModel):
