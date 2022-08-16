@@ -1,4 +1,3 @@
-import time
 from datetime import datetime
 from typing import Any, Callable, Dict, Tuple
 
@@ -34,6 +33,7 @@ def _get_name_value_from_kwargs(key: str, field: ModelField) -> Tuple[str, Any]:
 ##################
 def in_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
     field_name, field_value = _get_name_value_from_kwargs("in", kwargs["field"])
+    print(v, field_name, field_value)
     if field_value is not None and v not in field_value:
         raise ValueError(f"{field_name} not in {field_value}")
     return v
@@ -137,13 +137,31 @@ def duration_const_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
     return v
 
 
-duration_in_validator = in_validator
-duration_not_in_validator = not_in_validator
+def duration_in_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
+    field_name, field_value = _get_name_value_from_kwargs("duration_in", kwargs["field"])
+    if field_value is not None and v not in field_value:
+        raise ValueError(f"{field_name} not in {field_value}")
+    return v
+
+
+def duration_not_in_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
+    field_name, field_value = _get_name_value_from_kwargs("duration_not_in", kwargs["field"])
+    if field_value is not None and v in field_value:
+        raise ValueError(f"{field_name} in {field_value}")
+    return v
 
 
 #####################
 # timestamp support #
 #####################
+_now_default_factory: Callable[[], datetime] = datetime.now
+
+
+def set_now_default_factory(now_default_factory: Callable[[], datetime]) -> None:
+    global _now_default_factory
+    _now_default_factory = now_default_factory
+
+
 def timestamp_lt_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
     field_name, field_value = _get_name_value_from_kwargs("timestamp_lt", kwargs["field"])
     if field_value is not None and not (v < field_value):
@@ -153,9 +171,13 @@ def timestamp_lt_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
 
 def timestamp_lt_now_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
     field_name, field_value = _get_name_value_from_kwargs("timestamp_lt_now", kwargs["field"])
-    now_time: float = time.time()
-    if field_value is not None and not (v < now_time):
-        raise ValueError(f"{field_name} must < {now_time}, not {v}")
+    if field_value is not None:
+        if hasattr(field_value, "__call__"):
+            now_time: datetime = field_value()
+        else:
+            now_time = _now_default_factory()
+        if not v < now_time:
+            raise ValueError(f"{field_name} must < {now_time}, not {v}")
     return v
 
 
@@ -175,17 +197,25 @@ def timestamp_gt_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
 
 def timestamp_gt_now_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
     field_name, field_value = _get_name_value_from_kwargs("timestamp_gt_now", kwargs["field"])
-    now_time: datetime = datetime.now()
-    if field_value is not None and not (v > now_time):
-        raise ValueError(f"{field_name} must > {now_time}, not {v}")
+    if field_value is not None:
+        if hasattr(field_value, "__call__"):
+            now_time: datetime = field_value()
+        else:
+            now_time = _now_default_factory()
+        if not v > now_time:
+            raise ValueError(f"{field_name} must > {now_time}, not {v}")
     return v
 
 
 def timestamp_within_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
-    field_name, field_value = _get_name_value_from_kwargs("timestamp_within_now", kwargs["field"])
-    now_time: datetime = datetime.now()
-    if field_value is not None and not ((now_time - field_value) <= v <= (now_time + field_value)):
-        raise ValueError(f"{field_name} must between {now_time -field_value} and {now_time + field_value}, not {v}")
+    field_name, field_value = _get_name_value_from_kwargs("timestamp_within", kwargs["field"])
+    if field_value is not None:
+        if hasattr(field_value, "__call__"):
+            now_time: datetime = field_value()
+        else:
+            now_time = _now_default_factory()
+        if not ((now_time - field_value) <= v <= (now_time + field_value)):
+            raise ValueError(f"{field_name} must between {now_time -field_value} and {now_time + field_value}, not {v}")
     return v
 
 

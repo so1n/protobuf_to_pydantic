@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from typing import TYPE_CHECKING, Any, Callable, Dict, Optional, Type, Union
+from typing import TYPE_CHECKING, Any, Callable, Dict, Optional, Sequence, Type, Union
 
 from pydantic import (
     ConstrainedBytes,
@@ -12,6 +12,7 @@ from pydantic import (
     conint,
     conlist,
     constr,
+    validate_arguments,
     validator,
 )
 from pydantic.types import update_not_none
@@ -43,8 +44,8 @@ class ConstrainedTimedelta(timedelta):
     duration_gt: Optional[timedelta] = None
     duration_le: Optional[timedelta] = None
     duration_lt: Optional[timedelta] = None
-    duration_in: Optional[timedelta] = None
-    duration_not_in: Optional[timedelta] = None
+    duration_in: Optional[Sequence[timedelta]] = None
+    duration_not_in: Optional[Sequence[timedelta]] = None
 
     @classmethod
     def __modify_schema__(cls, field_schema: Dict[str, Any]) -> None:
@@ -63,13 +64,20 @@ class ConstrainedTimedelta(timedelta):
 
     @classmethod
     def __get_validators__(cls) -> "CallableGenerator":
-        yield customer_validator.duration_const_validator
-        yield customer_validator.duration_ge_validator
-        yield customer_validator.duration_gt_validator
-        yield customer_validator.duration_le_validator
-        yield customer_validator.duration_lt_validator
-        yield customer_validator.duration_in_validator
-        yield customer_validator.duration_not_in_validator
+        if cls.duration_const:
+            yield customer_validator.duration_const_validator
+        if cls.duration_ge:
+            yield customer_validator.duration_ge_validator
+        if cls.duration_gt:
+            yield customer_validator.duration_gt_validator
+        if cls.duration_le:
+            yield customer_validator.duration_le_validator
+        if cls.duration_lt:
+            yield customer_validator.duration_lt_validator
+        if cls.duration_in:
+            yield customer_validator.duration_in_validator
+        if cls.duration_not_in:
+            yield customer_validator.duration_not_in_validator
 
 
 def contimedelta(
@@ -79,8 +87,8 @@ def contimedelta(
     duration_gt: Optional[timedelta] = None,
     duration_le: Optional[timedelta] = None,
     duration_lt: Optional[timedelta] = None,
-    duration_in: Optional[timedelta] = None,
-    duration_not_in: Optional[timedelta] = None,
+    duration_in: Optional[Sequence[timedelta]] = None,
+    duration_not_in: Optional[Sequence[timedelta]] = None,
 ) -> Type[timedelta]:
     # use kwargs then define conf in a dict to aid with IDE type hinting
     namespace = dict(
@@ -99,17 +107,18 @@ def contimedelta(
 TIMESTAMP_ANT_TYPE = Union[int, float, str, datetime]
 
 
-class ConstrainedTimestamp(object):
-    timestamp_const: Optional[TIMESTAMP_ANT_TYPE] = None
-    timestamp_ge: Optional[TIMESTAMP_ANT_TYPE] = None
-    timestamp_gt: Optional[TIMESTAMP_ANT_TYPE] = None
-    timestamp_gt_now: Optional[TIMESTAMP_ANT_TYPE] = None
-    timestamp_le: Optional[TIMESTAMP_ANT_TYPE] = None
-    timestamp_lt: Optional[TIMESTAMP_ANT_TYPE] = None
-    timestamp_lt_now: Optional[TIMESTAMP_ANT_TYPE] = None
-    timestamp_in: Optional[TIMESTAMP_ANT_TYPE] = None
-    timestamp_not_in: Optional[TIMESTAMP_ANT_TYPE] = None
-    timestamp_within: Optional[TIMESTAMP_ANT_TYPE] = None
+class ConstrainedTimestamp(datetime):
+    timestamp_const: Optional[datetime] = None
+    timestamp_ge: Optional[datetime] = None
+    timestamp_gt: Optional[datetime] = None
+    timestamp_gt_now: Union[bool, Callable[[], datetime], None] = None
+    timestamp_le: Optional[datetime] = None
+    timestamp_lt: Optional[datetime] = None
+    timestamp_lt_now: Union[bool, Callable[[], datetime], None] = None
+    timestamp_in: Optional[Sequence[datetime]] = None
+    timestamp_not_in: Optional[Sequence[datetime]] = None
+    timestamp_within: Optional[timedelta] = None
+    ignore_tz: bool = False
 
     @classmethod
     def __modify_schema__(cls, field_schema: Dict[str, Any]) -> None:
@@ -126,35 +135,59 @@ class ConstrainedTimestamp(object):
                 timestamp_in=cls.timestamp_in,
                 timestamp_not_in=cls.timestamp_not_in,
                 timestamp_within=cls.timestamp_within,
+                ignore_tz=cls.ignore_tz,
             ),
         )
 
     @classmethod
     def __get_validators__(cls) -> "CallableGenerator":
-        yield customer_validator.timestamp_const_validator
-        yield customer_validator.timestamp_ge_validator
-        yield customer_validator.timestamp_gt_validator
-        yield customer_validator.timestamp_gt_now_validator
-        yield customer_validator.timestamp_le_validator
-        yield customer_validator.timestamp_lt_validator
-        yield customer_validator.timestamp_lt_now_validator
-        yield customer_validator.timestamp_in_validator
-        yield customer_validator.timestamp_not_in_validator
-        yield customer_validator.timestamp_within_validator
+        yield cls.validate
+        if cls.ignore_tz:
+            yield cls.ignore_value_tz
+        if cls.timestamp_const:
+            yield customer_validator.timestamp_const_validator
+        if cls.timestamp_ge:
+            yield customer_validator.timestamp_ge_validator
+        if cls.timestamp_gt:
+            yield customer_validator.timestamp_gt_validator
+        if cls.timestamp_gt_now:
+            yield customer_validator.timestamp_gt_now_validator
+        if cls.timestamp_le:
+            yield customer_validator.timestamp_le_validator
+        if cls.timestamp_lt:
+            yield customer_validator.timestamp_lt_validator
+        if cls.timestamp_lt_now:
+            yield customer_validator.timestamp_lt_now_validator
+        if cls.timestamp_in:
+            yield customer_validator.timestamp_in_validator
+        if cls.timestamp_not_in:
+            yield customer_validator.timestamp_not_in_validator
+        if cls.timestamp_within:
+            yield customer_validator.timestamp_within_validator
+
+    @classmethod
+    @validate_arguments
+    def validate(cls, v: datetime) -> datetime:
+        return v
+
+    @classmethod
+    def ignore_value_tz(cls, v: datetime) -> datetime:
+        return v.replace(tzinfo=None)
 
 
 def contimestamp(
     *,
-    timestamp_const: Optional[TIMESTAMP_ANT_TYPE] = None,
-    timestamp_ge: Optional[TIMESTAMP_ANT_TYPE] = None,
-    timestamp_gt: Optional[TIMESTAMP_ANT_TYPE] = None,
-    timestamp_gt_now: Optional[TIMESTAMP_ANT_TYPE] = None,
-    timestamp_le: Optional[TIMESTAMP_ANT_TYPE] = None,
-    timestamp_lt: Optional[TIMESTAMP_ANT_TYPE] = None,
-    timestamp_lt_now: Optional[TIMESTAMP_ANT_TYPE] = None,
-    timestamp_in: Optional[TIMESTAMP_ANT_TYPE] = None,
-    timestamp_not_in: Optional[TIMESTAMP_ANT_TYPE] = None,
-    timestamp_within: Optional[TIMESTAMP_ANT_TYPE] = None,
+    timestamp_const: Optional[datetime] = None,
+    timestamp_ge: Optional[datetime] = None,
+    timestamp_gt: Optional[datetime] = None,
+    timestamp_gt_now: Optional[Union[bool, Callable[[], datetime]]] = None,
+    timestamp_le: Optional[datetime] = None,
+    timestamp_lt: Optional[datetime] = None,
+    timestamp_lt_now: Optional[Union[bool, Callable[[], datetime]]] = None,
+    timestamp_in: Optional[Sequence[datetime]] = None,
+    timestamp_not_in: Optional[Sequence[datetime]] = None,
+    timestamp_within: Optional[timedelta] = None,
+    ignore_tz: bool = False,
 ) -> TIMESTAMP_ANT_TYPE:
     namespace = dict(
         timestamp_const=timestamp_const,
@@ -167,6 +200,7 @@ def contimestamp(
         timestamp_in=timestamp_in,
         timestamp_not_in=timestamp_not_in,
         timestamp_within=timestamp_within,
+        ignore_tz=ignore_tz,
     )
     return type("ConstrainedTimestampValue", (ConstrainedTimestamp,), namespace)  # type: ignore
 

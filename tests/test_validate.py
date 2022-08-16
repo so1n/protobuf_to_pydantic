@@ -183,7 +183,7 @@ class DurationTest(BaseModel):
         })
     not_in_test: Timedelta = FieldInfo(
         extra={
-            "duration_in": [
+            "duration_not_in": [
                 timedelta(seconds=1, microseconds=500000),
                 timedelta(seconds=3, microseconds=500000)
             ]
@@ -199,9 +199,10 @@ class DurationTest(BaseModel):
         'range_e_test', allow_reuse=True)(duration_le_validator)
     duration_ge_validator_range_e_test = validator(
         'range_e_test', allow_reuse=True)(duration_ge_validator)
-    in_validator_in_test = validator('in_test', allow_reuse=True)(in_validator)
-    in_validator_not_in_test = validator('not_in_test',
-                                         allow_reuse=True)(in_validator)""" in self._model_output(DurationTest)
+    duration_in_validator_in_test = validator(
+        'in_test', allow_reuse=True)(duration_in_validator)
+    duration_not_in_validator_not_in_test = validator(
+        'not_in_test', allow_reuse=True)(duration_not_in_validator)""" in self._model_output(DurationTest)
 
     def test_enum(self) -> None:
         assert """

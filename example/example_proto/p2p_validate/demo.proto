@@ -444,7 +444,7 @@ message DurationTest {
   google.protobuf.Duration range_test = 3 [(p2p_validate.rules).duration = {lt: {seconds: 10, nanos: 500000000}, gt: {seconds: 5, nanos: 500000000}}];
   google.protobuf.Duration range_e_test = 4 [(p2p_validate.rules).duration = {lte: {seconds: 10, nanos: 500000000}, gte: {seconds: 5, nanos: 500000000}}];
   google.protobuf.Duration in_test = 5 [(p2p_validate.rules).duration = {in: [{seconds: 1, nanos: 500000000}, {seconds:3, nanos: 500000000}]}];
-  google.protobuf.Duration not_in_test = 6 [(p2p_validate.rules).duration = {in: [{seconds: 1, nanos: 500000000}, {seconds:3, nanos: 500000000}]}];
+  google.protobuf.Duration not_in_test = 6 [(p2p_validate.rules).duration = {not_in: [{seconds: 1, nanos: 500000000}, {seconds:3, nanos: 500000000}]}];
   google.protobuf.Duration enable_test = 22 [(p2p_validate.rules).duration.enable = false];
   google.protobuf.Duration default_test = 23 [(p2p_validate.rules).duration.default = {seconds: 1, nanos:500000000}];
   google.protobuf.Duration default_factory_test = 24 [(p2p_validate.rules).duration.default_factory = "p2p@import|datetime|timedelta"];

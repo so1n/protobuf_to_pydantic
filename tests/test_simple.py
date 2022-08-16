@@ -89,14 +89,6 @@ class RepeatedMessage(BaseModel):
 
     def test_nested_message(self) -> None:
         assert """
-import typing
-from datetime import datetime
-from enum import IntEnum
-
-from pydantic import BaseModel
-from pydantic.fields import FieldInfo
-
-
 class SexType(IntEnum):
     man = 0
     women = 1
@@ -123,9 +115,12 @@ class MapMessage(BaseModel):
 
 
 class NestedMessageUserPayMessage(BaseModel):
-    bank_number: str = FieldInfo(default="")
-    exp: datetime = FieldInfo()
-    uuid: str = FieldInfo(default="")
+    bank_number: str = FieldInfo(default="", min_length=13, max_length=19)
+    exp: datetime = FieldInfo(extra={"timestamp_gt_now": True})
+    uuid: UUID = FieldInfo(default="")
+
+    timestamp_gt_now_validator_exp = validator(
+        'exp', allow_reuse=True)(timestamp_gt_now_validator)
 
 
 class NestedMessage(BaseModel):
@@ -133,4 +128,5 @@ class NestedMessage(BaseModel):
     user_map: typing.Dict[str, MapMessage] = FieldInfo()
     user_pay: NestedMessageUserPayMessage = FieldInfo()
     not_enable_user_pay: NestedMessageUserPayMessage = FieldInfo()
-    empty: None = FieldInfo()""" in self._model_output(demo_pb2.NestedMessage)
+    empty: None = FieldInfo()
+""" in self._model_output(demo_pb2.NestedMessage)
