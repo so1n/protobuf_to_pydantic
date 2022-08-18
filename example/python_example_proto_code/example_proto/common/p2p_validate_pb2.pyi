@@ -2905,9 +2905,9 @@ class DurationRules(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     CONST_FIELD_NUMBER: builtins.int
     LT_FIELD_NUMBER: builtins.int
-    LTE_FIELD_NUMBER: builtins.int
+    LE_FIELD_NUMBER: builtins.int
     GT_FIELD_NUMBER: builtins.int
-    GTE_FIELD_NUMBER: builtins.int
+    GE_FIELD_NUMBER: builtins.int
     IN_FIELD_NUMBER: builtins.int
     NOT_IN_FIELD_NUMBER: builtins.int
     ENABLE_FIELD_NUMBER: builtins.int
@@ -2932,7 +2932,7 @@ class DurationRules(google.protobuf.message.Message):
         """
         pass
     @property
-    def lte(self) -> google.protobuf.duration_pb2.Duration:
+    def le(self) -> google.protobuf.duration_pb2.Duration:
         """Lt specifies that this field must be less than the specified value,
         inclusive
         """
@@ -2944,7 +2944,7 @@ class DurationRules(google.protobuf.message.Message):
         """
         pass
     @property
-    def gte(self) -> google.protobuf.duration_pb2.Duration:
+    def ge(self) -> google.protobuf.duration_pb2.Duration:
         """Gte specifies that this field must be greater than the specified value,
         inclusive
         """
@@ -2998,9 +2998,9 @@ class DurationRules(google.protobuf.message.Message):
         *,
         const: typing.Optional[google.protobuf.duration_pb2.Duration] = ...,
         lt: typing.Optional[google.protobuf.duration_pb2.Duration] = ...,
-        lte: typing.Optional[google.protobuf.duration_pb2.Duration] = ...,
+        le: typing.Optional[google.protobuf.duration_pb2.Duration] = ...,
         gt: typing.Optional[google.protobuf.duration_pb2.Duration] = ...,
-        gte: typing.Optional[google.protobuf.duration_pb2.Duration] = ...,
+        ge: typing.Optional[google.protobuf.duration_pb2.Duration] = ...,
         not_in: typing.Optional[typing.Iterable[google.protobuf.duration_pb2.Duration]] = ...,
         enable: typing.Optional[builtins.bool] = ...,
         default: typing.Optional[google.protobuf.duration_pb2.Duration] = ...,
@@ -3014,8 +3014,8 @@ class DurationRules(google.protobuf.message.Message):
         type: typing.Optional[typing.Text] = ...,
         title: typing.Optional[typing.Text] = ...,
         ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_gt",b"_gt","_gte",b"_gte","_lt",b"_lt","_lte",b"_lte","_title",b"_title","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","gt",b"gt","gte",b"gte","lt",b"lt","lte",b"lte","miss_default",b"miss_default","title",b"title","type",b"type"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_gt",b"_gt","_gte",b"_gte","_lt",b"_lt","_lte",b"_lte","_title",b"_title","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","gt",b"gt","gte",b"gte","in",b"in","lt",b"lt","lte",b"lte","miss_default",b"miss_default","not_in",b"not_in","title",b"title","type",b"type"]) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_title",b"_title","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","le",b"le","lt",b"lt","miss_default",b"miss_default","title",b"title","type",b"type"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_alias",b"_alias","_const",b"_const","_description",b"_description","_enable",b"_enable","_field",b"_field","_ge",b"_ge","_gt",b"_gt","_le",b"_le","_lt",b"_lt","_title",b"_title","_type",b"_type","alias",b"alias","const",b"const","default",b"default","default_config",b"default_config","default_factory",b"default_factory","description",b"description","enable",b"enable","example",b"example","example_config",b"example_config","example_factory",b"example_factory","field",b"field","ge",b"ge","gt",b"gt","in",b"in","le",b"le","lt",b"lt","miss_default",b"miss_default","not_in",b"not_in","title",b"title","type",b"type"]) -> None: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_alias",b"_alias"]) -> typing.Optional[typing_extensions.Literal["alias"]]: ...
     @typing.overload
@@ -3027,13 +3027,13 @@ class DurationRules(google.protobuf.message.Message):
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_field",b"_field"]) -> typing.Optional[typing_extensions.Literal["field"]]: ...
     @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_ge",b"_ge"]) -> typing.Optional[typing_extensions.Literal["ge"]]: ...
+    @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_gt",b"_gt"]) -> typing.Optional[typing_extensions.Literal["gt"]]: ...
     @typing.overload
-    def WhichOneof(self, oneof_group: typing_extensions.Literal["_gte",b"_gte"]) -> typing.Optional[typing_extensions.Literal["gte"]]: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_le",b"_le"]) -> typing.Optional[typing_extensions.Literal["le"]]: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_lt",b"_lt"]) -> typing.Optional[typing_extensions.Literal["lt"]]: ...
-    @typing.overload
-    def WhichOneof(self, oneof_group: typing_extensions.Literal["_lte",b"_lte"]) -> typing.Optional[typing_extensions.Literal["lte"]]: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_title",b"_title"]) -> typing.Optional[typing_extensions.Literal["title"]]: ...
     @typing.overload

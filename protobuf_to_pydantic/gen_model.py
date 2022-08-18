@@ -46,10 +46,16 @@ type_dict: Dict[str, Type] = {
     FieldDescriptor.TYPE_SINT32: int,
     FieldDescriptor.TYPE_SINT64: int,
 }
-message_type_dict_by_type_name: Dict[str, Any] = {
+_message_type_dict_by_type_name: Dict[str, Any] = {
     "Timestamp": datetime.datetime,
     "Struct": Dict[str, Any],
     "Empty": Any,
+    "Duration": Timedelta,
+    "Any": AnyMessage,
+}
+_message_default_factory_dict_by_type_name: Dict[str, Any] = {
+    "Timestamp": datetime.datetime.now,
+    "Struct": Dict[str, Any],
     "Duration": Timedelta,
     "Any": AnyMessage,
 }
@@ -164,6 +170,8 @@ class M2P(object):
         pydantic_module: Optional[str] = None,
         local_dict: Optional[Dict[str, Any]] = None,
         desc_template: Optional[Type[DescTemplate]] = None,
+        message_type_dict_by_type_name: Optional[Dict[str, Any]] = None,
+        message_default_factory_dict_by_type_name: Optional[Dict[str, Any]] = None,
     ):
         proto_file_name = msg.DESCRIPTOR.file.name
         if proto_file_name.endswith("empty.proto"):
@@ -198,6 +206,12 @@ class M2P(object):
         self._pydantic_base: Type["BaseModel"] = pydantic_base or BaseModel
         self._pydantic_module: str = pydantic_module or __name__
         self._desc_template: DescTemplate = (desc_template or DescTemplate)(self._local_dict, self._comment_prefix)
+        self._message_type_dict_by_type_name: Dict[str, Any] = (
+            message_type_dict_by_type_name or _message_type_dict_by_type_name
+        )
+        self._message_default_factory_dict_by_type_name: Dict[str, Any] = (
+            message_default_factory_dict_by_type_name or _message_default_factory_dict_by_type_name
+        )
 
         self._gen_model: Type[BaseModel] = self._parse_msg_to_pydantic_model(
             descriptor=msg if isinstance(msg, Descriptor) else msg.DESCRIPTOR,
@@ -304,25 +318,28 @@ class M2P(object):
             default_factory: Optional[NoArgAnyCallable] = None
 
             if column.type == FieldDescriptor.TYPE_MESSAGE:
-                if column.message_type.name in message_type_dict_by_type_name:
-                    type_ = message_type_dict_by_type_name[column.message_type.name]
+                if column.message_type.name in self._message_type_dict_by_type_name:
+                    type_ = self._message_type_dict_by_type_name[column.message_type.name]
+                    if column.message_type.name in self._message_default_factory_dict_by_type_name:
+                        default_factory = self._message_default_factory_dict_by_type_name[column.message_type.name]
                 elif column.message_type.name.endswith("Entry"):
                     # support google.protobuf.MapEntry
                     key, value = column.message_type.fields
 
                     if not key.message_type:
                         key_type: Any = type_dict[key.type]
-                    elif key.message_type.name in message_type_dict_by_type_name:
-                        key_type = message_type_dict_by_type_name[key.message_type.name]
+                    elif key.message_type.name in self._message_type_dict_by_type_name:
+                        key_type = self._message_type_dict_by_type_name[key.message_type.name]
                     else:
                         key_type = self._parse_msg_to_pydantic_model(descriptor=key.message_type)
                     if not value.message_type:
                         value_type: Any = type_dict[value.type]
-                    elif value.message_type.name in message_type_dict_by_type_name:
-                        value_type = message_type_dict_by_type_name[value.message_type.name]
+                    elif value.message_type.name in self._message_type_dict_by_type_name:
+                        value_type = self._message_type_dict_by_type_name[value.message_type.name]
                     else:
                         value_type = self._parse_msg_to_pydantic_model(descriptor=value.message_type)
                     type_ = Dict[key_type, value_type]
+                    default_factory = dict
                 else:
                     # support google.protobuf.Message
                     if column.message_type.full_name.startswith(".".join(column.full_name.split(".")[:-1])):
@@ -378,10 +395,15 @@ class M2P(object):
 
                 check_dict_one_of(field_param_dict, ["miss_default", "default", "default_factory"])
                 check_dict_one_of(field_param_dict, ["example", "example_factory"])
-                if field_param_dict.pop("miss_default") is not True and not field_param_dict["default"]:
-                    field_param_dict["default"] = default
-                if field_param_dict["default_factory"]:
+                if field_param_dict["default_factory"] is not None:
                     field_param_dict.pop("default", "")
+                    field_param_dict.pop("miss_default", "")
+                elif field_param_dict["miss_default"] is True:
+                    field_param_dict.pop("default", "")
+                    field_param_dict.pop("miss_default", "")
+                    field_param_dict.pop("default_factory", "")
+                elif field_param_dict["default"] is None:
+                    field_param_dict["default"] = default
                 if field_param_dict.get("default", None) is default:
                     field_param_dict["default_factory"] = default_factory
 
@@ -455,6 +477,8 @@ def msg_to_pydantic_model(
     pydantic_base: Optional[Type["BaseModel"]] = None,
     pydantic_module: Optional[str] = None,
     desc_template: Optional[Type[DescTemplate]] = None,
+    message_type_dict_by_type_name: Optional[Dict[str, Any]] = None,
+    message_default_factory_dict_by_type_name: Optional[Dict[str, Any]] = None,
 ) -> Type[BaseModel]:
     """
     Parse a message to a pydantic model
@@ -468,6 +492,8 @@ def msg_to_pydantic_model(
     :param pydantic_base: custom pydantic.BaseModel
     :param pydantic_module: custom create model's module name
     :param desc_template: Template object, which can extend and modify template adaptation rules through inheritance
+    :param message_type_dict_by_type_name: Define the Python type mapping corresponding to each Protobuf Type
+    :param message_default_factory_dict_by_type_name: Define the default_factory corresponding to each Protobuf Type
     """
     return M2P(
         msg=msg,
@@ -478,4 +504,6 @@ def msg_to_pydantic_model(
         pydantic_module=pydantic_module,
         pydantic_base=pydantic_base,
         desc_template=desc_template,
+        message_type_dict_by_type_name=message_type_dict_by_type_name,
+        message_default_factory_dict_by_type_name=message_default_factory_dict_by_type_name,
     ).model

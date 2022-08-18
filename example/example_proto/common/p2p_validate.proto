@@ -1289,7 +1289,7 @@ message DurationRules {
 
     // Lt specifies that this field must be less than the specified value,
     // inclusive
-    optional google.protobuf.Duration lte = 4;
+    optional google.protobuf.Duration le = 4;
 
     // Gt specifies that this field must be greater than the specified value,
     // exclusive
@@ -1297,7 +1297,7 @@ message DurationRules {
 
     // Gte specifies that this field must be greater than the specified value,
     // inclusive
-    optional google.protobuf.Duration gte = 6;
+    optional google.protobuf.Duration ge = 6;
 
     // In specifies that this field must be equal to one of the specified
     // values
