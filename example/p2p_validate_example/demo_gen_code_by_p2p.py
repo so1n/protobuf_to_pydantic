@@ -374,9 +374,9 @@ class EnumTest(BaseModel):
 
 class MapTest(BaseModel):
     pair_test: typing.Dict[str, int] = FieldInfo(extra={"map_max_pairs": 5, "map_min_pairs": 1})
-    keys_test: typing.Dict[constr(), int] = FieldInfo()
-    values_test: typing.Dict[str, conint()] = FieldInfo()
-    keys_values_test: typing.Dict[constr(), contimestamp(timestamp_gt_now=True)] = FieldInfo()
+    keys_test: typing.Dict[constr(min_length=1, max_length=5), int] = FieldInfo()
+    values_test: typing.Dict[str, conint(gt=5, lt=5)] = FieldInfo()
+    keys_values_test: typing.Dict[constr(min_length=1, max_length=5), contimestamp(timestamp_gt_now=True)] = FieldInfo()
     default_factory_test: typing.Dict[str, int] = FieldInfo(default_factory=dict)
     miss_default_test: typing.Dict[str, int] = FieldInfo()
     alias_test: typing.Dict[str, int] = FieldInfo(alias="alias", alias_priority=2)
@@ -406,11 +406,7 @@ class RepeatedTest(BaseModel):
     )
     items_int32_test: conlist(item_type=conint(gt=1, lt=5), min_items=1, max_items=5) = FieldInfo(default_factory=list)
     items_timestamp_test: conlist(
-        item_type=contimestamp(
-            timestamp_gt=datetime(2020, 9, 13, 12, 26, 40), timestamp_lt=datetime(2020, 9, 13, 12, 26, 50)
-        ),
-        min_items=1,
-        max_items=5,
+        item_type=contimestamp(timestamp_gt=1600000000.0, timestamp_lt=1600000010.0), min_items=1, max_items=5
     ) = FieldInfo(default_factory=list)
     items_duration_test: conlist(
         item_type=contimedelta(duration_gt=timedelta(seconds=10), duration_lt=timedelta(seconds=10)),
@@ -508,25 +504,21 @@ class DurationTest(BaseModel):
 
 
 class TimestampTest(BaseModel):
-    const_test: datetime = FieldInfo(extra={"timestamp_const": datetime(2020, 9, 13, 12, 26, 40)})
-    range_test: datetime = FieldInfo(
-        extra={"timestamp_gt": datetime(2020, 9, 13, 12, 26, 40), "timestamp_lt": datetime(2020, 9, 13, 12, 26, 50)}
-    )
-    range_e_test: datetime = FieldInfo(
-        extra={"timestamp_ge": datetime(2020, 9, 13, 12, 26, 40), "timestamp_le": datetime(2020, 9, 13, 12, 26, 50)}
-    )
+    const_test: datetime = FieldInfo(extra={"timestamp_const": 1600000000.0})
+    range_test: datetime = FieldInfo(extra={"timestamp_gt": 1600000000.0, "timestamp_lt": 1600000010.0})
+    range_e_test: datetime = FieldInfo(extra={"timestamp_ge": 1600000000.0, "timestamp_le": 1600000010.0})
     lt_now_test: datetime = FieldInfo(extra={"timestamp_lt_now": True})
     gt_now_test: datetime = FieldInfo(extra={"timestamp_gt_now": True})
     within_test: datetime = FieldInfo(extra={"timestamp_within": timedelta(seconds=1)})
     within_and_gt_now_test: datetime = FieldInfo(
         extra={"timestamp_gt_now": True, "timestamp_within": timedelta(seconds=3600)}
     )
-    default_test: datetime = FieldInfo(default=datetime(1970, 1, 1, 0, 0, 1, 500000))
+    default_test: datetime = FieldInfo(default=1.5)
     default_factory_test: datetime = FieldInfo(default_factory=datetime.now)
     miss_default_test: datetime = FieldInfo()
     alias_test: datetime = FieldInfo(alias="alias", alias_priority=2)
     desc_test: datetime = FieldInfo(description="test desc")
-    example_test: datetime = FieldInfo(extra={"example": datetime(1970, 1, 1, 0, 0, 1, 500000)})
+    example_test: datetime = FieldInfo(extra={"example": 1.5})
     example_factory_test: datetime = FieldInfo(extra={"example": datetime.now})
     field_test: datetime = CustomerField()
     title_test: datetime = FieldInfo(title="title_test")

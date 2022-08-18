@@ -49,7 +49,7 @@ def replace_protobuf_type_to_python_type(value: Any) -> Any:
     if isinstance(value, Duration):
         return timedelta(microseconds=value.ToMicroseconds())
     elif isinstance(value, Timestamp):
-        return value.ToDatetime()
+        return value.ToMicroseconds() / 1000000
     elif isinstance(value, (list, RepeatedCompositeContainer)):
         return [replace_protobuf_type_to_python_type(i) for i in value]
     else:

@@ -19,12 +19,17 @@ def check_one_of(cls: Any, values: tuple) -> tuple:
     return values
 
 
-def _get_name_value_from_kwargs(key: str, field: ModelField) -> Tuple[str, Any]:
+def _get_name_value_from_kwargs(
+    key: str, field: ModelField, enable_timestamp_to_datetime: bool = False
+) -> Tuple[str, Any]:
     field_name: str = field.name
     if field.field_info.extra:
         field_value: Any = field.field_info.extra.get(key, None)
     else:
         field_value = getattr(field.type_, key, None)
+    if enable_timestamp_to_datetime and not isinstance(field_value, datetime):
+        field_value = datetime.fromtimestamp(field_value)
+
     return field_name, field_value
 
 
@@ -159,7 +164,9 @@ def set_now_default_factory(now_default_factory: Callable[[], datetime]) -> None
 
 
 def timestamp_lt_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
-    field_name, field_value = _get_name_value_from_kwargs("timestamp_lt", kwargs["field"])
+    field_name, field_value = _get_name_value_from_kwargs(
+        "timestamp_lt", kwargs["field"], enable_timestamp_to_datetime=True
+    )
     if field_value is not None and not (v < field_value):
         raise ValueError(f"{field_name} must < {field_value}, not {v}")
     return v
@@ -178,14 +185,18 @@ def timestamp_lt_now_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
 
 
 def timestamp_le_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
-    field_name, field_value = _get_name_value_from_kwargs("timestamp_le", kwargs["field"])
+    field_name, field_value = _get_name_value_from_kwargs(
+        "timestamp_le", kwargs["field"], enable_timestamp_to_datetime=True
+    )
     if field_value is not None and not (v <= field_value):
         raise ValueError(f"{field_name} must <= {field_value}, not {v}")
     return v
 
 
 def timestamp_gt_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
-    field_name, field_value = _get_name_value_from_kwargs("timestamp_gt", kwargs["field"])
+    field_name, field_value = _get_name_value_from_kwargs(
+        "timestamp_gt", kwargs["field"], enable_timestamp_to_datetime=True
+    )
     if field_value is not None and not (v > field_value):
         raise ValueError(f"{field_name} must > {field_value}, not {v}")
     return v
@@ -216,28 +227,36 @@ def timestamp_within_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
 
 
 def timestamp_ge_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
-    field_name, field_value = _get_name_value_from_kwargs("timestamp_ge", kwargs["field"])
+    field_name, field_value = _get_name_value_from_kwargs(
+        "timestamp_ge", kwargs["field"], enable_timestamp_to_datetime=True
+    )
     if field_value is not None and not (v >= field_value):
         raise ValueError(f"{field_name} must >= {field_value}, not {v}")
     return v
 
 
 def timestamp_const_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
-    field_name, field_value = _get_name_value_from_kwargs("timestamp_const", kwargs["field"])
+    field_name, field_value = _get_name_value_from_kwargs(
+        "timestamp_const", kwargs["field"], enable_timestamp_to_datetime=True
+    )
     if field_value is not None and v != field_value:
         raise ValueError(f"{field_name} must {field_value}, not {v}")
     return v
 
 
 def timestamp_in_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
-    field_name, field_value = _get_name_value_from_kwargs("timestamp_in", kwargs["field"])
+    field_name, field_value = _get_name_value_from_kwargs(
+        "timestamp_in", kwargs["field"], enable_timestamp_to_datetime=True
+    )
     if field_value is not None and v not in field_value:
         raise ValueError(f"{field_name} not in {field_value}")
     return v
 
 
 def timestamp_not_in_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
-    field_name, field_value = _get_name_value_from_kwargs("timestamp_not_in", kwargs["field"])
+    field_name, field_value = _get_name_value_from_kwargs(
+        "timestamp_not_in", kwargs["field"], enable_timestamp_to_datetime=True
+    )
     if field_value is not None and v in field_value:
         raise ValueError(f"{field_name} in {field_value}")
     return v

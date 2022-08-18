@@ -23,7 +23,7 @@ message DoubleTest {
   double range_e_test = 2 [(validate.rules).double= {gte: 1, lte: 10}];
   double range_test = 3[(validate.rules).double = {gt: 1, lt: 10}];
   double in_test = 4[(validate.rules).double = {in: [1,2,3]}];
-  double not_in_test = 5[(validate.rules).double = {in: [1,2,3]}];
+  double not_in_test = 5[(validate.rules).double = {not_in: [1,2,3]}];
   double ignore_test = 6[(validate.rules).double.ignore_empty = true];
 }
 
@@ -32,7 +32,7 @@ message Int32Test {
   int32 range_e_test = 2 [(validate.rules).int32 = {gte: 1, lte: 10}];
   int32 range_test = 3[(validate.rules).int32 = {gt: 1, lt: 10}];
   int32 in_test = 4[(validate.rules).int32 = {in: [1,2,3]}];
-  int32 not_in_test = 5[(validate.rules).int32 = {in: [1,2,3]}];
+  int32 not_in_test = 5[(validate.rules).int32 = {not_in: [1,2,3]}];
   int32 ignore_test = 6[(validate.rules).int32.ignore_empty = true];
 }
 
@@ -41,7 +41,7 @@ message Uint32Test {
   uint32 range_e_test = 2 [(validate.rules).uint32 = {gte: 1, lte: 10}];
   uint32 range_test = 3[(validate.rules).uint32 = {gt: 1, lt: 10}];
   uint32 in_test = 4[(validate.rules).uint32 = {in: [1,2,3]}];
-  uint32 not_in_test = 5[(validate.rules).uint32 = {in: [1,2,3]}];
+  uint32 not_in_test = 5[(validate.rules).uint32 = {not_in: [1,2,3]}];
   uint32 ignore_test = 6[(validate.rules).uint32.ignore_empty = true];
 }
 
@@ -50,7 +50,7 @@ message Sint32Test {
   sint32 range_e_test = 2 [(validate.rules).sint32 = {gte: 1, lte: 10}];
   sint32 range_test = 3[(validate.rules).sint32 = {gt: 1, lt: 10}];
   sint32 in_test = 4[(validate.rules).sint32 = {in: [1,2,3]}];
-  sint32 not_in_test = 5[(validate.rules).sint32 = {in: [1,2,3]}];
+  sint32 not_in_test = 5[(validate.rules).sint32 = {not_in: [1,2,3]}];
   sint32 ignore_test = 6[(validate.rules).sint32.ignore_empty = true];
 }
 
@@ -59,7 +59,7 @@ message Int64Test {
   int64 range_e_test = 2 [(validate.rules).int64 = {gte: 1, lte: 10}];
   int64 range_test = 3[(validate.rules).int64 = {gt: 1, lt: 10}];
   int64 in_test = 4[(validate.rules).int64 = {in: [1,2,3]}];
-  int64 not_in_test = 5[(validate.rules).int64 = {in: [1,2,3]}];
+  int64 not_in_test = 5[(validate.rules).int64 = {not_in: [1,2,3]}];
   int64 ignore_test = 6[(validate.rules).int64.ignore_empty = true];
 }
 
@@ -68,7 +68,7 @@ message Uint64Test {
   uint64 range_e_test = 2 [(validate.rules).uint64 = {gte: 1, lte: 10}];
   uint64 range_test = 3[(validate.rules).uint64 = {gt: 1, lt: 10}];
   uint64 in_test = 4[(validate.rules).uint64 = {in: [1,2,3]}];
-  uint64 not_in_test = 5[(validate.rules).uint64 = {in: [1,2,3]}];
+  uint64 not_in_test = 5[(validate.rules).uint64 = {not_in: [1,2,3]}];
   uint64 ignore_test = 6[(validate.rules).uint64.ignore_empty = true];
 }
 
@@ -77,7 +77,7 @@ message Sint64Test {
   sint64 range_e_test = 2 [(validate.rules).sint64 = {gte: 1, lte: 10}];
   sint64 range_test = 3[(validate.rules).sint64 = {gt: 1, lt: 10}];
   sint64 in_test = 4[(validate.rules).sint64 = {in: [1,2,3]}];
-  sint64 not_in_test = 5[(validate.rules).sint64 = {in: [1,2,3]}];
+  sint64 not_in_test = 5[(validate.rules).sint64 = {not_in: [1,2,3]}];
   sint64 ignore_test = 6[(validate.rules).sint64.ignore_empty = true];
 }
 
@@ -86,7 +86,7 @@ message Fixed32Test {
   fixed32 range_e_test = 2 [(validate.rules).fixed32 = {gte: 1, lte: 10}];
   fixed32 range_test = 3[(validate.rules).fixed32 = {gt: 1, lt: 10}];
   fixed32 in_test = 4[(validate.rules).fixed32 = {in: [1,2,3]}];
-  fixed32 not_in_test = 5[(validate.rules).fixed32 = {in: [1,2,3]}];
+  fixed32 not_in_test = 5[(validate.rules).fixed32 = {not_in: [1,2,3]}];
   fixed32 ignore_test = 6[(validate.rules).fixed32.ignore_empty = true];
 }
 
@@ -95,7 +95,7 @@ message Fixed64Test {
   fixed64 range_e_test = 2 [(validate.rules).fixed64 = {gte: 1, lte: 10}];
   fixed64 range_test = 3[(validate.rules).fixed64 = {gt: 1, lt: 10}];
   fixed64 in_test = 4[(validate.rules).fixed64 = {in: [1,2,3]}];
-  fixed64 not_in_test = 5[(validate.rules).fixed64 = {in: [1,2,3]}];
+  fixed64 not_in_test = 5[(validate.rules).fixed64 = {not_in: [1,2,3]}];
   fixed64 ignore_test = 6[(validate.rules).fixed64.ignore_empty = true];
 }
 
@@ -104,7 +104,7 @@ message Sfixed32Test {
   sfixed32 range_e_test = 2 [(validate.rules).sfixed32 = {gte: 1, lte: 10}];
   sfixed32 range_test = 3[(validate.rules).sfixed32 = {gt: 1, lt: 10}];
   sfixed32 in_test = 4[(validate.rules).sfixed32 = {in: [1,2,3]}];
-  sfixed32 not_in_test = 5[(validate.rules).sfixed32 = {in: [1,2,3]}];
+  sfixed32 not_in_test = 5[(validate.rules).sfixed32 = {not_in: [1,2,3]}];
   sfixed32 ignore_test = 6[(validate.rules).sfixed32.ignore_empty = true];
 }
 
@@ -113,7 +113,7 @@ message Sfixed64Test {
   sfixed64 range_e_test = 2 [(validate.rules).sfixed64 = {gte: 1, lte: 10}];
   sfixed64 range_test = 3[(validate.rules).sfixed64 = {gt: 1, lt: 10}];
   sfixed64 in_test = 4[(validate.rules).sfixed64 = {in: [1,2,3]}];
-  sfixed64 not_in_test = 5[(validate.rules).sfixed64 = {in: [1,2,3]}];
+  sfixed64 not_in_test = 5[(validate.rules).sfixed64 = {not_in: [1,2,3]}];
   sfixed64 ignore_test = 6[(validate.rules).sfixed64.ignore_empty = true];
 }
 
@@ -169,7 +169,7 @@ message EnumTest {
   State const_test = 1 [(validate.rules).enum.const = 2];
   State defined_only_test = 2 [(validate.rules).enum.defined_only = true];
   State in_test = 3 [(validate.rules).enum = {in: [0, 2]}];
-  State not_in_test = 4 [(validate.rules).enum = {in: [0, 2]}];
+  State not_in_test = 4 [(validate.rules).enum = {not_in: [0, 2]}];
 }
 
 
@@ -181,8 +181,8 @@ message MapTest {
     (validate.rules).map.keys.string.max_len = 5
   ];
   map<string, int32> values_test = 4 [
-    (validate.rules).map.values.int32.gt= 5,
-    (validate.rules).map.values.int32.lt = 5
+    (validate.rules).map.values.int32.gte= 5,
+    (validate.rules).map.values.int32.lte= 5
   ];
   map<string, google.protobuf.Timestamp> keys_values_test = 5 [
     (validate.rules).map.keys.string.min_len = 1,
@@ -219,7 +219,7 @@ message RepeatedTest {
   ];
   repeated google.protobuf.Duration items_duration_test = 7 [
     (validate.rules).repeated = {min_items: 1, max_items: 5},
-    (validate.rules).repeated.items.duration = {gt: {seconds: 10}, lt: {seconds: 10}}
+    (validate.rules).repeated.items.duration = {gt: {seconds: 10}, lt: {seconds: 20}}
   ];
   repeated bytes items_bytes_test = 8 [
     (validate.rules).repeated = {min_items: 1, max_items: 5},
