@@ -40,11 +40,11 @@ class TestP2pValidate:
     @staticmethod
     def _model_output(msg: Any) -> str:
         local_dict: dict = {
-             "CustomerField": CustomerField,
-             "confloat": confloat,
-             "conint": conint,
-             "customer_any": customer_any,
-         }
+            "CustomerField": CustomerField,
+            "confloat": confloat,
+            "conint": conint,
+            "customer_any": customer_any,
+        }
         return pydantic_model_to_py_code(msg_to_pydantic_model(msg, local_dict=local_dict))
 
     def test_any(self) -> None:

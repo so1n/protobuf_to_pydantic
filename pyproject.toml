@@ -52,6 +52,7 @@ testpaths = "tests"
 [tool.coverage.run]
 branch = true
 source = ["protobuf_to_pydantic"]
+omit = ["protobuf_to_pydantic/contrib/proto_parser.py"]
 
 [tool.coverage.report]
 exclude_lines = [
@@ -73,6 +74,8 @@ exclude_lines = [
     # type hints
     "if TYPE_CHECKING:",
     "pass",
+
+    "except ImportError:"
 ]
 
 
