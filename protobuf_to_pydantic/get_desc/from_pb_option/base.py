@@ -152,13 +152,15 @@ def option_descriptor_to_desc_dict(option_descriptor: Descriptor, field: Any, de
             option_descriptor_to_desc_dict(getattr(value, type_name), field, sub_dict, type_name)
             if "map_type" not in desc_dict:
                 desc_dict["map_type"] = {}
-            desc_dict["map_type"][column] = con_type(
-                **{
-                    _key: sub_dict["extra"].get(_key, None)
-                    for _key in inspect.signature(con_type).parameters.keys()
-                    if sub_dict["extra"].get(_key, None) is not None
-                }
-            )
+            con_type_param_dict: dict = {}
+            for _key in inspect.signature(con_type).parameters.keys():
+                if sub_dict.get(_key, None) is not None:
+                    con_type_param_dict[_key] = sub_dict[_key]
+                elif "extra" in sub_dict:
+                    if sub_dict["extra"].get(_key, None) is not None:
+                        con_type_param_dict[_key] = sub_dict["extra"][_key]
+
+            desc_dict["map_type"][column] = con_type(**con_type_param_dict)
             continue
         elif column == "items":
             type_name = value.ListFields()[0][0].full_name.split(".")[-1]

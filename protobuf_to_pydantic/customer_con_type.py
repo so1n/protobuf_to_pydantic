@@ -34,7 +34,15 @@ __all__ = [
     "contimestamp",
     "ConstrainedTimestamp",
     "pydantic_con_dict",
+    "set_ignore_param_value_tz",
 ]
+
+_ignore_param_value_tz: bool = False
+
+
+def set_ignore_param_value_tz(result: bool) -> None:
+    global _ignore_param_value_tz
+    _ignore_param_value_tz = result
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Duration[timedelta] TYPE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -142,7 +150,7 @@ class ConstrainedTimestamp(datetime):
     @classmethod
     def __get_validators__(cls) -> "CallableGenerator":
         yield cls.validate
-        if cls.ignore_tz:
+        if cls.ignore_tz or _ignore_param_value_tz:
             yield cls.ignore_value_tz
         if cls.timestamp_const:
             yield customer_validator.timestamp_const_validator

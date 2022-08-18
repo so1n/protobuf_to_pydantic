@@ -22,7 +22,7 @@ def check_one_of(cls: Any, values: tuple) -> tuple:
 def _get_name_value_from_kwargs(key: str, field: ModelField) -> Tuple[str, Any]:
     field_name: str = field.name
     if field.field_info.extra:
-        field_value: Any = field.field_info.extra["extra"].get(key, None)
+        field_value: Any = field.field_info.extra.get(key, None)
     else:
         field_value = getattr(field.type_, key, None)
     return field_name, field_value
@@ -33,27 +33,23 @@ def _get_name_value_from_kwargs(key: str, field: ModelField) -> Tuple[str, Any]:
 ##################
 def in_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
     field_name, field_value = _get_name_value_from_kwargs("in", kwargs["field"])
-    print(v, field_name, field_value)
     if field_value is not None and v not in field_value:
-        raise ValueError(f"{field_name} not in {field_value}")
+        raise ValueError(f"{field_name}:{v} not in {field_value}")
     return v
 
 
 def not_in_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
     field_name, field_value = _get_name_value_from_kwargs("not_in", kwargs["field"])
     if field_value is not None and v in field_value:
-        raise ValueError(f"{field_name} in {field_value}")
+        raise ValueError(f"{field_name}:{v} in {field_value}")
     return v
 
 
 def any_in_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
     field_name, field_value = _get_name_value_from_kwargs("any_in", kwargs["field"])
-    if (
-        field_value is not None
-        and isinstance(v, AnyMessage)
-        and (v.type_url not in field_value or v not in field_value)
-    ):
-        raise ValueError(f"{field_name}.type_url:{v.type_url} not in {field_value}")
+    if field_value is not None and isinstance(v, AnyMessage):
+        if not (v.type_url in field_value or v in field_value):
+            raise ValueError(f"{field_name}.type_url:{v.type_url} not in {field_value}")
     return v
 
 
@@ -87,15 +83,15 @@ def suffix_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
 
 def contains_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
     field_name, field_value = _get_name_value_from_kwargs("contains", kwargs["field"])
-    if field_value is not None and v not in field_value:
-        raise ValueError(f"{field_name} not contain {field_value}")
+    if field_value is not None and field_value not in v:
+        raise ValueError(f"{field_name} value:{v} must contain {field_value}")
     return v
 
 
 def not_contains_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
     field_name, field_value = _get_name_value_from_kwargs("not_contains", kwargs["field"])
-    if field_value is not None and v in field_value:
-        raise ValueError(f"{field_name} contain {field_value}")
+    if field_value is not None and field_value in v:
+        raise ValueError(f"{field_name} value :{v} must not contain {field_value}")
     return v
 
 

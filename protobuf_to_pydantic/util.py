@@ -14,8 +14,10 @@ class Timedelta(timedelta):
         yield cls.validate
 
     @classmethod
-    def validate(cls, v: Union[int, float, str]) -> timedelta:
-        if isinstance(v, str):
+    def validate(cls, v: Union[int, float, str, timedelta]) -> timedelta:
+        if isinstance(v, timedelta):
+            return v
+        elif isinstance(v, str):
             if v.endswith("s") and v[:-1].isdigit():
                 v = v[:-1]
             v = float(v)
