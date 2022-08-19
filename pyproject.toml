@@ -46,6 +46,14 @@ use_parentheses = true
 ensure_newline_before_comments = true
 line_length = 120
 
+[tool.mypy]
+disallow_untyped_defs = true
+python_executable = ".venv/bin/python"
+exclude = [
+    "^example/python_example_proto_code/example_proto"
+]
+
+
 [tool.pytest]
 testpaths = "tests"
 

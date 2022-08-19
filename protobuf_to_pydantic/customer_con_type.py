@@ -116,15 +116,15 @@ TIMESTAMP_ANT_TYPE = Union[int, float, str, datetime]
 
 
 class ConstrainedTimestamp(datetime):
-    timestamp_const: Optional[datetime] = None
-    timestamp_ge: Optional[datetime] = None
-    timestamp_gt: Optional[datetime] = None
-    timestamp_gt_now: Union[bool, Callable[[], datetime], None] = None
-    timestamp_le: Optional[datetime] = None
-    timestamp_lt: Optional[datetime] = None
-    timestamp_lt_now: Union[bool, Callable[[], datetime], None] = None
-    timestamp_in: Optional[Sequence[datetime]] = None
-    timestamp_not_in: Optional[Sequence[datetime]] = None
+    timestamp_const: Optional[TIMESTAMP_ANT_TYPE] = None
+    timestamp_ge: Optional[TIMESTAMP_ANT_TYPE] = None
+    timestamp_gt: Optional[TIMESTAMP_ANT_TYPE] = None
+    timestamp_gt_now: Union[bool, Callable[[], TIMESTAMP_ANT_TYPE], None] = None
+    timestamp_le: Optional[TIMESTAMP_ANT_TYPE] = None
+    timestamp_lt: Optional[TIMESTAMP_ANT_TYPE] = None
+    timestamp_lt_now: Union[bool, Callable[[], TIMESTAMP_ANT_TYPE], None] = None
+    timestamp_in: Optional[Sequence[TIMESTAMP_ANT_TYPE]] = None
+    timestamp_not_in: Optional[Sequence[TIMESTAMP_ANT_TYPE]] = None
     timestamp_within: Optional[timedelta] = None
     ignore_tz: bool = False
 
@@ -185,18 +185,18 @@ class ConstrainedTimestamp(datetime):
 
 def contimestamp(
     *,
-    timestamp_const: Optional[datetime] = None,
-    timestamp_ge: Optional[datetime] = None,
-    timestamp_gt: Optional[datetime] = None,
-    timestamp_gt_now: Optional[Union[bool, Callable[[], datetime]]] = None,
-    timestamp_le: Optional[datetime] = None,
-    timestamp_lt: Optional[datetime] = None,
-    timestamp_lt_now: Optional[Union[bool, Callable[[], datetime]]] = None,
-    timestamp_in: Optional[Sequence[datetime]] = None,
-    timestamp_not_in: Optional[Sequence[datetime]] = None,
+    timestamp_const: Optional[TIMESTAMP_ANT_TYPE] = None,
+    timestamp_ge: Optional[TIMESTAMP_ANT_TYPE] = None,
+    timestamp_gt: Optional[TIMESTAMP_ANT_TYPE] = None,
+    timestamp_gt_now: Optional[Union[bool, Callable[[], TIMESTAMP_ANT_TYPE]]] = None,
+    timestamp_le: Optional[TIMESTAMP_ANT_TYPE] = None,
+    timestamp_lt: Optional[TIMESTAMP_ANT_TYPE] = None,
+    timestamp_lt_now: Optional[Union[bool, Callable[[], TIMESTAMP_ANT_TYPE]]] = None,
+    timestamp_in: Optional[Sequence[TIMESTAMP_ANT_TYPE]] = None,
+    timestamp_not_in: Optional[Sequence[TIMESTAMP_ANT_TYPE]] = None,
     timestamp_within: Optional[timedelta] = None,
     ignore_tz: bool = False,
-) -> TIMESTAMP_ANT_TYPE:
+) -> Type:
     namespace = dict(
         timestamp_const=timestamp_const,
         timestamp_ge=timestamp_ge,
@@ -210,7 +210,7 @@ def contimestamp(
         timestamp_within=timestamp_within,
         ignore_tz=ignore_tz,
     )
-    return type("ConstrainedTimestampValue", (ConstrainedTimestamp,), namespace)  # type: ignore
+    return type("ConstrainedTimestampValue", (ConstrainedTimestamp,), namespace)
 
 
 pydantic_con_dict: Dict[Type, Callable] = {

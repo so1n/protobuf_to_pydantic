@@ -173,30 +173,31 @@ class M2P(object):
         message_type_dict_by_type_name: Optional[Dict[str, Any]] = None,
         message_default_factory_dict_by_type_name: Optional[Dict[str, Any]] = None,
     ):
-        proto_file_name = msg.DESCRIPTOR.file.name
+        proto_file_name = msg.DESCRIPTOR.file.name  # type: ignore
         if proto_file_name.endswith("empty.proto"):
             raise ValueError("Not support Empty Message")
-        if isinstance(parse_msg_desc_method, str) and Path(parse_msg_desc_method).exists():
+        if parse_msg_desc_method == "ignore":
+            message_field_dict: Dict[str, Dict[str, str]] = {}
+        elif isinstance(parse_msg_desc_method, str) and Path(parse_msg_desc_method).exists():
             file_str: str = parse_msg_desc_method
             if not file_str.endswith("/"):
                 file_str += "/"
-            message_field_dict: Dict[str, Dict[str, str]] = get_desc_from_proto_file(file_str + proto_file_name)
+            message_field_dict = get_desc_from_proto_file(file_str + proto_file_name)
         elif inspect.ismodule(parse_msg_desc_method):
-            if getattr(parse_msg_desc_method, msg.__name__, None) is not msg:
+            if getattr(parse_msg_desc_method, msg.__name__, None) is not msg:  # type: ignore
                 raise ValueError(f"Not the module corresponding to {msg}")
             pyi_file_name = parse_msg_desc_method.__file__ + "i"  # type: ignore
             if not Path(pyi_file_name).exists():
                 raise RuntimeError(f"Can not found {msg} pyi file")
             message_field_dict = get_desc_from_pyi_file(pyi_file_name)
         elif parse_msg_desc_method == "PGV":
-            message_field_dict = get_desc_from_pgv(message=msg)
+            message_field_dict = get_desc_from_pgv(message=msg)  # type: ignore
         elif parse_msg_desc_method is not None:
             raise ValueError(
-                f"parse_msg_desc_method param must be exist path or `PGV` or message model,"
-                f" not {parse_msg_desc_method})"
+                f"parse_msg_desc_method param must be exist path, `ignore` or `PGV`," f" not {parse_msg_desc_method})"
             )
         else:
-            message_field_dict = get_desc_from_p2p(message=msg)
+            message_field_dict = get_desc_from_p2p(message=msg)  # type: ignore
         self._parse_msg_desc_method: Optional[str] = parse_msg_desc_method
         self._field_doc_dict = message_field_dict
         self._default_field = default_field
@@ -397,15 +398,14 @@ class M2P(object):
                 check_dict_one_of(field_param_dict, ["example", "example_factory"])
                 if field_param_dict["default_factory"] is not None:
                     field_param_dict.pop("default", "")
-                    field_param_dict.pop("miss_default", "")
                 elif field_param_dict["miss_default"] is True:
                     field_param_dict.pop("default", "")
-                    field_param_dict.pop("miss_default", "")
                     field_param_dict.pop("default_factory", "")
                 elif field_param_dict["default"] is None:
                     field_param_dict["default"] = default
                 if field_param_dict.get("default", None) is default:
                     field_param_dict["default_factory"] = default_factory
+                field_param_dict.pop("miss_default", None)
 
                 # Unified field parameter handling
                 self._field_param_dict_handle(field_param_dict)

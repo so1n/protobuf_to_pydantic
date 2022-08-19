@@ -20,16 +20,12 @@ class SexType(IntEnum):
 
 class UserMessage(BaseModel):
     uid: str = FieldInfo(title="UID", description="user union id", extra={"example": "10086"})
-    age: int = FieldInfo(default=0, title="use age", ge=0, extra={"example": 18, "miss_default": False})
-    height: float = FieldInfo(default=0.0, ge=0, le=2, extra={"miss_default": False})
+    age: int = FieldInfo(default=0, title="use age", ge=0, extra={"example": 18})
+    height: float = FieldInfo(default=0.0, ge=0, le=2)
     sex: SexType = FieldInfo(default=0)
     is_adult: bool = FieldInfo(default=False)
     user_name: str = FieldInfo(
-        default="",
-        description="user name",
-        min_length=1,
-        max_length=10,
-        extra={"example": "so1n", "miss_default": False},
+        default="", description="user name", min_length=1, max_length=10, extra={"example": "so1n"}
     )
 
 
@@ -39,17 +35,13 @@ class MapMessage(BaseModel):
 
 
 class RepeatedMessage(BaseModel):
-    str_list: typing.List[str] = FieldInfo(
-        default_factory=list, min_items=3, max_items=5, extra={"miss_default": False}
-    )
-    int_list: typing.List[int] = FieldInfo(
-        default_factory=list, min_items=1, max_items=5, unique_items=True, extra={"miss_default": False}
-    )
+    str_list: typing.List[str] = FieldInfo(default_factory=list, min_items=3, max_items=5)
+    int_list: typing.List[int] = FieldInfo(default_factory=list, min_items=1, max_items=5, unique_items=True)
     user_list: typing.List[UserMessage] = FieldInfo(default_factory=list)
 
 
 class NestedMessageUserPayMessage(BaseModel):
-    bank_number: PaymentCardNumber = FieldInfo(default="", extra={"miss_default": False})
+    bank_number: PaymentCardNumber = FieldInfo(default="")
     exp: datetime = FieldInfo(default_factory=exp_time)
     uuid: str = FieldInfo(default_factory=uuid4)
 

@@ -7,7 +7,7 @@ from protobuf_to_pydantic import msg_to_pydantic_model, pydantic_model_to_py_cod
 class TestSimpleTest:
     @staticmethod
     def _model_output(msg: Any) -> str:
-        return pydantic_model_to_py_code(msg_to_pydantic_model(msg))
+        return pydantic_model_to_py_code(msg_to_pydantic_model(msg, parse_msg_desc_method="ignore"))
 
     def test_user_message(self) -> None:
         assert """
@@ -54,8 +54,8 @@ class UserMessage(BaseModel):
 
 
 class MapMessage(BaseModel):
-    user_map: typing.Dict[str, UserMessage] = FieldInfo()
-    user_flag: typing.Dict[str, bool] = FieldInfo()""" in self._model_output(demo_pb2.MapMessage)
+    user_map: typing.Dict[str, UserMessage] = FieldInfo(default_factory=dict)
+    user_flag: typing.Dict[str, bool] = FieldInfo(default_factory=dict)""" in self._model_output(demo_pb2.MapMessage)
 
     def test_repeated_message(self) -> None:
         assert """
@@ -110,23 +110,20 @@ class RepeatedMessage(BaseModel):
 
 
 class MapMessage(BaseModel):
-    user_map: typing.Dict[str, UserMessage] = FieldInfo()
-    user_flag: typing.Dict[str, bool] = FieldInfo()
+    user_map: typing.Dict[str, UserMessage] = FieldInfo(default_factory=dict)
+    user_flag: typing.Dict[str, bool] = FieldInfo(default_factory=dict)
 
 
 class NestedMessageUserPayMessage(BaseModel):
-    bank_number: str = FieldInfo(default="", min_length=13, max_length=19)
-    exp: datetime = FieldInfo(extra={"timestamp_gt_now": True})
-    uuid: UUID = FieldInfo(default="")
-
-    timestamp_gt_now_validator_exp = validator(
-        'exp', allow_reuse=True)(timestamp_gt_now_validator)
+    bank_number: str = FieldInfo(default="")
+    exp: datetime = FieldInfo(default_factory=datetime.now)
+    uuid: str = FieldInfo(default="")
 
 
 class NestedMessage(BaseModel):
-    user_list_map: typing.Dict[str, RepeatedMessage] = FieldInfo()
-    user_map: typing.Dict[str, MapMessage] = FieldInfo()
+    user_list_map: typing.Dict[str, RepeatedMessage] = FieldInfo(
+        default_factory=dict)
+    user_map: typing.Dict[str, MapMessage] = FieldInfo(default_factory=dict)
     user_pay: NestedMessageUserPayMessage = FieldInfo()
     not_enable_user_pay: NestedMessageUserPayMessage = FieldInfo()
-    empty: None = FieldInfo()
-""" in self._model_output(demo_pb2.NestedMessage)
+    empty: None = FieldInfo()""" in self._model_output(demo_pb2.NestedMessage)

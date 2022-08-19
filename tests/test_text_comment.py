@@ -54,13 +54,6 @@ class UserMessage(BaseModel):
 
     def test_map_message(self) -> None:
             assert """
-import typing
-from enum import IntEnum
-
-from pydantic import BaseModel
-from pydantic.fields import FieldInfo
-
-
 class SexType(IntEnum):
     man = 0
     women = 1
@@ -85,8 +78,8 @@ class UserMessage(BaseModel):
 
 
 class MapMessage(BaseModel):
-    user_map: typing.Dict[str, UserMessage] = FieldInfo()
-    user_flag: typing.Dict[str, bool] = FieldInfo()""" in self._model_output(demo_pb2.MapMessage)
+    user_map: typing.Dict[str, UserMessage] = FieldInfo(default_factory=dict)
+    user_flag: typing.Dict[str, bool] = FieldInfo(default_factory=dict)""" in self._model_output(demo_pb2.MapMessage)
 
     def test_repeated_message(self) -> None:
             assert """
@@ -134,18 +127,6 @@ class RepeatedMessage(BaseModel):
 
     def test_nested_message(self) -> None:
             assert """
-import typing
-from datetime import datetime
-from enum import IntEnum
-from uuid import uuid4
-
-from pydantic import BaseModel
-from pydantic.fields import FieldInfo
-from pydantic.types import PaymentCardNumber
-
-from tests.test_text_comment import exp_time
-
-
 class SexType(IntEnum):
     man = 0
     women = 1
@@ -181,8 +162,8 @@ class RepeatedMessage(BaseModel):
 
 
 class MapMessage(BaseModel):
-    user_map: typing.Dict[str, UserMessage] = FieldInfo()
-    user_flag: typing.Dict[str, bool] = FieldInfo()
+    user_map: typing.Dict[str, UserMessage] = FieldInfo(default_factory=dict)
+    user_flag: typing.Dict[str, bool] = FieldInfo(default_factory=dict)
 
 
 class NestedMessageUserPayMessage(BaseModel):
@@ -192,8 +173,9 @@ class NestedMessageUserPayMessage(BaseModel):
 
 
 class NestedMessage(BaseModel):
-    user_list_map: typing.Dict[str, RepeatedMessage] = FieldInfo()
-    user_map: typing.Dict[str, MapMessage] = FieldInfo()
+    user_list_map: typing.Dict[str, RepeatedMessage] = FieldInfo(
+        default_factory=dict)
+    user_map: typing.Dict[str, MapMessage] = FieldInfo(default_factory=dict)
     user_pay: NestedMessageUserPayMessage = FieldInfo()
     empty: None = FieldInfo()""" in self._model_output(demo_pb2.NestedMessage)
 

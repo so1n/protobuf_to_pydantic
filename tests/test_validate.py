@@ -39,9 +39,7 @@ def exp_time() -> float:
 class TestValidate:
     @staticmethod
     def _model_output(msg: Any) -> str:
-        return pydantic_model_to_py_code(
-            msg_to_pydantic_model(msg, parse_msg_desc_method="PGV")
-        )
+        return pydantic_model_to_py_code(msg_to_pydantic_model(msg, parse_msg_desc_method="PGV"))
 
     def test_string(self) -> None:
         assert """
@@ -92,6 +90,7 @@ class AnyTest(BaseModel):
 
     required_test: Any = FieldInfo()
     not_in_test: Any = FieldInfo(
+        default_factory=Any,
         extra={
             "any_not_in": [
                 "type.googleapis.com/google.protobuf.Duration",
@@ -99,6 +98,7 @@ class AnyTest(BaseModel):
             ]
         })
     in_test: Any = FieldInfo(
+        default_factory=Any,
         extra={
             "any_in": [
                 "type.googleapis.com/google.protobuf.Duration",
@@ -151,43 +151,57 @@ class DoubleTest(BaseModel):
     range_e_test: float = FieldInfo(default=0.0, ge=1, le=10)
     range_test: float = FieldInfo(default=0.0, gt=1, lt=10)
     in_test: float = FieldInfo(default=0.0, extra={"in": [1.0, 2.0, 3.0]})
-    not_in_test: float = FieldInfo(default=0.0, extra={"in": [1.0, 2.0, 3.0]})
+    not_in_test: float = FieldInfo(default=0.0,
+                                   extra={"not_in": [1.0, 2.0, 3.0]})
     ignore_test: float = FieldInfo(default=0.0)
 
     in_validator_in_test = validator('in_test', allow_reuse=True)(in_validator)
-    in_validator_not_in_test = validator('not_in_test',
-                                         allow_reuse=True)(in_validator)""" in self._model_output(DoubleTest)
+    not_in_validator_not_in_test = validator(
+        'not_in_test', allow_reuse=True)(not_in_validator)""" in self._model_output(DoubleTest)
 
     def test_duration(self) -> None:
         assert """
 class DurationTest(BaseModel):
     required_test: Timedelta = FieldInfo()
     const_test: Timedelta = FieldInfo(
+        default_factory=Timedelta,
         extra={"duration_const": timedelta(seconds=1, microseconds=500000)})
-    range_test: Timedelta = FieldInfo(
-        extra={
-            "duration_gt": timedelta(seconds=5, microseconds=500000),
-            "duration_lt": timedelta(seconds=10, microseconds=500000)
-        })
-    range_e_test: Timedelta = FieldInfo(
-        extra={
-            "duration_ge": timedelta(seconds=5, microseconds=500000),
-            "duration_le": timedelta(seconds=10, microseconds=500000)
-        })
-    in_test: Timedelta = FieldInfo(
-        extra={
-            "duration_in": [
-                timedelta(seconds=1, microseconds=500000),
-                timedelta(seconds=3, microseconds=500000)
-            ]
-        })
-    not_in_test: Timedelta = FieldInfo(
-        extra={
-            "duration_not_in": [
-                timedelta(seconds=1, microseconds=500000),
-                timedelta(seconds=3, microseconds=500000)
-            ]
-        })
+    range_test: Timedelta = FieldInfo(default_factory=Timedelta,
+                                      extra={
+                                          "duration_gt":
+                                          timedelta(seconds=5,
+                                                    microseconds=500000),
+                                          "duration_lt":
+                                          timedelta(seconds=10,
+                                                    microseconds=500000)
+                                      })
+    range_e_test: Timedelta = FieldInfo(default_factory=Timedelta,
+                                        extra={
+                                            "duration_ge":
+                                            timedelta(seconds=5,
+                                                      microseconds=500000),
+                                            "duration_le":
+                                            timedelta(seconds=10,
+                                                      microseconds=500000)
+                                        })
+    in_test: Timedelta = FieldInfo(default_factory=Timedelta,
+                                   extra={
+                                       "duration_in": [
+                                           timedelta(seconds=1,
+                                                     microseconds=500000),
+                                           timedelta(seconds=3,
+                                                     microseconds=500000)
+                                       ]
+                                   })
+    not_in_test: Timedelta = FieldInfo(default_factory=Timedelta,
+                                       extra={
+                                           "duration_not_in": [
+                                               timedelta(seconds=1,
+                                                         microseconds=500000),
+                                               timedelta(seconds=3,
+                                                         microseconds=500000)
+                                           ]
+                                       })
 
     duration_const_validator_const_test = validator(
         'const_test', allow_reuse=True)(duration_const_validator)
@@ -206,15 +220,21 @@ class DurationTest(BaseModel):
 
     def test_enum(self) -> None:
         assert """
+class State(IntEnum):
+    INACTIVE = 0
+    PENDING = 1
+    ACTIVE = 2
+
+
 class EnumTest(BaseModel):
     const_test: State = FieldInfo(default=2, const=True)
     defined_only_test: State = FieldInfo(default=0)
     in_test: State = FieldInfo(default=0, extra={"in": [0, 2]})
-    not_in_test: State = FieldInfo(default=0, extra={"in": [0, 2]})
+    not_in_test: State = FieldInfo(default=0, extra={"not_in": [0, 2]})
 
     in_validator_in_test = validator('in_test', allow_reuse=True)(in_validator)
-    in_validator_not_in_test = validator('not_in_test',
-                                         allow_reuse=True)(in_validator)""" in self._model_output(EnumTest)
+    not_in_validator_not_in_test = validator(
+        'not_in_test', allow_reuse=True)(not_in_validator)""" in self._model_output(EnumTest)
 
     def test_fixed32(self) -> None:
         assert """
@@ -223,12 +243,12 @@ class Fixed32Test(BaseModel):
     range_e_test: float = FieldInfo(default=0, ge=1, le=10)
     range_test: float = FieldInfo(default=0, gt=1, lt=10)
     in_test: float = FieldInfo(default=0, extra={"in": [1, 2, 3]})
-    not_in_test: float = FieldInfo(default=0, extra={"in": [1, 2, 3]})
+    not_in_test: float = FieldInfo(default=0, extra={"not_in": [1, 2, 3]})
     ignore_test: float = FieldInfo(default=0)
 
     in_validator_in_test = validator('in_test', allow_reuse=True)(in_validator)
-    in_validator_not_in_test = validator('not_in_test',
-                                         allow_reuse=True)(in_validator)""" in self._model_output(Fixed32Test)
+    not_in_validator_not_in_test = validator(
+        'not_in_test', allow_reuse=True)(not_in_validator)""" in self._model_output(Fixed32Test)
 
     def test_fixed64(self) -> None:
         assert """
@@ -237,12 +257,12 @@ class Fixed64Test(BaseModel):
     range_e_test: float = FieldInfo(default=0, ge=1, le=10)
     range_test: float = FieldInfo(default=0, gt=1, lt=10)
     in_test: float = FieldInfo(default=0, extra={"in": [1, 2, 3]})
-    not_in_test: float = FieldInfo(default=0, extra={"in": [1, 2, 3]})
+    not_in_test: float = FieldInfo(default=0, extra={"not_in": [1, 2, 3]})
     ignore_test: float = FieldInfo(default=0)
 
     in_validator_in_test = validator('in_test', allow_reuse=True)(in_validator)
-    in_validator_not_in_test = validator('not_in_test',
-                                         allow_reuse=True)(in_validator)""" in self._model_output(Fixed64Test)
+    not_in_validator_not_in_test = validator(
+        'not_in_test', allow_reuse=True)(not_in_validator)""" in self._model_output(Fixed64Test)
 
     def test_float(self) -> None:
         assert """
@@ -266,12 +286,12 @@ class Int32Test(BaseModel):
     range_e_test: int = FieldInfo(default=0, ge=1, le=10)
     range_test: int = FieldInfo(default=0, gt=1, lt=10)
     in_test: int = FieldInfo(default=0, extra={"in": [1, 2, 3]})
-    not_in_test: int = FieldInfo(default=0, extra={"in": [1, 2, 3]})
+    not_in_test: int = FieldInfo(default=0, extra={"not_in": [1, 2, 3]})
     ignore_test: int = FieldInfo(default=0)
 
     in_validator_in_test = validator('in_test', allow_reuse=True)(in_validator)
-    in_validator_not_in_test = validator('not_in_test',
-                                         allow_reuse=True)(in_validator)""" in self._model_output(Int32Test)
+    not_in_validator_not_in_test = validator(
+        'not_in_test', allow_reuse=True)(not_in_validator)""" in self._model_output(Int32Test)
 
     def test_int64(self) -> None:
         assert """
@@ -280,27 +300,31 @@ class Int64Test(BaseModel):
     range_e_test: int = FieldInfo(default=0, ge=1, le=10)
     range_test: int = FieldInfo(default=0, gt=1, lt=10)
     in_test: int = FieldInfo(default=0, extra={"in": [1, 2, 3]})
-    not_in_test: int = FieldInfo(default=0, extra={"in": [1, 2, 3]})
+    not_in_test: int = FieldInfo(default=0, extra={"not_in": [1, 2, 3]})
     ignore_test: int = FieldInfo(default=0)
 
     in_validator_in_test = validator('in_test', allow_reuse=True)(in_validator)
-    in_validator_not_in_test = validator('not_in_test',
-                                         allow_reuse=True)(in_validator)""" in self._model_output(Int64Test)
+    not_in_validator_not_in_test = validator(
+        'not_in_test', allow_reuse=True)(not_in_validator)""" in self._model_output(Int64Test)
 
     def test_map(self) -> None:
         assert """
 class MapTest(BaseModel):
-    pair_test: typing.Dict[str, int] = FieldInfo(extra={
-        "map_max_pairs": 5,
-        "map_min_pairs": 1
-    })
-    no_parse_test: typing.Dict[str, int] = FieldInfo()
-    keys_test: typing.Dict[constr(), int] = FieldInfo()
-    values_test: typing.Dict[str, conint()] = FieldInfo()
-    keys_values_test: typing.Dict[constr(),
+    pair_test: typing.Dict[str, int] = FieldInfo(default_factory=dict,
+                                                 extra={
+                                                     "map_max_pairs": 5,
+                                                     "map_min_pairs": 1
+                                                 })
+    no_parse_test: typing.Dict[str, int] = FieldInfo(default_factory=dict)
+    keys_test: typing.Dict[constr(min_length=1, max_length=5),
+                           int] = FieldInfo(default_factory=dict)
+    values_test: typing.Dict[str, conint(ge=5, le=5)] = FieldInfo(
+        default_factory=dict)
+    keys_values_test: typing.Dict[constr(min_length=1, max_length=5),
                                   contimestamp(
-                                      timestamp_gt_now=True)] = FieldInfo()
-    ignore_test: typing.Dict[str, int] = FieldInfo()
+                                      timestamp_gt_now=True)] = FieldInfo(
+                                          default_factory=dict)
+    ignore_test: typing.Dict[str, int] = FieldInfo(default_factory=dict)
 
     map_min_pairs_validator_pair_test = validator(
         'pair_test', allow_reuse=True)(map_min_pairs_validator)
@@ -369,17 +393,21 @@ class StringTest(BaseModel):
 
 
 class MapTest(BaseModel):
-    pair_test: typing.Dict[str, int] = FieldInfo(extra={
-        "map_max_pairs": 5,
-        "map_min_pairs": 1
-    })
-    no_parse_test: typing.Dict[str, int] = FieldInfo()
-    keys_test: typing.Dict[constr(), int] = FieldInfo()
-    values_test: typing.Dict[str, conint()] = FieldInfo()
-    keys_values_test: typing.Dict[constr(),
+    pair_test: typing.Dict[str, int] = FieldInfo(default_factory=dict,
+                                                 extra={
+                                                     "map_max_pairs": 5,
+                                                     "map_min_pairs": 1
+                                                 })
+    no_parse_test: typing.Dict[str, int] = FieldInfo(default_factory=dict)
+    keys_test: typing.Dict[constr(min_length=1, max_length=5),
+                           int] = FieldInfo(default_factory=dict)
+    values_test: typing.Dict[str, conint(ge=5, le=5)] = FieldInfo(
+        default_factory=dict)
+    keys_values_test: typing.Dict[constr(min_length=1, max_length=5),
                                   contimestamp(
-                                      timestamp_gt_now=True)] = FieldInfo()
-    ignore_test: typing.Dict[str, int] = FieldInfo()
+                                      timestamp_gt_now=True)] = FieldInfo(
+                                          default_factory=dict)
+    ignore_test: typing.Dict[str, int] = FieldInfo(default_factory=dict)
 
     map_min_pairs_validator_pair_test = validator(
         'pair_test', allow_reuse=True)(map_min_pairs_validator)
@@ -389,7 +417,8 @@ class MapTest(BaseModel):
 
 class NestedMessageUserPayMessage(BaseModel):
     bank_number: str = FieldInfo(default="", min_length=13, max_length=19)
-    exp: datetime = FieldInfo(extra={"timestamp_gt_now": True})
+    exp: datetime = FieldInfo(default_factory=datetime.now,
+                              extra={"timestamp_gt_now": True})
     uuid: UUID = FieldInfo(default="")
 
     timestamp_gt_now_validator_exp = validator(
@@ -398,13 +427,15 @@ class NestedMessageUserPayMessage(BaseModel):
 
 class NestedMessageNotEnableUserPayMessage(BaseModel):
     bank_number: str = FieldInfo(default="")
-    exp: datetime = FieldInfo()
+    exp: datetime = FieldInfo(default_factory=datetime.now)
     uuid: str = FieldInfo(default="")
 
 
 class NestedMessage(BaseModel):
-    string_in_map_test: typing.Dict[str, StringTest] = FieldInfo()
-    map_in_map_test: typing.Dict[str, MapTest] = FieldInfo()
+    string_in_map_test: typing.Dict[str, StringTest] = FieldInfo(
+        default_factory=dict)
+    map_in_map_test: typing.Dict[str,
+                                 MapTest] = FieldInfo(default_factory=dict)
     user_pay: NestedMessageUserPayMessage = FieldInfo()
     not_enable_user_pay: NestedMessageNotEnableUserPayMessage = FieldInfo()
     empty: None = FieldInfo()""" in self._model_output(NestedMessage)
@@ -443,16 +474,6 @@ class OneOfTest(BaseModel):
 
     def test_repeated(self) -> None:
         assert """
-import typing
-from datetime import datetime, timedelta
-
-from pydantic import BaseModel
-from pydantic.fields import FieldInfo
-from pydantic.types import conbytes, confloat, conint, conlist, constr
-
-from protobuf_to_pydantic.customer_con_type import contimedelta, contimestamp
-
-
 class RepeatedTest(BaseModel):
     range_test: typing.List[str] = FieldInfo(default_factory=list,
                                              min_items=1,
@@ -469,12 +490,12 @@ class RepeatedTest(BaseModel):
                               min_items=1,
                               max_items=5) = FieldInfo(default_factory=list)
     items_timestamp_test: conlist(
-        item_type=contimestamp(timestamp_gt=datetime(2020, 9, 13, 12, 26, 40),
-                               timestamp_lt=datetime(2020, 9, 13, 12, 26, 50)),
+        item_type=contimestamp(timestamp_gt=1600000000.0,
+                               timestamp_lt=1600000010.0),
         min_items=1,
         max_items=5) = FieldInfo(default_factory=list)
     items_duration_test: conlist(item_type=contimedelta(
-        duration_gt=timedelta(seconds=10), duration_lt=timedelta(seconds=10)),
+        duration_gt=timedelta(seconds=10), duration_lt=timedelta(seconds=20)),
                                  min_items=1,
                                  max_items=5) = FieldInfo(default_factory=list)
     items_bytes_test: conlist(item_type=conbytes(min_length=1, max_length=5),
@@ -484,100 +505,76 @@ class RepeatedTest(BaseModel):
 
     def test_sfixed32(self) -> None:
         assert """
-from pydantic import BaseModel, validator
-from pydantic.fields import FieldInfo
-
-from protobuf_to_pydantic.customer_validator import in_validator
-
-
 class Sfixed32Test(BaseModel):
     const_test: float = FieldInfo(default=1, const=True)
     range_e_test: float = FieldInfo(default=0, ge=1, le=10)
     range_test: float = FieldInfo(default=0, gt=1, lt=10)
     in_test: float = FieldInfo(default=0, extra={"in": [1, 2, 3]})
-    not_in_test: float = FieldInfo(default=0, extra={"in": [1, 2, 3]})
+    not_in_test: float = FieldInfo(default=0, extra={"not_in": [1, 2, 3]})
     ignore_test: float = FieldInfo(default=0)
 
     in_validator_in_test = validator('in_test', allow_reuse=True)(in_validator)
-    in_validator_not_in_test = validator('not_in_test',
-                                         allow_reuse=True)(in_validator)""" in self._model_output(Sfixed32Test)
+    not_in_validator_not_in_test = validator(
+        'not_in_test', allow_reuse=True)(not_in_validator)""" in self._model_output(Sfixed32Test)
 
     def test_sfixed64(self) -> None:
-        assert """from pydantic import BaseModel, validator
-from pydantic.fields import FieldInfo
-
-from protobuf_to_pydantic.customer_validator import in_validator
-
-
+        assert """
 class Sfixed64Test(BaseModel):
     const_test: float = FieldInfo(default=1, const=True)
     range_e_test: float = FieldInfo(default=0, ge=1, le=10)
     range_test: float = FieldInfo(default=0, gt=1, lt=10)
     in_test: float = FieldInfo(default=0, extra={"in": [1, 2, 3]})
-    not_in_test: float = FieldInfo(default=0, extra={"in": [1, 2, 3]})
+    not_in_test: float = FieldInfo(default=0, extra={"not_in": [1, 2, 3]})
     ignore_test: float = FieldInfo(default=0)
 
     in_validator_in_test = validator('in_test', allow_reuse=True)(in_validator)
-    in_validator_not_in_test = validator('not_in_test',
-                                         allow_reuse=True)(in_validator)""" in self._model_output(Sfixed64Test)
+    not_in_validator_not_in_test = validator(
+        'not_in_test', allow_reuse=True)(not_in_validator)""" in self._model_output(Sfixed64Test)
 
     def test_sint64(self) -> None:
         assert """
-from pydantic import BaseModel, validator
-from pydantic.fields import FieldInfo
-
-from protobuf_to_pydantic.customer_validator import in_validator
-
-
 class Sint64Test(BaseModel):
     const_test: int = FieldInfo(default=1, const=True)
     range_e_test: int = FieldInfo(default=0, ge=1, le=10)
     range_test: int = FieldInfo(default=0, gt=1, lt=10)
     in_test: int = FieldInfo(default=0, extra={"in": [1, 2, 3]})
-    not_in_test: int = FieldInfo(default=0, extra={"in": [1, 2, 3]})
+    not_in_test: int = FieldInfo(default=0, extra={"not_in": [1, 2, 3]})
     ignore_test: int = FieldInfo(default=0)
 
     in_validator_in_test = validator('in_test', allow_reuse=True)(in_validator)
-    in_validator_not_in_test = validator('not_in_test',
-                                         allow_reuse=True)(in_validator)""" in self._model_output(Sint64Test)
+    not_in_validator_not_in_test = validator(
+        'not_in_test', allow_reuse=True)(not_in_validator)""" in self._model_output(Sint64Test)
 
     def test_timestamp(self) -> None:
         assert """
-from datetime import datetime, timedelta
-
-from pydantic import BaseModel, validator
-from pydantic.fields import FieldInfo
-
-from protobuf_to_pydantic.customer_validator import (
-    timestamp_const_validator, timestamp_ge_validator,
-    timestamp_gt_now_validator, timestamp_gt_validator, timestamp_le_validator,
-    timestamp_lt_now_validator, timestamp_lt_validator,
-    timestamp_within_validator)
-
-
 class TimestampTest(BaseModel):
     required_test: datetime = FieldInfo()
-    const_test: datetime = FieldInfo(
-        extra={"timestamp_const": datetime(2020, 9, 13, 12, 26, 40)})
-    range_test: datetime = FieldInfo(
-        extra={
-            "timestamp_gt": datetime(2020, 9, 13, 12, 26, 40),
-            "timestamp_lt": datetime(2020, 9, 13, 12, 26, 50)
-        })
-    range_e_test: datetime = FieldInfo(
-        extra={
-            "timestamp_ge": datetime(2020, 9, 13, 12, 26, 40),
-            "timestamp_le": datetime(2020, 9, 13, 12, 26, 50)
-        })
-    lt_now_test: datetime = FieldInfo(extra={"timestamp_lt_now": True})
-    gt_now_test: datetime = FieldInfo(extra={"timestamp_gt_now": True})
+    const_test: datetime = FieldInfo(default_factory=datetime.now,
+                                     extra={"timestamp_const": 1600000000.0})
+    range_test: datetime = FieldInfo(default_factory=datetime.now,
+                                     extra={
+                                         "timestamp_gt": 1600000000.0,
+                                         "timestamp_lt": 1600000010.0
+                                     })
+    range_e_test: datetime = FieldInfo(default_factory=datetime.now,
+                                       extra={
+                                           "timestamp_ge": 1600000000.0,
+                                           "timestamp_le": 1600000010.0
+                                       })
+    lt_now_test: datetime = FieldInfo(default_factory=datetime.now,
+                                      extra={"timestamp_lt_now": True})
+    gt_now_test: datetime = FieldInfo(default_factory=datetime.now,
+                                      extra={"timestamp_gt_now": True})
     within_test: datetime = FieldInfo(
+        default_factory=datetime.now,
         extra={"timestamp_within": timedelta(seconds=1)})
-    within_and_gt_now_test: datetime = FieldInfo(
-        extra={
-            "timestamp_gt_now": True,
-            "timestamp_within": timedelta(seconds=3600)
-        })
+    within_and_gt_now_test: datetime = FieldInfo(default_factory=datetime.now,
+                                                 extra={
+                                                     "timestamp_gt_now":
+                                                     True,
+                                                     "timestamp_within":
+                                                     timedelta(seconds=3600)
+                                                 })
 
     timestamp_const_validator_const_test = validator(
         'const_test', allow_reuse=True)(timestamp_const_validator)
@@ -602,40 +599,28 @@ class TimestampTest(BaseModel):
 
     def test_unit32(self) -> None:
         assert """
-from pydantic import BaseModel, validator
-from pydantic.fields import FieldInfo
-
-from protobuf_to_pydantic.customer_validator import in_validator
-
-
 class Uint32Test(BaseModel):
     const_test: int = FieldInfo(default=1, const=True)
     range_e_test: int = FieldInfo(default=0, ge=1, le=10)
     range_test: int = FieldInfo(default=0, gt=1, lt=10)
     in_test: int = FieldInfo(default=0, extra={"in": [1, 2, 3]})
-    not_in_test: int = FieldInfo(default=0, extra={"in": [1, 2, 3]})
+    not_in_test: int = FieldInfo(default=0, extra={"not_in": [1, 2, 3]})
     ignore_test: int = FieldInfo(default=0)
 
     in_validator_in_test = validator('in_test', allow_reuse=True)(in_validator)
-    in_validator_not_in_test = validator('not_in_test',
-                                         allow_reuse=True)(in_validator)""" in self._model_output(Uint32Test)
+    not_in_validator_not_in_test = validator(
+        'not_in_test', allow_reuse=True)(not_in_validator)""" in self._model_output(Uint32Test)
 
     def test_unit64(self) -> None:
         assert """
-from pydantic import BaseModel, validator
-from pydantic.fields import FieldInfo
-
-from protobuf_to_pydantic.customer_validator import in_validator
-
-
 class Uint64Test(BaseModel):
     const_test: int = FieldInfo(default=1, const=True)
     range_e_test: int = FieldInfo(default=0, ge=1, le=10)
     range_test: int = FieldInfo(default=0, gt=1, lt=10)
     in_test: int = FieldInfo(default=0, extra={"in": [1, 2, 3]})
-    not_in_test: int = FieldInfo(default=0, extra={"in": [1, 2, 3]})
+    not_in_test: int = FieldInfo(default=0, extra={"not_in": [1, 2, 3]})
     ignore_test: int = FieldInfo(default=0)
 
     in_validator_in_test = validator('in_test', allow_reuse=True)(in_validator)
-    in_validator_not_in_test = validator('not_in_test',
-                                         allow_reuse=True)(in_validator)""" in self._model_output(Uint64Test)
+    not_in_validator_not_in_test = validator(
+        'not_in_test', allow_reuse=True)(not_in_validator)""" in self._model_output(Uint64Test)
