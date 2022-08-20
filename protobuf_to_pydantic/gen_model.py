@@ -195,10 +195,9 @@ class M2P(object):
         elif parse_msg_desc_method is not None:
             import os
 
-            print(os.getcwd())
-            print(Path(parse_msg_desc_method).exists())
             raise ValueError(
-                f"parse_msg_desc_method param must be exist path, `ignore` or `PGV`," f" not {parse_msg_desc_method})"
+                f"parse_msg_desc_method param must be exist path, `ignore` or `PGV`,"
+                f" not {parse_msg_desc_method}), now path:{os.getcwd()}"
             )
         else:
             message_field_dict = get_desc_from_p2p(message=msg)  # type: ignore
