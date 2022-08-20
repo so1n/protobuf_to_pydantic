@@ -193,6 +193,10 @@ class M2P(object):
         elif parse_msg_desc_method == "PGV":
             message_field_dict = get_desc_from_pgv(message=msg)  # type: ignore
         elif parse_msg_desc_method is not None:
+            import os
+
+            print(os.getcwd())
+            print(Path(parse_msg_desc_method).exists())
             raise ValueError(
                 f"parse_msg_desc_method param must be exist path, `ignore` or `PGV`," f" not {parse_msg_desc_method})"
             )

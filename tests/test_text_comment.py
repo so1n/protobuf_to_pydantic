@@ -196,11 +196,13 @@ class TestTextCommentByPyi(BaseTestTextComment):
 class TestTextCommentByProtobufFProtobufField(BaseTestTextComment):
     @staticmethod
     def _model_output(msg: Any) -> str:
+        import os
+        print(os.getcwd())
         local_dict = {"exp_time": exp_time, "uuid4": uuid4}
         return pydantic_model_to_py_code(
             msg_to_pydantic_model(
                 msg,
-                parse_msg_desc_method="/home/so1n/github/protobuf_to_pydantic/example",
+                parse_msg_desc_method="../example",
                 local_dict=local_dict
             )
         )
