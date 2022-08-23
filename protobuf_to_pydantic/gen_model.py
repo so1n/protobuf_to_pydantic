@@ -1,6 +1,7 @@
 import datetime
 import inspect
 import json
+import logging
 from dataclasses import MISSING
 from enum import IntEnum
 from importlib import import_module
@@ -174,10 +175,11 @@ class M2P(object):
         message_default_factory_dict_by_type_name: Optional[Dict[str, Any]] = None,
     ):
         proto_file_name = msg.DESCRIPTOR.file.name  # type: ignore
+        message_field_dict: Dict[str, Dict[str, str]] = {}
         if proto_file_name.endswith("empty.proto"):
-            raise ValueError("Not support Empty Message")
-        if parse_msg_desc_method == "ignore":
-            message_field_dict: Dict[str, Dict[str, str]] = {}
+            logging.warning("parse_msg_desc not support Empty message")
+        elif parse_msg_desc_method == "ignore":
+            pass
         elif isinstance(parse_msg_desc_method, str) and Path(parse_msg_desc_method).exists():
             file_str: str = parse_msg_desc_method
             if not file_str.endswith("/"):

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "protobuf_to_pydantic"
-version = "0.1.2"
+version = "0.1.3"
 description = "Convert Protobuf-generated Python objects to Pydantic.BaseModel objects with parameter checksum"
 authors = ["So1n <so1n897046026@gmail.com>"]
 license = "Apache Software License"
