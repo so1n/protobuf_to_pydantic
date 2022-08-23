@@ -127,7 +127,7 @@ def option_descriptor_to_desc_dict(option_descriptor: Descriptor, field: Any, de
             desc_dict["extra"][f"{type_name}_{column}"] = replace_protobuf_type_to_python_type(value)
             desc_dict["validator"][f"{field.name}_{type_name}_{column}_validator"] = validator(
                 field.name, allow_reuse=True
-            )(validate_validator_dict.get(f"{type_name}_{column}_validator"))
+            )(validate_validator_dict[f"{type_name}_{column}_validator"])
             continue
         elif column in ("in", "not_in", "len", "prefix", "suffix", "contains", "not_contains"):
             # Compatible with PGV attributes that are not supported by pydantic
@@ -135,7 +135,7 @@ def option_descriptor_to_desc_dict(option_descriptor: Descriptor, field: Any, de
                 desc_dict["validator"] = {}
             desc_dict["extra"][column] = replace_protobuf_type_to_python_type(value)
             desc_dict["validator"][f"{field.name}_{column}_validator"] = validator(field.name, allow_reuse=True)(
-                validate_validator_dict.get(f"{column}_validator")
+                validate_validator_dict[f"{column}_validator"]
             )
             continue
         elif column in column_pydantic_type_dict:
@@ -220,8 +220,6 @@ class ParseFromPbOption(object):
             type_name: str = ""
             if field.type == FieldDescriptor.TYPE_MESSAGE:
                 message_type_name: str = field.message_type.name
-                # if message_type_name.endswith("Entry"):
-                #     type_name = "map"
                 if message_type_name == "Duration":
                     type_name = "duration"
                 elif message_type_name == "Any":

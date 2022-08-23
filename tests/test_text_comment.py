@@ -198,7 +198,7 @@ class TestTextCommentByProtobufFProtobufField(BaseTestTextComment):
     def _model_output(msg: Any) -> str:
         local_dict = {"exp_time": exp_time, "uuid4": uuid4}
         from pathlib import Path
-        if not Path("../example").exists():
+        if not Path("example").exists():
             # ignore exec in github action runner
             return pydantic_model_to_py_code(
                 msg_to_pydantic_model(
@@ -210,7 +210,7 @@ class TestTextCommentByProtobufFProtobufField(BaseTestTextComment):
         return pydantic_model_to_py_code(
             msg_to_pydantic_model(
                 msg,
-                parse_msg_desc_method="../example",
+                parse_msg_desc_method="example",
                 local_dict=local_dict
             )
         )

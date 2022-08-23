@@ -4,7 +4,7 @@
 > NOTE:
 >  - 只支持proto3
 >
->  - 该项目是从[pait](https://github.com/so1n/pait)项目分离出来，所以本项目也是先在内存生成`pydantic.BaseModel`对象，再根据生成的对象生成对应的`Python`代码。
+>  - 该项目是从[pait](https://github.com/so1n/pait)项目0.7.9版本分离出来，所以本项目也是先在内存生成`pydantic.BaseModel`对象，再根据生成的对象生成对应的`Python`代码。
 
 # 1.安装
 ```bash
@@ -311,7 +311,9 @@ print(
 ```
 值得注意的是，这段代码没有显示的指明`parse_msg_desc_method`的值是`p2p`，因为`p2p`已经是`protobuf_to_pydantic`的默认规则了。
 
-> Note: local_dict的使用方法见模板章节
+> Note:
+>  - 1.local_dict的使用方法见模板章节
+>  - 2.如果出现引用Proto文件失败，需要下载[p2p_validate.proto](https://github.com/so1n/protobuf_to_pydantic/blob/master/p2p_validate/p2p_validate.proto)下载到项目中的protobuf目录中，才能在Protobuf文件中使用。
 
 
 

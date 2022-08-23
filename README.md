@@ -309,6 +309,11 @@ It is worth noting that this code does not explicitly specify that the value of 
 
 > Note: See the template chapter for the usage of `local_dict`
 
+ > Note:
+>  - 1.See the template chapter for the usage of `local_dict`
+>  - 2.If the reference to the Proto file fails, you need to download [p2p_validate.proto](https://github.com/so1n/protobuf_to_pydantic/blob/master/p2p_validate/p2p_validate.proto) in the project and use it in the Protobuf file。
+
+
 
 
 ### 2.2.3.Other parameter support

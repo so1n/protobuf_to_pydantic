@@ -308,12 +308,14 @@ class ProtoTransformer(Transformer):
         """Returns a Service namedtuple"""
         functions: List[RpcFunc] = []
         name: str = ""
-        for i in range(0, len(tokens)):
-            if not isinstance(tokens[i], Comment):
-                if isinstance(tokens[i], RpcFunc):
-                    functions.append(tokens[i])
+        for token in tokens:
+            if token is None:
+                continue
+            if not isinstance(token, Comment):
+                if isinstance(token, RpcFunc):
+                    functions.append(token)
                 else:
-                    name = tokens[i].value
+                    name = token.value
         return Service(name, functions)
 
     @staticmethod
@@ -325,6 +327,8 @@ class ProtoTransformer(Transformer):
         out_type: Token = Token("MESSAGETYPE", "")
 
         for token in tokens:
+            if token is None:
+                continue
             if isinstance(token, Token):
                 if token.type == "RPCNAME":
                     name = token
