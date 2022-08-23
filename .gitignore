@@ -107,5 +107,3 @@ venv.bak/
 .idea/
 .vscode/
 poetry.lock
-p2p_validate.proto
-validate.proto
