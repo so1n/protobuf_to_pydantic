@@ -6,6 +6,7 @@ Generate a `pydantic.BaseModel` with parameter verification function from the `P
 >
 >  - The project is from [pait](https://github.com/so1n/pait) separated，Therefore, this project also generates the `pydantic.BaseModel` object in memory first, and then generates the corresponding `Python` code according to the generated object.
 
+[中文文档](https://github.com/so1n/protobuf_to_pydantic/blob/master/README_ZH.md)
 # 1.Installation
 ```bash
 pip install protobuf_to_pydantic
