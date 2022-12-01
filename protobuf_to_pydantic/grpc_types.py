@@ -3,7 +3,12 @@ from google.protobuf.descriptor import Descriptor, FieldDescriptor  # type: igno
 from google.protobuf.duration_pb2 import Duration  # type: ignore
 from google.protobuf.json_format import MessageToDict  # type: ignore
 from google.protobuf.message import Message  # type: ignore
-from google.protobuf.pyext._message import RepeatedCompositeContainer, RepeatedScalarContainer  # type: ignore
+
+try:
+    from google.protobuf.pyext._message import RepeatedCompositeContainer, RepeatedScalarContainer  # type: ignore
+except ModuleNotFoundError:
+    from google._upb._message import RepeatedCompositeContainer, RepeatedScalarContainer
+
 from google.protobuf.timestamp_pb2 import Timestamp  # type: ignore
 
 __all__ = [
