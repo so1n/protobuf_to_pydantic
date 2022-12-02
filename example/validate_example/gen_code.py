@@ -1,4 +1,4 @@
-from example.python_example_proto_code.example_proto.validate.demo_pb2 import (
+from example.example_proto_python_code.example_proto.validate.demo_pb2 import (
     AnyTest,
     BoolTest,
     BytesTest,

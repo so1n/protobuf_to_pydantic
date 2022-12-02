@@ -1,7 +1,6 @@
 import datetime
 import inspect
 import json
-import logging
 from dataclasses import MISSING
 from enum import IntEnum
 from importlib import import_module
@@ -28,6 +27,7 @@ from protobuf_to_pydantic.grpc_types import (
     RepeatedCompositeContainer,
     RepeatedScalarContainer,
 )
+from protobuf_to_pydantic.types import OneOfTypedDict
 from protobuf_to_pydantic.util import Timedelta, create_pydantic_model
 
 type_dict: Dict[str, Type] = {
@@ -113,8 +113,7 @@ class DescTemplate(object):
         self._comment_prefix: str = comment_prefix
         self._support_template_list: List[str] = [i for i in dir(self) if i.startswith("template")]
 
-    def template_import_instance(self, template_var_list: List[str]) -> Any:
-        module_str, var_str, json_param = template_var_list
+    def template_import_instance(self, module_str: str, var_str: str, json_param: str) -> Any:
         module: Any = import_module(module_str, module_str)
         for sub_var_str in var_str.split("."):
             module = getattr(module, sub_var_str)
@@ -124,18 +123,17 @@ class DescTemplate(object):
             var = module
         return var
 
-    def template_import(self, template_var_list: List[str]) -> Any:
-        module_str, var_str = template_var_list
+    def template_import(self, module_str: str, var_str: str) -> Any:
         module = import_module(module_str, module_str)
         for sub_var_str in var_str.split("."):
             module = getattr(module, sub_var_str)
         return module
 
-    def template_local(self, template_var_list: List[str]) -> Any:
-        return self._local_dict[template_var_list[0]]
+    def template_local(self, local_var_name: str) -> Any:
+        return self._local_dict[local_var_name]
 
-    def template_builtin(self, template_var_list: List[str]) -> Any:
-        return __builtins__.get(template_var_list[0])  # type: ignore
+    def template_builtin(self, builtin_name: str) -> Any:
+        return __builtins__.get(builtin_name)  # type: ignore
 
     def _template_str_handler(self, template_str: str) -> Any:
         try:
@@ -144,15 +142,15 @@ class DescTemplate(object):
             template_fn: Optional[Callable] = getattr(self, f"template_{template_rule}", None)
             if not template_fn:
                 raise ValueError(f"Only support {' ,'.join(self._support_template_list)}. not {template_str}")
-            return template_fn(template_var_list)
+            return template_fn(*template_var_list)
         except Exception as e:
             raise ValueError(f"parse {template_str} error: {e}") from e
 
-    def get_value(self, container: Any) -> Any:
+    def handle_template_var(self, container: Any) -> Any:
         if isinstance(container, (list, RepeatedCompositeContainer, RepeatedScalarContainer)):
-            return [self.get_value(i) for i in container]
+            return [self.handle_template_var(i) for i in container]
         elif isinstance(container, dict):
-            return {k: self.get_value(v) for k, v in container.items()}
+            return {k: self.handle_template_var(v) for k, v in container.items()}
         elif isinstance(container, str) and container.startswith(f"{self._comment_prefix}@"):
             container = container.replace(f"{self._comment_prefix}@", "")
             return self._template_str_handler(container)
@@ -176,9 +174,8 @@ class M2P(object):
     ):
         proto_file_name = msg.DESCRIPTOR.file.name  # type: ignore
         message_field_dict: Dict[str, Dict[str, str]] = {}
-        if proto_file_name.endswith("empty.proto"):
-            logging.warning("parse_msg_desc not support Empty message")
-        elif parse_msg_desc_method == "ignore":
+
+        if proto_file_name.endswith("empty.proto") or parse_msg_desc_method == "ignore":
             pass
         elif isinstance(parse_msg_desc_method, str) and Path(parse_msg_desc_method).exists():
             file_str: str = parse_msg_desc_method
@@ -207,11 +204,10 @@ class M2P(object):
         self._field_doc_dict = message_field_dict
         self._default_field = default_field
         self._comment_prefix = comment_prefix
-        self._local_dict = local_dict or {}
         self._creat_cache: Dict[Union[Type[Message], Descriptor], Type[BaseModel]] = {}
         self._pydantic_base: Type["BaseModel"] = pydantic_base or BaseModel
         self._pydantic_module: str = pydantic_module or __name__
-        self._desc_template: DescTemplate = (desc_template or DescTemplate)(self._local_dict, self._comment_prefix)
+        self._desc_template: DescTemplate = (desc_template or DescTemplate)(local_dict or {}, self._comment_prefix)
         self._message_type_dict_by_type_name: Dict[str, Any] = (
             message_type_dict_by_type_name or _message_type_dict_by_type_name
         )
@@ -228,23 +224,28 @@ class M2P(object):
         return self._gen_model
 
     def _field_param_dict_handle(self, field_param_dict: dict) -> None:
-        # PGV const handler
+        """Convert the data of field param to the data that pydantic.Base Model can receive"""
+        # PGV&P2P const handler
         if field_param_dict.get("const").__class__ != MISSING.__class__:
             field_param_dict["default"] = field_param_dict["const"]
             field_param_dict["const"] = True
         else:
             field_param_dict.pop("const")
 
+        # example handle
+        check_dict_one_of(field_param_dict, ["example", "example_factory"])
         if field_param_dict.get("example").__class__ == MISSING.__class__:
             field_param_dict.pop("example")
         example_factory = field_param_dict.pop("example_factory")
         if example_factory:
             field_param_dict["example"] = example_factory
 
+        # extra handle
         extra = field_param_dict.pop("extra")
         if extra:
             field_param_dict.update(extra)
 
+        # type handle
         field_type = field_param_dict.get("type_")
         sub_field_param_dict: Optional[dict] = field_param_dict.pop("sub", None)
         field_type_model: Optional[ModuleType] = inspect.getmodule(field_type)
@@ -252,11 +253,7 @@ class M2P(object):
             field_type
             and not inspect.isclass(field_type)
             and field_type_model
-            and field_type_model.__name__
-            in (
-                "pydantic.types",
-                "protobuf_to_pydantic.customer_con_type",
-            )
+            and field_type_model.__name__ in ("pydantic.types", "protobuf_to_pydantic.customer_con_type")
         ):
             # support https://pydantic-docs.helpmanual.io/usage/types/#constrained-types
             # Parameters needed to extract `constrained-types`
@@ -272,16 +269,17 @@ class M2P(object):
             else:
                 field_param_dict["type_"] = field_type(**type_param_dict)
 
-    def _one_of_handle(self, descriptor: Descriptor) -> Dict[str, Any]:
-        one_of_dict: Dict[str, Any] = {}
+    def _one_of_handle(self, descriptor: Descriptor) -> Dict[str, OneOfTypedDict]:
+        one_of_dict: Dict[str, OneOfTypedDict] = {}
         for one_of in descriptor.oneofs:
             if one_of.full_name not in one_of_dict:
                 one_of_dict[one_of.full_name] = {"required": False, "fields": set()}
             if one_of.full_name in self._field_doc_dict:
-                # only PGV support
-                # The use of full name here and the use of name elsewhere will lead to confusion in the storage
-                # range of field_doc_dict, which must be changed later.
-                one_of_dict[one_of.full_name]["required"] = self._field_doc_dict[one_of.full_name].get(
+                # only PGV or P2P support
+
+                # TODO The use of full name here and the use of name elsewhere will lead to confusion in the storage
+                #  range of field_doc_dict, which must be changed later.
+                one_of_dict[one_of.full_name]["required"] = self._field_doc_dict[one_of.full_name].get(  # type: ignore
                     "required", False
                 )
             for _field in one_of.fields:
@@ -312,7 +310,7 @@ class M2P(object):
         annotation_dict: Dict[str, Tuple[Type, Any]] = {}
         validators: Dict[str, classmethod] = {}
         pydantic_model_config_dict: Dict[str, Any] = {}
-        one_of_dict: Dict[str, Any] = self._one_of_handle(descriptor)
+        one_of_dict: Dict[str, OneOfTypedDict] = self._one_of_handle(descriptor)
         if one_of_dict:
             validators["one_of_validator"] = root_validator(pre=True, allow_reuse=True)(check_one_of)
 
@@ -349,6 +347,8 @@ class M2P(object):
                 else:
                     # support google.protobuf.Message
                     if column.message_type.full_name.startswith(".".join(column.full_name.split(".")[:-1])):
+                        # Nesting Message processing
+
                         # A dynamically generated class cannot be a subclass of a class,
                         # so it can only be distinguished by adding the beginning of the subclass name
                         _class_name: str = "".join(column.message_type.full_name.split(".")[-2:])
@@ -368,6 +368,7 @@ class M2P(object):
                     default = column.default_value
 
             if column.label == FieldDescriptor.LABEL_REPEATED:
+                # support google.protobuf.array
                 if not (column.message_type and column.message_type.name.endswith("Entry")):
                     type_ = List[type_]  # type: ignore
                     default_factory = list
@@ -386,10 +387,10 @@ class M2P(object):
                     field_doc_dict = field_doc
                 if self._parse_msg_desc_method != "PGV":
                     # pgv method not support template var
-                    field_doc_dict = self._desc_template.get_value(field_doc_dict)
+                    field_doc_dict = self._desc_template.handle_template_var(field_doc_dict)
 
                 field_param_dict: dict = MessagePaitModel(**field_doc_dict).dict()
-                # Nested types do not include the `enable`, `field`, `validator` and `type`  attributes
+                # Nested types do not include the `enable`, `field` and `validator`  attributes
                 if not field_param_dict.pop("enable"):
                     continue
                 _field = field_param_dict.pop("field")
@@ -399,8 +400,11 @@ class M2P(object):
                 if validator_dict:
                     validators.update(validator_dict)
 
+                # Since `default` and `default_factory` are to be obtained,
+                #   the processing logic of default is placed outside
+
+                # Handle complex relationships with different defaults
                 check_dict_one_of(field_param_dict, ["miss_default", "default", "default_factory"])
-                check_dict_one_of(field_param_dict, ["example", "example_factory"])
                 if field_param_dict["default_factory"] is not None:
                     field_param_dict.pop("default", "")
                 elif field_param_dict["miss_default"] is True:
@@ -488,8 +492,7 @@ def msg_to_pydantic_model(
     """
     Parse a message to a pydantic model
     :param msg: grpc Message or descriptor
-    :param default_field: gen pydantic_model default Field,
-        apply only to the outermost pydantic model
+    :param default_field: gen pydantic_model default Field, apply only to the outermost pydantic model
     :param comment_prefix: Customize the prefixes that need to be parsed for comments
     :param parse_msg_desc_method: Define the type of comment to be parsed, if the value is a protobuf file path,
         it will be parsed by protobuf file; if it is a module of message object, it will be parsed by pyi file

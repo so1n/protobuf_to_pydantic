@@ -10,4 +10,7 @@ class _ParseFromPbOption(ParseFromPbOption):
 
 
 def get_desc_from_p2p(message: Type[Message]) -> dict:
+    """Parse data through Message and return info dict
+    Note: The returned dict includes the data of one of
+    """
     return _ParseFromPbOption(message).parse()

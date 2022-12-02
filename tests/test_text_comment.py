@@ -2,7 +2,7 @@ import time
 from typing import Any
 from uuid import uuid4
 
-from example.python_example_proto_code.example_proto.demo import demo_pb2
+from example.example_proto_python_code.example_proto.demo import demo_pb2
 from protobuf_to_pydantic import msg_to_pydantic_model, pydantic_model_to_py_code
 
 

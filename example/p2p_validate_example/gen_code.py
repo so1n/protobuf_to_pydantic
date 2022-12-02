@@ -2,7 +2,7 @@ from google.protobuf.any_pb2 import Any  # type: ignore
 from pydantic import confloat, conint
 from pydantic.fields import FieldInfo
 
-from example.python_example_proto_code.example_proto.p2p_validate.demo_pb2 import (
+from example.example_proto_python_code.example_proto.p2p_validate.demo_pb2 import (
     AnyTest,
     BoolTest,
     BytesTest,

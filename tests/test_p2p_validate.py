@@ -1,8 +1,7 @@
 import time
 from typing import Any
 
-from example.p2p_validate_example.gen_code import CustomerField, confloat, conint, customer_any
-from example.python_example_proto_code.example_proto.p2p_validate.demo_pb2 import (
+from example.example_proto_python_code.example_proto.p2p_validate.demo_pb2 import (
     AnyTest,
     BoolTest,
     BytesTest,
@@ -29,6 +28,7 @@ from example.python_example_proto_code.example_proto.p2p_validate.demo_pb2 impor
     Uint32Test,
     Uint64Test,
 )
+from example.p2p_validate_example.gen_code import CustomerField, confloat, conint, customer_any
 from protobuf_to_pydantic import msg_to_pydantic_model, pydantic_model_to_py_code
 
 

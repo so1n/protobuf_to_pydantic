@@ -5,14 +5,67 @@ _filename_desc_dict: Dict[str, Dict[str, Dict[str, str]]] = {}
 
 
 def get_desc_from_pyi_file(filename: str) -> Dict[str, Dict[str, str]]:
+    """
+    For a Protobuf message as follows:
+        ```protobuf
+        message UserMessage {
+            string uid=1;
+            int32 age=2;
+            float height=3;
+            SexType sex=4;
+            bool is_adult=5;
+            string user_name=6;
+        }
+        ```
+    mypy-protobuf will generate the following Python code:
+        class UserMessage(google.protobuf.message.Message):
+            ```user info```
+            DESCRIPTOR: google.protobuf.descriptor.Descriptor
+            UID_FIELD_NUMBER: builtins.int
+            AGE_FIELD_NUMBER: builtins.int
+            HEIGHT_FIELD_NUMBER: builtins.int
+            SEX_FIELD_NUMBER: builtins.int
+            IS_ADULT_FIELD_NUMBER: builtins.int
+            USER_NAME_FIELD_NUMBER: builtins.int
+            uid: typing.Text
+            ```p2p: {"miss_default": true, "example": "10086", "title": "UID", "description": "user union id"}```
+
+            age: builtins.int
+            ```p2p: {"example": 18, "title": "use age", "ge": 0}```
+
+            height: builtins.float
+            ```p2p: {"ge": 0, "le": 2.5}```
+
+            sex: global___SexType.ValueType
+            is_adult: builtins.bool
+            user_name: typing.Text
+            ```p2p: {"description": "user name"}
+            p2p: {"default": "", "min_length": 1, "max_length": "10", "example": "so1n"}
+            ```
+
+    And this function will parse the code and generate the following data
+    {
+        "path/demo.pyi": {
+            "UserMessage": {
+                "uid": {}        # field info like `protobuf_to_pydantic.gen_model.MessagePaitModel`,
+                "age": {}        # field info like `protobuf_to_pydantic.gen_model.MessagePaitModel`,
+                "height": {}     # field info like `protobuf_to_pydantic.gen_model.MessagePaitModel`,
+                "sex": {}        # field info like `protobuf_to_pydantic.gen_model.MessagePaitModel`,
+                "is_adult": {}   # field info like `protobuf_to_pydantic.gen_model.MessagePaitModel`,
+                "user_name": {}  # field info like `protobuf_to_pydantic.gen_model.MessagePaitModel`,
+            }
+        }
+    }
+    """
     if filename in _filename_desc_dict:
+        # get protobuf message info by cache
         return _filename_desc_dict[filename]
 
     with open(filename, "r") as f:
         pyi_content: str = f.read()
     line_list = pyi_content.split("\n")
 
-    _comment_model: bool = False
+    _comment_model: bool = False  # Whether to enable parsing comment mode
     _doc: str = ""
     _field_name: str = ""
     message_str_stack: List[Tuple[str, int, dict]] = []

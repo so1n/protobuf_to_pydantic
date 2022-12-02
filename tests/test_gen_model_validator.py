@@ -6,9 +6,9 @@ from uuid import uuid1, uuid4
 import pytest
 from pydantic import ValidationError
 
+from example.example_proto_python_code.example_proto.p2p_validate import demo_pb2 as p2p_demo_pb2
+from example.example_proto_python_code.example_proto.validate import demo_pb2
 from example.p2p_validate_example.gen_code import CustomerField, confloat, conint, customer_any
-from example.python_example_proto_code.example_proto.p2p_validate import demo_pb2 as p2p_demo_pb2
-from example.python_example_proto_code.example_proto.validate import demo_pb2
 from protobuf_to_pydantic import msg_to_pydantic_model
 from protobuf_to_pydantic.grpc_types import AnyMessage
 

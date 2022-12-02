@@ -35,14 +35,14 @@ message UserMessage {
 }
 ```
 `protobuf_to_pydantic`可以在运行时读取从Proto文件生成的Message对象来生成对应的`pydantic.BaseModel`对象:
+
 ```Python
 from typing import Type
 from protobuf_to_pydantic import msg_to_pydantic_model
 from pydantic import BaseModel
 
 # import protobuf gen python obj
-from example.python_example_proto_code.example_proto.demo import demo_pb2
-
+from example.example_proto_python_code.example_proto.demo import demo_pb2
 
 UserModel: Type[BaseModel] = msg_to_pydantic_model(demo_pb2.UserMessage)
 print(
@@ -109,13 +109,14 @@ message UserMessage {
 >   - 2.不支持多行注释。
 
 当编写了这些注释后，`protobuf_to_pydantic`在把Message转换成对应的`Pydantic.BaseModel`对象时都会为每个字段带上对应的信息，如下:
+
 ```python
 from typing import Type
 from protobuf_to_pydantic import msg_to_pydantic_model
 from pydantic import BaseModel
 
 # import protobuf gen python obj
-from example.python_example_proto_code.example_proto.demo import demo_pb2
+from example.example_proto_python_code.example_proto.demo import demo_pb2
 
 UserModel: Type[BaseModel] = msg_to_pydantic_model(demo_pb2.UserMessage, parse_msg_desc_method=demo_pb2)
 print(
@@ -162,13 +163,14 @@ python -m grpc_tools.protoc
   -I. \
 ```
 那么此时需要填写的路径就是`./protobuf_to_pydantic/example`，代码如下：
+
 ```python
 from typing import Type
 from protobuf_to_pydantic import msg_to_pydantic_model
 from pydantic import BaseModel
 
 # import protobuf gen python obj
-from example.python_example_proto_code.example_proto.demo import demo_pb2
+from example.example_proto_python_code.example_proto.demo import demo_pb2
 
 UserModel: Type[BaseModel] = msg_to_pydantic_model(
     demo_pb2.UserMessage, parse_msg_desc_method="./protobuf_to_pydantic/example"
@@ -198,13 +200,14 @@ print(
 所以`protobuf_to_pydantic`支持通过解析Protobuf文件中每个字段携带的`Pgv`校验信息使生成的`pydantic.BaseModel`携带`Pgv`对应的校验逻辑。
 
 在`protobuf_to_pydantic`中使用`Pgv`校验规则非常简单，只要先在Protobuf文件编写对应的`Pgv`规则，然后指定`parse_msg_desc_method`的值为`PGV`即可，代码如下：
+
 ```Python
 from typing import Type
 from protobuf_to_pydantic import msg_to_pydantic_model
 from pydantic import BaseModel
 
 # import protobuf gen python obj
-from example.python_example_proto_code.example_proto.validate import demo_pb2
+from example.example_proto_python_code.example_proto.validate import demo_pb2
 
 UserModel: Type[BaseModel] = msg_to_pydantic_model(
     demo_pb2.FloatTest, parse_msg_desc_method="PGV"
@@ -265,6 +268,7 @@ message FloatTest {
 }
 ```
 `protobuf_to_pydantic`可以在运行时读取生成的Message对象，并生成带有对应信息的`pydantic.BaseModel`对象:
+
 ```python
 from typing import Type
 from protobuf_to_pydantic import msg_to_pydantic_model
@@ -272,7 +276,7 @@ from pydantic import BaseModel, confloat
 from pydantic.fields import FieldInfo
 
 # import protobuf gen python obj
-from example.python_example_proto_code.example_proto.p2p_validate import demo_pb2
+from example.example_proto_python_code.example_proto.p2p_validate import demo_pb2
 
 
 class CustomerField(FieldInfo):
@@ -489,11 +493,12 @@ class TimestampTest(BaseModel):
 除了在运行时生成对应的`pydantic.BaseModel`对象外，`protobuf_to_pydantic`支持将运行时的`pydantic.BaseModel`对象转换为`Python`代码文本（仅适用于`protobuf_to_pydantic`生成的`pydantic.BaseModel`对象)。
 
 其中，`protobuf_to_pydantic.pydantic_model_to_py_code`用于生成代码文本，`protobuf_to_pydantic.pydantic_model_to_py_file`用于生成代码文件，`protobuf_to_pydantic.pydantic_model_to_py_file`的示例代码如下：
+
 ```Python
 from protobuf_to_pydantic import msg_to_pydantic_model, pydantic_model_to_py_file
 
 # import protobuf gen python obj
-from example.python_example_proto_code.example_proto.demo import demo_pb2
+from example.example_proto_python_code.example_proto.demo import demo_pb2
 
 pydantic_model_to_py_file(
     "./demo_gen_code.py",

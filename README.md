@@ -36,14 +36,14 @@ message UserMessage {
 }
 ```
 `protobuf_to_pydantic` can read the Message object generated from the Proto file at runtime and generate the corresponding `pydantic.BaseModel` object:
+
 ```Python
 from typing import Type
 from protobuf_to_pydantic import msg_to_pydantic_model
 from pydantic import BaseModel
 
 # import protobuf gen python obj
-from example.python_example_proto_code.example_proto.demo import demo_pb2
-
+from example.example_proto_python_code.example_proto.demo import demo_pb2
 
 UserModel: Type[BaseModel] = msg_to_pydantic_model(demo_pb2.UserMessage)
 print(
@@ -109,13 +109,14 @@ In this example, each annotation that can be used by `protobuf_to_pydantic` star
 >   - 2.multi line comments are not supported。
 
 When these annotations are written, `protobuf_to_pydantic` will bring the corresponding information for each field when converting the Message into the corresponding `Pydantic.BaseModel` object, as follows:
+
 ```python
 from typing import Type
 from protobuf_to_pydantic import msg_to_pydantic_model
 from pydantic import BaseModel
 
 # import protobuf gen python obj
-from example.python_example_proto_code.example_proto.demo import demo_pb2
+from example.example_proto_python_code.example_proto.demo import demo_pb2
 
 UserModel: Type[BaseModel] = msg_to_pydantic_model(demo_pb2.UserMessage, parse_msg_desc_method=demo_pb2)
 print(
@@ -160,13 +161,14 @@ python -m grpc_tools.protoc
   -I. \
 ```
 Then the path to be filled in at this time is `./protobuf_to_pydantic/example`, the code is as follows：
+
 ```python
 from typing import Type
 from protobuf_to_pydantic import msg_to_pydantic_model
 from pydantic import BaseModel
 
 # import protobuf gen python obj
-from example.python_example_proto_code.example_proto.demo import demo_pb2
+from example.example_proto_python_code.example_proto.demo import demo_pb2
 
 UserModel: Type[BaseModel] = msg_to_pydantic_model(
     demo_pb2.UserMessage, parse_msg_desc_method="./protobuf_to_pydantic/example"
@@ -197,13 +199,14 @@ However, the implementation of `Pgv` in `Python` is quite special. It checks all
 `protobuf_to_pydantic` supports parsing the `Pgv` verification information carried by each field in the Protobuf file so that the generated `pydantic.BaseModel` carries the verification logic corresponding to `Pgv`。
 
 It is very simple to use `Pgv` check rules in `protobuf_to_pydantic`, as long as you write the corresponding `Pgv` rules in the Protobuf file, and then specify the value of `parse_msg_desc_method` as `PGV`, the code is as follows：
+
 ```Python
 from typing import Type
 from protobuf_to_pydantic import msg_to_pydantic_model
 from pydantic import BaseModel
 
 # import protobuf gen python obj
-from example.python_example_proto_code.example_proto.validate import demo_pb2
+from example.example_proto_python_code.example_proto.validate import demo_pb2
 
 UserModel: Type[BaseModel] = msg_to_pydantic_model(
     demo_pb2.FloatTest, parse_msg_desc_method="PGV"
@@ -262,6 +265,7 @@ message FloatTest {
 }
 ```
 `protobuf_to_pydantic` can read the generated Message object at runtime and generate a `pydantic.BaseModel` object with the corresponding information:
+
 ```python
 from typing import Type
 from protobuf_to_pydantic import msg_to_pydantic_model
@@ -269,7 +273,7 @@ from pydantic import BaseModel, confloat
 from pydantic.fields import FieldInfo
 
 # import protobuf gen python obj
-from example.python_example_proto_code.example_proto.p2p_validate import demo_pb2
+from example.example_proto_python_code.example_proto.p2p_validate import demo_pb2
 
 
 class CustomerField(FieldInfo):
@@ -488,11 +492,12 @@ class TimestampTest(BaseModel):
 In addition to generating corresponding `pydantic.BaseModel` objects at runtime, `protobuf_to_pydantic` supports converting `pydantic.BaseModel` objects to `Python` code at runtime (only for `protobuf_to_pydantic` generation `pydantic.BaseModel` object).
 
 Among them, `protobuf_to_pydantic.pydantic_model_to_py_code` is used to generate the code text, `protobuf_to_pydantic.pydantic_model_to_py_file` is used to generate the code file, and the example code of `protobuf_to_pydantic.pydantic_model_to_py_file` as follows:
+
 ```Python
 from protobuf_to_pydantic import msg_to_pydantic_model, pydantic_model_to_py_file
 
 # import protobuf gen python obj
-from example.python_example_proto_code.example_proto.demo import demo_pb2
+from example.example_proto_python_code.example_proto.demo import demo_pb2
 
 pydantic_model_to_py_file(
     "./demo_gen_code.py",

@@ -4,21 +4,12 @@ from typing import Any, Callable, Dict, Tuple
 from pydantic.fields import ModelField
 
 from protobuf_to_pydantic.grpc_types import AnyMessage
+from protobuf_to_pydantic.types import OneOfTypedDict
 
 
-#################
-# pre validator #
-#################
-def check_one_of(cls: Any, values: tuple) -> tuple:
-    for one_of_name, one_of_dict in getattr(cls, "_one_of_dict", {}).items():
-        have_value_name = sum([1 for one_of_field_name in one_of_dict["fields"] if one_of_field_name in values])
-        if have_value_name >= 2:
-            raise ValueError(f"OneOf:{one_of_name} has {have_value_name} value")
-        if one_of_dict.get("required", False) and have_value_name == 0:
-            raise ValueError(f"OneOf:{one_of_name} must set value")
-    return values
-
-
+################
+# requirements #
+################
 def _get_name_value_from_kwargs(
     key: str, field: ModelField, enable_timestamp_to_datetime: bool = False
 ) -> Tuple[str, Any]:
@@ -34,6 +25,20 @@ def _get_name_value_from_kwargs(
             field_value = datetime.fromtimestamp(field_value)
 
     return field_name, field_value
+
+
+#################
+# pre validator #
+#################
+def check_one_of(cls: Any, values: tuple) -> tuple:
+    """validatorValidator for supporting protobuf one_of"""
+    for one_of_name, one_of_dict in getattr(cls, "_one_of_dict", {}).items():  # type: str, OneOfTypedDict
+        have_value_name = sum([1 for one_of_field_name in one_of_dict["fields"] if one_of_field_name in values])
+        if have_value_name >= 2:
+            raise ValueError(f"OneOf:{one_of_name} has {have_value_name} value")
+        if one_of_dict.get("required", False) and have_value_name == 0:
+            raise ValueError(f"OneOf:{one_of_name} must set value")
+    return values
 
 
 ##################
@@ -55,9 +60,8 @@ def not_in_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
 
 def any_in_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
     field_name, field_value = _get_name_value_from_kwargs("any_in", kwargs["field"])
-    if field_value is not None and isinstance(v, AnyMessage):
-        if not (v.type_url in field_value or v in field_value):
-            raise ValueError(f"{field_name}.type_url:{v.type_url} not in {field_value}")
+    if field_value is not None and isinstance(v, AnyMessage) and not (v.type_url in field_value or v in field_value):
+        raise ValueError(f"{field_name}.type_url:{v.type_url} not in {field_value}")
     return v
 
 

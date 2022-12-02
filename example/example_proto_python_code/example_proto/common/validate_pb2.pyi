@@ -17,9 +17,12 @@ import typing_extensions
 DESCRIPTOR: google.protobuf.descriptor.FileDescriptor
 
 class _KnownRegex:
-    ValueType = typing.NewType('ValueType', builtins.int)
+    ValueType = typing.NewType("ValueType", builtins.int)
     V: typing_extensions.TypeAlias = ValueType
-class _KnownRegexEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_KnownRegex.ValueType], builtins.type):
+
+class _KnownRegexEnumTypeWrapper(
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_KnownRegex.ValueType], builtins.type
+):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
     UNKNOWN: _KnownRegex.ValueType  # 0
     HTTP_HEADER_NAME: _KnownRegex.ValueType  # 1
@@ -30,6 +33,7 @@ class _KnownRegexEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._Enu
 
 class KnownRegex(_KnownRegex, metaclass=_KnownRegexEnumTypeWrapper):
     """WellKnownRegex contain some well-known patterns."""
+
     pass
 
 UNKNOWN: KnownRegex.ValueType  # 0
@@ -41,11 +45,11 @@ HTTP_HEADER_VALUE: KnownRegex.ValueType  # 2
 
 global___KnownRegex = KnownRegex
 
-
 class FieldRules(google.protobuf.message.Message):
     """FieldRules encapsulates the rules for each type of field. Depending on the
     field, the correct set should be used to ensure proper validations.
     """
+
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     MESSAGE_FIELD_NUMBER: builtins.int
     FLOAT_FIELD_NUMBER: builtins.int
@@ -119,7 +123,8 @@ class FieldRules(google.protobuf.message.Message):
     def duration(self) -> global___DurationRules: ...
     @property
     def timestamp(self) -> global___TimestampRules: ...
-    def __init__(self,
+    def __init__(
+        self,
         *,
         message: typing.Optional[global___MessageRules] = ...,
         float: typing.Optional[global___FloatRules] = ...,
@@ -143,14 +148,142 @@ class FieldRules(google.protobuf.message.Message):
         any: typing.Optional[global___AnyRules] = ...,
         duration: typing.Optional[global___DurationRules] = ...,
         timestamp: typing.Optional[global___TimestampRules] = ...,
-        ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["any",b"any","bool",b"bool","bytes",b"bytes","double",b"double","duration",b"duration","enum",b"enum","fixed32",b"fixed32","fixed64",b"fixed64","float",b"float","int32",b"int32","int64",b"int64","map",b"map","message",b"message","repeated",b"repeated","sfixed32",b"sfixed32","sfixed64",b"sfixed64","sint32",b"sint32","sint64",b"sint64","string",b"string","timestamp",b"timestamp","type",b"type","uint32",b"uint32","uint64",b"uint64"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["any",b"any","bool",b"bool","bytes",b"bytes","double",b"double","duration",b"duration","enum",b"enum","fixed32",b"fixed32","fixed64",b"fixed64","float",b"float","int32",b"int32","int64",b"int64","map",b"map","message",b"message","repeated",b"repeated","sfixed32",b"sfixed32","sfixed64",b"sfixed64","sint32",b"sint32","sint64",b"sint64","string",b"string","timestamp",b"timestamp","type",b"type","uint32",b"uint32","uint64",b"uint64"]) -> None: ...
-    def WhichOneof(self, oneof_group: typing_extensions.Literal["type",b"type"]) -> typing.Optional[typing_extensions.Literal["float","double","int32","int64","uint32","uint64","sint32","sint64","fixed32","fixed64","sfixed32","sfixed64","bool","string","bytes","enum","repeated","map","any","duration","timestamp"]]: ...
+    ) -> None: ...
+    def HasField(
+        self,
+        field_name: typing_extensions.Literal[
+            "any",
+            b"any",
+            "bool",
+            b"bool",
+            "bytes",
+            b"bytes",
+            "double",
+            b"double",
+            "duration",
+            b"duration",
+            "enum",
+            b"enum",
+            "fixed32",
+            b"fixed32",
+            "fixed64",
+            b"fixed64",
+            "float",
+            b"float",
+            "int32",
+            b"int32",
+            "int64",
+            b"int64",
+            "map",
+            b"map",
+            "message",
+            b"message",
+            "repeated",
+            b"repeated",
+            "sfixed32",
+            b"sfixed32",
+            "sfixed64",
+            b"sfixed64",
+            "sint32",
+            b"sint32",
+            "sint64",
+            b"sint64",
+            "string",
+            b"string",
+            "timestamp",
+            b"timestamp",
+            "type",
+            b"type",
+            "uint32",
+            b"uint32",
+            "uint64",
+            b"uint64",
+        ],
+    ) -> builtins.bool: ...
+    def ClearField(
+        self,
+        field_name: typing_extensions.Literal[
+            "any",
+            b"any",
+            "bool",
+            b"bool",
+            "bytes",
+            b"bytes",
+            "double",
+            b"double",
+            "duration",
+            b"duration",
+            "enum",
+            b"enum",
+            "fixed32",
+            b"fixed32",
+            "fixed64",
+            b"fixed64",
+            "float",
+            b"float",
+            "int32",
+            b"int32",
+            "int64",
+            b"int64",
+            "map",
+            b"map",
+            "message",
+            b"message",
+            "repeated",
+            b"repeated",
+            "sfixed32",
+            b"sfixed32",
+            "sfixed64",
+            b"sfixed64",
+            "sint32",
+            b"sint32",
+            "sint64",
+            b"sint64",
+            "string",
+            b"string",
+            "timestamp",
+            b"timestamp",
+            "type",
+            b"type",
+            "uint32",
+            b"uint32",
+            "uint64",
+            b"uint64",
+        ],
+    ) -> None: ...
+    def WhichOneof(
+        self, oneof_group: typing_extensions.Literal["type", b"type"]
+    ) -> typing.Optional[
+        typing_extensions.Literal[
+            "float",
+            "double",
+            "int32",
+            "int64",
+            "uint32",
+            "uint64",
+            "sint32",
+            "sint64",
+            "fixed32",
+            "fixed64",
+            "sfixed32",
+            "sfixed64",
+            "bool",
+            "string",
+            "bytes",
+            "enum",
+            "repeated",
+            "map",
+            "any",
+            "duration",
+            "timestamp",
+        ]
+    ]: ...
+
 global___FieldRules = FieldRules
 
 class FloatRules(google.protobuf.message.Message):
     """FloatRules describes the constraints applied to `float` values"""
+
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     CONST_FIELD_NUMBER: builtins.int
     LT_FIELD_NUMBER: builtins.int
@@ -184,7 +317,6 @@ class FloatRules(google.protobuf.message.Message):
     specified value, inclusive. If the value of Gte is larger than a
     specified Lt or Lte, the range is reversed.
     """
-
     @property
     def not_in(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[builtins.float]:
         """NotIn specifies that this field cannot be equal to one of the specified
@@ -195,8 +327,8 @@ class FloatRules(google.protobuf.message.Message):
     """IgnoreEmpty specifies that the validation rules of this field should be
     evaluated only if the field is not empty
     """
-
-    def __init__(self,
+    def __init__(
+        self,
         *,
         const: typing.Optional[builtins.float] = ...,
         lt: typing.Optional[builtins.float] = ...,
@@ -205,13 +337,40 @@ class FloatRules(google.protobuf.message.Message):
         gte: typing.Optional[builtins.float] = ...,
         not_in: typing.Optional[typing.Iterable[builtins.float]] = ...,
         ignore_empty: typing.Optional[builtins.bool] = ...,
-        ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["const",b"const","gt",b"gt","gte",b"gte","ignore_empty",b"ignore_empty","lt",b"lt","lte",b"lte"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["const",b"const","gt",b"gt","gte",b"gte","ignore_empty",b"ignore_empty","in",b"in","lt",b"lt","lte",b"lte","not_in",b"not_in"]) -> None: ...
+    ) -> None: ...
+    def HasField(
+        self,
+        field_name: typing_extensions.Literal[
+            "const", b"const", "gt", b"gt", "gte", b"gte", "ignore_empty", b"ignore_empty", "lt", b"lt", "lte", b"lte"
+        ],
+    ) -> builtins.bool: ...
+    def ClearField(
+        self,
+        field_name: typing_extensions.Literal[
+            "const",
+            b"const",
+            "gt",
+            b"gt",
+            "gte",
+            b"gte",
+            "ignore_empty",
+            b"ignore_empty",
+            "in",
+            b"in",
+            "lt",
+            b"lt",
+            "lte",
+            b"lte",
+            "not_in",
+            b"not_in",
+        ],
+    ) -> None: ...
+
 global___FloatRules = FloatRules
 
 class DoubleRules(google.protobuf.message.Message):
     """DoubleRules describes the constraints applied to `double` values"""
+
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     CONST_FIELD_NUMBER: builtins.int
     LT_FIELD_NUMBER: builtins.int
@@ -245,7 +404,6 @@ class DoubleRules(google.protobuf.message.Message):
     specified value, inclusive. If the value of Gte is larger than a
     specified Lt or Lte, the range is reversed.
     """
-
     @property
     def not_in(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[builtins.float]:
         """NotIn specifies that this field cannot be equal to one of the specified
@@ -256,8 +414,8 @@ class DoubleRules(google.protobuf.message.Message):
     """IgnoreEmpty specifies that the validation rules of this field should be
     evaluated only if the field is not empty
     """
-
-    def __init__(self,
+    def __init__(
+        self,
         *,
         const: typing.Optional[builtins.float] = ...,
         lt: typing.Optional[builtins.float] = ...,
@@ -266,13 +424,40 @@ class DoubleRules(google.protobuf.message.Message):
         gte: typing.Optional[builtins.float] = ...,
         not_in: typing.Optional[typing.Iterable[builtins.float]] = ...,
         ignore_empty: typing.Optional[builtins.bool] = ...,
-        ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["const",b"const","gt",b"gt","gte",b"gte","ignore_empty",b"ignore_empty","lt",b"lt","lte",b"lte"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["const",b"const","gt",b"gt","gte",b"gte","ignore_empty",b"ignore_empty","in",b"in","lt",b"lt","lte",b"lte","not_in",b"not_in"]) -> None: ...
+    ) -> None: ...
+    def HasField(
+        self,
+        field_name: typing_extensions.Literal[
+            "const", b"const", "gt", b"gt", "gte", b"gte", "ignore_empty", b"ignore_empty", "lt", b"lt", "lte", b"lte"
+        ],
+    ) -> builtins.bool: ...
+    def ClearField(
+        self,
+        field_name: typing_extensions.Literal[
+            "const",
+            b"const",
+            "gt",
+            b"gt",
+            "gte",
+            b"gte",
+            "ignore_empty",
+            b"ignore_empty",
+            "in",
+            b"in",
+            "lt",
+            b"lt",
+            "lte",
+            b"lte",
+            "not_in",
+            b"not_in",
+        ],
+    ) -> None: ...
+
 global___DoubleRules = DoubleRules
 
 class Int32Rules(google.protobuf.message.Message):
     """Int32Rules describes the constraints applied to `int32` values"""
+
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     CONST_FIELD_NUMBER: builtins.int
     LT_FIELD_NUMBER: builtins.int
@@ -306,7 +491,6 @@ class Int32Rules(google.protobuf.message.Message):
     specified value, inclusive. If the value of Gte is larger than a
     specified Lt or Lte, the range is reversed.
     """
-
     @property
     def not_in(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[builtins.int]:
         """NotIn specifies that this field cannot be equal to one of the specified
@@ -317,8 +501,8 @@ class Int32Rules(google.protobuf.message.Message):
     """IgnoreEmpty specifies that the validation rules of this field should be
     evaluated only if the field is not empty
     """
-
-    def __init__(self,
+    def __init__(
+        self,
         *,
         const: typing.Optional[builtins.int] = ...,
         lt: typing.Optional[builtins.int] = ...,
@@ -327,13 +511,40 @@ class Int32Rules(google.protobuf.message.Message):
         gte: typing.Optional[builtins.int] = ...,
         not_in: typing.Optional[typing.Iterable[builtins.int]] = ...,
         ignore_empty: typing.Optional[builtins.bool] = ...,
-        ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["const",b"const","gt",b"gt","gte",b"gte","ignore_empty",b"ignore_empty","lt",b"lt","lte",b"lte"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["const",b"const","gt",b"gt","gte",b"gte","ignore_empty",b"ignore_empty","in",b"in","lt",b"lt","lte",b"lte","not_in",b"not_in"]) -> None: ...
+    ) -> None: ...
+    def HasField(
+        self,
+        field_name: typing_extensions.Literal[
+            "const", b"const", "gt", b"gt", "gte", b"gte", "ignore_empty", b"ignore_empty", "lt", b"lt", "lte", b"lte"
+        ],
+    ) -> builtins.bool: ...
+    def ClearField(
+        self,
+        field_name: typing_extensions.Literal[
+            "const",
+            b"const",
+            "gt",
+            b"gt",
+            "gte",
+            b"gte",
+            "ignore_empty",
+            b"ignore_empty",
+            "in",
+            b"in",
+            "lt",
+            b"lt",
+            "lte",
+            b"lte",
+            "not_in",
+            b"not_in",
+        ],
+    ) -> None: ...
+
 global___Int32Rules = Int32Rules
 
 class Int64Rules(google.protobuf.message.Message):
     """Int64Rules describes the constraints applied to `int64` values"""
+
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     CONST_FIELD_NUMBER: builtins.int
     LT_FIELD_NUMBER: builtins.int
@@ -367,7 +578,6 @@ class Int64Rules(google.protobuf.message.Message):
     specified value, inclusive. If the value of Gte is larger than a
     specified Lt or Lte, the range is reversed.
     """
-
     @property
     def not_in(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[builtins.int]:
         """NotIn specifies that this field cannot be equal to one of the specified
@@ -378,8 +588,8 @@ class Int64Rules(google.protobuf.message.Message):
     """IgnoreEmpty specifies that the validation rules of this field should be
     evaluated only if the field is not empty
     """
-
-    def __init__(self,
+    def __init__(
+        self,
         *,
         const: typing.Optional[builtins.int] = ...,
         lt: typing.Optional[builtins.int] = ...,
@@ -388,13 +598,40 @@ class Int64Rules(google.protobuf.message.Message):
         gte: typing.Optional[builtins.int] = ...,
         not_in: typing.Optional[typing.Iterable[builtins.int]] = ...,
         ignore_empty: typing.Optional[builtins.bool] = ...,
-        ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["const",b"const","gt",b"gt","gte",b"gte","ignore_empty",b"ignore_empty","lt",b"lt","lte",b"lte"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["const",b"const","gt",b"gt","gte",b"gte","ignore_empty",b"ignore_empty","in",b"in","lt",b"lt","lte",b"lte","not_in",b"not_in"]) -> None: ...
+    ) -> None: ...
+    def HasField(
+        self,
+        field_name: typing_extensions.Literal[
+            "const", b"const", "gt", b"gt", "gte", b"gte", "ignore_empty", b"ignore_empty", "lt", b"lt", "lte", b"lte"
+        ],
+    ) -> builtins.bool: ...
+    def ClearField(
+        self,
+        field_name: typing_extensions.Literal[
+            "const",
+            b"const",
+            "gt",
+            b"gt",
+            "gte",
+            b"gte",
+            "ignore_empty",
+            b"ignore_empty",
+            "in",
+            b"in",
+            "lt",
+            b"lt",
+            "lte",
+            b"lte",
+            "not_in",
+            b"not_in",
+        ],
+    ) -> None: ...
+
 global___Int64Rules = Int64Rules
 
 class UInt32Rules(google.protobuf.message.Message):
     """UInt32Rules describes the constraints applied to `uint32` values"""
+
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     CONST_FIELD_NUMBER: builtins.int
     LT_FIELD_NUMBER: builtins.int
@@ -428,7 +665,6 @@ class UInt32Rules(google.protobuf.message.Message):
     specified value, inclusive. If the value of Gte is larger than a
     specified Lt or Lte, the range is reversed.
     """
-
     @property
     def not_in(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[builtins.int]:
         """NotIn specifies that this field cannot be equal to one of the specified
@@ -439,8 +675,8 @@ class UInt32Rules(google.protobuf.message.Message):
     """IgnoreEmpty specifies that the validation rules of this field should be
     evaluated only if the field is not empty
     """
-
-    def __init__(self,
+    def __init__(
+        self,
         *,
         const: typing.Optional[builtins.int] = ...,
         lt: typing.Optional[builtins.int] = ...,
@@ -449,13 +685,40 @@ class UInt32Rules(google.protobuf.message.Message):
         gte: typing.Optional[builtins.int] = ...,
         not_in: typing.Optional[typing.Iterable[builtins.int]] = ...,
         ignore_empty: typing.Optional[builtins.bool] = ...,
-        ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["const",b"const","gt",b"gt","gte",b"gte","ignore_empty",b"ignore_empty","lt",b"lt","lte",b"lte"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["const",b"const","gt",b"gt","gte",b"gte","ignore_empty",b"ignore_empty","in",b"in","lt",b"lt","lte",b"lte","not_in",b"not_in"]) -> None: ...
+    ) -> None: ...
+    def HasField(
+        self,
+        field_name: typing_extensions.Literal[
+            "const", b"const", "gt", b"gt", "gte", b"gte", "ignore_empty", b"ignore_empty", "lt", b"lt", "lte", b"lte"
+        ],
+    ) -> builtins.bool: ...
+    def ClearField(
+        self,
+        field_name: typing_extensions.Literal[
+            "const",
+            b"const",
+            "gt",
+            b"gt",
+            "gte",
+            b"gte",
+            "ignore_empty",
+            b"ignore_empty",
+            "in",
+            b"in",
+            "lt",
+            b"lt",
+            "lte",
+            b"lte",
+            "not_in",
+            b"not_in",
+        ],
+    ) -> None: ...
+
 global___UInt32Rules = UInt32Rules
 
 class UInt64Rules(google.protobuf.message.Message):
     """UInt64Rules describes the constraints applied to `uint64` values"""
+
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     CONST_FIELD_NUMBER: builtins.int
     LT_FIELD_NUMBER: builtins.int
@@ -489,7 +752,6 @@ class UInt64Rules(google.protobuf.message.Message):
     specified value, inclusive. If the value of Gte is larger than a
     specified Lt or Lte, the range is reversed.
     """
-
     @property
     def not_in(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[builtins.int]:
         """NotIn specifies that this field cannot be equal to one of the specified
@@ -500,8 +762,8 @@ class UInt64Rules(google.protobuf.message.Message):
     """IgnoreEmpty specifies that the validation rules of this field should be
     evaluated only if the field is not empty
     """
-
-    def __init__(self,
+    def __init__(
+        self,
         *,
         const: typing.Optional[builtins.int] = ...,
         lt: typing.Optional[builtins.int] = ...,
@@ -510,13 +772,40 @@ class UInt64Rules(google.protobuf.message.Message):
         gte: typing.Optional[builtins.int] = ...,
         not_in: typing.Optional[typing.Iterable[builtins.int]] = ...,
         ignore_empty: typing.Optional[builtins.bool] = ...,
-        ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["const",b"const","gt",b"gt","gte",b"gte","ignore_empty",b"ignore_empty","lt",b"lt","lte",b"lte"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["const",b"const","gt",b"gt","gte",b"gte","ignore_empty",b"ignore_empty","in",b"in","lt",b"lt","lte",b"lte","not_in",b"not_in"]) -> None: ...
+    ) -> None: ...
+    def HasField(
+        self,
+        field_name: typing_extensions.Literal[
+            "const", b"const", "gt", b"gt", "gte", b"gte", "ignore_empty", b"ignore_empty", "lt", b"lt", "lte", b"lte"
+        ],
+    ) -> builtins.bool: ...
+    def ClearField(
+        self,
+        field_name: typing_extensions.Literal[
+            "const",
+            b"const",
+            "gt",
+            b"gt",
+            "gte",
+            b"gte",
+            "ignore_empty",
+            b"ignore_empty",
+            "in",
+            b"in",
+            "lt",
+            b"lt",
+            "lte",
+            b"lte",
+            "not_in",
+            b"not_in",
+        ],
+    ) -> None: ...
+
 global___UInt64Rules = UInt64Rules
 
 class SInt32Rules(google.protobuf.message.Message):
     """SInt32Rules describes the constraints applied to `sint32` values"""
+
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     CONST_FIELD_NUMBER: builtins.int
     LT_FIELD_NUMBER: builtins.int
@@ -550,7 +839,6 @@ class SInt32Rules(google.protobuf.message.Message):
     specified value, inclusive. If the value of Gte is larger than a
     specified Lt or Lte, the range is reversed.
     """
-
     @property
     def not_in(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[builtins.int]:
         """NotIn specifies that this field cannot be equal to one of the specified
@@ -561,8 +849,8 @@ class SInt32Rules(google.protobuf.message.Message):
     """IgnoreEmpty specifies that the validation rules of this field should be
     evaluated only if the field is not empty
     """
-
-    def __init__(self,
+    def __init__(
+        self,
         *,
         const: typing.Optional[builtins.int] = ...,
         lt: typing.Optional[builtins.int] = ...,
@@ -571,13 +859,40 @@ class SInt32Rules(google.protobuf.message.Message):
         gte: typing.Optional[builtins.int] = ...,
         not_in: typing.Optional[typing.Iterable[builtins.int]] = ...,
         ignore_empty: typing.Optional[builtins.bool] = ...,
-        ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["const",b"const","gt",b"gt","gte",b"gte","ignore_empty",b"ignore_empty","lt",b"lt","lte",b"lte"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["const",b"const","gt",b"gt","gte",b"gte","ignore_empty",b"ignore_empty","in",b"in","lt",b"lt","lte",b"lte","not_in",b"not_in"]) -> None: ...
+    ) -> None: ...
+    def HasField(
+        self,
+        field_name: typing_extensions.Literal[
+            "const", b"const", "gt", b"gt", "gte", b"gte", "ignore_empty", b"ignore_empty", "lt", b"lt", "lte", b"lte"
+        ],
+    ) -> builtins.bool: ...
+    def ClearField(
+        self,
+        field_name: typing_extensions.Literal[
+            "const",
+            b"const",
+            "gt",
+            b"gt",
+            "gte",
+            b"gte",
+            "ignore_empty",
+            b"ignore_empty",
+            "in",
+            b"in",
+            "lt",
+            b"lt",
+            "lte",
+            b"lte",
+            "not_in",
+            b"not_in",
+        ],
+    ) -> None: ...
+
 global___SInt32Rules = SInt32Rules
 
 class SInt64Rules(google.protobuf.message.Message):
     """SInt64Rules describes the constraints applied to `sint64` values"""
+
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     CONST_FIELD_NUMBER: builtins.int
     LT_FIELD_NUMBER: builtins.int
@@ -611,7 +926,6 @@ class SInt64Rules(google.protobuf.message.Message):
     specified value, inclusive. If the value of Gte is larger than a
     specified Lt or Lte, the range is reversed.
     """
-
     @property
     def not_in(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[builtins.int]:
         """NotIn specifies that this field cannot be equal to one of the specified
@@ -622,8 +936,8 @@ class SInt64Rules(google.protobuf.message.Message):
     """IgnoreEmpty specifies that the validation rules of this field should be
     evaluated only if the field is not empty
     """
-
-    def __init__(self,
+    def __init__(
+        self,
         *,
         const: typing.Optional[builtins.int] = ...,
         lt: typing.Optional[builtins.int] = ...,
@@ -632,13 +946,40 @@ class SInt64Rules(google.protobuf.message.Message):
         gte: typing.Optional[builtins.int] = ...,
         not_in: typing.Optional[typing.Iterable[builtins.int]] = ...,
         ignore_empty: typing.Optional[builtins.bool] = ...,
-        ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["const",b"const","gt",b"gt","gte",b"gte","ignore_empty",b"ignore_empty","lt",b"lt","lte",b"lte"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["const",b"const","gt",b"gt","gte",b"gte","ignore_empty",b"ignore_empty","in",b"in","lt",b"lt","lte",b"lte","not_in",b"not_in"]) -> None: ...
+    ) -> None: ...
+    def HasField(
+        self,
+        field_name: typing_extensions.Literal[
+            "const", b"const", "gt", b"gt", "gte", b"gte", "ignore_empty", b"ignore_empty", "lt", b"lt", "lte", b"lte"
+        ],
+    ) -> builtins.bool: ...
+    def ClearField(
+        self,
+        field_name: typing_extensions.Literal[
+            "const",
+            b"const",
+            "gt",
+            b"gt",
+            "gte",
+            b"gte",
+            "ignore_empty",
+            b"ignore_empty",
+            "in",
+            b"in",
+            "lt",
+            b"lt",
+            "lte",
+            b"lte",
+            "not_in",
+            b"not_in",
+        ],
+    ) -> None: ...
+
 global___SInt64Rules = SInt64Rules
 
 class Fixed32Rules(google.protobuf.message.Message):
     """Fixed32Rules describes the constraints applied to `fixed32` values"""
+
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     CONST_FIELD_NUMBER: builtins.int
     LT_FIELD_NUMBER: builtins.int
@@ -672,7 +1013,6 @@ class Fixed32Rules(google.protobuf.message.Message):
     specified value, inclusive. If the value of Gte is larger than a
     specified Lt or Lte, the range is reversed.
     """
-
     @property
     def not_in(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[builtins.int]:
         """NotIn specifies that this field cannot be equal to one of the specified
@@ -683,8 +1023,8 @@ class Fixed32Rules(google.protobuf.message.Message):
     """IgnoreEmpty specifies that the validation rules of this field should be
     evaluated only if the field is not empty
     """
-
-    def __init__(self,
+    def __init__(
+        self,
         *,
         const: typing.Optional[builtins.int] = ...,
         lt: typing.Optional[builtins.int] = ...,
@@ -693,13 +1033,40 @@ class Fixed32Rules(google.protobuf.message.Message):
         gte: typing.Optional[builtins.int] = ...,
         not_in: typing.Optional[typing.Iterable[builtins.int]] = ...,
         ignore_empty: typing.Optional[builtins.bool] = ...,
-        ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["const",b"const","gt",b"gt","gte",b"gte","ignore_empty",b"ignore_empty","lt",b"lt","lte",b"lte"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["const",b"const","gt",b"gt","gte",b"gte","ignore_empty",b"ignore_empty","in",b"in","lt",b"lt","lte",b"lte","not_in",b"not_in"]) -> None: ...
+    ) -> None: ...
+    def HasField(
+        self,
+        field_name: typing_extensions.Literal[
+            "const", b"const", "gt", b"gt", "gte", b"gte", "ignore_empty", b"ignore_empty", "lt", b"lt", "lte", b"lte"
+        ],
+    ) -> builtins.bool: ...
+    def ClearField(
+        self,
+        field_name: typing_extensions.Literal[
+            "const",
+            b"const",
+            "gt",
+            b"gt",
+            "gte",
+            b"gte",
+            "ignore_empty",
+            b"ignore_empty",
+            "in",
+            b"in",
+            "lt",
+            b"lt",
+            "lte",
+            b"lte",
+            "not_in",
+            b"not_in",
+        ],
+    ) -> None: ...
+
 global___Fixed32Rules = Fixed32Rules
 
 class Fixed64Rules(google.protobuf.message.Message):
     """Fixed64Rules describes the constraints applied to `fixed64` values"""
+
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     CONST_FIELD_NUMBER: builtins.int
     LT_FIELD_NUMBER: builtins.int
@@ -733,7 +1100,6 @@ class Fixed64Rules(google.protobuf.message.Message):
     specified value, inclusive. If the value of Gte is larger than a
     specified Lt or Lte, the range is reversed.
     """
-
     @property
     def not_in(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[builtins.int]:
         """NotIn specifies that this field cannot be equal to one of the specified
@@ -744,8 +1110,8 @@ class Fixed64Rules(google.protobuf.message.Message):
     """IgnoreEmpty specifies that the validation rules of this field should be
     evaluated only if the field is not empty
     """
-
-    def __init__(self,
+    def __init__(
+        self,
         *,
         const: typing.Optional[builtins.int] = ...,
         lt: typing.Optional[builtins.int] = ...,
@@ -754,13 +1120,40 @@ class Fixed64Rules(google.protobuf.message.Message):
         gte: typing.Optional[builtins.int] = ...,
         not_in: typing.Optional[typing.Iterable[builtins.int]] = ...,
         ignore_empty: typing.Optional[builtins.bool] = ...,
-        ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["const",b"const","gt",b"gt","gte",b"gte","ignore_empty",b"ignore_empty","lt",b"lt","lte",b"lte"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["const",b"const","gt",b"gt","gte",b"gte","ignore_empty",b"ignore_empty","in",b"in","lt",b"lt","lte",b"lte","not_in",b"not_in"]) -> None: ...
+    ) -> None: ...
+    def HasField(
+        self,
+        field_name: typing_extensions.Literal[
+            "const", b"const", "gt", b"gt", "gte", b"gte", "ignore_empty", b"ignore_empty", "lt", b"lt", "lte", b"lte"
+        ],
+    ) -> builtins.bool: ...
+    def ClearField(
+        self,
+        field_name: typing_extensions.Literal[
+            "const",
+            b"const",
+            "gt",
+            b"gt",
+            "gte",
+            b"gte",
+            "ignore_empty",
+            b"ignore_empty",
+            "in",
+            b"in",
+            "lt",
+            b"lt",
+            "lte",
+            b"lte",
+            "not_in",
+            b"not_in",
+        ],
+    ) -> None: ...
+
 global___Fixed64Rules = Fixed64Rules
 
 class SFixed32Rules(google.protobuf.message.Message):
     """SFixed32Rules describes the constraints applied to `sfixed32` values"""
+
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     CONST_FIELD_NUMBER: builtins.int
     LT_FIELD_NUMBER: builtins.int
@@ -794,7 +1187,6 @@ class SFixed32Rules(google.protobuf.message.Message):
     specified value, inclusive. If the value of Gte is larger than a
     specified Lt or Lte, the range is reversed.
     """
-
     @property
     def not_in(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[builtins.int]:
         """NotIn specifies that this field cannot be equal to one of the specified
@@ -805,8 +1197,8 @@ class SFixed32Rules(google.protobuf.message.Message):
     """IgnoreEmpty specifies that the validation rules of this field should be
     evaluated only if the field is not empty
     """
-
-    def __init__(self,
+    def __init__(
+        self,
         *,
         const: typing.Optional[builtins.int] = ...,
         lt: typing.Optional[builtins.int] = ...,
@@ -815,13 +1207,40 @@ class SFixed32Rules(google.protobuf.message.Message):
         gte: typing.Optional[builtins.int] = ...,
         not_in: typing.Optional[typing.Iterable[builtins.int]] = ...,
         ignore_empty: typing.Optional[builtins.bool] = ...,
-        ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["const",b"const","gt",b"gt","gte",b"gte","ignore_empty",b"ignore_empty","lt",b"lt","lte",b"lte"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["const",b"const","gt",b"gt","gte",b"gte","ignore_empty",b"ignore_empty","in",b"in","lt",b"lt","lte",b"lte","not_in",b"not_in"]) -> None: ...
+    ) -> None: ...
+    def HasField(
+        self,
+        field_name: typing_extensions.Literal[
+            "const", b"const", "gt", b"gt", "gte", b"gte", "ignore_empty", b"ignore_empty", "lt", b"lt", "lte", b"lte"
+        ],
+    ) -> builtins.bool: ...
+    def ClearField(
+        self,
+        field_name: typing_extensions.Literal[
+            "const",
+            b"const",
+            "gt",
+            b"gt",
+            "gte",
+            b"gte",
+            "ignore_empty",
+            b"ignore_empty",
+            "in",
+            b"in",
+            "lt",
+            b"lt",
+            "lte",
+            b"lte",
+            "not_in",
+            b"not_in",
+        ],
+    ) -> None: ...
+
 global___SFixed32Rules = SFixed32Rules
 
 class SFixed64Rules(google.protobuf.message.Message):
     """SFixed64Rules describes the constraints applied to `sfixed64` values"""
+
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     CONST_FIELD_NUMBER: builtins.int
     LT_FIELD_NUMBER: builtins.int
@@ -855,7 +1274,6 @@ class SFixed64Rules(google.protobuf.message.Message):
     specified value, inclusive. If the value of Gte is larger than a
     specified Lt or Lte, the range is reversed.
     """
-
     @property
     def not_in(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[builtins.int]:
         """NotIn specifies that this field cannot be equal to one of the specified
@@ -866,8 +1284,8 @@ class SFixed64Rules(google.protobuf.message.Message):
     """IgnoreEmpty specifies that the validation rules of this field should be
     evaluated only if the field is not empty
     """
-
-    def __init__(self,
+    def __init__(
+        self,
         *,
         const: typing.Optional[builtins.int] = ...,
         lt: typing.Optional[builtins.int] = ...,
@@ -876,28 +1294,57 @@ class SFixed64Rules(google.protobuf.message.Message):
         gte: typing.Optional[builtins.int] = ...,
         not_in: typing.Optional[typing.Iterable[builtins.int]] = ...,
         ignore_empty: typing.Optional[builtins.bool] = ...,
-        ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["const",b"const","gt",b"gt","gte",b"gte","ignore_empty",b"ignore_empty","lt",b"lt","lte",b"lte"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["const",b"const","gt",b"gt","gte",b"gte","ignore_empty",b"ignore_empty","in",b"in","lt",b"lt","lte",b"lte","not_in",b"not_in"]) -> None: ...
+    ) -> None: ...
+    def HasField(
+        self,
+        field_name: typing_extensions.Literal[
+            "const", b"const", "gt", b"gt", "gte", b"gte", "ignore_empty", b"ignore_empty", "lt", b"lt", "lte", b"lte"
+        ],
+    ) -> builtins.bool: ...
+    def ClearField(
+        self,
+        field_name: typing_extensions.Literal[
+            "const",
+            b"const",
+            "gt",
+            b"gt",
+            "gte",
+            b"gte",
+            "ignore_empty",
+            b"ignore_empty",
+            "in",
+            b"in",
+            "lt",
+            b"lt",
+            "lte",
+            b"lte",
+            "not_in",
+            b"not_in",
+        ],
+    ) -> None: ...
+
 global___SFixed64Rules = SFixed64Rules
 
 class BoolRules(google.protobuf.message.Message):
     """BoolRules describes the constraints applied to `bool` values"""
+
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     CONST_FIELD_NUMBER: builtins.int
     const: builtins.bool
     """Const specifies that this field must be exactly the specified value"""
-
-    def __init__(self,
+    def __init__(
+        self,
         *,
         const: typing.Optional[builtins.bool] = ...,
-        ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["const",b"const"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["const",b"const"]) -> None: ...
+    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["const", b"const"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["const", b"const"]) -> None: ...
+
 global___BoolRules = BoolRules
 
 class StringRules(google.protobuf.message.Message):
     """StringRules describe the constraints applied to `string` values"""
+
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     CONST_FIELD_NUMBER: builtins.int
     LEN_FIELD_NUMBER: builtins.int
@@ -984,7 +1431,6 @@ class StringRules(google.protobuf.message.Message):
     """NotContains specifies that this field cannot have the specified substring
     anywhere in the string.
     """
-
     @property
     def not_in(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[typing.Text]:
         """NotIn specifies that this field cannot be equal to one of the specified
@@ -1051,8 +1497,8 @@ class StringRules(google.protobuf.message.Message):
     """IgnoreEmpty specifies that the validation rules of this field should be
     evaluated only if the field is not empty
     """
-
-    def __init__(self,
+    def __init__(
+        self,
         *,
         const: typing.Optional[typing.Text] = ...,
         len: typing.Optional[builtins.int] = ...,
@@ -1079,14 +1525,134 @@ class StringRules(google.protobuf.message.Message):
         well_known_regex: typing.Optional[global___KnownRegex.ValueType] = ...,
         strict: typing.Optional[builtins.bool] = ...,
         ignore_empty: typing.Optional[builtins.bool] = ...,
-        ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["address",b"address","const",b"const","contains",b"contains","email",b"email","hostname",b"hostname","ignore_empty",b"ignore_empty","ip",b"ip","ipv4",b"ipv4","ipv6",b"ipv6","len",b"len","len_bytes",b"len_bytes","max_bytes",b"max_bytes","max_len",b"max_len","min_bytes",b"min_bytes","min_len",b"min_len","not_contains",b"not_contains","pattern",b"pattern","prefix",b"prefix","strict",b"strict","suffix",b"suffix","uri",b"uri","uri_ref",b"uri_ref","uuid",b"uuid","well_known",b"well_known","well_known_regex",b"well_known_regex"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["address",b"address","const",b"const","contains",b"contains","email",b"email","hostname",b"hostname","ignore_empty",b"ignore_empty","in",b"in","ip",b"ip","ipv4",b"ipv4","ipv6",b"ipv6","len",b"len","len_bytes",b"len_bytes","max_bytes",b"max_bytes","max_len",b"max_len","min_bytes",b"min_bytes","min_len",b"min_len","not_contains",b"not_contains","not_in",b"not_in","pattern",b"pattern","prefix",b"prefix","strict",b"strict","suffix",b"suffix","uri",b"uri","uri_ref",b"uri_ref","uuid",b"uuid","well_known",b"well_known","well_known_regex",b"well_known_regex"]) -> None: ...
-    def WhichOneof(self, oneof_group: typing_extensions.Literal["well_known",b"well_known"]) -> typing.Optional[typing_extensions.Literal["email","hostname","ip","ipv4","ipv6","uri","uri_ref","address","uuid","well_known_regex"]]: ...
+    ) -> None: ...
+    def HasField(
+        self,
+        field_name: typing_extensions.Literal[
+            "address",
+            b"address",
+            "const",
+            b"const",
+            "contains",
+            b"contains",
+            "email",
+            b"email",
+            "hostname",
+            b"hostname",
+            "ignore_empty",
+            b"ignore_empty",
+            "ip",
+            b"ip",
+            "ipv4",
+            b"ipv4",
+            "ipv6",
+            b"ipv6",
+            "len",
+            b"len",
+            "len_bytes",
+            b"len_bytes",
+            "max_bytes",
+            b"max_bytes",
+            "max_len",
+            b"max_len",
+            "min_bytes",
+            b"min_bytes",
+            "min_len",
+            b"min_len",
+            "not_contains",
+            b"not_contains",
+            "pattern",
+            b"pattern",
+            "prefix",
+            b"prefix",
+            "strict",
+            b"strict",
+            "suffix",
+            b"suffix",
+            "uri",
+            b"uri",
+            "uri_ref",
+            b"uri_ref",
+            "uuid",
+            b"uuid",
+            "well_known",
+            b"well_known",
+            "well_known_regex",
+            b"well_known_regex",
+        ],
+    ) -> builtins.bool: ...
+    def ClearField(
+        self,
+        field_name: typing_extensions.Literal[
+            "address",
+            b"address",
+            "const",
+            b"const",
+            "contains",
+            b"contains",
+            "email",
+            b"email",
+            "hostname",
+            b"hostname",
+            "ignore_empty",
+            b"ignore_empty",
+            "in",
+            b"in",
+            "ip",
+            b"ip",
+            "ipv4",
+            b"ipv4",
+            "ipv6",
+            b"ipv6",
+            "len",
+            b"len",
+            "len_bytes",
+            b"len_bytes",
+            "max_bytes",
+            b"max_bytes",
+            "max_len",
+            b"max_len",
+            "min_bytes",
+            b"min_bytes",
+            "min_len",
+            b"min_len",
+            "not_contains",
+            b"not_contains",
+            "not_in",
+            b"not_in",
+            "pattern",
+            b"pattern",
+            "prefix",
+            b"prefix",
+            "strict",
+            b"strict",
+            "suffix",
+            b"suffix",
+            "uri",
+            b"uri",
+            "uri_ref",
+            b"uri_ref",
+            "uuid",
+            b"uuid",
+            "well_known",
+            b"well_known",
+            "well_known_regex",
+            b"well_known_regex",
+        ],
+    ) -> None: ...
+    def WhichOneof(
+        self, oneof_group: typing_extensions.Literal["well_known", b"well_known"]
+    ) -> typing.Optional[
+        typing_extensions.Literal[
+            "email", "hostname", "ip", "ipv4", "ipv6", "uri", "uri_ref", "address", "uuid", "well_known_regex"
+        ]
+    ]: ...
+
 global___StringRules = StringRules
 
 class BytesRules(google.protobuf.message.Message):
     """BytesRules describe the constraints applied to `bytes` values"""
+
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     CONST_FIELD_NUMBER: builtins.int
     LEN_FIELD_NUMBER: builtins.int
@@ -1138,7 +1704,6 @@ class BytesRules(google.protobuf.message.Message):
     """Contains specifies that this field must have the specified bytes
     anywhere in the string.
     """
-
     @property
     def not_in(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[builtins.bytes]:
         """NotIn specifies that this field cannot be equal to one of the specified
@@ -1164,8 +1729,8 @@ class BytesRules(google.protobuf.message.Message):
     """IgnoreEmpty specifies that the validation rules of this field should be
     evaluated only if the field is not empty
     """
-
-    def __init__(self,
+    def __init__(
+        self,
         *,
         const: typing.Optional[builtins.bytes] = ...,
         len: typing.Optional[builtins.int] = ...,
@@ -1180,14 +1745,82 @@ class BytesRules(google.protobuf.message.Message):
         ipv4: typing.Optional[builtins.bool] = ...,
         ipv6: typing.Optional[builtins.bool] = ...,
         ignore_empty: typing.Optional[builtins.bool] = ...,
-        ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["const",b"const","contains",b"contains","ignore_empty",b"ignore_empty","ip",b"ip","ipv4",b"ipv4","ipv6",b"ipv6","len",b"len","max_len",b"max_len","min_len",b"min_len","pattern",b"pattern","prefix",b"prefix","suffix",b"suffix","well_known",b"well_known"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["const",b"const","contains",b"contains","ignore_empty",b"ignore_empty","in",b"in","ip",b"ip","ipv4",b"ipv4","ipv6",b"ipv6","len",b"len","max_len",b"max_len","min_len",b"min_len","not_in",b"not_in","pattern",b"pattern","prefix",b"prefix","suffix",b"suffix","well_known",b"well_known"]) -> None: ...
-    def WhichOneof(self, oneof_group: typing_extensions.Literal["well_known",b"well_known"]) -> typing.Optional[typing_extensions.Literal["ip","ipv4","ipv6"]]: ...
+    ) -> None: ...
+    def HasField(
+        self,
+        field_name: typing_extensions.Literal[
+            "const",
+            b"const",
+            "contains",
+            b"contains",
+            "ignore_empty",
+            b"ignore_empty",
+            "ip",
+            b"ip",
+            "ipv4",
+            b"ipv4",
+            "ipv6",
+            b"ipv6",
+            "len",
+            b"len",
+            "max_len",
+            b"max_len",
+            "min_len",
+            b"min_len",
+            "pattern",
+            b"pattern",
+            "prefix",
+            b"prefix",
+            "suffix",
+            b"suffix",
+            "well_known",
+            b"well_known",
+        ],
+    ) -> builtins.bool: ...
+    def ClearField(
+        self,
+        field_name: typing_extensions.Literal[
+            "const",
+            b"const",
+            "contains",
+            b"contains",
+            "ignore_empty",
+            b"ignore_empty",
+            "in",
+            b"in",
+            "ip",
+            b"ip",
+            "ipv4",
+            b"ipv4",
+            "ipv6",
+            b"ipv6",
+            "len",
+            b"len",
+            "max_len",
+            b"max_len",
+            "min_len",
+            b"min_len",
+            "not_in",
+            b"not_in",
+            "pattern",
+            b"pattern",
+            "prefix",
+            b"prefix",
+            "suffix",
+            b"suffix",
+            "well_known",
+            b"well_known",
+        ],
+    ) -> None: ...
+    def WhichOneof(
+        self, oneof_group: typing_extensions.Literal["well_known", b"well_known"]
+    ) -> typing.Optional[typing_extensions.Literal["ip", "ipv4", "ipv6"]]: ...
+
 global___BytesRules = BytesRules
 
 class EnumRules(google.protobuf.message.Message):
     """EnumRules describe the constraints applied to enum values"""
+
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     CONST_FIELD_NUMBER: builtins.int
     DEFINED_ONLY_FIELD_NUMBER: builtins.int
@@ -1200,27 +1833,36 @@ class EnumRules(google.protobuf.message.Message):
     """DefinedOnly specifies that this field must be only one of the defined
     values for this enum, failing on any undefined value.
     """
-
     @property
     def not_in(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[builtins.int]:
         """NotIn specifies that this field cannot be equal to one of the specified
         values
         """
         pass
-    def __init__(self,
+    def __init__(
+        self,
         *,
         const: typing.Optional[builtins.int] = ...,
         defined_only: typing.Optional[builtins.bool] = ...,
         not_in: typing.Optional[typing.Iterable[builtins.int]] = ...,
-        ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["const",b"const","defined_only",b"defined_only"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["const",b"const","defined_only",b"defined_only","in",b"in","not_in",b"not_in"]) -> None: ...
+    ) -> None: ...
+    def HasField(
+        self, field_name: typing_extensions.Literal["const", b"const", "defined_only", b"defined_only"]
+    ) -> builtins.bool: ...
+    def ClearField(
+        self,
+        field_name: typing_extensions.Literal[
+            "const", b"const", "defined_only", b"defined_only", "in", b"in", "not_in", b"not_in"
+        ],
+    ) -> None: ...
+
 global___EnumRules = EnumRules
 
 class MessageRules(google.protobuf.message.Message):
     """MessageRules describe the constraints applied to embedded message values.
     For message-type fields, validation is performed recursively.
     """
+
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     SKIP_FIELD_NUMBER: builtins.int
     REQUIRED_FIELD_NUMBER: builtins.int
@@ -1231,18 +1873,22 @@ class MessageRules(google.protobuf.message.Message):
 
     required: builtins.bool
     """Required specifies that this field must be set"""
-
-    def __init__(self,
+    def __init__(
+        self,
         *,
         skip: typing.Optional[builtins.bool] = ...,
         required: typing.Optional[builtins.bool] = ...,
-        ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["required",b"required","skip",b"skip"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["required",b"required","skip",b"skip"]) -> None: ...
+    ) -> None: ...
+    def HasField(
+        self, field_name: typing_extensions.Literal["required", b"required", "skip", b"skip"]
+    ) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["required", b"required", "skip", b"skip"]) -> None: ...
+
 global___MessageRules = MessageRules
 
 class RepeatedRules(google.protobuf.message.Message):
     """RepeatedRules describe the constraints applied to `repeated` values"""
+
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     MIN_ITEMS_FIELD_NUMBER: builtins.int
     MAX_ITEMS_FIELD_NUMBER: builtins.int
@@ -1264,7 +1910,6 @@ class RepeatedRules(google.protobuf.message.Message):
     contraint is only applicable to scalar and enum types (messages are not
     supported).
     """
-
     @property
     def items(self) -> global___FieldRules:
         """Items specifies the contraints to be applied to each item in the field.
@@ -1276,21 +1921,51 @@ class RepeatedRules(google.protobuf.message.Message):
     """IgnoreEmpty specifies that the validation rules of this field should be
     evaluated only if the field is not empty
     """
-
-    def __init__(self,
+    def __init__(
+        self,
         *,
         min_items: typing.Optional[builtins.int] = ...,
         max_items: typing.Optional[builtins.int] = ...,
         unique: typing.Optional[builtins.bool] = ...,
         items: typing.Optional[global___FieldRules] = ...,
         ignore_empty: typing.Optional[builtins.bool] = ...,
-        ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["ignore_empty",b"ignore_empty","items",b"items","max_items",b"max_items","min_items",b"min_items","unique",b"unique"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["ignore_empty",b"ignore_empty","items",b"items","max_items",b"max_items","min_items",b"min_items","unique",b"unique"]) -> None: ...
+    ) -> None: ...
+    def HasField(
+        self,
+        field_name: typing_extensions.Literal[
+            "ignore_empty",
+            b"ignore_empty",
+            "items",
+            b"items",
+            "max_items",
+            b"max_items",
+            "min_items",
+            b"min_items",
+            "unique",
+            b"unique",
+        ],
+    ) -> builtins.bool: ...
+    def ClearField(
+        self,
+        field_name: typing_extensions.Literal[
+            "ignore_empty",
+            b"ignore_empty",
+            "items",
+            b"items",
+            "max_items",
+            b"max_items",
+            "min_items",
+            b"min_items",
+            "unique",
+            b"unique",
+        ],
+    ) -> None: ...
+
 global___RepeatedRules = RepeatedRules
 
 class MapRules(google.protobuf.message.Message):
     """MapRules describe the constraints applied to `map` values"""
+
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     MIN_PAIRS_FIELD_NUMBER: builtins.int
     MAX_PAIRS_FIELD_NUMBER: builtins.int
@@ -1312,7 +1987,6 @@ class MapRules(google.protobuf.message.Message):
     """NoSparse specifies values in this field cannot be unset. This only
     applies to map's with message value types.
     """
-
     @property
     def keys(self) -> global___FieldRules:
         """Keys specifies the constraints to be applied to each key in the field."""
@@ -1328,8 +2002,8 @@ class MapRules(google.protobuf.message.Message):
     """IgnoreEmpty specifies that the validation rules of this field should be
     evaluated only if the field is not empty
     """
-
-    def __init__(self,
+    def __init__(
+        self,
         *,
         min_pairs: typing.Optional[builtins.int] = ...,
         max_pairs: typing.Optional[builtins.int] = ...,
@@ -1337,41 +2011,79 @@ class MapRules(google.protobuf.message.Message):
         keys: typing.Optional[global___FieldRules] = ...,
         values: typing.Optional[global___FieldRules] = ...,
         ignore_empty: typing.Optional[builtins.bool] = ...,
-        ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["ignore_empty",b"ignore_empty","keys",b"keys","max_pairs",b"max_pairs","min_pairs",b"min_pairs","no_sparse",b"no_sparse","values",b"values"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["ignore_empty",b"ignore_empty","keys",b"keys","max_pairs",b"max_pairs","min_pairs",b"min_pairs","no_sparse",b"no_sparse","values",b"values"]) -> None: ...
+    ) -> None: ...
+    def HasField(
+        self,
+        field_name: typing_extensions.Literal[
+            "ignore_empty",
+            b"ignore_empty",
+            "keys",
+            b"keys",
+            "max_pairs",
+            b"max_pairs",
+            "min_pairs",
+            b"min_pairs",
+            "no_sparse",
+            b"no_sparse",
+            "values",
+            b"values",
+        ],
+    ) -> builtins.bool: ...
+    def ClearField(
+        self,
+        field_name: typing_extensions.Literal[
+            "ignore_empty",
+            b"ignore_empty",
+            "keys",
+            b"keys",
+            "max_pairs",
+            b"max_pairs",
+            "min_pairs",
+            b"min_pairs",
+            "no_sparse",
+            b"no_sparse",
+            "values",
+            b"values",
+        ],
+    ) -> None: ...
+
 global___MapRules = MapRules
 
 class AnyRules(google.protobuf.message.Message):
     """AnyRules describe constraints applied exclusively to the
     `google.protobuf.Any` well-known type
     """
+
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     REQUIRED_FIELD_NUMBER: builtins.int
     IN_FIELD_NUMBER: builtins.int
     NOT_IN_FIELD_NUMBER: builtins.int
     required: builtins.bool
     """Required specifies that this field must be set"""
-
     @property
     def not_in(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[typing.Text]:
         """NotIn specifies that this field's `type_url` must not be equal to any of
         the specified values.
         """
         pass
-    def __init__(self,
+    def __init__(
+        self,
         *,
         required: typing.Optional[builtins.bool] = ...,
         not_in: typing.Optional[typing.Iterable[typing.Text]] = ...,
-        ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["required",b"required"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["in",b"in","not_in",b"not_in","required",b"required"]) -> None: ...
+    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["required", b"required"]) -> builtins.bool: ...
+    def ClearField(
+        self, field_name: typing_extensions.Literal["in", b"in", "not_in", b"not_in", "required", b"required"]
+    ) -> None: ...
+
 global___AnyRules = AnyRules
 
 class DurationRules(google.protobuf.message.Message):
     """DurationRules describe the constraints applied exclusively to the
     `google.protobuf.Duration` well-known type
     """
+
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     REQUIRED_FIELD_NUMBER: builtins.int
     CONST_FIELD_NUMBER: builtins.int
@@ -1383,7 +2095,6 @@ class DurationRules(google.protobuf.message.Message):
     NOT_IN_FIELD_NUMBER: builtins.int
     required: builtins.bool
     """Required specifies that this field must be set"""
-
     @property
     def const(self) -> google.protobuf.duration_pb2.Duration:
         """Const specifies that this field must be exactly the specified value"""
@@ -1413,12 +2124,15 @@ class DurationRules(google.protobuf.message.Message):
         """
         pass
     @property
-    def not_in(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[google.protobuf.duration_pb2.Duration]:
+    def not_in(
+        self,
+    ) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[google.protobuf.duration_pb2.Duration]:
         """NotIn specifies that this field cannot be equal to one of the specified
         values
         """
         pass
-    def __init__(self,
+    def __init__(
+        self,
         *,
         required: typing.Optional[builtins.bool] = ...,
         const: typing.Optional[google.protobuf.duration_pb2.Duration] = ...,
@@ -1427,15 +2141,42 @@ class DurationRules(google.protobuf.message.Message):
         gt: typing.Optional[google.protobuf.duration_pb2.Duration] = ...,
         gte: typing.Optional[google.protobuf.duration_pb2.Duration] = ...,
         not_in: typing.Optional[typing.Iterable[google.protobuf.duration_pb2.Duration]] = ...,
-        ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["const",b"const","gt",b"gt","gte",b"gte","lt",b"lt","lte",b"lte","required",b"required"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["const",b"const","gt",b"gt","gte",b"gte","in",b"in","lt",b"lt","lte",b"lte","not_in",b"not_in","required",b"required"]) -> None: ...
+    ) -> None: ...
+    def HasField(
+        self,
+        field_name: typing_extensions.Literal[
+            "const", b"const", "gt", b"gt", "gte", b"gte", "lt", b"lt", "lte", b"lte", "required", b"required"
+        ],
+    ) -> builtins.bool: ...
+    def ClearField(
+        self,
+        field_name: typing_extensions.Literal[
+            "const",
+            b"const",
+            "gt",
+            b"gt",
+            "gte",
+            b"gte",
+            "in",
+            b"in",
+            "lt",
+            b"lt",
+            "lte",
+            b"lte",
+            "not_in",
+            b"not_in",
+            "required",
+            b"required",
+        ],
+    ) -> None: ...
+
 global___DurationRules = DurationRules
 
 class TimestampRules(google.protobuf.message.Message):
     """TimestampRules describe the constraints applied exclusively to the
     `google.protobuf.Timestamp` well-known type
     """
+
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     REQUIRED_FIELD_NUMBER: builtins.int
     CONST_FIELD_NUMBER: builtins.int
@@ -1448,7 +2189,6 @@ class TimestampRules(google.protobuf.message.Message):
     WITHIN_FIELD_NUMBER: builtins.int
     required: builtins.bool
     """Required specifies that this field must be set"""
-
     @property
     def const(self) -> google.protobuf.timestamp_pb2.Timestamp:
         """Const specifies that this field must be exactly the specified value"""
@@ -1486,7 +2226,6 @@ class TimestampRules(google.protobuf.message.Message):
     """GtNow specifies that this must be greater than the current time. GtNow
     can only be used with the Within rule.
     """
-
     @property
     def within(self) -> google.protobuf.duration_pb2.Duration:
         """Within specifies that this field must be within this duration of the
@@ -1494,7 +2233,8 @@ class TimestampRules(google.protobuf.message.Message):
         GtNow rules.
         """
         pass
-    def __init__(self,
+    def __init__(
+        self,
         *,
         required: typing.Optional[builtins.bool] = ...,
         const: typing.Optional[google.protobuf.timestamp_pb2.Timestamp] = ...,
@@ -1505,29 +2245,82 @@ class TimestampRules(google.protobuf.message.Message):
         lt_now: typing.Optional[builtins.bool] = ...,
         gt_now: typing.Optional[builtins.bool] = ...,
         within: typing.Optional[google.protobuf.duration_pb2.Duration] = ...,
-        ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["const",b"const","gt",b"gt","gt_now",b"gt_now","gte",b"gte","lt",b"lt","lt_now",b"lt_now","lte",b"lte","required",b"required","within",b"within"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["const",b"const","gt",b"gt","gt_now",b"gt_now","gte",b"gte","lt",b"lt","lt_now",b"lt_now","lte",b"lte","required",b"required","within",b"within"]) -> None: ...
+    ) -> None: ...
+    def HasField(
+        self,
+        field_name: typing_extensions.Literal[
+            "const",
+            b"const",
+            "gt",
+            b"gt",
+            "gt_now",
+            b"gt_now",
+            "gte",
+            b"gte",
+            "lt",
+            b"lt",
+            "lt_now",
+            b"lt_now",
+            "lte",
+            b"lte",
+            "required",
+            b"required",
+            "within",
+            b"within",
+        ],
+    ) -> builtins.bool: ...
+    def ClearField(
+        self,
+        field_name: typing_extensions.Literal[
+            "const",
+            b"const",
+            "gt",
+            b"gt",
+            "gt_now",
+            b"gt_now",
+            "gte",
+            b"gte",
+            "lt",
+            b"lt",
+            "lt_now",
+            b"lt_now",
+            "lte",
+            b"lte",
+            "required",
+            b"required",
+            "within",
+            b"within",
+        ],
+    ) -> None: ...
+
 global___TimestampRules = TimestampRules
 
 DISABLED_FIELD_NUMBER: builtins.int
 IGNORED_FIELD_NUMBER: builtins.int
 REQUIRED_FIELD_NUMBER: builtins.int
 RULES_FIELD_NUMBER: builtins.int
-disabled: google.protobuf.internal.extension_dict._ExtensionFieldDescriptor[google.protobuf.descriptor_pb2.MessageOptions, builtins.bool]
+disabled: google.protobuf.internal.extension_dict._ExtensionFieldDescriptor[
+    google.protobuf.descriptor_pb2.MessageOptions, builtins.bool
+]
 """Disabled nullifies any validation rules for this message, including any
 message fields associated with it that do support validation.
 """
 
-ignored: google.protobuf.internal.extension_dict._ExtensionFieldDescriptor[google.protobuf.descriptor_pb2.MessageOptions, builtins.bool]
+ignored: google.protobuf.internal.extension_dict._ExtensionFieldDescriptor[
+    google.protobuf.descriptor_pb2.MessageOptions, builtins.bool
+]
 """Ignore skips generation of validation methods for this message."""
 
-required: google.protobuf.internal.extension_dict._ExtensionFieldDescriptor[google.protobuf.descriptor_pb2.OneofOptions, builtins.bool]
+required: google.protobuf.internal.extension_dict._ExtensionFieldDescriptor[
+    google.protobuf.descriptor_pb2.OneofOptions, builtins.bool
+]
 """Required ensures that exactly one the field options in a oneof is set;
 validation fails if no fields in the oneof are set.
 """
 
-rules: google.protobuf.internal.extension_dict._ExtensionFieldDescriptor[google.protobuf.descriptor_pb2.FieldOptions, global___FieldRules]
+rules: google.protobuf.internal.extension_dict._ExtensionFieldDescriptor[
+    google.protobuf.descriptor_pb2.FieldOptions, global___FieldRules
+]
 """Rules specify the validations to be performed on this field. By default,
 no validation is performed against a field.
 """

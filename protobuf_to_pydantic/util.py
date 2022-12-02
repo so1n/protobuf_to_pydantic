@@ -1,9 +1,13 @@
 from datetime import timedelta
-from typing import Any, Callable, Dict, Generator, Tuple, Type, Union
+from typing import TYPE_CHECKING, Any, Callable, Dict, Generator, Optional, Tuple, Type, Union
 
 from pydantic import BaseConfig, BaseModel, create_model
 
-from protobuf_to_pydantic.grpc_types import Duration, RepeatedCompositeContainer, Timestamp
+if TYPE_CHECKING:
+    from pydantic.main import Model
+    from pydantic.typing import AnyClassMethod
+
+from protobuf_to_pydantic.grpc_types import Duration, RepeatedCompositeContainer, RepeatedScalarContainer, Timestamp
 
 
 class Timedelta(timedelta):
@@ -27,15 +31,15 @@ class Timedelta(timedelta):
 def create_pydantic_model(
     annotation_dict: Dict[str, Tuple[Type, Any]],
     class_name: str = "DynamicModel",
-    pydantic_config: Type["BaseConfig"] = None,
-    pydantic_base: Type["BaseModel"] = None,
+    pydantic_config: Optional[Type["BaseConfig"]] = None,
+    pydantic_base: Union[None, Type["Model"], Tuple[Type["Model"], ...]] = None,
     pydantic_module: str = "pydantic.main",
-    pydantic_validators: Dict[str, classmethod] = None,
+    pydantic_validators: Optional[Dict[str, "AnyClassMethod"]] = None,
 ) -> Type["BaseModel"]:
     """pydantic self.pait_response_model helper
     if use create_model('DynamicModel', **annotation_dict), mypy will tip error
     """
-    return create_model(
+    return create_model(  # type: ignore
         class_name,
         __config__=pydantic_config,
         __base__=pydantic_base,
@@ -46,11 +50,18 @@ def create_pydantic_model(
 
 
 def replace_protobuf_type_to_python_type(value: Any) -> Any:
+    """
+    protobuf.Duration -> datetime.timedelta
+    protobuf.Timestamp -> timestamp e.g 1600000000.000000
+    like list -> list
+
+    other type -> raw...
+    """
     if isinstance(value, Duration):
         return timedelta(microseconds=value.ToMicroseconds())
     elif isinstance(value, Timestamp):
         return value.ToMicroseconds() / 1000000
-    elif isinstance(value, (list, RepeatedCompositeContainer)):
+    elif isinstance(value, (list, RepeatedCompositeContainer, RepeatedScalarContainer)):
         return [replace_protobuf_type_to_python_type(i) for i in value]
     else:
         return value
