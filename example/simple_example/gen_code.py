@@ -14,7 +14,6 @@ def gen_code() -> None:
                 demo_pb2.NestedMessage,
             )
         ],
-        enable_yapf=False,
     )
 
 

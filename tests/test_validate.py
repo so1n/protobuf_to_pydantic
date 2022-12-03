@@ -31,6 +31,8 @@ from example.example_proto_python_code.example_proto.validate.demo_pb2 import (
 )
 from protobuf_to_pydantic import msg_to_pydantic_model, pydantic_model_to_py_code
 
+from . import P2CTest
+
 
 def exp_time() -> float:
     return time.time()
@@ -39,7 +41,7 @@ def exp_time() -> float:
 class TestValidate:
     @staticmethod
     def _model_output(msg: Any) -> str:
-        return pydantic_model_to_py_code(msg_to_pydantic_model(msg, parse_msg_desc_method="PGV"))
+        return pydantic_model_to_py_code(msg_to_pydantic_model(msg, parse_msg_desc_method="PGV"), p2c_class=P2CTest)
 
     def test_string(self) -> None:
         assert """

@@ -13,7 +13,7 @@ from pydantic.fields import FieldInfo
 
 from protobuf_to_pydantic import customer_validator, gen_model
 from protobuf_to_pydantic.customer_con_type import pydantic_con_dict
-from protobuf_to_pydantic.grpc_types import RepeatedScalarContainer
+from protobuf_to_pydantic.grpc_types import RepeatedCompositeContainer, RepeatedScalarContainer
 from protobuf_to_pydantic.util import replace_protobuf_type_to_python_type
 
 
@@ -29,9 +29,6 @@ class P2C(object):
         customer_import_set: Optional[Set[str]] = None,
         customer_deque: Optional[Deque] = None,
         module_path: str = "",
-        enable_autoflake: bool = True,
-        enable_isort: bool = True,
-        enable_yapf: bool = True,
         code_indent: Optional[int] = None,
     ):
         self._model_list: Tuple[Type[BaseModel], ...] = model
@@ -56,11 +53,37 @@ class P2C(object):
             module_path = str(module_path_obj.absolute())
         self._module_path: str = module_path
 
-        self._enable_autoflake: bool = enable_autoflake
-        self._enable_isort: bool = enable_isort
-        self._enable_yapf: bool = enable_yapf
         for _model in self._model_list:
             self._gen_pydantic_model_py_code(_model)
+
+    def format_content(self, content_str: str) -> str:
+
+        try:
+            import isort  # type: ignore
+        except ImportError:
+            pass
+        else:
+            content_str = isort.code(content_str)
+
+        try:
+            import autoflake  # type: ignore
+        except ImportError:
+            pass
+        else:
+            content_str = autoflake.fix_code(content_str)
+
+        try:
+            import black  # type: ignore
+        except ImportError:
+            try:
+                from yapf.yapflib.yapf_api import FormatCode  # type: ignore
+            except ImportError:
+                pass
+            else:
+                content_str, _ = FormatCode(content_str)
+        else:
+            content_str = black.format_str(content_str, mode=black.Mode(line_length=120))
+        return content_str
 
     @property
     def content(self) -> str:
@@ -71,7 +94,9 @@ class P2C(object):
             "# type: ignore\n\n"
         )
 
+        # Regardless of the order of import, you can sort through isort (if installed)
         content_str += "\n".join(sorted(self._import_set))
+
         if self._content_deque:
             _content_set: Set[str] = set()
             content_str += "\n\n"
@@ -81,35 +106,10 @@ class P2C(object):
                 _content_set.add(content)
                 content_str += f"\n\n{content}"
 
-        if self._enable_isort:
-            try:
-                import isort
-            except ImportError:
-                pass
-            else:
-                content_str = isort.code(content_str)
-
-        if self._enable_autoflake:
-            try:
-                import autoflake
-            except ImportError:
-                pass
-            else:
-                content_str = autoflake.fix_code(content_str)
-
-        if self._enable_yapf:
-            try:
-                from yapf.yapflib.yapf_api import FormatCode
-            except ImportError:
-                pass
-            else:
-                content_str, _ = FormatCode(content_str)
-
-        # TODO Waiting for black development API
-        # https://github.com/psf/black/issues/779
-        return content_str
+        return self.format_content(content_str)
 
     def _add_import_code(self, module_name: str, class_name: str) -> None:
+        """Generate import statements through module name and class name"""
         extra_str: str = ""
         if module_name.startswith("google.protobuf"):
             extra_str = "  # type: ignore"
@@ -118,6 +118,12 @@ class P2C(object):
         self._import_set.add(f"from {module_name} import {class_name}{extra_str}")
 
     def _get_value_code(self, type_: Type, is_first: bool = False) -> str:
+        """
+        Get the output string corresponding to the type
+        :param type_: needs to be parsed type
+        :param is_first: If False, will generate by the way import code
+        :return:
+        """
         type_ = replace_protobuf_type_to_python_type(type_)
         if isinstance(type_, dict):
             sort_list = [(k, v) for k, v in type_.items()]
@@ -210,11 +216,11 @@ class P2C(object):
     def _model_field_handle(self, model: Type[BaseModel], indent: int = 0) -> str:
         field_str: str = ""
         for key, value in model.__fields__.items():
-            value_type = value.outer_type_
-            value_type_name: str = getattr(value_type, "__name__", None)
+            value_outer_type = value.outer_type_
+            value_type_name: str = getattr(value_outer_type, "__name__", None)
 
             # Type Hint handler
-            if value.outer_type_.__module__ != "builtins":
+            if value_outer_type.__module__ != "builtins":
                 if inspect.isclass(value.type_) and issubclass(value.type_, IntEnum):
                     # Parse protobuf enum
                     self._import_set.add("from enum import IntEnum")
@@ -225,23 +231,23 @@ class P2C(object):
                 else:
                     # It is not necessary to consider other types since
                     # it is converted from the message object generated by protobuf
-                    value_type = model.__annotations__[key]
+                    value_outer_type = model.__annotations__[key]
                 # Extracting the exact Type Hint text
-                if isinstance(value_type, _GenericAlias):
+                if isinstance(value_outer_type, _GenericAlias):
                     sub_type_str = ", ".join(
-                        [self._get_value_code(i) for i in value_type.__args__ if i.__name__ != "T"]
+                        [self._get_value_code(i) for i in value_outer_type.__args__ if i.__name__ != "T"]
                     )
                     if sub_type_str:
-                        value_type_name = f"typing.{value_type._name}[{sub_type_str}]"
+                        value_type_name = f"typing.{value_outer_type._name}[{sub_type_str}]"
                     else:
-                        value_type_name = f"typing.{value_type._name}"
+                        value_type_name = f"typing.{value_outer_type._name}"
                     self._import_set.add("import typing")
-                elif inspect.isclass(value_type) and value_type.__mro__[1] in pydantic_con_dict:
+                elif inspect.isclass(value_outer_type) and value_outer_type.__mro__[1] in pydantic_con_dict:
                     # only support like repeated[string]
-                    value_type_name = self.pydantic_con_type_handle(value_type)
+                    value_type_name = self.pydantic_con_type_handle(value_outer_type)
                 else:
-                    value_type_name = getattr(value_type, "__name__", None)
-                    self._parse_type_to_import_code(value_type)
+                    value_type_name = getattr(value_outer_type, "__name__", None)
+                    self._parse_type_to_import_code(value_outer_type)
 
             field_str += " " * indent + f"{key}: {value_type_name} = {self._field_info_handle(value.field_info)}\n"
         return field_str
@@ -265,6 +271,7 @@ class P2C(object):
 
     def _gen_pydantic_model_py_code(self, model: Type[BaseModel], indent: int = 0) -> None:
         if model in self._create_set:
+            # ignore parsed model
             return None
 
         base_class: type = getattr(model, "_base_model", model.__mro__[1])
@@ -274,15 +281,19 @@ class P2C(object):
             self._add_import_code(base_class.__module__, base_class.__name__)
 
         class_str: str = f"class {model.__name__}({base_class.__name__}):\n"
+
         config_class: str = self._model_config_handle(model, indent=indent + self.code_indent)
         if config_class:
             class_str += config_class + "\n"
+
         attribute_str = self._model_attribute_handle(model, indent=indent + self.code_indent)
         if attribute_str:
             class_str += attribute_str + "\n"
+
         field_str = self._model_field_handle(model, indent=indent + self.code_indent)
         if field_str:
             class_str += field_str + "\n"
+
         validator_str: str = self._model_validator_handle(model, indent=indent + self.code_indent)
         if validator_str:
             class_str += f"{validator_str}\n"
@@ -293,11 +304,12 @@ class P2C(object):
         self._create_set.add(model)
 
     def _parse_type_to_import_code(self, type_: Any) -> None:
+        """Parse the type and generate the corresponding import"""
         type_module: Optional[ModuleType] = inspect.getmodule(type_)
         if not type_module:
             # The value cannot be found in the corresponding module,
-            # you need to determine if the built-in type needs to be resolved if possible
-            if isinstance(type_, (list, RepeatedScalarContainer)):
+            # need to determine if the built-in type needs to be resolved if possible
+            if isinstance(type_, (list, RepeatedScalarContainer, RepeatedCompositeContainer)):
                 for i in type_:
                     self._parse_type_to_import_code(i)
             elif isinstance(type_, dict):
@@ -381,7 +393,7 @@ class P2C(object):
                 f"_{root_validator.__name__} = root_validator(pre=True, allow_reuse=True)({root_validator.__name__})\n"
             )
 
-        # TODO Here currently only consider the support for pgv, the follow-up to fill in
+        # TODO Here currently only consider the support for pgv&p2p, the follow-up to fill in
         for key, value in model.__fields__.items():
             if not value.class_validators:
                 continue
@@ -403,19 +415,14 @@ def pydantic_model_to_py_code(
     customer_import_set: Optional[Set[str]] = None,
     customer_deque: Optional[Deque] = None,
     module_path: str = "",
-    enable_autoflake: bool = True,
-    enable_isort: bool = True,
-    enable_yapf: bool = True,
     code_indent: Optional[int] = None,
+    p2c_class: Type[P2C] = P2C,
 ) -> str:
-    return P2C(
+    return p2c_class(
         *model,
         customer_import_set=customer_import_set,
         customer_deque=customer_deque,
         module_path=module_path,
-        enable_autoflake=enable_autoflake,
-        enable_isort=enable_isort,
-        enable_yapf=enable_yapf,
         code_indent=code_indent,
     ).content
 
@@ -427,20 +434,16 @@ def pydantic_model_to_py_file(
     customer_deque: Optional[Deque] = None,
     open_mode: str = "w",
     module_path: str = "",
-    enable_autoflake: bool = True,
-    enable_isort: bool = True,
-    enable_yapf: bool = True,
     code_indent: Optional[int] = None,
+    p2c_class: Type[P2C] = P2C,
 ) -> None:
     py_code_content: str = pydantic_model_to_py_code(
         *model,
         customer_import_set=customer_import_set,
         customer_deque=customer_deque,
         module_path=module_path,
-        enable_autoflake=enable_autoflake,
-        enable_isort=enable_isort,
-        enable_yapf=enable_yapf,
         code_indent=code_indent,
+        p2c_class=p2c_class,
     )
     with open(filename, mode=open_mode) as f:
         f.write(py_code_content)

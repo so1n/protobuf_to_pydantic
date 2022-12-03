@@ -23,7 +23,6 @@ def gen_code() -> None:
             )
         ],
         module_path="../",
-        enable_yapf=False,
     )
     pydantic_model_to_py_file(
         "./use_module_path/demo_gen_code_by_protobuf_field.py",
@@ -41,7 +40,6 @@ def gen_code() -> None:
             )
         ],
         module_path="../",
-        enable_yapf=False,
     )
     pydantic_model_to_py_file(
         "./not_use_module_path/demo_gen_code_by_pyi.py",
@@ -54,7 +52,6 @@ def gen_code() -> None:
                 demo_pb2.NestedMessage,
             )
         ],
-        enable_yapf=False,
     )
     pydantic_model_to_py_file(
         "./not_use_module_path/demo_gen_code_by_protobuf_field.py",
@@ -71,7 +68,6 @@ def gen_code() -> None:
                 demo_pb2.NestedMessage,
             )
         ],
-        enable_yapf=False,
     )
 
 

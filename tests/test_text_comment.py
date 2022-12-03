@@ -5,6 +5,8 @@ from uuid import uuid4
 from example.example_proto_python_code.example_proto.demo import demo_pb2
 from protobuf_to_pydantic import msg_to_pydantic_model, pydantic_model_to_py_code
 
+from . import P2CTest
+
 
 def exp_time() -> float:
     return time.time()
@@ -19,7 +21,8 @@ class BaseTestTextComment:
                 msg,
                 parse_msg_desc_method=demo_pb2,
                 local_dict=local_dict
-            )
+            ),
+            p2c_class=P2CTest
         )
 
     def test_user_message(self) -> None:
@@ -189,7 +192,8 @@ class TestTextCommentByPyi(BaseTestTextComment):
                 msg,
                 parse_msg_desc_method=demo_pb2,
                 local_dict=local_dict
-            )
+            ),
+            p2c_class=P2CTest
         )
 
 
@@ -205,12 +209,14 @@ class TestTextCommentByProtobufFProtobufField(BaseTestTextComment):
                     msg,
                     parse_msg_desc_method=demo_pb2,
                     local_dict=local_dict
-                )
+                ),
+                p2c_class=P2CTest,
             )
         return pydantic_model_to_py_code(
             msg_to_pydantic_model(
                 msg,
                 parse_msg_desc_method="example",
                 local_dict=local_dict
-            )
+            ),
+            p2c_class=P2CTest,
         )

@@ -31,6 +31,8 @@ from example.example_proto_python_code.example_proto.p2p_validate.demo_pb2 impor
 from example.p2p_validate_example.gen_code import CustomerField, confloat, conint, customer_any
 from protobuf_to_pydantic import msg_to_pydantic_model, pydantic_model_to_py_code
 
+from . import P2CTest
+
 
 def exp_time() -> float:
     return time.time()
@@ -45,7 +47,7 @@ class TestP2pValidate:
             "conint": conint,
             "customer_any": customer_any,
         }
-        return pydantic_model_to_py_code(msg_to_pydantic_model(msg, local_dict=local_dict))
+        return pydantic_model_to_py_code(msg_to_pydantic_model(msg, local_dict=local_dict), p2c_class=P2CTest)
 
     def test_any(self) -> None:
         assert """

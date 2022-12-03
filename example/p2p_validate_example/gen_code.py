@@ -80,7 +80,6 @@ def gen_code() -> None:
             )
         ],
         module_path="../",
-        enable_yapf=False,
     )
 
 

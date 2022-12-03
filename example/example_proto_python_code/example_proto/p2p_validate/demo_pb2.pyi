@@ -17,17 +17,13 @@ import typing_extensions
 DESCRIPTOR: google.protobuf.descriptor.FileDescriptor
 
 class _State:
-    ValueType = typing.NewType("ValueType", builtins.int)
+    ValueType = typing.NewType('ValueType', builtins.int)
     V: typing_extensions.TypeAlias = ValueType
-
-class _StateEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_State.ValueType], builtins.type
-):
+class _StateEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_State.ValueType], builtins.type):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
     INACTIVE: _State.ValueType  # 0
     PENDING: _State.ValueType  # 1
     ACTIVE: _State.ValueType  # 2
-
 class State(_State, metaclass=_StateEnumTypeWrapper):
     pass
 
@@ -35,6 +31,7 @@ INACTIVE: State.ValueType  # 0
 PENDING: State.ValueType  # 1
 ACTIVE: State.ValueType  # 2
 global___State = State
+
 
 class FloatTest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
@@ -72,8 +69,7 @@ class FloatTest(google.protobuf.message.Message):
     field_test: builtins.float
     type_test: builtins.float
     title_test: builtins.float
-    def __init__(
-        self,
+    def __init__(self,
         *,
         const_test: builtins.float = ...,
         range_e_test: builtins.float = ...,
@@ -92,47 +88,8 @@ class FloatTest(google.protobuf.message.Message):
         field_test: builtins.float = ...,
         type_test: builtins.float = ...,
         title_test: builtins.float = ...,
-    ) -> None: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "alias_test",
-            b"alias_test",
-            "const_test",
-            b"const_test",
-            "default_factory_test",
-            b"default_factory_test",
-            "default_test",
-            b"default_test",
-            "desc_test",
-            b"desc_test",
-            "example_factory",
-            b"example_factory",
-            "example_test",
-            b"example_test",
-            "field_test",
-            b"field_test",
-            "in_test",
-            b"in_test",
-            "miss_default_test",
-            b"miss_default_test",
-            "multiple_of_test",
-            b"multiple_of_test",
-            "not_enable_test",
-            b"not_enable_test",
-            "not_in_test",
-            b"not_in_test",
-            "range_e_test",
-            b"range_e_test",
-            "range_test",
-            b"range_test",
-            "title_test",
-            b"title_test",
-            "type_test",
-            b"type_test",
-        ],
-    ) -> None: ...
-
+        ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["alias_test",b"alias_test","const_test",b"const_test","default_factory_test",b"default_factory_test","default_test",b"default_test","desc_test",b"desc_test","example_factory",b"example_factory","example_test",b"example_test","field_test",b"field_test","in_test",b"in_test","miss_default_test",b"miss_default_test","multiple_of_test",b"multiple_of_test","not_enable_test",b"not_enable_test","not_in_test",b"not_in_test","range_e_test",b"range_e_test","range_test",b"range_test","title_test",b"title_test","type_test",b"type_test"]) -> None: ...
 global___FloatTest = FloatTest
 
 class DoubleTest(google.protobuf.message.Message):
@@ -171,8 +128,7 @@ class DoubleTest(google.protobuf.message.Message):
     field_test: builtins.float
     type_test: builtins.float
     title_test: builtins.float
-    def __init__(
-        self,
+    def __init__(self,
         *,
         const_test: builtins.float = ...,
         range_e_test: builtins.float = ...,
@@ -191,47 +147,8 @@ class DoubleTest(google.protobuf.message.Message):
         field_test: builtins.float = ...,
         type_test: builtins.float = ...,
         title_test: builtins.float = ...,
-    ) -> None: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "alias_test",
-            b"alias_test",
-            "const_test",
-            b"const_test",
-            "default_factory_test",
-            b"default_factory_test",
-            "default_test",
-            b"default_test",
-            "desc_test",
-            b"desc_test",
-            "example_factory",
-            b"example_factory",
-            "example_test",
-            b"example_test",
-            "field_test",
-            b"field_test",
-            "in_test",
-            b"in_test",
-            "miss_default_test",
-            b"miss_default_test",
-            "multiple_of_test",
-            b"multiple_of_test",
-            "not_enable_test",
-            b"not_enable_test",
-            "not_in_test",
-            b"not_in_test",
-            "range_e_test",
-            b"range_e_test",
-            "range_test",
-            b"range_test",
-            "title_test",
-            b"title_test",
-            "type_test",
-            b"type_test",
-        ],
-    ) -> None: ...
-
+        ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["alias_test",b"alias_test","const_test",b"const_test","default_factory_test",b"default_factory_test","default_test",b"default_test","desc_test",b"desc_test","example_factory",b"example_factory","example_test",b"example_test","field_test",b"field_test","in_test",b"in_test","miss_default_test",b"miss_default_test","multiple_of_test",b"multiple_of_test","not_enable_test",b"not_enable_test","not_in_test",b"not_in_test","range_e_test",b"range_e_test","range_test",b"range_test","title_test",b"title_test","type_test",b"type_test"]) -> None: ...
 global___DoubleTest = DoubleTest
 
 class Int32Test(google.protobuf.message.Message):
@@ -270,8 +187,7 @@ class Int32Test(google.protobuf.message.Message):
     field_test: builtins.int
     type_test: builtins.int
     title_test: builtins.int
-    def __init__(
-        self,
+    def __init__(self,
         *,
         const_test: builtins.int = ...,
         range_e_test: builtins.int = ...,
@@ -290,47 +206,8 @@ class Int32Test(google.protobuf.message.Message):
         field_test: builtins.int = ...,
         type_test: builtins.int = ...,
         title_test: builtins.int = ...,
-    ) -> None: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "alias_test",
-            b"alias_test",
-            "const_test",
-            b"const_test",
-            "default_factory_test",
-            b"default_factory_test",
-            "default_test",
-            b"default_test",
-            "desc_test",
-            b"desc_test",
-            "example_factory",
-            b"example_factory",
-            "example_test",
-            b"example_test",
-            "field_test",
-            b"field_test",
-            "in_test",
-            b"in_test",
-            "miss_default_test",
-            b"miss_default_test",
-            "multiple_of_test",
-            b"multiple_of_test",
-            "not_enable_test",
-            b"not_enable_test",
-            "not_in_test",
-            b"not_in_test",
-            "range_e_test",
-            b"range_e_test",
-            "range_test",
-            b"range_test",
-            "title_test",
-            b"title_test",
-            "type_test",
-            b"type_test",
-        ],
-    ) -> None: ...
-
+        ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["alias_test",b"alias_test","const_test",b"const_test","default_factory_test",b"default_factory_test","default_test",b"default_test","desc_test",b"desc_test","example_factory",b"example_factory","example_test",b"example_test","field_test",b"field_test","in_test",b"in_test","miss_default_test",b"miss_default_test","multiple_of_test",b"multiple_of_test","not_enable_test",b"not_enable_test","not_in_test",b"not_in_test","range_e_test",b"range_e_test","range_test",b"range_test","title_test",b"title_test","type_test",b"type_test"]) -> None: ...
 global___Int32Test = Int32Test
 
 class Int64Test(google.protobuf.message.Message):
@@ -369,8 +246,7 @@ class Int64Test(google.protobuf.message.Message):
     field_test: builtins.int
     type_test: builtins.int
     title_test: builtins.int
-    def __init__(
-        self,
+    def __init__(self,
         *,
         const_test: builtins.int = ...,
         range_e_test: builtins.int = ...,
@@ -389,47 +265,8 @@ class Int64Test(google.protobuf.message.Message):
         field_test: builtins.int = ...,
         type_test: builtins.int = ...,
         title_test: builtins.int = ...,
-    ) -> None: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "alias_test",
-            b"alias_test",
-            "const_test",
-            b"const_test",
-            "default_factory_test",
-            b"default_factory_test",
-            "default_test",
-            b"default_test",
-            "desc_test",
-            b"desc_test",
-            "example_factory",
-            b"example_factory",
-            "example_test",
-            b"example_test",
-            "field_test",
-            b"field_test",
-            "in_test",
-            b"in_test",
-            "miss_default_test",
-            b"miss_default_test",
-            "multiple_of_test",
-            b"multiple_of_test",
-            "not_enable_test",
-            b"not_enable_test",
-            "not_in_test",
-            b"not_in_test",
-            "range_e_test",
-            b"range_e_test",
-            "range_test",
-            b"range_test",
-            "title_test",
-            b"title_test",
-            "type_test",
-            b"type_test",
-        ],
-    ) -> None: ...
-
+        ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["alias_test",b"alias_test","const_test",b"const_test","default_factory_test",b"default_factory_test","default_test",b"default_test","desc_test",b"desc_test","example_factory",b"example_factory","example_test",b"example_test","field_test",b"field_test","in_test",b"in_test","miss_default_test",b"miss_default_test","multiple_of_test",b"multiple_of_test","not_enable_test",b"not_enable_test","not_in_test",b"not_in_test","range_e_test",b"range_e_test","range_test",b"range_test","title_test",b"title_test","type_test",b"type_test"]) -> None: ...
 global___Int64Test = Int64Test
 
 class Uint32Test(google.protobuf.message.Message):
@@ -468,8 +305,7 @@ class Uint32Test(google.protobuf.message.Message):
     field_test: builtins.int
     type_test: builtins.int
     title_test: builtins.int
-    def __init__(
-        self,
+    def __init__(self,
         *,
         const_test: builtins.int = ...,
         range_e_test: builtins.int = ...,
@@ -488,47 +324,8 @@ class Uint32Test(google.protobuf.message.Message):
         field_test: builtins.int = ...,
         type_test: builtins.int = ...,
         title_test: builtins.int = ...,
-    ) -> None: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "alias_test",
-            b"alias_test",
-            "const_test",
-            b"const_test",
-            "default_factory_test",
-            b"default_factory_test",
-            "default_test",
-            b"default_test",
-            "desc_test",
-            b"desc_test",
-            "example_factory",
-            b"example_factory",
-            "example_test",
-            b"example_test",
-            "field_test",
-            b"field_test",
-            "in_test",
-            b"in_test",
-            "miss_default_test",
-            b"miss_default_test",
-            "multiple_of_test",
-            b"multiple_of_test",
-            "not_enable_test",
-            b"not_enable_test",
-            "not_in_test",
-            b"not_in_test",
-            "range_e_test",
-            b"range_e_test",
-            "range_test",
-            b"range_test",
-            "title_test",
-            b"title_test",
-            "type_test",
-            b"type_test",
-        ],
-    ) -> None: ...
-
+        ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["alias_test",b"alias_test","const_test",b"const_test","default_factory_test",b"default_factory_test","default_test",b"default_test","desc_test",b"desc_test","example_factory",b"example_factory","example_test",b"example_test","field_test",b"field_test","in_test",b"in_test","miss_default_test",b"miss_default_test","multiple_of_test",b"multiple_of_test","not_enable_test",b"not_enable_test","not_in_test",b"not_in_test","range_e_test",b"range_e_test","range_test",b"range_test","title_test",b"title_test","type_test",b"type_test"]) -> None: ...
 global___Uint32Test = Uint32Test
 
 class Sint32Test(google.protobuf.message.Message):
@@ -567,8 +364,7 @@ class Sint32Test(google.protobuf.message.Message):
     field_test: builtins.int
     type_test: builtins.int
     title_test: builtins.int
-    def __init__(
-        self,
+    def __init__(self,
         *,
         const_test: builtins.int = ...,
         range_e_test: builtins.int = ...,
@@ -587,47 +383,8 @@ class Sint32Test(google.protobuf.message.Message):
         field_test: builtins.int = ...,
         type_test: builtins.int = ...,
         title_test: builtins.int = ...,
-    ) -> None: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "alias_test",
-            b"alias_test",
-            "const_test",
-            b"const_test",
-            "default_factory_test",
-            b"default_factory_test",
-            "default_test",
-            b"default_test",
-            "desc_test",
-            b"desc_test",
-            "example_factory",
-            b"example_factory",
-            "example_test",
-            b"example_test",
-            "field_test",
-            b"field_test",
-            "in_test",
-            b"in_test",
-            "miss_default_test",
-            b"miss_default_test",
-            "multiple_of_test",
-            b"multiple_of_test",
-            "not_enable_test",
-            b"not_enable_test",
-            "not_in_test",
-            b"not_in_test",
-            "range_e_test",
-            b"range_e_test",
-            "range_test",
-            b"range_test",
-            "title_test",
-            b"title_test",
-            "type_test",
-            b"type_test",
-        ],
-    ) -> None: ...
-
+        ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["alias_test",b"alias_test","const_test",b"const_test","default_factory_test",b"default_factory_test","default_test",b"default_test","desc_test",b"desc_test","example_factory",b"example_factory","example_test",b"example_test","field_test",b"field_test","in_test",b"in_test","miss_default_test",b"miss_default_test","multiple_of_test",b"multiple_of_test","not_enable_test",b"not_enable_test","not_in_test",b"not_in_test","range_e_test",b"range_e_test","range_test",b"range_test","title_test",b"title_test","type_test",b"type_test"]) -> None: ...
 global___Sint32Test = Sint32Test
 
 class Uint64Test(google.protobuf.message.Message):
@@ -666,8 +423,7 @@ class Uint64Test(google.protobuf.message.Message):
     field_test: builtins.int
     type_test: builtins.int
     title_test: builtins.int
-    def __init__(
-        self,
+    def __init__(self,
         *,
         const_test: builtins.int = ...,
         range_e_test: builtins.int = ...,
@@ -686,47 +442,8 @@ class Uint64Test(google.protobuf.message.Message):
         field_test: builtins.int = ...,
         type_test: builtins.int = ...,
         title_test: builtins.int = ...,
-    ) -> None: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "alias_test",
-            b"alias_test",
-            "const_test",
-            b"const_test",
-            "default_factory_test",
-            b"default_factory_test",
-            "default_test",
-            b"default_test",
-            "desc_test",
-            b"desc_test",
-            "example_factory",
-            b"example_factory",
-            "example_test",
-            b"example_test",
-            "field_test",
-            b"field_test",
-            "in_test",
-            b"in_test",
-            "miss_default_test",
-            b"miss_default_test",
-            "multiple_of_test",
-            b"multiple_of_test",
-            "not_enable_test",
-            b"not_enable_test",
-            "not_in_test",
-            b"not_in_test",
-            "range_e_test",
-            b"range_e_test",
-            "range_test",
-            b"range_test",
-            "title_test",
-            b"title_test",
-            "type_test",
-            b"type_test",
-        ],
-    ) -> None: ...
-
+        ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["alias_test",b"alias_test","const_test",b"const_test","default_factory_test",b"default_factory_test","default_test",b"default_test","desc_test",b"desc_test","example_factory",b"example_factory","example_test",b"example_test","field_test",b"field_test","in_test",b"in_test","miss_default_test",b"miss_default_test","multiple_of_test",b"multiple_of_test","not_enable_test",b"not_enable_test","not_in_test",b"not_in_test","range_e_test",b"range_e_test","range_test",b"range_test","title_test",b"title_test","type_test",b"type_test"]) -> None: ...
 global___Uint64Test = Uint64Test
 
 class Sint64Test(google.protobuf.message.Message):
@@ -765,8 +482,7 @@ class Sint64Test(google.protobuf.message.Message):
     field_test: builtins.int
     type_test: builtins.int
     title_test: builtins.int
-    def __init__(
-        self,
+    def __init__(self,
         *,
         const_test: builtins.int = ...,
         range_e_test: builtins.int = ...,
@@ -785,47 +501,8 @@ class Sint64Test(google.protobuf.message.Message):
         field_test: builtins.int = ...,
         type_test: builtins.int = ...,
         title_test: builtins.int = ...,
-    ) -> None: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "alias_test",
-            b"alias_test",
-            "const_test",
-            b"const_test",
-            "default_factory_test",
-            b"default_factory_test",
-            "default_test",
-            b"default_test",
-            "desc_test",
-            b"desc_test",
-            "example_factory",
-            b"example_factory",
-            "example_test",
-            b"example_test",
-            "field_test",
-            b"field_test",
-            "in_test",
-            b"in_test",
-            "miss_default_test",
-            b"miss_default_test",
-            "multiple_of_test",
-            b"multiple_of_test",
-            "not_enable_test",
-            b"not_enable_test",
-            "not_in_test",
-            b"not_in_test",
-            "range_e_test",
-            b"range_e_test",
-            "range_test",
-            b"range_test",
-            "title_test",
-            b"title_test",
-            "type_test",
-            b"type_test",
-        ],
-    ) -> None: ...
-
+        ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["alias_test",b"alias_test","const_test",b"const_test","default_factory_test",b"default_factory_test","default_test",b"default_test","desc_test",b"desc_test","example_factory",b"example_factory","example_test",b"example_test","field_test",b"field_test","in_test",b"in_test","miss_default_test",b"miss_default_test","multiple_of_test",b"multiple_of_test","not_enable_test",b"not_enable_test","not_in_test",b"not_in_test","range_e_test",b"range_e_test","range_test",b"range_test","title_test",b"title_test","type_test",b"type_test"]) -> None: ...
 global___Sint64Test = Sint64Test
 
 class Fixed32Test(google.protobuf.message.Message):
@@ -864,8 +541,7 @@ class Fixed32Test(google.protobuf.message.Message):
     field_test: builtins.int
     type_test: builtins.int
     title_test: builtins.int
-    def __init__(
-        self,
+    def __init__(self,
         *,
         const_test: builtins.int = ...,
         range_e_test: builtins.int = ...,
@@ -884,47 +560,8 @@ class Fixed32Test(google.protobuf.message.Message):
         field_test: builtins.int = ...,
         type_test: builtins.int = ...,
         title_test: builtins.int = ...,
-    ) -> None: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "alias_test",
-            b"alias_test",
-            "const_test",
-            b"const_test",
-            "default_factory_test",
-            b"default_factory_test",
-            "default_test",
-            b"default_test",
-            "desc_test",
-            b"desc_test",
-            "example_factory",
-            b"example_factory",
-            "example_test",
-            b"example_test",
-            "field_test",
-            b"field_test",
-            "in_test",
-            b"in_test",
-            "miss_default_test",
-            b"miss_default_test",
-            "multiple_of_test",
-            b"multiple_of_test",
-            "not_enable_test",
-            b"not_enable_test",
-            "not_in_test",
-            b"not_in_test",
-            "range_e_test",
-            b"range_e_test",
-            "range_test",
-            b"range_test",
-            "title_test",
-            b"title_test",
-            "type_test",
-            b"type_test",
-        ],
-    ) -> None: ...
-
+        ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["alias_test",b"alias_test","const_test",b"const_test","default_factory_test",b"default_factory_test","default_test",b"default_test","desc_test",b"desc_test","example_factory",b"example_factory","example_test",b"example_test","field_test",b"field_test","in_test",b"in_test","miss_default_test",b"miss_default_test","multiple_of_test",b"multiple_of_test","not_enable_test",b"not_enable_test","not_in_test",b"not_in_test","range_e_test",b"range_e_test","range_test",b"range_test","title_test",b"title_test","type_test",b"type_test"]) -> None: ...
 global___Fixed32Test = Fixed32Test
 
 class Fixed64Test(google.protobuf.message.Message):
@@ -963,8 +600,7 @@ class Fixed64Test(google.protobuf.message.Message):
     field_test: builtins.int
     type_test: builtins.int
     title_test: builtins.int
-    def __init__(
-        self,
+    def __init__(self,
         *,
         const_test: builtins.int = ...,
         range_e_test: builtins.int = ...,
@@ -983,47 +619,8 @@ class Fixed64Test(google.protobuf.message.Message):
         field_test: builtins.int = ...,
         type_test: builtins.int = ...,
         title_test: builtins.int = ...,
-    ) -> None: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "alias_test",
-            b"alias_test",
-            "const_test",
-            b"const_test",
-            "default_factory_test",
-            b"default_factory_test",
-            "default_test",
-            b"default_test",
-            "desc_test",
-            b"desc_test",
-            "example_factory",
-            b"example_factory",
-            "example_test",
-            b"example_test",
-            "field_test",
-            b"field_test",
-            "in_test",
-            b"in_test",
-            "miss_default_test",
-            b"miss_default_test",
-            "multiple_of_test",
-            b"multiple_of_test",
-            "not_enable_test",
-            b"not_enable_test",
-            "not_in_test",
-            b"not_in_test",
-            "range_e_test",
-            b"range_e_test",
-            "range_test",
-            b"range_test",
-            "title_test",
-            b"title_test",
-            "type_test",
-            b"type_test",
-        ],
-    ) -> None: ...
-
+        ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["alias_test",b"alias_test","const_test",b"const_test","default_factory_test",b"default_factory_test","default_test",b"default_test","desc_test",b"desc_test","example_factory",b"example_factory","example_test",b"example_test","field_test",b"field_test","in_test",b"in_test","miss_default_test",b"miss_default_test","multiple_of_test",b"multiple_of_test","not_enable_test",b"not_enable_test","not_in_test",b"not_in_test","range_e_test",b"range_e_test","range_test",b"range_test","title_test",b"title_test","type_test",b"type_test"]) -> None: ...
 global___Fixed64Test = Fixed64Test
 
 class Sfixed32Test(google.protobuf.message.Message):
@@ -1062,8 +659,7 @@ class Sfixed32Test(google.protobuf.message.Message):
     field_test: builtins.int
     type_test: builtins.int
     title_test: builtins.int
-    def __init__(
-        self,
+    def __init__(self,
         *,
         const_test: builtins.int = ...,
         range_e_test: builtins.int = ...,
@@ -1082,47 +678,8 @@ class Sfixed32Test(google.protobuf.message.Message):
         field_test: builtins.int = ...,
         type_test: builtins.int = ...,
         title_test: builtins.int = ...,
-    ) -> None: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "alias_test",
-            b"alias_test",
-            "const_test",
-            b"const_test",
-            "default_factory_test",
-            b"default_factory_test",
-            "default_test",
-            b"default_test",
-            "desc_test",
-            b"desc_test",
-            "example_factory",
-            b"example_factory",
-            "example_test",
-            b"example_test",
-            "field_test",
-            b"field_test",
-            "in_test",
-            b"in_test",
-            "miss_default_test",
-            b"miss_default_test",
-            "multiple_of_test",
-            b"multiple_of_test",
-            "not_enable_test",
-            b"not_enable_test",
-            "not_in_test",
-            b"not_in_test",
-            "range_e_test",
-            b"range_e_test",
-            "range_test",
-            b"range_test",
-            "title_test",
-            b"title_test",
-            "type_test",
-            b"type_test",
-        ],
-    ) -> None: ...
-
+        ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["alias_test",b"alias_test","const_test",b"const_test","default_factory_test",b"default_factory_test","default_test",b"default_test","desc_test",b"desc_test","example_factory",b"example_factory","example_test",b"example_test","field_test",b"field_test","in_test",b"in_test","miss_default_test",b"miss_default_test","multiple_of_test",b"multiple_of_test","not_enable_test",b"not_enable_test","not_in_test",b"not_in_test","range_e_test",b"range_e_test","range_test",b"range_test","title_test",b"title_test","type_test",b"type_test"]) -> None: ...
 global___Sfixed32Test = Sfixed32Test
 
 class Sfixed64Test(google.protobuf.message.Message):
@@ -1161,8 +718,7 @@ class Sfixed64Test(google.protobuf.message.Message):
     field_test: builtins.int
     type_test: builtins.int
     title_test: builtins.int
-    def __init__(
-        self,
+    def __init__(self,
         *,
         const_test: builtins.int = ...,
         range_e_test: builtins.int = ...,
@@ -1181,47 +737,8 @@ class Sfixed64Test(google.protobuf.message.Message):
         field_test: builtins.int = ...,
         type_test: builtins.int = ...,
         title_test: builtins.int = ...,
-    ) -> None: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "alias_test",
-            b"alias_test",
-            "const_test",
-            b"const_test",
-            "default_factory_test",
-            b"default_factory_test",
-            "default_test",
-            b"default_test",
-            "desc_test",
-            b"desc_test",
-            "example_factory",
-            b"example_factory",
-            "example_test",
-            b"example_test",
-            "field_test",
-            b"field_test",
-            "in_test",
-            b"in_test",
-            "miss_default_test",
-            b"miss_default_test",
-            "multiple_of_test",
-            b"multiple_of_test",
-            "not_enable_test",
-            b"not_enable_test",
-            "not_in_test",
-            b"not_in_test",
-            "range_e_test",
-            b"range_e_test",
-            "range_test",
-            b"range_test",
-            "title_test",
-            b"title_test",
-            "type_test",
-            b"type_test",
-        ],
-    ) -> None: ...
-
+        ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["alias_test",b"alias_test","const_test",b"const_test","default_factory_test",b"default_factory_test","default_test",b"default_test","desc_test",b"desc_test","example_factory",b"example_factory","example_test",b"example_test","field_test",b"field_test","in_test",b"in_test","miss_default_test",b"miss_default_test","multiple_of_test",b"multiple_of_test","not_enable_test",b"not_enable_test","not_in_test",b"not_in_test","range_e_test",b"range_e_test","range_test",b"range_test","title_test",b"title_test","type_test",b"type_test"]) -> None: ...
 global___Sfixed64Test = Sfixed64Test
 
 class BoolTest(google.protobuf.message.Message):
@@ -1246,8 +763,7 @@ class BoolTest(google.protobuf.message.Message):
     example_test: builtins.bool
     field_test: builtins.bool
     title_test: builtins.bool
-    def __init__(
-        self,
+    def __init__(self,
         *,
         bool_1_test: builtins.bool = ...,
         bool_2_test: builtins.bool = ...,
@@ -1259,33 +775,8 @@ class BoolTest(google.protobuf.message.Message):
         example_test: builtins.bool = ...,
         field_test: builtins.bool = ...,
         title_test: builtins.bool = ...,
-    ) -> None: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "alias_test",
-            b"alias_test",
-            "bool_1_test",
-            b"bool_1_test",
-            "bool_2_test",
-            b"bool_2_test",
-            "default_test",
-            b"default_test",
-            "desc_test",
-            b"desc_test",
-            "enable_test",
-            b"enable_test",
-            "example_test",
-            b"example_test",
-            "field_test",
-            b"field_test",
-            "miss_default_test",
-            b"miss_default_test",
-            "title_test",
-            b"title_test",
-        ],
-    ) -> None: ...
-
+        ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["alias_test",b"alias_test","bool_1_test",b"bool_1_test","bool_2_test",b"bool_2_test","default_test",b"default_test","desc_test",b"desc_test","enable_test",b"enable_test","example_test",b"example_test","field_test",b"field_test","miss_default_test",b"miss_default_test","title_test",b"title_test"]) -> None: ...
 global___BoolTest = BoolTest
 
 class StringTest(google.protobuf.message.Message):
@@ -1352,8 +843,7 @@ class StringTest(google.protobuf.message.Message):
     field_test: typing.Text
     title_test: typing.Text
     type_test: typing.Text
-    def __init__(
-        self,
+    def __init__(self,
         *,
         const_test: typing.Text = ...,
         len_test: typing.Text = ...,
@@ -1386,75 +876,8 @@ class StringTest(google.protobuf.message.Message):
         field_test: typing.Text = ...,
         title_test: typing.Text = ...,
         type_test: typing.Text = ...,
-    ) -> None: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "address_test",
-            b"address_test",
-            "alias_test",
-            b"alias_test",
-            "const_test",
-            b"const_test",
-            "contains_test",
-            b"contains_test",
-            "default_factory_test",
-            b"default_factory_test",
-            "default_test",
-            b"default_test",
-            "desc_test",
-            b"desc_test",
-            "email_test",
-            b"email_test",
-            "enable_test",
-            b"enable_test",
-            "example_factory_test",
-            b"example_factory_test",
-            "example_test",
-            b"example_test",
-            "field_test",
-            b"field_test",
-            "hostname_test",
-            b"hostname_test",
-            "in_test",
-            b"in_test",
-            "ip_test",
-            b"ip_test",
-            "ipv4_test",
-            b"ipv4_test",
-            "ipv6_test",
-            b"ipv6_test",
-            "len_test",
-            b"len_test",
-            "miss_default_test",
-            b"miss_default_test",
-            "not_contains_test",
-            b"not_contains_test",
-            "not_in_test",
-            b"not_in_test",
-            "pattern_test",
-            b"pattern_test",
-            "prefix_test",
-            b"prefix_test",
-            "pydantic_type_test",
-            b"pydantic_type_test",
-            "s_range_len_test",
-            b"s_range_len_test",
-            "suffix_test",
-            b"suffix_test",
-            "title_test",
-            b"title_test",
-            "type_test",
-            b"type_test",
-            "uri_ref_test",
-            b"uri_ref_test",
-            "uri_test",
-            b"uri_test",
-            "uuid_test",
-            b"uuid_test",
-        ],
-    ) -> None: ...
-
+        ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["address_test",b"address_test","alias_test",b"alias_test","const_test",b"const_test","contains_test",b"contains_test","default_factory_test",b"default_factory_test","default_test",b"default_test","desc_test",b"desc_test","email_test",b"email_test","enable_test",b"enable_test","example_factory_test",b"example_factory_test","example_test",b"example_test","field_test",b"field_test","hostname_test",b"hostname_test","in_test",b"in_test","ip_test",b"ip_test","ipv4_test",b"ipv4_test","ipv6_test",b"ipv6_test","len_test",b"len_test","miss_default_test",b"miss_default_test","not_contains_test",b"not_contains_test","not_in_test",b"not_in_test","pattern_test",b"pattern_test","prefix_test",b"prefix_test","pydantic_type_test",b"pydantic_type_test","s_range_len_test",b"s_range_len_test","suffix_test",b"suffix_test","title_test",b"title_test","type_test",b"type_test","uri_ref_test",b"uri_ref_test","uri_test",b"uri_test","uuid_test",b"uuid_test"]) -> None: ...
 global___StringTest = StringTest
 
 class BytesTest(google.protobuf.message.Message):
@@ -1495,8 +918,7 @@ class BytesTest(google.protobuf.message.Message):
     field_test: builtins.bytes
     title_test: builtins.bytes
     type_test: builtins.bytes
-    def __init__(
-        self,
+    def __init__(self,
         *,
         const_test: builtins.bytes = ...,
         range_len_test: builtins.bytes = ...,
@@ -1516,49 +938,8 @@ class BytesTest(google.protobuf.message.Message):
         field_test: builtins.bytes = ...,
         title_test: builtins.bytes = ...,
         type_test: builtins.bytes = ...,
-    ) -> None: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "alias_test",
-            b"alias_test",
-            "const_test",
-            b"const_test",
-            "contains_test",
-            b"contains_test",
-            "default_factory_test",
-            b"default_factory_test",
-            "default_test",
-            b"default_test",
-            "desc_test",
-            b"desc_test",
-            "enable_test",
-            b"enable_test",
-            "example_factory_test",
-            b"example_factory_test",
-            "example_test",
-            b"example_test",
-            "field_test",
-            b"field_test",
-            "in_test",
-            b"in_test",
-            "miss_default_test",
-            b"miss_default_test",
-            "not_in_test",
-            b"not_in_test",
-            "prefix_test",
-            b"prefix_test",
-            "range_len_test",
-            b"range_len_test",
-            "suffix_test",
-            b"suffix_test",
-            "title_test",
-            b"title_test",
-            "type_test",
-            b"type_test",
-        ],
-    ) -> None: ...
-
+        ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["alias_test",b"alias_test","const_test",b"const_test","contains_test",b"contains_test","default_factory_test",b"default_factory_test","default_test",b"default_test","desc_test",b"desc_test","enable_test",b"enable_test","example_factory_test",b"example_factory_test","example_test",b"example_test","field_test",b"field_test","in_test",b"in_test","miss_default_test",b"miss_default_test","not_in_test",b"not_in_test","prefix_test",b"prefix_test","range_len_test",b"range_len_test","suffix_test",b"suffix_test","title_test",b"title_test","type_test",b"type_test"]) -> None: ...
 global___BytesTest = BytesTest
 
 class EnumTest(google.protobuf.message.Message):
@@ -1585,8 +966,7 @@ class EnumTest(google.protobuf.message.Message):
     example_test: global___State.ValueType
     field_test: global___State.ValueType
     title_test: global___State.ValueType
-    def __init__(
-        self,
+    def __init__(self,
         *,
         const_test: global___State.ValueType = ...,
         in_test: global___State.ValueType = ...,
@@ -1599,35 +979,8 @@ class EnumTest(google.protobuf.message.Message):
         example_test: global___State.ValueType = ...,
         field_test: global___State.ValueType = ...,
         title_test: global___State.ValueType = ...,
-    ) -> None: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "alias_test",
-            b"alias_test",
-            "const_test",
-            b"const_test",
-            "default_test",
-            b"default_test",
-            "desc_test",
-            b"desc_test",
-            "enable_test",
-            b"enable_test",
-            "example_test",
-            b"example_test",
-            "field_test",
-            b"field_test",
-            "in_test",
-            b"in_test",
-            "miss_default_test",
-            b"miss_default_test",
-            "not_in_test",
-            b"not_in_test",
-            "title_test",
-            b"title_test",
-        ],
-    ) -> None: ...
-
+        ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["alias_test",b"alias_test","const_test",b"const_test","default_test",b"default_test","desc_test",b"desc_test","enable_test",b"enable_test","example_test",b"example_test","field_test",b"field_test","in_test",b"in_test","miss_default_test",b"miss_default_test","not_in_test",b"not_in_test","title_test",b"title_test"]) -> None: ...
 global___EnumTest = EnumTest
 
 class MapTest(google.protobuf.message.Message):
@@ -1638,39 +991,39 @@ class MapTest(google.protobuf.message.Message):
         VALUE_FIELD_NUMBER: builtins.int
         key: typing.Text
         value: builtins.int
-        def __init__(
-            self,
+        def __init__(self,
             *,
             key: typing.Text = ...,
             value: builtins.int = ...,
-        ) -> None: ...
-        def ClearField(self, field_name: typing_extensions.Literal["key", b"key", "value", b"value"]) -> None: ...
+            ) -> None: ...
+        def ClearField(self, field_name: typing_extensions.Literal["key",b"key","value",b"value"]) -> None: ...
+
     class KeysTestEntry(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
         KEY_FIELD_NUMBER: builtins.int
         VALUE_FIELD_NUMBER: builtins.int
         key: typing.Text
         value: builtins.int
-        def __init__(
-            self,
+        def __init__(self,
             *,
             key: typing.Text = ...,
             value: builtins.int = ...,
-        ) -> None: ...
-        def ClearField(self, field_name: typing_extensions.Literal["key", b"key", "value", b"value"]) -> None: ...
+            ) -> None: ...
+        def ClearField(self, field_name: typing_extensions.Literal["key",b"key","value",b"value"]) -> None: ...
+
     class ValuesTestEntry(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
         KEY_FIELD_NUMBER: builtins.int
         VALUE_FIELD_NUMBER: builtins.int
         key: typing.Text
         value: builtins.int
-        def __init__(
-            self,
+        def __init__(self,
             *,
             key: typing.Text = ...,
             value: builtins.int = ...,
-        ) -> None: ...
-        def ClearField(self, field_name: typing_extensions.Literal["key", b"key", "value", b"value"]) -> None: ...
+            ) -> None: ...
+        def ClearField(self, field_name: typing_extensions.Literal["key",b"key","value",b"value"]) -> None: ...
+
     class KeysValuesTestEntry(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
         KEY_FIELD_NUMBER: builtins.int
@@ -1678,131 +1031,131 @@ class MapTest(google.protobuf.message.Message):
         key: typing.Text
         @property
         def value(self) -> google.protobuf.timestamp_pb2.Timestamp: ...
-        def __init__(
-            self,
+        def __init__(self,
             *,
             key: typing.Text = ...,
             value: typing.Optional[google.protobuf.timestamp_pb2.Timestamp] = ...,
-        ) -> None: ...
-        def HasField(self, field_name: typing_extensions.Literal["value", b"value"]) -> builtins.bool: ...
-        def ClearField(self, field_name: typing_extensions.Literal["key", b"key", "value", b"value"]) -> None: ...
+            ) -> None: ...
+        def HasField(self, field_name: typing_extensions.Literal["value",b"value"]) -> builtins.bool: ...
+        def ClearField(self, field_name: typing_extensions.Literal["key",b"key","value",b"value"]) -> None: ...
+
     class EnableTestEntry(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
         KEY_FIELD_NUMBER: builtins.int
         VALUE_FIELD_NUMBER: builtins.int
         key: typing.Text
         value: builtins.int
-        def __init__(
-            self,
+        def __init__(self,
             *,
             key: typing.Text = ...,
             value: builtins.int = ...,
-        ) -> None: ...
-        def ClearField(self, field_name: typing_extensions.Literal["key", b"key", "value", b"value"]) -> None: ...
+            ) -> None: ...
+        def ClearField(self, field_name: typing_extensions.Literal["key",b"key","value",b"value"]) -> None: ...
+
     class DefaultFactoryTestEntry(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
         KEY_FIELD_NUMBER: builtins.int
         VALUE_FIELD_NUMBER: builtins.int
         key: typing.Text
         value: builtins.int
-        def __init__(
-            self,
+        def __init__(self,
             *,
             key: typing.Text = ...,
             value: builtins.int = ...,
-        ) -> None: ...
-        def ClearField(self, field_name: typing_extensions.Literal["key", b"key", "value", b"value"]) -> None: ...
+            ) -> None: ...
+        def ClearField(self, field_name: typing_extensions.Literal["key",b"key","value",b"value"]) -> None: ...
+
     class MissDefaultTestEntry(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
         KEY_FIELD_NUMBER: builtins.int
         VALUE_FIELD_NUMBER: builtins.int
         key: typing.Text
         value: builtins.int
-        def __init__(
-            self,
+        def __init__(self,
             *,
             key: typing.Text = ...,
             value: builtins.int = ...,
-        ) -> None: ...
-        def ClearField(self, field_name: typing_extensions.Literal["key", b"key", "value", b"value"]) -> None: ...
+            ) -> None: ...
+        def ClearField(self, field_name: typing_extensions.Literal["key",b"key","value",b"value"]) -> None: ...
+
     class AliasTestEntry(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
         KEY_FIELD_NUMBER: builtins.int
         VALUE_FIELD_NUMBER: builtins.int
         key: typing.Text
         value: builtins.int
-        def __init__(
-            self,
+        def __init__(self,
             *,
             key: typing.Text = ...,
             value: builtins.int = ...,
-        ) -> None: ...
-        def ClearField(self, field_name: typing_extensions.Literal["key", b"key", "value", b"value"]) -> None: ...
+            ) -> None: ...
+        def ClearField(self, field_name: typing_extensions.Literal["key",b"key","value",b"value"]) -> None: ...
+
     class DescTestEntry(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
         KEY_FIELD_NUMBER: builtins.int
         VALUE_FIELD_NUMBER: builtins.int
         key: typing.Text
         value: builtins.int
-        def __init__(
-            self,
+        def __init__(self,
             *,
             key: typing.Text = ...,
             value: builtins.int = ...,
-        ) -> None: ...
-        def ClearField(self, field_name: typing_extensions.Literal["key", b"key", "value", b"value"]) -> None: ...
+            ) -> None: ...
+        def ClearField(self, field_name: typing_extensions.Literal["key",b"key","value",b"value"]) -> None: ...
+
     class ExampleFactoryTestEntry(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
         KEY_FIELD_NUMBER: builtins.int
         VALUE_FIELD_NUMBER: builtins.int
         key: typing.Text
         value: builtins.int
-        def __init__(
-            self,
+        def __init__(self,
             *,
             key: typing.Text = ...,
             value: builtins.int = ...,
-        ) -> None: ...
-        def ClearField(self, field_name: typing_extensions.Literal["key", b"key", "value", b"value"]) -> None: ...
+            ) -> None: ...
+        def ClearField(self, field_name: typing_extensions.Literal["key",b"key","value",b"value"]) -> None: ...
+
     class FieldTestEntry(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
         KEY_FIELD_NUMBER: builtins.int
         VALUE_FIELD_NUMBER: builtins.int
         key: typing.Text
         value: builtins.int
-        def __init__(
-            self,
+        def __init__(self,
             *,
             key: typing.Text = ...,
             value: builtins.int = ...,
-        ) -> None: ...
-        def ClearField(self, field_name: typing_extensions.Literal["key", b"key", "value", b"value"]) -> None: ...
+            ) -> None: ...
+        def ClearField(self, field_name: typing_extensions.Literal["key",b"key","value",b"value"]) -> None: ...
+
     class TitleTestEntry(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
         KEY_FIELD_NUMBER: builtins.int
         VALUE_FIELD_NUMBER: builtins.int
         key: typing.Text
         value: builtins.int
-        def __init__(
-            self,
+        def __init__(self,
             *,
             key: typing.Text = ...,
             value: builtins.int = ...,
-        ) -> None: ...
-        def ClearField(self, field_name: typing_extensions.Literal["key", b"key", "value", b"value"]) -> None: ...
+            ) -> None: ...
+        def ClearField(self, field_name: typing_extensions.Literal["key",b"key","value",b"value"]) -> None: ...
+
     class TypeTestEntry(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
         KEY_FIELD_NUMBER: builtins.int
         VALUE_FIELD_NUMBER: builtins.int
         key: typing.Text
         value: builtins.int
-        def __init__(
-            self,
+        def __init__(self,
             *,
             key: typing.Text = ...,
             value: builtins.int = ...,
-        ) -> None: ...
-        def ClearField(self, field_name: typing_extensions.Literal["key", b"key", "value", b"value"]) -> None: ...
+            ) -> None: ...
+        def ClearField(self, field_name: typing_extensions.Literal["key",b"key","value",b"value"]) -> None: ...
+
     PAIR_TEST_FIELD_NUMBER: builtins.int
     KEYS_TEST_FIELD_NUMBER: builtins.int
     VALUES_TEST_FIELD_NUMBER: builtins.int
@@ -1823,9 +1176,7 @@ class MapTest(google.protobuf.message.Message):
     @property
     def values_test(self) -> google.protobuf.internal.containers.ScalarMap[typing.Text, builtins.int]: ...
     @property
-    def keys_values_test(
-        self,
-    ) -> google.protobuf.internal.containers.MessageMap[typing.Text, google.protobuf.timestamp_pb2.Timestamp]: ...
+    def keys_values_test(self) -> google.protobuf.internal.containers.MessageMap[typing.Text, google.protobuf.timestamp_pb2.Timestamp]: ...
     @property
     def enable_test(self) -> google.protobuf.internal.containers.ScalarMap[typing.Text, builtins.int]: ...
     @property
@@ -1844,8 +1195,7 @@ class MapTest(google.protobuf.message.Message):
     def title_test(self) -> google.protobuf.internal.containers.ScalarMap[typing.Text, builtins.int]: ...
     @property
     def type_test(self) -> google.protobuf.internal.containers.ScalarMap[typing.Text, builtins.int]: ...
-    def __init__(
-        self,
+    def __init__(self,
         *,
         pair_test: typing.Optional[typing.Mapping[typing.Text, builtins.int]] = ...,
         keys_test: typing.Optional[typing.Mapping[typing.Text, builtins.int]] = ...,
@@ -1860,39 +1210,8 @@ class MapTest(google.protobuf.message.Message):
         field_test: typing.Optional[typing.Mapping[typing.Text, builtins.int]] = ...,
         title_test: typing.Optional[typing.Mapping[typing.Text, builtins.int]] = ...,
         type_test: typing.Optional[typing.Mapping[typing.Text, builtins.int]] = ...,
-    ) -> None: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "alias_test",
-            b"alias_test",
-            "default_factory_test",
-            b"default_factory_test",
-            "desc_test",
-            b"desc_test",
-            "enable_test",
-            b"enable_test",
-            "example_factory_test",
-            b"example_factory_test",
-            "field_test",
-            b"field_test",
-            "keys_test",
-            b"keys_test",
-            "keys_values_test",
-            b"keys_values_test",
-            "miss_default_test",
-            b"miss_default_test",
-            "pair_test",
-            b"pair_test",
-            "title_test",
-            b"title_test",
-            "type_test",
-            b"type_test",
-            "values_test",
-            b"values_test",
-        ],
-    ) -> None: ...
-
+        ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["alias_test",b"alias_test","default_factory_test",b"default_factory_test","desc_test",b"desc_test","enable_test",b"enable_test","example_factory_test",b"example_factory_test","field_test",b"field_test","keys_test",b"keys_test","keys_values_test",b"keys_values_test","miss_default_test",b"miss_default_test","pair_test",b"pair_test","title_test",b"title_test","type_test",b"type_test","values_test",b"values_test"]) -> None: ...
 global___MapTest = MapTest
 
 class MessageTest(google.protobuf.message.Message):
@@ -1901,16 +1220,12 @@ class MessageTest(google.protobuf.message.Message):
     REQUIRED_TEST_FIELD_NUMBER: builtins.int
     skip_test: typing.Text
     required_test: typing.Text
-    def __init__(
-        self,
+    def __init__(self,
         *,
         skip_test: typing.Text = ...,
         required_test: typing.Text = ...,
-    ) -> None: ...
-    def ClearField(
-        self, field_name: typing_extensions.Literal["required_test", b"required_test", "skip_test", b"skip_test"]
-    ) -> None: ...
-
+        ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["required_test",b"required_test","skip_test",b"skip_test"]) -> None: ...
 global___MessageTest = MessageTest
 
 class RepeatedTest(google.protobuf.message.Message):
@@ -1943,15 +1258,9 @@ class RepeatedTest(google.protobuf.message.Message):
     @property
     def items_int32_test(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[builtins.int]: ...
     @property
-    def items_timestamp_test(
-        self,
-    ) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[
-        google.protobuf.timestamp_pb2.Timestamp
-    ]: ...
+    def items_timestamp_test(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[google.protobuf.timestamp_pb2.Timestamp]: ...
     @property
-    def items_duration_test(
-        self,
-    ) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[google.protobuf.duration_pb2.Duration]: ...
+    def items_duration_test(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[google.protobuf.duration_pb2.Duration]: ...
     @property
     def items_bytes_test(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[builtins.bytes]: ...
     @property
@@ -1972,8 +1281,7 @@ class RepeatedTest(google.protobuf.message.Message):
     def title_test(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[typing.Text]: ...
     @property
     def type_test(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[typing.Text]: ...
-    def __init__(
-        self,
+    def __init__(self,
         *,
         range_test: typing.Optional[typing.Iterable[typing.Text]] = ...,
         unique_test: typing.Optional[typing.Iterable[typing.Text]] = ...,
@@ -1992,47 +1300,8 @@ class RepeatedTest(google.protobuf.message.Message):
         field_test: typing.Optional[typing.Iterable[typing.Text]] = ...,
         title_test: typing.Optional[typing.Iterable[typing.Text]] = ...,
         type_test: typing.Optional[typing.Iterable[typing.Text]] = ...,
-    ) -> None: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "alias_test",
-            b"alias_test",
-            "default_factory_test",
-            b"default_factory_test",
-            "desc_test",
-            b"desc_test",
-            "enable_test",
-            b"enable_test",
-            "example_factory_test",
-            b"example_factory_test",
-            "field_test",
-            b"field_test",
-            "items_bytes_test",
-            b"items_bytes_test",
-            "items_double_test",
-            b"items_double_test",
-            "items_duration_test",
-            b"items_duration_test",
-            "items_int32_test",
-            b"items_int32_test",
-            "items_string_test",
-            b"items_string_test",
-            "items_timestamp_test",
-            b"items_timestamp_test",
-            "miss_default_test",
-            b"miss_default_test",
-            "range_test",
-            b"range_test",
-            "title_test",
-            b"title_test",
-            "type_test",
-            b"type_test",
-            "unique_test",
-            b"unique_test",
-        ],
-    ) -> None: ...
-
+        ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["alias_test",b"alias_test","default_factory_test",b"default_factory_test","desc_test",b"desc_test","enable_test",b"enable_test","example_factory_test",b"example_factory_test","field_test",b"field_test","items_bytes_test",b"items_bytes_test","items_double_test",b"items_double_test","items_duration_test",b"items_duration_test","items_int32_test",b"items_int32_test","items_string_test",b"items_string_test","items_timestamp_test",b"items_timestamp_test","miss_default_test",b"miss_default_test","range_test",b"range_test","title_test",b"title_test","type_test",b"type_test","unique_test",b"unique_test"]) -> None: ...
 global___RepeatedTest = RepeatedTest
 
 class AnyTest(google.protobuf.message.Message):
@@ -2076,8 +1345,7 @@ class AnyTest(google.protobuf.message.Message):
     def field_test(self) -> google.protobuf.any_pb2.Any: ...
     @property
     def title_test(self) -> google.protobuf.any_pb2.Any: ...
-    def __init__(
-        self,
+    def __init__(self,
         *,
         required_test: typing.Optional[google.protobuf.any_pb2.Any] = ...,
         not_in_test: typing.Optional[google.protobuf.any_pb2.Any] = ...,
@@ -2092,70 +1360,9 @@ class AnyTest(google.protobuf.message.Message):
         example_factory_test: typing.Optional[google.protobuf.any_pb2.Any] = ...,
         field_test: typing.Optional[google.protobuf.any_pb2.Any] = ...,
         title_test: typing.Optional[google.protobuf.any_pb2.Any] = ...,
-    ) -> None: ...
-    def HasField(
-        self,
-        field_name: typing_extensions.Literal[
-            "alias_test",
-            b"alias_test",
-            "default_factory_test",
-            b"default_factory_test",
-            "default_test",
-            b"default_test",
-            "desc_test",
-            b"desc_test",
-            "enable_test",
-            b"enable_test",
-            "example_factory_test",
-            b"example_factory_test",
-            "example_test",
-            b"example_test",
-            "field_test",
-            b"field_test",
-            "in_test",
-            b"in_test",
-            "miss_default_test",
-            b"miss_default_test",
-            "not_in_test",
-            b"not_in_test",
-            "required_test",
-            b"required_test",
-            "title_test",
-            b"title_test",
-        ],
-    ) -> builtins.bool: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "alias_test",
-            b"alias_test",
-            "default_factory_test",
-            b"default_factory_test",
-            "default_test",
-            b"default_test",
-            "desc_test",
-            b"desc_test",
-            "enable_test",
-            b"enable_test",
-            "example_factory_test",
-            b"example_factory_test",
-            "example_test",
-            b"example_test",
-            "field_test",
-            b"field_test",
-            "in_test",
-            b"in_test",
-            "miss_default_test",
-            b"miss_default_test",
-            "not_in_test",
-            b"not_in_test",
-            "required_test",
-            b"required_test",
-            "title_test",
-            b"title_test",
-        ],
-    ) -> None: ...
-
+        ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["alias_test",b"alias_test","default_factory_test",b"default_factory_test","default_test",b"default_test","desc_test",b"desc_test","enable_test",b"enable_test","example_factory_test",b"example_factory_test","example_test",b"example_test","field_test",b"field_test","in_test",b"in_test","miss_default_test",b"miss_default_test","not_in_test",b"not_in_test","required_test",b"required_test","title_test",b"title_test"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["alias_test",b"alias_test","default_factory_test",b"default_factory_test","default_test",b"default_test","desc_test",b"desc_test","enable_test",b"enable_test","example_factory_test",b"example_factory_test","example_test",b"example_test","field_test",b"field_test","in_test",b"in_test","miss_default_test",b"miss_default_test","not_in_test",b"not_in_test","required_test",b"required_test","title_test",b"title_test"]) -> None: ...
 global___AnyTest = AnyTest
 
 class DurationTest(google.protobuf.message.Message):
@@ -2208,8 +1415,7 @@ class DurationTest(google.protobuf.message.Message):
     def title_test(self) -> google.protobuf.duration_pb2.Duration: ...
     @property
     def type_test(self) -> google.protobuf.duration_pb2.Duration: ...
-    def __init__(
-        self,
+    def __init__(self,
         *,
         const_test: typing.Optional[google.protobuf.duration_pb2.Duration] = ...,
         range_test: typing.Optional[google.protobuf.duration_pb2.Duration] = ...,
@@ -2227,82 +1433,9 @@ class DurationTest(google.protobuf.message.Message):
         field_test: typing.Optional[google.protobuf.duration_pb2.Duration] = ...,
         title_test: typing.Optional[google.protobuf.duration_pb2.Duration] = ...,
         type_test: typing.Optional[google.protobuf.duration_pb2.Duration] = ...,
-    ) -> None: ...
-    def HasField(
-        self,
-        field_name: typing_extensions.Literal[
-            "alias_test",
-            b"alias_test",
-            "const_test",
-            b"const_test",
-            "default_factory_test",
-            b"default_factory_test",
-            "default_test",
-            b"default_test",
-            "desc_test",
-            b"desc_test",
-            "enable_test",
-            b"enable_test",
-            "example_factory_test",
-            b"example_factory_test",
-            "example_test",
-            b"example_test",
-            "field_test",
-            b"field_test",
-            "in_test",
-            b"in_test",
-            "miss_default_test",
-            b"miss_default_test",
-            "not_in_test",
-            b"not_in_test",
-            "range_e_test",
-            b"range_e_test",
-            "range_test",
-            b"range_test",
-            "title_test",
-            b"title_test",
-            "type_test",
-            b"type_test",
-        ],
-    ) -> builtins.bool: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "alias_test",
-            b"alias_test",
-            "const_test",
-            b"const_test",
-            "default_factory_test",
-            b"default_factory_test",
-            "default_test",
-            b"default_test",
-            "desc_test",
-            b"desc_test",
-            "enable_test",
-            b"enable_test",
-            "example_factory_test",
-            b"example_factory_test",
-            "example_test",
-            b"example_test",
-            "field_test",
-            b"field_test",
-            "in_test",
-            b"in_test",
-            "miss_default_test",
-            b"miss_default_test",
-            "not_in_test",
-            b"not_in_test",
-            "range_e_test",
-            b"range_e_test",
-            "range_test",
-            b"range_test",
-            "title_test",
-            b"title_test",
-            "type_test",
-            b"type_test",
-        ],
-    ) -> None: ...
-
+        ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["alias_test",b"alias_test","const_test",b"const_test","default_factory_test",b"default_factory_test","default_test",b"default_test","desc_test",b"desc_test","enable_test",b"enable_test","example_factory_test",b"example_factory_test","example_test",b"example_test","field_test",b"field_test","in_test",b"in_test","miss_default_test",b"miss_default_test","not_in_test",b"not_in_test","range_e_test",b"range_e_test","range_test",b"range_test","title_test",b"title_test","type_test",b"type_test"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["alias_test",b"alias_test","const_test",b"const_test","default_factory_test",b"default_factory_test","default_test",b"default_test","desc_test",b"desc_test","enable_test",b"enable_test","example_factory_test",b"example_factory_test","example_test",b"example_test","field_test",b"field_test","in_test",b"in_test","miss_default_test",b"miss_default_test","not_in_test",b"not_in_test","range_e_test",b"range_e_test","range_test",b"range_test","title_test",b"title_test","type_test",b"type_test"]) -> None: ...
 global___DurationTest = DurationTest
 
 class TimestampTest(google.protobuf.message.Message):
@@ -2361,8 +1494,7 @@ class TimestampTest(google.protobuf.message.Message):
     def title_test(self) -> google.protobuf.timestamp_pb2.Timestamp: ...
     @property
     def type_test(self) -> google.protobuf.timestamp_pb2.Timestamp: ...
-    def __init__(
-        self,
+    def __init__(self,
         *,
         const_test: typing.Optional[google.protobuf.timestamp_pb2.Timestamp] = ...,
         range_test: typing.Optional[google.protobuf.timestamp_pb2.Timestamp] = ...,
@@ -2382,90 +1514,9 @@ class TimestampTest(google.protobuf.message.Message):
         field_test: typing.Optional[google.protobuf.timestamp_pb2.Timestamp] = ...,
         title_test: typing.Optional[google.protobuf.timestamp_pb2.Timestamp] = ...,
         type_test: typing.Optional[google.protobuf.timestamp_pb2.Timestamp] = ...,
-    ) -> None: ...
-    def HasField(
-        self,
-        field_name: typing_extensions.Literal[
-            "alias_test",
-            b"alias_test",
-            "const_test",
-            b"const_test",
-            "default_factory_test",
-            b"default_factory_test",
-            "default_test",
-            b"default_test",
-            "desc_test",
-            b"desc_test",
-            "enable_test",
-            b"enable_test",
-            "example_factory_test",
-            b"example_factory_test",
-            "example_test",
-            b"example_test",
-            "field_test",
-            b"field_test",
-            "gt_now_test",
-            b"gt_now_test",
-            "lt_now_test",
-            b"lt_now_test",
-            "miss_default_test",
-            b"miss_default_test",
-            "range_e_test",
-            b"range_e_test",
-            "range_test",
-            b"range_test",
-            "title_test",
-            b"title_test",
-            "type_test",
-            b"type_test",
-            "within_and_gt_now_test",
-            b"within_and_gt_now_test",
-            "within_test",
-            b"within_test",
-        ],
-    ) -> builtins.bool: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "alias_test",
-            b"alias_test",
-            "const_test",
-            b"const_test",
-            "default_factory_test",
-            b"default_factory_test",
-            "default_test",
-            b"default_test",
-            "desc_test",
-            b"desc_test",
-            "enable_test",
-            b"enable_test",
-            "example_factory_test",
-            b"example_factory_test",
-            "example_test",
-            b"example_test",
-            "field_test",
-            b"field_test",
-            "gt_now_test",
-            b"gt_now_test",
-            "lt_now_test",
-            b"lt_now_test",
-            "miss_default_test",
-            b"miss_default_test",
-            "range_e_test",
-            b"range_e_test",
-            "range_test",
-            b"range_test",
-            "title_test",
-            b"title_test",
-            "type_test",
-            b"type_test",
-            "within_and_gt_now_test",
-            b"within_and_gt_now_test",
-            "within_test",
-            b"within_test",
-        ],
-    ) -> None: ...
-
+        ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["alias_test",b"alias_test","const_test",b"const_test","default_factory_test",b"default_factory_test","default_test",b"default_test","desc_test",b"desc_test","enable_test",b"enable_test","example_factory_test",b"example_factory_test","example_test",b"example_test","field_test",b"field_test","gt_now_test",b"gt_now_test","lt_now_test",b"lt_now_test","miss_default_test",b"miss_default_test","range_e_test",b"range_e_test","range_test",b"range_test","title_test",b"title_test","type_test",b"type_test","within_and_gt_now_test",b"within_and_gt_now_test","within_test",b"within_test"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["alias_test",b"alias_test","const_test",b"const_test","default_factory_test",b"default_factory_test","default_test",b"default_test","desc_test",b"desc_test","enable_test",b"enable_test","example_factory_test",b"example_factory_test","example_test",b"example_test","field_test",b"field_test","gt_now_test",b"gt_now_test","lt_now_test",b"lt_now_test","miss_default_test",b"miss_default_test","range_e_test",b"range_e_test","range_test",b"range_test","title_test",b"title_test","type_test",b"type_test","within_and_gt_now_test",b"within_and_gt_now_test","within_test",b"within_test"]) -> None: ...
 global___TimestampTest = TimestampTest
 
 class MessageIgnoredTest(google.protobuf.message.Message):
@@ -2476,20 +1527,13 @@ class MessageIgnoredTest(google.protobuf.message.Message):
     const_test: builtins.int
     range_e_test: builtins.int
     range_test: builtins.int
-    def __init__(
-        self,
+    def __init__(self,
         *,
         const_test: builtins.int = ...,
         range_e_test: builtins.int = ...,
         range_test: builtins.int = ...,
-    ) -> None: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "const_test", b"const_test", "range_e_test", b"range_e_test", "range_test", b"range_test"
-        ],
-    ) -> None: ...
-
+        ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["const_test",b"const_test","range_e_test",b"range_e_test","range_test",b"range_test"]) -> None: ...
 global___MessageIgnoredTest = MessageIgnoredTest
 
 class OneOfTest(google.protobuf.message.Message):
@@ -2500,21 +1544,15 @@ class OneOfTest(google.protobuf.message.Message):
     header: typing.Text
     x: typing.Text
     y: builtins.int
-    def __init__(
-        self,
+    def __init__(self,
         *,
         header: typing.Text = ...,
         x: typing.Text = ...,
         y: builtins.int = ...,
-    ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["id", b"id", "x", b"x", "y", b"y"]) -> builtins.bool: ...
-    def ClearField(
-        self, field_name: typing_extensions.Literal["header", b"header", "id", b"id", "x", b"x", "y", b"y"]
-    ) -> None: ...
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["id", b"id"]
-    ) -> typing.Optional[typing_extensions.Literal["x", "y"]]: ...
-
+        ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["id",b"id","x",b"x","y",b"y"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["header",b"header","id",b"id","x",b"x","y",b"y"]) -> None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["id",b"id"]) -> typing.Optional[typing_extensions.Literal["x","y"]]: ...
 global___OneOfTest = OneOfTest
 
 class OneOfNotTest(google.protobuf.message.Message):
@@ -2525,26 +1563,19 @@ class OneOfNotTest(google.protobuf.message.Message):
     header: typing.Text
     x: typing.Text
     y: builtins.int
-    def __init__(
-        self,
+    def __init__(self,
         *,
         header: typing.Text = ...,
         x: typing.Text = ...,
         y: builtins.int = ...,
-    ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["id", b"id", "x", b"x", "y", b"y"]) -> builtins.bool: ...
-    def ClearField(
-        self, field_name: typing_extensions.Literal["header", b"header", "id", b"id", "x", b"x", "y", b"y"]
-    ) -> None: ...
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["id", b"id"]
-    ) -> typing.Optional[typing_extensions.Literal["x", "y"]]: ...
-
+        ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["id",b"id","x",b"x","y",b"y"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["header",b"header","id",b"id","x",b"x","y",b"y"]) -> None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["id",b"id"]) -> typing.Optional[typing_extensions.Literal["x","y"]]: ...
 global___OneOfNotTest = OneOfNotTest
 
 class NestedMessage(google.protobuf.message.Message):
     """test nested message"""
-
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     class UserPayMessage(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
@@ -2555,17 +1586,15 @@ class NestedMessage(google.protobuf.message.Message):
         @property
         def exp(self) -> google.protobuf.timestamp_pb2.Timestamp: ...
         uuid: typing.Text
-        def __init__(
-            self,
+        def __init__(self,
             *,
             bank_number: typing.Text = ...,
             exp: typing.Optional[google.protobuf.timestamp_pb2.Timestamp] = ...,
             uuid: typing.Text = ...,
-        ) -> None: ...
-        def HasField(self, field_name: typing_extensions.Literal["exp", b"exp"]) -> builtins.bool: ...
-        def ClearField(
-            self, field_name: typing_extensions.Literal["bank_number", b"bank_number", "exp", b"exp", "uuid", b"uuid"]
-        ) -> None: ...
+            ) -> None: ...
+        def HasField(self, field_name: typing_extensions.Literal["exp",b"exp"]) -> builtins.bool: ...
+        def ClearField(self, field_name: typing_extensions.Literal["bank_number",b"bank_number","exp",b"exp","uuid",b"uuid"]) -> None: ...
+
     class NotEnableUserPayMessage(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
         BANK_NUMBER_FIELD_NUMBER: builtins.int
@@ -2575,17 +1604,15 @@ class NestedMessage(google.protobuf.message.Message):
         @property
         def exp(self) -> google.protobuf.timestamp_pb2.Timestamp: ...
         uuid: typing.Text
-        def __init__(
-            self,
+        def __init__(self,
             *,
             bank_number: typing.Text = ...,
             exp: typing.Optional[google.protobuf.timestamp_pb2.Timestamp] = ...,
             uuid: typing.Text = ...,
-        ) -> None: ...
-        def HasField(self, field_name: typing_extensions.Literal["exp", b"exp"]) -> builtins.bool: ...
-        def ClearField(
-            self, field_name: typing_extensions.Literal["bank_number", b"bank_number", "exp", b"exp", "uuid", b"uuid"]
-        ) -> None: ...
+            ) -> None: ...
+        def HasField(self, field_name: typing_extensions.Literal["exp",b"exp"]) -> builtins.bool: ...
+        def ClearField(self, field_name: typing_extensions.Literal["bank_number",b"bank_number","exp",b"exp","uuid",b"uuid"]) -> None: ...
+
     class StringInMapTestEntry(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
         KEY_FIELD_NUMBER: builtins.int
@@ -2593,14 +1620,14 @@ class NestedMessage(google.protobuf.message.Message):
         key: typing.Text
         @property
         def value(self) -> global___StringTest: ...
-        def __init__(
-            self,
+        def __init__(self,
             *,
             key: typing.Text = ...,
             value: typing.Optional[global___StringTest] = ...,
-        ) -> None: ...
-        def HasField(self, field_name: typing_extensions.Literal["value", b"value"]) -> builtins.bool: ...
-        def ClearField(self, field_name: typing_extensions.Literal["key", b"key", "value", b"value"]) -> None: ...
+            ) -> None: ...
+        def HasField(self, field_name: typing_extensions.Literal["value",b"value"]) -> builtins.bool: ...
+        def ClearField(self, field_name: typing_extensions.Literal["key",b"key","value",b"value"]) -> None: ...
+
     class MapInMapTestEntry(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
         KEY_FIELD_NUMBER: builtins.int
@@ -2608,23 +1635,21 @@ class NestedMessage(google.protobuf.message.Message):
         key: typing.Text
         @property
         def value(self) -> global___MapTest: ...
-        def __init__(
-            self,
+        def __init__(self,
             *,
             key: typing.Text = ...,
             value: typing.Optional[global___MapTest] = ...,
-        ) -> None: ...
-        def HasField(self, field_name: typing_extensions.Literal["value", b"value"]) -> builtins.bool: ...
-        def ClearField(self, field_name: typing_extensions.Literal["key", b"key", "value", b"value"]) -> None: ...
+            ) -> None: ...
+        def HasField(self, field_name: typing_extensions.Literal["value",b"value"]) -> builtins.bool: ...
+        def ClearField(self, field_name: typing_extensions.Literal["key",b"key","value",b"value"]) -> None: ...
+
     STRING_IN_MAP_TEST_FIELD_NUMBER: builtins.int
     MAP_IN_MAP_TEST_FIELD_NUMBER: builtins.int
     USER_PAY_FIELD_NUMBER: builtins.int
     NOT_ENABLE_USER_PAY_FIELD_NUMBER: builtins.int
     EMPTY_FIELD_NUMBER: builtins.int
     @property
-    def string_in_map_test(
-        self,
-    ) -> google.protobuf.internal.containers.MessageMap[typing.Text, global___StringTest]: ...
+    def string_in_map_test(self) -> google.protobuf.internal.containers.MessageMap[typing.Text, global___StringTest]: ...
     @property
     def map_in_map_test(self) -> google.protobuf.internal.containers.MessageMap[typing.Text, global___MapTest]: ...
     @property
@@ -2633,35 +1658,14 @@ class NestedMessage(google.protobuf.message.Message):
     def not_enable_user_pay(self) -> global___NestedMessage.NotEnableUserPayMessage: ...
     @property
     def empty(self) -> google.protobuf.empty_pb2.Empty: ...
-    def __init__(
-        self,
+    def __init__(self,
         *,
         string_in_map_test: typing.Optional[typing.Mapping[typing.Text, global___StringTest]] = ...,
         map_in_map_test: typing.Optional[typing.Mapping[typing.Text, global___MapTest]] = ...,
         user_pay: typing.Optional[global___NestedMessage.UserPayMessage] = ...,
         not_enable_user_pay: typing.Optional[global___NestedMessage.NotEnableUserPayMessage] = ...,
         empty: typing.Optional[google.protobuf.empty_pb2.Empty] = ...,
-    ) -> None: ...
-    def HasField(
-        self,
-        field_name: typing_extensions.Literal[
-            "empty", b"empty", "not_enable_user_pay", b"not_enable_user_pay", "user_pay", b"user_pay"
-        ],
-    ) -> builtins.bool: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "empty",
-            b"empty",
-            "map_in_map_test",
-            b"map_in_map_test",
-            "not_enable_user_pay",
-            b"not_enable_user_pay",
-            "string_in_map_test",
-            b"string_in_map_test",
-            "user_pay",
-            b"user_pay",
-        ],
-    ) -> None: ...
-
+        ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["empty",b"empty","not_enable_user_pay",b"not_enable_user_pay","user_pay",b"user_pay"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["empty",b"empty","map_in_map_test",b"map_in_map_test","not_enable_user_pay",b"not_enable_user_pay","string_in_map_test",b"string_in_map_test","user_pay",b"user_pay"]) -> None: ...
 global___NestedMessage = NestedMessage

@@ -10,7 +10,7 @@ fi
 echo 'use venv path:' ${VENV_PREFIX}
 
 # gen python protos code path
-target_p='python_example_proto_code'
+target_p='example_proto_python_code'
 # project proto path
 source_p='example_proto'
 # service
@@ -35,5 +35,5 @@ do
   touch $target_p/$source_p/"$service"/__init__.py
   # fix grpc tools bug
   sed -i "s/from protos.$service import/from . import/" $target_p/$source_p/$service/*.py
-  sed -i "s/from example_proto./from example.python_example_proto_code.example_proto./" $target_p/$source_p/$service/*.py
+  sed -i "s/from example_proto./from example.example_proto_python_code.example_proto./" $target_p/$source_p/$service/*.py
 done

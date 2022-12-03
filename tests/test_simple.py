@@ -3,11 +3,13 @@ from typing import Any
 from example.example_proto_python_code.example_proto.demo import demo_pb2
 from protobuf_to_pydantic import msg_to_pydantic_model, pydantic_model_to_py_code
 
+from . import P2CTest
+
 
 class TestSimpleTest:
     @staticmethod
     def _model_output(msg: Any) -> str:
-        return pydantic_model_to_py_code(msg_to_pydantic_model(msg, parse_msg_desc_method="ignore"))
+        return pydantic_model_to_py_code(msg_to_pydantic_model(msg, parse_msg_desc_method="ignore"), p2c_class=P2CTest)
 
     def test_user_message(self) -> None:
         assert """
