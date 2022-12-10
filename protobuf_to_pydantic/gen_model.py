@@ -30,7 +30,7 @@ from protobuf_to_pydantic.grpc_types import (
 from protobuf_to_pydantic.types import OneOfTypedDict
 from protobuf_to_pydantic.util import Timedelta, create_pydantic_model
 
-type_dict: Dict[str, Type] = {
+type_dict: Dict[int, Type] = {
     FieldDescriptor.TYPE_DOUBLE: float,
     FieldDescriptor.TYPE_FLOAT: float,
     FieldDescriptor.TYPE_INT64: int,
@@ -47,6 +47,15 @@ type_dict: Dict[str, Type] = {
     FieldDescriptor.TYPE_SINT32: int,
     FieldDescriptor.TYPE_SINT64: int,
 }
+
+python_type_default_value_dict: Dict[type, Any] = {
+    float: 0.0,
+    int: 0,
+    bool: False,
+    str: "",
+    bytes: b"",
+}
+
 _message_type_dict_by_type_name: Dict[str, Any] = {
     "Timestamp": datetime.datetime,
     "Struct": Dict[str, Any],

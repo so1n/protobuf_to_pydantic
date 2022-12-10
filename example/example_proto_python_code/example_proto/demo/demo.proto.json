@@ -1,0 +1,292 @@
+{
+  "package": "user",
+  "filename": "example_proto/demo/demo.proto",
+  "dependencies": [
+    "google/protobuf/empty.proto",
+    "google/protobuf/timestamp.proto"
+  ],
+  "message_type": [
+    {
+      "name": "UserMessage",
+      "field": [
+        {
+          "name": "uid",
+          "number": 1,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "jsonName": "uid"
+        },
+        {
+          "name": "age",
+          "number": 2,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_INT32",
+          "jsonName": "age"
+        },
+        {
+          "name": "height",
+          "number": 3,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "jsonName": "height"
+        },
+        {
+          "name": "sex",
+          "number": 4,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_ENUM",
+          "typeName": ".user.SexType",
+          "jsonName": "sex"
+        },
+        {
+          "name": "is_adult",
+          "number": 5,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "jsonName": "isAdult"
+        },
+        {
+          "name": "user_name",
+          "number": 6,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "jsonName": "userName"
+        }
+      ]
+    },
+    {
+      "name": "MapMessage",
+      "field": [
+        {
+          "name": "user_map",
+          "number": 1,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".user.MapMessage.UserMapEntry",
+          "jsonName": "userMap"
+        },
+        {
+          "name": "user_flag",
+          "number": 2,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".user.MapMessage.UserFlagEntry",
+          "jsonName": "userFlag"
+        }
+      ],
+      "nestedType": [
+        {
+          "name": "UserMapEntry",
+          "field": [
+            {
+              "name": "key",
+              "number": 1,
+              "label": "LABEL_OPTIONAL",
+              "type": "TYPE_STRING",
+              "jsonName": "key"
+            },
+            {
+              "name": "value",
+              "number": 2,
+              "label": "LABEL_OPTIONAL",
+              "type": "TYPE_MESSAGE",
+              "typeName": ".user.UserMessage",
+              "jsonName": "value"
+            }
+          ],
+          "options": {
+            "mapEntry": true
+          }
+        },
+        {
+          "name": "UserFlagEntry",
+          "field": [
+            {
+              "name": "key",
+              "number": 1,
+              "label": "LABEL_OPTIONAL",
+              "type": "TYPE_STRING",
+              "jsonName": "key"
+            },
+            {
+              "name": "value",
+              "number": 2,
+              "label": "LABEL_OPTIONAL",
+              "type": "TYPE_BOOL",
+              "jsonName": "value"
+            }
+          ],
+          "options": {
+            "mapEntry": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "RepeatedMessage",
+      "field": [
+        {
+          "name": "str_list",
+          "number": 1,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_STRING",
+          "jsonName": "strList"
+        },
+        {
+          "name": "int_list",
+          "number": 2,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_INT32",
+          "jsonName": "intList"
+        },
+        {
+          "name": "user_list",
+          "number": 3,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".user.UserMessage",
+          "jsonName": "userList"
+        }
+      ]
+    },
+    {
+      "name": "NestedMessage",
+      "field": [
+        {
+          "name": "user_list_map",
+          "number": 1,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".user.NestedMessage.UserListMapEntry",
+          "jsonName": "userListMap"
+        },
+        {
+          "name": "user_map",
+          "number": 2,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".user.NestedMessage.UserMapEntry",
+          "jsonName": "userMap"
+        },
+        {
+          "name": "user_pay",
+          "number": 3,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".user.NestedMessage.UserPayMessage",
+          "jsonName": "userPay"
+        },
+        {
+          "name": "not_enable_user_pay",
+          "number": 4,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".user.NestedMessage.UserPayMessage",
+          "jsonName": "notEnableUserPay"
+        },
+        {
+          "name": "empty",
+          "number": 5,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".google.protobuf.Empty",
+          "jsonName": "empty"
+        }
+      ],
+      "nestedType": [
+        {
+          "name": "UserPayMessage",
+          "field": [
+            {
+              "name": "bank_number",
+              "number": 1,
+              "label": "LABEL_OPTIONAL",
+              "type": "TYPE_STRING",
+              "jsonName": "bankNumber"
+            },
+            {
+              "name": "exp",
+              "number": 2,
+              "label": "LABEL_OPTIONAL",
+              "type": "TYPE_MESSAGE",
+              "typeName": ".google.protobuf.Timestamp",
+              "jsonName": "exp"
+            },
+            {
+              "name": "uuid",
+              "number": 3,
+              "label": "LABEL_OPTIONAL",
+              "type": "TYPE_STRING",
+              "jsonName": "uuid"
+            }
+          ]
+        },
+        {
+          "name": "UserListMapEntry",
+          "field": [
+            {
+              "name": "key",
+              "number": 1,
+              "label": "LABEL_OPTIONAL",
+              "type": "TYPE_STRING",
+              "jsonName": "key"
+            },
+            {
+              "name": "value",
+              "number": 2,
+              "label": "LABEL_OPTIONAL",
+              "type": "TYPE_MESSAGE",
+              "typeName": ".user.RepeatedMessage",
+              "jsonName": "value"
+            }
+          ],
+          "options": {
+            "mapEntry": true
+          }
+        },
+        {
+          "name": "UserMapEntry",
+          "field": [
+            {
+              "name": "key",
+              "number": 1,
+              "label": "LABEL_OPTIONAL",
+              "type": "TYPE_STRING",
+              "jsonName": "key"
+            },
+            {
+              "name": "value",
+              "number": 2,
+              "label": "LABEL_OPTIONAL",
+              "type": "TYPE_MESSAGE",
+              "typeName": ".user.MapMessage",
+              "jsonName": "value"
+            }
+          ],
+          "options": {
+            "mapEntry": true
+          }
+        }
+      ]
+    }
+  ],
+  "service": [],
+  "public_dependency": [],
+  "enum_type": [
+    {
+      "name": "SexType",
+      "value": [
+        {
+          "name": "man",
+          "number": 0
+        },
+        {
+          "name": "women",
+          "number": 1
+        }
+      ]
+    }
+  ],
+  "extension": [],
+  "options": {}
+}

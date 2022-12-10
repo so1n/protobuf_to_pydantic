@@ -1,0 +1,1647 @@
+{
+  "package": "validate",
+  "filename": "example_proto/common/validate.proto",
+  "dependencies": [
+    "google/protobuf/descriptor.proto",
+    "google/protobuf/duration.proto",
+    "google/protobuf/timestamp.proto"
+  ],
+  "message_type": [
+    {
+      "name": "FieldRules",
+      "field": [
+        {
+          "name": "message",
+          "number": 17,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".validate.MessageRules",
+          "jsonName": "message"
+        },
+        {
+          "name": "float",
+          "number": 1,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".validate.FloatRules",
+          "oneofIndex": 0,
+          "jsonName": "float"
+        },
+        {
+          "name": "double",
+          "number": 2,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".validate.DoubleRules",
+          "oneofIndex": 0,
+          "jsonName": "double"
+        },
+        {
+          "name": "int32",
+          "number": 3,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".validate.Int32Rules",
+          "oneofIndex": 0,
+          "jsonName": "int32"
+        },
+        {
+          "name": "int64",
+          "number": 4,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".validate.Int64Rules",
+          "oneofIndex": 0,
+          "jsonName": "int64"
+        },
+        {
+          "name": "uint32",
+          "number": 5,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".validate.UInt32Rules",
+          "oneofIndex": 0,
+          "jsonName": "uint32"
+        },
+        {
+          "name": "uint64",
+          "number": 6,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".validate.UInt64Rules",
+          "oneofIndex": 0,
+          "jsonName": "uint64"
+        },
+        {
+          "name": "sint32",
+          "number": 7,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".validate.SInt32Rules",
+          "oneofIndex": 0,
+          "jsonName": "sint32"
+        },
+        {
+          "name": "sint64",
+          "number": 8,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".validate.SInt64Rules",
+          "oneofIndex": 0,
+          "jsonName": "sint64"
+        },
+        {
+          "name": "fixed32",
+          "number": 9,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".validate.Fixed32Rules",
+          "oneofIndex": 0,
+          "jsonName": "fixed32"
+        },
+        {
+          "name": "fixed64",
+          "number": 10,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".validate.Fixed64Rules",
+          "oneofIndex": 0,
+          "jsonName": "fixed64"
+        },
+        {
+          "name": "sfixed32",
+          "number": 11,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".validate.SFixed32Rules",
+          "oneofIndex": 0,
+          "jsonName": "sfixed32"
+        },
+        {
+          "name": "sfixed64",
+          "number": 12,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".validate.SFixed64Rules",
+          "oneofIndex": 0,
+          "jsonName": "sfixed64"
+        },
+        {
+          "name": "bool",
+          "number": 13,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".validate.BoolRules",
+          "oneofIndex": 0,
+          "jsonName": "bool"
+        },
+        {
+          "name": "string",
+          "number": 14,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".validate.StringRules",
+          "oneofIndex": 0,
+          "jsonName": "string"
+        },
+        {
+          "name": "bytes",
+          "number": 15,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".validate.BytesRules",
+          "oneofIndex": 0,
+          "jsonName": "bytes"
+        },
+        {
+          "name": "enum",
+          "number": 16,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".validate.EnumRules",
+          "oneofIndex": 0,
+          "jsonName": "enum"
+        },
+        {
+          "name": "repeated",
+          "number": 18,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".validate.RepeatedRules",
+          "oneofIndex": 0,
+          "jsonName": "repeated"
+        },
+        {
+          "name": "map",
+          "number": 19,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".validate.MapRules",
+          "oneofIndex": 0,
+          "jsonName": "map"
+        },
+        {
+          "name": "any",
+          "number": 20,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".validate.AnyRules",
+          "oneofIndex": 0,
+          "jsonName": "any"
+        },
+        {
+          "name": "duration",
+          "number": 21,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".validate.DurationRules",
+          "oneofIndex": 0,
+          "jsonName": "duration"
+        },
+        {
+          "name": "timestamp",
+          "number": 22,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".validate.TimestampRules",
+          "oneofIndex": 0,
+          "jsonName": "timestamp"
+        }
+      ],
+      "oneofDecl": [
+        {
+          "name": "type"
+        }
+      ]
+    },
+    {
+      "name": "FloatRules",
+      "field": [
+        {
+          "name": "const",
+          "number": 1,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "jsonName": "const"
+        },
+        {
+          "name": "lt",
+          "number": 2,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "jsonName": "lt"
+        },
+        {
+          "name": "lte",
+          "number": 3,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "jsonName": "lte"
+        },
+        {
+          "name": "gt",
+          "number": 4,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "jsonName": "gt"
+        },
+        {
+          "name": "gte",
+          "number": 5,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "jsonName": "gte"
+        },
+        {
+          "name": "in",
+          "number": 6,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_FLOAT",
+          "jsonName": "in"
+        },
+        {
+          "name": "not_in",
+          "number": 7,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_FLOAT",
+          "jsonName": "notIn"
+        },
+        {
+          "name": "ignore_empty",
+          "number": 8,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "jsonName": "ignoreEmpty"
+        }
+      ]
+    },
+    {
+      "name": "DoubleRules",
+      "field": [
+        {
+          "name": "const",
+          "number": 1,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_DOUBLE",
+          "jsonName": "const"
+        },
+        {
+          "name": "lt",
+          "number": 2,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_DOUBLE",
+          "jsonName": "lt"
+        },
+        {
+          "name": "lte",
+          "number": 3,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_DOUBLE",
+          "jsonName": "lte"
+        },
+        {
+          "name": "gt",
+          "number": 4,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_DOUBLE",
+          "jsonName": "gt"
+        },
+        {
+          "name": "gte",
+          "number": 5,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_DOUBLE",
+          "jsonName": "gte"
+        },
+        {
+          "name": "in",
+          "number": 6,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_DOUBLE",
+          "jsonName": "in"
+        },
+        {
+          "name": "not_in",
+          "number": 7,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_DOUBLE",
+          "jsonName": "notIn"
+        },
+        {
+          "name": "ignore_empty",
+          "number": 8,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "jsonName": "ignoreEmpty"
+        }
+      ]
+    },
+    {
+      "name": "Int32Rules",
+      "field": [
+        {
+          "name": "const",
+          "number": 1,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_INT32",
+          "jsonName": "const"
+        },
+        {
+          "name": "lt",
+          "number": 2,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_INT32",
+          "jsonName": "lt"
+        },
+        {
+          "name": "lte",
+          "number": 3,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_INT32",
+          "jsonName": "lte"
+        },
+        {
+          "name": "gt",
+          "number": 4,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_INT32",
+          "jsonName": "gt"
+        },
+        {
+          "name": "gte",
+          "number": 5,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_INT32",
+          "jsonName": "gte"
+        },
+        {
+          "name": "in",
+          "number": 6,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_INT32",
+          "jsonName": "in"
+        },
+        {
+          "name": "not_in",
+          "number": 7,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_INT32",
+          "jsonName": "notIn"
+        },
+        {
+          "name": "ignore_empty",
+          "number": 8,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "jsonName": "ignoreEmpty"
+        }
+      ]
+    },
+    {
+      "name": "Int64Rules",
+      "field": [
+        {
+          "name": "const",
+          "number": 1,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_INT64",
+          "jsonName": "const"
+        },
+        {
+          "name": "lt",
+          "number": 2,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_INT64",
+          "jsonName": "lt"
+        },
+        {
+          "name": "lte",
+          "number": 3,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_INT64",
+          "jsonName": "lte"
+        },
+        {
+          "name": "gt",
+          "number": 4,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_INT64",
+          "jsonName": "gt"
+        },
+        {
+          "name": "gte",
+          "number": 5,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_INT64",
+          "jsonName": "gte"
+        },
+        {
+          "name": "in",
+          "number": 6,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_INT64",
+          "jsonName": "in"
+        },
+        {
+          "name": "not_in",
+          "number": 7,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_INT64",
+          "jsonName": "notIn"
+        },
+        {
+          "name": "ignore_empty",
+          "number": 8,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "jsonName": "ignoreEmpty"
+        }
+      ]
+    },
+    {
+      "name": "UInt32Rules",
+      "field": [
+        {
+          "name": "const",
+          "number": 1,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_UINT32",
+          "jsonName": "const"
+        },
+        {
+          "name": "lt",
+          "number": 2,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_UINT32",
+          "jsonName": "lt"
+        },
+        {
+          "name": "lte",
+          "number": 3,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_UINT32",
+          "jsonName": "lte"
+        },
+        {
+          "name": "gt",
+          "number": 4,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_UINT32",
+          "jsonName": "gt"
+        },
+        {
+          "name": "gte",
+          "number": 5,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_UINT32",
+          "jsonName": "gte"
+        },
+        {
+          "name": "in",
+          "number": 6,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_UINT32",
+          "jsonName": "in"
+        },
+        {
+          "name": "not_in",
+          "number": 7,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_UINT32",
+          "jsonName": "notIn"
+        },
+        {
+          "name": "ignore_empty",
+          "number": 8,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "jsonName": "ignoreEmpty"
+        }
+      ]
+    },
+    {
+      "name": "UInt64Rules",
+      "field": [
+        {
+          "name": "const",
+          "number": 1,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_UINT64",
+          "jsonName": "const"
+        },
+        {
+          "name": "lt",
+          "number": 2,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_UINT64",
+          "jsonName": "lt"
+        },
+        {
+          "name": "lte",
+          "number": 3,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_UINT64",
+          "jsonName": "lte"
+        },
+        {
+          "name": "gt",
+          "number": 4,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_UINT64",
+          "jsonName": "gt"
+        },
+        {
+          "name": "gte",
+          "number": 5,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_UINT64",
+          "jsonName": "gte"
+        },
+        {
+          "name": "in",
+          "number": 6,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_UINT64",
+          "jsonName": "in"
+        },
+        {
+          "name": "not_in",
+          "number": 7,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_UINT64",
+          "jsonName": "notIn"
+        },
+        {
+          "name": "ignore_empty",
+          "number": 8,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "jsonName": "ignoreEmpty"
+        }
+      ]
+    },
+    {
+      "name": "SInt32Rules",
+      "field": [
+        {
+          "name": "const",
+          "number": 1,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_SINT32",
+          "jsonName": "const"
+        },
+        {
+          "name": "lt",
+          "number": 2,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_SINT32",
+          "jsonName": "lt"
+        },
+        {
+          "name": "lte",
+          "number": 3,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_SINT32",
+          "jsonName": "lte"
+        },
+        {
+          "name": "gt",
+          "number": 4,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_SINT32",
+          "jsonName": "gt"
+        },
+        {
+          "name": "gte",
+          "number": 5,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_SINT32",
+          "jsonName": "gte"
+        },
+        {
+          "name": "in",
+          "number": 6,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_SINT32",
+          "jsonName": "in"
+        },
+        {
+          "name": "not_in",
+          "number": 7,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_SINT32",
+          "jsonName": "notIn"
+        },
+        {
+          "name": "ignore_empty",
+          "number": 8,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "jsonName": "ignoreEmpty"
+        }
+      ]
+    },
+    {
+      "name": "SInt64Rules",
+      "field": [
+        {
+          "name": "const",
+          "number": 1,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_SINT64",
+          "jsonName": "const"
+        },
+        {
+          "name": "lt",
+          "number": 2,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_SINT64",
+          "jsonName": "lt"
+        },
+        {
+          "name": "lte",
+          "number": 3,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_SINT64",
+          "jsonName": "lte"
+        },
+        {
+          "name": "gt",
+          "number": 4,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_SINT64",
+          "jsonName": "gt"
+        },
+        {
+          "name": "gte",
+          "number": 5,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_SINT64",
+          "jsonName": "gte"
+        },
+        {
+          "name": "in",
+          "number": 6,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_SINT64",
+          "jsonName": "in"
+        },
+        {
+          "name": "not_in",
+          "number": 7,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_SINT64",
+          "jsonName": "notIn"
+        },
+        {
+          "name": "ignore_empty",
+          "number": 8,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "jsonName": "ignoreEmpty"
+        }
+      ]
+    },
+    {
+      "name": "Fixed32Rules",
+      "field": [
+        {
+          "name": "const",
+          "number": 1,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FIXED32",
+          "jsonName": "const"
+        },
+        {
+          "name": "lt",
+          "number": 2,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FIXED32",
+          "jsonName": "lt"
+        },
+        {
+          "name": "lte",
+          "number": 3,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FIXED32",
+          "jsonName": "lte"
+        },
+        {
+          "name": "gt",
+          "number": 4,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FIXED32",
+          "jsonName": "gt"
+        },
+        {
+          "name": "gte",
+          "number": 5,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FIXED32",
+          "jsonName": "gte"
+        },
+        {
+          "name": "in",
+          "number": 6,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_FIXED32",
+          "jsonName": "in"
+        },
+        {
+          "name": "not_in",
+          "number": 7,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_FIXED32",
+          "jsonName": "notIn"
+        },
+        {
+          "name": "ignore_empty",
+          "number": 8,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "jsonName": "ignoreEmpty"
+        }
+      ]
+    },
+    {
+      "name": "Fixed64Rules",
+      "field": [
+        {
+          "name": "const",
+          "number": 1,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FIXED64",
+          "jsonName": "const"
+        },
+        {
+          "name": "lt",
+          "number": 2,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FIXED64",
+          "jsonName": "lt"
+        },
+        {
+          "name": "lte",
+          "number": 3,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FIXED64",
+          "jsonName": "lte"
+        },
+        {
+          "name": "gt",
+          "number": 4,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FIXED64",
+          "jsonName": "gt"
+        },
+        {
+          "name": "gte",
+          "number": 5,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FIXED64",
+          "jsonName": "gte"
+        },
+        {
+          "name": "in",
+          "number": 6,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_FIXED64",
+          "jsonName": "in"
+        },
+        {
+          "name": "not_in",
+          "number": 7,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_FIXED64",
+          "jsonName": "notIn"
+        },
+        {
+          "name": "ignore_empty",
+          "number": 8,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "jsonName": "ignoreEmpty"
+        }
+      ]
+    },
+    {
+      "name": "SFixed32Rules",
+      "field": [
+        {
+          "name": "const",
+          "number": 1,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_SFIXED32",
+          "jsonName": "const"
+        },
+        {
+          "name": "lt",
+          "number": 2,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_SFIXED32",
+          "jsonName": "lt"
+        },
+        {
+          "name": "lte",
+          "number": 3,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_SFIXED32",
+          "jsonName": "lte"
+        },
+        {
+          "name": "gt",
+          "number": 4,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_SFIXED32",
+          "jsonName": "gt"
+        },
+        {
+          "name": "gte",
+          "number": 5,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_SFIXED32",
+          "jsonName": "gte"
+        },
+        {
+          "name": "in",
+          "number": 6,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_SFIXED32",
+          "jsonName": "in"
+        },
+        {
+          "name": "not_in",
+          "number": 7,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_SFIXED32",
+          "jsonName": "notIn"
+        },
+        {
+          "name": "ignore_empty",
+          "number": 8,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "jsonName": "ignoreEmpty"
+        }
+      ]
+    },
+    {
+      "name": "SFixed64Rules",
+      "field": [
+        {
+          "name": "const",
+          "number": 1,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_SFIXED64",
+          "jsonName": "const"
+        },
+        {
+          "name": "lt",
+          "number": 2,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_SFIXED64",
+          "jsonName": "lt"
+        },
+        {
+          "name": "lte",
+          "number": 3,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_SFIXED64",
+          "jsonName": "lte"
+        },
+        {
+          "name": "gt",
+          "number": 4,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_SFIXED64",
+          "jsonName": "gt"
+        },
+        {
+          "name": "gte",
+          "number": 5,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_SFIXED64",
+          "jsonName": "gte"
+        },
+        {
+          "name": "in",
+          "number": 6,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_SFIXED64",
+          "jsonName": "in"
+        },
+        {
+          "name": "not_in",
+          "number": 7,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_SFIXED64",
+          "jsonName": "notIn"
+        },
+        {
+          "name": "ignore_empty",
+          "number": 8,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "jsonName": "ignoreEmpty"
+        }
+      ]
+    },
+    {
+      "name": "BoolRules",
+      "field": [
+        {
+          "name": "const",
+          "number": 1,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "jsonName": "const"
+        }
+      ]
+    },
+    {
+      "name": "StringRules",
+      "field": [
+        {
+          "name": "const",
+          "number": 1,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "jsonName": "const"
+        },
+        {
+          "name": "len",
+          "number": 19,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_UINT64",
+          "jsonName": "len"
+        },
+        {
+          "name": "min_len",
+          "number": 2,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_UINT64",
+          "jsonName": "minLen"
+        },
+        {
+          "name": "max_len",
+          "number": 3,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_UINT64",
+          "jsonName": "maxLen"
+        },
+        {
+          "name": "len_bytes",
+          "number": 20,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_UINT64",
+          "jsonName": "lenBytes"
+        },
+        {
+          "name": "min_bytes",
+          "number": 4,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_UINT64",
+          "jsonName": "minBytes"
+        },
+        {
+          "name": "max_bytes",
+          "number": 5,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_UINT64",
+          "jsonName": "maxBytes"
+        },
+        {
+          "name": "pattern",
+          "number": 6,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "jsonName": "pattern"
+        },
+        {
+          "name": "prefix",
+          "number": 7,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "jsonName": "prefix"
+        },
+        {
+          "name": "suffix",
+          "number": 8,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "jsonName": "suffix"
+        },
+        {
+          "name": "contains",
+          "number": 9,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "jsonName": "contains"
+        },
+        {
+          "name": "not_contains",
+          "number": 23,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "jsonName": "notContains"
+        },
+        {
+          "name": "in",
+          "number": 10,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_STRING",
+          "jsonName": "in"
+        },
+        {
+          "name": "not_in",
+          "number": 11,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_STRING",
+          "jsonName": "notIn"
+        },
+        {
+          "name": "email",
+          "number": 12,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 0,
+          "jsonName": "email"
+        },
+        {
+          "name": "hostname",
+          "number": 13,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 0,
+          "jsonName": "hostname"
+        },
+        {
+          "name": "ip",
+          "number": 14,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 0,
+          "jsonName": "ip"
+        },
+        {
+          "name": "ipv4",
+          "number": 15,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 0,
+          "jsonName": "ipv4"
+        },
+        {
+          "name": "ipv6",
+          "number": 16,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 0,
+          "jsonName": "ipv6"
+        },
+        {
+          "name": "uri",
+          "number": 17,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 0,
+          "jsonName": "uri"
+        },
+        {
+          "name": "uri_ref",
+          "number": 18,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 0,
+          "jsonName": "uriRef"
+        },
+        {
+          "name": "address",
+          "number": 21,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 0,
+          "jsonName": "address"
+        },
+        {
+          "name": "uuid",
+          "number": 22,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 0,
+          "jsonName": "uuid"
+        },
+        {
+          "name": "well_known_regex",
+          "number": 24,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_ENUM",
+          "typeName": ".validate.KnownRegex",
+          "oneofIndex": 0,
+          "jsonName": "wellKnownRegex"
+        },
+        {
+          "name": "strict",
+          "number": 25,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "defaultValue": "true",
+          "jsonName": "strict"
+        },
+        {
+          "name": "ignore_empty",
+          "number": 26,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "jsonName": "ignoreEmpty"
+        }
+      ],
+      "oneofDecl": [
+        {
+          "name": "well_known"
+        }
+      ]
+    },
+    {
+      "name": "BytesRules",
+      "field": [
+        {
+          "name": "const",
+          "number": 1,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BYTES",
+          "jsonName": "const"
+        },
+        {
+          "name": "len",
+          "number": 13,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_UINT64",
+          "jsonName": "len"
+        },
+        {
+          "name": "min_len",
+          "number": 2,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_UINT64",
+          "jsonName": "minLen"
+        },
+        {
+          "name": "max_len",
+          "number": 3,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_UINT64",
+          "jsonName": "maxLen"
+        },
+        {
+          "name": "pattern",
+          "number": 4,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "jsonName": "pattern"
+        },
+        {
+          "name": "prefix",
+          "number": 5,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BYTES",
+          "jsonName": "prefix"
+        },
+        {
+          "name": "suffix",
+          "number": 6,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BYTES",
+          "jsonName": "suffix"
+        },
+        {
+          "name": "contains",
+          "number": 7,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BYTES",
+          "jsonName": "contains"
+        },
+        {
+          "name": "in",
+          "number": 8,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_BYTES",
+          "jsonName": "in"
+        },
+        {
+          "name": "not_in",
+          "number": 9,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_BYTES",
+          "jsonName": "notIn"
+        },
+        {
+          "name": "ip",
+          "number": 10,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 0,
+          "jsonName": "ip"
+        },
+        {
+          "name": "ipv4",
+          "number": 11,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 0,
+          "jsonName": "ipv4"
+        },
+        {
+          "name": "ipv6",
+          "number": 12,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 0,
+          "jsonName": "ipv6"
+        },
+        {
+          "name": "ignore_empty",
+          "number": 14,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "jsonName": "ignoreEmpty"
+        }
+      ],
+      "oneofDecl": [
+        {
+          "name": "well_known"
+        }
+      ]
+    },
+    {
+      "name": "EnumRules",
+      "field": [
+        {
+          "name": "const",
+          "number": 1,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_INT32",
+          "jsonName": "const"
+        },
+        {
+          "name": "defined_only",
+          "number": 2,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "jsonName": "definedOnly"
+        },
+        {
+          "name": "in",
+          "number": 3,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_INT32",
+          "jsonName": "in"
+        },
+        {
+          "name": "not_in",
+          "number": 4,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_INT32",
+          "jsonName": "notIn"
+        }
+      ]
+    },
+    {
+      "name": "MessageRules",
+      "field": [
+        {
+          "name": "skip",
+          "number": 1,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "jsonName": "skip"
+        },
+        {
+          "name": "required",
+          "number": 2,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "jsonName": "required"
+        }
+      ]
+    },
+    {
+      "name": "RepeatedRules",
+      "field": [
+        {
+          "name": "min_items",
+          "number": 1,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_UINT64",
+          "jsonName": "minItems"
+        },
+        {
+          "name": "max_items",
+          "number": 2,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_UINT64",
+          "jsonName": "maxItems"
+        },
+        {
+          "name": "unique",
+          "number": 3,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "jsonName": "unique"
+        },
+        {
+          "name": "items",
+          "number": 4,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".validate.FieldRules",
+          "jsonName": "items"
+        },
+        {
+          "name": "ignore_empty",
+          "number": 5,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "jsonName": "ignoreEmpty"
+        }
+      ]
+    },
+    {
+      "name": "MapRules",
+      "field": [
+        {
+          "name": "min_pairs",
+          "number": 1,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_UINT64",
+          "jsonName": "minPairs"
+        },
+        {
+          "name": "max_pairs",
+          "number": 2,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_UINT64",
+          "jsonName": "maxPairs"
+        },
+        {
+          "name": "no_sparse",
+          "number": 3,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "jsonName": "noSparse"
+        },
+        {
+          "name": "keys",
+          "number": 4,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".validate.FieldRules",
+          "jsonName": "keys"
+        },
+        {
+          "name": "values",
+          "number": 5,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".validate.FieldRules",
+          "jsonName": "values"
+        },
+        {
+          "name": "ignore_empty",
+          "number": 6,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "jsonName": "ignoreEmpty"
+        }
+      ]
+    },
+    {
+      "name": "AnyRules",
+      "field": [
+        {
+          "name": "required",
+          "number": 1,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "jsonName": "required"
+        },
+        {
+          "name": "in",
+          "number": 2,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_STRING",
+          "jsonName": "in"
+        },
+        {
+          "name": "not_in",
+          "number": 3,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_STRING",
+          "jsonName": "notIn"
+        }
+      ]
+    },
+    {
+      "name": "DurationRules",
+      "field": [
+        {
+          "name": "required",
+          "number": 1,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "jsonName": "required"
+        },
+        {
+          "name": "const",
+          "number": 2,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".google.protobuf.Duration",
+          "jsonName": "const"
+        },
+        {
+          "name": "lt",
+          "number": 3,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".google.protobuf.Duration",
+          "jsonName": "lt"
+        },
+        {
+          "name": "lte",
+          "number": 4,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".google.protobuf.Duration",
+          "jsonName": "lte"
+        },
+        {
+          "name": "gt",
+          "number": 5,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".google.protobuf.Duration",
+          "jsonName": "gt"
+        },
+        {
+          "name": "gte",
+          "number": 6,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".google.protobuf.Duration",
+          "jsonName": "gte"
+        },
+        {
+          "name": "in",
+          "number": 7,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".google.protobuf.Duration",
+          "jsonName": "in"
+        },
+        {
+          "name": "not_in",
+          "number": 8,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".google.protobuf.Duration",
+          "jsonName": "notIn"
+        }
+      ]
+    },
+    {
+      "name": "TimestampRules",
+      "field": [
+        {
+          "name": "required",
+          "number": 1,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "jsonName": "required"
+        },
+        {
+          "name": "const",
+          "number": 2,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".google.protobuf.Timestamp",
+          "jsonName": "const"
+        },
+        {
+          "name": "lt",
+          "number": 3,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".google.protobuf.Timestamp",
+          "jsonName": "lt"
+        },
+        {
+          "name": "lte",
+          "number": 4,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".google.protobuf.Timestamp",
+          "jsonName": "lte"
+        },
+        {
+          "name": "gt",
+          "number": 5,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".google.protobuf.Timestamp",
+          "jsonName": "gt"
+        },
+        {
+          "name": "gte",
+          "number": 6,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".google.protobuf.Timestamp",
+          "jsonName": "gte"
+        },
+        {
+          "name": "lt_now",
+          "number": 7,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "jsonName": "ltNow"
+        },
+        {
+          "name": "gt_now",
+          "number": 8,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "jsonName": "gtNow"
+        },
+        {
+          "name": "within",
+          "number": 9,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".google.protobuf.Duration",
+          "jsonName": "within"
+        }
+      ]
+    }
+  ],
+  "service": [],
+  "public_dependency": [],
+  "enum_type": [
+    {
+      "name": "KnownRegex",
+      "value": [
+        {
+          "name": "UNKNOWN",
+          "number": 0
+        },
+        {
+          "name": "HTTP_HEADER_NAME",
+          "number": 1
+        },
+        {
+          "name": "HTTP_HEADER_VALUE",
+          "number": 2
+        }
+      ]
+    }
+  ],
+  "extension": [
+    {
+      "name": "disabled",
+      "extendee": ".google.protobuf.MessageOptions",
+      "number": 1071,
+      "label": "LABEL_OPTIONAL",
+      "type": "TYPE_BOOL",
+      "jsonName": "disabled"
+    },
+    {
+      "name": "ignored",
+      "extendee": ".google.protobuf.MessageOptions",
+      "number": 1072,
+      "label": "LABEL_OPTIONAL",
+      "type": "TYPE_BOOL",
+      "jsonName": "ignored"
+    },
+    {
+      "name": "required",
+      "extendee": ".google.protobuf.OneofOptions",
+      "number": 1071,
+      "label": "LABEL_OPTIONAL",
+      "type": "TYPE_BOOL",
+      "jsonName": "required"
+    },
+    {
+      "name": "rules",
+      "extendee": ".google.protobuf.FieldOptions",
+      "number": 1071,
+      "label": "LABEL_OPTIONAL",
+      "type": "TYPE_MESSAGE",
+      "typeName": ".validate.FieldRules",
+      "jsonName": "rules"
+    }
+  ],
+  "options": {
+    "java_package": "io.envoyproxy.pgv.validate",
+    "go_package": "github.com/envoyproxy/protoc-gen-validate/validate"
+  }
+}

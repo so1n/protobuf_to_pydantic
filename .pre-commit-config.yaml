@@ -3,22 +3,22 @@ repos:
     rev: v0.910
     hooks:
       - id: mypy
-        exclude: "^example/example_proto_python_code/example_proto|^p2p_validate"
+        exclude: "^example/example_proto_python_code/example_proto|example/gen_code.py$|^protobuf_to_pydantic/protos"
   - repo: https://github.com/PyCQA/isort
     rev: 5.9.3
     hooks:
       - id: isort
-        exclude: "^example/example_proto_python_code/example_proto"
+        exclude: "^example/example_proto_python_code/example_proto|^protobuf_to_pydantic/protos"
   - repo: https://github.com/psf/black
     rev: 21.7b0
     hooks:
       - id: black
-        exclude: "^example/example_proto_python_code/example_proto|^tests"
+        exclude: "^example/example_proto_python_code/example_proto|^tests|^protobuf_to_pydantic/protos"
   - repo: https://github.com/PyCQA/flake8
     rev: 3.9.2
     hooks:
       - id: flake8
-        exclude: "^example/example_proto_python_code/example_proto|^tests|^p2p_validate"
+        exclude: "^example/example_proto_python_code/example_proto|^tests|^protobuf_to_pydantic/protos"
   - repo: https://github.com/myint/autoflake
     rev: v1.4
     hooks:

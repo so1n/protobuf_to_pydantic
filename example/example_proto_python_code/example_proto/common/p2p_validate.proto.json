@@ -1,0 +1,4672 @@
+{
+  "package": "p2p_validate",
+  "filename": "example_proto/common/p2p_validate.proto",
+  "dependencies": [
+    "google/protobuf/descriptor.proto",
+    "google/protobuf/duration.proto",
+    "google/protobuf/timestamp.proto"
+  ],
+  "message_type": [
+    {
+      "name": "FieldRules",
+      "field": [
+        {
+          "name": "message",
+          "number": 17,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".p2p_validate.MessageRules",
+          "oneofIndex": 1,
+          "jsonName": "message",
+          "proto3Optional": true
+        },
+        {
+          "name": "float",
+          "number": 1,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".p2p_validate.FloatRules",
+          "oneofIndex": 0,
+          "jsonName": "float"
+        },
+        {
+          "name": "double",
+          "number": 2,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".p2p_validate.DoubleRules",
+          "oneofIndex": 0,
+          "jsonName": "double"
+        },
+        {
+          "name": "int32",
+          "number": 3,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".p2p_validate.Int32Rules",
+          "oneofIndex": 0,
+          "jsonName": "int32"
+        },
+        {
+          "name": "int64",
+          "number": 4,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".p2p_validate.Int64Rules",
+          "oneofIndex": 0,
+          "jsonName": "int64"
+        },
+        {
+          "name": "uint32",
+          "number": 5,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".p2p_validate.UInt32Rules",
+          "oneofIndex": 0,
+          "jsonName": "uint32"
+        },
+        {
+          "name": "uint64",
+          "number": 6,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".p2p_validate.UInt64Rules",
+          "oneofIndex": 0,
+          "jsonName": "uint64"
+        },
+        {
+          "name": "sint32",
+          "number": 7,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".p2p_validate.SInt32Rules",
+          "oneofIndex": 0,
+          "jsonName": "sint32"
+        },
+        {
+          "name": "sint64",
+          "number": 8,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".p2p_validate.SInt64Rules",
+          "oneofIndex": 0,
+          "jsonName": "sint64"
+        },
+        {
+          "name": "fixed32",
+          "number": 9,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".p2p_validate.Fixed32Rules",
+          "oneofIndex": 0,
+          "jsonName": "fixed32"
+        },
+        {
+          "name": "fixed64",
+          "number": 10,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".p2p_validate.Fixed64Rules",
+          "oneofIndex": 0,
+          "jsonName": "fixed64"
+        },
+        {
+          "name": "sfixed32",
+          "number": 11,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".p2p_validate.SFixed32Rules",
+          "oneofIndex": 0,
+          "jsonName": "sfixed32"
+        },
+        {
+          "name": "sfixed64",
+          "number": 12,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".p2p_validate.SFixed64Rules",
+          "oneofIndex": 0,
+          "jsonName": "sfixed64"
+        },
+        {
+          "name": "bool",
+          "number": 13,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".p2p_validate.BoolRules",
+          "oneofIndex": 0,
+          "jsonName": "bool"
+        },
+        {
+          "name": "string",
+          "number": 14,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".p2p_validate.StringRules",
+          "oneofIndex": 0,
+          "jsonName": "string"
+        },
+        {
+          "name": "bytes",
+          "number": 15,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".p2p_validate.BytesRules",
+          "oneofIndex": 0,
+          "jsonName": "bytes"
+        },
+        {
+          "name": "enum",
+          "number": 16,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".p2p_validate.EnumRules",
+          "oneofIndex": 0,
+          "jsonName": "enum"
+        },
+        {
+          "name": "repeated",
+          "number": 18,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".p2p_validate.RepeatedRules",
+          "oneofIndex": 0,
+          "jsonName": "repeated"
+        },
+        {
+          "name": "map",
+          "number": 19,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".p2p_validate.MapRules",
+          "oneofIndex": 0,
+          "jsonName": "map"
+        },
+        {
+          "name": "any",
+          "number": 20,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".p2p_validate.AnyRules",
+          "oneofIndex": 0,
+          "jsonName": "any"
+        },
+        {
+          "name": "duration",
+          "number": 21,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".p2p_validate.DurationRules",
+          "oneofIndex": 0,
+          "jsonName": "duration"
+        },
+        {
+          "name": "timestamp",
+          "number": 22,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".p2p_validate.TimestampRules",
+          "oneofIndex": 0,
+          "jsonName": "timestamp"
+        }
+      ],
+      "oneofDecl": [
+        {
+          "name": "type"
+        },
+        {
+          "name": "_message"
+        }
+      ]
+    },
+    {
+      "name": "FloatRules",
+      "field": [
+        {
+          "name": "const",
+          "number": 1,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "oneofIndex": 2,
+          "jsonName": "const",
+          "proto3Optional": true
+        },
+        {
+          "name": "lt",
+          "number": 2,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "oneofIndex": 3,
+          "jsonName": "lt",
+          "proto3Optional": true
+        },
+        {
+          "name": "le",
+          "number": 3,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "oneofIndex": 4,
+          "jsonName": "le",
+          "proto3Optional": true
+        },
+        {
+          "name": "gt",
+          "number": 4,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "oneofIndex": 5,
+          "jsonName": "gt",
+          "proto3Optional": true
+        },
+        {
+          "name": "ge",
+          "number": 5,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "oneofIndex": 6,
+          "jsonName": "ge",
+          "proto3Optional": true
+        },
+        {
+          "name": "in",
+          "number": 6,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_FLOAT",
+          "jsonName": "in"
+        },
+        {
+          "name": "not_in",
+          "number": 7,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_FLOAT",
+          "jsonName": "notIn"
+        },
+        {
+          "name": "enable",
+          "number": 8,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 7,
+          "jsonName": "enable",
+          "proto3Optional": true
+        },
+        {
+          "name": "default",
+          "number": 9,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "oneofIndex": 0,
+          "jsonName": "default"
+        },
+        {
+          "name": "default_factory",
+          "number": 10,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 0,
+          "jsonName": "defaultFactory"
+        },
+        {
+          "name": "miss_default",
+          "number": 11,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 0,
+          "jsonName": "missDefault"
+        },
+        {
+          "name": "alias",
+          "number": 12,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 8,
+          "jsonName": "alias",
+          "proto3Optional": true
+        },
+        {
+          "name": "description",
+          "number": 13,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 9,
+          "jsonName": "description",
+          "proto3Optional": true
+        },
+        {
+          "name": "multiple_of",
+          "number": 14,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "oneofIndex": 10,
+          "jsonName": "multipleOf",
+          "proto3Optional": true
+        },
+        {
+          "name": "example",
+          "number": 15,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "oneofIndex": 1,
+          "jsonName": "example"
+        },
+        {
+          "name": "example_factory",
+          "number": 16,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 1,
+          "jsonName": "exampleFactory"
+        },
+        {
+          "name": "field",
+          "number": 17,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 11,
+          "jsonName": "field",
+          "proto3Optional": true
+        },
+        {
+          "name": "type",
+          "number": 18,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 12,
+          "jsonName": "type",
+          "proto3Optional": true
+        },
+        {
+          "name": "title",
+          "number": 19,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 13,
+          "jsonName": "title",
+          "proto3Optional": true
+        }
+      ],
+      "oneofDecl": [
+        {
+          "name": "default_config"
+        },
+        {
+          "name": "example_config"
+        },
+        {
+          "name": "_const"
+        },
+        {
+          "name": "_lt"
+        },
+        {
+          "name": "_le"
+        },
+        {
+          "name": "_gt"
+        },
+        {
+          "name": "_ge"
+        },
+        {
+          "name": "_enable"
+        },
+        {
+          "name": "_alias"
+        },
+        {
+          "name": "_description"
+        },
+        {
+          "name": "_multiple_of"
+        },
+        {
+          "name": "_field"
+        },
+        {
+          "name": "_type"
+        },
+        {
+          "name": "_title"
+        }
+      ]
+    },
+    {
+      "name": "DoubleRules",
+      "field": [
+        {
+          "name": "const",
+          "number": 1,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_DOUBLE",
+          "oneofIndex": 2,
+          "jsonName": "const",
+          "proto3Optional": true
+        },
+        {
+          "name": "lt",
+          "number": 2,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_DOUBLE",
+          "oneofIndex": 3,
+          "jsonName": "lt",
+          "proto3Optional": true
+        },
+        {
+          "name": "le",
+          "number": 3,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_DOUBLE",
+          "oneofIndex": 4,
+          "jsonName": "le",
+          "proto3Optional": true
+        },
+        {
+          "name": "gt",
+          "number": 4,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_DOUBLE",
+          "oneofIndex": 5,
+          "jsonName": "gt",
+          "proto3Optional": true
+        },
+        {
+          "name": "ge",
+          "number": 5,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_DOUBLE",
+          "oneofIndex": 6,
+          "jsonName": "ge",
+          "proto3Optional": true
+        },
+        {
+          "name": "in",
+          "number": 6,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_DOUBLE",
+          "jsonName": "in"
+        },
+        {
+          "name": "not_in",
+          "number": 7,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_DOUBLE",
+          "jsonName": "notIn"
+        },
+        {
+          "name": "enable",
+          "number": 8,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 7,
+          "jsonName": "enable",
+          "proto3Optional": true
+        },
+        {
+          "name": "default",
+          "number": 9,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "oneofIndex": 0,
+          "jsonName": "default"
+        },
+        {
+          "name": "default_factory",
+          "number": 10,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 0,
+          "jsonName": "defaultFactory"
+        },
+        {
+          "name": "miss_default",
+          "number": 11,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 0,
+          "jsonName": "missDefault"
+        },
+        {
+          "name": "alias",
+          "number": 12,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 8,
+          "jsonName": "alias",
+          "proto3Optional": true
+        },
+        {
+          "name": "description",
+          "number": 13,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 9,
+          "jsonName": "description",
+          "proto3Optional": true
+        },
+        {
+          "name": "multiple_of",
+          "number": 14,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "oneofIndex": 10,
+          "jsonName": "multipleOf",
+          "proto3Optional": true
+        },
+        {
+          "name": "example",
+          "number": 15,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "oneofIndex": 1,
+          "jsonName": "example"
+        },
+        {
+          "name": "example_factory",
+          "number": 16,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 1,
+          "jsonName": "exampleFactory"
+        },
+        {
+          "name": "field",
+          "number": 17,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 11,
+          "jsonName": "field",
+          "proto3Optional": true
+        },
+        {
+          "name": "type",
+          "number": 18,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 12,
+          "jsonName": "type",
+          "proto3Optional": true
+        },
+        {
+          "name": "title",
+          "number": 19,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 13,
+          "jsonName": "title",
+          "proto3Optional": true
+        }
+      ],
+      "oneofDecl": [
+        {
+          "name": "default_config"
+        },
+        {
+          "name": "example_config"
+        },
+        {
+          "name": "_const"
+        },
+        {
+          "name": "_lt"
+        },
+        {
+          "name": "_le"
+        },
+        {
+          "name": "_gt"
+        },
+        {
+          "name": "_ge"
+        },
+        {
+          "name": "_enable"
+        },
+        {
+          "name": "_alias"
+        },
+        {
+          "name": "_description"
+        },
+        {
+          "name": "_multiple_of"
+        },
+        {
+          "name": "_field"
+        },
+        {
+          "name": "_type"
+        },
+        {
+          "name": "_title"
+        }
+      ]
+    },
+    {
+      "name": "Int32Rules",
+      "field": [
+        {
+          "name": "const",
+          "number": 1,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_INT32",
+          "oneofIndex": 2,
+          "jsonName": "const",
+          "proto3Optional": true
+        },
+        {
+          "name": "lt",
+          "number": 2,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_INT32",
+          "oneofIndex": 3,
+          "jsonName": "lt",
+          "proto3Optional": true
+        },
+        {
+          "name": "le",
+          "number": 3,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_INT32",
+          "oneofIndex": 4,
+          "jsonName": "le",
+          "proto3Optional": true
+        },
+        {
+          "name": "gt",
+          "number": 4,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_INT32",
+          "oneofIndex": 5,
+          "jsonName": "gt",
+          "proto3Optional": true
+        },
+        {
+          "name": "ge",
+          "number": 5,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_INT32",
+          "oneofIndex": 6,
+          "jsonName": "ge",
+          "proto3Optional": true
+        },
+        {
+          "name": "in",
+          "number": 6,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_INT32",
+          "jsonName": "in"
+        },
+        {
+          "name": "not_in",
+          "number": 7,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_INT32",
+          "jsonName": "notIn"
+        },
+        {
+          "name": "enable",
+          "number": 8,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 7,
+          "jsonName": "enable",
+          "proto3Optional": true
+        },
+        {
+          "name": "default",
+          "number": 9,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "oneofIndex": 0,
+          "jsonName": "default"
+        },
+        {
+          "name": "default_factory",
+          "number": 10,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 0,
+          "jsonName": "defaultFactory"
+        },
+        {
+          "name": "miss_default",
+          "number": 11,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 0,
+          "jsonName": "missDefault"
+        },
+        {
+          "name": "alias",
+          "number": 12,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 8,
+          "jsonName": "alias",
+          "proto3Optional": true
+        },
+        {
+          "name": "description",
+          "number": 13,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 9,
+          "jsonName": "description",
+          "proto3Optional": true
+        },
+        {
+          "name": "multiple_of",
+          "number": 14,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "oneofIndex": 10,
+          "jsonName": "multipleOf",
+          "proto3Optional": true
+        },
+        {
+          "name": "example",
+          "number": 15,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "oneofIndex": 1,
+          "jsonName": "example"
+        },
+        {
+          "name": "example_factory",
+          "number": 16,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 1,
+          "jsonName": "exampleFactory"
+        },
+        {
+          "name": "field",
+          "number": 17,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 11,
+          "jsonName": "field",
+          "proto3Optional": true
+        },
+        {
+          "name": "type",
+          "number": 18,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 12,
+          "jsonName": "type",
+          "proto3Optional": true
+        },
+        {
+          "name": "title",
+          "number": 19,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 13,
+          "jsonName": "title",
+          "proto3Optional": true
+        }
+      ],
+      "oneofDecl": [
+        {
+          "name": "default_config"
+        },
+        {
+          "name": "example_config"
+        },
+        {
+          "name": "_const"
+        },
+        {
+          "name": "_lt"
+        },
+        {
+          "name": "_le"
+        },
+        {
+          "name": "_gt"
+        },
+        {
+          "name": "_ge"
+        },
+        {
+          "name": "_enable"
+        },
+        {
+          "name": "_alias"
+        },
+        {
+          "name": "_description"
+        },
+        {
+          "name": "_multiple_of"
+        },
+        {
+          "name": "_field"
+        },
+        {
+          "name": "_type"
+        },
+        {
+          "name": "_title"
+        }
+      ]
+    },
+    {
+      "name": "Int64Rules",
+      "field": [
+        {
+          "name": "const",
+          "number": 1,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_INT64",
+          "oneofIndex": 2,
+          "jsonName": "const",
+          "proto3Optional": true
+        },
+        {
+          "name": "lt",
+          "number": 2,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_INT64",
+          "oneofIndex": 3,
+          "jsonName": "lt",
+          "proto3Optional": true
+        },
+        {
+          "name": "le",
+          "number": 3,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_INT64",
+          "oneofIndex": 4,
+          "jsonName": "le",
+          "proto3Optional": true
+        },
+        {
+          "name": "gt",
+          "number": 4,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_INT64",
+          "oneofIndex": 5,
+          "jsonName": "gt",
+          "proto3Optional": true
+        },
+        {
+          "name": "ge",
+          "number": 5,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_INT64",
+          "oneofIndex": 6,
+          "jsonName": "ge",
+          "proto3Optional": true
+        },
+        {
+          "name": "in",
+          "number": 6,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_INT64",
+          "jsonName": "in"
+        },
+        {
+          "name": "not_in",
+          "number": 7,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_INT64",
+          "jsonName": "notIn"
+        },
+        {
+          "name": "enable",
+          "number": 8,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 7,
+          "jsonName": "enable",
+          "proto3Optional": true
+        },
+        {
+          "name": "default",
+          "number": 9,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "oneofIndex": 0,
+          "jsonName": "default"
+        },
+        {
+          "name": "default_factory",
+          "number": 10,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 0,
+          "jsonName": "defaultFactory"
+        },
+        {
+          "name": "miss_default",
+          "number": 11,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 0,
+          "jsonName": "missDefault"
+        },
+        {
+          "name": "alias",
+          "number": 12,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 8,
+          "jsonName": "alias",
+          "proto3Optional": true
+        },
+        {
+          "name": "description",
+          "number": 13,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 9,
+          "jsonName": "description",
+          "proto3Optional": true
+        },
+        {
+          "name": "multiple_of",
+          "number": 14,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "oneofIndex": 10,
+          "jsonName": "multipleOf",
+          "proto3Optional": true
+        },
+        {
+          "name": "example",
+          "number": 15,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "oneofIndex": 1,
+          "jsonName": "example"
+        },
+        {
+          "name": "example_factory",
+          "number": 16,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 1,
+          "jsonName": "exampleFactory"
+        },
+        {
+          "name": "field",
+          "number": 17,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 11,
+          "jsonName": "field",
+          "proto3Optional": true
+        },
+        {
+          "name": "type",
+          "number": 18,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 12,
+          "jsonName": "type",
+          "proto3Optional": true
+        },
+        {
+          "name": "title",
+          "number": 19,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 13,
+          "jsonName": "title",
+          "proto3Optional": true
+        }
+      ],
+      "oneofDecl": [
+        {
+          "name": "default_config"
+        },
+        {
+          "name": "example_config"
+        },
+        {
+          "name": "_const"
+        },
+        {
+          "name": "_lt"
+        },
+        {
+          "name": "_le"
+        },
+        {
+          "name": "_gt"
+        },
+        {
+          "name": "_ge"
+        },
+        {
+          "name": "_enable"
+        },
+        {
+          "name": "_alias"
+        },
+        {
+          "name": "_description"
+        },
+        {
+          "name": "_multiple_of"
+        },
+        {
+          "name": "_field"
+        },
+        {
+          "name": "_type"
+        },
+        {
+          "name": "_title"
+        }
+      ]
+    },
+    {
+      "name": "UInt32Rules",
+      "field": [
+        {
+          "name": "const",
+          "number": 1,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_UINT32",
+          "oneofIndex": 2,
+          "jsonName": "const",
+          "proto3Optional": true
+        },
+        {
+          "name": "lt",
+          "number": 2,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_UINT32",
+          "oneofIndex": 3,
+          "jsonName": "lt",
+          "proto3Optional": true
+        },
+        {
+          "name": "le",
+          "number": 3,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_UINT32",
+          "oneofIndex": 4,
+          "jsonName": "le",
+          "proto3Optional": true
+        },
+        {
+          "name": "gt",
+          "number": 4,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_UINT32",
+          "oneofIndex": 5,
+          "jsonName": "gt",
+          "proto3Optional": true
+        },
+        {
+          "name": "ge",
+          "number": 5,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_UINT32",
+          "oneofIndex": 6,
+          "jsonName": "ge",
+          "proto3Optional": true
+        },
+        {
+          "name": "in",
+          "number": 6,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_UINT32",
+          "jsonName": "in"
+        },
+        {
+          "name": "not_in",
+          "number": 7,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_UINT32",
+          "jsonName": "notIn"
+        },
+        {
+          "name": "enable",
+          "number": 8,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 7,
+          "jsonName": "enable",
+          "proto3Optional": true
+        },
+        {
+          "name": "default",
+          "number": 9,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "oneofIndex": 0,
+          "jsonName": "default"
+        },
+        {
+          "name": "default_factory",
+          "number": 10,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 0,
+          "jsonName": "defaultFactory"
+        },
+        {
+          "name": "miss_default",
+          "number": 11,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 0,
+          "jsonName": "missDefault"
+        },
+        {
+          "name": "alias",
+          "number": 12,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 8,
+          "jsonName": "alias",
+          "proto3Optional": true
+        },
+        {
+          "name": "description",
+          "number": 13,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 9,
+          "jsonName": "description",
+          "proto3Optional": true
+        },
+        {
+          "name": "multiple_of",
+          "number": 14,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "oneofIndex": 10,
+          "jsonName": "multipleOf",
+          "proto3Optional": true
+        },
+        {
+          "name": "example",
+          "number": 15,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "oneofIndex": 1,
+          "jsonName": "example"
+        },
+        {
+          "name": "example_factory",
+          "number": 16,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 1,
+          "jsonName": "exampleFactory"
+        },
+        {
+          "name": "field",
+          "number": 17,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 11,
+          "jsonName": "field",
+          "proto3Optional": true
+        },
+        {
+          "name": "type",
+          "number": 18,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 12,
+          "jsonName": "type",
+          "proto3Optional": true
+        },
+        {
+          "name": "title",
+          "number": 19,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 13,
+          "jsonName": "title",
+          "proto3Optional": true
+        }
+      ],
+      "oneofDecl": [
+        {
+          "name": "default_config"
+        },
+        {
+          "name": "example_config"
+        },
+        {
+          "name": "_const"
+        },
+        {
+          "name": "_lt"
+        },
+        {
+          "name": "_le"
+        },
+        {
+          "name": "_gt"
+        },
+        {
+          "name": "_ge"
+        },
+        {
+          "name": "_enable"
+        },
+        {
+          "name": "_alias"
+        },
+        {
+          "name": "_description"
+        },
+        {
+          "name": "_multiple_of"
+        },
+        {
+          "name": "_field"
+        },
+        {
+          "name": "_type"
+        },
+        {
+          "name": "_title"
+        }
+      ]
+    },
+    {
+      "name": "UInt64Rules",
+      "field": [
+        {
+          "name": "const",
+          "number": 1,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_UINT64",
+          "oneofIndex": 2,
+          "jsonName": "const",
+          "proto3Optional": true
+        },
+        {
+          "name": "lt",
+          "number": 2,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_UINT64",
+          "oneofIndex": 3,
+          "jsonName": "lt",
+          "proto3Optional": true
+        },
+        {
+          "name": "le",
+          "number": 3,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_UINT64",
+          "oneofIndex": 4,
+          "jsonName": "le",
+          "proto3Optional": true
+        },
+        {
+          "name": "gt",
+          "number": 4,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_UINT64",
+          "oneofIndex": 5,
+          "jsonName": "gt",
+          "proto3Optional": true
+        },
+        {
+          "name": "ge",
+          "number": 5,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_UINT64",
+          "oneofIndex": 6,
+          "jsonName": "ge",
+          "proto3Optional": true
+        },
+        {
+          "name": "in",
+          "number": 6,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_UINT64",
+          "jsonName": "in"
+        },
+        {
+          "name": "not_in",
+          "number": 7,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_UINT64",
+          "jsonName": "notIn"
+        },
+        {
+          "name": "enable",
+          "number": 8,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 7,
+          "jsonName": "enable",
+          "proto3Optional": true
+        },
+        {
+          "name": "default",
+          "number": 9,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "oneofIndex": 0,
+          "jsonName": "default"
+        },
+        {
+          "name": "default_factory",
+          "number": 10,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 0,
+          "jsonName": "defaultFactory"
+        },
+        {
+          "name": "miss_default",
+          "number": 11,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 0,
+          "jsonName": "missDefault"
+        },
+        {
+          "name": "alias",
+          "number": 12,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 8,
+          "jsonName": "alias",
+          "proto3Optional": true
+        },
+        {
+          "name": "description",
+          "number": 13,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 9,
+          "jsonName": "description",
+          "proto3Optional": true
+        },
+        {
+          "name": "multiple_of",
+          "number": 14,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "oneofIndex": 10,
+          "jsonName": "multipleOf",
+          "proto3Optional": true
+        },
+        {
+          "name": "example",
+          "number": 15,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "oneofIndex": 1,
+          "jsonName": "example"
+        },
+        {
+          "name": "example_factory",
+          "number": 16,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 1,
+          "jsonName": "exampleFactory"
+        },
+        {
+          "name": "field",
+          "number": 17,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 11,
+          "jsonName": "field",
+          "proto3Optional": true
+        },
+        {
+          "name": "type",
+          "number": 18,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 12,
+          "jsonName": "type",
+          "proto3Optional": true
+        },
+        {
+          "name": "title",
+          "number": 19,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 13,
+          "jsonName": "title",
+          "proto3Optional": true
+        }
+      ],
+      "oneofDecl": [
+        {
+          "name": "default_config"
+        },
+        {
+          "name": "example_config"
+        },
+        {
+          "name": "_const"
+        },
+        {
+          "name": "_lt"
+        },
+        {
+          "name": "_le"
+        },
+        {
+          "name": "_gt"
+        },
+        {
+          "name": "_ge"
+        },
+        {
+          "name": "_enable"
+        },
+        {
+          "name": "_alias"
+        },
+        {
+          "name": "_description"
+        },
+        {
+          "name": "_multiple_of"
+        },
+        {
+          "name": "_field"
+        },
+        {
+          "name": "_type"
+        },
+        {
+          "name": "_title"
+        }
+      ]
+    },
+    {
+      "name": "SInt32Rules",
+      "field": [
+        {
+          "name": "const",
+          "number": 1,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_SINT32",
+          "oneofIndex": 2,
+          "jsonName": "const",
+          "proto3Optional": true
+        },
+        {
+          "name": "lt",
+          "number": 2,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_SINT32",
+          "oneofIndex": 3,
+          "jsonName": "lt",
+          "proto3Optional": true
+        },
+        {
+          "name": "le",
+          "number": 3,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_SINT32",
+          "oneofIndex": 4,
+          "jsonName": "le",
+          "proto3Optional": true
+        },
+        {
+          "name": "gt",
+          "number": 4,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_SINT32",
+          "oneofIndex": 5,
+          "jsonName": "gt",
+          "proto3Optional": true
+        },
+        {
+          "name": "ge",
+          "number": 5,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_SINT32",
+          "oneofIndex": 6,
+          "jsonName": "ge",
+          "proto3Optional": true
+        },
+        {
+          "name": "in",
+          "number": 6,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_SINT32",
+          "jsonName": "in"
+        },
+        {
+          "name": "not_in",
+          "number": 7,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_SINT32",
+          "jsonName": "notIn"
+        },
+        {
+          "name": "enable",
+          "number": 8,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 7,
+          "jsonName": "enable",
+          "proto3Optional": true
+        },
+        {
+          "name": "default",
+          "number": 9,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "oneofIndex": 0,
+          "jsonName": "default"
+        },
+        {
+          "name": "default_factory",
+          "number": 10,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 0,
+          "jsonName": "defaultFactory"
+        },
+        {
+          "name": "miss_default",
+          "number": 11,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 0,
+          "jsonName": "missDefault"
+        },
+        {
+          "name": "alias",
+          "number": 12,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 8,
+          "jsonName": "alias",
+          "proto3Optional": true
+        },
+        {
+          "name": "description",
+          "number": 13,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 9,
+          "jsonName": "description",
+          "proto3Optional": true
+        },
+        {
+          "name": "multiple_of",
+          "number": 14,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "oneofIndex": 10,
+          "jsonName": "multipleOf",
+          "proto3Optional": true
+        },
+        {
+          "name": "example",
+          "number": 15,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "oneofIndex": 1,
+          "jsonName": "example"
+        },
+        {
+          "name": "example_factory",
+          "number": 16,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 1,
+          "jsonName": "exampleFactory"
+        },
+        {
+          "name": "field",
+          "number": 17,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 11,
+          "jsonName": "field",
+          "proto3Optional": true
+        },
+        {
+          "name": "type",
+          "number": 18,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 12,
+          "jsonName": "type",
+          "proto3Optional": true
+        },
+        {
+          "name": "title",
+          "number": 19,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 13,
+          "jsonName": "title",
+          "proto3Optional": true
+        }
+      ],
+      "oneofDecl": [
+        {
+          "name": "default_config"
+        },
+        {
+          "name": "example_config"
+        },
+        {
+          "name": "_const"
+        },
+        {
+          "name": "_lt"
+        },
+        {
+          "name": "_le"
+        },
+        {
+          "name": "_gt"
+        },
+        {
+          "name": "_ge"
+        },
+        {
+          "name": "_enable"
+        },
+        {
+          "name": "_alias"
+        },
+        {
+          "name": "_description"
+        },
+        {
+          "name": "_multiple_of"
+        },
+        {
+          "name": "_field"
+        },
+        {
+          "name": "_type"
+        },
+        {
+          "name": "_title"
+        }
+      ]
+    },
+    {
+      "name": "SInt64Rules",
+      "field": [
+        {
+          "name": "const",
+          "number": 1,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_SINT64",
+          "oneofIndex": 2,
+          "jsonName": "const",
+          "proto3Optional": true
+        },
+        {
+          "name": "lt",
+          "number": 2,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_SINT64",
+          "oneofIndex": 3,
+          "jsonName": "lt",
+          "proto3Optional": true
+        },
+        {
+          "name": "le",
+          "number": 3,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_SINT64",
+          "oneofIndex": 4,
+          "jsonName": "le",
+          "proto3Optional": true
+        },
+        {
+          "name": "gt",
+          "number": 4,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_SINT64",
+          "oneofIndex": 5,
+          "jsonName": "gt",
+          "proto3Optional": true
+        },
+        {
+          "name": "ge",
+          "number": 5,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_SINT64",
+          "oneofIndex": 6,
+          "jsonName": "ge",
+          "proto3Optional": true
+        },
+        {
+          "name": "in",
+          "number": 6,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_SINT64",
+          "jsonName": "in"
+        },
+        {
+          "name": "not_in",
+          "number": 7,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_SINT64",
+          "jsonName": "notIn"
+        },
+        {
+          "name": "enable",
+          "number": 8,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 7,
+          "jsonName": "enable",
+          "proto3Optional": true
+        },
+        {
+          "name": "default",
+          "number": 9,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "oneofIndex": 0,
+          "jsonName": "default"
+        },
+        {
+          "name": "default_factory",
+          "number": 10,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 0,
+          "jsonName": "defaultFactory"
+        },
+        {
+          "name": "miss_default",
+          "number": 11,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 0,
+          "jsonName": "missDefault"
+        },
+        {
+          "name": "alias",
+          "number": 12,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 8,
+          "jsonName": "alias",
+          "proto3Optional": true
+        },
+        {
+          "name": "description",
+          "number": 13,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 9,
+          "jsonName": "description",
+          "proto3Optional": true
+        },
+        {
+          "name": "multiple_of",
+          "number": 14,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "oneofIndex": 10,
+          "jsonName": "multipleOf",
+          "proto3Optional": true
+        },
+        {
+          "name": "example",
+          "number": 15,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "oneofIndex": 1,
+          "jsonName": "example"
+        },
+        {
+          "name": "example_factory",
+          "number": 16,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 1,
+          "jsonName": "exampleFactory"
+        },
+        {
+          "name": "field",
+          "number": 17,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 11,
+          "jsonName": "field",
+          "proto3Optional": true
+        },
+        {
+          "name": "type",
+          "number": 18,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 12,
+          "jsonName": "type",
+          "proto3Optional": true
+        },
+        {
+          "name": "title",
+          "number": 19,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 13,
+          "jsonName": "title",
+          "proto3Optional": true
+        }
+      ],
+      "oneofDecl": [
+        {
+          "name": "default_config"
+        },
+        {
+          "name": "example_config"
+        },
+        {
+          "name": "_const"
+        },
+        {
+          "name": "_lt"
+        },
+        {
+          "name": "_le"
+        },
+        {
+          "name": "_gt"
+        },
+        {
+          "name": "_ge"
+        },
+        {
+          "name": "_enable"
+        },
+        {
+          "name": "_alias"
+        },
+        {
+          "name": "_description"
+        },
+        {
+          "name": "_multiple_of"
+        },
+        {
+          "name": "_field"
+        },
+        {
+          "name": "_type"
+        },
+        {
+          "name": "_title"
+        }
+      ]
+    },
+    {
+      "name": "Fixed32Rules",
+      "field": [
+        {
+          "name": "const",
+          "number": 1,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FIXED32",
+          "oneofIndex": 2,
+          "jsonName": "const",
+          "proto3Optional": true
+        },
+        {
+          "name": "lt",
+          "number": 2,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FIXED32",
+          "oneofIndex": 3,
+          "jsonName": "lt",
+          "proto3Optional": true
+        },
+        {
+          "name": "le",
+          "number": 3,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FIXED32",
+          "oneofIndex": 4,
+          "jsonName": "le",
+          "proto3Optional": true
+        },
+        {
+          "name": "gt",
+          "number": 4,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FIXED32",
+          "oneofIndex": 5,
+          "jsonName": "gt",
+          "proto3Optional": true
+        },
+        {
+          "name": "ge",
+          "number": 5,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FIXED32",
+          "oneofIndex": 6,
+          "jsonName": "ge",
+          "proto3Optional": true
+        },
+        {
+          "name": "in",
+          "number": 6,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_FIXED32",
+          "jsonName": "in"
+        },
+        {
+          "name": "not_in",
+          "number": 7,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_FIXED32",
+          "jsonName": "notIn"
+        },
+        {
+          "name": "enable",
+          "number": 8,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 7,
+          "jsonName": "enable",
+          "proto3Optional": true
+        },
+        {
+          "name": "default",
+          "number": 9,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "oneofIndex": 0,
+          "jsonName": "default"
+        },
+        {
+          "name": "default_factory",
+          "number": 10,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 0,
+          "jsonName": "defaultFactory"
+        },
+        {
+          "name": "miss_default",
+          "number": 11,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 0,
+          "jsonName": "missDefault"
+        },
+        {
+          "name": "alias",
+          "number": 12,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 8,
+          "jsonName": "alias",
+          "proto3Optional": true
+        },
+        {
+          "name": "description",
+          "number": 13,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 9,
+          "jsonName": "description",
+          "proto3Optional": true
+        },
+        {
+          "name": "multiple_of",
+          "number": 14,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "oneofIndex": 10,
+          "jsonName": "multipleOf",
+          "proto3Optional": true
+        },
+        {
+          "name": "example",
+          "number": 15,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "oneofIndex": 1,
+          "jsonName": "example"
+        },
+        {
+          "name": "example_factory",
+          "number": 16,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 1,
+          "jsonName": "exampleFactory"
+        },
+        {
+          "name": "field",
+          "number": 17,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 11,
+          "jsonName": "field",
+          "proto3Optional": true
+        },
+        {
+          "name": "type",
+          "number": 18,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 12,
+          "jsonName": "type",
+          "proto3Optional": true
+        },
+        {
+          "name": "title",
+          "number": 19,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 13,
+          "jsonName": "title",
+          "proto3Optional": true
+        }
+      ],
+      "oneofDecl": [
+        {
+          "name": "default_config"
+        },
+        {
+          "name": "example_config"
+        },
+        {
+          "name": "_const"
+        },
+        {
+          "name": "_lt"
+        },
+        {
+          "name": "_le"
+        },
+        {
+          "name": "_gt"
+        },
+        {
+          "name": "_ge"
+        },
+        {
+          "name": "_enable"
+        },
+        {
+          "name": "_alias"
+        },
+        {
+          "name": "_description"
+        },
+        {
+          "name": "_multiple_of"
+        },
+        {
+          "name": "_field"
+        },
+        {
+          "name": "_type"
+        },
+        {
+          "name": "_title"
+        }
+      ]
+    },
+    {
+      "name": "Fixed64Rules",
+      "field": [
+        {
+          "name": "const",
+          "number": 1,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FIXED64",
+          "oneofIndex": 2,
+          "jsonName": "const",
+          "proto3Optional": true
+        },
+        {
+          "name": "lt",
+          "number": 2,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FIXED64",
+          "oneofIndex": 3,
+          "jsonName": "lt",
+          "proto3Optional": true
+        },
+        {
+          "name": "le",
+          "number": 3,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FIXED64",
+          "oneofIndex": 4,
+          "jsonName": "le",
+          "proto3Optional": true
+        },
+        {
+          "name": "gt",
+          "number": 4,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FIXED64",
+          "oneofIndex": 5,
+          "jsonName": "gt",
+          "proto3Optional": true
+        },
+        {
+          "name": "ge",
+          "number": 5,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FIXED64",
+          "oneofIndex": 6,
+          "jsonName": "ge",
+          "proto3Optional": true
+        },
+        {
+          "name": "in",
+          "number": 6,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_FIXED64",
+          "jsonName": "in"
+        },
+        {
+          "name": "not_in",
+          "number": 7,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_FIXED64",
+          "jsonName": "notIn"
+        },
+        {
+          "name": "enable",
+          "number": 8,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 7,
+          "jsonName": "enable",
+          "proto3Optional": true
+        },
+        {
+          "name": "default",
+          "number": 9,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "oneofIndex": 0,
+          "jsonName": "default"
+        },
+        {
+          "name": "default_factory",
+          "number": 10,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 0,
+          "jsonName": "defaultFactory"
+        },
+        {
+          "name": "miss_default",
+          "number": 11,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 0,
+          "jsonName": "missDefault"
+        },
+        {
+          "name": "alias",
+          "number": 12,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 8,
+          "jsonName": "alias",
+          "proto3Optional": true
+        },
+        {
+          "name": "description",
+          "number": 13,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 9,
+          "jsonName": "description",
+          "proto3Optional": true
+        },
+        {
+          "name": "multiple_of",
+          "number": 14,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "oneofIndex": 10,
+          "jsonName": "multipleOf",
+          "proto3Optional": true
+        },
+        {
+          "name": "example",
+          "number": 15,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "oneofIndex": 1,
+          "jsonName": "example"
+        },
+        {
+          "name": "example_factory",
+          "number": 16,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 1,
+          "jsonName": "exampleFactory"
+        },
+        {
+          "name": "field",
+          "number": 17,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 11,
+          "jsonName": "field",
+          "proto3Optional": true
+        },
+        {
+          "name": "type",
+          "number": 18,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 12,
+          "jsonName": "type",
+          "proto3Optional": true
+        },
+        {
+          "name": "title",
+          "number": 19,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 13,
+          "jsonName": "title",
+          "proto3Optional": true
+        }
+      ],
+      "oneofDecl": [
+        {
+          "name": "default_config"
+        },
+        {
+          "name": "example_config"
+        },
+        {
+          "name": "_const"
+        },
+        {
+          "name": "_lt"
+        },
+        {
+          "name": "_le"
+        },
+        {
+          "name": "_gt"
+        },
+        {
+          "name": "_ge"
+        },
+        {
+          "name": "_enable"
+        },
+        {
+          "name": "_alias"
+        },
+        {
+          "name": "_description"
+        },
+        {
+          "name": "_multiple_of"
+        },
+        {
+          "name": "_field"
+        },
+        {
+          "name": "_type"
+        },
+        {
+          "name": "_title"
+        }
+      ]
+    },
+    {
+      "name": "SFixed32Rules",
+      "field": [
+        {
+          "name": "const",
+          "number": 1,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_SFIXED32",
+          "oneofIndex": 2,
+          "jsonName": "const",
+          "proto3Optional": true
+        },
+        {
+          "name": "lt",
+          "number": 2,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_SFIXED32",
+          "oneofIndex": 3,
+          "jsonName": "lt",
+          "proto3Optional": true
+        },
+        {
+          "name": "le",
+          "number": 3,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_SFIXED32",
+          "oneofIndex": 4,
+          "jsonName": "le",
+          "proto3Optional": true
+        },
+        {
+          "name": "gt",
+          "number": 4,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_SFIXED32",
+          "oneofIndex": 5,
+          "jsonName": "gt",
+          "proto3Optional": true
+        },
+        {
+          "name": "ge",
+          "number": 5,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_SFIXED32",
+          "oneofIndex": 6,
+          "jsonName": "ge",
+          "proto3Optional": true
+        },
+        {
+          "name": "in",
+          "number": 6,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_SFIXED32",
+          "jsonName": "in"
+        },
+        {
+          "name": "not_in",
+          "number": 7,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_SFIXED32",
+          "jsonName": "notIn"
+        },
+        {
+          "name": "enable",
+          "number": 8,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 7,
+          "jsonName": "enable",
+          "proto3Optional": true
+        },
+        {
+          "name": "default",
+          "number": 9,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "oneofIndex": 0,
+          "jsonName": "default"
+        },
+        {
+          "name": "default_factory",
+          "number": 10,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 0,
+          "jsonName": "defaultFactory"
+        },
+        {
+          "name": "miss_default",
+          "number": 11,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 0,
+          "jsonName": "missDefault"
+        },
+        {
+          "name": "alias",
+          "number": 12,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 8,
+          "jsonName": "alias",
+          "proto3Optional": true
+        },
+        {
+          "name": "description",
+          "number": 13,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 9,
+          "jsonName": "description",
+          "proto3Optional": true
+        },
+        {
+          "name": "multiple_of",
+          "number": 14,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "oneofIndex": 10,
+          "jsonName": "multipleOf",
+          "proto3Optional": true
+        },
+        {
+          "name": "example",
+          "number": 15,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "oneofIndex": 1,
+          "jsonName": "example"
+        },
+        {
+          "name": "example_factory",
+          "number": 16,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 1,
+          "jsonName": "exampleFactory"
+        },
+        {
+          "name": "field",
+          "number": 17,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 11,
+          "jsonName": "field",
+          "proto3Optional": true
+        },
+        {
+          "name": "type",
+          "number": 18,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 12,
+          "jsonName": "type",
+          "proto3Optional": true
+        },
+        {
+          "name": "title",
+          "number": 19,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 13,
+          "jsonName": "title",
+          "proto3Optional": true
+        }
+      ],
+      "oneofDecl": [
+        {
+          "name": "default_config"
+        },
+        {
+          "name": "example_config"
+        },
+        {
+          "name": "_const"
+        },
+        {
+          "name": "_lt"
+        },
+        {
+          "name": "_le"
+        },
+        {
+          "name": "_gt"
+        },
+        {
+          "name": "_ge"
+        },
+        {
+          "name": "_enable"
+        },
+        {
+          "name": "_alias"
+        },
+        {
+          "name": "_description"
+        },
+        {
+          "name": "_multiple_of"
+        },
+        {
+          "name": "_field"
+        },
+        {
+          "name": "_type"
+        },
+        {
+          "name": "_title"
+        }
+      ]
+    },
+    {
+      "name": "SFixed64Rules",
+      "field": [
+        {
+          "name": "const",
+          "number": 1,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_SFIXED64",
+          "oneofIndex": 2,
+          "jsonName": "const",
+          "proto3Optional": true
+        },
+        {
+          "name": "lt",
+          "number": 2,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_SFIXED64",
+          "oneofIndex": 3,
+          "jsonName": "lt",
+          "proto3Optional": true
+        },
+        {
+          "name": "le",
+          "number": 3,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_SFIXED64",
+          "oneofIndex": 4,
+          "jsonName": "le",
+          "proto3Optional": true
+        },
+        {
+          "name": "gt",
+          "number": 4,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_SFIXED64",
+          "oneofIndex": 5,
+          "jsonName": "gt",
+          "proto3Optional": true
+        },
+        {
+          "name": "ge",
+          "number": 5,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_SFIXED64",
+          "oneofIndex": 6,
+          "jsonName": "ge",
+          "proto3Optional": true
+        },
+        {
+          "name": "in",
+          "number": 6,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_SFIXED64",
+          "jsonName": "in"
+        },
+        {
+          "name": "not_in",
+          "number": 7,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_SFIXED64",
+          "jsonName": "notIn"
+        },
+        {
+          "name": "enable",
+          "number": 8,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 7,
+          "jsonName": "enable",
+          "proto3Optional": true
+        },
+        {
+          "name": "default",
+          "number": 9,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "oneofIndex": 0,
+          "jsonName": "default"
+        },
+        {
+          "name": "default_factory",
+          "number": 10,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 0,
+          "jsonName": "defaultFactory"
+        },
+        {
+          "name": "miss_default",
+          "number": 11,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 0,
+          "jsonName": "missDefault"
+        },
+        {
+          "name": "alias",
+          "number": 12,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 8,
+          "jsonName": "alias",
+          "proto3Optional": true
+        },
+        {
+          "name": "description",
+          "number": 13,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 9,
+          "jsonName": "description",
+          "proto3Optional": true
+        },
+        {
+          "name": "multiple_of",
+          "number": 14,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "oneofIndex": 10,
+          "jsonName": "multipleOf",
+          "proto3Optional": true
+        },
+        {
+          "name": "example",
+          "number": 15,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "oneofIndex": 1,
+          "jsonName": "example"
+        },
+        {
+          "name": "example_factory",
+          "number": 16,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 1,
+          "jsonName": "exampleFactory"
+        },
+        {
+          "name": "field",
+          "number": 17,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 11,
+          "jsonName": "field",
+          "proto3Optional": true
+        },
+        {
+          "name": "type",
+          "number": 18,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 12,
+          "jsonName": "type",
+          "proto3Optional": true
+        },
+        {
+          "name": "title",
+          "number": 19,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 13,
+          "jsonName": "title",
+          "proto3Optional": true
+        }
+      ],
+      "oneofDecl": [
+        {
+          "name": "default_config"
+        },
+        {
+          "name": "example_config"
+        },
+        {
+          "name": "_const"
+        },
+        {
+          "name": "_lt"
+        },
+        {
+          "name": "_le"
+        },
+        {
+          "name": "_gt"
+        },
+        {
+          "name": "_ge"
+        },
+        {
+          "name": "_enable"
+        },
+        {
+          "name": "_alias"
+        },
+        {
+          "name": "_description"
+        },
+        {
+          "name": "_multiple_of"
+        },
+        {
+          "name": "_field"
+        },
+        {
+          "name": "_type"
+        },
+        {
+          "name": "_title"
+        }
+      ]
+    },
+    {
+      "name": "BoolRules",
+      "field": [
+        {
+          "name": "const",
+          "number": 1,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 1,
+          "jsonName": "const",
+          "proto3Optional": true
+        },
+        {
+          "name": "enable",
+          "number": 2,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 2,
+          "jsonName": "enable",
+          "proto3Optional": true
+        },
+        {
+          "name": "default",
+          "number": 3,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 0,
+          "jsonName": "default"
+        },
+        {
+          "name": "miss_default",
+          "number": 4,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 0,
+          "jsonName": "missDefault"
+        },
+        {
+          "name": "alias",
+          "number": 5,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 3,
+          "jsonName": "alias",
+          "proto3Optional": true
+        },
+        {
+          "name": "description",
+          "number": 6,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 4,
+          "jsonName": "description",
+          "proto3Optional": true
+        },
+        {
+          "name": "example",
+          "number": 7,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 5,
+          "jsonName": "example",
+          "proto3Optional": true
+        },
+        {
+          "name": "field",
+          "number": 8,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 6,
+          "jsonName": "field",
+          "proto3Optional": true
+        },
+        {
+          "name": "type",
+          "number": 9,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 7,
+          "jsonName": "type",
+          "proto3Optional": true
+        },
+        {
+          "name": "title",
+          "number": 19,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 8,
+          "jsonName": "title",
+          "proto3Optional": true
+        }
+      ],
+      "oneofDecl": [
+        {
+          "name": "default_config"
+        },
+        {
+          "name": "_const"
+        },
+        {
+          "name": "_enable"
+        },
+        {
+          "name": "_alias"
+        },
+        {
+          "name": "_description"
+        },
+        {
+          "name": "_example"
+        },
+        {
+          "name": "_field"
+        },
+        {
+          "name": "_type"
+        },
+        {
+          "name": "_title"
+        }
+      ]
+    },
+    {
+      "name": "StringRules",
+      "field": [
+        {
+          "name": "const",
+          "number": 1,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 3,
+          "jsonName": "const",
+          "proto3Optional": true
+        },
+        {
+          "name": "len",
+          "number": 2,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_UINT64",
+          "oneofIndex": 4,
+          "jsonName": "len",
+          "proto3Optional": true
+        },
+        {
+          "name": "min_length",
+          "number": 3,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_UINT64",
+          "oneofIndex": 5,
+          "jsonName": "minLength",
+          "proto3Optional": true
+        },
+        {
+          "name": "max_length",
+          "number": 4,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_UINT64",
+          "oneofIndex": 6,
+          "jsonName": "maxLength",
+          "proto3Optional": true
+        },
+        {
+          "name": "pattern",
+          "number": 5,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 7,
+          "jsonName": "pattern",
+          "proto3Optional": true
+        },
+        {
+          "name": "prefix",
+          "number": 6,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 8,
+          "jsonName": "prefix",
+          "proto3Optional": true
+        },
+        {
+          "name": "suffix",
+          "number": 7,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 9,
+          "jsonName": "suffix",
+          "proto3Optional": true
+        },
+        {
+          "name": "contains",
+          "number": 8,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 10,
+          "jsonName": "contains",
+          "proto3Optional": true
+        },
+        {
+          "name": "not_contains",
+          "number": 9,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 11,
+          "jsonName": "notContains",
+          "proto3Optional": true
+        },
+        {
+          "name": "in",
+          "number": 10,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_STRING",
+          "jsonName": "in"
+        },
+        {
+          "name": "not_in",
+          "number": 11,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_STRING",
+          "jsonName": "notIn"
+        },
+        {
+          "name": "email",
+          "number": 12,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 0,
+          "jsonName": "email"
+        },
+        {
+          "name": "hostname",
+          "number": 13,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 0,
+          "jsonName": "hostname"
+        },
+        {
+          "name": "ip",
+          "number": 14,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 0,
+          "jsonName": "ip"
+        },
+        {
+          "name": "ipv4",
+          "number": 15,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 0,
+          "jsonName": "ipv4"
+        },
+        {
+          "name": "ipv6",
+          "number": 16,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 0,
+          "jsonName": "ipv6"
+        },
+        {
+          "name": "uri",
+          "number": 17,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 0,
+          "jsonName": "uri"
+        },
+        {
+          "name": "uri_ref",
+          "number": 18,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 0,
+          "jsonName": "uriRef"
+        },
+        {
+          "name": "address",
+          "number": 21,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 0,
+          "jsonName": "address"
+        },
+        {
+          "name": "uuid",
+          "number": 22,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 0,
+          "jsonName": "uuid"
+        },
+        {
+          "name": "pydantic_type",
+          "number": 99,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 0,
+          "jsonName": "pydanticType"
+        },
+        {
+          "name": "enable",
+          "number": 23,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 12,
+          "jsonName": "enable",
+          "proto3Optional": true
+        },
+        {
+          "name": "default",
+          "number": 24,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 1,
+          "jsonName": "default"
+        },
+        {
+          "name": "default_factory",
+          "number": 25,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 1,
+          "jsonName": "defaultFactory"
+        },
+        {
+          "name": "miss_default",
+          "number": 26,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 1,
+          "jsonName": "missDefault"
+        },
+        {
+          "name": "alias",
+          "number": 27,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 13,
+          "jsonName": "alias",
+          "proto3Optional": true
+        },
+        {
+          "name": "description",
+          "number": 28,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 14,
+          "jsonName": "description",
+          "proto3Optional": true
+        },
+        {
+          "name": "example",
+          "number": 30,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 2,
+          "jsonName": "example"
+        },
+        {
+          "name": "example_factory",
+          "number": 31,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 2,
+          "jsonName": "exampleFactory"
+        },
+        {
+          "name": "field",
+          "number": 32,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 15,
+          "jsonName": "field",
+          "proto3Optional": true
+        },
+        {
+          "name": "type",
+          "number": 33,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 16,
+          "jsonName": "type",
+          "proto3Optional": true
+        },
+        {
+          "name": "title",
+          "number": 34,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 17,
+          "jsonName": "title",
+          "proto3Optional": true
+        }
+      ],
+      "oneofDecl": [
+        {
+          "name": "well_known"
+        },
+        {
+          "name": "default_config"
+        },
+        {
+          "name": "example_config"
+        },
+        {
+          "name": "_const"
+        },
+        {
+          "name": "_len"
+        },
+        {
+          "name": "_min_length"
+        },
+        {
+          "name": "_max_length"
+        },
+        {
+          "name": "_pattern"
+        },
+        {
+          "name": "_prefix"
+        },
+        {
+          "name": "_suffix"
+        },
+        {
+          "name": "_contains"
+        },
+        {
+          "name": "_not_contains"
+        },
+        {
+          "name": "_enable"
+        },
+        {
+          "name": "_alias"
+        },
+        {
+          "name": "_description"
+        },
+        {
+          "name": "_field"
+        },
+        {
+          "name": "_type"
+        },
+        {
+          "name": "_title"
+        }
+      ]
+    },
+    {
+      "name": "BytesRules",
+      "field": [
+        {
+          "name": "const",
+          "number": 1,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BYTES",
+          "oneofIndex": 3,
+          "jsonName": "const",
+          "proto3Optional": true
+        },
+        {
+          "name": "min_length",
+          "number": 2,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_UINT64",
+          "oneofIndex": 4,
+          "jsonName": "minLength",
+          "proto3Optional": true
+        },
+        {
+          "name": "max_length",
+          "number": 3,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_UINT64",
+          "oneofIndex": 5,
+          "jsonName": "maxLength",
+          "proto3Optional": true
+        },
+        {
+          "name": "prefix",
+          "number": 5,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BYTES",
+          "oneofIndex": 6,
+          "jsonName": "prefix",
+          "proto3Optional": true
+        },
+        {
+          "name": "suffix",
+          "number": 6,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BYTES",
+          "oneofIndex": 7,
+          "jsonName": "suffix",
+          "proto3Optional": true
+        },
+        {
+          "name": "contains",
+          "number": 7,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BYTES",
+          "oneofIndex": 8,
+          "jsonName": "contains",
+          "proto3Optional": true
+        },
+        {
+          "name": "in",
+          "number": 8,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_BYTES",
+          "jsonName": "in"
+        },
+        {
+          "name": "not_in",
+          "number": 9,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_BYTES",
+          "jsonName": "notIn"
+        },
+        {
+          "name": "enable",
+          "number": 10,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 9,
+          "jsonName": "enable",
+          "proto3Optional": true
+        },
+        {
+          "name": "default",
+          "number": 11,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BYTES",
+          "oneofIndex": 0,
+          "jsonName": "default"
+        },
+        {
+          "name": "default_factory",
+          "number": 12,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 0,
+          "jsonName": "defaultFactory"
+        },
+        {
+          "name": "miss_default",
+          "number": 13,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 0,
+          "jsonName": "missDefault"
+        },
+        {
+          "name": "alias",
+          "number": 14,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 10,
+          "jsonName": "alias",
+          "proto3Optional": true
+        },
+        {
+          "name": "description",
+          "number": 15,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 11,
+          "jsonName": "description",
+          "proto3Optional": true
+        },
+        {
+          "name": "multiple_of",
+          "number": 16,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "oneofIndex": 12,
+          "jsonName": "multipleOf",
+          "proto3Optional": true
+        },
+        {
+          "name": "example",
+          "number": 17,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BYTES",
+          "oneofIndex": 1,
+          "jsonName": "example"
+        },
+        {
+          "name": "example_factory",
+          "number": 18,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 1,
+          "jsonName": "exampleFactory"
+        },
+        {
+          "name": "field",
+          "number": 19,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 13,
+          "jsonName": "field",
+          "proto3Optional": true
+        },
+        {
+          "name": "type",
+          "number": 20,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 14,
+          "jsonName": "type",
+          "proto3Optional": true
+        },
+        {
+          "name": "ip",
+          "number": 21,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 2,
+          "jsonName": "ip"
+        },
+        {
+          "name": "ipv4",
+          "number": 22,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 2,
+          "jsonName": "ipv4"
+        },
+        {
+          "name": "ipv6",
+          "number": 23,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 2,
+          "jsonName": "ipv6"
+        },
+        {
+          "name": "title",
+          "number": 24,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 15,
+          "jsonName": "title",
+          "proto3Optional": true
+        }
+      ],
+      "oneofDecl": [
+        {
+          "name": "default_config"
+        },
+        {
+          "name": "example_config"
+        },
+        {
+          "name": "well_known"
+        },
+        {
+          "name": "_const"
+        },
+        {
+          "name": "_min_length"
+        },
+        {
+          "name": "_max_length"
+        },
+        {
+          "name": "_prefix"
+        },
+        {
+          "name": "_suffix"
+        },
+        {
+          "name": "_contains"
+        },
+        {
+          "name": "_enable"
+        },
+        {
+          "name": "_alias"
+        },
+        {
+          "name": "_description"
+        },
+        {
+          "name": "_multiple_of"
+        },
+        {
+          "name": "_field"
+        },
+        {
+          "name": "_type"
+        },
+        {
+          "name": "_title"
+        }
+      ]
+    },
+    {
+      "name": "EnumRules",
+      "field": [
+        {
+          "name": "const",
+          "number": 1,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_INT32",
+          "oneofIndex": 2,
+          "jsonName": "const",
+          "proto3Optional": true
+        },
+        {
+          "name": "in",
+          "number": 3,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_INT32",
+          "jsonName": "in"
+        },
+        {
+          "name": "not_in",
+          "number": 4,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_INT32",
+          "jsonName": "notIn"
+        },
+        {
+          "name": "enable",
+          "number": 8,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 3,
+          "jsonName": "enable",
+          "proto3Optional": true
+        },
+        {
+          "name": "default",
+          "number": 9,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_INT32",
+          "oneofIndex": 0,
+          "jsonName": "default"
+        },
+        {
+          "name": "default_factory",
+          "number": 10,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 0,
+          "jsonName": "defaultFactory"
+        },
+        {
+          "name": "miss_default",
+          "number": 11,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 0,
+          "jsonName": "missDefault"
+        },
+        {
+          "name": "alias",
+          "number": 12,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 4,
+          "jsonName": "alias",
+          "proto3Optional": true
+        },
+        {
+          "name": "description",
+          "number": 13,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 5,
+          "jsonName": "description",
+          "proto3Optional": true
+        },
+        {
+          "name": "example",
+          "number": 15,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_INT32",
+          "oneofIndex": 1,
+          "jsonName": "example"
+        },
+        {
+          "name": "example_factory",
+          "number": 16,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 1,
+          "jsonName": "exampleFactory"
+        },
+        {
+          "name": "field",
+          "number": 17,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 6,
+          "jsonName": "field",
+          "proto3Optional": true
+        },
+        {
+          "name": "title",
+          "number": 18,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 7,
+          "jsonName": "title",
+          "proto3Optional": true
+        }
+      ],
+      "oneofDecl": [
+        {
+          "name": "default_config"
+        },
+        {
+          "name": "example_config"
+        },
+        {
+          "name": "_const"
+        },
+        {
+          "name": "_enable"
+        },
+        {
+          "name": "_alias"
+        },
+        {
+          "name": "_description"
+        },
+        {
+          "name": "_field"
+        },
+        {
+          "name": "_title"
+        }
+      ]
+    },
+    {
+      "name": "MessageRules",
+      "field": [
+        {
+          "name": "skip",
+          "number": 1,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 2,
+          "jsonName": "skip",
+          "proto3Optional": true
+        },
+        {
+          "name": "required",
+          "number": 2,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 3,
+          "jsonName": "required",
+          "proto3Optional": true
+        },
+        {
+          "name": "enable",
+          "number": 8,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 4,
+          "jsonName": "enable",
+          "proto3Optional": true
+        },
+        {
+          "name": "default",
+          "number": 9,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "oneofIndex": 0,
+          "jsonName": "default"
+        },
+        {
+          "name": "default_factory",
+          "number": 10,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 0,
+          "jsonName": "defaultFactory"
+        },
+        {
+          "name": "miss_default",
+          "number": 11,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 0,
+          "jsonName": "missDefault"
+        },
+        {
+          "name": "alias",
+          "number": 12,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 5,
+          "jsonName": "alias",
+          "proto3Optional": true
+        },
+        {
+          "name": "description",
+          "number": 13,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 6,
+          "jsonName": "description",
+          "proto3Optional": true
+        },
+        {
+          "name": "example",
+          "number": 15,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_FLOAT",
+          "oneofIndex": 1,
+          "jsonName": "example"
+        },
+        {
+          "name": "example_factory",
+          "number": 16,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 1,
+          "jsonName": "exampleFactory"
+        },
+        {
+          "name": "field",
+          "number": 17,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 7,
+          "jsonName": "field",
+          "proto3Optional": true
+        },
+        {
+          "name": "type",
+          "number": 18,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 8,
+          "jsonName": "type",
+          "proto3Optional": true
+        },
+        {
+          "name": "title",
+          "number": 19,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 9,
+          "jsonName": "title",
+          "proto3Optional": true
+        }
+      ],
+      "oneofDecl": [
+        {
+          "name": "default_config"
+        },
+        {
+          "name": "example_config"
+        },
+        {
+          "name": "_skip"
+        },
+        {
+          "name": "_required"
+        },
+        {
+          "name": "_enable"
+        },
+        {
+          "name": "_alias"
+        },
+        {
+          "name": "_description"
+        },
+        {
+          "name": "_field"
+        },
+        {
+          "name": "_type"
+        },
+        {
+          "name": "_title"
+        }
+      ]
+    },
+    {
+      "name": "RepeatedRules",
+      "field": [
+        {
+          "name": "min_items",
+          "number": 1,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_UINT64",
+          "oneofIndex": 2,
+          "jsonName": "minItems",
+          "proto3Optional": true
+        },
+        {
+          "name": "max_items",
+          "number": 2,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_UINT64",
+          "oneofIndex": 3,
+          "jsonName": "maxItems",
+          "proto3Optional": true
+        },
+        {
+          "name": "unique",
+          "number": 3,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 4,
+          "jsonName": "unique",
+          "proto3Optional": true
+        },
+        {
+          "name": "items",
+          "number": 4,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".p2p_validate.FieldRules",
+          "oneofIndex": 5,
+          "jsonName": "items",
+          "proto3Optional": true
+        },
+        {
+          "name": "enable",
+          "number": 8,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 6,
+          "jsonName": "enable",
+          "proto3Optional": true
+        },
+        {
+          "name": "default_factory",
+          "number": 10,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 0,
+          "jsonName": "defaultFactory"
+        },
+        {
+          "name": "miss_default",
+          "number": 11,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 0,
+          "jsonName": "missDefault"
+        },
+        {
+          "name": "alias",
+          "number": 12,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 7,
+          "jsonName": "alias",
+          "proto3Optional": true
+        },
+        {
+          "name": "description",
+          "number": 13,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 8,
+          "jsonName": "description",
+          "proto3Optional": true
+        },
+        {
+          "name": "example_factory",
+          "number": 16,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 1,
+          "jsonName": "exampleFactory"
+        },
+        {
+          "name": "field",
+          "number": 17,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 9,
+          "jsonName": "field",
+          "proto3Optional": true
+        },
+        {
+          "name": "type",
+          "number": 18,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 10,
+          "jsonName": "type",
+          "proto3Optional": true
+        },
+        {
+          "name": "title",
+          "number": 19,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 11,
+          "jsonName": "title",
+          "proto3Optional": true
+        }
+      ],
+      "oneofDecl": [
+        {
+          "name": "default_config"
+        },
+        {
+          "name": "example_config"
+        },
+        {
+          "name": "_min_items"
+        },
+        {
+          "name": "_max_items"
+        },
+        {
+          "name": "_unique"
+        },
+        {
+          "name": "_items"
+        },
+        {
+          "name": "_enable"
+        },
+        {
+          "name": "_alias"
+        },
+        {
+          "name": "_description"
+        },
+        {
+          "name": "_field"
+        },
+        {
+          "name": "_type"
+        },
+        {
+          "name": "_title"
+        }
+      ]
+    },
+    {
+      "name": "MapRules",
+      "field": [
+        {
+          "name": "min_pairs",
+          "number": 1,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_UINT64",
+          "oneofIndex": 2,
+          "jsonName": "minPairs",
+          "proto3Optional": true
+        },
+        {
+          "name": "max_pairs",
+          "number": 2,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_UINT64",
+          "oneofIndex": 3,
+          "jsonName": "maxPairs",
+          "proto3Optional": true
+        },
+        {
+          "name": "keys",
+          "number": 4,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".p2p_validate.FieldRules",
+          "oneofIndex": 4,
+          "jsonName": "keys",
+          "proto3Optional": true
+        },
+        {
+          "name": "values",
+          "number": 5,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".p2p_validate.FieldRules",
+          "oneofIndex": 5,
+          "jsonName": "values",
+          "proto3Optional": true
+        },
+        {
+          "name": "enable",
+          "number": 8,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 6,
+          "jsonName": "enable",
+          "proto3Optional": true
+        },
+        {
+          "name": "default_factory",
+          "number": 10,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 0,
+          "jsonName": "defaultFactory"
+        },
+        {
+          "name": "miss_default",
+          "number": 11,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 0,
+          "jsonName": "missDefault"
+        },
+        {
+          "name": "alias",
+          "number": 12,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 7,
+          "jsonName": "alias",
+          "proto3Optional": true
+        },
+        {
+          "name": "description",
+          "number": 13,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 8,
+          "jsonName": "description",
+          "proto3Optional": true
+        },
+        {
+          "name": "example_factory",
+          "number": 16,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 1,
+          "jsonName": "exampleFactory"
+        },
+        {
+          "name": "field",
+          "number": 17,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 9,
+          "jsonName": "field",
+          "proto3Optional": true
+        },
+        {
+          "name": "type",
+          "number": 18,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 10,
+          "jsonName": "type",
+          "proto3Optional": true
+        },
+        {
+          "name": "title",
+          "number": 19,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 11,
+          "jsonName": "title",
+          "proto3Optional": true
+        }
+      ],
+      "oneofDecl": [
+        {
+          "name": "default_config"
+        },
+        {
+          "name": "example_config"
+        },
+        {
+          "name": "_min_pairs"
+        },
+        {
+          "name": "_max_pairs"
+        },
+        {
+          "name": "_keys"
+        },
+        {
+          "name": "_values"
+        },
+        {
+          "name": "_enable"
+        },
+        {
+          "name": "_alias"
+        },
+        {
+          "name": "_description"
+        },
+        {
+          "name": "_field"
+        },
+        {
+          "name": "_type"
+        },
+        {
+          "name": "_title"
+        }
+      ]
+    },
+    {
+      "name": "AnyRules",
+      "field": [
+        {
+          "name": "required",
+          "number": 1,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 2,
+          "jsonName": "required",
+          "proto3Optional": true
+        },
+        {
+          "name": "in",
+          "number": 2,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_STRING",
+          "jsonName": "in"
+        },
+        {
+          "name": "not_in",
+          "number": 3,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_STRING",
+          "jsonName": "notIn"
+        },
+        {
+          "name": "enable",
+          "number": 8,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 3,
+          "jsonName": "enable",
+          "proto3Optional": true
+        },
+        {
+          "name": "default",
+          "number": 9,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 0,
+          "jsonName": "default"
+        },
+        {
+          "name": "default_factory",
+          "number": 10,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 0,
+          "jsonName": "defaultFactory"
+        },
+        {
+          "name": "miss_default",
+          "number": 11,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 0,
+          "jsonName": "missDefault"
+        },
+        {
+          "name": "alias",
+          "number": 12,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 4,
+          "jsonName": "alias",
+          "proto3Optional": true
+        },
+        {
+          "name": "description",
+          "number": 13,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 5,
+          "jsonName": "description",
+          "proto3Optional": true
+        },
+        {
+          "name": "example",
+          "number": 14,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 1,
+          "jsonName": "example"
+        },
+        {
+          "name": "example_factory",
+          "number": 15,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 1,
+          "jsonName": "exampleFactory"
+        },
+        {
+          "name": "field",
+          "number": 16,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 6,
+          "jsonName": "field",
+          "proto3Optional": true
+        },
+        {
+          "name": "title",
+          "number": 17,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 7,
+          "jsonName": "title",
+          "proto3Optional": true
+        }
+      ],
+      "oneofDecl": [
+        {
+          "name": "default_config"
+        },
+        {
+          "name": "example_config"
+        },
+        {
+          "name": "_required"
+        },
+        {
+          "name": "_enable"
+        },
+        {
+          "name": "_alias"
+        },
+        {
+          "name": "_description"
+        },
+        {
+          "name": "_field"
+        },
+        {
+          "name": "_title"
+        }
+      ]
+    },
+    {
+      "name": "DurationRules",
+      "field": [
+        {
+          "name": "const",
+          "number": 2,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".google.protobuf.Duration",
+          "oneofIndex": 2,
+          "jsonName": "const",
+          "proto3Optional": true
+        },
+        {
+          "name": "lt",
+          "number": 3,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".google.protobuf.Duration",
+          "oneofIndex": 3,
+          "jsonName": "lt",
+          "proto3Optional": true
+        },
+        {
+          "name": "le",
+          "number": 4,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".google.protobuf.Duration",
+          "oneofIndex": 4,
+          "jsonName": "le",
+          "proto3Optional": true
+        },
+        {
+          "name": "gt",
+          "number": 5,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".google.protobuf.Duration",
+          "oneofIndex": 5,
+          "jsonName": "gt",
+          "proto3Optional": true
+        },
+        {
+          "name": "ge",
+          "number": 6,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".google.protobuf.Duration",
+          "oneofIndex": 6,
+          "jsonName": "ge",
+          "proto3Optional": true
+        },
+        {
+          "name": "in",
+          "number": 7,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".google.protobuf.Duration",
+          "jsonName": "in"
+        },
+        {
+          "name": "not_in",
+          "number": 8,
+          "label": "LABEL_REPEATED",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".google.protobuf.Duration",
+          "jsonName": "notIn"
+        },
+        {
+          "name": "enable",
+          "number": 14,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 7,
+          "jsonName": "enable",
+          "proto3Optional": true
+        },
+        {
+          "name": "default",
+          "number": 9,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".google.protobuf.Duration",
+          "oneofIndex": 0,
+          "jsonName": "default"
+        },
+        {
+          "name": "default_factory",
+          "number": 10,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 0,
+          "jsonName": "defaultFactory"
+        },
+        {
+          "name": "miss_default",
+          "number": 11,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 0,
+          "jsonName": "missDefault"
+        },
+        {
+          "name": "alias",
+          "number": 12,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 8,
+          "jsonName": "alias",
+          "proto3Optional": true
+        },
+        {
+          "name": "description",
+          "number": 13,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 9,
+          "jsonName": "description",
+          "proto3Optional": true
+        },
+        {
+          "name": "example",
+          "number": 15,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".google.protobuf.Duration",
+          "oneofIndex": 1,
+          "jsonName": "example"
+        },
+        {
+          "name": "example_factory",
+          "number": 16,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 1,
+          "jsonName": "exampleFactory"
+        },
+        {
+          "name": "field",
+          "number": 17,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 10,
+          "jsonName": "field",
+          "proto3Optional": true
+        },
+        {
+          "name": "type",
+          "number": 18,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 11,
+          "jsonName": "type",
+          "proto3Optional": true
+        },
+        {
+          "name": "title",
+          "number": 19,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 12,
+          "jsonName": "title",
+          "proto3Optional": true
+        }
+      ],
+      "oneofDecl": [
+        {
+          "name": "default_config"
+        },
+        {
+          "name": "example_config"
+        },
+        {
+          "name": "_const"
+        },
+        {
+          "name": "_lt"
+        },
+        {
+          "name": "_le"
+        },
+        {
+          "name": "_gt"
+        },
+        {
+          "name": "_ge"
+        },
+        {
+          "name": "_enable"
+        },
+        {
+          "name": "_alias"
+        },
+        {
+          "name": "_description"
+        },
+        {
+          "name": "_field"
+        },
+        {
+          "name": "_type"
+        },
+        {
+          "name": "_title"
+        }
+      ]
+    },
+    {
+      "name": "TimestampRules",
+      "field": [
+        {
+          "name": "const",
+          "number": 2,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".google.protobuf.Timestamp",
+          "oneofIndex": 2,
+          "jsonName": "const",
+          "proto3Optional": true
+        },
+        {
+          "name": "lt",
+          "number": 3,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".google.protobuf.Timestamp",
+          "oneofIndex": 3,
+          "jsonName": "lt",
+          "proto3Optional": true
+        },
+        {
+          "name": "le",
+          "number": 4,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".google.protobuf.Timestamp",
+          "oneofIndex": 4,
+          "jsonName": "le",
+          "proto3Optional": true
+        },
+        {
+          "name": "gt",
+          "number": 5,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".google.protobuf.Timestamp",
+          "oneofIndex": 5,
+          "jsonName": "gt",
+          "proto3Optional": true
+        },
+        {
+          "name": "ge",
+          "number": 6,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".google.protobuf.Timestamp",
+          "oneofIndex": 6,
+          "jsonName": "ge",
+          "proto3Optional": true
+        },
+        {
+          "name": "lt_now",
+          "number": 7,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 7,
+          "jsonName": "ltNow",
+          "proto3Optional": true
+        },
+        {
+          "name": "gt_now",
+          "number": 8,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 8,
+          "jsonName": "gtNow",
+          "proto3Optional": true
+        },
+        {
+          "name": "within",
+          "number": 9,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".google.protobuf.Duration",
+          "oneofIndex": 9,
+          "jsonName": "within",
+          "proto3Optional": true
+        },
+        {
+          "name": "enable",
+          "number": 10,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 10,
+          "jsonName": "enable",
+          "proto3Optional": true
+        },
+        {
+          "name": "default",
+          "number": 11,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".google.protobuf.Timestamp",
+          "oneofIndex": 0,
+          "jsonName": "default"
+        },
+        {
+          "name": "default_factory",
+          "number": 12,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 0,
+          "jsonName": "defaultFactory"
+        },
+        {
+          "name": "miss_default",
+          "number": 13,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_BOOL",
+          "oneofIndex": 0,
+          "jsonName": "missDefault"
+        },
+        {
+          "name": "alias",
+          "number": 14,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 11,
+          "jsonName": "alias",
+          "proto3Optional": true
+        },
+        {
+          "name": "description",
+          "number": 15,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 12,
+          "jsonName": "description",
+          "proto3Optional": true
+        },
+        {
+          "name": "example",
+          "number": 16,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".google.protobuf.Timestamp",
+          "oneofIndex": 1,
+          "jsonName": "example"
+        },
+        {
+          "name": "example_factory",
+          "number": 17,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 1,
+          "jsonName": "exampleFactory"
+        },
+        {
+          "name": "field",
+          "number": 18,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 13,
+          "jsonName": "field",
+          "proto3Optional": true
+        },
+        {
+          "name": "type",
+          "number": 19,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 14,
+          "jsonName": "type",
+          "proto3Optional": true
+        },
+        {
+          "name": "title",
+          "number": 20,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_STRING",
+          "oneofIndex": 15,
+          "jsonName": "title",
+          "proto3Optional": true
+        }
+      ],
+      "oneofDecl": [
+        {
+          "name": "default_config"
+        },
+        {
+          "name": "example_config"
+        },
+        {
+          "name": "_const"
+        },
+        {
+          "name": "_lt"
+        },
+        {
+          "name": "_le"
+        },
+        {
+          "name": "_gt"
+        },
+        {
+          "name": "_ge"
+        },
+        {
+          "name": "_lt_now"
+        },
+        {
+          "name": "_gt_now"
+        },
+        {
+          "name": "_within"
+        },
+        {
+          "name": "_enable"
+        },
+        {
+          "name": "_alias"
+        },
+        {
+          "name": "_description"
+        },
+        {
+          "name": "_field"
+        },
+        {
+          "name": "_type"
+        },
+        {
+          "name": "_title"
+        }
+      ]
+    }
+  ],
+  "service": [],
+  "public_dependency": [],
+  "enum_type": [],
+  "extension": [
+    {
+      "name": "ignored",
+      "extendee": ".google.protobuf.MessageOptions",
+      "number": 1073,
+      "label": "LABEL_OPTIONAL",
+      "type": "TYPE_BOOL",
+      "jsonName": "ignored",
+      "proto3Optional": true
+    },
+    {
+      "name": "required",
+      "extendee": ".google.protobuf.OneofOptions",
+      "number": 1073,
+      "label": "LABEL_OPTIONAL",
+      "type": "TYPE_BOOL",
+      "jsonName": "required",
+      "proto3Optional": true
+    },
+    {
+      "name": "rules",
+      "extendee": ".google.protobuf.FieldOptions",
+      "number": 1073,
+      "label": "LABEL_OPTIONAL",
+      "type": "TYPE_MESSAGE",
+      "typeName": ".p2p_validate.FieldRules",
+      "jsonName": "rules",
+      "proto3Optional": true
+    }
+  ],
+  "options": {}
+}

@@ -191,6 +191,31 @@ def option_descriptor_to_desc_dict(option_descriptor: Descriptor, field: Any, ty
         desc_dict[column] = value
 
 
+def field_optional_handle(protobuf_pkg: str, type_name: str, field: FieldDescriptor) -> dict:
+    """Parse the information for each filed"""
+    field_dict: dict = {"extra": {}, "skip": False}
+    miss_default: bool = False
+    for option_descriptor, option_value in field.GetOptions().ListFields():
+        if option_descriptor.full_name != f"{protobuf_pkg}.rules":
+            # filter unwanted Option
+            continue
+        rule_message: Any = option_value.message
+        if rule_message:
+            if getattr(rule_message, "skip", None):
+                field_dict["skip"] = True
+            if getattr(rule_message, "required", None):
+                miss_default = True
+        type_value: Optional[Descriptor] = getattr(option_value, type_name, None)
+        if not type_value:
+            _logger.warning(f"{__name__} Can not found {field.full_name}'s {type_name} from {option_value}")
+            continue
+        option_descriptor_to_desc_dict(type_value, field, type_name, field_dict)
+
+    if miss_default:
+        field_dict["miss_default"] = miss_default
+    return field_dict
+
+
 _global_desc_dict: Dict[str, Dict[str, Any]] = {}
 
 
@@ -265,7 +290,7 @@ class ParseFromPbOption(object):
                     f"{__name__} not support protobuf type id:{field.type} from field name{field.full_name}"
                 )
                 continue
-            field_dict: dict = self.field_optional_handle(type_name, field)
+            field_dict: dict = field_optional_handle(self.protobuf_pkg, type_name, field)
             if field_dict["skip"]:
                 # If skip is True, the corresponding validation rule is not applied
                 continue
@@ -280,27 +305,3 @@ class ParseFromPbOption(object):
                     message_field_dict[sub_field.message_type.name] = self.get_desc_from_options(sub_field.message_type)
         self._msg_desc_dict[descriptor.name] = message_field_dict
         return message_field_dict
-
-    def field_optional_handle(self, type_name: str, field: FieldDescriptor) -> dict:
-        """Parse the information for each filed"""
-        field_dict: dict = {"extra": {}, "skip": False}
-        miss_default: bool = False
-        for option_descriptor, option_value in field.GetOptions().ListFields():
-            if option_descriptor.full_name != f"{self.protobuf_pkg}.rules":
-                # filter unwanted Option
-                continue
-            rule_message: Any = option_value.message
-            if rule_message:
-                if getattr(rule_message, "skip", None):
-                    field_dict["skip"] = True
-                if getattr(rule_message, "required", None):
-                    miss_default = True
-            type_value: Optional[Descriptor] = getattr(option_value, type_name, None)
-            if not type_value:
-                _logger.warning(f"{__name__} Can not found {field.full_name}'s {type_name} from {option_value}")
-                continue
-            option_descriptor_to_desc_dict(type_value, field, type_name, field_dict)
-
-        if miss_default:
-            field_dict["miss_default"] = miss_default
-        return field_dict

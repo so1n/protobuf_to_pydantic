@@ -15,16 +15,19 @@ target_p='example_proto_python_code'
 source_p='example_proto'
 # service
 service_list=("demo" "validate" "p2p_validate" "common")
+plugin_p='../protobuf_to_pydantic/plugin/main.py'
 
 
 rm -r "${target_p:?}/${source_p:?}"*
 mkdir -p "${target_p:?}/${source_p:?}"
+chmod u+x $plugin_p
 
 for service in "${service_list[@]}"
 do
   mkdir -p "${target_p:?}/${source_p:?}/${service:?}"
   echo  "from proto file:" $source_p/"$service"/*.proto "gen proto py file to" $target_p/$source_p
   ${VENV_PREFIX}python -m grpc_tools.protoc \
+    --plugin=protoc-gen-custom-plugin=$plugin_p --custom-plugin_out=config_path=plugin_config.py:./$target_p/ \
     --python_out=./$target_p \
     --grpc_python_out=./$target_p \
     --mypy_grpc_out=./$target_p \
