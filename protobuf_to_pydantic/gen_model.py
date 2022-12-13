@@ -82,8 +82,73 @@ def check_dict_one_of(desc_dict: dict, key_list: List[str]) -> bool:
         )
         > 1
     ):
-        raise RuntimeError(f"Field:{key_list} cannot have both values")
+        raise RuntimeError(f"Field:{key_list} cannot have both values: {desc_dict}")
     return True
+
+
+def field_param_dict_handle(field_param_dict: dict, default: Any, default_factory: Optional[NoArgAnyCallable]) -> None:
+    """Convert the data of field param to the data that pydantic.Base Model can receive"""
+    # Handle complex relationships with different defaults
+    check_dict_one_of(field_param_dict, ["miss_default", "default", "default_factory"])
+    if field_param_dict.get("default_factory", None) is not None:
+        field_param_dict.pop("default", "")
+    elif field_param_dict.get("default", None) is None:
+        if default_factory:
+            field_param_dict["default_factory"] = default_factory
+            field_param_dict.pop("default", "")
+        else:
+            field_param_dict["default"] = default
+            field_param_dict.pop("default_factory", None)
+
+    if field_param_dict.get("miss_default", None) is True:
+        field_param_dict.pop("default", "")
+        field_param_dict.pop("default_factory", "")
+    field_param_dict.pop("miss_default", None)
+
+    # PGV&P2P const handler
+    if field_param_dict.get("const", MISSING).__class__ != MISSING.__class__:
+        field_param_dict["default"] = field_param_dict["const"]
+        field_param_dict["const"] = True
+    else:
+        field_param_dict.pop("const", None)
+
+    # example handle
+    check_dict_one_of(field_param_dict, ["example", "example_factory"])
+    if field_param_dict.get("example", MISSING).__class__ == MISSING.__class__:
+        field_param_dict.pop("example", None)
+    example_factory = field_param_dict.pop("example_factory", None)
+    if example_factory:
+        field_param_dict["example"] = example_factory
+
+    # extra handle
+    extra = field_param_dict.pop("extra", None)
+    if extra:
+        field_param_dict.update(extra)
+
+    # type handle
+    field_type = field_param_dict.get("type_")
+    sub_field_param_dict: Optional[dict] = field_param_dict.pop("sub", None)
+    field_type_model: Optional[ModuleType] = inspect.getmodule(field_type)
+
+    if (
+        field_type
+        and not inspect.isclass(field_type)
+        and field_type_model
+        and field_type_model.__name__ in ("pydantic.types", "protobuf_to_pydantic.customer_con_type")
+    ):
+        # support https://pydantic-docs.helpmanual.io/usage/types/#constrained-types
+        # Parameters needed to extract `constrained-types`
+        type_param_dict: dict = {}
+        for key in inspect.signature(field_type).parameters.keys():
+            if key in field_param_dict:
+                type_param_dict[key] = field_param_dict.pop(key)
+
+        if sub_field_param_dict and "type_" in sub_field_param_dict:
+            # If a nested type is found, use the same treatment
+            field_param_dict_handle(sub_field_param_dict, default, default_factory)
+            field_param_dict["type_"] = field_type(sub_field_param_dict["type_"], **type_param_dict)
+        else:
+            field_param_dict["type_"] = field_type(**type_param_dict)
 
 
 class MessagePaitModel(BaseModel):
@@ -232,52 +297,6 @@ class M2P(object):
     def model(self) -> Type[BaseModel]:
         return self._gen_model
 
-    def _field_param_dict_handle(self, field_param_dict: dict) -> None:
-        """Convert the data of field param to the data that pydantic.Base Model can receive"""
-        # PGV&P2P const handler
-        if field_param_dict.get("const").__class__ != MISSING.__class__:
-            field_param_dict["default"] = field_param_dict["const"]
-            field_param_dict["const"] = True
-        else:
-            field_param_dict.pop("const")
-
-        # example handle
-        check_dict_one_of(field_param_dict, ["example", "example_factory"])
-        if field_param_dict.get("example").__class__ == MISSING.__class__:
-            field_param_dict.pop("example")
-        example_factory = field_param_dict.pop("example_factory")
-        if example_factory:
-            field_param_dict["example"] = example_factory
-
-        # extra handle
-        extra = field_param_dict.pop("extra")
-        if extra:
-            field_param_dict.update(extra)
-
-        # type handle
-        field_type = field_param_dict.get("type_")
-        sub_field_param_dict: Optional[dict] = field_param_dict.pop("sub", None)
-        field_type_model: Optional[ModuleType] = inspect.getmodule(field_type)
-        if (
-            field_type
-            and not inspect.isclass(field_type)
-            and field_type_model
-            and field_type_model.__name__ in ("pydantic.types", "protobuf_to_pydantic.customer_con_type")
-        ):
-            # support https://pydantic-docs.helpmanual.io/usage/types/#constrained-types
-            # Parameters needed to extract `constrained-types`
-            type_param_dict: dict = {}
-            for key in inspect.signature(field_type).parameters.keys():
-                if key in field_param_dict:
-                    type_param_dict[key] = field_param_dict.pop(key)
-
-            if sub_field_param_dict and "type_" in sub_field_param_dict:
-                # If a nested type is found, use the same treatment
-                self._field_param_dict_handle(sub_field_param_dict)
-                field_param_dict["type_"] = field_type(sub_field_param_dict["type_"], **type_param_dict)
-            else:
-                field_param_dict["type_"] = field_type(**type_param_dict)
-
     def _one_of_handle(self, descriptor: Descriptor) -> Dict[str, OneOfTypedDict]:
         one_of_dict: Dict[str, OneOfTypedDict] = {}
         for one_of in descriptor.oneofs:
@@ -409,24 +428,8 @@ class M2P(object):
                 if validator_dict:
                     validators.update(validator_dict)
 
-                # Since `default` and `default_factory` are to be obtained,
-                #   the processing logic of default is placed outside
-
-                # Handle complex relationships with different defaults
-                check_dict_one_of(field_param_dict, ["miss_default", "default", "default_factory"])
-                if field_param_dict["default_factory"] is not None:
-                    field_param_dict.pop("default", "")
-                elif field_param_dict["miss_default"] is True:
-                    field_param_dict.pop("default", "")
-                    field_param_dict.pop("default_factory", "")
-                elif field_param_dict["default"] is None:
-                    field_param_dict["default"] = default
-                if field_param_dict.get("default", None) is default:
-                    field_param_dict["default_factory"] = default_factory
-                field_param_dict.pop("miss_default", None)
-
                 # Unified field parameter handling
-                self._field_param_dict_handle(field_param_dict)
+                field_param_dict_handle(field_param_dict, default, default_factory)
 
                 # Type will change in the unified processing logic
                 field_type = field_param_dict.pop("type_", type_)

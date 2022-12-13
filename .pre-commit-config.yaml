@@ -3,7 +3,7 @@ repos:
     rev: v0.910
     hooks:
       - id: mypy
-        exclude: "^example/example_proto_python_code/example_proto|example/gen_code.py$|^protobuf_to_pydantic/protos"
+        exclude: "^example/example_proto_python_code/example_proto|^protobuf_to_pydantic/protos"
   - repo: https://github.com/PyCQA/isort
     rev: 5.9.3
     hooks:

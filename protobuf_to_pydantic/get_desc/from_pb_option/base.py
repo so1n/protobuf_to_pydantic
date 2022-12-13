@@ -1,6 +1,6 @@
 import inspect
 import logging
-from typing import Any, Callable, Dict, List, Optional, Set, Type
+from typing import Any, Callable, Dict, List, Optional, Set, Type, Union
 
 from protobuf_to_pydantic.customer_con_type import (
     conbytes,
@@ -13,7 +13,7 @@ from protobuf_to_pydantic.customer_con_type import (
     validator,
 )
 from protobuf_to_pydantic.customer_validator import validate_validator_dict
-from protobuf_to_pydantic.grpc_types import Descriptor, FieldDescriptor, Message
+from protobuf_to_pydantic.grpc_types import Descriptor, FieldDescriptor, FieldDescriptorProto, Message
 from protobuf_to_pydantic.util import replace_protobuf_type_to_python_type
 
 from .types import column_pydantic_type_dict
@@ -90,7 +90,13 @@ def get_con_type_func_from_type_name(type_name: str) -> Optional[Callable]:
         return None
 
 
-def option_descriptor_to_desc_dict(option_descriptor: Descriptor, field: Any, type_name: str, desc_dict: dict) -> None:
+def option_descriptor_to_desc_dict(
+    option_descriptor: Descriptor,
+    field: Union[FieldDescriptor, FieldDescriptorProto],
+    type_name: str,
+    full_name: str,
+    desc_dict: dict,
+) -> None:
     """Parse the data of option and store it in dict.
     Since array and map are supported, the complexity is relatively high
     """
@@ -101,7 +107,7 @@ def option_descriptor_to_desc_dict(option_descriptor: Descriptor, field: Any, ty
 
         if column in type_not_support_dict.get(field.type, type_not_support_dict["Any"]):
             # Exclude unsupported fields
-            _logger.warning(f"{__name__} not support `{column}`, please reset {field.full_name} `{column}` value")
+            _logger.warning(f"{__name__} not support `{column}`, please reset {full_name} `{column}` value")
             continue
 
         value = getattr(option_descriptor, column)
@@ -157,11 +163,11 @@ def option_descriptor_to_desc_dict(option_descriptor: Descriptor, field: Any, ty
             con_type = get_con_type_func_from_type_name(type_name)
             if not con_type:
                 # TODO nested message
-                _logger.warning(f"{__name__} not support sub type `{type_name}`, please reset {field.full_name}")
+                _logger.warning(f"{__name__} not support sub type `{type_name}`, please reset {full_name}")
                 continue
             # Generate information corresponding to the nested type
             sub_dict: dict = {"extra": {}}
-            option_descriptor_to_desc_dict(getattr(value, type_name), field, type_name, sub_dict)
+            option_descriptor_to_desc_dict(getattr(value, type_name), field, type_name, full_name, sub_dict)
             if "map_type" not in desc_dict:
                 desc_dict["map_type"] = {}
             con_type_param_dict: dict = {}
@@ -185,19 +191,33 @@ def option_descriptor_to_desc_dict(option_descriptor: Descriptor, field: Any, ty
                 desc_dict["type"] = List
                 continue
             sub_dict = {"extra": {}, "type": con_type}
-            option_descriptor_to_desc_dict(getattr(value, type_name), field, type_name, sub_dict)
+            option_descriptor_to_desc_dict(getattr(value, type_name), field, type_name, full_name, sub_dict)
             desc_dict["type"] = conlist
             desc_dict["sub"] = sub_dict
         desc_dict[column] = value
 
 
-def field_optional_handle(protobuf_pkg: str, type_name: str, field: FieldDescriptor) -> dict:
+def field_optional_handle(
+    type_name: str,
+    full_name: str,
+    field: Union[FieldDescriptor, FieldDescriptorProto],
+    protobuf_pkg: str = "",
+) -> dict:
     """Parse the information for each filed"""
     field_dict: dict = {"extra": {}, "skip": False}
     miss_default: bool = False
-    for option_descriptor, option_value in field.GetOptions().ListFields():
-        if option_descriptor.full_name != f"{protobuf_pkg}.rules":
-            # filter unwanted Option
+    if isinstance(field, FieldDescriptor):
+        field_list = field.GetOptions().ListFields()
+    elif isinstance(field, FieldDescriptorProto):
+        field_list = field.options.ListFields()
+    else:
+        raise RuntimeError(f"Not support type:{field.type}")
+    for option_descriptor, option_value in field_list:
+        # filter unwanted Option
+        if protobuf_pkg:
+            if option_descriptor.full_name != f"{protobuf_pkg}.rules":
+                continue
+        elif not option_descriptor.full_name.endswith("validate.rules"):
             continue
         rule_message: Any = option_value.message
         if rule_message:
@@ -207,9 +227,9 @@ def field_optional_handle(protobuf_pkg: str, type_name: str, field: FieldDescrip
                 miss_default = True
         type_value: Optional[Descriptor] = getattr(option_value, type_name, None)
         if not type_value:
-            _logger.warning(f"{__name__} Can not found {field.full_name}'s {type_name} from {option_value}")
+            _logger.warning(f"{__name__} Can not found {full_name}'s {type_name} from {option_value}")
             continue
-        option_descriptor_to_desc_dict(type_value, field, type_name, field_dict)
+        option_descriptor_to_desc_dict(type_value, field, type_name, full_name, field_dict)
 
     if miss_default:
         field_dict["miss_default"] = miss_default
@@ -290,7 +310,7 @@ class ParseFromPbOption(object):
                     f"{__name__} not support protobuf type id:{field.type} from field name{field.full_name}"
                 )
                 continue
-            field_dict: dict = field_optional_handle(self.protobuf_pkg, type_name, field)
+            field_dict: dict = field_optional_handle(type_name, field.full_name, field, self.protobuf_pkg)
             if field_dict["skip"]:
                 # If skip is True, the corresponding validation rule is not applied
                 continue

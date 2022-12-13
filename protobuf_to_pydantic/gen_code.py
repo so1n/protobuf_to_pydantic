@@ -6,7 +6,7 @@ from datetime import datetime
 from enum import IntEnum
 from types import ModuleType
 from typing import _GenericAlias  # type: ignore
-from typing import Any, Callable, Deque, List, Optional, Set, Tuple, Type
+from typing import Any, Callable, Deque, List, Optional, Set, Type
 
 from pydantic import BaseConfig, BaseModel
 from pydantic.fields import FieldInfo
@@ -17,7 +17,7 @@ from protobuf_to_pydantic.grpc_types import RepeatedCompositeContainer, Repeated
 from protobuf_to_pydantic.util import replace_protobuf_type_to_python_type
 
 
-class P2C(object):
+class BaseP2C(object):
     """
     BaseModel objects into corresponding Python code
     (only protobuf-generated pydantic.BaseModel objects are supported, not overly complex pydantic.BaseModel)
@@ -25,13 +25,11 @@ class P2C(object):
 
     def __init__(
         self,
-        *model: Type[BaseModel],
         customer_import_set: Optional[Set[str]] = None,
         customer_deque: Optional[Deque] = None,
         module_path: str = "",
         code_indent: Optional[int] = None,
     ):
-        self._model_list: Tuple[Type[BaseModel], ...] = model
         self._import_set: Set[str] = customer_import_set or set()
         self._content_deque: Deque = customer_deque or deque()
         self._create_set: Set[Type[BaseModel]] = set()
@@ -52,9 +50,6 @@ class P2C(object):
                 module_path_obj = module_path_obj.parent
             module_path = str(module_path_obj.absolute())
         self._module_path: str = module_path
-
-        for _model in self._model_list:
-            self._gen_pydantic_model_py_code(_model)
 
     def format_content(self, content_str: str) -> str:
 
@@ -105,19 +100,21 @@ class P2C(object):
                     continue
                 _content_set.add(content)
                 content_str += f"\n\n{content}"
-
+        # return content_str
         return self.format_content(content_str)
 
-    def _add_import_code(self, module_name: str, class_name: str) -> None:
+    def _add_import_code(self, module_name: str, class_name: str = "", extra_str: str = "") -> None:
         """Generate import statements through module name and class name"""
-        extra_str: str = ""
         if module_name.startswith("google.protobuf"):
-            extra_str = "  # type: ignore"
+            extra_str += "  # type: ignore"
         if module_name in (gen_model.__name__, __name__):
             return
-        self._import_set.add(f"from {module_name} import {class_name}{extra_str}")
+        if class_name:
+            self._import_set.add(f"from {module_name} import {class_name}{extra_str}")
+        else:
+            self._import_set.add(f"import {module_name}")
 
-    def _get_value_code(self, type_: Type, is_first: bool = False) -> str:
+    def _get_value_code(self, type_: Any, is_first: bool = False) -> str:
         """
         Get the output string corresponding to the type
         :param type_: needs to be parsed type
@@ -126,7 +123,7 @@ class P2C(object):
         """
         type_ = replace_protobuf_type_to_python_type(type_)
         if isinstance(type_, dict):
-            sort_list = [(k, v) for k, v in type_.items()]
+            sort_list: list = [(k, v) for k, v in type_.items()]
             sort_list.sort()
             type_name: str = ", ".join(
                 sorted([f"{self._get_value_code(k)}: {self._get_value_code(v)}" for k, v in sort_list])
@@ -408,6 +405,30 @@ class P2C(object):
                     f"'{key}', allow_reuse=True)({class_validator_value.func.__name__})\n"
                 )
         return validator_str
+
+
+class P2C(BaseP2C):
+    """
+    BaseModel objects into corresponding Python code
+    (only protobuf-generated pydantic.BaseModel objects are supported, not overly complex pydantic.BaseModel)
+    """
+
+    def __init__(
+        self,
+        *model: Type[BaseModel],
+        customer_import_set: Optional[Set[str]] = None,
+        customer_deque: Optional[Deque] = None,
+        module_path: str = "",
+        code_indent: Optional[int] = None,
+    ):
+        super().__init__(
+            customer_import_set=customer_import_set,
+            customer_deque=customer_deque,
+            module_path=module_path,
+            code_indent=code_indent,
+        )
+        for _module in model:
+            self._gen_pydantic_model_py_code(_module)
 
 
 def pydantic_model_to_py_code(
