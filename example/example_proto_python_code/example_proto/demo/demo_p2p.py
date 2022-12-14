@@ -17,6 +17,7 @@ class SexType(IntEnum):
 
 
 class UserMessage(BaseModel):
+
     uid: str = FieldInfo(default="")
     age: int = FieldInfo(default=0)
     height: float = FieldInfo(default=0.0)
@@ -26,11 +27,13 @@ class UserMessage(BaseModel):
 
 
 class MapMessage(BaseModel):
+
     user_map: typing.Dict[str, UserMessage] = FieldInfo(default_factory=dict)
     user_flag: typing.Dict[str, bool] = FieldInfo(default_factory=dict)
 
 
 class RepeatedMessage(BaseModel):
+
     str_list: typing.List[str] = FieldInfo(default_factory=list)
     int_list: typing.List[int] = FieldInfo(default_factory=list)
     user_list: typing.List["UserMessage"] = FieldInfo(default_factory=list)
@@ -38,6 +41,7 @@ class RepeatedMessage(BaseModel):
 
 class NestedMessage(BaseModel):
     class UserPayMessage(BaseModel):
+
         bank_number: str = FieldInfo(default="")
         exp: datetime.datetime = FieldInfo(default_factory="now")
         uuid: str = FieldInfo(default="")

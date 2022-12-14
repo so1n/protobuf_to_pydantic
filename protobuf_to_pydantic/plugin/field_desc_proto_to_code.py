@@ -11,6 +11,7 @@ from google.protobuf.descriptor_pb2 import (  # type: ignore
 from mypy_protobuf.main import PYTHON_RESERVED, Descriptors, SourceCodeLocation
 from pydantic.fields import FieldInfo, Undefined
 
+from protobuf_to_pydantic import customer_validator
 from protobuf_to_pydantic.customer_con_type import pydantic_con_dict
 from protobuf_to_pydantic.gen_code import BaseP2C
 from protobuf_to_pydantic.gen_model import (
@@ -80,7 +81,8 @@ class FileDescriptorProtoToCode(BaseP2C):
         ]
         return self._message(nested_type_list, scl_prefix, indent + self.code_indent)
 
-    def _message_field_handle(self, field: FieldDescriptorProto, indent: int) -> Optional[str]:
+    # flake8: noqa: C901
+    def _message_field_handle(self, field: FieldDescriptorProto, indent: int) -> Optional[Tuple[str, str]]:
         """generate message's field to Pydantic.FieldInfo code"""
         field_info_dict: dict = {}
         rule_type_str: Optional[str] = None
@@ -130,23 +132,38 @@ class FileDescriptorProtoToCode(BaseP2C):
 
         if len(field.options.ListFields()) != 0 and rule_type_str:
             # protobuf option support
-            field_option_info_dict = MessagePaitModel(
-                **self._desc_template.handle_template_var(field_optional_handle(rule_type_str, field.type_name, field))
-            ).dict()
-
+            field_option_info_dict = field_optional_handle(rule_type_str, field.type_name, field)
             if not field_option_info_dict.pop("skip", False):
-                field_param_dict_handle(
-                    field_option_info_dict,
-                    field_info_dict.get("default", Undefined),
-                    field_info_dict.get("default_factory", None),
-                )
-                field_info_dict = field_option_info_dict
 
-        if "validator" in field_info_dict:
+                field_option_info_dict = MessagePaitModel(
+                    **self._desc_template.handle_template_var(field_option_info_dict)
+                ).dict()
+                if field_option_info_dict.pop("enable", False):
+                    field_param_dict_handle(
+                        field_option_info_dict,
+                        field_info_dict.get("default", Undefined),
+                        field_info_dict.get("default_factory", None),
+                    )
+                    field_info_dict = field_option_info_dict
+
+        validator_dict = field_info_dict.pop("validator", None)
+        class_head_content = ""
+        if validator_dict:
             # validator support
-            field_info_dict.pop("validator")
-            # logger.info(field_info_dict.pop("validator"))
-            # type_str = self.pydantic_con_type_handle(field_info_dict.pop("validator"))
+            self._add_import_code("pydantic", "validator")
+            for validator_name, validator_class in validator_dict.items():
+                param, validator_instance = validator_class.__validator_config__
+                func = validator_instance.func
+                # TODO get allow_reuse, pre from validator_instance
+                if func.__module__ != customer_validator.__name__:
+                    continue
+
+                self._add_import_code(func.__module__, func.__name__)
+                param_str = ", ".join([self._get_value_code(i) for i in param])
+                class_head_content += (
+                    " " * (self.code_indent + indent)
+                    + f"{validator_name} = validator({param_str},  allow_reuse=True)({func.__name__})\n"
+                )
 
         # type support
         type_: Any = field_info_dict.pop("type_", None)
@@ -189,11 +206,13 @@ class FileDescriptorProtoToCode(BaseP2C):
             new_field_info_dict["extra"] = field_info_dict
 
         field_info_dict = new_field_info_dict
-        field_info_str: str = " ,".join([f"{k}={self._get_value_code(v)}" for k, v in field_info_dict.items()]) or ""
+        field_info_str: str = ", ".join([f"{k}={self._get_value_code(v)}" for k, v in field_info_dict.items()]) or ""
 
-        return " " * (self.code_indent + indent) + f"{field.name}: {type_str} = {field_name}({field_info_str}) \n"
+        class_field_content: str = (
+            " " * (self.code_indent + indent) + f"{field.name}: {type_str} = {field_name}({field_info_str}) \n"
+        )
+        return class_head_content, class_field_content
         # TODO support config
-        # TODO support validator
 
     def _message(self, messages: Iterable[DescriptorProto], scl_prefix: SourceCodeLocation, indent: int = 0) -> str:
         if not messages:
@@ -212,11 +231,12 @@ class FileDescriptorProtoToCode(BaseP2C):
             for idx, field in enumerate(desc.field):
                 if field.name in PYTHON_RESERVED:
                     continue
-                _field_content: Optional[str] = self._message_field_handle(field, indent)
-                if _field_content:
-                    class_field_content += _field_content
+                _content_tuple: Optional[Tuple[str, str]] = self._message_field_handle(field, indent)
+                if _content_tuple:
+                    class_head_content += _content_tuple[0]
+                    class_field_content += _content_tuple[1]
 
-            content += class_content + class_head_content + class_field_content
+            content += "\n".join([i for i in [class_content, class_head_content, class_field_content] if i])
             content += "\n" if indent > 0 else "\n\n"
         return content
 

@@ -12,6 +12,7 @@ from pydantic.fields import FieldInfo
 
 
 class FieldRules(BaseModel):
+
     message: "MessageRules" = FieldInfo()
     float: "FloatRules" = FieldInfo()
     double: "DoubleRules" = FieldInfo()
@@ -37,6 +38,7 @@ class FieldRules(BaseModel):
 
 
 class FloatRules(BaseModel):
+
     const: float = FieldInfo(default=0.0)
     lt: float = FieldInfo(default=0.0)
     le: float = FieldInfo(default=0.0)
@@ -58,6 +60,7 @@ class FloatRules(BaseModel):
 
 
 class DoubleRules(BaseModel):
+
     const: float = FieldInfo(default=0.0)
     lt: float = FieldInfo(default=0.0)
     le: float = FieldInfo(default=0.0)
@@ -79,6 +82,7 @@ class DoubleRules(BaseModel):
 
 
 class Int32Rules(BaseModel):
+
     const: int = FieldInfo(default=0)
     lt: int = FieldInfo(default=0)
     le: int = FieldInfo(default=0)
@@ -100,6 +104,7 @@ class Int32Rules(BaseModel):
 
 
 class Int64Rules(BaseModel):
+
     const: int = FieldInfo(default=0)
     lt: int = FieldInfo(default=0)
     le: int = FieldInfo(default=0)
@@ -121,6 +126,7 @@ class Int64Rules(BaseModel):
 
 
 class UInt32Rules(BaseModel):
+
     const: int = FieldInfo(default=0)
     lt: int = FieldInfo(default=0)
     le: int = FieldInfo(default=0)
@@ -142,6 +148,7 @@ class UInt32Rules(BaseModel):
 
 
 class UInt64Rules(BaseModel):
+
     const: int = FieldInfo(default=0)
     lt: int = FieldInfo(default=0)
     le: int = FieldInfo(default=0)
@@ -163,6 +170,7 @@ class UInt64Rules(BaseModel):
 
 
 class SInt32Rules(BaseModel):
+
     const: int = FieldInfo(default=0)
     lt: int = FieldInfo(default=0)
     le: int = FieldInfo(default=0)
@@ -184,6 +192,7 @@ class SInt32Rules(BaseModel):
 
 
 class SInt64Rules(BaseModel):
+
     const: int = FieldInfo(default=0)
     lt: int = FieldInfo(default=0)
     le: int = FieldInfo(default=0)
@@ -205,6 +214,7 @@ class SInt64Rules(BaseModel):
 
 
 class Fixed32Rules(BaseModel):
+
     const: float = FieldInfo(default=0.0)
     lt: float = FieldInfo(default=0.0)
     le: float = FieldInfo(default=0.0)
@@ -226,6 +236,7 @@ class Fixed32Rules(BaseModel):
 
 
 class Fixed64Rules(BaseModel):
+
     const: float = FieldInfo(default=0.0)
     lt: float = FieldInfo(default=0.0)
     le: float = FieldInfo(default=0.0)
@@ -247,6 +258,7 @@ class Fixed64Rules(BaseModel):
 
 
 class SFixed32Rules(BaseModel):
+
     const: float = FieldInfo(default=0.0)
     lt: float = FieldInfo(default=0.0)
     le: float = FieldInfo(default=0.0)
@@ -268,6 +280,7 @@ class SFixed32Rules(BaseModel):
 
 
 class SFixed64Rules(BaseModel):
+
     const: float = FieldInfo(default=0.0)
     lt: float = FieldInfo(default=0.0)
     le: float = FieldInfo(default=0.0)
@@ -289,6 +302,7 @@ class SFixed64Rules(BaseModel):
 
 
 class BoolRules(BaseModel):
+
     const: bool = FieldInfo(default=False)
     enable: bool = FieldInfo(default=False)
     default: bool = FieldInfo(default=False)
@@ -302,6 +316,7 @@ class BoolRules(BaseModel):
 
 
 class StringRules(BaseModel):
+
     const: str = FieldInfo(default="")
     len: int = FieldInfo(default=0)
     min_length: int = FieldInfo(default=0)
@@ -336,6 +351,7 @@ class StringRules(BaseModel):
 
 
 class BytesRules(BaseModel):
+
     const: bytes = FieldInfo(default=b"")
     min_length: int = FieldInfo(default=0)
     max_length: int = FieldInfo(default=0)
@@ -361,6 +377,7 @@ class BytesRules(BaseModel):
 
 
 class EnumRules(BaseModel):
+
     const: int = FieldInfo(default=0)
     not_in: typing.List[int] = FieldInfo(default_factory=list)
     enable: bool = FieldInfo(default=False)
@@ -376,6 +393,7 @@ class EnumRules(BaseModel):
 
 
 class MessageRules(BaseModel):
+
     skip: bool = FieldInfo(default=False)
     required: bool = FieldInfo(default=False)
     enable: bool = FieldInfo(default=False)
@@ -392,6 +410,7 @@ class MessageRules(BaseModel):
 
 
 class RepeatedRules(BaseModel):
+
     min_items: int = FieldInfo(default=0)
     max_items: int = FieldInfo(default=0)
     unique: bool = FieldInfo(default=False)
@@ -408,6 +427,7 @@ class RepeatedRules(BaseModel):
 
 
 class MapRules(BaseModel):
+
     min_pairs: int = FieldInfo(default=0)
     max_pairs: int = FieldInfo(default=0)
     keys: "FieldRules" = FieldInfo()
@@ -424,6 +444,7 @@ class MapRules(BaseModel):
 
 
 class AnyRules(BaseModel):
+
     required: bool = FieldInfo(default=False)
     not_in: typing.List[str] = FieldInfo(default_factory=list)
     enable: bool = FieldInfo(default=False)
@@ -439,6 +460,7 @@ class AnyRules(BaseModel):
 
 
 class DurationRules(BaseModel):
+
     const: Timedelta = FieldInfo(default_factory="Timedelta")
     lt: Timedelta = FieldInfo(default_factory="Timedelta")
     le: Timedelta = FieldInfo(default_factory="Timedelta")
@@ -459,6 +481,7 @@ class DurationRules(BaseModel):
 
 
 class TimestampRules(BaseModel):
+
     const: datetime.datetime = FieldInfo(default_factory="now")
     lt: datetime.datetime = FieldInfo(default_factory="now")
     le: datetime.datetime = FieldInfo(default_factory="now")
