@@ -100,7 +100,6 @@ class BaseP2C(object):
                     continue
                 _content_set.add(content)
                 content_str += f"\n\n{content}"
-        # return content_str
         return self.format_content(content_str)
 
     def _add_import_code(self, module_name: str, class_name: str = "", extra_str: str = "") -> None:

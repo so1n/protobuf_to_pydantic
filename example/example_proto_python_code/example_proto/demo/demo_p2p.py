@@ -15,35 +15,35 @@ class SexType(IntEnum):
     man = 0
     women = 1
 
-    class UserPayMessage(BaseModel):
-        bank_number: str = FieldInfo(default="", extra={})
-        exp: datetime.datetime = FieldInfo(default_factory="now", extra={})
-        uuid: str = FieldInfo(default="", extra={})
-
 
 class UserMessage(BaseModel):
-    uid: str = FieldInfo(default="", extra={})
-    age: int = FieldInfo(default=0, extra={})
-    height: float = FieldInfo(default=0.0, extra={})
-    sex: "SexType" = FieldInfo(default=0, extra={})
-    is_adult: bool = FieldInfo(default=False, extra={})
-    user_name: str = FieldInfo(default="", extra={})
+    uid: str = FieldInfo(default="")
+    age: int = FieldInfo(default=0)
+    height: float = FieldInfo(default=0.0)
+    sex: "SexType" = FieldInfo(default=0)
+    is_adult: bool = FieldInfo(default=False)
+    user_name: str = FieldInfo(default="")
 
 
 class MapMessage(BaseModel):
-    user_map: typing.Dict[str, UserMessage] = FieldInfo(default_factory=dict, extra={})
-    user_flag: typing.Dict[str, bool] = FieldInfo(default_factory=dict, extra={})
+    user_map: typing.Dict[str, UserMessage] = FieldInfo(default_factory=dict)
+    user_flag: typing.Dict[str, bool] = FieldInfo(default_factory=dict)
 
 
 class RepeatedMessage(BaseModel):
-    str_list: typing.List[str] = FieldInfo(default_factory=list, extra={})
-    int_list: typing.List[int] = FieldInfo(default_factory=list, extra={})
-    user_list: typing.List["UserMessage"] = FieldInfo(default_factory=list, extra={})
+    str_list: typing.List[str] = FieldInfo(default_factory=list)
+    int_list: typing.List[int] = FieldInfo(default_factory=list)
+    user_list: typing.List["UserMessage"] = FieldInfo(default_factory=list)
 
 
 class NestedMessage(BaseModel):
-    user_list_map: typing.Dict[str, RepeatedMessage] = FieldInfo(default_factory=dict, extra={})
-    user_map: typing.Dict[str, MapMessage] = FieldInfo(default_factory=dict, extra={})
-    user_pay: "UserPayMessage" = FieldInfo(extra={})
-    not_enable_user_pay: "UserPayMessage" = FieldInfo(extra={})
-    empty: None = FieldInfo(extra={})
+    class UserPayMessage(BaseModel):
+        bank_number: str = FieldInfo(default="")
+        exp: datetime.datetime = FieldInfo(default_factory="now")
+        uuid: str = FieldInfo(default="")
+
+    user_list_map: typing.Dict[str, RepeatedMessage] = FieldInfo(default_factory=dict)
+    user_map: typing.Dict[str, MapMessage] = FieldInfo(default_factory=dict)
+    user_pay: "UserPayMessage" = FieldInfo()
+    not_enable_user_pay: "UserPayMessage" = FieldInfo()
+    empty: None = FieldInfo()
