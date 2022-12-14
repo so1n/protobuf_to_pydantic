@@ -1,6 +1,6 @@
 import inspect
 import logging
-from typing import Any, Iterable, Optional, Tuple
+from typing import Any, Dict, Iterable, Optional, Set, Tuple
 
 from google.protobuf.descriptor_pb2 import (  # type: ignore
     DescriptorProto,
@@ -21,7 +21,7 @@ from protobuf_to_pydantic.gen_model import (
     python_type_default_value_dict,
     type_dict,
 )
-from protobuf_to_pydantic.get_desc.from_pb_option.base import field_optional_handle, protobuf_common_type_dict
+from protobuf_to_pydantic.get_desc.from_pb_option.base import field_option_handle, protobuf_common_type_dict
 from protobuf_to_pydantic.plugin.config import Config
 
 logger: logging.Logger = logging.getLogger(__name__)
@@ -82,11 +82,13 @@ class FileDescriptorProtoToCode(BaseP2C):
         return self._message(nested_type_list, scl_prefix, indent + self.code_indent)
 
     # flake8: noqa: C901
-    def _message_field_handle(self, field: FieldDescriptorProto, indent: int) -> Optional[Tuple[str, str]]:
+    def _message_field_handle(
+        self, field: FieldDescriptorProto, indent: int, class_name: str = ""
+    ) -> Optional[Tuple[str, str]]:
         """generate message's field to Pydantic.FieldInfo code"""
         field_info_dict: dict = {}
         rule_type_str: Optional[str] = None
-        # TODO Cross-file references are not currently supported
+        # TODO  Cross-file references are not currently supported
         if field.type == 11:
             # message handle
             message = self._descriptors.messages[field.type_name]
@@ -112,8 +114,8 @@ class FileDescriptorProtoToCode(BaseP2C):
                 type_str = '"' + self._get_protobuf_type_str(field)[0] + '"'
         elif field.type == 14:
             # enum handle
-            field_type = field.type_name.split(".")[-1]
-            type_str = self._get_value_code(field_type)
+            # TODO nested enum support
+            type_str = self._get_value_code(field.type_name.split(".")[-1])
             field_info_dict["default"] = 0
         elif field.type not in type_dict:
             logger.error(f"Not found {field.type} in type_dict")
@@ -132,9 +134,8 @@ class FileDescriptorProtoToCode(BaseP2C):
 
         if len(field.options.ListFields()) != 0 and rule_type_str:
             # protobuf option support
-            field_option_info_dict = field_optional_handle(rule_type_str, field.type_name, field)
+            field_option_info_dict = field_option_handle(rule_type_str, field.type_name, field)
             if not field_option_info_dict.pop("skip", False):
-
                 field_option_info_dict = MessagePaitModel(
                     **self._desc_template.handle_template_var(field_option_info_dict)
                 ).dict()
@@ -169,11 +170,13 @@ class FileDescriptorProtoToCode(BaseP2C):
         type_: Any = field_info_dict.pop("type_", None)
         map_type_dict: dict = field_info_dict.pop("map_type", {})
         if type_:
+            # Custom types have the highest priority
             if inspect.isclass(type_) and type_.__mro__[1] in pydantic_con_dict:
                 type_str = self.pydantic_con_type_handle(type_)
             else:
                 type_str = self._get_value_code(type_)
         elif map_type_dict:
+            # For `map type`, the string of type needs to be regenerated
             message = self._descriptors.messages[field.type_name]
             if "keys" in map_type_dict:
                 key_type_str = self._get_value_code(map_type_dict["keys"])
@@ -194,25 +197,48 @@ class FileDescriptorProtoToCode(BaseP2C):
             self._add_import_code("pydantic.fields", "FieldInfo")
 
         # arranging  field info parameters
-        new_field_info_dict = {}
+        _temp_field_info_dict = {}
         for key in FieldInfo.__slots__:
             if key not in field_info_dict:
                 continue
             value: Any = field_info_dict.pop(key, None)
             if value is getattr(FieldInfo(), key):
                 continue
-            new_field_info_dict[key] = value
+            _temp_field_info_dict[key] = value
         if field_info_dict:
-            new_field_info_dict["extra"] = field_info_dict
+            _temp_field_info_dict["extra"] = field_info_dict
+        field_info_dict = _temp_field_info_dict
 
-        field_info_dict = new_field_info_dict
         field_info_str: str = ", ".join([f"{k}={self._get_value_code(v)}" for k, v in field_info_dict.items()]) or ""
-
         class_field_content: str = (
             " " * (self.code_indent + indent) + f"{field.name}: {type_str} = {field_name}({field_info_str}) \n"
         )
         return class_head_content, class_field_content
-        # TODO support config
+
+    def _gen_one_of_dict(self, desc: DescriptorProto) -> Dict:
+        one_of_dict = {}
+        index_field_name_dict: Dict[int, Set[str]] = {}
+        for field in desc.field:
+            if not field.HasField("oneof_index"):
+                continue
+            if field.oneof_index not in index_field_name_dict:
+                index_field_name_dict[field.oneof_index] = set()
+            index_field_name_dict[field.oneof_index].add(field.name)
+
+        for index, one_of_item in enumerate(desc.oneof_decl):
+            option_dict = {}
+            for option_descriptor, option_value in one_of_item.options.ListFields():
+                pkg, rule_name = option_descriptor.full_name.split(".")
+                if not pkg.endswith("validate"):
+                    continue
+                if rule_name == "required":
+                    # Now only support `required`
+                    option_dict[rule_name] = option_value
+            option_dict["fields"] = index_field_name_dict[index]
+            if option_dict:
+                # Only when the rules are used, will the number of fields of one_of be checked to see if they match
+                one_of_dict[desc.name + "." + one_of_item.name] = option_dict
+        return one_of_dict
 
     def _message(self, messages: Iterable[DescriptorProto], scl_prefix: SourceCodeLocation, indent: int = 0) -> str:
         if not messages:
@@ -236,10 +262,23 @@ class FileDescriptorProtoToCode(BaseP2C):
                 if field.type == 11 and self._get_protobuf_type_str(field)[0] == "AnyMessage":
                     use_custom_type = True
 
-                _content_tuple: Optional[Tuple[str, str]] = self._message_field_handle(field, indent)
+                _content_tuple: Optional[Tuple[str, str]] = self._message_field_handle(field, indent, class_name)
                 if _content_tuple:
                     class_head_content += _content_tuple[0]
                     class_field_content += _content_tuple[1]
+
+            if desc.oneof_decl:
+                one_of_dict: dict = self._gen_one_of_dict(desc)
+                if one_of_dict:
+                    class_head_content += (
+                        f"{' ' * (indent + self.code_indent)}_one_of_dict = {self._get_value_code(one_of_dict)}\n"
+                    )
+                    class_head_content += (
+                        f"{' ' * (indent + self.code_indent)}"
+                        f"_check_one_of = root_validator(pre=True, allow_reuse=True)(check_one_of)\n"
+                    )
+                    self._add_import_code("pydantic", "root_validator")
+                    self._add_import_code("protobuf_to_pydantic.customer_validator", "check_one_of")
 
             if use_custom_type:
                 config_content: str = f"{' ' * (indent + self.code_indent)}class Config:\n"
@@ -252,8 +291,7 @@ class FileDescriptorProtoToCode(BaseP2C):
     def _get_protobuf_type_str(self, field: FieldDescriptorProto) -> Tuple[str, Optional[str]]:
         rule_type_str: Optional[str] = None
         if field.type in type_dict:
-            field_type = type_dict[field.type]
-            py_type_str: str = self._get_value_code(field_type)
+            py_type_str: str = self._get_value_code(type_dict[field.type])
             rule_type_str = protobuf_common_type_dict.get(field.type, None)
             return py_type_str, rule_type_str
         elif field.type_name.startswith(".google.protobuf"):

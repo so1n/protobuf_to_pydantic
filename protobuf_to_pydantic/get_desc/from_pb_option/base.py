@@ -197,7 +197,7 @@ def option_descriptor_to_desc_dict(
         desc_dict[column] = value
 
 
-def field_optional_handle(
+def field_option_handle(
     type_name: str,
     full_name: str,
     field: Union[FieldDescriptor, FieldDescriptorProto],
@@ -310,7 +310,7 @@ class ParseFromPbOption(object):
                     f"{__name__} not support protobuf type id:{field.type} from field name{field.full_name}"
                 )
                 continue
-            field_dict: dict = field_optional_handle(type_name, field.full_name, field, self.protobuf_pkg)
+            field_dict: dict = field_option_handle(type_name, field.full_name, field, self.protobuf_pkg)
             if field_dict["skip"]:
                 # If skip is True, the corresponding validation rule is not applied
                 continue

@@ -16,6 +16,7 @@ from protobuf_to_pydantic.customer_con_type import contimedelta, contimestamp
 from protobuf_to_pydantic.customer_validator import (
     any_in_validator,
     any_not_in_validator,
+    check_one_of,
     contains_validator,
     duration_const_validator,
     duration_ge_validator,
@@ -43,7 +44,7 @@ from protobuf_to_pydantic.customer_validator import (
 )
 from protobuf_to_pydantic.get_desc.from_pb_option.types import HostNameStr, UriRefStr
 from protobuf_to_pydantic.util import Timedelta
-from pydantic import BaseModel, validator
+from pydantic import BaseModel, root_validator, validator
 from pydantic.fields import FieldInfo
 from pydantic.networks import AnyUrl, EmailStr, IPvAnyAddress
 from pydantic.types import conbytes, confloat, conint, conlist, constr
@@ -650,12 +651,18 @@ class MessageIgnoredTest(BaseModel):
 
 class OneOfTest(BaseModel):
 
+    _one_of_dict = {"OneOfTest.id": {"fields": {"x", "y"}, "required": True}}
+    _check_one_of = root_validator(pre=True, allow_reuse=True)(check_one_of)
+
     header: str = FieldInfo(default="")
     x: str = FieldInfo(default="")
     y: int = FieldInfo(default=0)
 
 
 class OneOfNotTest(BaseModel):
+
+    _one_of_dict = {"OneOfNotTest.id": {"fields": {"x", "y"}}}
+    _check_one_of = root_validator(pre=True, allow_reuse=True)(check_one_of)
 
     header: str = FieldInfo(default="")
     x: str = FieldInfo(default="")

@@ -7,8 +7,9 @@ import typing
 from enum import IntEnum
 
 from google.protobuf.message import Message  # type: ignore
+from protobuf_to_pydantic.customer_validator import check_one_of
 from protobuf_to_pydantic.util import Timedelta
-from pydantic import BaseModel
+from pydantic import BaseModel, root_validator
 from pydantic.fields import FieldInfo
 
 
@@ -19,6 +20,35 @@ class KnownRegex(IntEnum):
 
 
 class FieldRules(BaseModel):
+
+    _one_of_dict = {
+        "FieldRules.type": {
+            "fields": {
+                "any",
+                "bool",
+                "bytes",
+                "double",
+                "duration",
+                "enum",
+                "fixed32",
+                "fixed64",
+                "float",
+                "int32",
+                "int64",
+                "map",
+                "repeated",
+                "sfixed32",
+                "sfixed64",
+                "sint32",
+                "sint64",
+                "string",
+                "timestamp",
+                "uint32",
+                "uint64",
+            }
+        }
+    }
+    _check_one_of = root_validator(pre=True, allow_reuse=True)(check_one_of)
 
     message: "MessageRules" = FieldInfo()
     float: "FloatRules" = FieldInfo()
@@ -183,6 +213,24 @@ class BoolRules(BaseModel):
 
 class StringRules(BaseModel):
 
+    _one_of_dict = {
+        "StringRules.well_known": {
+            "fields": {
+                "address",
+                "email",
+                "hostname",
+                "ip",
+                "ipv4",
+                "ipv6",
+                "uri",
+                "uri_ref",
+                "uuid",
+                "well_known_regex",
+            }
+        }
+    }
+    _check_one_of = root_validator(pre=True, allow_reuse=True)(check_one_of)
+
     const: str = FieldInfo(default="")
     len: int = FieldInfo(default=0)
     min_len: int = FieldInfo(default=0)
@@ -211,6 +259,9 @@ class StringRules(BaseModel):
 
 
 class BytesRules(BaseModel):
+
+    _one_of_dict = {"BytesRules.well_known": {"fields": {"ip", "ipv4", "ipv6"}}}
+    _check_one_of = root_validator(pre=True, allow_reuse=True)(check_one_of)
 
     const: bytes = FieldInfo(default=b"")
     len: int = FieldInfo(default=0)

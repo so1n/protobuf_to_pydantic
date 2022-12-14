@@ -113,11 +113,11 @@ class BaseP2C(object):
         else:
             self._import_set.add(f"import {module_name}")
 
-    def _get_value_code(self, type_: Any, is_first: bool = False) -> str:
+    def _get_value_code(self, type_: Any, auto_import_type_code: bool = True) -> str:
         """
         Get the output string corresponding to the type
         :param type_: needs to be parsed type
-        :param is_first: If False, will generate by the way import code
+        :param auto_import_type_code: If True, will generate by the way import code
         :return:
         """
         type_ = replace_protobuf_type_to_python_type(type_)
@@ -140,7 +140,7 @@ class BaseP2C(object):
                 return "(" + type_name + ")"
         elif inspect.isfunction(type_) or "cyfunction" in str(type_):
             # pydantic confunc support
-            if not is_first:
+            if auto_import_type_code:
                 self._parse_type_to_import_code(type_)
             return type_.__name__
         elif inspect.isclass(type_):
@@ -148,18 +148,18 @@ class BaseP2C(object):
                 # pydantic con class support
                 return self.pydantic_con_type_handle(type_)
             else:
-                if not is_first:
+                if auto_import_type_code:
                     self._parse_type_to_import_code(type_)
                 return getattr(type_, "__name__", None)
         elif getattr(type_, "DESCRIPTOR", None):
             # protobuf message support
             message_name: str = type_.__class__.__name__
             attr_str: str = " ,".join([f"{i[0].name}={repr(i[1])}" for i in type_.ListFields()])
-            if not is_first:
+            if auto_import_type_code:
                 self._parse_type_to_import_code(type_)
             return f"{message_name}({attr_str})"
         else:
-            if not is_first:
+            if auto_import_type_code:
                 self._parse_type_to_import_code(type_)
             type_module = inspect.getmodule(type_)
 
@@ -346,7 +346,7 @@ class BaseP2C(object):
                         module_name = start_path.split("/")[-1] + type_module.__file__.replace(start_path, "")
                 module_name = module_name.replace("/", ".").replace(".py", "")
 
-                class_name: str = self._get_value_code(type_, is_first=True)
+                class_name: str = self._get_value_code(type_, auto_import_type_code=False)
             else:
                 module_name = type_module.__name__
                 if not inspect.isclass(type_) and not inspect.isfunction(type_):
