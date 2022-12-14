@@ -507,6 +507,8 @@ class RepeatedTest(BaseModel):
 
 
 class AnyTest(BaseModel):
+    class Config:
+        arbitrary_types_allowed = True
 
     not_in_test_any_not_in_validator = validator("not_in_test", allow_reuse=True)(any_not_in_validator)
     in_test_any_in_validator = validator("in_test", allow_reuse=True)(any_in_validator)

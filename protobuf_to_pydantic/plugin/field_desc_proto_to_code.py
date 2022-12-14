@@ -228,14 +228,23 @@ class FileDescriptorProtoToCode(BaseP2C):
 
             if desc.nested_type:
                 class_head_content += self._message_nested_type_handle(desc, scl_prefix, indent)
+
+            use_custom_type: bool = False
             for idx, field in enumerate(desc.field):
                 if field.name in PYTHON_RESERVED:
                     continue
+                if field.type == 11 and self._get_protobuf_type_str(field)[0] == "AnyMessage":
+                    use_custom_type = True
+
                 _content_tuple: Optional[Tuple[str, str]] = self._message_field_handle(field, indent)
                 if _content_tuple:
                     class_head_content += _content_tuple[0]
                     class_field_content += _content_tuple[1]
 
+            if use_custom_type:
+                config_content: str = f"{' ' * (indent + self.code_indent)}class Config:\n"
+                config_content += f"{' ' * (indent + self.code_indent * 2)}arbitrary_types_allowed = True\n\n"
+                class_head_content = config_content + class_head_content
             content += "\n".join([i for i in [class_content, class_head_content, class_field_content] if i])
             content += "\n" if indent > 0 else "\n\n"
         return content
