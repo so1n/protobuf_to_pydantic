@@ -45,7 +45,7 @@ def check_one_of(cls: Any, values: tuple) -> tuple:
 # data validator #
 ##################
 def in_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
-    field_name, field_value = _get_name_value_from_kwargs("in", kwargs["field"])
+    field_name, field_value = _get_name_value_from_kwargs("in_", kwargs["field"])
     if field_value is not None and v not in field_value:
         raise ValueError(f"{field_name}:{v} not in {field_value}")
     return v

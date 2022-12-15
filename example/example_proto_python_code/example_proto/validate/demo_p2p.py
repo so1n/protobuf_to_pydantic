@@ -62,8 +62,8 @@ class FloatTest(BaseModel):
     const_test: float = FieldInfo(default=1.0, const=True)
     range_e_test: float = FieldInfo(default=0.0, ge=1, le=10)
     range_test: float = FieldInfo(default=0.0, gt=1, lt=10)
-    in_test: float = FieldInfo(default=0.0, extra={"in": [1.0, 2.0, 3.0]})
-    not_in_test: float = FieldInfo(default=0.0, extra={"not_in": [1.0, 2.0, 3.0]})
+    in_test: float = FieldInfo(default=0.0, in_=[1.0, 2.0, 3.0])
+    not_in_test: float = FieldInfo(default=0.0, not_in=[1.0, 2.0, 3.0])
     ignore_test: float = FieldInfo(default=0.0)
 
 
@@ -75,8 +75,8 @@ class DoubleTest(BaseModel):
     const_test: float = FieldInfo(default=1.0, const=True)
     range_e_test: float = FieldInfo(default=0.0, ge=1, le=10)
     range_test: float = FieldInfo(default=0.0, gt=1, lt=10)
-    in_test: float = FieldInfo(default=0.0, extra={"in": [1.0, 2.0, 3.0]})
-    not_in_test: float = FieldInfo(default=0.0, extra={"not_in": [1.0, 2.0, 3.0]})
+    in_test: float = FieldInfo(default=0.0, in_=[1.0, 2.0, 3.0])
+    not_in_test: float = FieldInfo(default=0.0, not_in=[1.0, 2.0, 3.0])
     ignore_test: float = FieldInfo(default=0.0)
 
 
@@ -88,8 +88,8 @@ class Int32Test(BaseModel):
     const_test: int = FieldInfo(default=1, const=True)
     range_e_test: int = FieldInfo(default=0, ge=1, le=10)
     range_test: int = FieldInfo(default=0, gt=1, lt=10)
-    in_test: int = FieldInfo(default=0, extra={"in": [1, 2, 3]})
-    not_in_test: int = FieldInfo(default=0, extra={"not_in": [1, 2, 3]})
+    in_test: int = FieldInfo(default=0, in_=[1, 2, 3])
+    not_in_test: int = FieldInfo(default=0, not_in=[1, 2, 3])
     ignore_test: int = FieldInfo(default=0)
 
 
@@ -101,8 +101,8 @@ class Uint32Test(BaseModel):
     const_test: int = FieldInfo(default=1, const=True)
     range_e_test: int = FieldInfo(default=0, ge=1, le=10)
     range_test: int = FieldInfo(default=0, gt=1, lt=10)
-    in_test: int = FieldInfo(default=0, extra={"in": [1, 2, 3]})
-    not_in_test: int = FieldInfo(default=0, extra={"not_in": [1, 2, 3]})
+    in_test: int = FieldInfo(default=0, in_=[1, 2, 3])
+    not_in_test: int = FieldInfo(default=0, not_in=[1, 2, 3])
     ignore_test: int = FieldInfo(default=0)
 
 
@@ -114,8 +114,8 @@ class Sint32Test(BaseModel):
     const_test: int = FieldInfo(default=1, const=True)
     range_e_test: int = FieldInfo(default=0, ge=1, le=10)
     range_test: int = FieldInfo(default=0, gt=1, lt=10)
-    in_test: int = FieldInfo(default=0, extra={"in": [1, 2, 3]})
-    not_in_test: int = FieldInfo(default=0, extra={"not_in": [1, 2, 3]})
+    in_test: int = FieldInfo(default=0, in_=[1, 2, 3])
+    not_in_test: int = FieldInfo(default=0, not_in=[1, 2, 3])
     ignore_test: int = FieldInfo(default=0)
 
 
@@ -127,8 +127,8 @@ class Int64Test(BaseModel):
     const_test: int = FieldInfo(default=1, const=True)
     range_e_test: int = FieldInfo(default=0, ge=1, le=10)
     range_test: int = FieldInfo(default=0, gt=1, lt=10)
-    in_test: int = FieldInfo(default=0, extra={"in": [1, 2, 3]})
-    not_in_test: int = FieldInfo(default=0, extra={"not_in": [1, 2, 3]})
+    in_test: int = FieldInfo(default=0, in_=[1, 2, 3])
+    not_in_test: int = FieldInfo(default=0, not_in=[1, 2, 3])
     ignore_test: int = FieldInfo(default=0)
 
 
@@ -140,8 +140,8 @@ class Uint64Test(BaseModel):
     const_test: int = FieldInfo(default=1, const=True)
     range_e_test: int = FieldInfo(default=0, ge=1, le=10)
     range_test: int = FieldInfo(default=0, gt=1, lt=10)
-    in_test: int = FieldInfo(default=0, extra={"in": [1, 2, 3]})
-    not_in_test: int = FieldInfo(default=0, extra={"not_in": [1, 2, 3]})
+    in_test: int = FieldInfo(default=0, in_=[1, 2, 3])
+    not_in_test: int = FieldInfo(default=0, not_in=[1, 2, 3])
     ignore_test: int = FieldInfo(default=0)
 
 
@@ -153,8 +153,8 @@ class Sint64Test(BaseModel):
     const_test: int = FieldInfo(default=1, const=True)
     range_e_test: int = FieldInfo(default=0, ge=1, le=10)
     range_test: int = FieldInfo(default=0, gt=1, lt=10)
-    in_test: int = FieldInfo(default=0, extra={"in": [1, 2, 3]})
-    not_in_test: int = FieldInfo(default=0, extra={"not_in": [1, 2, 3]})
+    in_test: int = FieldInfo(default=0, in_=[1, 2, 3])
+    not_in_test: int = FieldInfo(default=0, not_in=[1, 2, 3])
     ignore_test: int = FieldInfo(default=0)
 
 
@@ -166,8 +166,8 @@ class Fixed32Test(BaseModel):
     const_test: float = FieldInfo(default=1, const=True)
     range_e_test: float = FieldInfo(default=0.0, ge=1, le=10)
     range_test: float = FieldInfo(default=0.0, gt=1, lt=10)
-    in_test: float = FieldInfo(default=0.0, extra={"in": [1, 2, 3]})
-    not_in_test: float = FieldInfo(default=0.0, extra={"not_in": [1, 2, 3]})
+    in_test: float = FieldInfo(default=0.0, in_=[1, 2, 3])
+    not_in_test: float = FieldInfo(default=0.0, not_in=[1, 2, 3])
     ignore_test: float = FieldInfo(default=0.0)
 
 
@@ -179,8 +179,8 @@ class Fixed64Test(BaseModel):
     const_test: float = FieldInfo(default=1, const=True)
     range_e_test: float = FieldInfo(default=0.0, ge=1, le=10)
     range_test: float = FieldInfo(default=0.0, gt=1, lt=10)
-    in_test: float = FieldInfo(default=0.0, extra={"in": [1, 2, 3]})
-    not_in_test: float = FieldInfo(default=0.0, extra={"not_in": [1, 2, 3]})
+    in_test: float = FieldInfo(default=0.0, in_=[1, 2, 3])
+    not_in_test: float = FieldInfo(default=0.0, not_in=[1, 2, 3])
     ignore_test: float = FieldInfo(default=0.0)
 
 
@@ -192,8 +192,8 @@ class Sfixed32Test(BaseModel):
     const_test: float = FieldInfo(default=1, const=True)
     range_e_test: float = FieldInfo(default=0.0, ge=1, le=10)
     range_test: float = FieldInfo(default=0.0, gt=1, lt=10)
-    in_test: float = FieldInfo(default=0.0, extra={"in": [1, 2, 3]})
-    not_in_test: float = FieldInfo(default=0.0, extra={"not_in": [1, 2, 3]})
+    in_test: float = FieldInfo(default=0.0, in_=[1, 2, 3])
+    not_in_test: float = FieldInfo(default=0.0, not_in=[1, 2, 3])
     ignore_test: float = FieldInfo(default=0.0)
 
 
@@ -205,8 +205,8 @@ class Sfixed64Test(BaseModel):
     const_test: float = FieldInfo(default=1, const=True)
     range_e_test: float = FieldInfo(default=0.0, ge=1, le=10)
     range_test: float = FieldInfo(default=0.0, gt=1, lt=10)
-    in_test: float = FieldInfo(default=0.0, extra={"in": [1, 2, 3]})
-    not_in_test: float = FieldInfo(default=0.0, extra={"not_in": [1, 2, 3]})
+    in_test: float = FieldInfo(default=0.0, in_=[1, 2, 3])
+    not_in_test: float = FieldInfo(default=0.0, not_in=[1, 2, 3])
     ignore_test: float = FieldInfo(default=0.0)
 
 
@@ -227,16 +227,16 @@ class StringTest(BaseModel):
     not_in_test_not_in_validator = validator("not_in_test", allow_reuse=True)(not_in_validator)
 
     const_test: str = FieldInfo(default="aaa", const=True)
-    len_test: str = FieldInfo(default="", extra={"len": 3})
+    len_test: str = FieldInfo(default="", len=3)
     s_range_len_test: str = FieldInfo(default="", min_length=1, max_length=3)
     b_range_len_test: str = FieldInfo(default="")
     pattern_test: str = FieldInfo(default="", regex="^test")
-    prefix_test: str = FieldInfo(default="", extra={"prefix": "prefix"})
-    suffix_test: str = FieldInfo(default="", extra={"suffix": "suffix"})
-    contains_test: str = FieldInfo(default="", extra={"contains": "contains"})
-    not_contains_test: str = FieldInfo(default="", extra={"not_contains": "not_contains"})
-    in_test: str = FieldInfo(default="", extra={"in": ["a", "b", "c"]})
-    not_in_test: str = FieldInfo(default="", extra={"not_in": ["a", "b", "c"]})
+    prefix_test: str = FieldInfo(default="", prefix="prefix")
+    suffix_test: str = FieldInfo(default="", suffix="suffix")
+    contains_test: str = FieldInfo(default="", contains="contains")
+    not_contains_test: str = FieldInfo(default="", not_contains="not_contains")
+    in_test: str = FieldInfo(default="", in_=["a", "b", "c"])
+    not_in_test: str = FieldInfo(default="", not_in=["a", "b", "c"])
     email_test: EmailStr = FieldInfo(default="")
     hostname_test: HostNameStr = FieldInfo(default="")
     ip_test: IPvAnyAddress = FieldInfo(default="")
@@ -259,14 +259,14 @@ class BytesTest(BaseModel):
     not_in_test_not_in_validator = validator("not_in_test", allow_reuse=True)(not_in_validator)
 
     const_test: bytes = FieldInfo(default=b"demo", const=True)
-    len_test: bytes = FieldInfo(default=b"", extra={"len": 4})
+    len_test: bytes = FieldInfo(default=b"", len=4)
     range_len_test: bytes = FieldInfo(default=b"", min_length=1, max_length=4)
     pattern_test: bytes = FieldInfo(default=b"")
-    prefix_test: bytes = FieldInfo(default=b"", extra={"prefix": b"prefix"})
-    suffix_test: bytes = FieldInfo(default=b"", extra={"suffix": b"suffix"})
-    contains_test: bytes = FieldInfo(default=b"", extra={"contains": b"contains"})
-    in_test: bytes = FieldInfo(default=b"", extra={"in": [b"a", b"b", b"c"]})
-    not_in_test: bytes = FieldInfo(default=b"", extra={"not_in": [b"a", b"b", b"c"]})
+    prefix_test: bytes = FieldInfo(default=b"", prefix=b"prefix")
+    suffix_test: bytes = FieldInfo(default=b"", suffix=b"suffix")
+    contains_test: bytes = FieldInfo(default=b"", contains=b"contains")
+    in_test: bytes = FieldInfo(default=b"", in_=[b"a", b"b", b"c"])
+    not_in_test: bytes = FieldInfo(default=b"", not_in=[b"a", b"b", b"c"])
 
 
 class EnumTest(BaseModel):
@@ -282,7 +282,7 @@ class MapTest(BaseModel):
     pair_test_map_min_pairs_validator = validator("pair_test", allow_reuse=True)(map_min_pairs_validator)
     pair_test_map_max_pairs_validator = validator("pair_test", allow_reuse=True)(map_max_pairs_validator)
 
-    pair_test: typing.Dict[str, int] = FieldInfo(default_factory=dict, extra={"map_max_pairs": 5, "map_min_pairs": 1})
+    pair_test: typing.Dict[str, int] = FieldInfo(default_factory=dict, map_min_pairs=1, map_max_pairs=5)
     no_parse_test: typing.Dict[str, int] = FieldInfo(default_factory=dict)
     keys_test: typing.Dict[constr(min_length=1, max_length=5), int] = FieldInfo(default_factory=dict)
     values_test: typing.Dict[str, conint(ge=5, le=5)] = FieldInfo(default_factory=dict)
@@ -324,6 +324,8 @@ class RepeatedTest(BaseModel):
 
 
 class AnyTest(BaseModel):
+    class Config:
+        arbitrary_types_allowed = True
 
     not_in_test_any_not_in_validator = validator("not_in_test", allow_reuse=True)(any_not_in_validator)
     in_test_any_in_validator = validator("in_test", allow_reuse=True)(any_in_validator)
@@ -331,18 +333,11 @@ class AnyTest(BaseModel):
     required_test: Any = FieldInfo()
     not_in_test: Any = FieldInfo(
         default_factory=Any,
-        extra={
-            "any_not_in": [
-                "type.googleapis.com/google.protobuf.Duration",
-                "type.googleapis.com/google.protobuf.Timestamp",
-            ]
-        },
+        any_not_in=["type.googleapis.com/google.protobuf.Duration", "type.googleapis.com/google.protobuf.Timestamp"],
     )
     in_test: Any = FieldInfo(
         default_factory=Any,
-        extra={
-            "any_in": ["type.googleapis.com/google.protobuf.Duration", "type.googleapis.com/google.protobuf.Timestamp"]
-        },
+        any_in=["type.googleapis.com/google.protobuf.Duration", "type.googleapis.com/google.protobuf.Timestamp"],
     )
 
 
@@ -358,31 +353,25 @@ class DurationTest(BaseModel):
 
     required_test: Timedelta = FieldInfo()
     const_test: Timedelta = FieldInfo(
-        default_factory=timedelta, extra={"duration_const": timedelta(seconds=1, microseconds=500000)}
+        default_factory=timedelta, duration_const=timedelta(seconds=1, microseconds=500000)
     )
     range_test: Timedelta = FieldInfo(
         default_factory=timedelta,
-        extra={
-            "duration_gt": timedelta(seconds=5, microseconds=500000),
-            "duration_lt": timedelta(seconds=10, microseconds=500000),
-        },
+        duration_lt=timedelta(seconds=10, microseconds=500000),
+        duration_gt=timedelta(seconds=5, microseconds=500000),
     )
     range_e_test: Timedelta = FieldInfo(
         default_factory=timedelta,
-        extra={
-            "duration_ge": timedelta(seconds=5, microseconds=500000),
-            "duration_le": timedelta(seconds=10, microseconds=500000),
-        },
+        duration_le=timedelta(seconds=10, microseconds=500000),
+        duration_ge=timedelta(seconds=5, microseconds=500000),
     )
     in_test: Timedelta = FieldInfo(
         default_factory=timedelta,
-        extra={"duration_in": [timedelta(seconds=1, microseconds=500000), timedelta(seconds=3, microseconds=500000)]},
+        duration_in=[timedelta(seconds=1, microseconds=500000), timedelta(seconds=3, microseconds=500000)],
     )
     not_in_test: Timedelta = FieldInfo(
         default_factory=timedelta,
-        extra={
-            "duration_not_in": [timedelta(seconds=1, microseconds=500000), timedelta(seconds=3, microseconds=500000)]
-        },
+        duration_not_in=[timedelta(seconds=1, microseconds=500000), timedelta(seconds=3, microseconds=500000)],
     )
 
 
@@ -404,18 +393,16 @@ class TimestampTest(BaseModel):
     )
 
     required_test: datetime = FieldInfo()
-    const_test: datetime = FieldInfo(default_factory=datetime.now, extra={"timestamp_const": 1600000000.0})
-    range_test: datetime = FieldInfo(
-        default_factory=datetime.now, extra={"timestamp_gt": 1600000000.0, "timestamp_lt": 1600000010.0}
-    )
+    const_test: datetime = FieldInfo(default_factory=datetime.now, timestamp_const=1600000000.0)
+    range_test: datetime = FieldInfo(default_factory=datetime.now, timestamp_lt=1600000010.0, timestamp_gt=1600000000.0)
     range_e_test: datetime = FieldInfo(
-        default_factory=datetime.now, extra={"timestamp_ge": 1600000000.0, "timestamp_le": 1600000010.0}
+        default_factory=datetime.now, timestamp_le=1600000010.0, timestamp_ge=1600000000.0
     )
-    lt_now_test: datetime = FieldInfo(default_factory=datetime.now, extra={"timestamp_lt_now": True})
-    gt_now_test: datetime = FieldInfo(default_factory=datetime.now, extra={"timestamp_gt_now": True})
-    within_test: datetime = FieldInfo(default_factory=datetime.now, extra={"timestamp_within": timedelta(seconds=1)})
+    lt_now_test: datetime = FieldInfo(default_factory=datetime.now, timestamp_lt_now=True)
+    gt_now_test: datetime = FieldInfo(default_factory=datetime.now, timestamp_gt_now=True)
+    within_test: datetime = FieldInfo(default_factory=datetime.now, timestamp_within=timedelta(seconds=1))
     within_and_gt_now_test: datetime = FieldInfo(
-        default_factory=datetime.now, extra={"timestamp_gt_now": True, "timestamp_within": timedelta(seconds=3600)}
+        default_factory=datetime.now, timestamp_gt_now=True, timestamp_within=timedelta(seconds=3600)
     )
 
 
@@ -459,7 +446,7 @@ class NestedMessage(BaseModel):
         exp_timestamp_gt_now_validator = validator("exp", allow_reuse=True)(timestamp_gt_now_validator)
 
         bank_number: str = FieldInfo(default="", min_length=13, max_length=19)
-        exp: datetime = FieldInfo(default_factory=datetime.now, extra={"timestamp_gt_now": True})
+        exp: datetime = FieldInfo(default_factory=datetime.now, timestamp_gt_now=True)
         uuid: UUID = FieldInfo(default="")
 
     class NotEnableUserPayMessage(BaseModel):
@@ -467,7 +454,7 @@ class NestedMessage(BaseModel):
         exp_timestamp_gt_now_validator = validator("exp", allow_reuse=True)(timestamp_gt_now_validator)
 
         bank_number: str = FieldInfo(default="", min_length=13, max_length=19)
-        exp: datetime = FieldInfo(default_factory=datetime.now, extra={"timestamp_gt_now": True})
+        exp: datetime = FieldInfo(default_factory=datetime.now, timestamp_gt_now=True)
         uuid: UUID = FieldInfo(default="")
 
     string_in_map_test: typing.Dict[str, StringTest] = FieldInfo(default_factory=dict)

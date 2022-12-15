@@ -64,8 +64,8 @@ class FloatTest(BaseModel):
     const_test: float = FieldInfo(default=1.0, const=True)
     range_e_test: float = FieldInfo(default=0.0, ge=1, le=10)
     range_test: float = FieldInfo(default=0.0, gt=1, lt=10)
-    in_test: float = FieldInfo(default=0.0, extra={"in": [1.0, 2.0, 3.0]})
-    not_in_test: float = FieldInfo(default=0.0, extra={"not_in": [1.0, 2.0, 3.0]})
+    in_test: float = FieldInfo(default=0.0, in_=[1.0, 2.0, 3.0])
+    not_in_test: float = FieldInfo(default=0.0, not_in=[1.0, 2.0, 3.0])
     default_test: float = FieldInfo(default=1.0)
     not_enable_test: float = FieldInfo(default=0.0)
     default_factory_test: float = FieldInfo(default_factory=float)
@@ -73,8 +73,8 @@ class FloatTest(BaseModel):
     alias_test: float = FieldInfo(default=0.0, alias="alias")
     desc_test: float = FieldInfo(default=0.0, description="test desc")
     multiple_of_test: float = FieldInfo(default=0.0, multiple_of=3)
-    example_test: float = FieldInfo(default=0.0, extra={"example": 1.0})
-    example_factory: float = FieldInfo(default=0.0, extra={"example": float})
+    example_test: float = FieldInfo(default=0.0, example=1.0)
+    example_factory: float = FieldInfo(default=0.0, example=float)
     field_test: float = CustomerField(default=0.0)
     type_test: confloat() = FieldInfo(default=0.0)
     title_test: float = FieldInfo(default=0.0, title="title_test")
@@ -88,8 +88,8 @@ class DoubleTest(BaseModel):
     const_test: float = FieldInfo(default=1.0, const=True)
     range_e_test: float = FieldInfo(default=0.0, ge=1, le=10)
     range_test: float = FieldInfo(default=0.0, gt=1, lt=10)
-    in_test: float = FieldInfo(default=0.0, extra={"in": [1.0, 2.0, 3.0]})
-    not_in_test: float = FieldInfo(default=0.0, extra={"not_in": [1.0, 2.0, 3.0]})
+    in_test: float = FieldInfo(default=0.0, in_=[1.0, 2.0, 3.0])
+    not_in_test: float = FieldInfo(default=0.0, not_in=[1.0, 2.0, 3.0])
     default_test: float = FieldInfo(default=1.0)
     not_enable_test: float = FieldInfo(default=0.0)
     default_factory_test: float = FieldInfo(default_factory=float)
@@ -97,8 +97,8 @@ class DoubleTest(BaseModel):
     alias_test: float = FieldInfo(default=0.0, alias="alias")
     desc_test: float = FieldInfo(default=0.0, description="test desc")
     multiple_of_test: float = FieldInfo(default=0.0, multiple_of=3)
-    example_test: float = FieldInfo(default=0.0, extra={"example": 1.0})
-    example_factory: float = FieldInfo(default=0.0, extra={"example": float})
+    example_test: float = FieldInfo(default=0.0, example=1.0)
+    example_factory: float = FieldInfo(default=0.0, example=float)
     field_test: float = CustomerField(default=0.0)
     type_test: confloat() = FieldInfo(default=0.0)
     title_test: float = FieldInfo(default=0.0, title="title_test")
@@ -112,8 +112,8 @@ class Int32Test(BaseModel):
     const_test: int = FieldInfo(default=1, const=True)
     range_e_test: int = FieldInfo(default=0, ge=1, le=10)
     range_test: int = FieldInfo(default=0, gt=1, lt=10)
-    in_test: int = FieldInfo(default=0, extra={"in": [1, 2, 3]})
-    not_in_test: int = FieldInfo(default=0, extra={"not_in": [1, 2, 3]})
+    in_test: int = FieldInfo(default=0, in_=[1, 2, 3])
+    not_in_test: int = FieldInfo(default=0, not_in=[1, 2, 3])
     default_test: int = FieldInfo(default=1.0)
     not_enable_test: int = FieldInfo(default=0)
     default_factory_test: int = FieldInfo(default_factory=int)
@@ -121,8 +121,8 @@ class Int32Test(BaseModel):
     alias_test: int = FieldInfo(default=0, alias="alias")
     desc_test: int = FieldInfo(default=0, description="test desc")
     multiple_of_test: int = FieldInfo(default=0, multiple_of=3)
-    example_test: int = FieldInfo(default=0, extra={"example": 1.0})
-    example_factory: int = FieldInfo(default=0, extra={"example": int})
+    example_test: int = FieldInfo(default=0, example=1.0)
+    example_factory: int = FieldInfo(default=0, example=int)
     field_test: int = CustomerField(default=0)
     type_test: confloat() = FieldInfo(default=0)
     title_test: int = FieldInfo(default=0, title="title_test")
@@ -136,8 +136,8 @@ class Int64Test(BaseModel):
     const_test: int = FieldInfo(default=1, const=True)
     range_e_test: int = FieldInfo(default=0, ge=1, le=10)
     range_test: int = FieldInfo(default=0, gt=1, lt=10)
-    in_test: int = FieldInfo(default=0, extra={"in": [1, 2, 3]})
-    not_in_test: int = FieldInfo(default=0, extra={"not_in": [1, 2, 3]})
+    in_test: int = FieldInfo(default=0, in_=[1, 2, 3])
+    not_in_test: int = FieldInfo(default=0, not_in=[1, 2, 3])
     default_test: int = FieldInfo(default=1.0)
     not_enable_test: int = FieldInfo(default=0)
     default_factory_test: int = FieldInfo(default_factory=int)
@@ -145,8 +145,8 @@ class Int64Test(BaseModel):
     alias_test: int = FieldInfo(default=0, alias="alias")
     desc_test: int = FieldInfo(default=0, description="test desc")
     multiple_of_test: int = FieldInfo(default=0, multiple_of=3)
-    example_test: int = FieldInfo(default=0, extra={"example": 1.0})
-    example_factory: int = FieldInfo(default=0, extra={"example": int})
+    example_test: int = FieldInfo(default=0, example=1.0)
+    example_factory: int = FieldInfo(default=0, example=int)
     field_test: int = CustomerField(default=0)
     type_test: confloat() = FieldInfo(default=0)
     title_test: int = FieldInfo(default=0, title="title_test")
@@ -160,8 +160,8 @@ class Uint32Test(BaseModel):
     const_test: int = FieldInfo(default=1, const=True)
     range_e_test: int = FieldInfo(default=0, ge=1, le=10)
     range_test: int = FieldInfo(default=0, gt=1, lt=10)
-    in_test: int = FieldInfo(default=0, extra={"in": [1, 2, 3]})
-    not_in_test: int = FieldInfo(default=0, extra={"not_in": [1, 2, 3]})
+    in_test: int = FieldInfo(default=0, in_=[1, 2, 3])
+    not_in_test: int = FieldInfo(default=0, not_in=[1, 2, 3])
     default_test: int = FieldInfo(default=1.0)
     not_enable_test: int = FieldInfo(default=0)
     default_factory_test: int = FieldInfo(default_factory=int)
@@ -169,8 +169,8 @@ class Uint32Test(BaseModel):
     alias_test: int = FieldInfo(default=0, alias="alias")
     desc_test: int = FieldInfo(default=0, description="test desc")
     multiple_of_test: int = FieldInfo(default=0, multiple_of=3)
-    example_test: int = FieldInfo(default=0, extra={"example": 1.0})
-    example_factory: int = FieldInfo(default=0, extra={"example": int})
+    example_test: int = FieldInfo(default=0, example=1.0)
+    example_factory: int = FieldInfo(default=0, example=int)
     field_test: int = CustomerField(default=0)
     type_test: conint() = FieldInfo(default=0)
     title_test: int = FieldInfo(default=0, title="title_test")
@@ -184,8 +184,8 @@ class Sint32Test(BaseModel):
     const_test: int = FieldInfo(default=1, const=True)
     range_e_test: int = FieldInfo(default=0, ge=1, le=10)
     range_test: int = FieldInfo(default=0, gt=1, lt=10)
-    in_test: int = FieldInfo(default=0, extra={"in": [1, 2, 3]})
-    not_in_test: int = FieldInfo(default=0, extra={"not_in": [1, 2, 3]})
+    in_test: int = FieldInfo(default=0, in_=[1, 2, 3])
+    not_in_test: int = FieldInfo(default=0, not_in=[1, 2, 3])
     default_test: int = FieldInfo(default=1.0)
     not_enable_test: int = FieldInfo(default=0)
     default_factory_test: int = FieldInfo(default_factory=int)
@@ -193,8 +193,8 @@ class Sint32Test(BaseModel):
     alias_test: int = FieldInfo(default=0, alias="alias")
     desc_test: int = FieldInfo(default=0, description="test desc")
     multiple_of_test: int = FieldInfo(default=0, multiple_of=3)
-    example_test: int = FieldInfo(default=0, extra={"example": 1.0})
-    example_factory: int = FieldInfo(default=0, extra={"example": int})
+    example_test: int = FieldInfo(default=0, example=1.0)
+    example_factory: int = FieldInfo(default=0, example=int)
     field_test: int = CustomerField(default=0)
     type_test: conint() = FieldInfo(default=0)
     title_test: int = FieldInfo(default=0, title="title_test")
@@ -208,8 +208,8 @@ class Uint64Test(BaseModel):
     const_test: int = FieldInfo(default=1, const=True)
     range_e_test: int = FieldInfo(default=0, ge=1, le=10)
     range_test: int = FieldInfo(default=0, gt=1, lt=10)
-    in_test: int = FieldInfo(default=0, extra={"in": [1, 2, 3]})
-    not_in_test: int = FieldInfo(default=0, extra={"not_in": [1, 2, 3]})
+    in_test: int = FieldInfo(default=0, in_=[1, 2, 3])
+    not_in_test: int = FieldInfo(default=0, not_in=[1, 2, 3])
     default_test: int = FieldInfo(default=1.0)
     not_enable_test: int = FieldInfo(default=0)
     default_factory_test: int = FieldInfo(default_factory=int)
@@ -217,8 +217,8 @@ class Uint64Test(BaseModel):
     alias_test: int = FieldInfo(default=0, alias="alias")
     desc_test: int = FieldInfo(default=0, description="test desc")
     multiple_of_test: int = FieldInfo(default=0, multiple_of=3)
-    example_test: int = FieldInfo(default=0, extra={"example": 1.0})
-    example_factory: int = FieldInfo(default=0, extra={"example": int})
+    example_test: int = FieldInfo(default=0, example=1.0)
+    example_factory: int = FieldInfo(default=0, example=int)
     field_test: int = CustomerField(default=0)
     type_test: conint() = FieldInfo(default=0)
     title_test: int = FieldInfo(default=0, title="title_test")
@@ -232,8 +232,8 @@ class Sint64Test(BaseModel):
     const_test: int = FieldInfo(default=1, const=True)
     range_e_test: int = FieldInfo(default=0, ge=1, le=10)
     range_test: int = FieldInfo(default=0, gt=1, lt=10)
-    in_test: int = FieldInfo(default=0, extra={"in": [1, 2, 3]})
-    not_in_test: int = FieldInfo(default=0, extra={"not_in": [1, 2, 3]})
+    in_test: int = FieldInfo(default=0, in_=[1, 2, 3])
+    not_in_test: int = FieldInfo(default=0, not_in=[1, 2, 3])
     default_test: int = FieldInfo(default=1.0)
     not_enable_test: int = FieldInfo(default=0)
     default_factory_test: int = FieldInfo(default_factory=int)
@@ -241,8 +241,8 @@ class Sint64Test(BaseModel):
     alias_test: int = FieldInfo(default=0, alias="alias")
     desc_test: int = FieldInfo(default=0, description="test desc")
     multiple_of_test: int = FieldInfo(default=0, multiple_of=3)
-    example_test: int = FieldInfo(default=0, extra={"example": 1.0})
-    example_factory: int = FieldInfo(default=0, extra={"example": int})
+    example_test: int = FieldInfo(default=0, example=1.0)
+    example_factory: int = FieldInfo(default=0, example=int)
     field_test: int = CustomerField(default=0)
     type_test: conint() = FieldInfo(default=0)
     title_test: int = FieldInfo(default=0, title="title_test")
@@ -256,8 +256,8 @@ class Fixed32Test(BaseModel):
     const_test: float = FieldInfo(default=1, const=True)
     range_e_test: float = FieldInfo(default=0.0, ge=1, le=10)
     range_test: float = FieldInfo(default=0.0, gt=1, lt=10)
-    in_test: float = FieldInfo(default=0.0, extra={"in": [1, 2, 3]})
-    not_in_test: float = FieldInfo(default=0.0, extra={"not_in": [1, 2, 3]})
+    in_test: float = FieldInfo(default=0.0, in_=[1, 2, 3])
+    not_in_test: float = FieldInfo(default=0.0, not_in=[1, 2, 3])
     default_test: float = FieldInfo(default=1.0)
     not_enable_test: float = FieldInfo(default=0.0)
     default_factory_test: float = FieldInfo(default_factory=float)
@@ -265,8 +265,8 @@ class Fixed32Test(BaseModel):
     alias_test: float = FieldInfo(default=0.0, alias="alias")
     desc_test: float = FieldInfo(default=0.0, description="test desc")
     multiple_of_test: float = FieldInfo(default=0.0, multiple_of=3)
-    example_test: float = FieldInfo(default=0.0, extra={"example": 1.0})
-    example_factory: float = FieldInfo(default=0.0, extra={"example": float})
+    example_test: float = FieldInfo(default=0.0, example=1.0)
+    example_factory: float = FieldInfo(default=0.0, example=float)
     field_test: float = CustomerField(default=0.0)
     type_test: confloat() = FieldInfo(default=0.0)
     title_test: float = FieldInfo(default=0.0, title="title_test")
@@ -280,8 +280,8 @@ class Fixed64Test(BaseModel):
     const_test: float = FieldInfo(default=0.0)
     range_e_test: float = FieldInfo(default=0.0, ge=1, le=10)
     range_test: float = FieldInfo(default=0.0, gt=1, lt=10)
-    in_test: float = FieldInfo(default=0.0, extra={"in": [1, 2, 3]})
-    not_in_test: float = FieldInfo(default=0.0, extra={"not_in": [1, 2, 3]})
+    in_test: float = FieldInfo(default=0.0, in_=[1, 2, 3])
+    not_in_test: float = FieldInfo(default=0.0, not_in=[1, 2, 3])
     default_test: float = FieldInfo(default=1.0)
     not_enable_test: float = FieldInfo(default=0.0)
     default_factory_test: float = FieldInfo(default_factory=float)
@@ -289,8 +289,8 @@ class Fixed64Test(BaseModel):
     alias_test: float = FieldInfo(default=0.0, alias="alias")
     desc_test: float = FieldInfo(default=0.0, description="test desc")
     multiple_of_test: float = FieldInfo(default=0.0, multiple_of=3)
-    example_test: float = FieldInfo(default=0.0, extra={"example": 1.0})
-    example_factory: float = FieldInfo(default=0.0, extra={"example": float})
+    example_test: float = FieldInfo(default=0.0, example=1.0)
+    example_factory: float = FieldInfo(default=0.0, example=float)
     field_test: float = CustomerField(default=0.0)
     type_test: confloat() = FieldInfo(default=0.0)
     title_test: float = FieldInfo(default=0.0, title="title_test")
@@ -304,8 +304,8 @@ class Sfixed32Test(BaseModel):
     const_test: float = FieldInfo(default=0.0)
     range_e_test: float = FieldInfo(default=0.0, ge=1, le=10)
     range_test: float = FieldInfo(default=0.0, gt=1, lt=10)
-    in_test: float = FieldInfo(default=0.0, extra={"in": [1, 2, 3]})
-    not_in_test: float = FieldInfo(default=0.0, extra={"not_in": [1, 2, 3]})
+    in_test: float = FieldInfo(default=0.0, in_=[1, 2, 3])
+    not_in_test: float = FieldInfo(default=0.0, not_in=[1, 2, 3])
     default_test: float = FieldInfo(default=1.0)
     not_enable_test: float = FieldInfo(default=0.0)
     default_factory_test: float = FieldInfo(default_factory=float)
@@ -313,8 +313,8 @@ class Sfixed32Test(BaseModel):
     alias_test: float = FieldInfo(default=0.0, alias="alias")
     desc_test: float = FieldInfo(default=0.0, description="test desc")
     multiple_of_test: float = FieldInfo(default=0.0, multiple_of=3)
-    example_test: float = FieldInfo(default=0.0, extra={"example": 1.0})
-    example_factory: float = FieldInfo(default=0.0, extra={"example": float})
+    example_test: float = FieldInfo(default=0.0, example=1.0)
+    example_factory: float = FieldInfo(default=0.0, example=float)
     field_test: float = CustomerField(default=0.0)
     type_test: confloat() = FieldInfo(default=0.0)
     title_test: float = FieldInfo(default=0.0, title="title_test")
@@ -328,8 +328,8 @@ class Sfixed64Test(BaseModel):
     const_test: float = FieldInfo(default=0.0)
     range_e_test: float = FieldInfo(default=0.0, ge=1, le=10)
     range_test: float = FieldInfo(default=0.0, gt=1, lt=10)
-    in_test: float = FieldInfo(default=0.0, extra={"in": [1, 2, 3]})
-    not_in_test: float = FieldInfo(default=0.0, extra={"not_in": [1, 2, 3]})
+    in_test: float = FieldInfo(default=0.0, in_=[1, 2, 3])
+    not_in_test: float = FieldInfo(default=0.0, not_in=[1, 2, 3])
     default_test: float = FieldInfo(default=1.0)
     not_enable_test: float = FieldInfo(default=0.0)
     default_factory_test: float = FieldInfo(default_factory=float)
@@ -337,8 +337,8 @@ class Sfixed64Test(BaseModel):
     alias_test: float = FieldInfo(default=0.0, alias="alias")
     desc_test: float = FieldInfo(default=0.0, description="test desc")
     multiple_of_test: float = FieldInfo(default=0.0, multiple_of=3)
-    example_test: float = FieldInfo(default=0.0, extra={"example": 1.0})
-    example_factory: float = FieldInfo(default=0.0, extra={"example": float})
+    example_test: float = FieldInfo(default=0.0, example=1.0)
+    example_factory: float = FieldInfo(default=0.0, example=float)
     field_test: float = CustomerField(default=0.0)
     type_test: confloat() = FieldInfo(default=0.0)
     title_test: float = FieldInfo(default=0.0, title="title_test")
@@ -353,7 +353,7 @@ class BoolTest(BaseModel):
     miss_default_test: bool = FieldInfo()
     alias_test: bool = FieldInfo(default=False, alias="alias")
     desc_test: bool = FieldInfo(default=False, description="test desc")
-    example_test: bool = FieldInfo(default=False, extra={"example": True})
+    example_test: bool = FieldInfo(default=False, example=True)
     field_test: bool = CustomerField(default=False)
     title_test: bool = FieldInfo(default=False, title="title_test")
 
@@ -369,15 +369,15 @@ class StringTest(BaseModel):
     not_in_test_not_in_validator = validator("not_in_test", allow_reuse=True)(not_in_validator)
 
     const_test: str = FieldInfo(default="aaa", const=True)
-    len_test: str = FieldInfo(default="", extra={"len": 3})
+    len_test: str = FieldInfo(default="", len=3)
     s_range_len_test: str = FieldInfo(default="", min_length=1, max_length=3)
     pattern_test: str = FieldInfo(default="", regex="^test")
-    prefix_test: str = FieldInfo(default="", extra={"prefix": "prefix"})
-    suffix_test: str = FieldInfo(default="", extra={"suffix": "suffix"})
-    contains_test: str = FieldInfo(default="", extra={"contains": "contains"})
-    not_contains_test: str = FieldInfo(default="", extra={"not_contains": "not_contains"})
-    in_test: str = FieldInfo(default="", extra={"in": ["a", "b", "c"]})
-    not_in_test: str = FieldInfo(default="", extra={"not_in": ["a", "b", "c"]})
+    prefix_test: str = FieldInfo(default="", prefix="prefix")
+    suffix_test: str = FieldInfo(default="", suffix="suffix")
+    contains_test: str = FieldInfo(default="", contains="contains")
+    not_contains_test: str = FieldInfo(default="", not_contains="not_contains")
+    in_test: str = FieldInfo(default="", in_=["a", "b", "c"])
+    not_in_test: str = FieldInfo(default="", not_in=["a", "b", "c"])
     email_test: EmailStr = FieldInfo(default="")
     hostname_test: HostNameStr = FieldInfo(default="")
     ip_test: IPvAnyAddress = FieldInfo(default="")
@@ -394,8 +394,8 @@ class StringTest(BaseModel):
     miss_default_test: str = FieldInfo()
     alias_test: str = FieldInfo(default="", alias="alias")
     desc_test: str = FieldInfo(default="", description="test desc")
-    example_test: str = FieldInfo(default="", extra={"example": "example"})
-    example_factory_test: str = FieldInfo(default="", extra={"example": uuid4})
+    example_test: str = FieldInfo(default="", example="example")
+    example_factory_test: str = FieldInfo(default="", example=uuid4)
     field_test: str = CustomerField(default="")
     title_test: str = FieldInfo(default="", title="title_test")
     type_test: constr() = FieldInfo(default="")
@@ -411,19 +411,19 @@ class BytesTest(BaseModel):
 
     const_test: bytes = FieldInfo(default=b"demo", const=True)
     range_len_test: bytes = FieldInfo(default=b"", min_length=1, max_length=4)
-    prefix_test: bytes = FieldInfo(default=b"", extra={"prefix": b"prefix"})
-    suffix_test: bytes = FieldInfo(default=b"", extra={"suffix": b"suffix"})
-    contains_test: bytes = FieldInfo(default=b"", extra={"contains": b"contains"})
-    in_test: bytes = FieldInfo(default=b"", extra={"in": [b"a", b"b", b"c"]})
-    not_in_test: bytes = FieldInfo(default=b"", extra={"not_in": [b"a", b"b", b"c"]})
+    prefix_test: bytes = FieldInfo(default=b"", prefix=b"prefix")
+    suffix_test: bytes = FieldInfo(default=b"", suffix=b"suffix")
+    contains_test: bytes = FieldInfo(default=b"", contains=b"contains")
+    in_test: bytes = FieldInfo(default=b"", in_=[b"a", b"b", b"c"])
+    not_in_test: bytes = FieldInfo(default=b"", not_in=[b"a", b"b", b"c"])
     enable_test: bytes = FieldInfo(default=b"")
     default_test: bytes = FieldInfo(default=b"default")
     default_factory_test: bytes = FieldInfo(default_factory=bytes)
     miss_default_test: bytes = FieldInfo()
     alias_test: bytes = FieldInfo(default=b"", alias="alias")
     desc_test: bytes = FieldInfo(default=b"", description="test desc")
-    example_test: bytes = FieldInfo(default=b"", extra={"example": b"example"})
-    example_factory_test: bytes = FieldInfo(default=b"", extra={"example": bytes})
+    example_test: bytes = FieldInfo(default=b"", example=b"example")
+    example_factory_test: bytes = FieldInfo(default=b"", example=bytes)
     field_test: bytes = CustomerField(default=b"")
     title_test: bytes = FieldInfo(default=b"", title="title_test")
     type_test: constr() = FieldInfo(default=b"")
@@ -449,7 +449,7 @@ class MapTest(BaseModel):
     pair_test_map_min_pairs_validator = validator("pair_test", allow_reuse=True)(map_min_pairs_validator)
     pair_test_map_max_pairs_validator = validator("pair_test", allow_reuse=True)(map_max_pairs_validator)
 
-    pair_test: typing.Dict[str, int] = FieldInfo(default_factory=dict, extra={"map_max_pairs": 5, "map_min_pairs": 1})
+    pair_test: typing.Dict[str, int] = FieldInfo(default_factory=dict, map_min_pairs=1, map_max_pairs=5)
     keys_test: typing.Dict[constr(min_length=1, max_length=5), int] = FieldInfo(default_factory=dict)
     values_test: typing.Dict[str, conint(ge=5, le=5)] = FieldInfo(default_factory=dict)
     keys_values_test: typing.Dict[constr(min_length=1, max_length=5), contimestamp(timestamp_gt_now=True)] = FieldInfo(
@@ -460,7 +460,7 @@ class MapTest(BaseModel):
     miss_default_test: typing.Dict[str, int] = FieldInfo()
     alias_test: typing.Dict[str, int] = FieldInfo(default_factory=dict, alias="alias")
     desc_test: typing.Dict[str, int] = FieldInfo(default_factory=dict, description="test desc")
-    example_factory_test: typing.Dict[str, int] = FieldInfo(default_factory=dict, extra={"example": dict})
+    example_factory_test: typing.Dict[str, int] = FieldInfo(default_factory=dict, example=dict)
     field_test: typing.Dict[str, int] = CustomerField(default_factory=dict)
     title_test: typing.Dict[str, int] = FieldInfo(default_factory=dict, title="title_test")
     type_test: dict = FieldInfo(default_factory=dict)
@@ -499,13 +499,15 @@ class RepeatedTest(BaseModel):
     miss_default_test: typing.List[str] = FieldInfo()
     alias_test: typing.List[str] = FieldInfo(default_factory=list, alias="alias")
     desc_test: typing.List[str] = FieldInfo(default_factory=list, description="test desc")
-    example_factory_test: typing.List[str] = FieldInfo(default_factory=list, extra={"example": list})
+    example_factory_test: typing.List[str] = FieldInfo(default_factory=list, example=list)
     field_test: typing.List[str] = CustomerField(default_factory=list)
     title_test: typing.List[str] = FieldInfo(default_factory=list, title="title_test")
     type_test: list = FieldInfo(default_factory=list)
 
 
 class AnyTest(BaseModel):
+    class Config:
+        arbitrary_types_allowed = True
 
     not_in_test_any_not_in_validator = validator("not_in_test", allow_reuse=True)(any_not_in_validator)
     in_test_any_in_validator = validator("in_test", allow_reuse=True)(any_in_validator)
@@ -513,21 +515,14 @@ class AnyTest(BaseModel):
     required_test: Any = FieldInfo()
     not_in_test: Any = FieldInfo(
         default_factory=Any,
-        extra={
-            "any_not_in": [
-                "type.googleapis.com/google.protobuf.Duration",
-                "type.googleapis.com/google.protobuf.Timestamp",
-            ]
-        },
+        any_not_in=["type.googleapis.com/google.protobuf.Duration", "type.googleapis.com/google.protobuf.Timestamp"],
     )
     in_test: Any = FieldInfo(
         default_factory=Any,
-        extra={
-            "any_in": [
-                "type.googleapis.com/google.protobuf.Timestamp",
-                Any(type_url="type.googleapis.com/google.protobuf.Duration"),
-            ]
-        },
+        any_in=[
+            "type.googleapis.com/google.protobuf.Timestamp",
+            Any(type_url="type.googleapis.com/google.protobuf.Duration"),
+        ],
     )
     enable_test: Any = FieldInfo(default_factory=Any)
     default_test: Any = FieldInfo(default=Any(type_url="type.googleapis.com/google.protobuf.Duration"))
@@ -535,10 +530,8 @@ class AnyTest(BaseModel):
     miss_default_test: Any = FieldInfo()
     alias_test: Any = FieldInfo(default_factory=Any, alias="alias")
     desc_test: Any = FieldInfo(default_factory=Any, description="test desc")
-    example_test: Any = FieldInfo(
-        default_factory=Any, extra={"example": "type.googleapis.com/google.protobuf.Duration"}
-    )
-    example_factory_test: Any = FieldInfo(default_factory=Any, extra={"example": customer_any})
+    example_test: Any = FieldInfo(default_factory=Any, example="type.googleapis.com/google.protobuf.Duration")
+    example_factory_test: Any = FieldInfo(default_factory=Any, example=customer_any)
     field_test: Any = CustomerField(default_factory=Any)
     title_test: Any = FieldInfo(default_factory=Any, title="title_test")
 
@@ -554,31 +547,25 @@ class DurationTest(BaseModel):
     not_in_test_duration_not_in_validator = validator("not_in_test", allow_reuse=True)(duration_not_in_validator)
 
     const_test: Timedelta = FieldInfo(
-        default_factory=timedelta, extra={"duration_const": timedelta(seconds=1, microseconds=500000)}
+        default_factory=timedelta, duration_const=timedelta(seconds=1, microseconds=500000)
     )
     range_test: Timedelta = FieldInfo(
         default_factory=timedelta,
-        extra={
-            "duration_gt": timedelta(seconds=5, microseconds=500000),
-            "duration_lt": timedelta(seconds=10, microseconds=500000),
-        },
+        duration_lt=timedelta(seconds=10, microseconds=500000),
+        duration_gt=timedelta(seconds=5, microseconds=500000),
     )
     range_e_test: Timedelta = FieldInfo(
         default_factory=timedelta,
-        extra={
-            "duration_ge": timedelta(seconds=5, microseconds=500000),
-            "duration_le": timedelta(seconds=10, microseconds=500000),
-        },
+        duration_le=timedelta(seconds=10, microseconds=500000),
+        duration_ge=timedelta(seconds=5, microseconds=500000),
     )
     in_test: Timedelta = FieldInfo(
         default_factory=timedelta,
-        extra={"duration_in": [timedelta(seconds=1, microseconds=500000), timedelta(seconds=3, microseconds=500000)]},
+        duration_in=[timedelta(seconds=1, microseconds=500000), timedelta(seconds=3, microseconds=500000)],
     )
     not_in_test: Timedelta = FieldInfo(
         default_factory=timedelta,
-        extra={
-            "duration_not_in": [timedelta(seconds=1, microseconds=500000), timedelta(seconds=3, microseconds=500000)]
-        },
+        duration_not_in=[timedelta(seconds=1, microseconds=500000), timedelta(seconds=3, microseconds=500000)],
     )
     enable_test: Timedelta = FieldInfo(default_factory=timedelta)
     default_test: Timedelta = FieldInfo(default=timedelta(seconds=1, microseconds=500000))
@@ -586,10 +573,8 @@ class DurationTest(BaseModel):
     miss_default_test: Timedelta = FieldInfo()
     alias_test: Timedelta = FieldInfo(default_factory=timedelta, alias="alias")
     desc_test: Timedelta = FieldInfo(default_factory=timedelta, description="test desc")
-    example_test: Timedelta = FieldInfo(
-        default_factory=timedelta, extra={"example": timedelta(seconds=1, microseconds=500000)}
-    )
-    example_factory_test: Timedelta = FieldInfo(default_factory=timedelta, extra={"example": timedelta})
+    example_test: Timedelta = FieldInfo(default_factory=timedelta, example=timedelta(seconds=1, microseconds=500000))
+    example_factory_test: Timedelta = FieldInfo(default_factory=timedelta, example=timedelta)
     field_test: Timedelta = CustomerField(default_factory=timedelta)
     title_test: Timedelta = FieldInfo(default_factory=timedelta, title="title_test")
     type_test: timedelta = FieldInfo(default_factory=timedelta)
@@ -612,18 +597,16 @@ class TimestampTest(BaseModel):
         timestamp_within_validator
     )
 
-    const_test: datetime = FieldInfo(default_factory=datetime.now, extra={"timestamp_const": 1600000000.0})
-    range_test: datetime = FieldInfo(
-        default_factory=datetime.now, extra={"timestamp_gt": 1600000000.0, "timestamp_lt": 1600000010.0}
-    )
+    const_test: datetime = FieldInfo(default_factory=datetime.now, timestamp_const=1600000000.0)
+    range_test: datetime = FieldInfo(default_factory=datetime.now, timestamp_lt=1600000010.0, timestamp_gt=1600000000.0)
     range_e_test: datetime = FieldInfo(
-        default_factory=datetime.now, extra={"timestamp_ge": 1600000000.0, "timestamp_le": 1600000010.0}
+        default_factory=datetime.now, timestamp_le=1600000010.0, timestamp_ge=1600000000.0
     )
-    lt_now_test: datetime = FieldInfo(default_factory=datetime.now, extra={"timestamp_lt_now": True})
-    gt_now_test: datetime = FieldInfo(default_factory=datetime.now, extra={"timestamp_gt_now": True})
-    within_test: datetime = FieldInfo(default_factory=datetime.now, extra={"timestamp_within": timedelta(seconds=1)})
+    lt_now_test: datetime = FieldInfo(default_factory=datetime.now, timestamp_lt_now=True)
+    gt_now_test: datetime = FieldInfo(default_factory=datetime.now, timestamp_gt_now=True)
+    within_test: datetime = FieldInfo(default_factory=datetime.now, timestamp_within=timedelta(seconds=1))
     within_and_gt_now_test: datetime = FieldInfo(
-        default_factory=datetime.now, extra={"timestamp_gt_now": True, "timestamp_within": timedelta(seconds=3600)}
+        default_factory=datetime.now, timestamp_gt_now=True, timestamp_within=timedelta(seconds=3600)
     )
     enable_test: datetime = FieldInfo(default_factory=datetime.now)
     default_test: datetime = FieldInfo(default=1.5)
@@ -631,8 +614,8 @@ class TimestampTest(BaseModel):
     miss_default_test: datetime = FieldInfo()
     alias_test: datetime = FieldInfo(default_factory=datetime.now, alias="alias")
     desc_test: datetime = FieldInfo(default_factory=datetime.now, description="test desc")
-    example_test: datetime = FieldInfo(default_factory=datetime.now, extra={"example": 1.5})
-    example_factory_test: datetime = FieldInfo(default_factory=datetime.now, extra={"example": datetime.now})
+    example_test: datetime = FieldInfo(default_factory=datetime.now, example=1.5)
+    example_factory_test: datetime = FieldInfo(default_factory=datetime.now, example=datetime.now)
     field_test: datetime = CustomerField(default_factory=datetime.now)
     title_test: datetime = FieldInfo(default_factory=datetime.now, title="title_test")
     type_test: datetime = FieldInfo(default_factory=datetime.now)
@@ -671,7 +654,7 @@ class NestedMessage(BaseModel):
         exp_timestamp_gt_now_validator = validator("exp", allow_reuse=True)(timestamp_gt_now_validator)
 
         bank_number: str = FieldInfo(default="", min_length=13, max_length=19)
-        exp: datetime = FieldInfo(default_factory=datetime.now, extra={"timestamp_gt_now": True})
+        exp: datetime = FieldInfo(default_factory=datetime.now, timestamp_gt_now=True)
         uuid: UUID = FieldInfo(default="")
 
     class NotEnableUserPayMessage(BaseModel):
@@ -679,7 +662,7 @@ class NestedMessage(BaseModel):
         exp_timestamp_gt_now_validator = validator("exp", allow_reuse=True)(timestamp_gt_now_validator)
 
         bank_number: str = FieldInfo(default="", min_length=13, max_length=19)
-        exp: datetime = FieldInfo(default_factory=datetime.now, extra={"timestamp_gt_now": True})
+        exp: datetime = FieldInfo(default_factory=datetime.now, timestamp_gt_now=True)
         uuid: UUID = FieldInfo(default="")
 
     string_in_map_test: typing.Dict[str, StringTest] = FieldInfo(default_factory=dict)

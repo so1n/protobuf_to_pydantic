@@ -199,17 +199,10 @@ class FileDescriptorProtoToCode(BaseP2C):
             self._add_import_code("pydantic.fields", "FieldInfo")
 
         # arranging  field info parameters
-        _temp_field_info_dict = {}
         for key in FieldInfo.__slots__:
-            if key not in field_info_dict:
-                continue
-            value: Any = field_info_dict.pop(key, None)
+            value: Any = field_info_dict.get(key, None)
             if value is getattr(FieldInfo(), key):
-                continue
-            _temp_field_info_dict[key] = value
-        if field_info_dict:
-            _temp_field_info_dict["extra"] = field_info_dict
-        field_info_dict = _temp_field_info_dict
+                field_info_dict.pop(key, None)
 
         field_info_str: str = ", ".join([f"{k}={self._get_value_code(v)}" for k, v in field_info_dict.items()]) or ""
         class_field_content: str = (
@@ -262,7 +255,7 @@ class FileDescriptorProtoToCode(BaseP2C):
             for idx, field in enumerate(desc.field):
                 if field.name in PYTHON_RESERVED:
                     continue
-                if field.type == 11 and self._get_protobuf_type_model(field).py_type_str == "AnyMessage":
+                if field.type == 11 and self._get_protobuf_type_model(field).type_factory is AnyMessage:
                     use_custom_type = True
 
                 _content_tuple: Optional[Tuple[str, str]] = self._message_field_handle(field, indent, class_name)
