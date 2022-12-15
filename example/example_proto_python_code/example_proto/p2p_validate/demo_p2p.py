@@ -2,7 +2,6 @@
 # gen by protobuf_to_pydantic(https://github.com/so1n/protobuf_to_pydantic)
 # type: ignore
 
-import datetime
 import typing
 from datetime import datetime, timedelta
 from enum import IntEnum
@@ -10,7 +9,6 @@ from ipaddress import IPv4Address, IPv6Address
 from uuid import UUID, uuid4
 
 from google.protobuf.any_pb2 import Any  # type: ignore
-from google.protobuf.any_pb2 import Any as AnyMessage
 from google.protobuf.message import Message  # type: ignore
 from protobuf_to_pydantic.customer_con_type import contimedelta, contimestamp
 from protobuf_to_pydantic.customer_validator import (
@@ -508,15 +506,13 @@ class RepeatedTest(BaseModel):
 
 
 class AnyTest(BaseModel):
-    class Config:
-        arbitrary_types_allowed = True
 
     not_in_test_any_not_in_validator = validator("not_in_test", allow_reuse=True)(any_not_in_validator)
     in_test_any_in_validator = validator("in_test", allow_reuse=True)(any_in_validator)
 
-    required_test: AnyMessage = FieldInfo()
-    not_in_test: AnyMessage = FieldInfo(
-        default_factory="AnyMessage",
+    required_test: Any = FieldInfo()
+    not_in_test: Any = FieldInfo(
+        default_factory=Any,
         extra={
             "any_not_in": [
                 "type.googleapis.com/google.protobuf.Duration",
@@ -524,8 +520,8 @@ class AnyTest(BaseModel):
             ]
         },
     )
-    in_test: AnyMessage = FieldInfo(
-        default_factory="AnyMessage",
+    in_test: Any = FieldInfo(
+        default_factory=Any,
         extra={
             "any_in": [
                 "type.googleapis.com/google.protobuf.Timestamp",
@@ -533,18 +529,18 @@ class AnyTest(BaseModel):
             ]
         },
     )
-    enable_test: AnyMessage = FieldInfo(default_factory="AnyMessage")
-    default_test: AnyMessage = FieldInfo(default=Any(type_url="type.googleapis.com/google.protobuf.Duration"))
-    default_factory_test: AnyMessage = FieldInfo(default_factory=customer_any)
-    miss_default_test: AnyMessage = FieldInfo()
-    alias_test: AnyMessage = FieldInfo(default_factory="AnyMessage", alias="alias")
-    desc_test: AnyMessage = FieldInfo(default_factory="AnyMessage", description="test desc")
-    example_test: AnyMessage = FieldInfo(
-        default_factory="AnyMessage", extra={"example": "type.googleapis.com/google.protobuf.Duration"}
+    enable_test: Any = FieldInfo(default_factory=Any)
+    default_test: Any = FieldInfo(default=Any(type_url="type.googleapis.com/google.protobuf.Duration"))
+    default_factory_test: Any = FieldInfo(default_factory=customer_any)
+    miss_default_test: Any = FieldInfo()
+    alias_test: Any = FieldInfo(default_factory=Any, alias="alias")
+    desc_test: Any = FieldInfo(default_factory=Any, description="test desc")
+    example_test: Any = FieldInfo(
+        default_factory=Any, extra={"example": "type.googleapis.com/google.protobuf.Duration"}
     )
-    example_factory_test: AnyMessage = FieldInfo(default_factory="AnyMessage", extra={"example": customer_any})
-    field_test: AnyMessage = CustomerField(default_factory="AnyMessage")
-    title_test: AnyMessage = FieldInfo(default_factory="AnyMessage", title="title_test")
+    example_factory_test: Any = FieldInfo(default_factory=Any, extra={"example": customer_any})
+    field_test: Any = CustomerField(default_factory=Any)
+    title_test: Any = FieldInfo(default_factory=Any, title="title_test")
 
 
 class DurationTest(BaseModel):
@@ -558,45 +554,45 @@ class DurationTest(BaseModel):
     not_in_test_duration_not_in_validator = validator("not_in_test", allow_reuse=True)(duration_not_in_validator)
 
     const_test: Timedelta = FieldInfo(
-        default_factory="Timedelta", extra={"duration_const": timedelta(seconds=1, microseconds=500000)}
+        default_factory=timedelta, extra={"duration_const": timedelta(seconds=1, microseconds=500000)}
     )
     range_test: Timedelta = FieldInfo(
-        default_factory="Timedelta",
+        default_factory=timedelta,
         extra={
             "duration_gt": timedelta(seconds=5, microseconds=500000),
             "duration_lt": timedelta(seconds=10, microseconds=500000),
         },
     )
     range_e_test: Timedelta = FieldInfo(
-        default_factory="Timedelta",
+        default_factory=timedelta,
         extra={
             "duration_ge": timedelta(seconds=5, microseconds=500000),
             "duration_le": timedelta(seconds=10, microseconds=500000),
         },
     )
     in_test: Timedelta = FieldInfo(
-        default_factory="Timedelta",
+        default_factory=timedelta,
         extra={"duration_in": [timedelta(seconds=1, microseconds=500000), timedelta(seconds=3, microseconds=500000)]},
     )
     not_in_test: Timedelta = FieldInfo(
-        default_factory="Timedelta",
+        default_factory=timedelta,
         extra={
             "duration_not_in": [timedelta(seconds=1, microseconds=500000), timedelta(seconds=3, microseconds=500000)]
         },
     )
-    enable_test: Timedelta = FieldInfo(default_factory="Timedelta")
+    enable_test: Timedelta = FieldInfo(default_factory=timedelta)
     default_test: Timedelta = FieldInfo(default=timedelta(seconds=1, microseconds=500000))
     default_factory_test: Timedelta = FieldInfo(default_factory=timedelta)
     miss_default_test: Timedelta = FieldInfo()
-    alias_test: Timedelta = FieldInfo(default_factory="Timedelta", alias="alias")
-    desc_test: Timedelta = FieldInfo(default_factory="Timedelta", description="test desc")
+    alias_test: Timedelta = FieldInfo(default_factory=timedelta, alias="alias")
+    desc_test: Timedelta = FieldInfo(default_factory=timedelta, description="test desc")
     example_test: Timedelta = FieldInfo(
-        default_factory="Timedelta", extra={"example": timedelta(seconds=1, microseconds=500000)}
+        default_factory=timedelta, extra={"example": timedelta(seconds=1, microseconds=500000)}
     )
-    example_factory_test: Timedelta = FieldInfo(default_factory="Timedelta", extra={"example": timedelta})
-    field_test: Timedelta = CustomerField(default_factory="Timedelta")
-    title_test: Timedelta = FieldInfo(default_factory="Timedelta", title="title_test")
-    type_test: timedelta = FieldInfo(default_factory="Timedelta")
+    example_factory_test: Timedelta = FieldInfo(default_factory=timedelta, extra={"example": timedelta})
+    field_test: Timedelta = CustomerField(default_factory=timedelta)
+    title_test: Timedelta = FieldInfo(default_factory=timedelta, title="title_test")
+    type_test: timedelta = FieldInfo(default_factory=timedelta)
 
 
 class TimestampTest(BaseModel):
@@ -616,30 +612,30 @@ class TimestampTest(BaseModel):
         timestamp_within_validator
     )
 
-    const_test: datetime.datetime = FieldInfo(default_factory="now", extra={"timestamp_const": 1600000000.0})
-    range_test: datetime.datetime = FieldInfo(
-        default_factory="now", extra={"timestamp_gt": 1600000000.0, "timestamp_lt": 1600000010.0}
+    const_test: datetime = FieldInfo(default_factory=datetime.now, extra={"timestamp_const": 1600000000.0})
+    range_test: datetime = FieldInfo(
+        default_factory=datetime.now, extra={"timestamp_gt": 1600000000.0, "timestamp_lt": 1600000010.0}
     )
-    range_e_test: datetime.datetime = FieldInfo(
-        default_factory="now", extra={"timestamp_ge": 1600000000.0, "timestamp_le": 1600000010.0}
+    range_e_test: datetime = FieldInfo(
+        default_factory=datetime.now, extra={"timestamp_ge": 1600000000.0, "timestamp_le": 1600000010.0}
     )
-    lt_now_test: datetime.datetime = FieldInfo(default_factory="now", extra={"timestamp_lt_now": True})
-    gt_now_test: datetime.datetime = FieldInfo(default_factory="now", extra={"timestamp_gt_now": True})
-    within_test: datetime.datetime = FieldInfo(default_factory="now", extra={"timestamp_within": timedelta(seconds=1)})
-    within_and_gt_now_test: datetime.datetime = FieldInfo(
-        default_factory="now", extra={"timestamp_gt_now": True, "timestamp_within": timedelta(seconds=3600)}
+    lt_now_test: datetime = FieldInfo(default_factory=datetime.now, extra={"timestamp_lt_now": True})
+    gt_now_test: datetime = FieldInfo(default_factory=datetime.now, extra={"timestamp_gt_now": True})
+    within_test: datetime = FieldInfo(default_factory=datetime.now, extra={"timestamp_within": timedelta(seconds=1)})
+    within_and_gt_now_test: datetime = FieldInfo(
+        default_factory=datetime.now, extra={"timestamp_gt_now": True, "timestamp_within": timedelta(seconds=3600)}
     )
-    enable_test: datetime.datetime = FieldInfo(default_factory="now")
-    default_test: datetime.datetime = FieldInfo(default=1.5)
-    default_factory_test: datetime.datetime = FieldInfo(default_factory=datetime.now)
-    miss_default_test: datetime.datetime = FieldInfo()
-    alias_test: datetime.datetime = FieldInfo(default_factory="now", alias="alias")
-    desc_test: datetime.datetime = FieldInfo(default_factory="now", description="test desc")
-    example_test: datetime.datetime = FieldInfo(default_factory="now", extra={"example": 1.5})
-    example_factory_test: datetime.datetime = FieldInfo(default_factory="now", extra={"example": datetime.now})
-    field_test: datetime.datetime = CustomerField(default_factory="now")
-    title_test: datetime.datetime = FieldInfo(default_factory="now", title="title_test")
-    type_test: datetime = FieldInfo(default_factory="now")
+    enable_test: datetime = FieldInfo(default_factory=datetime.now)
+    default_test: datetime = FieldInfo(default=1.5)
+    default_factory_test: datetime = FieldInfo(default_factory=datetime.now)
+    miss_default_test: datetime = FieldInfo()
+    alias_test: datetime = FieldInfo(default_factory=datetime.now, alias="alias")
+    desc_test: datetime = FieldInfo(default_factory=datetime.now, description="test desc")
+    example_test: datetime = FieldInfo(default_factory=datetime.now, extra={"example": 1.5})
+    example_factory_test: datetime = FieldInfo(default_factory=datetime.now, extra={"example": datetime.now})
+    field_test: datetime = CustomerField(default_factory=datetime.now)
+    title_test: datetime = FieldInfo(default_factory=datetime.now, title="title_test")
+    type_test: datetime = FieldInfo(default_factory=datetime.now)
 
 
 class MessageIgnoredTest(BaseModel):
@@ -675,7 +671,7 @@ class NestedMessage(BaseModel):
         exp_timestamp_gt_now_validator = validator("exp", allow_reuse=True)(timestamp_gt_now_validator)
 
         bank_number: str = FieldInfo(default="", min_length=13, max_length=19)
-        exp: datetime.datetime = FieldInfo(default_factory="now", extra={"timestamp_gt_now": True})
+        exp: datetime = FieldInfo(default_factory=datetime.now, extra={"timestamp_gt_now": True})
         uuid: UUID = FieldInfo(default="")
 
     class NotEnableUserPayMessage(BaseModel):
@@ -683,7 +679,7 @@ class NestedMessage(BaseModel):
         exp_timestamp_gt_now_validator = validator("exp", allow_reuse=True)(timestamp_gt_now_validator)
 
         bank_number: str = FieldInfo(default="", min_length=13, max_length=19)
-        exp: datetime.datetime = FieldInfo(default_factory="now", extra={"timestamp_gt_now": True})
+        exp: datetime = FieldInfo(default_factory=datetime.now, extra={"timestamp_gt_now": True})
         uuid: UUID = FieldInfo(default="")
 
     string_in_map_test: typing.Dict[str, StringTest] = FieldInfo(default_factory=dict)

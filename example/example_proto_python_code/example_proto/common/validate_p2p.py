@@ -2,8 +2,8 @@
 # gen by protobuf_to_pydantic(https://github.com/so1n/protobuf_to_pydantic)
 # type: ignore
 
-import datetime
 import typing
+from datetime import datetime, timedelta
 from enum import IntEnum
 
 from google.protobuf.message import Message  # type: ignore
@@ -319,22 +319,22 @@ class AnyRules(BaseModel):
 class DurationRules(BaseModel):
 
     required: bool = FieldInfo(default=False)
-    const: Timedelta = FieldInfo(default_factory="Timedelta")
-    lt: Timedelta = FieldInfo(default_factory="Timedelta")
-    lte: Timedelta = FieldInfo(default_factory="Timedelta")
-    gt: Timedelta = FieldInfo(default_factory="Timedelta")
-    gte: Timedelta = FieldInfo(default_factory="Timedelta")
+    const: Timedelta = FieldInfo(default_factory=timedelta)
+    lt: Timedelta = FieldInfo(default_factory=timedelta)
+    lte: Timedelta = FieldInfo(default_factory=timedelta)
+    gt: Timedelta = FieldInfo(default_factory=timedelta)
+    gte: Timedelta = FieldInfo(default_factory=timedelta)
     not_in: typing.List[Timedelta] = FieldInfo(default_factory=list)
 
 
 class TimestampRules(BaseModel):
 
     required: bool = FieldInfo(default=False)
-    const: datetime.datetime = FieldInfo(default_factory="now")
-    lt: datetime.datetime = FieldInfo(default_factory="now")
-    lte: datetime.datetime = FieldInfo(default_factory="now")
-    gt: datetime.datetime = FieldInfo(default_factory="now")
-    gte: datetime.datetime = FieldInfo(default_factory="now")
+    const: datetime = FieldInfo(default_factory=datetime.now)
+    lt: datetime = FieldInfo(default_factory=datetime.now)
+    lte: datetime = FieldInfo(default_factory=datetime.now)
+    gt: datetime = FieldInfo(default_factory=datetime.now)
+    gte: datetime = FieldInfo(default_factory=datetime.now)
     lt_now: bool = FieldInfo(default=False)
     gt_now: bool = FieldInfo(default=False)
-    within: Timedelta = FieldInfo(default_factory="Timedelta")
+    within: Timedelta = FieldInfo(default_factory=timedelta)

@@ -1,13 +1,8 @@
 import inspect
 import logging
+from datetime import datetime, timedelta
 from typing import Any, Dict, Iterable, Optional, Set, Tuple
 
-from google.protobuf.descriptor_pb2 import (  # type: ignore
-    DescriptorProto,
-    EnumDescriptorProto,
-    FieldDescriptorProto,
-    FileDescriptorProto,
-)
 from mypy_protobuf.main import PYTHON_RESERVED, Descriptors, SourceCodeLocation
 from pydantic.fields import FieldInfo, Undefined
 
@@ -22,7 +17,15 @@ from protobuf_to_pydantic.gen_model import (
     type_dict,
 )
 from protobuf_to_pydantic.get_desc.from_pb_option.base import field_option_handle, protobuf_common_type_dict
+from protobuf_to_pydantic.grpc_types import (
+    AnyMessage,
+    DescriptorProto,
+    EnumDescriptorProto,
+    FieldDescriptorProto,
+    FileDescriptorProto,
+)
 from protobuf_to_pydantic.plugin.config import Config
+from protobuf_to_pydantic.plugin.types import ProtobufTypeModel
 
 logger: logging.Logger = logging.getLogger(__name__)
 
@@ -97,21 +100,18 @@ class FileDescriptorProtoToCode(BaseP2C):
                 key_msg, value_msg = message.field
                 self._add_import_code("typing")
                 type_str: str = (
-                    f"typing.Dict["
-                    f"{self._get_protobuf_type_str(key_msg)[0]}, "
-                    f"{self._get_protobuf_type_str(value_msg)[0]}"
-                    f"]"
+                    f"typing.Dict[{self._get_protobuf_type_model(key_msg).py_type_str},"
+                    f" {self._get_protobuf_type_model(value_msg).py_type_str}]"
                 )
                 field_info_dict["default_factory"] = dict
                 rule_type_str = "map"
             elif field.type_name.startswith(".google.protobuf"):
-                type_str, rule_type_str = self._get_protobuf_type_str(field)
-                if type_str == "datetime.datetime":
-                    field_info_dict["default_factory"] = "datetime.datetime.now"
-                elif type_str in ("Timedelta", "AnyMessage"):
-                    field_info_dict["default_factory"] = type_str
+                protobuf_type_model = self._get_protobuf_type_model(field)
+                type_str = protobuf_type_model.py_type_str
+                rule_type_str = protobuf_type_model.rule_type_str
+                field_info_dict["default_factory"] = protobuf_type_model.type_factory
             else:
-                type_str = '"' + self._get_protobuf_type_str(field)[0] + '"'
+                type_str = '"' + self._get_protobuf_type_model(field).py_type_str + '"'
         elif field.type == 14:
             # enum handle
             # TODO nested enum support
@@ -122,7 +122,9 @@ class FileDescriptorProtoToCode(BaseP2C):
             return None
         else:
             field_info_dict["default"] = python_type_default_value_dict[type_dict[field.type]]
-            type_str, rule_type_str = self._get_protobuf_type_str(field)
+            protobuf_type_model = self._get_protobuf_type_model(field)
+            type_str = protobuf_type_model.py_type_str
+            rule_type_str = protobuf_type_model.rule_type_str
 
         if field.label == field.LABEL_REPEATED and not field.type_name.endswith("Entry"):
             # repeated support
@@ -181,11 +183,11 @@ class FileDescriptorProtoToCode(BaseP2C):
             if "keys" in map_type_dict:
                 key_type_str = self._get_value_code(map_type_dict["keys"])
             else:
-                key_type_str = self._get_protobuf_type_str(message.field[0])[0]
+                key_type_str = self._get_protobuf_type_model(message.field[0]).py_type_str
             if "values" in map_type_dict:
                 value_type_str = self._get_value_code(map_type_dict["values"])
             else:
-                value_type_str = self._get_protobuf_type_str(message.field[1])[0]
+                value_type_str = self._get_protobuf_type_model(message.field[1]).py_type_str
             type_str = f"typing.Dict[{key_type_str}, {value_type_str}]"
 
         # custom field support
@@ -215,7 +217,8 @@ class FileDescriptorProtoToCode(BaseP2C):
         )
         return class_head_content, class_field_content
 
-    def _gen_one_of_dict(self, desc: DescriptorProto) -> Dict:
+    @staticmethod
+    def _gen_one_of_dict(desc: DescriptorProto) -> Dict:
         one_of_dict = {}
         index_field_name_dict: Dict[int, Set[str]] = {}
         for field in desc.field:
@@ -231,7 +234,7 @@ class FileDescriptorProtoToCode(BaseP2C):
                 pkg, rule_name = option_descriptor.full_name.split(".")
                 if not pkg.endswith("validate"):
                     continue
-                if rule_name == "required":
+                if rule_name in ("required",):
                     # Now only support `required`
                     option_dict[rule_name] = option_value
             option_dict["fields"] = index_field_name_dict[index]
@@ -259,7 +262,7 @@ class FileDescriptorProtoToCode(BaseP2C):
             for idx, field in enumerate(desc.field):
                 if field.name in PYTHON_RESERVED:
                     continue
-                if field.type == 11 and self._get_protobuf_type_str(field)[0] == "AnyMessage":
+                if field.type == 11 and self._get_protobuf_type_model(field).py_type_str == "AnyMessage":
                     use_custom_type = True
 
                 _content_tuple: Optional[Tuple[str, str]] = self._message_field_handle(field, indent, class_name)
@@ -288,35 +291,54 @@ class FileDescriptorProtoToCode(BaseP2C):
             content += "\n" if indent > 0 else "\n\n"
         return content
 
-    def _get_protobuf_type_str(self, field: FieldDescriptorProto) -> Tuple[str, Optional[str]]:
+    def _get_protobuf_type_model(self, field: FieldDescriptorProto) -> ProtobufTypeModel:
         rule_type_str: Optional[str] = None
+        type_factory: Optional[Any] = None
         if field.type in type_dict:
-            py_type_str: str = self._get_value_code(type_dict[field.type])
-            rule_type_str = protobuf_common_type_dict.get(field.type, None)
-            return py_type_str, rule_type_str
+            type_factory = type_dict[field.type]
+            return ProtobufTypeModel(
+                type_factory=type_factory,
+                py_type_str=self._get_value_code(type_factory),
+                rule_type_str=protobuf_common_type_dict.get(field.type, None),
+            )
         elif field.type_name.startswith(".google.protobuf"):
             _type_str = field.type_name.split(".")[-1]
             if _type_str == "Empty":
                 py_type_str = "None"
+                rule_type_str = ""
             elif _type_str == "Timestamp":
-                py_type_str = "datetime.datetime"
+                py_type_str = "datetime"
                 rule_type_str = "timestamp"
-                self._import_set.add("import datetime")
+                type_factory = datetime.now
+                self._add_import_code("datetime", "datetime")
             elif _type_str == "Duration":
                 py_type_str = "Timedelta"
                 rule_type_str = "duration"
+                type_factory = timedelta
+                self._add_import_code("datetime", "timedelta")
                 self._add_import_code("protobuf_to_pydantic.util", py_type_str)
             elif _type_str == "Any":
-                py_type_str = "AnyMessage"
+                py_type_str = "Any"
                 rule_type_str = "any"
-                self._add_import_code("google.protobuf.any_pb2", "Any", " as AnyMessage")
+                type_factory = AnyMessage
+                self._add_import_code("google.protobuf.any_pb2", "Any")
             else:
                 logger.error(f"Not support type {field.type_name}")
                 py_type_str = ""
-            return py_type_str, rule_type_str
+            return ProtobufTypeModel(
+                type_factory=type_factory,
+                rule_type_str=rule_type_str,
+                py_type_str=py_type_str,
+            )
         else:
             # TODO Cross-file references are not currently supported
-            return field.type_name.split(".")[-1], "message"
+            return ProtobufTypeModel(
+                # When relying on other Messages, it will only be used in the type of pydantic.Model,
+                # and the type_ field will not be used at this time
+                type_factory=None,
+                rule_type_str="message",
+                py_type_str=field.type_name.split(".")[-1],
+            )
 
     def _parse_field_descriptor(self) -> None:
         self._content_deque.append(self._enum(self._fd.enum_type, [FileDescriptorProto.ENUM_TYPE_FIELD_NUMBER]))

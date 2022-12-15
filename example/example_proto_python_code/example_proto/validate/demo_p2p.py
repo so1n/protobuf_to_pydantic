@@ -2,14 +2,13 @@
 # gen by protobuf_to_pydantic(https://github.com/so1n/protobuf_to_pydantic)
 # type: ignore
 
-import datetime
 import typing
-from datetime import timedelta
+from datetime import datetime, timedelta
 from enum import IntEnum
 from ipaddress import IPv4Address, IPv6Address
 from uuid import UUID
 
-from google.protobuf.any_pb2 import Any as AnyMessage  # type: ignore
+from google.protobuf.any_pb2 import Any  # type: ignore
 from google.protobuf.message import Message  # type: ignore
 from protobuf_to_pydantic.customer_con_type import contimedelta, contimestamp
 from protobuf_to_pydantic.customer_validator import (
@@ -325,15 +324,13 @@ class RepeatedTest(BaseModel):
 
 
 class AnyTest(BaseModel):
-    class Config:
-        arbitrary_types_allowed = True
 
     not_in_test_any_not_in_validator = validator("not_in_test", allow_reuse=True)(any_not_in_validator)
     in_test_any_in_validator = validator("in_test", allow_reuse=True)(any_in_validator)
 
-    required_test: AnyMessage = FieldInfo()
-    not_in_test: AnyMessage = FieldInfo(
-        default_factory="AnyMessage",
+    required_test: Any = FieldInfo()
+    not_in_test: Any = FieldInfo(
+        default_factory=Any,
         extra={
             "any_not_in": [
                 "type.googleapis.com/google.protobuf.Duration",
@@ -341,8 +338,8 @@ class AnyTest(BaseModel):
             ]
         },
     )
-    in_test: AnyMessage = FieldInfo(
-        default_factory="AnyMessage",
+    in_test: Any = FieldInfo(
+        default_factory=Any,
         extra={
             "any_in": ["type.googleapis.com/google.protobuf.Duration", "type.googleapis.com/google.protobuf.Timestamp"]
         },
@@ -361,28 +358,28 @@ class DurationTest(BaseModel):
 
     required_test: Timedelta = FieldInfo()
     const_test: Timedelta = FieldInfo(
-        default_factory="Timedelta", extra={"duration_const": timedelta(seconds=1, microseconds=500000)}
+        default_factory=timedelta, extra={"duration_const": timedelta(seconds=1, microseconds=500000)}
     )
     range_test: Timedelta = FieldInfo(
-        default_factory="Timedelta",
+        default_factory=timedelta,
         extra={
             "duration_gt": timedelta(seconds=5, microseconds=500000),
             "duration_lt": timedelta(seconds=10, microseconds=500000),
         },
     )
     range_e_test: Timedelta = FieldInfo(
-        default_factory="Timedelta",
+        default_factory=timedelta,
         extra={
             "duration_ge": timedelta(seconds=5, microseconds=500000),
             "duration_le": timedelta(seconds=10, microseconds=500000),
         },
     )
     in_test: Timedelta = FieldInfo(
-        default_factory="Timedelta",
+        default_factory=timedelta,
         extra={"duration_in": [timedelta(seconds=1, microseconds=500000), timedelta(seconds=3, microseconds=500000)]},
     )
     not_in_test: Timedelta = FieldInfo(
-        default_factory="Timedelta",
+        default_factory=timedelta,
         extra={
             "duration_not_in": [timedelta(seconds=1, microseconds=500000), timedelta(seconds=3, microseconds=500000)]
         },
@@ -406,19 +403,19 @@ class TimestampTest(BaseModel):
         timestamp_within_validator
     )
 
-    required_test: datetime.datetime = FieldInfo()
-    const_test: datetime.datetime = FieldInfo(default_factory="now", extra={"timestamp_const": 1600000000.0})
-    range_test: datetime.datetime = FieldInfo(
-        default_factory="now", extra={"timestamp_gt": 1600000000.0, "timestamp_lt": 1600000010.0}
+    required_test: datetime = FieldInfo()
+    const_test: datetime = FieldInfo(default_factory=datetime.now, extra={"timestamp_const": 1600000000.0})
+    range_test: datetime = FieldInfo(
+        default_factory=datetime.now, extra={"timestamp_gt": 1600000000.0, "timestamp_lt": 1600000010.0}
     )
-    range_e_test: datetime.datetime = FieldInfo(
-        default_factory="now", extra={"timestamp_ge": 1600000000.0, "timestamp_le": 1600000010.0}
+    range_e_test: datetime = FieldInfo(
+        default_factory=datetime.now, extra={"timestamp_ge": 1600000000.0, "timestamp_le": 1600000010.0}
     )
-    lt_now_test: datetime.datetime = FieldInfo(default_factory="now", extra={"timestamp_lt_now": True})
-    gt_now_test: datetime.datetime = FieldInfo(default_factory="now", extra={"timestamp_gt_now": True})
-    within_test: datetime.datetime = FieldInfo(default_factory="now", extra={"timestamp_within": timedelta(seconds=1)})
-    within_and_gt_now_test: datetime.datetime = FieldInfo(
-        default_factory="now", extra={"timestamp_gt_now": True, "timestamp_within": timedelta(seconds=3600)}
+    lt_now_test: datetime = FieldInfo(default_factory=datetime.now, extra={"timestamp_lt_now": True})
+    gt_now_test: datetime = FieldInfo(default_factory=datetime.now, extra={"timestamp_gt_now": True})
+    within_test: datetime = FieldInfo(default_factory=datetime.now, extra={"timestamp_within": timedelta(seconds=1)})
+    within_and_gt_now_test: datetime = FieldInfo(
+        default_factory=datetime.now, extra={"timestamp_gt_now": True, "timestamp_within": timedelta(seconds=3600)}
     )
 
 
@@ -462,7 +459,7 @@ class NestedMessage(BaseModel):
         exp_timestamp_gt_now_validator = validator("exp", allow_reuse=True)(timestamp_gt_now_validator)
 
         bank_number: str = FieldInfo(default="", min_length=13, max_length=19)
-        exp: datetime.datetime = FieldInfo(default_factory="now", extra={"timestamp_gt_now": True})
+        exp: datetime = FieldInfo(default_factory=datetime.now, extra={"timestamp_gt_now": True})
         uuid: UUID = FieldInfo(default="")
 
     class NotEnableUserPayMessage(BaseModel):
@@ -470,7 +467,7 @@ class NestedMessage(BaseModel):
         exp_timestamp_gt_now_validator = validator("exp", allow_reuse=True)(timestamp_gt_now_validator)
 
         bank_number: str = FieldInfo(default="", min_length=13, max_length=19)
-        exp: datetime.datetime = FieldInfo(default_factory="now", extra={"timestamp_gt_now": True})
+        exp: datetime = FieldInfo(default_factory=datetime.now, extra={"timestamp_gt_now": True})
         uuid: UUID = FieldInfo(default="")
 
     string_in_map_test: typing.Dict[str, StringTest] = FieldInfo(default_factory=dict)

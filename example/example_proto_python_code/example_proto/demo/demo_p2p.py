@@ -2,8 +2,8 @@
 # gen by protobuf_to_pydantic(https://github.com/so1n/protobuf_to_pydantic)
 # type: ignore
 
-import datetime
 import typing
+from datetime import datetime
 from enum import IntEnum
 
 from google.protobuf.message import Message  # type: ignore
@@ -43,7 +43,7 @@ class NestedMessage(BaseModel):
     class UserPayMessage(BaseModel):
 
         bank_number: str = FieldInfo(default="")
-        exp: datetime.datetime = FieldInfo(default_factory="now")
+        exp: datetime = FieldInfo(default_factory=datetime.now)
         uuid: str = FieldInfo(default="")
 
     user_list_map: typing.Dict[str, RepeatedMessage] = FieldInfo(default_factory=dict)

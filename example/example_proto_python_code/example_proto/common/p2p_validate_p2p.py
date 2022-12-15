@@ -2,8 +2,8 @@
 # gen by protobuf_to_pydantic(https://github.com/so1n/protobuf_to_pydantic)
 # type: ignore
 
-import datetime
 import typing
+from datetime import datetime, timedelta
 
 from google.protobuf.message import Message  # type: ignore
 from protobuf_to_pydantic.customer_validator import check_one_of
@@ -852,19 +852,19 @@ class DurationRules(BaseModel):
     }
     _check_one_of = root_validator(pre=True, allow_reuse=True)(check_one_of)
 
-    const: Timedelta = FieldInfo(default_factory="Timedelta")
-    lt: Timedelta = FieldInfo(default_factory="Timedelta")
-    le: Timedelta = FieldInfo(default_factory="Timedelta")
-    gt: Timedelta = FieldInfo(default_factory="Timedelta")
-    ge: Timedelta = FieldInfo(default_factory="Timedelta")
+    const: Timedelta = FieldInfo(default_factory=timedelta)
+    lt: Timedelta = FieldInfo(default_factory=timedelta)
+    le: Timedelta = FieldInfo(default_factory=timedelta)
+    gt: Timedelta = FieldInfo(default_factory=timedelta)
+    ge: Timedelta = FieldInfo(default_factory=timedelta)
     not_in: typing.List[Timedelta] = FieldInfo(default_factory=list)
     enable: bool = FieldInfo(default=False)
-    default: Timedelta = FieldInfo(default_factory="Timedelta")
+    default: Timedelta = FieldInfo(default_factory=timedelta)
     default_factory: str = FieldInfo(default="")
     miss_default: bool = FieldInfo(default=False)
     alias: str = FieldInfo(default="")
     description: str = FieldInfo(default="")
-    example: Timedelta = FieldInfo(default_factory="Timedelta")
+    example: Timedelta = FieldInfo(default_factory=timedelta)
     example_factory: str = FieldInfo(default="")
     field: str = FieldInfo(default="")
     type: str = FieldInfo(default="")
@@ -893,21 +893,21 @@ class TimestampRules(BaseModel):
     }
     _check_one_of = root_validator(pre=True, allow_reuse=True)(check_one_of)
 
-    const: datetime.datetime = FieldInfo(default_factory="now")
-    lt: datetime.datetime = FieldInfo(default_factory="now")
-    le: datetime.datetime = FieldInfo(default_factory="now")
-    gt: datetime.datetime = FieldInfo(default_factory="now")
-    ge: datetime.datetime = FieldInfo(default_factory="now")
+    const: datetime = FieldInfo(default_factory=datetime.now)
+    lt: datetime = FieldInfo(default_factory=datetime.now)
+    le: datetime = FieldInfo(default_factory=datetime.now)
+    gt: datetime = FieldInfo(default_factory=datetime.now)
+    ge: datetime = FieldInfo(default_factory=datetime.now)
     lt_now: bool = FieldInfo(default=False)
     gt_now: bool = FieldInfo(default=False)
-    within: Timedelta = FieldInfo(default_factory="Timedelta")
+    within: Timedelta = FieldInfo(default_factory=timedelta)
     enable: bool = FieldInfo(default=False)
-    default: datetime.datetime = FieldInfo(default_factory="now")
+    default: datetime = FieldInfo(default_factory=datetime.now)
     default_factory: str = FieldInfo(default="")
     miss_default: bool = FieldInfo(default=False)
     alias: str = FieldInfo(default="")
     description: str = FieldInfo(default="")
-    example: datetime.datetime = FieldInfo(default_factory="now")
+    example: datetime = FieldInfo(default_factory=datetime.now)
     example_factory: str = FieldInfo(default="")
     field: str = FieldInfo(default="")
     type: str = FieldInfo(default="")
