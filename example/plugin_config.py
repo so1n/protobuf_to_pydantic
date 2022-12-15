@@ -1,5 +1,6 @@
-from typing import Any, Type
+from typing import Type
 
+from google.protobuf.any_pb2 import Any  # type: ignore
 from pydantic import confloat, conint
 from pydantic.fields import FieldInfo
 
@@ -11,7 +12,7 @@ class CustomerField(FieldInfo):
 
 
 def customer_any() -> Any:
-    return Any()  # type: ignore
+    return Any  # type: ignore
 
 
 local_dict = {

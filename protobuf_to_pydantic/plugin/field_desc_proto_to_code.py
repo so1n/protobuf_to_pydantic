@@ -74,23 +74,33 @@ class FileDescriptorProtoToCode(BaseP2C):
             content += "\n\n"
         return content
 
-    def _message_nested_type_handle(self, desc: DescriptorProto, scl_prefix: SourceCodeLocation, indent: int) -> str:
+    def _message_nested_type_handle(
+        self, desc: DescriptorProto, scl_prefix: SourceCodeLocation, indent: int, nested_message_config_dict: dict
+    ) -> str:
         """Parse the nested information of Message"""
-        nested_type_list = [
-            nested_message
-            for nested_message in desc.nested_type
-            # Some data of Map Entry in nested type array
-            if not nested_message.options.map_entry
-        ]
-        return self._message(nested_type_list, scl_prefix, indent + self.code_indent)
+        content: str = ""
+        for nested_message in desc.nested_type:
+            if nested_message.options.map_entry:
+                # Some data of Map Entry in nested type array
+                continue
+            skip_validate_rule = nested_message_config_dict.get(nested_message.name, {}).get("skip", False)
+            content += self._message(
+                nested_message, scl_prefix, indent + self.code_indent, skip_validate_rule=skip_validate_rule
+            )
+        return content
 
     # flake8: noqa: C901
     def _message_field_handle(
-        self, field: FieldDescriptorProto, indent: int, class_name: str = ""
+        self,
+        field: FieldDescriptorProto,
+        indent: int,
+        nested_message_config_dict: dict,
+        skip_validate_rule: bool = False,
     ) -> Optional[Tuple[str, str]]:
         """generate message's field to Pydantic.FieldInfo code"""
         field_info_dict: dict = {}
         rule_type_str: Optional[str] = None
+        nested_message_name: Optional[str] = None
         # TODO  Cross-file references are not currently supported
         if field.type == 11:
             # message handle
@@ -111,12 +121,16 @@ class FileDescriptorProtoToCode(BaseP2C):
                 rule_type_str = protobuf_type_model.rule_type_str
                 field_info_dict["default_factory"] = protobuf_type_model.type_factory
             else:
-                type_str = '"' + self._get_protobuf_type_model(field).py_type_str + '"'
+                protobuf_type_model = self._get_protobuf_type_model(field)
+                type_str = protobuf_type_model.py_type_str
+                rule_type_str = protobuf_type_model.rule_type_str
+                nested_message_name = type_str
         elif field.type == 14:
             # enum handle
             # TODO nested enum support
             type_str = self._get_value_code(field.type_name.split(".")[-1])
             field_info_dict["default"] = 0
+            rule_type_str = "enum"
         elif field.type not in type_dict:
             logger.error(f"Not found {field.type} in type_dict")
             return None
@@ -133,21 +147,27 @@ class FileDescriptorProtoToCode(BaseP2C):
             field_info_dict.pop("default", "")
             field_info_dict["default_factory"] = list
             rule_type_str = "repeated"
-
-        if len(field.options.ListFields()) != 0 and rule_type_str:
+        if len(field.options.ListFields()) != 0 and rule_type_str and not skip_validate_rule:
             # protobuf option support
             field_option_info_dict = field_option_handle(rule_type_str, field.type_name, field)
-            if not field_option_info_dict.pop("skip", False):
-                field_option_info_dict = MessagePaitModel(
-                    **self._desc_template.handle_template_var(field_option_info_dict)
-                ).dict()
-                if field_option_info_dict.pop("enable", False):
-                    field_param_dict_handle(
-                        field_option_info_dict,
-                        field_info_dict.get("default", Undefined),
-                        field_info_dict.get("default_factory", None),
-                    )
-                    field_info_dict = field_option_info_dict
+
+            skip = field_option_info_dict.pop("skip", False)
+            if nested_message_name:
+                if nested_message_name not in nested_message_config_dict:
+                    nested_message_config_dict[nested_message_name] = {}
+                nested_message_config_dict[nested_message_name]["skip"] = skip
+
+            field_option_info_dict = MessagePaitModel(
+                **self._desc_template.handle_template_var(field_option_info_dict)
+            ).dict()
+            if not field_option_info_dict.pop("enable", False):
+                return None
+            field_param_dict_handle(
+                field_option_info_dict,
+                field_info_dict.get("default", Undefined),
+                field_info_dict.get("default_factory", None),
+            )
+            field_info_dict = field_option_info_dict
 
         validator_dict = field_info_dict.pop("validator", None)
         class_head_content = ""
@@ -236,52 +256,54 @@ class FileDescriptorProtoToCode(BaseP2C):
                 one_of_dict[desc.name + "." + one_of_item.name] = option_dict
         return one_of_dict
 
-    def _message(self, messages: Iterable[DescriptorProto], scl_prefix: SourceCodeLocation, indent: int = 0) -> str:
-        if not messages:
-            return ""
+    def _message(
+        self, desc: DescriptorProto, scl_prefix: SourceCodeLocation, indent: int = 0, skip_validate_rule: bool = False
+    ) -> str:
         self._add_import_code("google.protobuf.message", "Message")
         self._add_import_code("pydantic", "BaseModel")
         content: str = ""
-        for i, desc in enumerate(messages):
-            class_name = desc.name if desc.name not in PYTHON_RESERVED else "_r_" + desc.name
-            class_content = " " * indent + f"class {class_name}(BaseModel):\n"
-            class_head_content = ""
-            class_field_content = ""
+        class_name = desc.name if desc.name not in PYTHON_RESERVED else "_r_" + desc.name
+        class_content = " " * indent + f"class {class_name}(BaseModel):\n"
+        class_head_content = ""
+        class_field_content = ""
 
-            if desc.nested_type:
-                class_head_content += self._message_nested_type_handle(desc, scl_prefix, indent)
+        use_custom_type: bool = False
+        nested_message_config_dict: dict = {}
+        for idx, field in enumerate(desc.field):
+            if field.name in PYTHON_RESERVED:
+                continue
+            if field.type == 11 and self._get_protobuf_type_model(field).type_factory is AnyMessage:
+                use_custom_type = True
 
-            use_custom_type: bool = False
-            for idx, field in enumerate(desc.field):
-                if field.name in PYTHON_RESERVED:
-                    continue
-                if field.type == 11 and self._get_protobuf_type_model(field).type_factory is AnyMessage:
-                    use_custom_type = True
+            _content_tuple: Optional[Tuple[str, str]] = self._message_field_handle(
+                field, indent, nested_message_config_dict, skip_validate_rule=skip_validate_rule
+            )
+            if _content_tuple:
+                class_head_content += _content_tuple[0]
+                class_field_content += _content_tuple[1]
 
-                _content_tuple: Optional[Tuple[str, str]] = self._message_field_handle(field, indent, class_name)
-                if _content_tuple:
-                    class_head_content += _content_tuple[0]
-                    class_field_content += _content_tuple[1]
+        if desc.nested_type:
+            class_head_content += self._message_nested_type_handle(desc, scl_prefix, indent, nested_message_config_dict)
 
-            if desc.oneof_decl:
-                one_of_dict: dict = self._gen_one_of_dict(desc)
-                if one_of_dict:
-                    class_head_content += (
-                        f"{' ' * (indent + self.code_indent)}_one_of_dict = {self._get_value_code(one_of_dict)}\n"
-                    )
-                    class_head_content += (
-                        f"{' ' * (indent + self.code_indent)}"
-                        f"_check_one_of = root_validator(pre=True, allow_reuse=True)(check_one_of)\n"
-                    )
-                    self._add_import_code("pydantic", "root_validator")
-                    self._add_import_code("protobuf_to_pydantic.customer_validator", "check_one_of")
+        if desc.oneof_decl:
+            one_of_dict: dict = self._gen_one_of_dict(desc)
+            if one_of_dict:
+                class_head_content += (
+                    f"{' ' * (indent + self.code_indent)}_one_of_dict = {self._get_value_code(one_of_dict)}\n"
+                )
+                class_head_content += (
+                    f"{' ' * (indent + self.code_indent)}"
+                    f"_check_one_of = root_validator(pre=True, allow_reuse=True)(check_one_of)\n"
+                )
+                self._add_import_code("pydantic", "root_validator")
+                self._add_import_code("protobuf_to_pydantic.customer_validator", "check_one_of")
 
-            if use_custom_type:
-                config_content: str = f"{' ' * (indent + self.code_indent)}class Config:\n"
-                config_content += f"{' ' * (indent + self.code_indent * 2)}arbitrary_types_allowed = True\n\n"
-                class_head_content = config_content + class_head_content
-            content += "\n".join([i for i in [class_content, class_head_content, class_field_content] if i])
-            content += "\n" if indent > 0 else "\n\n"
+        if use_custom_type:
+            config_content: str = f"{' ' * (indent + self.code_indent)}class Config:\n"
+            config_content += f"{' ' * (indent + self.code_indent * 2)}arbitrary_types_allowed = True\n\n"
+            class_head_content = config_content + class_head_content
+        content += "\n".join([i for i in [class_content, class_head_content, class_field_content] if i])
+        content += "\n" if indent > 0 else "\n\n"
         return content
 
     def _get_protobuf_type_model(self, field: FieldDescriptorProto) -> ProtobufTypeModel:
@@ -335,4 +357,5 @@ class FileDescriptorProtoToCode(BaseP2C):
 
     def _parse_field_descriptor(self) -> None:
         self._content_deque.append(self._enum(self._fd.enum_type, [FileDescriptorProto.ENUM_TYPE_FIELD_NUMBER]))
-        self._content_deque.append(self._message(self._fd.message_type, [FileDescriptorProto.ENUM_TYPE_FIELD_NUMBER]))
+        for desc in self._fd.message_type:
+            self._content_deque.append(self._message(desc, [FileDescriptorProto.ENUM_TYPE_FIELD_NUMBER]))

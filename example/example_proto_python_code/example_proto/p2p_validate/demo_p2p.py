@@ -67,7 +67,6 @@ class FloatTest(BaseModel):
     in_test: float = FieldInfo(default=0.0, in_=[1.0, 2.0, 3.0])
     not_in_test: float = FieldInfo(default=0.0, not_in=[1.0, 2.0, 3.0])
     default_test: float = FieldInfo(default=1.0)
-    not_enable_test: float = FieldInfo(default=0.0)
     default_factory_test: float = FieldInfo(default_factory=float)
     miss_default_test: float = FieldInfo()
     alias_test: float = FieldInfo(default=0.0, alias="alias")
@@ -91,7 +90,6 @@ class DoubleTest(BaseModel):
     in_test: float = FieldInfo(default=0.0, in_=[1.0, 2.0, 3.0])
     not_in_test: float = FieldInfo(default=0.0, not_in=[1.0, 2.0, 3.0])
     default_test: float = FieldInfo(default=1.0)
-    not_enable_test: float = FieldInfo(default=0.0)
     default_factory_test: float = FieldInfo(default_factory=float)
     miss_default_test: float = FieldInfo()
     alias_test: float = FieldInfo(default=0.0, alias="alias")
@@ -115,7 +113,6 @@ class Int32Test(BaseModel):
     in_test: int = FieldInfo(default=0, in_=[1, 2, 3])
     not_in_test: int = FieldInfo(default=0, not_in=[1, 2, 3])
     default_test: int = FieldInfo(default=1.0)
-    not_enable_test: int = FieldInfo(default=0)
     default_factory_test: int = FieldInfo(default_factory=int)
     miss_default_test: int = FieldInfo()
     alias_test: int = FieldInfo(default=0, alias="alias")
@@ -139,7 +136,6 @@ class Int64Test(BaseModel):
     in_test: int = FieldInfo(default=0, in_=[1, 2, 3])
     not_in_test: int = FieldInfo(default=0, not_in=[1, 2, 3])
     default_test: int = FieldInfo(default=1.0)
-    not_enable_test: int = FieldInfo(default=0)
     default_factory_test: int = FieldInfo(default_factory=int)
     miss_default_test: int = FieldInfo()
     alias_test: int = FieldInfo(default=0, alias="alias")
@@ -163,7 +159,6 @@ class Uint32Test(BaseModel):
     in_test: int = FieldInfo(default=0, in_=[1, 2, 3])
     not_in_test: int = FieldInfo(default=0, not_in=[1, 2, 3])
     default_test: int = FieldInfo(default=1.0)
-    not_enable_test: int = FieldInfo(default=0)
     default_factory_test: int = FieldInfo(default_factory=int)
     miss_default_test: int = FieldInfo()
     alias_test: int = FieldInfo(default=0, alias="alias")
@@ -187,7 +182,6 @@ class Sint32Test(BaseModel):
     in_test: int = FieldInfo(default=0, in_=[1, 2, 3])
     not_in_test: int = FieldInfo(default=0, not_in=[1, 2, 3])
     default_test: int = FieldInfo(default=1.0)
-    not_enable_test: int = FieldInfo(default=0)
     default_factory_test: int = FieldInfo(default_factory=int)
     miss_default_test: int = FieldInfo()
     alias_test: int = FieldInfo(default=0, alias="alias")
@@ -211,7 +205,6 @@ class Uint64Test(BaseModel):
     in_test: int = FieldInfo(default=0, in_=[1, 2, 3])
     not_in_test: int = FieldInfo(default=0, not_in=[1, 2, 3])
     default_test: int = FieldInfo(default=1.0)
-    not_enable_test: int = FieldInfo(default=0)
     default_factory_test: int = FieldInfo(default_factory=int)
     miss_default_test: int = FieldInfo()
     alias_test: int = FieldInfo(default=0, alias="alias")
@@ -235,7 +228,6 @@ class Sint64Test(BaseModel):
     in_test: int = FieldInfo(default=0, in_=[1, 2, 3])
     not_in_test: int = FieldInfo(default=0, not_in=[1, 2, 3])
     default_test: int = FieldInfo(default=1.0)
-    not_enable_test: int = FieldInfo(default=0)
     default_factory_test: int = FieldInfo(default_factory=int)
     miss_default_test: int = FieldInfo()
     alias_test: int = FieldInfo(default=0, alias="alias")
@@ -259,7 +251,6 @@ class Fixed32Test(BaseModel):
     in_test: float = FieldInfo(default=0.0, in_=[1, 2, 3])
     not_in_test: float = FieldInfo(default=0.0, not_in=[1, 2, 3])
     default_test: float = FieldInfo(default=1.0)
-    not_enable_test: float = FieldInfo(default=0.0)
     default_factory_test: float = FieldInfo(default_factory=float)
     miss_default_test: float = FieldInfo()
     alias_test: float = FieldInfo(default=0.0, alias="alias")
@@ -283,7 +274,6 @@ class Fixed64Test(BaseModel):
     in_test: float = FieldInfo(default=0.0, in_=[1, 2, 3])
     not_in_test: float = FieldInfo(default=0.0, not_in=[1, 2, 3])
     default_test: float = FieldInfo(default=1.0)
-    not_enable_test: float = FieldInfo(default=0.0)
     default_factory_test: float = FieldInfo(default_factory=float)
     miss_default_test: float = FieldInfo()
     alias_test: float = FieldInfo(default=0.0, alias="alias")
@@ -307,7 +297,6 @@ class Sfixed32Test(BaseModel):
     in_test: float = FieldInfo(default=0.0, in_=[1, 2, 3])
     not_in_test: float = FieldInfo(default=0.0, not_in=[1, 2, 3])
     default_test: float = FieldInfo(default=1.0)
-    not_enable_test: float = FieldInfo(default=0.0)
     default_factory_test: float = FieldInfo(default_factory=float)
     miss_default_test: float = FieldInfo()
     alias_test: float = FieldInfo(default=0.0, alias="alias")
@@ -331,7 +320,6 @@ class Sfixed64Test(BaseModel):
     in_test: float = FieldInfo(default=0.0, in_=[1, 2, 3])
     not_in_test: float = FieldInfo(default=0.0, not_in=[1, 2, 3])
     default_test: float = FieldInfo(default=1.0)
-    not_enable_test: float = FieldInfo(default=0.0)
     default_factory_test: float = FieldInfo(default_factory=float)
     miss_default_test: float = FieldInfo()
     alias_test: float = FieldInfo(default=0.0, alias="alias")
@@ -348,7 +336,6 @@ class BoolTest(BaseModel):
 
     bool_1_test: bool = FieldInfo(default=True, const=True)
     bool_2_test: bool = FieldInfo(default=False, const=True)
-    enable_test: bool = FieldInfo(default=False)
     default_test: bool = FieldInfo(default=True)
     miss_default_test: bool = FieldInfo()
     alias_test: bool = FieldInfo(default=False, alias="alias")
@@ -388,7 +375,6 @@ class StringTest(BaseModel):
     address_test: IPvAnyAddress = FieldInfo(default="")
     uuid_test: UUID = FieldInfo(default="")
     pydantic_type_test: str = FieldInfo(default="")
-    enable_test: str = FieldInfo(default="")
     default_test: str = FieldInfo(default="default")
     default_factory_test: str = FieldInfo(default_factory=uuid4)
     miss_default_test: str = FieldInfo()
@@ -416,7 +402,6 @@ class BytesTest(BaseModel):
     contains_test: bytes = FieldInfo(default=b"", contains=b"contains")
     in_test: bytes = FieldInfo(default=b"", in_=[b"a", b"b", b"c"])
     not_in_test: bytes = FieldInfo(default=b"", not_in=[b"a", b"b", b"c"])
-    enable_test: bytes = FieldInfo(default=b"")
     default_test: bytes = FieldInfo(default=b"default")
     default_factory_test: bytes = FieldInfo(default_factory=bytes)
     miss_default_test: bytes = FieldInfo()
@@ -431,17 +416,19 @@ class BytesTest(BaseModel):
 
 class EnumTest(BaseModel):
 
-    const_test: "State" = FieldInfo(default=0)
-    in_test: "State" = FieldInfo(default=0)
-    not_in_test: "State" = FieldInfo(default=0)
-    enable_test: "State" = FieldInfo(default=0)
-    default_test: "State" = FieldInfo(default=0)
-    miss_default_test: "State" = FieldInfo(default=0)
-    alias_test: "State" = FieldInfo(default=0)
-    desc_test: "State" = FieldInfo(default=0)
-    example_test: "State" = FieldInfo(default=0)
-    field_test: "State" = FieldInfo(default=0)
-    title_test: "State" = FieldInfo(default=0)
+    in_test_in_validator = validator("in_test", allow_reuse=True)(in_validator)
+    not_in_test_not_in_validator = validator("not_in_test", allow_reuse=True)(not_in_validator)
+
+    const_test: "State" = FieldInfo(default=2, const=True)
+    in_test: "State" = FieldInfo(default=0, in_=[0, 2])
+    not_in_test: "State" = FieldInfo(default=0, not_in=[0, 2])
+    default_test: "State" = FieldInfo(default=1)
+    miss_default_test: "State" = FieldInfo()
+    alias_test: "State" = FieldInfo(default=0, alias="alias")
+    desc_test: "State" = FieldInfo(default=0, description="test desc")
+    example_test: "State" = FieldInfo(default=0, example=2)
+    field_test: "State" = CustomerField(default=0)
+    title_test: "State" = FieldInfo(default=0, title="title_test")
 
 
 class MapTest(BaseModel):
@@ -455,7 +442,6 @@ class MapTest(BaseModel):
     keys_values_test: typing.Dict[constr(min_length=1, max_length=5), contimestamp(timestamp_gt_now=True)] = FieldInfo(
         default_factory=dict
     )
-    enable_test: typing.Dict[str, int] = FieldInfo(default_factory=dict)
     default_factory_test: typing.Dict[str, int] = FieldInfo(default_factory=dict)
     miss_default_test: typing.Dict[str, int] = FieldInfo()
     alias_test: typing.Dict[str, int] = FieldInfo(default_factory=dict, alias="alias")
@@ -494,7 +480,6 @@ class RepeatedTest(BaseModel):
     items_bytes_test: conlist(item_type=conbytes(min_length=1, max_length=5), min_items=1, max_items=5) = FieldInfo(
         default_factory=list
     )
-    enable_test: typing.List[str] = FieldInfo(default_factory=list)
     default_factory_test: typing.List[str] = FieldInfo(default_factory=list)
     miss_default_test: typing.List[str] = FieldInfo()
     alias_test: typing.List[str] = FieldInfo(default_factory=list, alias="alias")
@@ -524,7 +509,6 @@ class AnyTest(BaseModel):
             Any(type_url="type.googleapis.com/google.protobuf.Duration"),
         ],
     )
-    enable_test: Any = FieldInfo(default_factory=Any)
     default_test: Any = FieldInfo(default=Any(type_url="type.googleapis.com/google.protobuf.Duration"))
     default_factory_test: Any = FieldInfo(default_factory=customer_any)
     miss_default_test: Any = FieldInfo()
@@ -567,7 +551,6 @@ class DurationTest(BaseModel):
         default_factory=timedelta,
         duration_not_in=[timedelta(seconds=1, microseconds=500000), timedelta(seconds=3, microseconds=500000)],
     )
-    enable_test: Timedelta = FieldInfo(default_factory=timedelta)
     default_test: Timedelta = FieldInfo(default=timedelta(seconds=1, microseconds=500000))
     default_factory_test: Timedelta = FieldInfo(default_factory=timedelta)
     miss_default_test: Timedelta = FieldInfo()
@@ -608,7 +591,6 @@ class TimestampTest(BaseModel):
     within_and_gt_now_test: datetime = FieldInfo(
         default_factory=datetime.now, timestamp_gt_now=True, timestamp_within=timedelta(seconds=3600)
     )
-    enable_test: datetime = FieldInfo(default_factory=datetime.now)
     default_test: datetime = FieldInfo(default=1.5)
     default_factory_test: datetime = FieldInfo(default_factory=datetime.now)
     miss_default_test: datetime = FieldInfo()
@@ -659,14 +641,12 @@ class NestedMessage(BaseModel):
 
     class NotEnableUserPayMessage(BaseModel):
 
-        exp_timestamp_gt_now_validator = validator("exp", allow_reuse=True)(timestamp_gt_now_validator)
-
-        bank_number: str = FieldInfo(default="", min_length=13, max_length=19)
-        exp: datetime = FieldInfo(default_factory=datetime.now, timestamp_gt_now=True)
-        uuid: UUID = FieldInfo(default="")
+        bank_number: str = FieldInfo(default="")
+        exp: datetime = FieldInfo(default_factory=datetime.now)
+        uuid: str = FieldInfo(default="")
 
     string_in_map_test: typing.Dict[str, StringTest] = FieldInfo(default_factory=dict)
     map_in_map_test: typing.Dict[str, MapTest] = FieldInfo(default_factory=dict)
-    user_pay: "UserPayMessage" = FieldInfo()
-    not_enable_user_pay: "NotEnableUserPayMessage" = FieldInfo()
+    user_pay: UserPayMessage = FieldInfo()
+    not_enable_user_pay: NotEnableUserPayMessage = FieldInfo()
     empty: None = FieldInfo()

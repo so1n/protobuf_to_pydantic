@@ -36,7 +36,7 @@ class RepeatedMessage(BaseModel):
 
     str_list: typing.List[str] = FieldInfo(default_factory=list)
     int_list: typing.List[int] = FieldInfo(default_factory=list)
-    user_list: typing.List["UserMessage"] = FieldInfo(default_factory=list)
+    user_list: typing.List[UserMessage] = FieldInfo(default_factory=list)
 
 
 class NestedMessage(BaseModel):
@@ -48,6 +48,6 @@ class NestedMessage(BaseModel):
 
     user_list_map: typing.Dict[str, RepeatedMessage] = FieldInfo(default_factory=dict)
     user_map: typing.Dict[str, MapMessage] = FieldInfo(default_factory=dict)
-    user_pay: "UserPayMessage" = FieldInfo()
-    not_enable_user_pay: "UserPayMessage" = FieldInfo()
+    user_pay: UserPayMessage = FieldInfo()
+    not_enable_user_pay: UserPayMessage = FieldInfo()
     empty: None = FieldInfo()

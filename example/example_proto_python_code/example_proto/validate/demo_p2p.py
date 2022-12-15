@@ -271,10 +271,13 @@ class BytesTest(BaseModel):
 
 class EnumTest(BaseModel):
 
-    const_test: "State" = FieldInfo(default=0)
+    in_test_in_validator = validator("in_test", allow_reuse=True)(in_validator)
+    not_in_test_not_in_validator = validator("not_in_test", allow_reuse=True)(not_in_validator)
+
+    const_test: "State" = FieldInfo(default=2, const=True)
     defined_only_test: "State" = FieldInfo(default=0)
-    in_test: "State" = FieldInfo(default=0)
-    not_in_test: "State" = FieldInfo(default=0)
+    in_test: "State" = FieldInfo(default=0, in_=[0, 2])
+    not_in_test: "State" = FieldInfo(default=0, not_in=[0, 2])
 
 
 class MapTest(BaseModel):
@@ -451,14 +454,12 @@ class NestedMessage(BaseModel):
 
     class NotEnableUserPayMessage(BaseModel):
 
-        exp_timestamp_gt_now_validator = validator("exp", allow_reuse=True)(timestamp_gt_now_validator)
-
-        bank_number: str = FieldInfo(default="", min_length=13, max_length=19)
-        exp: datetime = FieldInfo(default_factory=datetime.now, timestamp_gt_now=True)
-        uuid: UUID = FieldInfo(default="")
+        bank_number: str = FieldInfo(default="")
+        exp: datetime = FieldInfo(default_factory=datetime.now)
+        uuid: str = FieldInfo(default="")
 
     string_in_map_test: typing.Dict[str, StringTest] = FieldInfo(default_factory=dict)
     map_in_map_test: typing.Dict[str, MapTest] = FieldInfo(default_factory=dict)
-    user_pay: "UserPayMessage" = FieldInfo()
-    not_enable_user_pay: "NotEnableUserPayMessage" = FieldInfo()
+    user_pay: UserPayMessage = FieldInfo()
+    not_enable_user_pay: NotEnableUserPayMessage = FieldInfo()
     empty: None = FieldInfo()
