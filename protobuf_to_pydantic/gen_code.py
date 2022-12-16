@@ -366,13 +366,16 @@ class BaseP2C(object):
             if k == "default" and str(v) == "PydanticUndefined":
                 # Ignore the default value of the pydantic field
                 continue
-            if k == "extra" and not v:
-                # Ignore cases where the value of extra is empty
-                continue
-
-            value_name: str = self._get_value_code(v)
-            field_list.append(f"{k}={value_name}")
-            self._parse_type_to_import_code(v)
+            if k == "extra":
+                if not v:
+                    # Ignore cases where the value of extra is empty
+                    continue
+                for extra_k, extra_v in v.items():
+                    field_list.append(f"{extra_k}={self._get_value_code(extra_v)}")
+                    self._parse_type_to_import_code(extra_v)
+            else:
+                field_list.append(f"{k}={self._get_value_code(v)}")
+                self._parse_type_to_import_code(v)
 
         return f"{field_info.__class__.__name__}({', '.join(field_list)})"
 

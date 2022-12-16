@@ -20,14 +20,12 @@ class SexType(IntEnum):
 
 
 class UserMessage(BaseModel):
-    uid: str = FieldInfo(title="UID", description="user union id", extra={"example": "10086"})
-    age: int = FieldInfo(default=0, title="use age", ge=0, extra={"example": 18})
+    uid: str = FieldInfo(title="UID", description="user union id", example="10086")
+    age: int = FieldInfo(default=0, title="use age", ge=0, example=18)
     height: float = FieldInfo(default=0.0, ge=0, le=2)
     sex: SexType = FieldInfo(default=0)
     is_adult: bool = FieldInfo(default=False)
-    user_name: str = FieldInfo(
-        default="", description="user name", min_length=1, max_length=10, extra={"example": "so1n"}
-    )
+    user_name: str = FieldInfo(default="", description="user name", min_length=1, max_length=10, example="so1n")
 
 
 class MapMessage(BaseModel):
