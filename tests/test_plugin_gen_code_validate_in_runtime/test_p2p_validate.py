@@ -1,7 +1,7 @@
 from typing import Any, Callable, Type
 
 from example.example_proto_python_code.example_proto.p2p_validate import demo_p2p
-from tests.test_gen_code_validate_in_runtime.test_p2p_validate import BaseTestP2pModelValidator, local_dict
+from tests.test_gen_model_validate_in_runtime.test_p2p_validate import BaseTestP2pModelValidator, local_dict
 
 
 def stub_func(model_class: Type, **kwargs: Any) -> Type:

@@ -1,7 +1,7 @@
 from typing import Any, Callable, Type
 
 from example.example_proto_python_code.example_proto.validate import demo_p2p
-from tests.test_gen_code_validate_in_runtime.test_pgv_validate import BaseTestPgvModelValidator
+from tests.test_gen_model_validate_in_runtime.test_pgv_validate import BaseTestPgvModelValidator
 
 
 def stub_func(model_class: Type, **kwargs: Any) -> Type:
