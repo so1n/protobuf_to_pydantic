@@ -373,6 +373,8 @@ class BytesTest(BaseModel):
 
 
 class State(IntEnum):
+    """An enumeration."""
+
     INACTIVE = 0
     PENDING = 1
     ACTIVE = 2

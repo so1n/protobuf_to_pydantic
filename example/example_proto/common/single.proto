@@ -1,0 +1,14 @@
+syntax = "proto3";
+package single;
+
+enum DemoEnum{
+  zero = 0;
+  one = 1;
+  two = 3;
+}
+
+message DemoMessage{
+  string earth = 1;
+  string mercury = 2;
+  string mars=3;
+}

@@ -86,6 +86,14 @@ def check_dict_one_of(desc_dict: dict, key_list: List[str]) -> bool:
     return True
 
 
+def replace_file_name_to_class_name(filename: str) -> str:
+    # example_proto/common/single.proto -> Example_protoCommonSingle
+    prefix: str = "".join([str(i).title() for i in Path(filename.split(".")[0]).joinpath().parts])
+    # Example_protoCommonSingle -> ExampleProtoCommonSingle
+    prefix = prefix.replace("_", "")
+    return prefix
+
+
 def field_param_dict_handle(field_param_dict: dict, default: Any, default_factory: Optional[NoArgAnyCallable]) -> None:
     """Convert the data of field param to the data that pydantic.Base Model can receive"""
     # Handle complex relationships with different defaults
@@ -382,12 +390,34 @@ class M2P(object):
                         _class_name: str = "".join(column.message_type.full_name.split(".")[-2:])
                     else:
                         _class_name = column.message_type.name
+                    is_same_pkg: bool = descriptor.file.name == column.message_type.file.name
+                    if not is_same_pkg:
+                        _class_name = replace_file_name_to_class_name(column.message_type.file.name) + _class_name
+                    # if column.message_type.name in descriptor.nested_types_by_name:
+                    #     print(column.message_type.name)
                     type_ = self._parse_msg_to_pydantic_model(descriptor=column.message_type, class_name=_class_name)
+                    if not is_same_pkg:
+                        setattr(
+                            type_,
+                            "__doc__",
+                            (
+                                "Note: The current class does not belong to the package\n"
+                                f"{_class_name} protobuf path:{column.message_type.file.name}"
+                            ),
+                        )
             elif column.type == FieldDescriptor.TYPE_ENUM:
                 # support google.protobuf.Enum
-                type_ = IntEnum(  # type: ignore
-                    column.enum_type.name, {v.name: v.number for v in column.enum_type.values}
-                )
+                enum_class_dict = {v.name: v.number for v in column.enum_type.values}
+                _class_name = column.enum_type.name
+                if descriptor.file.name != column.enum_type.file.name:
+                    _class_name = replace_file_name_to_class_name(column.enum_type.file.name) + _class_name
+                    enum_class_dict["__doc__"] = (
+                        "Note: The current class does not belong to the package\n"
+                        f"{_class_name} protobuf path:{column.enum_type.file.name}"
+                    )
+                else:
+                    enum_class_dict["__doc__"] = ""
+                type_ = IntEnum(_class_name, enum_class_dict)  # type: ignore
                 default = 0
             else:
                 if column.label == FieldDescriptor.LABEL_REQUIRED:

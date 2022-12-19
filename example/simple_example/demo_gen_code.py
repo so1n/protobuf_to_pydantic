@@ -15,13 +15,33 @@ class SexType(IntEnum):
     women = 1
 
 
+class ExampleProtoCommonSingleDemoEnum(IntEnum):
+    """Note: The current class does not belong to the package
+    DemoEnum protobuf path:example_proto/common/single.proto"""
+
+    zero = 0
+    one = 1
+    two = 3
+
+
+class ExampleProtoCommonSingleDemoMessage(BaseModel):
+    """Note: The current class does not belong to the package
+    DemoMessage protobuf path:example_proto/common/single.proto"""
+
+    earth: str = FieldInfo(default="")
+    mercury: str = FieldInfo(default="")
+    mars: str = FieldInfo(default="")
+
+
 class UserMessage(BaseModel):
     uid: str = FieldInfo(default="")
     age: int = FieldInfo(default=0)
     height: float = FieldInfo(default=0.0)
     sex: SexType = FieldInfo(default=0)
+    demo: ExampleProtoCommonSingleDemoEnum = FieldInfo(default=0)
     is_adult: bool = FieldInfo(default=False)
     user_name: str = FieldInfo(default="")
+    demo_message: ExampleProtoCommonSingleDemoMessage = FieldInfo()
 
 
 class MapMessage(BaseModel):
@@ -41,9 +61,16 @@ class NestedMessageUserPayMessage(BaseModel):
     uuid: str = FieldInfo(default="")
 
 
+class IncludeEnum(IntEnum):
+    zero = 0
+    one = 1
+    two = 2
+
+
 class NestedMessage(BaseModel):
     user_list_map: typing.Dict[str, RepeatedMessage] = FieldInfo(default_factory=dict)
     user_map: typing.Dict[str, MapMessage] = FieldInfo(default_factory=dict)
     user_pay: NestedMessageUserPayMessage = FieldInfo()
+    include_enum: IncludeEnum = FieldInfo(default=0)
     not_enable_user_pay: NestedMessageUserPayMessage = FieldInfo()
     empty: None = FieldInfo()

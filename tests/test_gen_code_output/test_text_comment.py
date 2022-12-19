@@ -29,13 +29,33 @@ class SexType(IntEnum):
     women = 1
 
 
+class ExampleProtoCommonSingleDemoEnum(IntEnum):
+    \"\"\"Note: The current class does not belong to the package
+    ExampleProtoCommonSingleDemoEnum protobuf path:example_proto/common/single.proto\"\"\"
+
+    zero = 0
+    one = 1
+    two = 3
+
+
+class ExampleProtoCommonSingleDemoMessage(BaseModel):
+    \"\"\"Note: The current class does not belong to the package
+    ExampleProtoCommonSingleDemoMessage protobuf path:example_proto/common/single.proto\"\"\"
+
+    earth: str = FieldInfo(default="")
+    mercury: str = FieldInfo(default="")
+    mars: str = FieldInfo(default="")
+
+
 class UserMessage(BaseModel):
     uid: str = FieldInfo(title="UID", description="user union id", example="10086")
     age: int = FieldInfo(default=0, title="use age", ge=0, example=18)
     height: float = FieldInfo(default=0.0, ge=0, le=2)
     sex: SexType = FieldInfo(default=0)
+    demo: ExampleProtoCommonSingleDemoEnum = FieldInfo(default=0)
     is_adult: bool = FieldInfo(default=False)
     user_name: str = FieldInfo(default="", description="user name", min_length=1, max_length=10, example="so1n")
+    demo_message: ExampleProtoCommonSingleDemoMessage = FieldInfo()
 """ in self._model_output(demo_pb2.UserMessage)
 
     def test_map_message(self) -> None:
@@ -45,13 +65,33 @@ class SexType(IntEnum):
     women = 1
 
 
+class ExampleProtoCommonSingleDemoEnum(IntEnum):
+    \"\"\"Note: The current class does not belong to the package
+    ExampleProtoCommonSingleDemoEnum protobuf path:example_proto/common/single.proto\"\"\"
+
+    zero = 0
+    one = 1
+    two = 3
+
+
+class ExampleProtoCommonSingleDemoMessage(BaseModel):
+    \"\"\"Note: The current class does not belong to the package
+    ExampleProtoCommonSingleDemoMessage protobuf path:example_proto/common/single.proto\"\"\"
+
+    earth: str = FieldInfo(default="")
+    mercury: str = FieldInfo(default="")
+    mars: str = FieldInfo(default="")
+
+
 class UserMessage(BaseModel):
     uid: str = FieldInfo(title="UID", description="user union id", example="10086")
     age: int = FieldInfo(default=0, title="use age", ge=0, example=18)
     height: float = FieldInfo(default=0.0, ge=0, le=2)
     sex: SexType = FieldInfo(default=0)
+    demo: ExampleProtoCommonSingleDemoEnum = FieldInfo(default=0)
     is_adult: bool = FieldInfo(default=False)
     user_name: str = FieldInfo(default="", description="user name", min_length=1, max_length=10, example="so1n")
+    demo_message: ExampleProtoCommonSingleDemoMessage = FieldInfo()
 
 
 class MapMessage(BaseModel):
@@ -66,13 +106,33 @@ class SexType(IntEnum):
     women = 1
 
 
+class ExampleProtoCommonSingleDemoEnum(IntEnum):
+    \"\"\"Note: The current class does not belong to the package
+    ExampleProtoCommonSingleDemoEnum protobuf path:example_proto/common/single.proto\"\"\"
+
+    zero = 0
+    one = 1
+    two = 3
+
+
+class ExampleProtoCommonSingleDemoMessage(BaseModel):
+    \"\"\"Note: The current class does not belong to the package
+    ExampleProtoCommonSingleDemoMessage protobuf path:example_proto/common/single.proto\"\"\"
+
+    earth: str = FieldInfo(default="")
+    mercury: str = FieldInfo(default="")
+    mars: str = FieldInfo(default="")
+
+
 class UserMessage(BaseModel):
     uid: str = FieldInfo(title="UID", description="user union id", example="10086")
     age: int = FieldInfo(default=0, title="use age", ge=0, example=18)
     height: float = FieldInfo(default=0.0, ge=0, le=2)
     sex: SexType = FieldInfo(default=0)
+    demo: ExampleProtoCommonSingleDemoEnum = FieldInfo(default=0)
     is_adult: bool = FieldInfo(default=False)
     user_name: str = FieldInfo(default="", description="user name", min_length=1, max_length=10, example="so1n")
+    demo_message: ExampleProtoCommonSingleDemoMessage = FieldInfo()
 
 
 class RepeatedMessage(BaseModel):
@@ -88,13 +148,33 @@ class SexType(IntEnum):
     women = 1
 
 
+class ExampleProtoCommonSingleDemoEnum(IntEnum):
+    \"\"\"Note: The current class does not belong to the package
+    ExampleProtoCommonSingleDemoEnum protobuf path:example_proto/common/single.proto\"\"\"
+
+    zero = 0
+    one = 1
+    two = 3
+
+
+class ExampleProtoCommonSingleDemoMessage(BaseModel):
+    \"\"\"Note: The current class does not belong to the package
+    ExampleProtoCommonSingleDemoMessage protobuf path:example_proto/common/single.proto\"\"\"
+
+    earth: str = FieldInfo(default="")
+    mercury: str = FieldInfo(default="")
+    mars: str = FieldInfo(default="")
+
+
 class UserMessage(BaseModel):
     uid: str = FieldInfo(title="UID", description="user union id", example="10086")
     age: int = FieldInfo(default=0, title="use age", ge=0, example=18)
     height: float = FieldInfo(default=0.0, ge=0, le=2)
     sex: SexType = FieldInfo(default=0)
+    demo: ExampleProtoCommonSingleDemoEnum = FieldInfo(default=0)
     is_adult: bool = FieldInfo(default=False)
     user_name: str = FieldInfo(default="", description="user name", min_length=1, max_length=10, example="so1n")
+    demo_message: ExampleProtoCommonSingleDemoMessage = FieldInfo()
 
 
 class RepeatedMessage(BaseModel):
@@ -114,10 +194,17 @@ class NestedMessageUserPayMessage(BaseModel):
     uuid: str = FieldInfo(default_factory=uuid4)
 
 
+class IncludeEnum(IntEnum):
+    zero = 0
+    one = 1
+    two = 2
+
+
 class NestedMessage(BaseModel):
     user_list_map: typing.Dict[str, RepeatedMessage] = FieldInfo(default_factory=dict)
     user_map: typing.Dict[str, MapMessage] = FieldInfo(default_factory=dict)
     user_pay: NestedMessageUserPayMessage = FieldInfo()
+    include_enum: IncludeEnum = FieldInfo(default=0)
     empty: None = FieldInfo()
 """ in self._model_output(demo_pb2.NestedMessage)
 

@@ -22,8 +22,10 @@ class UserMessage(BaseModel):
     age: int = FieldInfo(default=0)
     height: float = FieldInfo(default=0.0)
     sex: "SexType" = FieldInfo(default=0)
+    demo: "DemoEnum" = FieldInfo(default=0)
     is_adult: bool = FieldInfo(default=False)
     user_name: str = FieldInfo(default="")
+    demo_message: DemoMessage = FieldInfo()
 
 
 class MapMessage(BaseModel):
@@ -49,5 +51,6 @@ class NestedMessage(BaseModel):
     user_list_map: typing.Dict[str, RepeatedMessage] = FieldInfo(default_factory=dict)
     user_map: typing.Dict[str, MapMessage] = FieldInfo(default_factory=dict)
     user_pay: UserPayMessage = FieldInfo()
+    include_enum: "IncludeEnum" = FieldInfo(default=0)
     not_enable_user_pay: UserPayMessage = FieldInfo()
     empty: None = FieldInfo()

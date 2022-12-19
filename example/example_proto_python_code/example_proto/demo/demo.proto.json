@@ -3,7 +3,8 @@
   "filename": "example_proto/demo/demo.proto",
   "dependencies": [
     "google/protobuf/empty.proto",
-    "google/protobuf/timestamp.proto"
+    "google/protobuf/timestamp.proto",
+    "example_proto/common/single.proto"
   ],
   "message_type": [
     {
@@ -39,18 +40,34 @@
           "jsonName": "sex"
         },
         {
+          "name": "demo",
+          "number": 6,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_ENUM",
+          "typeName": ".single.DemoEnum",
+          "jsonName": "demo"
+        },
+        {
           "name": "is_adult",
-          "number": 5,
+          "number": 7,
           "label": "LABEL_OPTIONAL",
           "type": "TYPE_BOOL",
           "jsonName": "isAdult"
         },
         {
           "name": "user_name",
-          "number": 6,
+          "number": 8,
           "label": "LABEL_OPTIONAL",
           "type": "TYPE_STRING",
           "jsonName": "userName"
+        },
+        {
+          "name": "demo_message",
+          "number": 9,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_MESSAGE",
+          "typeName": ".single.DemoMessage",
+          "jsonName": "demoMessage"
         }
       ]
     },
@@ -177,8 +194,16 @@
           "jsonName": "userPay"
         },
         {
-          "name": "not_enable_user_pay",
+          "name": "include_enum",
           "number": 4,
+          "label": "LABEL_OPTIONAL",
+          "type": "TYPE_ENUM",
+          "typeName": ".user.NestedMessage.IncludeEnum",
+          "jsonName": "includeEnum"
+        },
+        {
+          "name": "not_enable_user_pay",
+          "number": 5,
           "label": "LABEL_OPTIONAL",
           "type": "TYPE_MESSAGE",
           "typeName": ".user.NestedMessage.UserPayMessage",
@@ -186,7 +211,7 @@
         },
         {
           "name": "empty",
-          "number": 5,
+          "number": 6,
           "label": "LABEL_OPTIONAL",
           "type": "TYPE_MESSAGE",
           "typeName": ".google.protobuf.Empty",
@@ -266,6 +291,25 @@
           "options": {
             "mapEntry": true
           }
+        }
+      ],
+      "enumType": [
+        {
+          "name": "IncludeEnum",
+          "value": [
+            {
+              "name": "zero",
+              "number": 0
+            },
+            {
+              "name": "one",
+              "number": 1
+            },
+            {
+              "name": "two",
+              "number": 2
+            }
+          ]
         }
       ]
     }

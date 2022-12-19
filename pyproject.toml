@@ -68,7 +68,12 @@ testpaths = "tests"
 [tool.coverage.run]
 branch = true
 source = ["protobuf_to_pydantic"]
-omit = ["protobuf_to_pydantic/contrib/proto_parser.py"]
+omit = [
+    "protobuf_to_pydantic/contrib/proto_parser.py",
+    # The plugin cannot be tested,
+    # only by checking the running result of the generated code to judge whether the plugin is executed successfully
+    "protobuf_to_pydantic/plugin/*",
+]
 
 [tool.coverage.report]
 exclude_lines = [
@@ -91,7 +96,9 @@ exclude_lines = [
     "if TYPE_CHECKING:",
     "pass",
 
-    "except ImportError:"
+    # error
+    "except ImportError:",
+    "except ModuleNotFoundError:"
 ]
 
 

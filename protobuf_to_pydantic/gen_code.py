@@ -221,6 +221,8 @@ class BaseP2C(object):
                     # Parse protobuf enum
                     self._import_set.add("from enum import IntEnum")
                     depend_set_str = f"class {value.type_.__name__}(IntEnum):\n"
+                    if value.type_.__doc__:
+                        depend_set_str += " " * self.code_indent + '"""' + value.type_.__doc__ + '"""' + "\n"
                     for enum_name, enum_value in value.type_.__members__.items():
                         depend_set_str += " " * self.code_indent + f"{enum_name} = {enum_value.value}\n"
                     self._content_deque.append(depend_set_str)
@@ -277,6 +279,8 @@ class BaseP2C(object):
             self._add_import_code(base_class.__module__, base_class.__name__)
 
         class_str: str = f"class {model.__name__}({base_class.__name__}):\n"
+        if model.__doc__:
+            class_str += " " * (indent + self.code_indent) + '"""' + model.__doc__ + '"""\n'
 
         config_class: str = self._model_config_handle(model, indent=indent + self.code_indent)
         if config_class:

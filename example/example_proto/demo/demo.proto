@@ -2,6 +2,7 @@ syntax = "proto3";
 package user;
 import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
+import "example_proto/common/single.proto";
 
 enum SexType {
   man = 0;
@@ -18,10 +19,12 @@ message UserMessage {
   // p2p: {"ge": 0, "le": 2.5}
   float height=3;
   SexType sex=4;
-  bool is_adult=5;
+  single.DemoEnum demo =6;
+  bool is_adult=7;
   // p2p: {"description": "user name"}
   // p2p: {"default": "", "min_length": 1, "max_length": "10", "example": "so1n"}
-  string user_name=6;
+  string user_name=8;
+  single.DemoMessage demo_message=9;
 }
 
 
@@ -41,6 +44,11 @@ message RepeatedMessage {
 
 // test nested message
 message NestedMessage{
+  enum IncludeEnum {
+    zero=0;
+    one=1;
+    two=2;
+  }
   message UserPayMessage {
     string bank_number=1; // p2p: {"type": "p2p@import|pydantic.types|PaymentCardNumber"}
     google.protobuf.Timestamp exp=2; // p2p: {"default_factory": "p2p@local|exp_time"}
@@ -49,7 +57,8 @@ message NestedMessage{
   map<string, RepeatedMessage> user_list_map=1;
   map<string, MapMessage> user_map=2;
   UserPayMessage user_pay=3;
+  IncludeEnum include_enum=4;
   // p2p: {"enable": false}
-  UserPayMessage not_enable_user_pay=4;
-  google.protobuf.Empty empty=5;
+  UserPayMessage not_enable_user_pay=5;
+  google.protobuf.Empty empty=6;
 }
