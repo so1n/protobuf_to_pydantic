@@ -185,23 +185,21 @@ class MapMessage(BaseModel):
     user_flag: typing.Dict[str, bool] = FieldInfo(default_factory=dict)
 
 
-class NestedMessageUserPayMessage(BaseModel):
-    bank_number: str = FieldInfo(default="")
-    exp: datetime = FieldInfo(default_factory=datetime.now)
-    uuid: str = FieldInfo(default="")
-
-
-class IncludeEnum(IntEnum):
-    zero = 0
-    one = 1
-    two = 2
-
-
 class NestedMessage(BaseModel):
+    class UserPayMessage(BaseModel):
+        bank_number: str = FieldInfo(default="")
+        exp: datetime = FieldInfo(default_factory=datetime.now)
+        uuid: str = FieldInfo(default="")
+
+    class IncludeEnum(IntEnum):
+        zero = 0
+        one = 1
+        two = 2
+
     user_list_map: typing.Dict[str, RepeatedMessage] = FieldInfo(default_factory=dict)
     user_map: typing.Dict[str, MapMessage] = FieldInfo(default_factory=dict)
-    user_pay: NestedMessageUserPayMessage = FieldInfo()
+    user_pay: UserPayMessage = FieldInfo()
     include_enum: IncludeEnum = FieldInfo(default=0)
-    not_enable_user_pay: NestedMessageUserPayMessage = FieldInfo()
+    not_enable_user_pay: UserPayMessage = FieldInfo()
     empty: None = FieldInfo()
 """ in self._model_output(demo_pb2.NestedMessage)

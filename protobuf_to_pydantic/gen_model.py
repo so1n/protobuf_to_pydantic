@@ -350,6 +350,24 @@ class M2P(object):
         if one_of_dict:
             validators["one_of_validator"] = root_validator(pre=True, allow_reuse=True)(check_one_of)
 
+        # nested support
+        nested_message_dict: Dict[str, Type[Union[BaseModel, IntEnum]]] = {}
+        for message in descriptor.nested_types:
+            if message.name.endswith("Entry"):
+                continue
+            nested_type: Any = self._parse_msg_to_pydantic_model(descriptor=message)
+            nested_message_dict[message.full_name] = nested_type
+            # Facilitate the analysis of `gen code`
+            setattr(nested_type, "_is_nested", True)
+
+        for enum_type in descriptor.enum_types:
+            class_dict: dict = {v.name: v.number for v in enum_type.values}
+            class_dict["__doc__"] = ""
+            nested_type = IntEnum(enum_type.name, class_dict)  # type: ignore
+            nested_message_dict[enum_type.full_name] = nested_type
+            # Facilitate the analysis of `gen code`
+            setattr(nested_type, "_is_nested", True)
+
         # parse field
         for column in descriptor.fields:
             type_: Any = type_dict.get(column.type, None)
@@ -382,43 +400,42 @@ class M2P(object):
                     default_factory = dict
                 else:
                     # support google.protobuf.Message
-                    if column.message_type.full_name.startswith(".".join(column.full_name.split(".")[:-1])):
-                        # Nesting Message processing
-
-                        # A dynamically generated class cannot be a subclass of a class,
-                        # so it can only be distinguished by adding the beginning of the subclass name
-                        _class_name: str = "".join(column.message_type.full_name.split(".")[-2:])
+                    if column.message_type.full_name in nested_message_dict:
+                        type_ = nested_message_dict[column.message_type.full_name]
                     else:
-                        _class_name = column.message_type.name
-                    is_same_pkg: bool = descriptor.file.name == column.message_type.file.name
-                    if not is_same_pkg:
-                        _class_name = replace_file_name_to_class_name(column.message_type.file.name) + _class_name
-                    # if column.message_type.name in descriptor.nested_types_by_name:
-                    #     print(column.message_type.name)
-                    type_ = self._parse_msg_to_pydantic_model(descriptor=column.message_type, class_name=_class_name)
-                    if not is_same_pkg:
-                        setattr(
-                            type_,
-                            "__doc__",
-                            (
-                                "Note: The current class does not belong to the package\n"
-                                f"{_class_name} protobuf path:{column.message_type.file.name}"
-                            ),
+                        is_same_pkg: bool = descriptor.file.name == column.message_type.file.name
+                        _class_name: str = column.message_type.name
+                        if not is_same_pkg:
+                            _class_name = replace_file_name_to_class_name(column.message_type.file.name) + _class_name
+                        type_ = self._parse_msg_to_pydantic_model(
+                            descriptor=column.message_type, class_name=_class_name
                         )
+                        if not is_same_pkg:
+                            setattr(
+                                type_,
+                                "__doc__",
+                                (
+                                    "Note: The current class does not belong to the package\n"
+                                    f"{_class_name} protobuf path:{column.message_type.file.name}"
+                                ),
+                            )
             elif column.type == FieldDescriptor.TYPE_ENUM:
                 # support google.protobuf.Enum
-                enum_class_dict = {v.name: v.number for v in column.enum_type.values}
-                _class_name = column.enum_type.name
-                if descriptor.file.name != column.enum_type.file.name:
-                    _class_name = replace_file_name_to_class_name(column.enum_type.file.name) + _class_name
-                    enum_class_dict["__doc__"] = (
-                        "Note: The current class does not belong to the package\n"
-                        f"{_class_name} protobuf path:{column.enum_type.file.name}"
-                    )
-                else:
-                    enum_class_dict["__doc__"] = ""
-                type_ = IntEnum(_class_name, enum_class_dict)  # type: ignore
                 default = 0
+                if column.enum_type.full_name in nested_message_dict:
+                    type_ = nested_message_dict[column.enum_type.full_name]
+                else:
+                    enum_class_dict = {v.name: v.number for v in column.enum_type.values}
+                    _class_name = column.enum_type.name
+                    if descriptor.file.name != column.enum_type.file.name:
+                        _class_name = replace_file_name_to_class_name(column.enum_type.file.name) + _class_name
+                        enum_class_dict["__doc__"] = (
+                            "Note: The current class does not belong to the package\n"
+                            f"{_class_name} protobuf path:{column.enum_type.file.name}"
+                        )
+                    else:
+                        enum_class_dict["__doc__"] = ""
+                    type_ = IntEnum(_class_name, enum_class_dict)  # type: ignore
             else:
                 if column.label == FieldDescriptor.LABEL_REQUIRED:
                     default = Undefined
@@ -495,6 +512,8 @@ class M2P(object):
         )
         setattr(pydantic_model, "_one_of_dict", one_of_dict)
         setattr(pydantic_model, "_base_model", self._pydantic_base)
+        # Facilitate the analysis of `gen code`
+        setattr(pydantic_model, "_nested_message_dict", nested_message_dict)
         self._creat_cache[descriptor] = pydantic_model
         return pydantic_model
 

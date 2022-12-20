@@ -17,7 +17,7 @@ class SexType(IntEnum):
 
 class ExampleProtoCommonSingleDemoEnum(IntEnum):
     """Note: The current class does not belong to the package
-    DemoEnum protobuf path:example_proto/common/single.proto"""
+    ExampleProtoCommonSingleDemoEnum protobuf path:example_proto/common/single.proto"""
 
     zero = 0
     one = 1
@@ -26,7 +26,7 @@ class ExampleProtoCommonSingleDemoEnum(IntEnum):
 
 class ExampleProtoCommonSingleDemoMessage(BaseModel):
     """Note: The current class does not belong to the package
-    DemoMessage protobuf path:example_proto/common/single.proto"""
+    ExampleProtoCommonSingleDemoMessage protobuf path:example_proto/common/single.proto"""
 
     earth: str = FieldInfo(default="")
     mercury: str = FieldInfo(default="")
@@ -55,22 +55,20 @@ class RepeatedMessage(BaseModel):
     user_list: typing.List[UserMessage] = FieldInfo(default_factory=list)
 
 
-class NestedMessageUserPayMessage(BaseModel):
-    bank_number: str = FieldInfo(default="")
-    exp: datetime = FieldInfo(default_factory=datetime.now)
-    uuid: str = FieldInfo(default="")
-
-
-class IncludeEnum(IntEnum):
-    zero = 0
-    one = 1
-    two = 2
-
-
 class NestedMessage(BaseModel):
+    class UserPayMessage(BaseModel):
+        bank_number: str = FieldInfo(default="")
+        exp: datetime = FieldInfo(default_factory=datetime.now)
+        uuid: str = FieldInfo(default="")
+
+    class IncludeEnum(IntEnum):
+        zero = 0
+        one = 1
+        two = 2
+
     user_list_map: typing.Dict[str, RepeatedMessage] = FieldInfo(default_factory=dict)
     user_map: typing.Dict[str, MapMessage] = FieldInfo(default_factory=dict)
-    user_pay: NestedMessageUserPayMessage = FieldInfo()
-    include_enum: IncludeEnum = FieldInfo(default=0)
-    not_enable_user_pay: NestedMessageUserPayMessage = FieldInfo()
+    user_pay: UserPayMessage = FieldInfo()
+    include_enum: IncludeEnum = FieldInfo()
+    not_enable_user_pay: UserPayMessage = FieldInfo()
     empty: None = FieldInfo()
