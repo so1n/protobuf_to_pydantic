@@ -10,6 +10,8 @@ from google.protobuf.message import Message  # type: ignore
 from pydantic import BaseModel
 from pydantic.fields import FieldInfo
 
+from ..common.single_p2p import DemoEnum, DemoMessage
+
 
 class SexType(IntEnum):
     man = 0
@@ -21,8 +23,8 @@ class UserMessage(BaseModel):
     uid: str = FieldInfo(default="")
     age: int = FieldInfo(default=0)
     height: float = FieldInfo(default=0.0)
-    sex: "SexType" = FieldInfo(default=0)
-    demo: "DemoEnum" = FieldInfo(default=0)
+    sex: SexType = FieldInfo(default=0)
+    demo: DemoEnum = FieldInfo(default=0)
     is_adult: bool = FieldInfo(default=False)
     user_name: str = FieldInfo(default="")
     demo_message: DemoMessage = FieldInfo()
@@ -48,9 +50,14 @@ class NestedMessage(BaseModel):
         exp: datetime = FieldInfo(default_factory=datetime.now)
         uuid: str = FieldInfo(default="")
 
+    class IncludeEnum(IntEnum):
+        zero = 0
+        one = 1
+        two = 2
+
     user_list_map: typing.Dict[str, RepeatedMessage] = FieldInfo(default_factory=dict)
     user_map: typing.Dict[str, MapMessage] = FieldInfo(default_factory=dict)
     user_pay: UserPayMessage = FieldInfo()
-    include_enum: "IncludeEnum" = FieldInfo(default=0)
+    include_enum: IncludeEnum = FieldInfo(default=0)
     not_enable_user_pay: UserPayMessage = FieldInfo()
     empty: None = FieldInfo()

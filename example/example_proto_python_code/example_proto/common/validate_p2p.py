@@ -253,7 +253,7 @@ class StringRules(BaseModel):
     uri_ref: bool = FieldInfo(default=False)
     address: bool = FieldInfo(default=False)
     uuid: bool = FieldInfo(default=False)
-    well_known_regex: "KnownRegex" = FieldInfo(default=0)
+    well_known_regex: KnownRegex = FieldInfo(default=0)
     strict: bool = FieldInfo(default=False)
     ignore_empty: bool = FieldInfo(default=False)
 

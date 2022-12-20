@@ -15,22 +15,23 @@ from example.text_comment_example.gen_code import exp_time
 
 
 class SexType(IntEnum):
-    """An enumeration."""
-
     man = 0
     women = 1
 
 
-class DemoEnum(IntEnum):
+class ExampleProtoCommonSingleDemoEnum(IntEnum):
     """Note: The current class does not belong to the package
-    DemoEnum protobuf path:example_proto/common/single.proto"""
+    ExampleProtoCommonSingleDemoEnum protobuf path:example_proto/common/single.proto"""
 
     zero = 0
     one = 1
     two = 3
 
 
-class DemoMessage(BaseModel):
+class ExampleProtoCommonSingleDemoMessage(BaseModel):
+    """Note: The current class does not belong to the package
+    ExampleProtoCommonSingleDemoMessage protobuf path:example_proto/common/single.proto"""
+
     earth: str = FieldInfo(default="")
     mercury: str = FieldInfo(default="")
     mars: str = FieldInfo(default="")
@@ -41,10 +42,10 @@ class UserMessage(BaseModel):
     age: int = FieldInfo(default=0, title="use age", ge=0, example=18)
     height: float = FieldInfo(default=0.0, ge=0, le=2)
     sex: SexType = FieldInfo(default=0)
-    demo: DemoEnum = FieldInfo(default=0)
+    demo: ExampleProtoCommonSingleDemoEnum = FieldInfo(default=0)
     is_adult: bool = FieldInfo(default=False)
     user_name: str = FieldInfo(default="", description="user name", min_length=1, max_length=10, example="so1n")
-    demo_message: DemoMessage = FieldInfo()
+    demo_message: ExampleProtoCommonSingleDemoMessage = FieldInfo()
 
 
 class MapMessage(BaseModel):
@@ -58,23 +59,19 @@ class RepeatedMessage(BaseModel):
     user_list: typing.List[UserMessage] = FieldInfo(default_factory=list)
 
 
-class NestedMessageUserPayMessage(BaseModel):
-    bank_number: PaymentCardNumber = FieldInfo(default="")
-    exp: datetime = FieldInfo(default_factory=exp_time)
-    uuid: str = FieldInfo(default_factory=uuid4)
-
-
-class IncludeEnum(IntEnum):
-    """An enumeration."""
-
-    zero = 0
-    one = 1
-    two = 2
-
-
 class NestedMessage(BaseModel):
+    class UserPayMessage(BaseModel):
+        bank_number: PaymentCardNumber = FieldInfo(default="")
+        exp: datetime = FieldInfo(default_factory=exp_time)
+        uuid: str = FieldInfo(default_factory=uuid4)
+
+    class IncludeEnum(IntEnum):
+        zero = 0
+        one = 1
+        two = 2
+
     user_list_map: typing.Dict[str, RepeatedMessage] = FieldInfo(default_factory=dict)
     user_map: typing.Dict[str, MapMessage] = FieldInfo(default_factory=dict)
-    user_pay: NestedMessageUserPayMessage = FieldInfo()
+    user_pay: UserPayMessage = FieldInfo()
     include_enum: IncludeEnum = FieldInfo(default=0)
     empty: None = FieldInfo()

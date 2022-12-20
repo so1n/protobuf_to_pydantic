@@ -69,6 +69,6 @@ class NestedMessage(BaseModel):
     user_list_map: typing.Dict[str, RepeatedMessage] = FieldInfo(default_factory=dict)
     user_map: typing.Dict[str, MapMessage] = FieldInfo(default_factory=dict)
     user_pay: UserPayMessage = FieldInfo()
-    include_enum: IncludeEnum = FieldInfo()
+    include_enum: IncludeEnum = FieldInfo(default=0)
     not_enable_user_pay: UserPayMessage = FieldInfo()
     empty: None = FieldInfo()

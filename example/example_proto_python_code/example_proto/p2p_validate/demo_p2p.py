@@ -419,16 +419,16 @@ class EnumTest(BaseModel):
     in_test_in_validator = validator("in_test", allow_reuse=True)(in_validator)
     not_in_test_not_in_validator = validator("not_in_test", allow_reuse=True)(not_in_validator)
 
-    const_test: "State" = FieldInfo(default=2, const=True)
-    in_test: "State" = FieldInfo(default=0, in_=[0, 2])
-    not_in_test: "State" = FieldInfo(default=0, not_in=[0, 2])
-    default_test: "State" = FieldInfo(default=1)
-    miss_default_test: "State" = FieldInfo()
-    alias_test: "State" = FieldInfo(default=0, alias="alias")
-    desc_test: "State" = FieldInfo(default=0, description="test desc")
-    example_test: "State" = FieldInfo(default=0, example=2)
-    field_test: "State" = CustomerField(default=0)
-    title_test: "State" = FieldInfo(default=0, title="title_test")
+    const_test: State = FieldInfo(default=2, const=True)
+    in_test: State = FieldInfo(default=0, in_=[0, 2])
+    not_in_test: State = FieldInfo(default=0, not_in=[0, 2])
+    default_test: State = FieldInfo(default=1)
+    miss_default_test: State = FieldInfo()
+    alias_test: State = FieldInfo(default=0, alias="alias")
+    desc_test: State = FieldInfo(default=0, description="test desc")
+    example_test: State = FieldInfo(default=0, example=2)
+    field_test: State = CustomerField(default=0)
+    title_test: State = FieldInfo(default=0, title="title_test")
 
 
 class MapTest(BaseModel):

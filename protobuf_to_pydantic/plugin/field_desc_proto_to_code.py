@@ -1,6 +1,7 @@
 import inspect
 import logging
 from datetime import datetime, timedelta
+from pathlib import Path
 from typing import Any, Dict, Iterable, Optional, Set, Tuple
 
 from mypy_protobuf.main import PYTHON_RESERVED, Descriptors, SourceCodeLocation
@@ -43,7 +44,29 @@ class FileDescriptorProtoToCode(BaseP2C):
         self._desc_template: DescTemplate = config.desc_template
         self._parse_field_descriptor()
 
-    def _enum(self, enums: Iterable[EnumDescriptorProto], scl_prefix: SourceCodeLocation) -> str:
+    def _add_other_module_pkg(self, other_fd: FileDescriptorProto, type_str: str) -> None:
+        if other_fd.name != self._fd.name:
+            # Generate the corresponding import statement
+            # e.g:
+            #   fd name:example_proto/demo/demo.proto
+            #   other_fd name: example_proto/common/single.proto
+            #   output: from ..common.single_p2p import DemoMessage
+            fd_path_list: Tuple[str, ...] = Path(self._fd.name).parts
+            message_path_list: Tuple[str, ...] = Path(other_fd.name).parts
+            index: int = -1
+            for _index in range(min(len(fd_path_list), len(message_path_list))):
+                if message_path_list[_index] == fd_path_list[_index]:
+                    index = _index
+
+            module_name: str = (
+                ".".join(message_path_list[index + 1 : -1]) + "." + message_path_list[-1].replace(".proto", "") + "_p2p"
+            )
+            logger.info((self._fd.name, other_fd.name, index))
+            if index != "-1":
+                module_name = "." * (len(message_path_list) - (index + 1)) + module_name
+            self._add_import_code(module_name, type_str)
+
+    def _enum(self, enums: Iterable[EnumDescriptorProto], scl_prefix: SourceCodeLocation, indent: int = 0) -> str:
         """
         e.g:
             enums:
@@ -68,9 +91,9 @@ class FileDescriptorProtoToCode(BaseP2C):
         content: str = ""
         for i, enum in enumerate(enums):
             class_name = enum.name if enum.name not in PYTHON_RESERVED else "_r_" + enum.name
-            content += f"class {class_name}(IntEnum):\n"
+            content += " " * indent + f"class {class_name}(IntEnum):\n"
             for enum_item in enum.value:
-                content += " " * self.code_indent + f"{enum_item.name} = {enum_item.number}\n"
+                content += " " * (self.code_indent + indent) + f"{enum_item.name} = {enum_item.number}\n"
             content += "\n\n"
         return content
 
@@ -125,12 +148,18 @@ class FileDescriptorProtoToCode(BaseP2C):
                 type_str = protobuf_type_model.py_type_str
                 rule_type_str = protobuf_type_model.rule_type_str
                 nested_message_name = type_str
+
+                message_fd: FileDescriptorProto = self._descriptors.message_to_fd[field.type_name]
+                self._add_other_module_pkg(message_fd, type_str)
+
         elif field.type == 14:
             # enum handle
             # TODO nested enum support
-            type_str = self._get_value_code(field.type_name.split(".")[-1])
+            type_str = field.type_name.split(".")[-1]
             field_info_dict["default"] = 0
             rule_type_str = "enum"
+            message_fd = self._descriptors.message_to_fd[field.type_name]
+            self._add_other_module_pkg(message_fd, type_str)
         elif field.type not in type_dict:
             logger.error(f"Not found {field.type} in type_dict")
             return None
@@ -284,6 +313,8 @@ class FileDescriptorProtoToCode(BaseP2C):
 
         if desc.nested_type:
             class_head_content += self._message_nested_type_handle(desc, scl_prefix, indent, nested_message_config_dict)
+        if desc.enum_type:
+            class_head_content += self._enum(desc.enum_type, scl_prefix, indent + self.code_indent)
 
         if desc.oneof_decl:
             one_of_dict: dict = self._gen_one_of_dict(desc)
