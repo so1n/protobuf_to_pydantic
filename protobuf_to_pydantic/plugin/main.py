@@ -52,6 +52,8 @@ def process_file(proto_file: FileDescriptorProto, response: CodeGeneratorRespons
 
 def generate_pydantic_model(descriptors: Descriptors, response: CodeGeneratorResponse, config: Config) -> None:
     for name, fd in descriptors.to_generate.items():
+        if fd.package in config.ignore_pkg_list:
+            continue
         file = response.file.add()
         file.name = fd.name[:-6].replace("-", "_").replace(".", "/") + "_p2p.py"
         file.content = FileDescriptorProtoToCode(fd=fd, descriptors=descriptors, config=config).content

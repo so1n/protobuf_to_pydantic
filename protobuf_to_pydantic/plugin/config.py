@@ -1,5 +1,5 @@
 from collections import deque
-from typing import Any, Deque, Optional, Set, Type
+from typing import Any, Deque, List, Optional, Set, Type
 
 from protobuf_to_pydantic.gen_model import DescTemplate
 
@@ -15,6 +15,7 @@ class Config(object):
         "customer_deque",
         "module_path",
         "code_indent",
+        "ignore_pkg_list",
     )
 
     def __init__(
@@ -26,6 +27,7 @@ class Config(object):
         module_path: str = "",
         code_indent: Optional[int] = None,
         desc_template: Optional[Type[DescTemplate]] = None,
+        ignore_pkg_list: Optional[List[str]] = None,
     ):
         self.local_dict: dict = local_dict or {}
         self.desc_template: DescTemplate = (desc_template or DescTemplate)(self.local_dict, comment_prefix)
@@ -34,6 +36,7 @@ class Config(object):
         self.customer_deque: Deque = customer_deque or deque()
         self.module_path: str = module_path
         self.code_indent: int = code_indent or 4
+        self.ignore_pkg_list: List[str] = ignore_pkg_list or []
 
 
 def get_config_by_module(module: Any) -> Config:

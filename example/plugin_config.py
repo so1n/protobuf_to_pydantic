@@ -1,4 +1,4 @@
-from typing import Type
+from typing import List, Type
 
 from google.protobuf.any_pb2 import Any  # type: ignore
 from pydantic import confloat, conint
@@ -23,3 +23,4 @@ local_dict = {
 }
 comment_prefix = "p2p"
 desc_template: Type[DescTemplate] = DescTemplate
+ignore_pkg_list: List[str] = ["validate", "p2p_validate"]
