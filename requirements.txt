@@ -1,6 +1,5 @@
 grpcio-tools==1.40.0 ; python_version >= "3.7" and python_version < "4.0"
 grpcio==1.51.1 ; python_version >= "3.7" and python_version < "4.0"
-lark==1.1.5 ; python_version >= "3.7" and python_version < "4.0"
 protobuf==3.20.3 ; python_version >= "3.7" and python_version < "4.0"
 pydantic==1.10.2 ; python_version >= "3.7" and python_version < "4.0"
 setuptools==65.6.3 ; python_version >= "3.7" and python_version < "4.0"
