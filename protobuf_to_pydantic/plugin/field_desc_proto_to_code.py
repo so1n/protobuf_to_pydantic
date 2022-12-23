@@ -2,9 +2,10 @@ import inspect
 import logging
 from datetime import datetime, timedelta
 from pathlib import Path
-from typing import Any, Dict, Iterable, Optional, Set, Tuple
+from typing import TYPE_CHECKING, Any, Dict, Iterable, Optional, Set, Tuple
 
 from mypy_protobuf.main import PYTHON_RESERVED, Descriptors, SourceCodeLocation
+from pydantic import BaseModel
 from pydantic.fields import FieldInfo, Undefined
 
 from protobuf_to_pydantic import customer_validator
@@ -25,14 +26,16 @@ from protobuf_to_pydantic.grpc_types import (
     FieldDescriptorProto,
     FileDescriptorProto,
 )
-from protobuf_to_pydantic.plugin.config import Config
 from protobuf_to_pydantic.plugin.types import ProtobufTypeModel
+
+if TYPE_CHECKING:
+    from protobuf_to_pydantic.plugin.config import Config
 
 logger: logging.Logger = logging.getLogger(__name__)
 
 
 class FileDescriptorProtoToCode(BaseP2C):
-    def __init__(self, fd: FileDescriptorProto, descriptors: Descriptors, config: Config):
+    def __init__(self, fd: FileDescriptorProto, descriptors: Descriptors, config: "Config"):
         super().__init__(
             customer_import_set=config.customer_import_set,
             customer_deque=config.customer_deque,
@@ -42,6 +45,11 @@ class FileDescriptorProtoToCode(BaseP2C):
         self._fd: FileDescriptorProto = fd
         self._descriptors: Descriptors = descriptors
         self._desc_template: DescTemplate = config.desc_template
+
+        if config.base_model_class is BaseModel:
+            self._import_set.add("from pydantic import BaseModel")
+        else:
+            self._add_import_code(config.base_model_class.__module__, config.base_model_class.__name__)
         self._parse_field_descriptor()
 
     def _add_other_module_pkg(self, other_fd: FileDescriptorProto, type_str: str) -> None:
@@ -124,7 +132,6 @@ class FileDescriptorProtoToCode(BaseP2C):
         field_info_dict: dict = {}
         rule_type_str: Optional[str] = None
         nested_message_name: Optional[str] = None
-        # TODO  Cross-file references are not currently supported
         if field.type == 11:
             # message handle
             message = self._descriptors.messages[field.type_name]
@@ -154,7 +161,6 @@ class FileDescriptorProtoToCode(BaseP2C):
 
         elif field.type == 14:
             # enum handle
-            # TODO nested enum support
             type_str = field.type_name.split(".")[-1]
             field_info_dict["default"] = 0
             rule_type_str = "enum"
@@ -289,7 +295,6 @@ class FileDescriptorProtoToCode(BaseP2C):
         self, desc: DescriptorProto, scl_prefix: SourceCodeLocation, indent: int = 0, skip_validate_rule: bool = False
     ) -> str:
         self._add_import_code("google.protobuf.message", "Message")
-        self._add_import_code("pydantic", "BaseModel")
         content: str = ""
         class_name = desc.name if desc.name not in PYTHON_RESERVED else "_r_" + desc.name
         class_content = " " * indent + f"class {class_name}(BaseModel):\n"
@@ -377,7 +382,6 @@ class FileDescriptorProtoToCode(BaseP2C):
                 py_type_str=py_type_str,
             )
         else:
-            # TODO Cross-file references are not currently supported
             return ProtobufTypeModel(
                 # When relying on other Messages, it will only be used in the type of pydantic.Model,
                 # and the type_ field will not be used at this time

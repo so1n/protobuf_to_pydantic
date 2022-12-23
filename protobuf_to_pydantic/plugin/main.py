@@ -64,7 +64,6 @@ def parse_param(request: CodeGeneratorRequest) -> Config:
 
 def main() -> None:
     with code_generation() as (request, response):
-        # TODO config handle
         generate_pydantic_model(Descriptors(request), response, parse_param(request))
 
 
