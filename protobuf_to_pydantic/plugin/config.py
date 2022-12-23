@@ -2,6 +2,7 @@ from collections import deque
 from typing import Any, Deque, List, Optional, Set, Type
 
 from protobuf_to_pydantic.gen_model import DescTemplate
+from protobuf_to_pydantic.plugin.field_desc_proto_to_code import FileDescriptorProtoToCode
 
 
 class Config(object):
@@ -16,6 +17,7 @@ class Config(object):
         "module_path",
         "code_indent",
         "ignore_pkg_list",
+        "file_descriptor_proto_to_code",
     )
 
     def __init__(
@@ -28,6 +30,7 @@ class Config(object):
         code_indent: Optional[int] = None,
         desc_template: Optional[Type[DescTemplate]] = None,
         ignore_pkg_list: Optional[List[str]] = None,
+        file_descriptor_proto_to_code: Optional[Type[FileDescriptorProtoToCode]] = None,
     ):
         self.local_dict: dict = local_dict or {}
         self.desc_template: DescTemplate = (desc_template or DescTemplate)(self.local_dict, comment_prefix)
@@ -37,6 +40,9 @@ class Config(object):
         self.module_path: str = module_path
         self.code_indent: int = code_indent or 4
         self.ignore_pkg_list: List[str] = ignore_pkg_list or []
+        self.file_descriptor_proto_to_code: Type[FileDescriptorProtoToCode] = (
+            file_descriptor_proto_to_code or FileDescriptorProtoToCode
+        )
 
 
 def get_config_by_module(module: Any) -> Config:
