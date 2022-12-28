@@ -11,6 +11,9 @@ packages = [
     { include = "protobuf_to_pydantic" },
 ]
 
+[tool.poetry.scripts]
+protoc-gen-protobuf-to-pydantic = "protobuf_to_pydantic.plugin:main"
+
 
 [tool.poetry.dependencies]
 python = "^3.7"
