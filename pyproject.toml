@@ -9,7 +9,6 @@ repository = "https://github.com/so1n/protobuf_to_pydantic"
 homepage = "https://github.com/so1n/protobuf_to_pydantic"
 packages = [
     { include = "protobuf_to_pydantic" },
-    { include = "p2p_validate" },
 ]
 
 
