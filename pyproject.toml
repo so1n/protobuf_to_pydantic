@@ -12,7 +12,7 @@ packages = [
 ]
 
 [tool.poetry.scripts]
-protoc-gen-protobuf-to-pydantic = "protobuf_to_pydantic.plugin:main"
+protoc-gen-protobuf-to-pydantic = "protobuf_to_pydantic.plugin.main:main"
 
 
 [tool.poetry.dependencies]
