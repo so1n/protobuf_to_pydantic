@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "protobuf_to_pydantic"
-version = "0.1.5.1"
+version = "0.0.0"
 description = "Convert Protobuf-generated Python objects to Pydantic.BaseModel objects with parameter checksum"
 authors = ["So1n <so1n897046026@gmail.com>"]
 license = "Apache Software License"
@@ -108,6 +108,12 @@ exclude_lines = [
 ]
 
 
+[tool.poetry-dynamic-versioning]
+enable = true
+metadata=false
+vcs = "git"
+format = "v{base}"
+
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning"]
+build-backend = "poetry_dynamic_versioning.backend"

@@ -1,4 +1,7 @@
-## 0.1[now]
+## 0.1.6[now]
+- Feature, support proto plugin feature
+
+## 0.1
 - Feature, add get desc from p2p
 - Feature, add DescTemplate class
 - Refactor, change pydantic validate param type (datetime -> float)
