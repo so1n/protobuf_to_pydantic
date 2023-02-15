@@ -10,7 +10,7 @@ repos:
       - id: isort
         exclude: "^example/example_proto_python_code/example_proto|^protobuf_to_pydantic/protos"
   - repo: https://github.com/psf/black
-    rev: 21.7b0
+    rev: 23.1.0
     hooks:
       - id: black
         exclude: "^example/example_proto_python_code/example_proto|^tests|^protobuf_to_pydantic/protos"

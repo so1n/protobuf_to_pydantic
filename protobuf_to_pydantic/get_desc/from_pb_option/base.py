@@ -91,7 +91,7 @@ def get_con_type_func_from_type_name(type_name: str) -> Optional[Callable]:
 
 
 def option_descriptor_to_desc_dict(
-    option_descriptor: Descriptor,
+    option_descriptor: Union[Descriptor, FieldDescriptor],
     field: Union[FieldDescriptor, FieldDescriptorProto],
     type_name: str,
     full_name: str,
@@ -100,7 +100,15 @@ def option_descriptor_to_desc_dict(
     """Parse the data of option and store it in dict.
     Since array and map are supported, the complexity is relatively high
     """
-    for column in option_descriptor.__dir__():
+    if hasattr(option_descriptor, "ListFields"):
+        column_list = [column[0].name for column in option_descriptor.ListFields()]  # type: ignore
+    else:
+        column_list = [
+            column
+            for column in option_descriptor.__dir__()
+            if _has_raw_message_field(column, option_descriptor)  # type: ignore
+        ]
+    for column in column_list:
         if not _has_raw_message_field(column, option_descriptor):  # type: ignore
             # Removing internal methods
             continue
