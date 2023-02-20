@@ -72,6 +72,7 @@ _message_default_factory_dict_by_type_name: Dict[str, Any] = {
 
 
 def check_dict_one_of(desc_dict: dict, key_list: List[str]) -> bool:
+    """Check if the key also appears in the dict"""
     if (
         len(
             [
@@ -87,6 +88,7 @@ def check_dict_one_of(desc_dict: dict, key_list: List[str]) -> bool:
 
 
 def replace_file_name_to_class_name(filename: str) -> str:
+    """Convert the protobuf file name to the class name(PEP-8)"""
     # example_proto/common/single.proto -> Example_protoCommonSingle
     prefix: str = "".join([str(i).title() for i in Path(filename.split(".")[0]).joinpath().parts])
     # Example_protoCommonSingle -> ExampleProtoCommonSingle
@@ -322,17 +324,13 @@ class M2P(object):
                 one_of_dict[one_of.full_name]["fields"].add(_field.name)
         return one_of_dict
 
-    def _get_pydantic_base(self, pydantic_model_config_dict: Dict[str, Any]) -> Type[BaseModel]:
-        if pydantic_model_config_dict:
+    def _get_pydantic_base(self, config_dict: Dict[str, Any]) -> Type[BaseModel]:
+        if config_dict:
             # Changing the configuration of Config by inheritance
             pydantic_base: Type[BaseModel] = type(  # type: ignore
                 self._pydantic_base.__name__,
                 (self._pydantic_base,),
-                {
-                    "Config": type(
-                        self._pydantic_base.Config.__name__, (self._pydantic_base.Config,), pydantic_model_config_dict
-                    )
-                },
+                {"Config": type(self._pydantic_base.Config.__name__, (self._pydantic_base.Config,), config_dict)},
             )
         else:
             pydantic_base = self._pydantic_base
@@ -379,24 +377,23 @@ class M2P(object):
                 if column.message_type.name in self._message_type_dict_by_type_name:
                     type_ = self._message_type_dict_by_type_name[column.message_type.name]
                     if column.message_type.name in self._message_default_factory_dict_by_type_name:
+                        # Default factory has a higher priority
                         default_factory = self._message_default_factory_dict_by_type_name[column.message_type.name]
                 elif column.message_type.name.endswith("Entry"):
                     # support google.protobuf.MapEntry
-                    key, value = column.message_type.fields
+                    # key, value = column.message_type.fields
 
-                    if not key.message_type:
-                        key_type: Any = type_dict[key.type]
-                    elif key.message_type.name in self._message_type_dict_by_type_name:
-                        key_type = self._message_type_dict_by_type_name[key.message_type.name]
-                    else:
-                        key_type = self._parse_msg_to_pydantic_model(descriptor=key.message_type)
-                    if not value.message_type:
-                        value_type: Any = type_dict[value.type]
-                    elif value.message_type.name in self._message_type_dict_by_type_name:
-                        value_type = self._message_type_dict_by_type_name[value.message_type.name]
-                    else:
-                        value_type = self._parse_msg_to_pydantic_model(descriptor=value.message_type)
-                    type_ = Dict[key_type, value_type]
+                    dict_type_param_list = []
+                    for k_v_field in column.message_type.fields:
+                        if not k_v_field.message_type:
+                            k_v_type: Any = type_dict[k_v_field.type]
+                        elif k_v_field.message_type.name in self._message_type_dict_by_type_name:
+                            k_v_type = self._message_type_dict_by_type_name[k_v_field.message_type.name]
+                        else:
+                            k_v_type = self._parse_msg_to_pydantic_model(descriptor=k_v_field.message_type)
+                        dict_type_param_list.append(k_v_type)
+
+                    type_ = Dict[tuple(dict_type_param_list)]  # type: ignore
                     default_factory = dict
                 else:
                     # support google.protobuf.Message
@@ -411,14 +408,11 @@ class M2P(object):
                             descriptor=column.message_type, class_name=_class_name
                         )
                         if not is_same_pkg:
-                            setattr(
-                                type_,
-                                "__doc__",
-                                (
-                                    "Note: The current class does not belong to the package\n"
-                                    f"{_class_name} protobuf path:{column.message_type.file.name}"
-                                ),
+                            _class_doc: str = (
+                                "Note: The current class does not belong to the package\n"
+                                f"{_class_name} protobuf path:{column.message_type.file.name}"
                             )
+                            setattr(type_, "__doc__", _class_doc)
             elif column.type == FieldDescriptor.TYPE_ENUM:
                 # support google.protobuf.Enum
                 default = 0
@@ -427,14 +421,14 @@ class M2P(object):
                 else:
                     enum_class_dict = {v.name: v.number for v in column.enum_type.values}
                     _class_name = column.enum_type.name
+                    _class_doc = ""
                     if descriptor.file.name != column.enum_type.file.name:
                         _class_name = replace_file_name_to_class_name(column.enum_type.file.name) + _class_name
-                        enum_class_dict["__doc__"] = (
+                        _class_doc = (
                             "Note: The current class does not belong to the package\n"
                             f"{_class_name} protobuf path:{column.enum_type.file.name}"
                         )
-                    else:
-                        enum_class_dict["__doc__"] = ""
+                    enum_class_dict["__doc__"] = _class_doc
                     type_ = IntEnum(_class_name, enum_class_dict)  # type: ignore
             else:
                 if column.label == FieldDescriptor.LABEL_REQUIRED:
@@ -445,6 +439,7 @@ class M2P(object):
             if column.label == FieldDescriptor.LABEL_REPEATED:
                 # support google.protobuf.array
                 if not (column.message_type and column.message_type.name.endswith("Entry")):
+                    # I didn't know that Protobuf's Design of Maps and Lists would be so weird
                     type_ = List[type_]  # type: ignore
                     default_factory = list
                     # TODO support lambda
@@ -484,17 +479,15 @@ class M2P(object):
                 if field_type:
                     type_ = field_type
                 elif map_type_dict and type_._name == "Dict":
-                    raw_keys_type, raw_values_type = type_.__args__
-                    if "keys" in map_type_dict:
-                        new_keys_type = map_type_dict["keys"]
-                        if issubclass(new_keys_type, raw_keys_type) or raw_keys_type is datetime.datetime:
-                            raw_keys_type = new_keys_type
-                    if "values" in map_type_dict:
-                        new_values_type = map_type_dict["values"]
-                        if issubclass(new_values_type, raw_values_type) or raw_values_type is datetime.datetime:
-                            raw_values_type = new_values_type
-
-                    type_ = Dict[raw_keys_type, raw_values_type]  # type: ignore
+                    new_args_list: List = list(type_.__args__)
+                    for index, k_v_column in enumerate(["keys", "values"]):
+                        raw_k_v_type = new_args_list[index]
+                        if k_v_column not in map_type_dict:
+                            continue
+                        new_k_v_type = map_type_dict[k_v_column]
+                        if issubclass(new_k_v_type, raw_k_v_type) or raw_k_v_type is datetime.datetime:
+                            new_args_list[index] = new_k_v_type
+                    type_ = Dict[tuple(new_args_list)]  # type: ignore
             else:
                 field_param_dict = {"default": default, "default_factory": default_factory}
             use_field = field(**field_param_dict)  # type: ignore
@@ -555,12 +548,21 @@ def msg_to_pydantic_model(
     :param msg: grpc Message or descriptor
     :param default_field: gen pydantic_model default Field, apply only to the outermost pydantic model
     :param comment_prefix: Customize the prefixes that need to be parsed for comments
-    :param parse_msg_desc_method: Define the type of comment to be parsed, if the value is a protobuf file path,
-        it will be parsed by protobuf file; if it is a module of message object, it will be parsed by pyi file
+    :param parse_msg_desc_method:
+        Define a method for extracting the message extension property
+        1.If the value is 'ignore', it means that no extraction is made
+        2.If the value is the Protobuf file path, the Protobuf file is parsed and the information is extracted from
+         the comments in the file
+         Note: The extracted content is a text comment in the Protobuf file
+        3.If the value is a Message object's module, it is extracted from the corresponding pyi file
+         (pyi file is generated by mypy-protobuf)
+         Note: The extracted content is a text comment in the Protobuf file
+        4.If the value is PGV, the corresponding PGV information is extracted from the Message object
+        5.If the value is None (default), the P2P information is extracted from the Message)
     :param local_dict: The variables corresponding to the p2p@local template
     :param pydantic_base: custom pydantic.BaseModel
     :param pydantic_module: custom create model's module name
-    :param desc_template: Template object, which can extend and modify template adaptation rules through inheritance
+    :param desc_template: DescTemplate object, which can extend and modify template adaptation rules through inheritance
     :param message_type_dict_by_type_name: Define the Python type mapping corresponding to each Protobuf Type
     :param message_default_factory_dict_by_type_name: Define the default_factory corresponding to each Protobuf Type
     """

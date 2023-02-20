@@ -52,7 +52,6 @@ class BaseP2C(object):
         self._module_path: str = module_path
 
     def format_content(self, content_str: str) -> str:
-
         try:
             import isort  # type: ignore
         except ImportError:
@@ -82,7 +81,6 @@ class BaseP2C(object):
 
     @property
     def content(self) -> str:
-
         content_str: str = (
             "# This is an automatically generated file, please do not change\n"
             "# gen by protobuf_to_pydantic(https://github.com/so1n/protobuf_to_pydantic)\n"
@@ -123,6 +121,7 @@ class BaseP2C(object):
         type_ = replace_protobuf_type_to_python_type(type_)
         if isinstance(type_, dict):
             sort_list: list = [(k, v) for k, v in type_.items()]
+            # Ensure that the order of code generated multiple times is consistent
             sort_list.sort()
             type_name: str = ", ".join(
                 sorted([f"{self._get_value_code(k)}: {self._get_value_code(v)}" for k, v in sort_list])
@@ -161,7 +160,6 @@ class BaseP2C(object):
         else:
             if auto_import_type_code:
                 self._parse_type_to_import_code(type_)
-            type_module = inspect.getmodule(type_)
 
             qualname: str = getattr(type_, "__qualname__", "")
             if (
@@ -175,6 +173,7 @@ class BaseP2C(object):
                 type_name = qualname
                 self._parse_type_to_import_code(datetime)
             else:
+                type_module = inspect.getmodule(type_)
                 if type_module and type_module.__name__ == "builtins" or inspect.isfunction(type_module):
                     type_name = type_.__name__
                 else:
@@ -340,8 +339,8 @@ class BaseP2C(object):
         """Parse the type and generate the corresponding import"""
         type_module: Optional[ModuleType] = inspect.getmodule(type_)
         if not type_module:
-            # The value cannot be found in the corresponding module,
-            # need to determine if the built-in type needs to be resolved if possible
+            # The corresponding module could not be found,
+            # it may be a nested type, or the module needs to be found by some other means
             if isinstance(type_, (list, RepeatedScalarContainer, RepeatedCompositeContainer)):
                 for i in type_:
                     self._parse_type_to_import_code(i)
@@ -354,6 +353,7 @@ class BaseP2C(object):
         if not type_module:
             return
         elif getattr(type_module, "__name__", "builtins") == "builtins":
+            # The built-in method does not use a guide package
             return
         elif isinstance(type_, _GenericAlias):
             # type hint handle
@@ -417,6 +417,7 @@ class BaseP2C(object):
         return f"{field_info.__class__.__name__}({', '.join(field_list)})"
 
     def _model_validator_handle(self, model: Type[BaseModel], indent: int = 0) -> str:
+        # TODO Here currently only consider the support for pgv&p2p, the follow-up to fill in
         validator_str: str = ""
 
         for root_validator in model.__pre_root_validators__:
@@ -429,7 +430,6 @@ class BaseP2C(object):
                 f"_{root_validator.__name__} = root_validator(pre=True, allow_reuse=True)({root_validator.__name__})\n"
             )
 
-        # TODO Here currently only consider the support for pgv&p2p, the follow-up to fill in
         for key, value in model.__fields__.items():
             if not value.class_validators:
                 continue
@@ -478,6 +478,15 @@ def pydantic_model_to_py_code(
     code_indent: Optional[int] = None,
     p2c_class: Type[P2C] = P2C,
 ) -> str:
+    """
+    :param model:  the model(s) to generate code for
+    :param customer_import_set: Customize the text that needs to be imported into the Python package
+    :param customer_deque: Customize the code to be generated
+    :param module_path:
+    :param code_indent: Code indentation, default is 4
+    :param p2c_class:  The class that actually executes
+    :return:
+    """
     return p2c_class(
         *model,
         customer_import_set=customer_import_set,
