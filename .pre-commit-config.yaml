@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v0.910
+    rev: v1.0.0
     hooks:
       - id: mypy
         exclude: "^example/example_proto_python_code/example_proto|^protobuf_to_pydantic/protos|test_p2p_validate.py$|test_pgv_validate.py$|protobuf_to_pydantic/contrib/proto_parser.py"

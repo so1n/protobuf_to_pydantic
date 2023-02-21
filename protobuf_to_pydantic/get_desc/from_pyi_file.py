@@ -86,7 +86,7 @@ def get_desc_from_pyi_file(filename: str) -> Dict[str, Dict[str, str]]:
                 # When you encounter the same indentation of different classes,
                 # need to pop off the previous one and insert the current one
                 message_str_stack.pop()
-            message_field_dict: dict = {}
+            message_field_dict: Dict[str, str] = {}
             if message_str_stack:
                 parent_message_field_dict = message_str_stack[-1][2]
                 parent_message_field_dict[message_str] = message_field_dict

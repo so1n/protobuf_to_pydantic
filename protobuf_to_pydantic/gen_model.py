@@ -308,20 +308,18 @@ class M2P(object):
         return self._gen_model
 
     def _one_of_handle(self, descriptor: Descriptor) -> Dict[str, OneOfTypedDict]:
+        desc_dict: Optional[dict] = self._field_doc_dict.get(descriptor.name, None)
+
         one_of_dict: Dict[str, OneOfTypedDict] = {}
         for one_of in descriptor.oneofs:
-            if one_of.full_name not in one_of_dict:
-                one_of_dict[one_of.full_name] = {"required": False, "fields": set()}
-            if one_of.full_name in self._field_doc_dict:
+            column_name: str = one_of.full_name
+            if column_name not in one_of_dict:
+                one_of_dict[column_name] = {"required": False, "fields": set()}
+            if desc_dict and column_name in desc_dict["one_of"]:
                 # only PGV or P2P support
-
-                # TODO The use of full name here and the use of name elsewhere will lead to confusion in the storage
-                #  range of field_doc_dict, which must be changed later.
-                one_of_dict[one_of.full_name]["required"] = self._field_doc_dict[one_of.full_name].get(  # type: ignore
-                    "required", False
-                )
+                one_of_dict[column_name]["required"] = desc_dict["one_of"][column_name].get("required", False)
             for _field in one_of.fields:
-                one_of_dict[one_of.full_name]["fields"].add(_field.name)
+                one_of_dict[column_name]["fields"].add(_field.name)
         return one_of_dict
 
     def _get_pydantic_base(self, config_dict: Dict[str, Any]) -> Type[BaseModel]:
@@ -447,12 +445,12 @@ class M2P(object):
                         default = Undefined
 
             field = self._default_field
-            field_doc: Union[str, dict] = self._get_field_doc_by_full_name(column.full_name)
-            if field_doc:
+            field_doc: Union[str, dict, None] = self._get_field_doc_by_full_name(column.full_name)
+            if field_doc is not None:
                 # Refine field properties with data from desc
                 if isinstance(field_doc, str):
                     # support protobuf optional by comment
-                    field_doc_dict = self._gen_dict_from_desc_str(field_doc)
+                    field_doc_dict: dict = self._gen_dict_from_desc_str(field_doc)
                 else:
                     field_doc_dict = field_doc
                 if self._parse_msg_desc_method != "PGV":
@@ -520,12 +518,14 @@ class M2P(object):
             pait_dict.update(json.loads(line))
         return pait_dict
 
-    def _get_field_doc_by_full_name(self, full_name: str) -> Any:
-        field_doc_dict: dict = self._field_doc_dict
+    def _get_field_doc_by_full_name(self, full_name: str) -> Union[dict, None, str]:
+        field_doc_dict = self._field_doc_dict
         key_list = full_name.split(".")[1:]  # ignore package name
         for key in key_list:
+            if "message" in field_doc_dict:
+                field_doc_dict = field_doc_dict["message"] or {}  # type: ignore
             if key in field_doc_dict:
-                field_doc_dict = field_doc_dict[key]
+                field_doc_dict = field_doc_dict[key]  # type: ignore
             else:
                 return None
         return field_doc_dict

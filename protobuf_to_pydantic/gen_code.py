@@ -149,7 +149,7 @@ class BaseP2C(object):
             else:
                 if auto_import_type_code:
                     self._parse_type_to_import_code(type_)
-                return getattr(type_, "__name__", None)
+                return getattr(type_, "__name__")
         elif getattr(type_, "DESCRIPTOR", None):
             # protobuf message support
             message_name: str = type_.__class__.__name__
@@ -224,7 +224,7 @@ class BaseP2C(object):
         field_str: str = ""
         for key, value in model.__fields__.items():
             value_outer_type = value.outer_type_
-            value_type_name: str = getattr(value_outer_type, "__name__", None)
+            value_type_name: str = getattr(value_outer_type, "__name__")
 
             # Type Hint handler
             if value_outer_type.__module__ != "builtins":
@@ -252,7 +252,7 @@ class BaseP2C(object):
                     # only support like repeated[string]
                     value_type_name = self.pydantic_con_type_handle(value_outer_type)
                 else:
-                    value_type_name = getattr(value_outer_type, "__name__", None)
+                    value_type_name = getattr(value_outer_type, "__name__")
                     self._parse_type_to_import_code(value_outer_type)
 
             field_str += " " * indent + f"{key}: {value_type_name} = {self._field_info_handle(value.field_info)}\n"
@@ -350,7 +350,7 @@ class BaseP2C(object):
             else:
                 type_module = inspect.getmodule(type_.__class__)
 
-        if not type_module:
+        if type_module is None:
             return
         elif getattr(type_module, "__name__", "builtins") == "builtins":
             # The built-in method does not use a guide package
@@ -368,19 +368,20 @@ class BaseP2C(object):
             # other type handle
             if type_module.__name__ == "__main__":
                 start_path: str = sys.path[0]
+                module_file = type_module.__file__ or ""
                 if self._module_path:
-                    if not type_module.__file__.startswith(self._module_path):
-                        type_module_file: str = start_path + "/" + type_module.__file__
+                    if not module_file.startswith(self._module_path):
+                        type_module_file: str = start_path + "/" + module_file
                     else:
-                        type_module_file = type_module.__file__
+                        type_module_file = module_file
                     module_name = self._module_path.split("/")[-1] + type_module_file.replace(self._module_path, "")
                 else:
                     # Find the name of the module for the variable that starts the code file
-                    if not type_module.__file__.startswith(start_path):
+                    if not module_file.startswith(start_path):
                         # Compatible scripts are run directly in the submodule
-                        module_name = f"{start_path.split('/')[-1]}.{type_module.__file__.split('/')[-1]}"
+                        module_name = f"{start_path.split('/')[-1]}.{module_file.split('/')[-1]}"
                     else:
-                        module_name = start_path.split("/")[-1] + type_module.__file__.replace(start_path, "")
+                        module_name = start_path.split("/")[-1] + module_file.replace(start_path, "")
                 module_name = module_name.replace("/", ".").replace(".py", "")
 
                 class_name: str = self._get_value_code(type_, auto_import_type_code=False)

@@ -184,7 +184,7 @@ class FileDescriptorProtoToCode(BaseP2C):
             rule_type_str = "repeated"
         if len(field.options.ListFields()) != 0 and rule_type_str and not skip_validate_rule:
             # protobuf option support
-            field_option_info_dict = field_option_handle(rule_type_str, field.type_name, field)
+            field_option_info_dict: dict = field_option_handle(rule_type_str, field.type_name, field)  # type: ignore
 
             skip = field_option_info_dict.pop("skip", False)
             if nested_message_name:
@@ -350,7 +350,7 @@ class FileDescriptorProtoToCode(BaseP2C):
             return ProtobufTypeModel(
                 type_factory=type_factory,
                 py_type_str=self._get_value_code(type_factory),
-                rule_type_str=protobuf_common_type_dict.get(field.type, None),
+                rule_type_str=protobuf_common_type_dict.get(field.type, ""),
             )
         elif field.type_name.startswith(".google.protobuf"):
             _type_str = field.type_name.split(".")[-1]

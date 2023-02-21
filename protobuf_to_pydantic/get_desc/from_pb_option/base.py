@@ -14,13 +14,14 @@ from protobuf_to_pydantic.customer_con_type import (
 )
 from protobuf_to_pydantic.customer_validator import validate_validator_dict
 from protobuf_to_pydantic.grpc_types import Descriptor, FieldDescriptor, FieldDescriptorProto, Message
+from protobuf_to_pydantic.types import DescFromOptionTypedDict, FieldInfoTypedDict
 from protobuf_to_pydantic.util import replace_protobuf_type_to_python_type
 
 from .types import column_pydantic_type_dict
 
 _logger: logging.Logger = logging.getLogger(__name__)
 
-protobuf_common_type_dict: Dict[str, str] = {
+protobuf_common_type_dict: Dict[Any, str] = {
     FieldDescriptor.TYPE_DOUBLE: "double",
     FieldDescriptor.TYPE_FLOAT: "float",
     FieldDescriptor.TYPE_INT64: "int64",
@@ -39,13 +40,13 @@ protobuf_common_type_dict: Dict[str, str] = {
     FieldDescriptor.TYPE_SINT64: "sint64",
 }
 
-type_not_support_dict: Dict[str, Set[str]] = {
+type_not_support_dict: Dict[Any, Set[str]] = {
     FieldDescriptor.TYPE_BYTES: {"pattern"},
     FieldDescriptor.TYPE_STRING: {"min_bytes", "max_bytes", "well_known_regex", "strict"},
     "Any": {"ignore_empty", "defined_only", "no_sparse"},
 }
 
-column_pydantic_dict: Dict[str, str] = {
+pgv_column_to_pydantic_dict: Dict[str, str] = {
     "min_len": "min_length",
     "min_bytes": "min_length",
     "max_len": "max_length",
@@ -60,6 +61,7 @@ column_pydantic_dict: Dict[str, str] = {
 
 
 def _has_raw_message_field(column: str, message: Message) -> bool:
+    """Determine whether the field held by the Message is a field defined by Protobuf"""
     if column.startswith("_"):
         return False
     if getattr(Message, column, None):
@@ -95,7 +97,7 @@ def option_descriptor_to_desc_dict(
     field: Union[FieldDescriptor, FieldDescriptorProto],
     type_name: str,
     full_name: str,
-    desc_dict: dict,
+    desc_dict: FieldInfoTypedDict,
 ) -> None:
     """Parse the data of option and store it in dict.
     Since array and map are supported, the complexity is relatively high
@@ -109,19 +111,15 @@ def option_descriptor_to_desc_dict(
             if _has_raw_message_field(column, option_descriptor)  # type: ignore
         ]
     for column in column_list:
-        if not _has_raw_message_field(column, option_descriptor):  # type: ignore
-            # Removing internal methods
-            continue
-
         if column in type_not_support_dict.get(field.type, type_not_support_dict["Any"]):
             # Exclude unsupported fields
             _logger.warning(f"{__name__} not support `{column}`, please reset {full_name} `{column}` value")
             continue
 
         value = getattr(option_descriptor, column)
-        if column in column_pydantic_dict:
+        if column in pgv_column_to_pydantic_dict:
             # Field Conversion
-            column = column_pydantic_dict[column]
+            column = pgv_column_to_pydantic_dict[column]
 
         if type_name in ("duration", "any", "timestamp", "map") and column in (
             "lt",
@@ -143,10 +141,11 @@ def option_descriptor_to_desc_dict(
             # Types of priority treatment for special cases
             if "validator" not in desc_dict:
                 desc_dict["validator"] = {}
-            desc_dict["extra"][f"{type_name}_{column}"] = replace_protobuf_type_to_python_type(value)
-            desc_dict["validator"][f"{field.name}_{type_name}_{column}_validator"] = validator(
-                field.name, allow_reuse=True
-            )(validate_validator_dict[f"{type_name}_{column}_validator"])
+            _column: str = f"{type_name}_{column}"
+            desc_dict["extra"][_column] = replace_protobuf_type_to_python_type(value)
+            desc_dict["validator"][f"{field.name}_{_column}_validator"] = validator(field.name, allow_reuse=True)(
+                validate_validator_dict[f"{_column}_validator"]
+            )
             continue
         elif column in ("in", "not_in", "len", "prefix", "suffix", "contains", "not_contains"):
             # The verification of these parameters is handed over to the validator,
@@ -155,7 +154,7 @@ def option_descriptor_to_desc_dict(
             # Compatible with PGV attributes that are not supported by pydantic
             if "validator" not in desc_dict:
                 desc_dict["validator"] = {}
-            _column: str = column + "_" if column in ("in",) else column
+            _column = column + "_" if column in ("in",) else column
             desc_dict["extra"][_column] = replace_protobuf_type_to_python_type(value)
             desc_dict["validator"][f"{field.name}_{column}_validator"] = validator(field.name, allow_reuse=True)(
                 validate_validator_dict[f"{column}_validator"]
@@ -175,14 +174,15 @@ def option_descriptor_to_desc_dict(
                 _logger.warning(f"{__name__} not support sub type `{type_name}`, please reset {full_name}")
                 continue
             # Generate information corresponding to the nested type
-            sub_dict: dict = {"extra": {}}
+            sub_dict: FieldInfoTypedDict = {"extra": {}, "skip": False}
             option_descriptor_to_desc_dict(getattr(value, type_name), field, type_name, full_name, sub_dict)
             if "map_type" not in desc_dict:
                 desc_dict["map_type"] = {}
             con_type_param_dict: dict = {}
             for _key in inspect.signature(con_type).parameters.keys():
-                if sub_dict.get(_key, None) is not None:
-                    con_type_param_dict[_key] = sub_dict[_key]
+                param_value = sub_dict.get(_key, None)  # type: ignore
+                if param_value is not None:
+                    con_type_param_dict[_key] = param_value
                 elif "extra" in sub_dict:
                     if sub_dict["extra"].get(_key, None) is not None:
                         con_type_param_dict[_key] = sub_dict["extra"][_key]
@@ -196,14 +196,16 @@ def option_descriptor_to_desc_dict(
             con_type = get_con_type_func_from_type_name(type_name)
             if not con_type:
                 # TODO nested message
-                _logger.warning(f"{__name__} not support sub type `{type_name}`, please reset {field.full_name}")
+                _logger.warning(
+                    f"{__name__} not support sub type `{type_name}`, please reset {field.full_name}"  # type: ignore
+                )
                 desc_dict["type"] = List
                 continue
-            sub_dict = {"extra": {}, "type": con_type}
+            sub_dict = {"extra": {}, "type": con_type, "skip": False}
             option_descriptor_to_desc_dict(getattr(value, type_name), field, type_name, full_name, sub_dict)
             desc_dict["type"] = conlist
             desc_dict["sub"] = sub_dict
-        desc_dict[column] = value
+        desc_dict[column] = value  # type: ignore
 
 
 def field_option_handle(
@@ -211,9 +213,9 @@ def field_option_handle(
     full_name: str,
     field: Union[FieldDescriptor, FieldDescriptorProto],
     protobuf_pkg: str = "",
-) -> dict:
+) -> FieldInfoTypedDict:
     """Parse the information for each filed"""
-    field_dict: dict = {"extra": {}, "skip": False}
+    field_dict: FieldInfoTypedDict = {"extra": {}, "skip": False}
     miss_default: bool = False
     if isinstance(field, FieldDescriptor):
         field_list = field.GetOptions().ListFields()
@@ -228,6 +230,7 @@ def field_option_handle(
                 continue
         elif not option_descriptor.full_name.endswith("validate.rules"):
             continue
+
         rule_message: Any = option_value.message
         if rule_message:
             if getattr(rule_message, "skip", None):
@@ -245,7 +248,7 @@ def field_option_handle(
     return field_dict
 
 
-_global_desc_dict: Dict[str, Dict[str, Any]] = {}
+_global_desc_dict: Dict[str, Dict[str, DescFromOptionTypedDict]] = {}
 
 
 class ParseFromPbOption(object):
@@ -253,13 +256,13 @@ class ParseFromPbOption(object):
 
     def __init__(self, message: Type[Message]):
         self.message = message
-        self._msg_desc_dict: Dict[str, Any] = {}
+        self._msg_desc_dict: Dict[str, DescFromOptionTypedDict] = {}
         if self.protobuf_pkg not in _global_desc_dict:
             _global_desc_dict[self.protobuf_pkg] = self._msg_desc_dict
         else:
             self._msg_desc_dict = _global_desc_dict[self.protobuf_pkg]
 
-    def parse(self) -> Dict[str, Any]:
+    def parse(self) -> Dict[str, DescFromOptionTypedDict]:
         descriptor: Descriptor = self.message.DESCRIPTOR
         if descriptor.name in self._msg_desc_dict:
             return self._msg_desc_dict
@@ -267,11 +270,14 @@ class ParseFromPbOption(object):
         self._msg_desc_dict[descriptor.name] = self.get_desc_from_options(descriptor)
         return self._msg_desc_dict
 
-    def get_desc_from_options(self, descriptor: Descriptor) -> dict:
+    def get_desc_from_options(self, descriptor: Descriptor) -> DescFromOptionTypedDict:
         """Extract the information of each field through the Options of Protobuf Message"""
         if descriptor.name in self._msg_desc_dict:
             return self._msg_desc_dict[descriptor.name]
-        message_field_dict: dict = {}
+        message_field_dict: DescFromOptionTypedDict = {
+            "message": {},
+            "one_of": {},
+        }
 
         # Options for processing Messages
         for option_descriptor, option_value in descriptor.GetOptions().ListFields():
@@ -279,28 +285,24 @@ class ParseFromPbOption(object):
             if (option_descriptor.full_name == f"{self.protobuf_pkg}.disabled" and option_value) or (
                 option_descriptor.full_name == f"{self.protobuf_pkg}.ignored" and option_value
             ):
-                self._msg_desc_dict[descriptor.name] = message_field_dict
+                message_field_dict["message"] = None
                 return message_field_dict
         # Handle one_ofs of Message
         for one_of in descriptor.oneofs:
             for one_of_descriptor, one_ov_value in one_of.GetOptions().ListFields():
                 if one_of_descriptor.full_name == f"{self.protobuf_pkg}.required":
-                    if one_of.full_name in self._msg_desc_dict:
-                        continue
+                    # if one_of.full_name in self._msg_desc_dict:
+                    #     continue
                     # Support one of is required
-                    self._msg_desc_dict[one_of.full_name] = {"required": True}
+                    message_field_dict["one_of"] = {one_of.full_name: {"required": True, "fields": set()}}
         # Process all fields of Message
         for field in descriptor.fields:
             type_name: str = ""
             if field.type == FieldDescriptor.TYPE_MESSAGE:
                 # Convert some types of Protobuf
                 message_type_name: str = field.message_type.name
-                if message_type_name == "Duration":
-                    type_name = "duration"
-                elif message_type_name == "Any":
-                    type_name = "any"
-                elif message_type_name == "Timestamp":
-                    type_name = "timestamp"
+                if message_type_name in ("Duration", "Any", "Timestamp"):
+                    type_name = message_type_name.lower()
                 elif message_type_name.endswith("Entry"):
                     type_name = "map"
                 elif message_type_name == "Empty":
@@ -319,18 +321,20 @@ class ParseFromPbOption(object):
                     f"{__name__} not support protobuf type id:{field.type} from field name{field.full_name}"
                 )
                 continue
-            field_dict: dict = field_option_handle(type_name, field.full_name, field, self.protobuf_pkg)
+            field_dict: FieldInfoTypedDict = field_option_handle(type_name, field.full_name, field, self.protobuf_pkg)
             if field_dict["skip"]:
                 # If skip is True, the corresponding validation rule is not applied
                 continue
-            message_field_dict[field.name] = field_dict
+            message_dict: Dict[str, Union[FieldInfoTypedDict, "DescFromOptionTypedDict"]] = {}
+            message_field_dict["message"] = message_dict
+            message_dict[field.name] = field_dict
             if type_name == "message":
-                message_field_dict[field.message_type.name] = self.get_desc_from_options(field.message_type)
+                message_dict[field.message_type.name] = self.get_desc_from_options(field.message_type)
             elif type_name == "map":
                 for sub_field in field.message_type.fields:
                     if not sub_field.message_type:
                         continue
                     # keys and values
-                    message_field_dict[sub_field.message_type.name] = self.get_desc_from_options(sub_field.message_type)
+                    message_dict[sub_field.message_type.name] = self.get_desc_from_options(sub_field.message_type)
         self._msg_desc_dict[descriptor.name] = message_field_dict
         return message_field_dict
