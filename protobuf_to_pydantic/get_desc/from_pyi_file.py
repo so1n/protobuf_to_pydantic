@@ -1,10 +1,15 @@
 import re
-from typing import Dict, List, Tuple
+from typing import TYPE_CHECKING, Dict, List, Tuple
 
-_filename_desc_dict: Dict[str, Dict[str, Dict[str, str]]] = {}
+from protobuf_to_pydantic.util import gen_dict_from_desc_str
+
+if TYPE_CHECKING:
+    from protobuf_to_pydantic.types import DescFromOptionTypedDict, FieldInfoTypedDict
+
+_filename_desc_dict: Dict[str, Dict[str, "DescFromOptionTypedDict"]] = {}
 
 
-def get_desc_from_pyi_file(filename: str) -> Dict[str, Dict[str, str]]:
+def get_desc_from_pyi_file(filename: str, comment_prefix: str) -> Dict[str, "DescFromOptionTypedDict"]:
     """
     For a Protobuf message as follows:
         ```protobuf
@@ -68,10 +73,10 @@ def get_desc_from_pyi_file(filename: str) -> Dict[str, Dict[str, str]]:
     _comment_model: bool = False  # Whether to enable parsing comment mode
     _doc: str = ""
     _field_name: str = ""
-    message_str_stack: List[Tuple[str, int, dict]] = []
+    message_str_stack: List[Tuple[str, int, DescFromOptionTypedDict]] = []
     indent: int = 0
 
-    global_message_field_dict: dict = {}
+    global_message_field_dict: Dict[str, "DescFromOptionTypedDict"] = {}
 
     for index, line in enumerate(line_list):
         if "class" in line:
@@ -86,22 +91,25 @@ def get_desc_from_pyi_file(filename: str) -> Dict[str, Dict[str, str]]:
                 # When you encounter the same indentation of different classes,
                 # need to pop off the previous one and insert the current one
                 message_str_stack.pop()
-            message_field_dict: Dict[str, str] = {}
+            message_field_dict: Dict[str, FieldInfoTypedDict] = {}
+            global_message_field_dict[message_str] = {
+                "message": message_field_dict,
+                "one_of": {},
+                "nested": {},  # type: ignore
+            }
             if message_str_stack:
                 parent_message_field_dict = message_str_stack[-1][2]
-                parent_message_field_dict[message_str] = message_field_dict
-            else:
-                global_message_field_dict[message_str] = message_field_dict
+                parent_message_field_dict["nested"][message_str] = global_message_field_dict[message_str]
 
             indent = new_indent
-            message_str_stack.append((message_str, indent, message_field_dict))
+            message_str_stack.append((message_str, indent, global_message_field_dict[message_str]))
         elif indent:
             if line and message_str_stack and line[indent] != " ":
                 # The current class has been scanned, go back to the previous class
                 message_str_stack.pop()
 
         if message_str_stack:
-            message_str, indent, message_field_dict = message_str_stack[-1]
+            message_str, indent, desc_dict = message_str_stack[-1]
             line = line.strip()
             if _comment_model:
                 _doc += "\n" + line
@@ -117,7 +125,7 @@ def get_desc_from_pyi_file(filename: str) -> Dict[str, Dict[str, str]]:
             if (line.endswith('"""') or line == '"""') and _comment_model:
                 # end add doc
                 _comment_model = False
-                message_field_dict[_field_name] = _doc.replace('"""', "")
+                desc_dict["message"][_field_name] = gen_dict_from_desc_str(comment_prefix, _doc.replace('"""', ""))
 
     _filename_desc_dict[filename] = global_message_field_dict
     return global_message_field_dict

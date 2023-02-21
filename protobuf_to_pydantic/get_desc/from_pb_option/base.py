@@ -274,10 +274,7 @@ class ParseFromPbOption(object):
         """Extract the information of each field through the Options of Protobuf Message"""
         if descriptor.name in self._msg_desc_dict:
             return self._msg_desc_dict[descriptor.name]
-        message_field_dict: DescFromOptionTypedDict = {
-            "message": {},
-            "one_of": {},
-        }
+        message_field_dict: DescFromOptionTypedDict = {"message": {}, "one_of": {}, "nested": {}}
 
         # Options for processing Messages
         for option_descriptor, option_value in descriptor.GetOptions().ListFields():
@@ -285,7 +282,6 @@ class ParseFromPbOption(object):
             if (option_descriptor.full_name == f"{self.protobuf_pkg}.disabled" and option_value) or (
                 option_descriptor.full_name == f"{self.protobuf_pkg}.ignored" and option_value
             ):
-                message_field_dict["message"] = None
                 return message_field_dict
         # Handle one_ofs of Message
         for one_of in descriptor.oneofs:
@@ -325,16 +321,16 @@ class ParseFromPbOption(object):
             if field_dict["skip"]:
                 # If skip is True, the corresponding validation rule is not applied
                 continue
-            message_dict: Dict[str, Union[FieldInfoTypedDict, "DescFromOptionTypedDict"]] = {}
-            message_field_dict["message"] = message_dict
-            message_dict[field.name] = field_dict
+            message_field_dict["message"][field.name] = field_dict
             if type_name == "message":
-                message_dict[field.message_type.name] = self.get_desc_from_options(field.message_type)
+                message_field_dict["nested"][field.message_type.name] = self.get_desc_from_options(field.message_type)
             elif type_name == "map":
                 for sub_field in field.message_type.fields:
                     if not sub_field.message_type:
                         continue
                     # keys and values
-                    message_dict[sub_field.message_type.name] = self.get_desc_from_options(sub_field.message_type)
+                    message_field_dict["nested"][sub_field.message_type.name] = self.get_desc_from_options(
+                        sub_field.message_type
+                    )
         self._msg_desc_dict[descriptor.name] = message_field_dict
         return message_field_dict

@@ -26,7 +26,7 @@ from protobuf_to_pydantic.grpc_types import (
     FieldDescriptorProto,
     FileDescriptorProto,
 )
-from protobuf_to_pydantic.plugin.types import ProtobufTypeModel
+from protobuf_to_pydantic.plugin.my_types import ProtobufTypeModel
 
 if TYPE_CHECKING:
     from protobuf_to_pydantic.plugin.config import Config

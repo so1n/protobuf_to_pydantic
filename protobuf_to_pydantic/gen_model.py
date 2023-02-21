@@ -6,7 +6,7 @@ from enum import IntEnum
 from importlib import import_module
 from pathlib import Path
 from types import ModuleType
-from typing import Any, Callable, Dict, List, Optional, Tuple, Type, Union
+from typing import TYPE_CHECKING, Any, Callable, Dict, List, Optional, Tuple, Type, Union
 
 from pydantic import BaseModel, Field, root_validator
 from pydantic.fields import FieldInfo, Undefined
@@ -27,8 +27,10 @@ from protobuf_to_pydantic.grpc_types import (
     RepeatedCompositeContainer,
     RepeatedScalarContainer,
 )
-from protobuf_to_pydantic.types import OneOfTypedDict
 from protobuf_to_pydantic.util import Timedelta, create_pydantic_model
+
+if TYPE_CHECKING:
+    from protobuf_to_pydantic.types import DescFromOptionTypedDict, FieldInfoTypedDict, OneOfTypedDict
 
 type_dict: Dict[int, Type] = {
     FieldDescriptor.TYPE_DOUBLE: float,
@@ -257,7 +259,7 @@ class M2P(object):
         message_default_factory_dict_by_type_name: Optional[Dict[str, Any]] = None,
     ):
         proto_file_name = msg.DESCRIPTOR.file.name  # type: ignore
-        message_field_dict: Dict[str, Dict[str, str]] = {}
+        message_field_dict: Dict[str, "DescFromOptionTypedDict"] = {}
 
         if proto_file_name.endswith("empty.proto") or parse_msg_desc_method == "ignore":
             pass
@@ -265,14 +267,14 @@ class M2P(object):
             file_str: str = parse_msg_desc_method
             if not file_str.endswith("/"):
                 file_str += "/"
-            message_field_dict = get_desc_from_proto_file(file_str + proto_file_name)
+            message_field_dict = get_desc_from_proto_file(file_str + proto_file_name, comment_prefix)
         elif inspect.ismodule(parse_msg_desc_method):
             if getattr(parse_msg_desc_method, msg.__name__, None) is not msg:  # type: ignore
                 raise ValueError(f"Not the module corresponding to {msg}")
             pyi_file_name = parse_msg_desc_method.__file__ + "i"  # type: ignore
             if not Path(pyi_file_name).exists():
                 raise RuntimeError(f"Can not found {msg} pyi file")
-            message_field_dict = get_desc_from_pyi_file(pyi_file_name)
+            message_field_dict = get_desc_from_pyi_file(pyi_file_name, comment_prefix)
         elif parse_msg_desc_method == "PGV":
             message_field_dict = get_desc_from_pgv(message=msg)  # type: ignore
         elif parse_msg_desc_method is not None:
@@ -285,7 +287,7 @@ class M2P(object):
         else:
             message_field_dict = get_desc_from_p2p(message=msg)  # type: ignore
         self._parse_msg_desc_method: Optional[str] = parse_msg_desc_method
-        self._field_doc_dict = message_field_dict
+        self._field_doc_dict: Dict[str, DescFromOptionTypedDict] = message_field_dict
         self._default_field = default_field
         self._comment_prefix = comment_prefix
         self._creat_cache: Dict[Union[Type[Message], Descriptor], Type[BaseModel]] = {}
@@ -307,10 +309,9 @@ class M2P(object):
     def model(self) -> Type[BaseModel]:
         return self._gen_model
 
-    def _one_of_handle(self, descriptor: Descriptor) -> Dict[str, OneOfTypedDict]:
-        desc_dict: Optional[dict] = self._field_doc_dict.get(descriptor.name, None)
-
-        one_of_dict: Dict[str, OneOfTypedDict] = {}
+    def _one_of_handle(self, descriptor: Descriptor) -> Dict[str, "OneOfTypedDict"]:
+        desc_dict: "DescFromOptionTypedDict" = self._field_doc_dict.get(descriptor.name, {})  # type: ignore
+        one_of_dict: Dict[str, "OneOfTypedDict"] = {}
         for one_of in descriptor.oneofs:
             column_name: str = one_of.full_name
             if column_name not in one_of_dict:
@@ -342,7 +343,7 @@ class M2P(object):
         annotation_dict: Dict[str, Tuple[Type, Any]] = {}
         validators: Dict[str, classmethod] = {}
         pydantic_model_config_dict: Dict[str, Any] = {}
-        one_of_dict: Dict[str, OneOfTypedDict] = self._one_of_handle(descriptor)
+        one_of_dict: Dict[str, "OneOfTypedDict"] = self._one_of_handle(descriptor)
         if one_of_dict:
             validators["one_of_validator"] = root_validator(pre=True, allow_reuse=True)(check_one_of)
 
@@ -445,19 +446,13 @@ class M2P(object):
                         default = Undefined
 
             field = self._default_field
-            field_doc: Union[str, dict, None] = self._get_field_doc_by_full_name(column.full_name)
-            if field_doc is not None:
-                # Refine field properties with data from desc
-                if isinstance(field_doc, str):
-                    # support protobuf optional by comment
-                    field_doc_dict: dict = self._gen_dict_from_desc_str(field_doc)
-                else:
-                    field_doc_dict = field_doc
+            field_doc_dict = self._get_field_info_dict_by_full_name(column.full_name)
+            if field_doc_dict is not None:
                 if self._parse_msg_desc_method != "PGV":
                     # pgv method not support template var
                     field_doc_dict = self._desc_template.handle_template_var(field_doc_dict)
 
-                field_param_dict: dict = MessagePaitModel(**field_doc_dict).dict()
+                field_param_dict: dict = MessagePaitModel(**field_doc_dict).dict()  # type: ignore
                 # Nested types do not include the `enable`, `field` and `validator`  attributes
                 if not field_param_dict.pop("enable"):
                     continue
@@ -518,17 +513,20 @@ class M2P(object):
             pait_dict.update(json.loads(line))
         return pait_dict
 
-    def _get_field_doc_by_full_name(self, full_name: str) -> Union[dict, None, str]:
-        field_doc_dict = self._field_doc_dict
-        key_list = full_name.split(".")[1:]  # ignore package name
+    def _get_field_info_dict_by_full_name(self, full_name: str) -> Optional["FieldInfoTypedDict"]:
+        message_name, *key_list = full_name.split(".")[1:]  # ignore package name
+        if message_name not in self._field_doc_dict:
+            return None
+        desc_dict: "DescFromOptionTypedDict" = self._field_doc_dict[message_name]
+
         for key in key_list:
-            if "message" in field_doc_dict:
-                field_doc_dict = field_doc_dict["message"] or {}  # type: ignore
-            if key in field_doc_dict:
-                field_doc_dict = field_doc_dict[key]  # type: ignore
+            if key in desc_dict["message"]:
+                return desc_dict["message"][key]
+            elif key in desc_dict["nested"]:
+                desc_dict = desc_dict["nested"][key]
             else:
                 return None
-        return field_doc_dict
+        return None
 
 
 def msg_to_pydantic_model(

@@ -43,5 +43,6 @@ class FieldInfoTypedDict(TypedDict):
 
 
 class DescFromOptionTypedDict(TypedDict):
-    message: Optional[Dict[str, Union[FieldInfoTypedDict, "DescFromOptionTypedDict"]]]
+    message: Dict[str, FieldInfoTypedDict]
     one_of: Dict[str, OneOfTypedDict]
+    nested: Dict[str, "DescFromOptionTypedDict"]

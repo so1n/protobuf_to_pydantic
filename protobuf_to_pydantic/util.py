@@ -1,3 +1,4 @@
+import json
 from datetime import timedelta
 from typing import TYPE_CHECKING, Any, Callable, Dict, Generator, Optional, Tuple, Type, Union
 
@@ -8,6 +9,7 @@ if TYPE_CHECKING:
     from pydantic.typing import AnyClassMethod
 
 from protobuf_to_pydantic.grpc_types import Duration, RepeatedCompositeContainer, RepeatedScalarContainer, Timestamp
+from protobuf_to_pydantic.types import FieldInfoTypedDict
 
 
 class Timedelta(timedelta):
@@ -65,3 +67,14 @@ def replace_protobuf_type_to_python_type(value: Any) -> Any:
         return [replace_protobuf_type_to_python_type(i) for i in value]
     else:
         return value
+
+
+def gen_dict_from_desc_str(comment_prefix: str, desc: str) -> FieldInfoTypedDict:
+    pait_dict: dict = {}
+    for line in desc.split("\n"):
+        line = line.strip()
+        if not line.startswith(f"{comment_prefix}:"):
+            continue
+        line = line.replace(f"{comment_prefix}:", "")
+        pait_dict.update(json.loads(line))
+    return pait_dict  # type: ignore

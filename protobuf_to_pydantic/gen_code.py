@@ -224,7 +224,7 @@ class BaseP2C(object):
         field_str: str = ""
         for key, value in model.__fields__.items():
             value_outer_type = value.outer_type_
-            value_type_name: str = getattr(value_outer_type, "__name__")
+            value_type_name: str = getattr(value_outer_type, "__name__", "None")
 
             # Type Hint handler
             if value_outer_type.__module__ != "builtins":
@@ -252,7 +252,7 @@ class BaseP2C(object):
                     # only support like repeated[string]
                     value_type_name = self.pydantic_con_type_handle(value_outer_type)
                 else:
-                    value_type_name = getattr(value_outer_type, "__name__")
+                    value_type_name = getattr(value_outer_type, "__name__", "None")
                     self._parse_type_to_import_code(value_outer_type)
 
             field_str += " " * indent + f"{key}: {value_type_name} = {self._field_info_handle(value.field_info)}\n"

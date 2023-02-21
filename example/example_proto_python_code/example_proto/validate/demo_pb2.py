@@ -4,6 +4,7 @@
 """Generated protocol buffer code."""
 from google.protobuf.internal import enum_type_wrapper
 from google.protobuf import descriptor as _descriptor
+from google.protobuf import descriptor_pool as _descriptor_pool
 from google.protobuf import message as _message
 from google.protobuf import reflection as _reflection
 from google.protobuf import symbol_database as _symbol_database
@@ -19,2335 +20,52 @@ from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__
 from example.example_proto_python_code.example_proto.common import validate_pb2 as example__proto_dot_common_dot_validate__pb2
 
 
-DESCRIPTOR = _descriptor.FileDescriptor(
-  name='example_proto/validate/demo.proto',
-  package='validate_test',
-  syntax='proto3',
-  serialized_options=None,
-  create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n!example_proto/validate/demo.proto\x12\rvalidate_test\x1a\x19google/protobuf/any.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a#example_proto/common/validate.proto\"\xe7\x01\n\tFloatTest\x12\x1e\n\nconst_test\x18\x01 \x01(\x02\x42\n\xfa\x42\x07\n\x05\r\x00\x00\x80?\x12%\n\x0crange_e_test\x18\x02 \x01(\x02\x42\x0f\xfa\x42\x0c\n\n\x1d\x00\x00 A-\x00\x00\x80?\x12#\n\nrange_test\x18\x03 \x01(\x02\x42\x0f\xfa\x42\x0c\n\n\x15\x00\x00 A%\x00\x00\x80?\x12%\n\x07in_test\x18\x04 \x01(\x02\x42\x14\xfa\x42\x11\n\x0f\x35\x00\x00\x80?5\x00\x00\x00@5\x00\x00@@\x12)\n\x0bnot_in_test\x18\x05 \x01(\x02\x42\x14\xfa\x42\x11\n\x0f=\x00\x00\x80?=\x00\x00\x00@=\x00\x00@@\x12\x1c\n\x0bignore_test\x18\x06 \x01(\x02\x42\x07\xfa\x42\x04\n\x02@\x01\"\x94\x02\n\nDoubleTest\x12\"\n\nconst_test\x18\x01 \x01(\x01\x42\x0e\xfa\x42\x0b\x12\t\t\x00\x00\x00\x00\x00\x00\xf0?\x12-\n\x0crange_e_test\x18\x02 \x01(\x01\x42\x17\xfa\x42\x14\x12\x12\x19\x00\x00\x00\x00\x00\x00$@)\x00\x00\x00\x00\x00\x00\xf0?\x12+\n\nrange_test\x18\x03 \x01(\x01\x42\x17\xfa\x42\x14\x12\x12\x11\x00\x00\x00\x00\x00\x00$@!\x00\x00\x00\x00\x00\x00\xf0?\x12\x31\n\x07in_test\x18\x04 \x01(\x01\x42 \xfa\x42\x1d\x12\x1b\x31\x00\x00\x00\x00\x00\x00\xf0?1\x00\x00\x00\x00\x00\x00\x00@1\x00\x00\x00\x00\x00\x00\x08@\x12\x35\n\x0bnot_in_test\x18\x05 \x01(\x01\x42 \xfa\x42\x1d\x12\x1b\x39\x00\x00\x00\x00\x00\x00\xf0?9\x00\x00\x00\x00\x00\x00\x00@9\x00\x00\x00\x00\x00\x00\x08@\x12\x1c\n\x0bignore_test\x18\x06 \x01(\x01\x42\x07\xfa\x42\x04\x12\x02@\x01\"\xc6\x01\n\tInt32Test\x12\x1b\n\nconst_test\x18\x01 \x01(\x05\x42\x07\xfa\x42\x04\x1a\x02\x08\x01\x12\x1f\n\x0crange_e_test\x18\x02 \x01(\x05\x42\t\xfa\x42\x06\x1a\x04\x18\n(\x01\x12\x1d\n\nrange_test\x18\x03 \x01(\x05\x42\t\xfa\x42\x06\x1a\x04\x10\n \x01\x12\x1c\n\x07in_test\x18\x04 \x01(\x05\x42\x0b\xfa\x42\x08\x1a\x06\x30\x01\x30\x02\x30\x03\x12 \n\x0bnot_in_test\x18\x05 \x01(\x05\x42\x0b\xfa\x42\x08\x1a\x06\x38\x01\x38\x02\x38\x03\x12\x1c\n\x0bignore_test\x18\x06 \x01(\x05\x42\x07\xfa\x42\x04\x1a\x02@\x01\"\xc7\x01\n\nUint32Test\x12\x1b\n\nconst_test\x18\x01 \x01(\rB\x07\xfa\x42\x04*\x02\x08\x01\x12\x1f\n\x0crange_e_test\x18\x02 \x01(\rB\t\xfa\x42\x06*\x04\x18\n(\x01\x12\x1d\n\nrange_test\x18\x03 \x01(\rB\t\xfa\x42\x06*\x04\x10\n \x01\x12\x1c\n\x07in_test\x18\x04 \x01(\rB\x0b\xfa\x42\x08*\x06\x30\x01\x30\x02\x30\x03\x12 \n\x0bnot_in_test\x18\x05 \x01(\rB\x0b\xfa\x42\x08*\x06\x38\x01\x38\x02\x38\x03\x12\x1c\n\x0bignore_test\x18\x06 \x01(\rB\x07\xfa\x42\x04*\x02@\x01\"\xc7\x01\n\nSint32Test\x12\x1b\n\nconst_test\x18\x01 \x01(\x11\x42\x07\xfa\x42\x04:\x02\x08\x02\x12\x1f\n\x0crange_e_test\x18\x02 \x01(\x11\x42\t\xfa\x42\x06:\x04\x18\x14(\x02\x12\x1d\n\nrange_test\x18\x03 \x01(\x11\x42\t\xfa\x42\x06:\x04\x10\x14 \x02\x12\x1c\n\x07in_test\x18\x04 \x01(\x11\x42\x0b\xfa\x42\x08:\x06\x30\x02\x30\x04\x30\x06\x12 \n\x0bnot_in_test\x18\x05 \x01(\x11\x42\x0b\xfa\x42\x08:\x06\x38\x02\x38\x04\x38\x06\x12\x1c\n\x0bignore_test\x18\x06 \x01(\x11\x42\x07\xfa\x42\x04:\x02@\x01\"\xc6\x01\n\tInt64Test\x12\x1b\n\nconst_test\x18\x01 \x01(\x03\x42\x07\xfa\x42\x04\"\x02\x08\x01\x12\x1f\n\x0crange_e_test\x18\x02 \x01(\x03\x42\t\xfa\x42\x06\"\x04\x18\n(\x01\x12\x1d\n\nrange_test\x18\x03 \x01(\x03\x42\t\xfa\x42\x06\"\x04\x10\n \x01\x12\x1c\n\x07in_test\x18\x04 \x01(\x03\x42\x0b\xfa\x42\x08\"\x06\x30\x01\x30\x02\x30\x03\x12 \n\x0bnot_in_test\x18\x05 \x01(\x03\x42\x0b\xfa\x42\x08\"\x06\x38\x01\x38\x02\x38\x03\x12\x1c\n\x0bignore_test\x18\x06 \x01(\x03\x42\x07\xfa\x42\x04\"\x02@\x01\"\xc7\x01\n\nUint64Test\x12\x1b\n\nconst_test\x18\x01 \x01(\x04\x42\x07\xfa\x42\x04\x32\x02\x08\x01\x12\x1f\n\x0crange_e_test\x18\x02 \x01(\x04\x42\t\xfa\x42\x06\x32\x04\x18\n(\x01\x12\x1d\n\nrange_test\x18\x03 \x01(\x04\x42\t\xfa\x42\x06\x32\x04\x10\n \x01\x12\x1c\n\x07in_test\x18\x04 \x01(\x04\x42\x0b\xfa\x42\x08\x32\x06\x30\x01\x30\x02\x30\x03\x12 \n\x0bnot_in_test\x18\x05 \x01(\x04\x42\x0b\xfa\x42\x08\x32\x06\x38\x01\x38\x02\x38\x03\x12\x1c\n\x0bignore_test\x18\x06 \x01(\x04\x42\x07\xfa\x42\x04\x32\x02@\x01\"\xc7\x01\n\nSint64Test\x12\x1b\n\nconst_test\x18\x01 \x01(\x12\x42\x07\xfa\x42\x04\x42\x02\x08\x02\x12\x1f\n\x0crange_e_test\x18\x02 \x01(\x12\x42\t\xfa\x42\x06\x42\x04\x18\x14(\x02\x12\x1d\n\nrange_test\x18\x03 \x01(\x12\x42\t\xfa\x42\x06\x42\x04\x10\x14 \x02\x12\x1c\n\x07in_test\x18\x04 \x01(\x12\x42\x0b\xfa\x42\x08\x42\x06\x30\x02\x30\x04\x30\x06\x12 \n\x0bnot_in_test\x18\x05 \x01(\x12\x42\x0b\xfa\x42\x08\x42\x06\x38\x02\x38\x04\x38\x06\x12\x1c\n\x0bignore_test\x18\x06 \x01(\x12\x42\x07\xfa\x42\x04\x42\x02@\x01\"\xe9\x01\n\x0b\x46ixed32Test\x12\x1e\n\nconst_test\x18\x01 \x01(\x07\x42\n\xfa\x42\x07J\x05\r\x01\x00\x00\x00\x12%\n\x0crange_e_test\x18\x02 \x01(\x07\x42\x0f\xfa\x42\x0cJ\n\x1d\n\x00\x00\x00-\x01\x00\x00\x00\x12#\n\nrange_test\x18\x03 \x01(\x07\x42\x0f\xfa\x42\x0cJ\n\x15\n\x00\x00\x00%\x01\x00\x00\x00\x12%\n\x07in_test\x18\x04 \x01(\x07\x42\x14\xfa\x42\x11J\x0f\x35\x01\x00\x00\x00\x35\x02\x00\x00\x00\x35\x03\x00\x00\x00\x12)\n\x0bnot_in_test\x18\x05 \x01(\x07\x42\x14\xfa\x42\x11J\x0f=\x01\x00\x00\x00=\x02\x00\x00\x00=\x03\x00\x00\x00\x12\x1c\n\x0bignore_test\x18\x06 \x01(\x07\x42\x07\xfa\x42\x04J\x02@\x01\"\x95\x02\n\x0b\x46ixed64Test\x12\"\n\nconst_test\x18\x01 \x01(\x06\x42\x0e\xfa\x42\x0bR\t\t\x01\x00\x00\x00\x00\x00\x00\x00\x12-\n\x0crange_e_test\x18\x02 \x01(\x06\x42\x17\xfa\x42\x14R\x12\x19\n\x00\x00\x00\x00\x00\x00\x00)\x01\x00\x00\x00\x00\x00\x00\x00\x12+\n\nrange_test\x18\x03 \x01(\x06\x42\x17\xfa\x42\x14R\x12\x11\n\x00\x00\x00\x00\x00\x00\x00!\x01\x00\x00\x00\x00\x00\x00\x00\x12\x31\n\x07in_test\x18\x04 \x01(\x06\x42 \xfa\x42\x1dR\x1b\x31\x01\x00\x00\x00\x00\x00\x00\x00\x31\x02\x00\x00\x00\x00\x00\x00\x00\x31\x03\x00\x00\x00\x00\x00\x00\x00\x12\x35\n\x0bnot_in_test\x18\x05 \x01(\x06\x42 \xfa\x42\x1dR\x1b\x39\x01\x00\x00\x00\x00\x00\x00\x00\x39\x02\x00\x00\x00\x00\x00\x00\x00\x39\x03\x00\x00\x00\x00\x00\x00\x00\x12\x1c\n\x0bignore_test\x18\x06 \x01(\x06\x42\x07\xfa\x42\x04R\x02@\x01\"\xea\x01\n\x0cSfixed32Test\x12\x1e\n\nconst_test\x18\x01 \x01(\x0f\x42\n\xfa\x42\x07Z\x05\r\x01\x00\x00\x00\x12%\n\x0crange_e_test\x18\x02 \x01(\x0f\x42\x0f\xfa\x42\x0cZ\n\x1d\n\x00\x00\x00-\x01\x00\x00\x00\x12#\n\nrange_test\x18\x03 \x01(\x0f\x42\x0f\xfa\x42\x0cZ\n\x15\n\x00\x00\x00%\x01\x00\x00\x00\x12%\n\x07in_test\x18\x04 \x01(\x0f\x42\x14\xfa\x42\x11Z\x0f\x35\x01\x00\x00\x00\x35\x02\x00\x00\x00\x35\x03\x00\x00\x00\x12)\n\x0bnot_in_test\x18\x05 \x01(\x0f\x42\x14\xfa\x42\x11Z\x0f=\x01\x00\x00\x00=\x02\x00\x00\x00=\x03\x00\x00\x00\x12\x1c\n\x0bignore_test\x18\x06 \x01(\x0f\x42\x07\xfa\x42\x04Z\x02@\x01\"\x96\x02\n\x0cSfixed64Test\x12\"\n\nconst_test\x18\x01 \x01(\x10\x42\x0e\xfa\x42\x0b\x62\t\t\x01\x00\x00\x00\x00\x00\x00\x00\x12-\n\x0crange_e_test\x18\x02 \x01(\x10\x42\x17\xfa\x42\x14\x62\x12\x19\n\x00\x00\x00\x00\x00\x00\x00)\x01\x00\x00\x00\x00\x00\x00\x00\x12+\n\nrange_test\x18\x03 \x01(\x10\x42\x17\xfa\x42\x14\x62\x12\x11\n\x00\x00\x00\x00\x00\x00\x00!\x01\x00\x00\x00\x00\x00\x00\x00\x12\x31\n\x07in_test\x18\x04 \x01(\x10\x42 \xfa\x42\x1d\x62\x1b\x31\x01\x00\x00\x00\x00\x00\x00\x00\x31\x02\x00\x00\x00\x00\x00\x00\x00\x31\x03\x00\x00\x00\x00\x00\x00\x00\x12\x35\n\x0bnot_in_test\x18\x05 \x01(\x10\x42 \xfa\x42\x1d\x62\x1b\x39\x01\x00\x00\x00\x00\x00\x00\x00\x39\x02\x00\x00\x00\x00\x00\x00\x00\x39\x03\x00\x00\x00\x00\x00\x00\x00\x12\x1c\n\x0bignore_test\x18\x06 \x01(\x10\x42\x07\xfa\x42\x04\x62\x02@\x01\"F\n\x08\x42oolTest\x12\x1c\n\x0b\x62ool_1_test\x18\x01 \x01(\x08\x42\x07\xfa\x42\x04j\x02\x08\x01\x12\x1c\n\x0b\x62ool_2_test\x18\x02 \x01(\x08\x42\x07\xfa\x42\x04j\x02\x08\x00\"\xc5\x05\n\nStringTest\x12\x1e\n\nconst_test\x18\x01 \x01(\tB\n\xfa\x42\x07r\x05\n\x03\x61\x61\x61\x12\x1a\n\x08len_test\x18\x02 \x01(\tB\x08\xfa\x42\x05r\x03\x98\x01\x03\x12#\n\x10s_range_len_test\x18\x03 \x01(\tB\t\xfa\x42\x06r\x04\x10\x01\x18\x03\x12#\n\x10\x62_range_len_test\x18\x04 \x01(\tB\t\xfa\x42\x06r\x04 \x01(\x03\x12\"\n\x0cpattern_test\x18\x05 \x01(\tB\x0c\xfa\x42\tr\x07\x32\x05^test\x12\"\n\x0bprefix_test\x18\x06 \x01(\tB\r\xfa\x42\nr\x08:\x06prefix\x12\"\n\x0bsuffix_test\x18\x07 \x01(\tB\r\xfa\x42\nr\x08\x42\x06suffix\x12&\n\rcontains_test\x18\x08 \x01(\tB\x0f\xfa\x42\x0cr\nJ\x08\x63ontains\x12/\n\x11not_contains_test\x18\t \x01(\tB\x14\xfa\x42\x11r\x0f\xba\x01\x0cnot_contains\x12\x1f\n\x07in_test\x18\n \x01(\tB\x0e\xfa\x42\x0br\tR\x01\x61R\x01\x62R\x01\x63\x12#\n\x0bnot_in_test\x18\x0b \x01(\tB\x0e\xfa\x42\x0br\tZ\x01\x61Z\x01\x62Z\x01\x63\x12\x1b\n\nemail_test\x18\x0c \x01(\tB\x07\xfa\x42\x04r\x02`\x01\x12\x1e\n\rhostname_test\x18\r \x01(\tB\x07\xfa\x42\x04r\x02h\x01\x12\x18\n\x07ip_test\x18\x0e \x01(\tB\x07\xfa\x42\x04r\x02p\x01\x12\x1a\n\tipv4_test\x18\x0f \x01(\tB\x07\xfa\x42\x04r\x02x\x01\x12\x1b\n\tipv6_test\x18\x10 \x01(\tB\x08\xfa\x42\x05r\x03\x80\x01\x01\x12\x1a\n\x08uri_test\x18\x11 \x01(\tB\x08\xfa\x42\x05r\x03\x88\x01\x01\x12\x1e\n\x0curi_ref_test\x18\x12 \x01(\tB\x08\xfa\x42\x05r\x03\x90\x01\x01\x12\x1e\n\x0c\x61\x64\x64ress_test\x18\x13 \x01(\tB\x08\xfa\x42\x05r\x03\xa8\x01\x01\x12\x1b\n\tuuid_test\x18\x14 \x01(\tB\x08\xfa\x42\x05r\x03\xb0\x01\x01\x12\x1d\n\x0bignore_test\x18\x15 \x01(\tB\x08\xfa\x42\x05r\x03\xd0\x01\x01\"\xc4\x02\n\tBytesTest\x12\x1f\n\nconst_test\x18\x01 \x01(\x0c\x42\x0b\xfa\x42\x08z\x06\n\x04\x64\x65mo\x12\x19\n\x08len_test\x18\x02 \x01(\x0c\x42\x07\xfa\x42\x04z\x02h\x04\x12!\n\x0erange_len_test\x18\x03 \x01(\x0c\x42\t\xfa\x42\x06z\x04\x10\x01\x18\x04\x12\"\n\x0cpattern_test\x18\x04 \x01(\x0c\x42\x0c\xfa\x42\tz\x07\"\x05^test\x12\"\n\x0bprefix_test\x18\x05 \x01(\x0c\x42\r\xfa\x42\nz\x08*\x06prefix\x12\"\n\x0bsuffix_test\x18\x06 \x01(\x0c\x42\r\xfa\x42\nz\x08\x32\x06suffix\x12&\n\rcontains_test\x18\x07 \x01(\x0c\x42\x0f\xfa\x42\x0cz\n:\x08\x63ontains\x12\x1f\n\x07in_test\x18\x08 \x01(\x0c\x42\x0e\xfa\x42\x0bz\tB\x01\x61\x42\x01\x62\x42\x01\x63\x12#\n\x0bnot_in_test\x18\t \x01(\x0c\x42\x0e\xfa\x42\x0bz\tJ\x01\x61J\x01\x62J\x01\x63\"\xe3\x01\n\x08\x45numTest\x12\x32\n\nconst_test\x18\x01 \x01(\x0e\x32\x14.validate_test.StateB\x08\xfa\x42\x05\x82\x01\x02\x08\x02\x12\x39\n\x11\x64\x65\x66ined_only_test\x18\x02 \x01(\x0e\x32\x14.validate_test.StateB\x08\xfa\x42\x05\x82\x01\x02\x10\x01\x12\x31\n\x07in_test\x18\x03 \x01(\x0e\x32\x14.validate_test.StateB\n\xfa\x42\x07\x82\x01\x04\x18\x00\x18\x02\x12\x35\n\x0bnot_in_test\x18\x04 \x01(\x0e\x32\x14.validate_test.StateB\n\xfa\x42\x07\x82\x01\x04 \x00 \x02\"\xc5\x06\n\x07MapTest\x12\x43\n\tpair_test\x18\x01 \x03(\x0b\x32$.validate_test.MapTest.PairTestEntryB\n\xfa\x42\x07\x9a\x01\x04\x08\x01\x10\x05\x12H\n\rno_parse_test\x18\x02 \x03(\x0b\x32\'.validate_test.MapTest.NoParseTestEntryB\x08\xfa\x42\x05\x9a\x01\x02\x18\x01\x12Q\n\tkeys_test\x18\x03 \x03(\x0b\x32$.validate_test.MapTest.KeysTestEntryB\x18\xfa\x42\t\x9a\x01\x06\"\x04r\x02\x10\x01\xfa\x42\t\x9a\x01\x06\"\x04r\x02\x18\x05\x12U\n\x0bvalues_test\x18\x04 \x03(\x0b\x32&.validate_test.MapTest.ValuesTestEntryB\x18\xfa\x42\t\x9a\x01\x06*\x04\x1a\x02(\x05\xfa\x42\t\x9a\x01\x06*\x04\x1a\x02\x18\x05\x12k\n\x10keys_values_test\x18\x05 \x03(\x0b\x32*.validate_test.MapTest.KeysValuesTestEntryB%\xfa\x42\t\x9a\x01\x06\"\x04r\x02\x10\x01\xfa\x42\t\x9a\x01\x06\"\x04r\x02\x18\x05\xfa\x42\n\x9a\x01\x07*\x05\xb2\x01\x02@\x01\x12\x45\n\x0bignore_test\x18\x06 \x03(\x0b\x32&.validate_test.MapTest.IgnoreTestEntryB\x08\xfa\x42\x05\x9a\x01\x02\x30\x01\x1a/\n\rPairTestEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\x1a\x32\n\x10NoParseTestEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\x1a/\n\rKeysTestEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\x1a\x31\n\x0fValuesTestEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\x1aQ\n\x13KeysValuesTestEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12)\n\x05value\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp:\x02\x38\x01\x1a\x31\n\x0fIgnoreTestEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\"K\n\x0bMessageTest\x12\x1b\n\tskip_test\x18\x01 \x01(\tB\x08\xfa\x42\x05\x8a\x01\x02\x08\x01\x12\x1f\n\rrequired_test\x18\x02 \x01(\tB\x08\xfa\x42\x05\x8a\x01\x02\x10\x01\"\x84\x04\n\x0cRepeatedTest\x12\x1e\n\nrange_test\x18\x01 \x03(\tB\n\xfa\x42\x07\x92\x01\x04\x08\x01\x10\x05\x12\x1d\n\x0bunique_test\x18\x02 \x03(\tB\x08\xfa\x42\x05\x92\x01\x02\x18\x01\x12\x33\n\x11items_string_test\x18\x03 \x03(\tB\x18\xfa\x42\x07\x92\x01\x04\x08\x01\x10\x05\xfa\x42\x0b\x92\x01\x08\"\x06r\x04\x10\x01\x18\x05\x12\x41\n\x11items_double_test\x18\x04 \x03(\x01\x42&\xfa\x42\x07\x92\x01\x04\x08\x01\x10\x05\xfa\x42\x19\x92\x01\x16\"\x14\x12\x12\x11\x00\x00\x00\x00\x00\x00\x14@!\x00\x00\x00\x00\x00\x00\xf0?\x12\x32\n\x10items_int32_test\x18\x05 \x03(\x05\x42\x18\xfa\x42\x07\x92\x01\x04\x08\x01\x10\x05\xfa\x42\x0b\x92\x01\x08\"\x06\x1a\x04\x10\x05 \x01\x12_\n\x14items_timestamp_test\x18\x06 \x03(\x0b\x32\x1a.google.protobuf.TimestampB%\xfa\x42\x07\x92\x01\x04\x08\x01\x10\x05\xfa\x42\x18\x92\x01\x15\"\x13\xb2\x01\x10\x1a\x06\x08\x8a\xa0\xf8\xfa\x05*\x06\x08\x80\xa0\xf8\xfa\x05\x12U\n\x13items_duration_test\x18\x07 \x03(\x0b\x32\x19.google.protobuf.DurationB\x1d\xfa\x42\x07\x92\x01\x04\x08\x01\x10\x05\xfa\x42\x10\x92\x01\r\"\x0b\xaa\x01\x08\x1a\x02\x08\x14*\x02\x08\n\x12\x32\n\x10items_bytes_test\x18\x08 \x03(\x0c\x42\x18\xfa\x42\x07\x92\x01\x04\x08\x01\x10\x05\xfa\x42\x0b\x92\x01\x08\"\x06z\x04\x10\x01\x18\x05\x12\x1d\n\x0bignore_test\x18\t \x03(\tB\x08\xfa\x42\x05\x92\x01\x02(\x01\"\xde\x02\n\x07\x41nyTest\x12\x35\n\rrequired_test\x18\x01 \x01(\x0b\x32\x14.google.protobuf.AnyB\x08\xfa\x42\x05\xa2\x01\x02\x08\x01\x12\x8e\x01\n\x0bnot_in_test\x18\x02 \x01(\x0b\x32\x14.google.protobuf.AnyBc\xfa\x42`\xa2\x01]\x1a,type.googleapis.com/google.protobuf.Duration\x1a-type.googleapis.com/google.protobuf.Timestamp\x12\x8a\x01\n\x07in_test\x18\x03 \x01(\x0b\x32\x14.google.protobuf.AnyBc\xfa\x42`\xa2\x01]\x12,type.googleapis.com/google.protobuf.Duration\x12-type.googleapis.com/google.protobuf.Timestamp\"\xb7\x03\n\x0c\x44urationTest\x12:\n\rrequired_test\x18\x01 \x01(\x0b\x32\x19.google.protobuf.DurationB\x08\xfa\x42\x05\xaa\x01\x02\x08\x01\x12?\n\nconst_test\x18\x02 \x01(\x0b\x32\x19.google.protobuf.DurationB\x10\xfa\x42\r\xaa\x01\n\x12\x08\x08\x01\x10\x80\xca\xb5\xee\x01\x12I\n\nrange_test\x18\x03 \x01(\x0b\x32\x19.google.protobuf.DurationB\x1a\xfa\x42\x17\xaa\x01\x14\x1a\x08\x08\n\x10\x80\xca\xb5\xee\x01*\x08\x08\x05\x10\x80\xca\xb5\xee\x01\x12K\n\x0crange_e_test\x18\x04 \x01(\x0b\x32\x19.google.protobuf.DurationB\x1a\xfa\x42\x17\xaa\x01\x14\"\x08\x08\n\x10\x80\xca\xb5\xee\x01\x32\x08\x08\x05\x10\x80\xca\xb5\xee\x01\x12\x46\n\x07in_test\x18\x05 \x01(\x0b\x32\x19.google.protobuf.DurationB\x1a\xfa\x42\x17\xaa\x01\x14:\x08\x08\x01\x10\x80\xca\xb5\xee\x01:\x08\x08\x03\x10\x80\xca\xb5\xee\x01\x12J\n\x0bnot_in_test\x18\x06 \x01(\x0b\x32\x19.google.protobuf.DurationB\x1a\xfa\x42\x17\xaa\x01\x14\x42\x08\x08\x01\x10\x80\xca\xb5\xee\x01\x42\x08\x08\x03\x10\x80\xca\xb5\xee\x01\"\x9c\x04\n\rTimestampTest\x12;\n\rrequired_test\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.TimestampB\x08\xfa\x42\x05\xb2\x01\x02\x08\x01\x12>\n\nconst_test\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.TimestampB\x0e\xfa\x42\x0b\xb2\x01\x08\x12\x06\x08\x80\xa0\xf8\xfa\x05\x12\x46\n\nrange_test\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.TimestampB\x16\xfa\x42\x13\xb2\x01\x10\x1a\x06\x08\x8a\xa0\xf8\xfa\x05*\x06\x08\x80\xa0\xf8\xfa\x05\x12H\n\x0crange_e_test\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.TimestampB\x16\xfa\x42\x13\xb2\x01\x10\"\x06\x08\x8a\xa0\xf8\xfa\x05\x32\x06\x08\x80\xa0\xf8\xfa\x05\x12\x39\n\x0blt_now_test\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.TimestampB\x08\xfa\x42\x05\xb2\x01\x02\x38\x01\x12\x39\n\x0bgt_now_test\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.TimestampB\x08\xfa\x42\x05\xb2\x01\x02@\x01\x12;\n\x0bwithin_test\x18\x07 \x01(\x0b\x32\x1a.google.protobuf.TimestampB\n\xfa\x42\x07\xb2\x01\x04J\x02\x08\x01\x12I\n\x16within_and_gt_now_test\x18\x08 \x01(\x0b\x32\x1a.google.protobuf.TimestampB\r\xfa\x42\n\xb2\x01\x07@\x01J\x03\x08\x90\x1c\"\x86\x01\n\x13MessageDisabledTest\x12\x1e\n\nconst_test\x18\x01 \x01(\x11\x42\n\xfa\x42\x07\n\x05\r\x00\x00\x80?\x12%\n\x0crange_e_test\x18\x02 \x01(\x11\x42\x0f\xfa\x42\x0c\n\n\x1d\x00\x00 A-\x00\x00\x80?\x12#\n\nrange_test\x18\x03 \x01(\x11\x42\x0f\xfa\x42\x0c\n\n\x15\x00\x00 A%\x00\x00\x80?:\x03\xf8\x42\x01\"\x85\x01\n\x12MessageIgnoredTest\x12\x1e\n\nconst_test\x18\x01 \x01(\x11\x42\n\xfa\x42\x07\n\x05\r\x00\x00\x80?\x12%\n\x0crange_e_test\x18\x02 \x01(\x11\x42\x0f\xfa\x42\x0c\n\n\x1d\x00\x00 A-\x00\x00\x80?\x12#\n\nrange_test\x18\x03 \x01(\x11\x42\x0f\xfa\x42\x0c\n\n\x15\x00\x00 A%\x00\x00\x80?:\x03\x80\x43\x01\"@\n\tOneOfTest\x12\x0e\n\x06header\x18\x01 \x01(\t\x12\x0b\n\x01x\x18\x02 \x01(\tH\x00\x12\x0b\n\x01y\x18\x03 \x01(\x05H\x00\x42\t\n\x02id\x12\x03\xf8\x42\x01\">\n\x0cOneOfNotTest\x12\x0e\n\x06header\x18\x01 \x01(\t\x12\x0b\n\x01x\x18\x02 \x01(\tH\x00\x12\x0b\n\x01y\x18\x03 \x01(\x05H\x00\x42\x04\n\x02id\"\x8e\x06\n\rNestedMessage\x12M\n\x12string_in_map_test\x18\x01 \x03(\x0b\x32\x31.validate_test.NestedMessage.StringInMapTestEntry\x12G\n\x0fmap_in_map_test\x18\x02 \x03(\x0b\x32..validate_test.NestedMessage.MapInMapTestEntry\x12=\n\x08user_pay\x18\x03 \x01(\x0b\x32+.validate_test.NestedMessage.UserPayMessage\x12[\n\x13not_enable_user_pay\x18\x04 \x01(\x0b\x32\x34.validate_test.NestedMessage.NotEnableUserPayMessageB\x08\xfa\x42\x05\x8a\x01\x02\x08\x01\x12%\n\x05\x65mpty\x18\x05 \x01(\x0b\x32\x16.google.protobuf.Empty\x1a{\n\x0eUserPayMessage\x12\x1e\n\x0b\x62\x61nk_number\x18\x01 \x01(\tB\t\xfa\x42\x06r\x04\x10\r\x18\x13\x12\x31\n\x03\x65xp\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.TimestampB\x08\xfa\x42\x05\xb2\x01\x02@\x01\x12\x16\n\x04uuid\x18\x03 \x01(\tB\x08\xfa\x42\x05r\x03\xb0\x01\x01\x1a\x84\x01\n\x17NotEnableUserPayMessage\x12\x1e\n\x0b\x62\x61nk_number\x18\x01 \x01(\tB\t\xfa\x42\x06r\x04\x10\r\x18\x13\x12\x31\n\x03\x65xp\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.TimestampB\x08\xfa\x42\x05\xb2\x01\x02@\x01\x12\x16\n\x04uuid\x18\x03 \x01(\tB\x08\xfa\x42\x05r\x03\xb0\x01\x01\x1aQ\n\x14StringInMapTestEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12(\n\x05value\x18\x02 \x01(\x0b\x32\x19.validate_test.StringTest:\x02\x38\x01\x1aK\n\x11MapInMapTestEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12%\n\x05value\x18\x02 \x01(\x0b\x32\x16.validate_test.MapTest:\x02\x38\x01*.\n\x05State\x12\x0c\n\x08INACTIVE\x10\x00\x12\x0b\n\x07PENDING\x10\x01\x12\n\n\x06\x41\x43TIVE\x10\x02\x62\x06proto3'
-  ,
-  dependencies=[google_dot_protobuf_dot_any__pb2.DESCRIPTOR,google_dot_protobuf_dot_empty__pb2.DESCRIPTOR,google_dot_protobuf_dot_duration__pb2.DESCRIPTOR,google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,example__proto_dot_common_dot_validate__pb2.DESCRIPTOR,])
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n!example_proto/validate/demo.proto\x12\rvalidate_test\x1a\x19google/protobuf/any.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a#example_proto/common/validate.proto\"\xe7\x01\n\tFloatTest\x12\x1e\n\nconst_test\x18\x01 \x01(\x02\x42\n\xfa\x42\x07\n\x05\r\x00\x00\x80?\x12%\n\x0crange_e_test\x18\x02 \x01(\x02\x42\x0f\xfa\x42\x0c\n\n\x1d\x00\x00 A-\x00\x00\x80?\x12#\n\nrange_test\x18\x03 \x01(\x02\x42\x0f\xfa\x42\x0c\n\n\x15\x00\x00 A%\x00\x00\x80?\x12%\n\x07in_test\x18\x04 \x01(\x02\x42\x14\xfa\x42\x11\n\x0f\x35\x00\x00\x80?5\x00\x00\x00@5\x00\x00@@\x12)\n\x0bnot_in_test\x18\x05 \x01(\x02\x42\x14\xfa\x42\x11\n\x0f=\x00\x00\x80?=\x00\x00\x00@=\x00\x00@@\x12\x1c\n\x0bignore_test\x18\x06 \x01(\x02\x42\x07\xfa\x42\x04\n\x02@\x01\"\x94\x02\n\nDoubleTest\x12\"\n\nconst_test\x18\x01 \x01(\x01\x42\x0e\xfa\x42\x0b\x12\t\t\x00\x00\x00\x00\x00\x00\xf0?\x12-\n\x0crange_e_test\x18\x02 \x01(\x01\x42\x17\xfa\x42\x14\x12\x12\x19\x00\x00\x00\x00\x00\x00$@)\x00\x00\x00\x00\x00\x00\xf0?\x12+\n\nrange_test\x18\x03 \x01(\x01\x42\x17\xfa\x42\x14\x12\x12\x11\x00\x00\x00\x00\x00\x00$@!\x00\x00\x00\x00\x00\x00\xf0?\x12\x31\n\x07in_test\x18\x04 \x01(\x01\x42 \xfa\x42\x1d\x12\x1b\x31\x00\x00\x00\x00\x00\x00\xf0?1\x00\x00\x00\x00\x00\x00\x00@1\x00\x00\x00\x00\x00\x00\x08@\x12\x35\n\x0bnot_in_test\x18\x05 \x01(\x01\x42 \xfa\x42\x1d\x12\x1b\x39\x00\x00\x00\x00\x00\x00\xf0?9\x00\x00\x00\x00\x00\x00\x00@9\x00\x00\x00\x00\x00\x00\x08@\x12\x1c\n\x0bignore_test\x18\x06 \x01(\x01\x42\x07\xfa\x42\x04\x12\x02@\x01\"\xc6\x01\n\tInt32Test\x12\x1b\n\nconst_test\x18\x01 \x01(\x05\x42\x07\xfa\x42\x04\x1a\x02\x08\x01\x12\x1f\n\x0crange_e_test\x18\x02 \x01(\x05\x42\t\xfa\x42\x06\x1a\x04\x18\n(\x01\x12\x1d\n\nrange_test\x18\x03 \x01(\x05\x42\t\xfa\x42\x06\x1a\x04\x10\n \x01\x12\x1c\n\x07in_test\x18\x04 \x01(\x05\x42\x0b\xfa\x42\x08\x1a\x06\x30\x01\x30\x02\x30\x03\x12 \n\x0bnot_in_test\x18\x05 \x01(\x05\x42\x0b\xfa\x42\x08\x1a\x06\x38\x01\x38\x02\x38\x03\x12\x1c\n\x0bignore_test\x18\x06 \x01(\x05\x42\x07\xfa\x42\x04\x1a\x02@\x01\"\xc7\x01\n\nUint32Test\x12\x1b\n\nconst_test\x18\x01 \x01(\rB\x07\xfa\x42\x04*\x02\x08\x01\x12\x1f\n\x0crange_e_test\x18\x02 \x01(\rB\t\xfa\x42\x06*\x04\x18\n(\x01\x12\x1d\n\nrange_test\x18\x03 \x01(\rB\t\xfa\x42\x06*\x04\x10\n \x01\x12\x1c\n\x07in_test\x18\x04 \x01(\rB\x0b\xfa\x42\x08*\x06\x30\x01\x30\x02\x30\x03\x12 \n\x0bnot_in_test\x18\x05 \x01(\rB\x0b\xfa\x42\x08*\x06\x38\x01\x38\x02\x38\x03\x12\x1c\n\x0bignore_test\x18\x06 \x01(\rB\x07\xfa\x42\x04*\x02@\x01\"\xc7\x01\n\nSint32Test\x12\x1b\n\nconst_test\x18\x01 \x01(\x11\x42\x07\xfa\x42\x04:\x02\x08\x02\x12\x1f\n\x0crange_e_test\x18\x02 \x01(\x11\x42\t\xfa\x42\x06:\x04\x18\x14(\x02\x12\x1d\n\nrange_test\x18\x03 \x01(\x11\x42\t\xfa\x42\x06:\x04\x10\x14 \x02\x12\x1c\n\x07in_test\x18\x04 \x01(\x11\x42\x0b\xfa\x42\x08:\x06\x30\x02\x30\x04\x30\x06\x12 \n\x0bnot_in_test\x18\x05 \x01(\x11\x42\x0b\xfa\x42\x08:\x06\x38\x02\x38\x04\x38\x06\x12\x1c\n\x0bignore_test\x18\x06 \x01(\x11\x42\x07\xfa\x42\x04:\x02@\x01\"\xc6\x01\n\tInt64Test\x12\x1b\n\nconst_test\x18\x01 \x01(\x03\x42\x07\xfa\x42\x04\"\x02\x08\x01\x12\x1f\n\x0crange_e_test\x18\x02 \x01(\x03\x42\t\xfa\x42\x06\"\x04\x18\n(\x01\x12\x1d\n\nrange_test\x18\x03 \x01(\x03\x42\t\xfa\x42\x06\"\x04\x10\n \x01\x12\x1c\n\x07in_test\x18\x04 \x01(\x03\x42\x0b\xfa\x42\x08\"\x06\x30\x01\x30\x02\x30\x03\x12 \n\x0bnot_in_test\x18\x05 \x01(\x03\x42\x0b\xfa\x42\x08\"\x06\x38\x01\x38\x02\x38\x03\x12\x1c\n\x0bignore_test\x18\x06 \x01(\x03\x42\x07\xfa\x42\x04\"\x02@\x01\"\xc7\x01\n\nUint64Test\x12\x1b\n\nconst_test\x18\x01 \x01(\x04\x42\x07\xfa\x42\x04\x32\x02\x08\x01\x12\x1f\n\x0crange_e_test\x18\x02 \x01(\x04\x42\t\xfa\x42\x06\x32\x04\x18\n(\x01\x12\x1d\n\nrange_test\x18\x03 \x01(\x04\x42\t\xfa\x42\x06\x32\x04\x10\n \x01\x12\x1c\n\x07in_test\x18\x04 \x01(\x04\x42\x0b\xfa\x42\x08\x32\x06\x30\x01\x30\x02\x30\x03\x12 \n\x0bnot_in_test\x18\x05 \x01(\x04\x42\x0b\xfa\x42\x08\x32\x06\x38\x01\x38\x02\x38\x03\x12\x1c\n\x0bignore_test\x18\x06 \x01(\x04\x42\x07\xfa\x42\x04\x32\x02@\x01\"\xc7\x01\n\nSint64Test\x12\x1b\n\nconst_test\x18\x01 \x01(\x12\x42\x07\xfa\x42\x04\x42\x02\x08\x02\x12\x1f\n\x0crange_e_test\x18\x02 \x01(\x12\x42\t\xfa\x42\x06\x42\x04\x18\x14(\x02\x12\x1d\n\nrange_test\x18\x03 \x01(\x12\x42\t\xfa\x42\x06\x42\x04\x10\x14 \x02\x12\x1c\n\x07in_test\x18\x04 \x01(\x12\x42\x0b\xfa\x42\x08\x42\x06\x30\x02\x30\x04\x30\x06\x12 \n\x0bnot_in_test\x18\x05 \x01(\x12\x42\x0b\xfa\x42\x08\x42\x06\x38\x02\x38\x04\x38\x06\x12\x1c\n\x0bignore_test\x18\x06 \x01(\x12\x42\x07\xfa\x42\x04\x42\x02@\x01\"\xe9\x01\n\x0b\x46ixed32Test\x12\x1e\n\nconst_test\x18\x01 \x01(\x07\x42\n\xfa\x42\x07J\x05\r\x01\x00\x00\x00\x12%\n\x0crange_e_test\x18\x02 \x01(\x07\x42\x0f\xfa\x42\x0cJ\n\x1d\n\x00\x00\x00-\x01\x00\x00\x00\x12#\n\nrange_test\x18\x03 \x01(\x07\x42\x0f\xfa\x42\x0cJ\n\x15\n\x00\x00\x00%\x01\x00\x00\x00\x12%\n\x07in_test\x18\x04 \x01(\x07\x42\x14\xfa\x42\x11J\x0f\x35\x01\x00\x00\x00\x35\x02\x00\x00\x00\x35\x03\x00\x00\x00\x12)\n\x0bnot_in_test\x18\x05 \x01(\x07\x42\x14\xfa\x42\x11J\x0f=\x01\x00\x00\x00=\x02\x00\x00\x00=\x03\x00\x00\x00\x12\x1c\n\x0bignore_test\x18\x06 \x01(\x07\x42\x07\xfa\x42\x04J\x02@\x01\"\x95\x02\n\x0b\x46ixed64Test\x12\"\n\nconst_test\x18\x01 \x01(\x06\x42\x0e\xfa\x42\x0bR\t\t\x01\x00\x00\x00\x00\x00\x00\x00\x12-\n\x0crange_e_test\x18\x02 \x01(\x06\x42\x17\xfa\x42\x14R\x12\x19\n\x00\x00\x00\x00\x00\x00\x00)\x01\x00\x00\x00\x00\x00\x00\x00\x12+\n\nrange_test\x18\x03 \x01(\x06\x42\x17\xfa\x42\x14R\x12\x11\n\x00\x00\x00\x00\x00\x00\x00!\x01\x00\x00\x00\x00\x00\x00\x00\x12\x31\n\x07in_test\x18\x04 \x01(\x06\x42 \xfa\x42\x1dR\x1b\x31\x01\x00\x00\x00\x00\x00\x00\x00\x31\x02\x00\x00\x00\x00\x00\x00\x00\x31\x03\x00\x00\x00\x00\x00\x00\x00\x12\x35\n\x0bnot_in_test\x18\x05 \x01(\x06\x42 \xfa\x42\x1dR\x1b\x39\x01\x00\x00\x00\x00\x00\x00\x00\x39\x02\x00\x00\x00\x00\x00\x00\x00\x39\x03\x00\x00\x00\x00\x00\x00\x00\x12\x1c\n\x0bignore_test\x18\x06 \x01(\x06\x42\x07\xfa\x42\x04R\x02@\x01\"\xea\x01\n\x0cSfixed32Test\x12\x1e\n\nconst_test\x18\x01 \x01(\x0f\x42\n\xfa\x42\x07Z\x05\r\x01\x00\x00\x00\x12%\n\x0crange_e_test\x18\x02 \x01(\x0f\x42\x0f\xfa\x42\x0cZ\n\x1d\n\x00\x00\x00-\x01\x00\x00\x00\x12#\n\nrange_test\x18\x03 \x01(\x0f\x42\x0f\xfa\x42\x0cZ\n\x15\n\x00\x00\x00%\x01\x00\x00\x00\x12%\n\x07in_test\x18\x04 \x01(\x0f\x42\x14\xfa\x42\x11Z\x0f\x35\x01\x00\x00\x00\x35\x02\x00\x00\x00\x35\x03\x00\x00\x00\x12)\n\x0bnot_in_test\x18\x05 \x01(\x0f\x42\x14\xfa\x42\x11Z\x0f=\x01\x00\x00\x00=\x02\x00\x00\x00=\x03\x00\x00\x00\x12\x1c\n\x0bignore_test\x18\x06 \x01(\x0f\x42\x07\xfa\x42\x04Z\x02@\x01\"\x96\x02\n\x0cSfixed64Test\x12\"\n\nconst_test\x18\x01 \x01(\x10\x42\x0e\xfa\x42\x0b\x62\t\t\x01\x00\x00\x00\x00\x00\x00\x00\x12-\n\x0crange_e_test\x18\x02 \x01(\x10\x42\x17\xfa\x42\x14\x62\x12\x19\n\x00\x00\x00\x00\x00\x00\x00)\x01\x00\x00\x00\x00\x00\x00\x00\x12+\n\nrange_test\x18\x03 \x01(\x10\x42\x17\xfa\x42\x14\x62\x12\x11\n\x00\x00\x00\x00\x00\x00\x00!\x01\x00\x00\x00\x00\x00\x00\x00\x12\x31\n\x07in_test\x18\x04 \x01(\x10\x42 \xfa\x42\x1d\x62\x1b\x31\x01\x00\x00\x00\x00\x00\x00\x00\x31\x02\x00\x00\x00\x00\x00\x00\x00\x31\x03\x00\x00\x00\x00\x00\x00\x00\x12\x35\n\x0bnot_in_test\x18\x05 \x01(\x10\x42 \xfa\x42\x1d\x62\x1b\x39\x01\x00\x00\x00\x00\x00\x00\x00\x39\x02\x00\x00\x00\x00\x00\x00\x00\x39\x03\x00\x00\x00\x00\x00\x00\x00\x12\x1c\n\x0bignore_test\x18\x06 \x01(\x10\x42\x07\xfa\x42\x04\x62\x02@\x01\"F\n\x08\x42oolTest\x12\x1c\n\x0b\x62ool_1_test\x18\x01 \x01(\x08\x42\x07\xfa\x42\x04j\x02\x08\x01\x12\x1c\n\x0b\x62ool_2_test\x18\x02 \x01(\x08\x42\x07\xfa\x42\x04j\x02\x08\x00\"\xc5\x05\n\nStringTest\x12\x1e\n\nconst_test\x18\x01 \x01(\tB\n\xfa\x42\x07r\x05\n\x03\x61\x61\x61\x12\x1a\n\x08len_test\x18\x02 \x01(\tB\x08\xfa\x42\x05r\x03\x98\x01\x03\x12#\n\x10s_range_len_test\x18\x03 \x01(\tB\t\xfa\x42\x06r\x04\x10\x01\x18\x03\x12#\n\x10\x62_range_len_test\x18\x04 \x01(\tB\t\xfa\x42\x06r\x04 \x01(\x03\x12\"\n\x0cpattern_test\x18\x05 \x01(\tB\x0c\xfa\x42\tr\x07\x32\x05^test\x12\"\n\x0bprefix_test\x18\x06 \x01(\tB\r\xfa\x42\nr\x08:\x06prefix\x12\"\n\x0bsuffix_test\x18\x07 \x01(\tB\r\xfa\x42\nr\x08\x42\x06suffix\x12&\n\rcontains_test\x18\x08 \x01(\tB\x0f\xfa\x42\x0cr\nJ\x08\x63ontains\x12/\n\x11not_contains_test\x18\t \x01(\tB\x14\xfa\x42\x11r\x0f\xba\x01\x0cnot_contains\x12\x1f\n\x07in_test\x18\n \x01(\tB\x0e\xfa\x42\x0br\tR\x01\x61R\x01\x62R\x01\x63\x12#\n\x0bnot_in_test\x18\x0b \x01(\tB\x0e\xfa\x42\x0br\tZ\x01\x61Z\x01\x62Z\x01\x63\x12\x1b\n\nemail_test\x18\x0c \x01(\tB\x07\xfa\x42\x04r\x02`\x01\x12\x1e\n\rhostname_test\x18\r \x01(\tB\x07\xfa\x42\x04r\x02h\x01\x12\x18\n\x07ip_test\x18\x0e \x01(\tB\x07\xfa\x42\x04r\x02p\x01\x12\x1a\n\tipv4_test\x18\x0f \x01(\tB\x07\xfa\x42\x04r\x02x\x01\x12\x1b\n\tipv6_test\x18\x10 \x01(\tB\x08\xfa\x42\x05r\x03\x80\x01\x01\x12\x1a\n\x08uri_test\x18\x11 \x01(\tB\x08\xfa\x42\x05r\x03\x88\x01\x01\x12\x1e\n\x0curi_ref_test\x18\x12 \x01(\tB\x08\xfa\x42\x05r\x03\x90\x01\x01\x12\x1e\n\x0c\x61\x64\x64ress_test\x18\x13 \x01(\tB\x08\xfa\x42\x05r\x03\xa8\x01\x01\x12\x1b\n\tuuid_test\x18\x14 \x01(\tB\x08\xfa\x42\x05r\x03\xb0\x01\x01\x12\x1d\n\x0bignore_test\x18\x15 \x01(\tB\x08\xfa\x42\x05r\x03\xd0\x01\x01\"\xc4\x02\n\tBytesTest\x12\x1f\n\nconst_test\x18\x01 \x01(\x0c\x42\x0b\xfa\x42\x08z\x06\n\x04\x64\x65mo\x12\x19\n\x08len_test\x18\x02 \x01(\x0c\x42\x07\xfa\x42\x04z\x02h\x04\x12!\n\x0erange_len_test\x18\x03 \x01(\x0c\x42\t\xfa\x42\x06z\x04\x10\x01\x18\x04\x12\"\n\x0cpattern_test\x18\x04 \x01(\x0c\x42\x0c\xfa\x42\tz\x07\"\x05^test\x12\"\n\x0bprefix_test\x18\x05 \x01(\x0c\x42\r\xfa\x42\nz\x08*\x06prefix\x12\"\n\x0bsuffix_test\x18\x06 \x01(\x0c\x42\r\xfa\x42\nz\x08\x32\x06suffix\x12&\n\rcontains_test\x18\x07 \x01(\x0c\x42\x0f\xfa\x42\x0cz\n:\x08\x63ontains\x12\x1f\n\x07in_test\x18\x08 \x01(\x0c\x42\x0e\xfa\x42\x0bz\tB\x01\x61\x42\x01\x62\x42\x01\x63\x12#\n\x0bnot_in_test\x18\t \x01(\x0c\x42\x0e\xfa\x42\x0bz\tJ\x01\x61J\x01\x62J\x01\x63\"\xe3\x01\n\x08\x45numTest\x12\x32\n\nconst_test\x18\x01 \x01(\x0e\x32\x14.validate_test.StateB\x08\xfa\x42\x05\x82\x01\x02\x08\x02\x12\x39\n\x11\x64\x65\x66ined_only_test\x18\x02 \x01(\x0e\x32\x14.validate_test.StateB\x08\xfa\x42\x05\x82\x01\x02\x10\x01\x12\x31\n\x07in_test\x18\x03 \x01(\x0e\x32\x14.validate_test.StateB\n\xfa\x42\x07\x82\x01\x04\x18\x00\x18\x02\x12\x35\n\x0bnot_in_test\x18\x04 \x01(\x0e\x32\x14.validate_test.StateB\n\xfa\x42\x07\x82\x01\x04 \x00 \x02\"\xc5\x06\n\x07MapTest\x12\x43\n\tpair_test\x18\x01 \x03(\x0b\x32$.validate_test.MapTest.PairTestEntryB\n\xfa\x42\x07\x9a\x01\x04\x08\x01\x10\x05\x12H\n\rno_parse_test\x18\x02 \x03(\x0b\x32\'.validate_test.MapTest.NoParseTestEntryB\x08\xfa\x42\x05\x9a\x01\x02\x18\x01\x12Q\n\tkeys_test\x18\x03 \x03(\x0b\x32$.validate_test.MapTest.KeysTestEntryB\x18\xfa\x42\t\x9a\x01\x06\"\x04r\x02\x10\x01\xfa\x42\t\x9a\x01\x06\"\x04r\x02\x18\x05\x12U\n\x0bvalues_test\x18\x04 \x03(\x0b\x32&.validate_test.MapTest.ValuesTestEntryB\x18\xfa\x42\t\x9a\x01\x06*\x04\x1a\x02(\x05\xfa\x42\t\x9a\x01\x06*\x04\x1a\x02\x18\x05\x12k\n\x10keys_values_test\x18\x05 \x03(\x0b\x32*.validate_test.MapTest.KeysValuesTestEntryB%\xfa\x42\t\x9a\x01\x06\"\x04r\x02\x10\x01\xfa\x42\t\x9a\x01\x06\"\x04r\x02\x18\x05\xfa\x42\n\x9a\x01\x07*\x05\xb2\x01\x02@\x01\x12\x45\n\x0bignore_test\x18\x06 \x03(\x0b\x32&.validate_test.MapTest.IgnoreTestEntryB\x08\xfa\x42\x05\x9a\x01\x02\x30\x01\x1a/\n\rPairTestEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\x1a\x32\n\x10NoParseTestEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\x1a/\n\rKeysTestEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\x1a\x31\n\x0fValuesTestEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\x1aQ\n\x13KeysValuesTestEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12)\n\x05value\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp:\x02\x38\x01\x1a\x31\n\x0fIgnoreTestEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\"K\n\x0bMessageTest\x12\x1b\n\tskip_test\x18\x01 \x01(\tB\x08\xfa\x42\x05\x8a\x01\x02\x08\x01\x12\x1f\n\rrequired_test\x18\x02 \x01(\tB\x08\xfa\x42\x05\x8a\x01\x02\x10\x01\"\x84\x04\n\x0cRepeatedTest\x12\x1e\n\nrange_test\x18\x01 \x03(\tB\n\xfa\x42\x07\x92\x01\x04\x08\x01\x10\x05\x12\x1d\n\x0bunique_test\x18\x02 \x03(\tB\x08\xfa\x42\x05\x92\x01\x02\x18\x01\x12\x33\n\x11items_string_test\x18\x03 \x03(\tB\x18\xfa\x42\x07\x92\x01\x04\x08\x01\x10\x05\xfa\x42\x0b\x92\x01\x08\"\x06r\x04\x10\x01\x18\x05\x12\x41\n\x11items_double_test\x18\x04 \x03(\x01\x42&\xfa\x42\x07\x92\x01\x04\x08\x01\x10\x05\xfa\x42\x19\x92\x01\x16\"\x14\x12\x12\x11\x00\x00\x00\x00\x00\x00\x14@!\x00\x00\x00\x00\x00\x00\xf0?\x12\x32\n\x10items_int32_test\x18\x05 \x03(\x05\x42\x18\xfa\x42\x07\x92\x01\x04\x08\x01\x10\x05\xfa\x42\x0b\x92\x01\x08\"\x06\x1a\x04\x10\x05 \x01\x12_\n\x14items_timestamp_test\x18\x06 \x03(\x0b\x32\x1a.google.protobuf.TimestampB%\xfa\x42\x07\x92\x01\x04\x08\x01\x10\x05\xfa\x42\x18\x92\x01\x15\"\x13\xb2\x01\x10\x1a\x06\x08\x8a\xa0\xf8\xfa\x05*\x06\x08\x80\xa0\xf8\xfa\x05\x12U\n\x13items_duration_test\x18\x07 \x03(\x0b\x32\x19.google.protobuf.DurationB\x1d\xfa\x42\x07\x92\x01\x04\x08\x01\x10\x05\xfa\x42\x10\x92\x01\r\"\x0b\xaa\x01\x08\x1a\x02\x08\x14*\x02\x08\n\x12\x32\n\x10items_bytes_test\x18\x08 \x03(\x0c\x42\x18\xfa\x42\x07\x92\x01\x04\x08\x01\x10\x05\xfa\x42\x0b\x92\x01\x08\"\x06z\x04\x10\x01\x18\x05\x12\x1d\n\x0bignore_test\x18\t \x03(\tB\x08\xfa\x42\x05\x92\x01\x02(\x01\"\xde\x02\n\x07\x41nyTest\x12\x35\n\rrequired_test\x18\x01 \x01(\x0b\x32\x14.google.protobuf.AnyB\x08\xfa\x42\x05\xa2\x01\x02\x08\x01\x12\x8e\x01\n\x0bnot_in_test\x18\x02 \x01(\x0b\x32\x14.google.protobuf.AnyBc\xfa\x42`\xa2\x01]\x1a,type.googleapis.com/google.protobuf.Duration\x1a-type.googleapis.com/google.protobuf.Timestamp\x12\x8a\x01\n\x07in_test\x18\x03 \x01(\x0b\x32\x14.google.protobuf.AnyBc\xfa\x42`\xa2\x01]\x12,type.googleapis.com/google.protobuf.Duration\x12-type.googleapis.com/google.protobuf.Timestamp\"\xb7\x03\n\x0c\x44urationTest\x12:\n\rrequired_test\x18\x01 \x01(\x0b\x32\x19.google.protobuf.DurationB\x08\xfa\x42\x05\xaa\x01\x02\x08\x01\x12?\n\nconst_test\x18\x02 \x01(\x0b\x32\x19.google.protobuf.DurationB\x10\xfa\x42\r\xaa\x01\n\x12\x08\x08\x01\x10\x80\xca\xb5\xee\x01\x12I\n\nrange_test\x18\x03 \x01(\x0b\x32\x19.google.protobuf.DurationB\x1a\xfa\x42\x17\xaa\x01\x14\x1a\x08\x08\n\x10\x80\xca\xb5\xee\x01*\x08\x08\x05\x10\x80\xca\xb5\xee\x01\x12K\n\x0crange_e_test\x18\x04 \x01(\x0b\x32\x19.google.protobuf.DurationB\x1a\xfa\x42\x17\xaa\x01\x14\"\x08\x08\n\x10\x80\xca\xb5\xee\x01\x32\x08\x08\x05\x10\x80\xca\xb5\xee\x01\x12\x46\n\x07in_test\x18\x05 \x01(\x0b\x32\x19.google.protobuf.DurationB\x1a\xfa\x42\x17\xaa\x01\x14:\x08\x08\x01\x10\x80\xca\xb5\xee\x01:\x08\x08\x03\x10\x80\xca\xb5\xee\x01\x12J\n\x0bnot_in_test\x18\x06 \x01(\x0b\x32\x19.google.protobuf.DurationB\x1a\xfa\x42\x17\xaa\x01\x14\x42\x08\x08\x01\x10\x80\xca\xb5\xee\x01\x42\x08\x08\x03\x10\x80\xca\xb5\xee\x01\"\x9c\x04\n\rTimestampTest\x12;\n\rrequired_test\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.TimestampB\x08\xfa\x42\x05\xb2\x01\x02\x08\x01\x12>\n\nconst_test\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.TimestampB\x0e\xfa\x42\x0b\xb2\x01\x08\x12\x06\x08\x80\xa0\xf8\xfa\x05\x12\x46\n\nrange_test\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.TimestampB\x16\xfa\x42\x13\xb2\x01\x10\x1a\x06\x08\x8a\xa0\xf8\xfa\x05*\x06\x08\x80\xa0\xf8\xfa\x05\x12H\n\x0crange_e_test\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.TimestampB\x16\xfa\x42\x13\xb2\x01\x10\"\x06\x08\x8a\xa0\xf8\xfa\x05\x32\x06\x08\x80\xa0\xf8\xfa\x05\x12\x39\n\x0blt_now_test\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.TimestampB\x08\xfa\x42\x05\xb2\x01\x02\x38\x01\x12\x39\n\x0bgt_now_test\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.TimestampB\x08\xfa\x42\x05\xb2\x01\x02@\x01\x12;\n\x0bwithin_test\x18\x07 \x01(\x0b\x32\x1a.google.protobuf.TimestampB\n\xfa\x42\x07\xb2\x01\x04J\x02\x08\x01\x12I\n\x16within_and_gt_now_test\x18\x08 \x01(\x0b\x32\x1a.google.protobuf.TimestampB\r\xfa\x42\n\xb2\x01\x07@\x01J\x03\x08\x90\x1c\"\x86\x01\n\x13MessageDisabledTest\x12\x1e\n\nconst_test\x18\x01 \x01(\x11\x42\n\xfa\x42\x07\n\x05\r\x00\x00\x80?\x12%\n\x0crange_e_test\x18\x02 \x01(\x11\x42\x0f\xfa\x42\x0c\n\n\x1d\x00\x00 A-\x00\x00\x80?\x12#\n\nrange_test\x18\x03 \x01(\x11\x42\x0f\xfa\x42\x0c\n\n\x15\x00\x00 A%\x00\x00\x80?:\x03\xf8\x42\x01\"\x85\x01\n\x12MessageIgnoredTest\x12\x1e\n\nconst_test\x18\x01 \x01(\x11\x42\n\xfa\x42\x07\n\x05\r\x00\x00\x80?\x12%\n\x0crange_e_test\x18\x02 \x01(\x11\x42\x0f\xfa\x42\x0c\n\n\x1d\x00\x00 A-\x00\x00\x80?\x12#\n\nrange_test\x18\x03 \x01(\x11\x42\x0f\xfa\x42\x0c\n\n\x15\x00\x00 A%\x00\x00\x80?:\x03\x80\x43\x01\"@\n\tOneOfTest\x12\x0e\n\x06header\x18\x01 \x01(\t\x12\x0b\n\x01x\x18\x02 \x01(\tH\x00\x12\x0b\n\x01y\x18\x03 \x01(\x05H\x00\x42\t\n\x02id\x12\x03\xf8\x42\x01\">\n\x0cOneOfNotTest\x12\x0e\n\x06header\x18\x01 \x01(\t\x12\x0b\n\x01x\x18\x02 \x01(\tH\x00\x12\x0b\n\x01y\x18\x03 \x01(\x05H\x00\x42\x04\n\x02id\"\x8e\x06\n\rNestedMessage\x12M\n\x12string_in_map_test\x18\x01 \x03(\x0b\x32\x31.validate_test.NestedMessage.StringInMapTestEntry\x12G\n\x0fmap_in_map_test\x18\x02 \x03(\x0b\x32..validate_test.NestedMessage.MapInMapTestEntry\x12=\n\x08user_pay\x18\x03 \x01(\x0b\x32+.validate_test.NestedMessage.UserPayMessage\x12[\n\x13not_enable_user_pay\x18\x04 \x01(\x0b\x32\x34.validate_test.NestedMessage.NotEnableUserPayMessageB\x08\xfa\x42\x05\x8a\x01\x02\x08\x01\x12%\n\x05\x65mpty\x18\x05 \x01(\x0b\x32\x16.google.protobuf.Empty\x1a{\n\x0eUserPayMessage\x12\x1e\n\x0b\x62\x61nk_number\x18\x01 \x01(\tB\t\xfa\x42\x06r\x04\x10\r\x18\x13\x12\x31\n\x03\x65xp\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.TimestampB\x08\xfa\x42\x05\xb2\x01\x02@\x01\x12\x16\n\x04uuid\x18\x03 \x01(\tB\x08\xfa\x42\x05r\x03\xb0\x01\x01\x1a\x84\x01\n\x17NotEnableUserPayMessage\x12\x1e\n\x0b\x62\x61nk_number\x18\x01 \x01(\tB\t\xfa\x42\x06r\x04\x10\r\x18\x13\x12\x31\n\x03\x65xp\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.TimestampB\x08\xfa\x42\x05\xb2\x01\x02@\x01\x12\x16\n\x04uuid\x18\x03 \x01(\tB\x08\xfa\x42\x05r\x03\xb0\x01\x01\x1aQ\n\x14StringInMapTestEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12(\n\x05value\x18\x02 \x01(\x0b\x32\x19.validate_test.StringTest:\x02\x38\x01\x1aK\n\x11MapInMapTestEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12%\n\x05value\x18\x02 \x01(\x0b\x32\x16.validate_test.MapTest:\x02\x38\x01*.\n\x05State\x12\x0c\n\x08INACTIVE\x10\x00\x12\x0b\n\x07PENDING\x10\x01\x12\n\n\x06\x41\x43TIVE\x10\x02\x62\x06proto3')
 
-_STATE = _descriptor.EnumDescriptor(
-  name='State',
-  full_name='validate_test.State',
-  filename=None,
-  file=DESCRIPTOR,
-  create_key=_descriptor._internal_create_key,
-  values=[
-    _descriptor.EnumValueDescriptor(
-      name='INACTIVE', index=0, number=0,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-    _descriptor.EnumValueDescriptor(
-      name='PENDING', index=1, number=1,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-    _descriptor.EnumValueDescriptor(
-      name='ACTIVE', index=2, number=2,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-  ],
-  containing_type=None,
-  serialized_options=None,
-  serialized_start=8270,
-  serialized_end=8316,
-)
-_sym_db.RegisterEnumDescriptor(_STATE)
-
+_STATE = DESCRIPTOR.enum_types_by_name['State']
 State = enum_type_wrapper.EnumTypeWrapper(_STATE)
 INACTIVE = 0
 PENDING = 1
 ACTIVE = 2
 
 
-
-_FLOATTEST = _descriptor.Descriptor(
-  name='FloatTest',
-  full_name='validate_test.FloatTest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='const_test', full_name='validate_test.FloatTest.const_test', index=0,
-      number=1, type=2, cpp_type=6, label=1,
-      has_default_value=False, default_value=float(0),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\007\n\005\r\000\000\200?', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='range_e_test', full_name='validate_test.FloatTest.range_e_test', index=1,
-      number=2, type=2, cpp_type=6, label=1,
-      has_default_value=False, default_value=float(0),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\014\n\n\035\000\000 A-\000\000\200?', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='range_test', full_name='validate_test.FloatTest.range_test', index=2,
-      number=3, type=2, cpp_type=6, label=1,
-      has_default_value=False, default_value=float(0),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\014\n\n\025\000\000 A%\000\000\200?', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='in_test', full_name='validate_test.FloatTest.in_test', index=3,
-      number=4, type=2, cpp_type=6, label=1,
-      has_default_value=False, default_value=float(0),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\021\n\0175\000\000\200?5\000\000\000@5\000\000@@', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='not_in_test', full_name='validate_test.FloatTest.not_in_test', index=4,
-      number=5, type=2, cpp_type=6, label=1,
-      has_default_value=False, default_value=float(0),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\021\n\017=\000\000\200?=\000\000\000@=\000\000@@', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='ignore_test', full_name='validate_test.FloatTest.ignore_test', index=5,
-      number=6, type=2, cpp_type=6, label=1,
-      has_default_value=False, default_value=float(0),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\004\n\002@\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=211,
-  serialized_end=442,
-)
-
-
-_DOUBLETEST = _descriptor.Descriptor(
-  name='DoubleTest',
-  full_name='validate_test.DoubleTest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='const_test', full_name='validate_test.DoubleTest.const_test', index=0,
-      number=1, type=1, cpp_type=5, label=1,
-      has_default_value=False, default_value=float(0),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\013\022\t\t\000\000\000\000\000\000\360?', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='range_e_test', full_name='validate_test.DoubleTest.range_e_test', index=1,
-      number=2, type=1, cpp_type=5, label=1,
-      has_default_value=False, default_value=float(0),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\024\022\022\031\000\000\000\000\000\000$@)\000\000\000\000\000\000\360?', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='range_test', full_name='validate_test.DoubleTest.range_test', index=2,
-      number=3, type=1, cpp_type=5, label=1,
-      has_default_value=False, default_value=float(0),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\024\022\022\021\000\000\000\000\000\000$@!\000\000\000\000\000\000\360?', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='in_test', full_name='validate_test.DoubleTest.in_test', index=3,
-      number=4, type=1, cpp_type=5, label=1,
-      has_default_value=False, default_value=float(0),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\035\022\0331\000\000\000\000\000\000\360?1\000\000\000\000\000\000\000@1\000\000\000\000\000\000\010@', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='not_in_test', full_name='validate_test.DoubleTest.not_in_test', index=4,
-      number=5, type=1, cpp_type=5, label=1,
-      has_default_value=False, default_value=float(0),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\035\022\0339\000\000\000\000\000\000\360?9\000\000\000\000\000\000\000@9\000\000\000\000\000\000\010@', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='ignore_test', full_name='validate_test.DoubleTest.ignore_test', index=5,
-      number=6, type=1, cpp_type=5, label=1,
-      has_default_value=False, default_value=float(0),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\004\022\002@\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=445,
-  serialized_end=721,
-)
-
-
-_INT32TEST = _descriptor.Descriptor(
-  name='Int32Test',
-  full_name='validate_test.Int32Test',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='const_test', full_name='validate_test.Int32Test.const_test', index=0,
-      number=1, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\004\032\002\010\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='range_e_test', full_name='validate_test.Int32Test.range_e_test', index=1,
-      number=2, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\006\032\004\030\n(\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='range_test', full_name='validate_test.Int32Test.range_test', index=2,
-      number=3, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\006\032\004\020\n \001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='in_test', full_name='validate_test.Int32Test.in_test', index=3,
-      number=4, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\010\032\0060\0010\0020\003', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='not_in_test', full_name='validate_test.Int32Test.not_in_test', index=4,
-      number=5, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\010\032\0068\0018\0028\003', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='ignore_test', full_name='validate_test.Int32Test.ignore_test', index=5,
-      number=6, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\004\032\002@\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=724,
-  serialized_end=922,
-)
-
-
-_UINT32TEST = _descriptor.Descriptor(
-  name='Uint32Test',
-  full_name='validate_test.Uint32Test',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='const_test', full_name='validate_test.Uint32Test.const_test', index=0,
-      number=1, type=13, cpp_type=3, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\004*\002\010\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='range_e_test', full_name='validate_test.Uint32Test.range_e_test', index=1,
-      number=2, type=13, cpp_type=3, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\006*\004\030\n(\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='range_test', full_name='validate_test.Uint32Test.range_test', index=2,
-      number=3, type=13, cpp_type=3, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\006*\004\020\n \001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='in_test', full_name='validate_test.Uint32Test.in_test', index=3,
-      number=4, type=13, cpp_type=3, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\010*\0060\0010\0020\003', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='not_in_test', full_name='validate_test.Uint32Test.not_in_test', index=4,
-      number=5, type=13, cpp_type=3, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\010*\0068\0018\0028\003', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='ignore_test', full_name='validate_test.Uint32Test.ignore_test', index=5,
-      number=6, type=13, cpp_type=3, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\004*\002@\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=925,
-  serialized_end=1124,
-)
-
-
-_SINT32TEST = _descriptor.Descriptor(
-  name='Sint32Test',
-  full_name='validate_test.Sint32Test',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='const_test', full_name='validate_test.Sint32Test.const_test', index=0,
-      number=1, type=17, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\004:\002\010\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='range_e_test', full_name='validate_test.Sint32Test.range_e_test', index=1,
-      number=2, type=17, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\006:\004\030\024(\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='range_test', full_name='validate_test.Sint32Test.range_test', index=2,
-      number=3, type=17, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\006:\004\020\024 \002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='in_test', full_name='validate_test.Sint32Test.in_test', index=3,
-      number=4, type=17, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\010:\0060\0020\0040\006', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='not_in_test', full_name='validate_test.Sint32Test.not_in_test', index=4,
-      number=5, type=17, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\010:\0068\0028\0048\006', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='ignore_test', full_name='validate_test.Sint32Test.ignore_test', index=5,
-      number=6, type=17, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\004:\002@\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=1127,
-  serialized_end=1326,
-)
-
-
-_INT64TEST = _descriptor.Descriptor(
-  name='Int64Test',
-  full_name='validate_test.Int64Test',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='const_test', full_name='validate_test.Int64Test.const_test', index=0,
-      number=1, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\004\"\002\010\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='range_e_test', full_name='validate_test.Int64Test.range_e_test', index=1,
-      number=2, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\006\"\004\030\n(\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='range_test', full_name='validate_test.Int64Test.range_test', index=2,
-      number=3, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\006\"\004\020\n \001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='in_test', full_name='validate_test.Int64Test.in_test', index=3,
-      number=4, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\010\"\0060\0010\0020\003', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='not_in_test', full_name='validate_test.Int64Test.not_in_test', index=4,
-      number=5, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\010\"\0068\0018\0028\003', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='ignore_test', full_name='validate_test.Int64Test.ignore_test', index=5,
-      number=6, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\004\"\002@\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=1329,
-  serialized_end=1527,
-)
-
-
-_UINT64TEST = _descriptor.Descriptor(
-  name='Uint64Test',
-  full_name='validate_test.Uint64Test',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='const_test', full_name='validate_test.Uint64Test.const_test', index=0,
-      number=1, type=4, cpp_type=4, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\0042\002\010\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='range_e_test', full_name='validate_test.Uint64Test.range_e_test', index=1,
-      number=2, type=4, cpp_type=4, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\0062\004\030\n(\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='range_test', full_name='validate_test.Uint64Test.range_test', index=2,
-      number=3, type=4, cpp_type=4, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\0062\004\020\n \001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='in_test', full_name='validate_test.Uint64Test.in_test', index=3,
-      number=4, type=4, cpp_type=4, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\0102\0060\0010\0020\003', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='not_in_test', full_name='validate_test.Uint64Test.not_in_test', index=4,
-      number=5, type=4, cpp_type=4, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\0102\0068\0018\0028\003', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='ignore_test', full_name='validate_test.Uint64Test.ignore_test', index=5,
-      number=6, type=4, cpp_type=4, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\0042\002@\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=1530,
-  serialized_end=1729,
-)
-
-
-_SINT64TEST = _descriptor.Descriptor(
-  name='Sint64Test',
-  full_name='validate_test.Sint64Test',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='const_test', full_name='validate_test.Sint64Test.const_test', index=0,
-      number=1, type=18, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\004B\002\010\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='range_e_test', full_name='validate_test.Sint64Test.range_e_test', index=1,
-      number=2, type=18, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\006B\004\030\024(\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='range_test', full_name='validate_test.Sint64Test.range_test', index=2,
-      number=3, type=18, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\006B\004\020\024 \002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='in_test', full_name='validate_test.Sint64Test.in_test', index=3,
-      number=4, type=18, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\010B\0060\0020\0040\006', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='not_in_test', full_name='validate_test.Sint64Test.not_in_test', index=4,
-      number=5, type=18, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\010B\0068\0028\0048\006', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='ignore_test', full_name='validate_test.Sint64Test.ignore_test', index=5,
-      number=6, type=18, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\004B\002@\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=1732,
-  serialized_end=1931,
-)
-
-
-_FIXED32TEST = _descriptor.Descriptor(
-  name='Fixed32Test',
-  full_name='validate_test.Fixed32Test',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='const_test', full_name='validate_test.Fixed32Test.const_test', index=0,
-      number=1, type=7, cpp_type=3, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\007J\005\r\001\000\000\000', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='range_e_test', full_name='validate_test.Fixed32Test.range_e_test', index=1,
-      number=2, type=7, cpp_type=3, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\014J\n\035\n\000\000\000-\001\000\000\000', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='range_test', full_name='validate_test.Fixed32Test.range_test', index=2,
-      number=3, type=7, cpp_type=3, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\014J\n\025\n\000\000\000%\001\000\000\000', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='in_test', full_name='validate_test.Fixed32Test.in_test', index=3,
-      number=4, type=7, cpp_type=3, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\021J\0175\001\000\000\0005\002\000\000\0005\003\000\000\000', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='not_in_test', full_name='validate_test.Fixed32Test.not_in_test', index=4,
-      number=5, type=7, cpp_type=3, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\021J\017=\001\000\000\000=\002\000\000\000=\003\000\000\000', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='ignore_test', full_name='validate_test.Fixed32Test.ignore_test', index=5,
-      number=6, type=7, cpp_type=3, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\004J\002@\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=1934,
-  serialized_end=2167,
-)
-
-
-_FIXED64TEST = _descriptor.Descriptor(
-  name='Fixed64Test',
-  full_name='validate_test.Fixed64Test',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='const_test', full_name='validate_test.Fixed64Test.const_test', index=0,
-      number=1, type=6, cpp_type=4, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\013R\t\t\001\000\000\000\000\000\000\000', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='range_e_test', full_name='validate_test.Fixed64Test.range_e_test', index=1,
-      number=2, type=6, cpp_type=4, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\024R\022\031\n\000\000\000\000\000\000\000)\001\000\000\000\000\000\000\000', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='range_test', full_name='validate_test.Fixed64Test.range_test', index=2,
-      number=3, type=6, cpp_type=4, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\024R\022\021\n\000\000\000\000\000\000\000!\001\000\000\000\000\000\000\000', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='in_test', full_name='validate_test.Fixed64Test.in_test', index=3,
-      number=4, type=6, cpp_type=4, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\035R\0331\001\000\000\000\000\000\000\0001\002\000\000\000\000\000\000\0001\003\000\000\000\000\000\000\000', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='not_in_test', full_name='validate_test.Fixed64Test.not_in_test', index=4,
-      number=5, type=6, cpp_type=4, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\035R\0339\001\000\000\000\000\000\000\0009\002\000\000\000\000\000\000\0009\003\000\000\000\000\000\000\000', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='ignore_test', full_name='validate_test.Fixed64Test.ignore_test', index=5,
-      number=6, type=6, cpp_type=4, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\004R\002@\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=2170,
-  serialized_end=2447,
-)
-
-
-_SFIXED32TEST = _descriptor.Descriptor(
-  name='Sfixed32Test',
-  full_name='validate_test.Sfixed32Test',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='const_test', full_name='validate_test.Sfixed32Test.const_test', index=0,
-      number=1, type=15, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\007Z\005\r\001\000\000\000', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='range_e_test', full_name='validate_test.Sfixed32Test.range_e_test', index=1,
-      number=2, type=15, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\014Z\n\035\n\000\000\000-\001\000\000\000', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='range_test', full_name='validate_test.Sfixed32Test.range_test', index=2,
-      number=3, type=15, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\014Z\n\025\n\000\000\000%\001\000\000\000', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='in_test', full_name='validate_test.Sfixed32Test.in_test', index=3,
-      number=4, type=15, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\021Z\0175\001\000\000\0005\002\000\000\0005\003\000\000\000', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='not_in_test', full_name='validate_test.Sfixed32Test.not_in_test', index=4,
-      number=5, type=15, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\021Z\017=\001\000\000\000=\002\000\000\000=\003\000\000\000', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='ignore_test', full_name='validate_test.Sfixed32Test.ignore_test', index=5,
-      number=6, type=15, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\004Z\002@\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=2450,
-  serialized_end=2684,
-)
-
-
-_SFIXED64TEST = _descriptor.Descriptor(
-  name='Sfixed64Test',
-  full_name='validate_test.Sfixed64Test',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='const_test', full_name='validate_test.Sfixed64Test.const_test', index=0,
-      number=1, type=16, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\013b\t\t\001\000\000\000\000\000\000\000', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='range_e_test', full_name='validate_test.Sfixed64Test.range_e_test', index=1,
-      number=2, type=16, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\024b\022\031\n\000\000\000\000\000\000\000)\001\000\000\000\000\000\000\000', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='range_test', full_name='validate_test.Sfixed64Test.range_test', index=2,
-      number=3, type=16, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\024b\022\021\n\000\000\000\000\000\000\000!\001\000\000\000\000\000\000\000', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='in_test', full_name='validate_test.Sfixed64Test.in_test', index=3,
-      number=4, type=16, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\035b\0331\001\000\000\000\000\000\000\0001\002\000\000\000\000\000\000\0001\003\000\000\000\000\000\000\000', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='not_in_test', full_name='validate_test.Sfixed64Test.not_in_test', index=4,
-      number=5, type=16, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\035b\0339\001\000\000\000\000\000\000\0009\002\000\000\000\000\000\000\0009\003\000\000\000\000\000\000\000', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='ignore_test', full_name='validate_test.Sfixed64Test.ignore_test', index=5,
-      number=6, type=16, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\004b\002@\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=2687,
-  serialized_end=2965,
-)
-
-
-_BOOLTEST = _descriptor.Descriptor(
-  name='BoolTest',
-  full_name='validate_test.BoolTest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='bool_1_test', full_name='validate_test.BoolTest.bool_1_test', index=0,
-      number=1, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\004j\002\010\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='bool_2_test', full_name='validate_test.BoolTest.bool_2_test', index=1,
-      number=2, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\004j\002\010\000', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=2967,
-  serialized_end=3037,
-)
-
-
-_STRINGTEST = _descriptor.Descriptor(
-  name='StringTest',
-  full_name='validate_test.StringTest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='const_test', full_name='validate_test.StringTest.const_test', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\007r\005\n\003aaa', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='len_test', full_name='validate_test.StringTest.len_test', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\005r\003\230\001\003', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='s_range_len_test', full_name='validate_test.StringTest.s_range_len_test', index=2,
-      number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\006r\004\020\001\030\003', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='b_range_len_test', full_name='validate_test.StringTest.b_range_len_test', index=3,
-      number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\006r\004 \001(\003', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='pattern_test', full_name='validate_test.StringTest.pattern_test', index=4,
-      number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\tr\0072\005^test', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='prefix_test', full_name='validate_test.StringTest.prefix_test', index=5,
-      number=6, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\nr\010:\006prefix', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='suffix_test', full_name='validate_test.StringTest.suffix_test', index=6,
-      number=7, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\nr\010B\006suffix', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='contains_test', full_name='validate_test.StringTest.contains_test', index=7,
-      number=8, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\014r\nJ\010contains', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='not_contains_test', full_name='validate_test.StringTest.not_contains_test', index=8,
-      number=9, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\021r\017\272\001\014not_contains', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='in_test', full_name='validate_test.StringTest.in_test', index=9,
-      number=10, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\013r\tR\001aR\001bR\001c', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='not_in_test', full_name='validate_test.StringTest.not_in_test', index=10,
-      number=11, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\013r\tZ\001aZ\001bZ\001c', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='email_test', full_name='validate_test.StringTest.email_test', index=11,
-      number=12, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\004r\002`\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='hostname_test', full_name='validate_test.StringTest.hostname_test', index=12,
-      number=13, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\004r\002h\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='ip_test', full_name='validate_test.StringTest.ip_test', index=13,
-      number=14, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\004r\002p\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='ipv4_test', full_name='validate_test.StringTest.ipv4_test', index=14,
-      number=15, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\004r\002x\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='ipv6_test', full_name='validate_test.StringTest.ipv6_test', index=15,
-      number=16, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\005r\003\200\001\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='uri_test', full_name='validate_test.StringTest.uri_test', index=16,
-      number=17, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\005r\003\210\001\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='uri_ref_test', full_name='validate_test.StringTest.uri_ref_test', index=17,
-      number=18, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\005r\003\220\001\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='address_test', full_name='validate_test.StringTest.address_test', index=18,
-      number=19, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\005r\003\250\001\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='uuid_test', full_name='validate_test.StringTest.uuid_test', index=19,
-      number=20, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\005r\003\260\001\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='ignore_test', full_name='validate_test.StringTest.ignore_test', index=20,
-      number=21, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\005r\003\320\001\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=3040,
-  serialized_end=3749,
-)
-
-
-_BYTESTEST = _descriptor.Descriptor(
-  name='BytesTest',
-  full_name='validate_test.BytesTest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='const_test', full_name='validate_test.BytesTest.const_test', index=0,
-      number=1, type=12, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"",
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\010z\006\n\004demo', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='len_test', full_name='validate_test.BytesTest.len_test', index=1,
-      number=2, type=12, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"",
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\004z\002h\004', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='range_len_test', full_name='validate_test.BytesTest.range_len_test', index=2,
-      number=3, type=12, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"",
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\006z\004\020\001\030\004', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='pattern_test', full_name='validate_test.BytesTest.pattern_test', index=3,
-      number=4, type=12, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"",
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\tz\007\"\005^test', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='prefix_test', full_name='validate_test.BytesTest.prefix_test', index=4,
-      number=5, type=12, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"",
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\nz\010*\006prefix', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='suffix_test', full_name='validate_test.BytesTest.suffix_test', index=5,
-      number=6, type=12, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"",
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\nz\0102\006suffix', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='contains_test', full_name='validate_test.BytesTest.contains_test', index=6,
-      number=7, type=12, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"",
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\014z\n:\010contains', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='in_test', full_name='validate_test.BytesTest.in_test', index=7,
-      number=8, type=12, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"",
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\013z\tB\001aB\001bB\001c', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='not_in_test', full_name='validate_test.BytesTest.not_in_test', index=8,
-      number=9, type=12, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"",
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\013z\tJ\001aJ\001bJ\001c', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=3752,
-  serialized_end=4076,
-)
-
-
-_ENUMTEST = _descriptor.Descriptor(
-  name='EnumTest',
-  full_name='validate_test.EnumTest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='const_test', full_name='validate_test.EnumTest.const_test', index=0,
-      number=1, type=14, cpp_type=8, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\005\202\001\002\010\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='defined_only_test', full_name='validate_test.EnumTest.defined_only_test', index=1,
-      number=2, type=14, cpp_type=8, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\005\202\001\002\020\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='in_test', full_name='validate_test.EnumTest.in_test', index=2,
-      number=3, type=14, cpp_type=8, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\007\202\001\004\030\000\030\002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='not_in_test', full_name='validate_test.EnumTest.not_in_test', index=3,
-      number=4, type=14, cpp_type=8, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\007\202\001\004 \000 \002', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=4079,
-  serialized_end=4306,
-)
-
-
-_MAPTEST_PAIRTESTENTRY = _descriptor.Descriptor(
-  name='PairTestEntry',
-  full_name='validate_test.MapTest.PairTestEntry',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='key', full_name='validate_test.MapTest.PairTestEntry.key', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='value', full_name='validate_test.MapTest.PairTestEntry.value', index=1,
-      number=2, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=b'8\001',
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=4813,
-  serialized_end=4860,
-)
-
-_MAPTEST_NOPARSETESTENTRY = _descriptor.Descriptor(
-  name='NoParseTestEntry',
-  full_name='validate_test.MapTest.NoParseTestEntry',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='key', full_name='validate_test.MapTest.NoParseTestEntry.key', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='value', full_name='validate_test.MapTest.NoParseTestEntry.value', index=1,
-      number=2, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=b'8\001',
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=4862,
-  serialized_end=4912,
-)
-
-_MAPTEST_KEYSTESTENTRY = _descriptor.Descriptor(
-  name='KeysTestEntry',
-  full_name='validate_test.MapTest.KeysTestEntry',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='key', full_name='validate_test.MapTest.KeysTestEntry.key', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='value', full_name='validate_test.MapTest.KeysTestEntry.value', index=1,
-      number=2, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=b'8\001',
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=4914,
-  serialized_end=4961,
-)
-
-_MAPTEST_VALUESTESTENTRY = _descriptor.Descriptor(
-  name='ValuesTestEntry',
-  full_name='validate_test.MapTest.ValuesTestEntry',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='key', full_name='validate_test.MapTest.ValuesTestEntry.key', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='value', full_name='validate_test.MapTest.ValuesTestEntry.value', index=1,
-      number=2, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=b'8\001',
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=4963,
-  serialized_end=5012,
-)
-
-_MAPTEST_KEYSVALUESTESTENTRY = _descriptor.Descriptor(
-  name='KeysValuesTestEntry',
-  full_name='validate_test.MapTest.KeysValuesTestEntry',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='key', full_name='validate_test.MapTest.KeysValuesTestEntry.key', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='value', full_name='validate_test.MapTest.KeysValuesTestEntry.value', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=b'8\001',
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=5014,
-  serialized_end=5095,
-)
-
-_MAPTEST_IGNORETESTENTRY = _descriptor.Descriptor(
-  name='IgnoreTestEntry',
-  full_name='validate_test.MapTest.IgnoreTestEntry',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='key', full_name='validate_test.MapTest.IgnoreTestEntry.key', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='value', full_name='validate_test.MapTest.IgnoreTestEntry.value', index=1,
-      number=2, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=b'8\001',
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=5097,
-  serialized_end=5146,
-)
-
-_MAPTEST = _descriptor.Descriptor(
-  name='MapTest',
-  full_name='validate_test.MapTest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='pair_test', full_name='validate_test.MapTest.pair_test', index=0,
-      number=1, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\007\232\001\004\010\001\020\005', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='no_parse_test', full_name='validate_test.MapTest.no_parse_test', index=1,
-      number=2, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\005\232\001\002\030\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='keys_test', full_name='validate_test.MapTest.keys_test', index=2,
-      number=3, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\t\232\001\006\"\004r\002\020\001\372B\t\232\001\006\"\004r\002\030\005', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='values_test', full_name='validate_test.MapTest.values_test', index=3,
-      number=4, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\t\232\001\006*\004\032\002(\005\372B\t\232\001\006*\004\032\002\030\005', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='keys_values_test', full_name='validate_test.MapTest.keys_values_test', index=4,
-      number=5, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\t\232\001\006\"\004r\002\020\001\372B\t\232\001\006\"\004r\002\030\005\372B\n\232\001\007*\005\262\001\002@\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='ignore_test', full_name='validate_test.MapTest.ignore_test', index=5,
-      number=6, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\005\232\001\0020\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[_MAPTEST_PAIRTESTENTRY, _MAPTEST_NOPARSETESTENTRY, _MAPTEST_KEYSTESTENTRY, _MAPTEST_VALUESTESTENTRY, _MAPTEST_KEYSVALUESTESTENTRY, _MAPTEST_IGNORETESTENTRY, ],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=4309,
-  serialized_end=5146,
-)
-
-
-_MESSAGETEST = _descriptor.Descriptor(
-  name='MessageTest',
-  full_name='validate_test.MessageTest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='skip_test', full_name='validate_test.MessageTest.skip_test', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\005\212\001\002\010\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='required_test', full_name='validate_test.MessageTest.required_test', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\005\212\001\002\020\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=5148,
-  serialized_end=5223,
-)
-
-
-_REPEATEDTEST = _descriptor.Descriptor(
-  name='RepeatedTest',
-  full_name='validate_test.RepeatedTest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='range_test', full_name='validate_test.RepeatedTest.range_test', index=0,
-      number=1, type=9, cpp_type=9, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\007\222\001\004\010\001\020\005', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='unique_test', full_name='validate_test.RepeatedTest.unique_test', index=1,
-      number=2, type=9, cpp_type=9, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\005\222\001\002\030\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='items_string_test', full_name='validate_test.RepeatedTest.items_string_test', index=2,
-      number=3, type=9, cpp_type=9, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\007\222\001\004\010\001\020\005\372B\013\222\001\010\"\006r\004\020\001\030\005', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='items_double_test', full_name='validate_test.RepeatedTest.items_double_test', index=3,
-      number=4, type=1, cpp_type=5, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\007\222\001\004\010\001\020\005\372B\031\222\001\026\"\024\022\022\021\000\000\000\000\000\000\024@!\000\000\000\000\000\000\360?', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='items_int32_test', full_name='validate_test.RepeatedTest.items_int32_test', index=4,
-      number=5, type=5, cpp_type=1, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\007\222\001\004\010\001\020\005\372B\013\222\001\010\"\006\032\004\020\005 \001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='items_timestamp_test', full_name='validate_test.RepeatedTest.items_timestamp_test', index=5,
-      number=6, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\007\222\001\004\010\001\020\005\372B\030\222\001\025\"\023\262\001\020\032\006\010\212\240\370\372\005*\006\010\200\240\370\372\005', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='items_duration_test', full_name='validate_test.RepeatedTest.items_duration_test', index=6,
-      number=7, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\007\222\001\004\010\001\020\005\372B\020\222\001\r\"\013\252\001\010\032\002\010\024*\002\010\n', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='items_bytes_test', full_name='validate_test.RepeatedTest.items_bytes_test', index=7,
-      number=8, type=12, cpp_type=9, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\007\222\001\004\010\001\020\005\372B\013\222\001\010\"\006z\004\020\001\030\005', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='ignore_test', full_name='validate_test.RepeatedTest.ignore_test', index=8,
-      number=9, type=9, cpp_type=9, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\005\222\001\002(\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=5226,
-  serialized_end=5742,
-)
-
-
-_ANYTEST = _descriptor.Descriptor(
-  name='AnyTest',
-  full_name='validate_test.AnyTest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='required_test', full_name='validate_test.AnyTest.required_test', index=0,
-      number=1, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\005\242\001\002\010\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='not_in_test', full_name='validate_test.AnyTest.not_in_test', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B`\242\001]\032,type.googleapis.com/google.protobuf.Duration\032-type.googleapis.com/google.protobuf.Timestamp', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='in_test', full_name='validate_test.AnyTest.in_test', index=2,
-      number=3, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B`\242\001]\022,type.googleapis.com/google.protobuf.Duration\022-type.googleapis.com/google.protobuf.Timestamp', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=5745,
-  serialized_end=6095,
-)
-
-
-_DURATIONTEST = _descriptor.Descriptor(
-  name='DurationTest',
-  full_name='validate_test.DurationTest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='required_test', full_name='validate_test.DurationTest.required_test', index=0,
-      number=1, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\005\252\001\002\010\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='const_test', full_name='validate_test.DurationTest.const_test', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\r\252\001\n\022\010\010\001\020\200\312\265\356\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='range_test', full_name='validate_test.DurationTest.range_test', index=2,
-      number=3, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\027\252\001\024\032\010\010\n\020\200\312\265\356\001*\010\010\005\020\200\312\265\356\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='range_e_test', full_name='validate_test.DurationTest.range_e_test', index=3,
-      number=4, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\027\252\001\024\"\010\010\n\020\200\312\265\356\0012\010\010\005\020\200\312\265\356\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='in_test', full_name='validate_test.DurationTest.in_test', index=4,
-      number=5, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\027\252\001\024:\010\010\001\020\200\312\265\356\001:\010\010\003\020\200\312\265\356\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='not_in_test', full_name='validate_test.DurationTest.not_in_test', index=5,
-      number=6, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\027\252\001\024B\010\010\001\020\200\312\265\356\001B\010\010\003\020\200\312\265\356\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=6098,
-  serialized_end=6537,
-)
-
-
-_TIMESTAMPTEST = _descriptor.Descriptor(
-  name='TimestampTest',
-  full_name='validate_test.TimestampTest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='required_test', full_name='validate_test.TimestampTest.required_test', index=0,
-      number=1, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\005\262\001\002\010\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='const_test', full_name='validate_test.TimestampTest.const_test', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\013\262\001\010\022\006\010\200\240\370\372\005', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='range_test', full_name='validate_test.TimestampTest.range_test', index=2,
-      number=3, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\023\262\001\020\032\006\010\212\240\370\372\005*\006\010\200\240\370\372\005', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='range_e_test', full_name='validate_test.TimestampTest.range_e_test', index=3,
-      number=4, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\023\262\001\020\"\006\010\212\240\370\372\0052\006\010\200\240\370\372\005', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='lt_now_test', full_name='validate_test.TimestampTest.lt_now_test', index=4,
-      number=5, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\005\262\001\0028\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='gt_now_test', full_name='validate_test.TimestampTest.gt_now_test', index=5,
-      number=6, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\005\262\001\002@\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='within_test', full_name='validate_test.TimestampTest.within_test', index=6,
-      number=7, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\007\262\001\004J\002\010\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='within_and_gt_now_test', full_name='validate_test.TimestampTest.within_and_gt_now_test', index=7,
-      number=8, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\n\262\001\007@\001J\003\010\220\034', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=6540,
-  serialized_end=7080,
-)
-
-
-_MESSAGEDISABLEDTEST = _descriptor.Descriptor(
-  name='MessageDisabledTest',
-  full_name='validate_test.MessageDisabledTest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='const_test', full_name='validate_test.MessageDisabledTest.const_test', index=0,
-      number=1, type=17, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\007\n\005\r\000\000\200?', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='range_e_test', full_name='validate_test.MessageDisabledTest.range_e_test', index=1,
-      number=2, type=17, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\014\n\n\035\000\000 A-\000\000\200?', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='range_test', full_name='validate_test.MessageDisabledTest.range_test', index=2,
-      number=3, type=17, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\014\n\n\025\000\000 A%\000\000\200?', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=b'\370B\001',
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=7083,
-  serialized_end=7217,
-)
-
-
-_MESSAGEIGNOREDTEST = _descriptor.Descriptor(
-  name='MessageIgnoredTest',
-  full_name='validate_test.MessageIgnoredTest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='const_test', full_name='validate_test.MessageIgnoredTest.const_test', index=0,
-      number=1, type=17, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\007\n\005\r\000\000\200?', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='range_e_test', full_name='validate_test.MessageIgnoredTest.range_e_test', index=1,
-      number=2, type=17, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\014\n\n\035\000\000 A-\000\000\200?', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='range_test', full_name='validate_test.MessageIgnoredTest.range_test', index=2,
-      number=3, type=17, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\014\n\n\025\000\000 A%\000\000\200?', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=b'\200C\001',
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=7220,
-  serialized_end=7353,
-)
-
-
-_ONEOFTEST = _descriptor.Descriptor(
-  name='OneOfTest',
-  full_name='validate_test.OneOfTest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='header', full_name='validate_test.OneOfTest.header', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='x', full_name='validate_test.OneOfTest.x', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='y', full_name='validate_test.OneOfTest.y', index=2,
-      number=3, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-    _descriptor.OneofDescriptor(
-      name='id', full_name='validate_test.OneOfTest.id',
-      index=0, containing_type=None,
-      create_key=_descriptor._internal_create_key,
-    fields=[], serialized_options=b'\370B\001'),
-  ],
-  serialized_start=7355,
-  serialized_end=7419,
-)
-
-
-_ONEOFNOTTEST = _descriptor.Descriptor(
-  name='OneOfNotTest',
-  full_name='validate_test.OneOfNotTest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='header', full_name='validate_test.OneOfNotTest.header', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='x', full_name='validate_test.OneOfNotTest.x', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='y', full_name='validate_test.OneOfNotTest.y', index=2,
-      number=3, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-    _descriptor.OneofDescriptor(
-      name='id', full_name='validate_test.OneOfNotTest.id',
-      index=0, containing_type=None,
-      create_key=_descriptor._internal_create_key,
-    fields=[]),
-  ],
-  serialized_start=7421,
-  serialized_end=7483,
-)
-
-
-_NESTEDMESSAGE_USERPAYMESSAGE = _descriptor.Descriptor(
-  name='UserPayMessage',
-  full_name='validate_test.NestedMessage.UserPayMessage',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='bank_number', full_name='validate_test.NestedMessage.UserPayMessage.bank_number', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\006r\004\020\r\030\023', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='exp', full_name='validate_test.NestedMessage.UserPayMessage.exp', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\005\262\001\002@\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='uuid', full_name='validate_test.NestedMessage.UserPayMessage.uuid', index=2,
-      number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\005r\003\260\001\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=7850,
-  serialized_end=7973,
-)
-
-_NESTEDMESSAGE_NOTENABLEUSERPAYMESSAGE = _descriptor.Descriptor(
-  name='NotEnableUserPayMessage',
-  full_name='validate_test.NestedMessage.NotEnableUserPayMessage',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='bank_number', full_name='validate_test.NestedMessage.NotEnableUserPayMessage.bank_number', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\006r\004\020\r\030\023', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='exp', full_name='validate_test.NestedMessage.NotEnableUserPayMessage.exp', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\005\262\001\002@\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='uuid', full_name='validate_test.NestedMessage.NotEnableUserPayMessage.uuid', index=2,
-      number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\005r\003\260\001\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=7976,
-  serialized_end=8108,
-)
-
-_NESTEDMESSAGE_STRINGINMAPTESTENTRY = _descriptor.Descriptor(
-  name='StringInMapTestEntry',
-  full_name='validate_test.NestedMessage.StringInMapTestEntry',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='key', full_name='validate_test.NestedMessage.StringInMapTestEntry.key', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='value', full_name='validate_test.NestedMessage.StringInMapTestEntry.value', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=b'8\001',
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=8110,
-  serialized_end=8191,
-)
-
-_NESTEDMESSAGE_MAPINMAPTESTENTRY = _descriptor.Descriptor(
-  name='MapInMapTestEntry',
-  full_name='validate_test.NestedMessage.MapInMapTestEntry',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='key', full_name='validate_test.NestedMessage.MapInMapTestEntry.key', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='value', full_name='validate_test.NestedMessage.MapInMapTestEntry.value', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=b'8\001',
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=8193,
-  serialized_end=8268,
-)
-
-_NESTEDMESSAGE = _descriptor.Descriptor(
-  name='NestedMessage',
-  full_name='validate_test.NestedMessage',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='string_in_map_test', full_name='validate_test.NestedMessage.string_in_map_test', index=0,
-      number=1, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='map_in_map_test', full_name='validate_test.NestedMessage.map_in_map_test', index=1,
-      number=2, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='user_pay', full_name='validate_test.NestedMessage.user_pay', index=2,
-      number=3, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='not_enable_user_pay', full_name='validate_test.NestedMessage.not_enable_user_pay', index=3,
-      number=4, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=b'\372B\005\212\001\002\010\001', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='empty', full_name='validate_test.NestedMessage.empty', index=4,
-      number=5, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[_NESTEDMESSAGE_USERPAYMESSAGE, _NESTEDMESSAGE_NOTENABLEUSERPAYMESSAGE, _NESTEDMESSAGE_STRINGINMAPTESTENTRY, _NESTEDMESSAGE_MAPINMAPTESTENTRY, ],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=7486,
-  serialized_end=8268,
-)
-
-_ENUMTEST.fields_by_name['const_test'].enum_type = _STATE
-_ENUMTEST.fields_by_name['defined_only_test'].enum_type = _STATE
-_ENUMTEST.fields_by_name['in_test'].enum_type = _STATE
-_ENUMTEST.fields_by_name['not_in_test'].enum_type = _STATE
-_MAPTEST_PAIRTESTENTRY.containing_type = _MAPTEST
-_MAPTEST_NOPARSETESTENTRY.containing_type = _MAPTEST
-_MAPTEST_KEYSTESTENTRY.containing_type = _MAPTEST
-_MAPTEST_VALUESTESTENTRY.containing_type = _MAPTEST
-_MAPTEST_KEYSVALUESTESTENTRY.fields_by_name['value'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
-_MAPTEST_KEYSVALUESTESTENTRY.containing_type = _MAPTEST
-_MAPTEST_IGNORETESTENTRY.containing_type = _MAPTEST
-_MAPTEST.fields_by_name['pair_test'].message_type = _MAPTEST_PAIRTESTENTRY
-_MAPTEST.fields_by_name['no_parse_test'].message_type = _MAPTEST_NOPARSETESTENTRY
-_MAPTEST.fields_by_name['keys_test'].message_type = _MAPTEST_KEYSTESTENTRY
-_MAPTEST.fields_by_name['values_test'].message_type = _MAPTEST_VALUESTESTENTRY
-_MAPTEST.fields_by_name['keys_values_test'].message_type = _MAPTEST_KEYSVALUESTESTENTRY
-_MAPTEST.fields_by_name['ignore_test'].message_type = _MAPTEST_IGNORETESTENTRY
-_REPEATEDTEST.fields_by_name['items_timestamp_test'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
-_REPEATEDTEST.fields_by_name['items_duration_test'].message_type = google_dot_protobuf_dot_duration__pb2._DURATION
-_ANYTEST.fields_by_name['required_test'].message_type = google_dot_protobuf_dot_any__pb2._ANY
-_ANYTEST.fields_by_name['not_in_test'].message_type = google_dot_protobuf_dot_any__pb2._ANY
-_ANYTEST.fields_by_name['in_test'].message_type = google_dot_protobuf_dot_any__pb2._ANY
-_DURATIONTEST.fields_by_name['required_test'].message_type = google_dot_protobuf_dot_duration__pb2._DURATION
-_DURATIONTEST.fields_by_name['const_test'].message_type = google_dot_protobuf_dot_duration__pb2._DURATION
-_DURATIONTEST.fields_by_name['range_test'].message_type = google_dot_protobuf_dot_duration__pb2._DURATION
-_DURATIONTEST.fields_by_name['range_e_test'].message_type = google_dot_protobuf_dot_duration__pb2._DURATION
-_DURATIONTEST.fields_by_name['in_test'].message_type = google_dot_protobuf_dot_duration__pb2._DURATION
-_DURATIONTEST.fields_by_name['not_in_test'].message_type = google_dot_protobuf_dot_duration__pb2._DURATION
-_TIMESTAMPTEST.fields_by_name['required_test'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
-_TIMESTAMPTEST.fields_by_name['const_test'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
-_TIMESTAMPTEST.fields_by_name['range_test'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
-_TIMESTAMPTEST.fields_by_name['range_e_test'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
-_TIMESTAMPTEST.fields_by_name['lt_now_test'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
-_TIMESTAMPTEST.fields_by_name['gt_now_test'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
-_TIMESTAMPTEST.fields_by_name['within_test'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
-_TIMESTAMPTEST.fields_by_name['within_and_gt_now_test'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
-_ONEOFTEST.oneofs_by_name['id'].fields.append(
-  _ONEOFTEST.fields_by_name['x'])
-_ONEOFTEST.fields_by_name['x'].containing_oneof = _ONEOFTEST.oneofs_by_name['id']
-_ONEOFTEST.oneofs_by_name['id'].fields.append(
-  _ONEOFTEST.fields_by_name['y'])
-_ONEOFTEST.fields_by_name['y'].containing_oneof = _ONEOFTEST.oneofs_by_name['id']
-_ONEOFNOTTEST.oneofs_by_name['id'].fields.append(
-  _ONEOFNOTTEST.fields_by_name['x'])
-_ONEOFNOTTEST.fields_by_name['x'].containing_oneof = _ONEOFNOTTEST.oneofs_by_name['id']
-_ONEOFNOTTEST.oneofs_by_name['id'].fields.append(
-  _ONEOFNOTTEST.fields_by_name['y'])
-_ONEOFNOTTEST.fields_by_name['y'].containing_oneof = _ONEOFNOTTEST.oneofs_by_name['id']
-_NESTEDMESSAGE_USERPAYMESSAGE.fields_by_name['exp'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
-_NESTEDMESSAGE_USERPAYMESSAGE.containing_type = _NESTEDMESSAGE
-_NESTEDMESSAGE_NOTENABLEUSERPAYMESSAGE.fields_by_name['exp'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
-_NESTEDMESSAGE_NOTENABLEUSERPAYMESSAGE.containing_type = _NESTEDMESSAGE
-_NESTEDMESSAGE_STRINGINMAPTESTENTRY.fields_by_name['value'].message_type = _STRINGTEST
-_NESTEDMESSAGE_STRINGINMAPTESTENTRY.containing_type = _NESTEDMESSAGE
-_NESTEDMESSAGE_MAPINMAPTESTENTRY.fields_by_name['value'].message_type = _MAPTEST
-_NESTEDMESSAGE_MAPINMAPTESTENTRY.containing_type = _NESTEDMESSAGE
-_NESTEDMESSAGE.fields_by_name['string_in_map_test'].message_type = _NESTEDMESSAGE_STRINGINMAPTESTENTRY
-_NESTEDMESSAGE.fields_by_name['map_in_map_test'].message_type = _NESTEDMESSAGE_MAPINMAPTESTENTRY
-_NESTEDMESSAGE.fields_by_name['user_pay'].message_type = _NESTEDMESSAGE_USERPAYMESSAGE
-_NESTEDMESSAGE.fields_by_name['not_enable_user_pay'].message_type = _NESTEDMESSAGE_NOTENABLEUSERPAYMESSAGE
-_NESTEDMESSAGE.fields_by_name['empty'].message_type = google_dot_protobuf_dot_empty__pb2._EMPTY
-DESCRIPTOR.message_types_by_name['FloatTest'] = _FLOATTEST
-DESCRIPTOR.message_types_by_name['DoubleTest'] = _DOUBLETEST
-DESCRIPTOR.message_types_by_name['Int32Test'] = _INT32TEST
-DESCRIPTOR.message_types_by_name['Uint32Test'] = _UINT32TEST
-DESCRIPTOR.message_types_by_name['Sint32Test'] = _SINT32TEST
-DESCRIPTOR.message_types_by_name['Int64Test'] = _INT64TEST
-DESCRIPTOR.message_types_by_name['Uint64Test'] = _UINT64TEST
-DESCRIPTOR.message_types_by_name['Sint64Test'] = _SINT64TEST
-DESCRIPTOR.message_types_by_name['Fixed32Test'] = _FIXED32TEST
-DESCRIPTOR.message_types_by_name['Fixed64Test'] = _FIXED64TEST
-DESCRIPTOR.message_types_by_name['Sfixed32Test'] = _SFIXED32TEST
-DESCRIPTOR.message_types_by_name['Sfixed64Test'] = _SFIXED64TEST
-DESCRIPTOR.message_types_by_name['BoolTest'] = _BOOLTEST
-DESCRIPTOR.message_types_by_name['StringTest'] = _STRINGTEST
-DESCRIPTOR.message_types_by_name['BytesTest'] = _BYTESTEST
-DESCRIPTOR.message_types_by_name['EnumTest'] = _ENUMTEST
-DESCRIPTOR.message_types_by_name['MapTest'] = _MAPTEST
-DESCRIPTOR.message_types_by_name['MessageTest'] = _MESSAGETEST
-DESCRIPTOR.message_types_by_name['RepeatedTest'] = _REPEATEDTEST
-DESCRIPTOR.message_types_by_name['AnyTest'] = _ANYTEST
-DESCRIPTOR.message_types_by_name['DurationTest'] = _DURATIONTEST
-DESCRIPTOR.message_types_by_name['TimestampTest'] = _TIMESTAMPTEST
-DESCRIPTOR.message_types_by_name['MessageDisabledTest'] = _MESSAGEDISABLEDTEST
-DESCRIPTOR.message_types_by_name['MessageIgnoredTest'] = _MESSAGEIGNOREDTEST
-DESCRIPTOR.message_types_by_name['OneOfTest'] = _ONEOFTEST
-DESCRIPTOR.message_types_by_name['OneOfNotTest'] = _ONEOFNOTTEST
-DESCRIPTOR.message_types_by_name['NestedMessage'] = _NESTEDMESSAGE
-DESCRIPTOR.enum_types_by_name['State'] = _STATE
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
-
+_FLOATTEST = DESCRIPTOR.message_types_by_name['FloatTest']
+_DOUBLETEST = DESCRIPTOR.message_types_by_name['DoubleTest']
+_INT32TEST = DESCRIPTOR.message_types_by_name['Int32Test']
+_UINT32TEST = DESCRIPTOR.message_types_by_name['Uint32Test']
+_SINT32TEST = DESCRIPTOR.message_types_by_name['Sint32Test']
+_INT64TEST = DESCRIPTOR.message_types_by_name['Int64Test']
+_UINT64TEST = DESCRIPTOR.message_types_by_name['Uint64Test']
+_SINT64TEST = DESCRIPTOR.message_types_by_name['Sint64Test']
+_FIXED32TEST = DESCRIPTOR.message_types_by_name['Fixed32Test']
+_FIXED64TEST = DESCRIPTOR.message_types_by_name['Fixed64Test']
+_SFIXED32TEST = DESCRIPTOR.message_types_by_name['Sfixed32Test']
+_SFIXED64TEST = DESCRIPTOR.message_types_by_name['Sfixed64Test']
+_BOOLTEST = DESCRIPTOR.message_types_by_name['BoolTest']
+_STRINGTEST = DESCRIPTOR.message_types_by_name['StringTest']
+_BYTESTEST = DESCRIPTOR.message_types_by_name['BytesTest']
+_ENUMTEST = DESCRIPTOR.message_types_by_name['EnumTest']
+_MAPTEST = DESCRIPTOR.message_types_by_name['MapTest']
+_MAPTEST_PAIRTESTENTRY = _MAPTEST.nested_types_by_name['PairTestEntry']
+_MAPTEST_NOPARSETESTENTRY = _MAPTEST.nested_types_by_name['NoParseTestEntry']
+_MAPTEST_KEYSTESTENTRY = _MAPTEST.nested_types_by_name['KeysTestEntry']
+_MAPTEST_VALUESTESTENTRY = _MAPTEST.nested_types_by_name['ValuesTestEntry']
+_MAPTEST_KEYSVALUESTESTENTRY = _MAPTEST.nested_types_by_name['KeysValuesTestEntry']
+_MAPTEST_IGNORETESTENTRY = _MAPTEST.nested_types_by_name['IgnoreTestEntry']
+_MESSAGETEST = DESCRIPTOR.message_types_by_name['MessageTest']
+_REPEATEDTEST = DESCRIPTOR.message_types_by_name['RepeatedTest']
+_ANYTEST = DESCRIPTOR.message_types_by_name['AnyTest']
+_DURATIONTEST = DESCRIPTOR.message_types_by_name['DurationTest']
+_TIMESTAMPTEST = DESCRIPTOR.message_types_by_name['TimestampTest']
+_MESSAGEDISABLEDTEST = DESCRIPTOR.message_types_by_name['MessageDisabledTest']
+_MESSAGEIGNOREDTEST = DESCRIPTOR.message_types_by_name['MessageIgnoredTest']
+_ONEOFTEST = DESCRIPTOR.message_types_by_name['OneOfTest']
+_ONEOFNOTTEST = DESCRIPTOR.message_types_by_name['OneOfNotTest']
+_NESTEDMESSAGE = DESCRIPTOR.message_types_by_name['NestedMessage']
+_NESTEDMESSAGE_USERPAYMESSAGE = _NESTEDMESSAGE.nested_types_by_name['UserPayMessage']
+_NESTEDMESSAGE_NOTENABLEUSERPAYMESSAGE = _NESTEDMESSAGE.nested_types_by_name['NotEnableUserPayMessage']
+_NESTEDMESSAGE_STRINGINMAPTESTENTRY = _NESTEDMESSAGE.nested_types_by_name['StringInMapTestEntry']
+_NESTEDMESSAGE_MAPINMAPTESTENTRY = _NESTEDMESSAGE.nested_types_by_name['MapInMapTestEntry']
 FloatTest = _reflection.GeneratedProtocolMessageType('FloatTest', (_message.Message,), {
   'DESCRIPTOR' : _FLOATTEST,
   '__module__' : 'example_proto.validate.demo_pb2'
@@ -2617,171 +335,415 @@ _sym_db.RegisterMessage(NestedMessage.NotEnableUserPayMessage)
 _sym_db.RegisterMessage(NestedMessage.StringInMapTestEntry)
 _sym_db.RegisterMessage(NestedMessage.MapInMapTestEntry)
 
+if _descriptor._USE_C_DESCRIPTORS == False:
 
-_FLOATTEST.fields_by_name['const_test']._options = None
-_FLOATTEST.fields_by_name['range_e_test']._options = None
-_FLOATTEST.fields_by_name['range_test']._options = None
-_FLOATTEST.fields_by_name['in_test']._options = None
-_FLOATTEST.fields_by_name['not_in_test']._options = None
-_FLOATTEST.fields_by_name['ignore_test']._options = None
-_DOUBLETEST.fields_by_name['const_test']._options = None
-_DOUBLETEST.fields_by_name['range_e_test']._options = None
-_DOUBLETEST.fields_by_name['range_test']._options = None
-_DOUBLETEST.fields_by_name['in_test']._options = None
-_DOUBLETEST.fields_by_name['not_in_test']._options = None
-_DOUBLETEST.fields_by_name['ignore_test']._options = None
-_INT32TEST.fields_by_name['const_test']._options = None
-_INT32TEST.fields_by_name['range_e_test']._options = None
-_INT32TEST.fields_by_name['range_test']._options = None
-_INT32TEST.fields_by_name['in_test']._options = None
-_INT32TEST.fields_by_name['not_in_test']._options = None
-_INT32TEST.fields_by_name['ignore_test']._options = None
-_UINT32TEST.fields_by_name['const_test']._options = None
-_UINT32TEST.fields_by_name['range_e_test']._options = None
-_UINT32TEST.fields_by_name['range_test']._options = None
-_UINT32TEST.fields_by_name['in_test']._options = None
-_UINT32TEST.fields_by_name['not_in_test']._options = None
-_UINT32TEST.fields_by_name['ignore_test']._options = None
-_SINT32TEST.fields_by_name['const_test']._options = None
-_SINT32TEST.fields_by_name['range_e_test']._options = None
-_SINT32TEST.fields_by_name['range_test']._options = None
-_SINT32TEST.fields_by_name['in_test']._options = None
-_SINT32TEST.fields_by_name['not_in_test']._options = None
-_SINT32TEST.fields_by_name['ignore_test']._options = None
-_INT64TEST.fields_by_name['const_test']._options = None
-_INT64TEST.fields_by_name['range_e_test']._options = None
-_INT64TEST.fields_by_name['range_test']._options = None
-_INT64TEST.fields_by_name['in_test']._options = None
-_INT64TEST.fields_by_name['not_in_test']._options = None
-_INT64TEST.fields_by_name['ignore_test']._options = None
-_UINT64TEST.fields_by_name['const_test']._options = None
-_UINT64TEST.fields_by_name['range_e_test']._options = None
-_UINT64TEST.fields_by_name['range_test']._options = None
-_UINT64TEST.fields_by_name['in_test']._options = None
-_UINT64TEST.fields_by_name['not_in_test']._options = None
-_UINT64TEST.fields_by_name['ignore_test']._options = None
-_SINT64TEST.fields_by_name['const_test']._options = None
-_SINT64TEST.fields_by_name['range_e_test']._options = None
-_SINT64TEST.fields_by_name['range_test']._options = None
-_SINT64TEST.fields_by_name['in_test']._options = None
-_SINT64TEST.fields_by_name['not_in_test']._options = None
-_SINT64TEST.fields_by_name['ignore_test']._options = None
-_FIXED32TEST.fields_by_name['const_test']._options = None
-_FIXED32TEST.fields_by_name['range_e_test']._options = None
-_FIXED32TEST.fields_by_name['range_test']._options = None
-_FIXED32TEST.fields_by_name['in_test']._options = None
-_FIXED32TEST.fields_by_name['not_in_test']._options = None
-_FIXED32TEST.fields_by_name['ignore_test']._options = None
-_FIXED64TEST.fields_by_name['const_test']._options = None
-_FIXED64TEST.fields_by_name['range_e_test']._options = None
-_FIXED64TEST.fields_by_name['range_test']._options = None
-_FIXED64TEST.fields_by_name['in_test']._options = None
-_FIXED64TEST.fields_by_name['not_in_test']._options = None
-_FIXED64TEST.fields_by_name['ignore_test']._options = None
-_SFIXED32TEST.fields_by_name['const_test']._options = None
-_SFIXED32TEST.fields_by_name['range_e_test']._options = None
-_SFIXED32TEST.fields_by_name['range_test']._options = None
-_SFIXED32TEST.fields_by_name['in_test']._options = None
-_SFIXED32TEST.fields_by_name['not_in_test']._options = None
-_SFIXED32TEST.fields_by_name['ignore_test']._options = None
-_SFIXED64TEST.fields_by_name['const_test']._options = None
-_SFIXED64TEST.fields_by_name['range_e_test']._options = None
-_SFIXED64TEST.fields_by_name['range_test']._options = None
-_SFIXED64TEST.fields_by_name['in_test']._options = None
-_SFIXED64TEST.fields_by_name['not_in_test']._options = None
-_SFIXED64TEST.fields_by_name['ignore_test']._options = None
-_BOOLTEST.fields_by_name['bool_1_test']._options = None
-_BOOLTEST.fields_by_name['bool_2_test']._options = None
-_STRINGTEST.fields_by_name['const_test']._options = None
-_STRINGTEST.fields_by_name['len_test']._options = None
-_STRINGTEST.fields_by_name['s_range_len_test']._options = None
-_STRINGTEST.fields_by_name['b_range_len_test']._options = None
-_STRINGTEST.fields_by_name['pattern_test']._options = None
-_STRINGTEST.fields_by_name['prefix_test']._options = None
-_STRINGTEST.fields_by_name['suffix_test']._options = None
-_STRINGTEST.fields_by_name['contains_test']._options = None
-_STRINGTEST.fields_by_name['not_contains_test']._options = None
-_STRINGTEST.fields_by_name['in_test']._options = None
-_STRINGTEST.fields_by_name['not_in_test']._options = None
-_STRINGTEST.fields_by_name['email_test']._options = None
-_STRINGTEST.fields_by_name['hostname_test']._options = None
-_STRINGTEST.fields_by_name['ip_test']._options = None
-_STRINGTEST.fields_by_name['ipv4_test']._options = None
-_STRINGTEST.fields_by_name['ipv6_test']._options = None
-_STRINGTEST.fields_by_name['uri_test']._options = None
-_STRINGTEST.fields_by_name['uri_ref_test']._options = None
-_STRINGTEST.fields_by_name['address_test']._options = None
-_STRINGTEST.fields_by_name['uuid_test']._options = None
-_STRINGTEST.fields_by_name['ignore_test']._options = None
-_BYTESTEST.fields_by_name['const_test']._options = None
-_BYTESTEST.fields_by_name['len_test']._options = None
-_BYTESTEST.fields_by_name['range_len_test']._options = None
-_BYTESTEST.fields_by_name['pattern_test']._options = None
-_BYTESTEST.fields_by_name['prefix_test']._options = None
-_BYTESTEST.fields_by_name['suffix_test']._options = None
-_BYTESTEST.fields_by_name['contains_test']._options = None
-_BYTESTEST.fields_by_name['in_test']._options = None
-_BYTESTEST.fields_by_name['not_in_test']._options = None
-_ENUMTEST.fields_by_name['const_test']._options = None
-_ENUMTEST.fields_by_name['defined_only_test']._options = None
-_ENUMTEST.fields_by_name['in_test']._options = None
-_ENUMTEST.fields_by_name['not_in_test']._options = None
-_MAPTEST_PAIRTESTENTRY._options = None
-_MAPTEST_NOPARSETESTENTRY._options = None
-_MAPTEST_KEYSTESTENTRY._options = None
-_MAPTEST_VALUESTESTENTRY._options = None
-_MAPTEST_KEYSVALUESTESTENTRY._options = None
-_MAPTEST_IGNORETESTENTRY._options = None
-_MAPTEST.fields_by_name['pair_test']._options = None
-_MAPTEST.fields_by_name['no_parse_test']._options = None
-_MAPTEST.fields_by_name['keys_test']._options = None
-_MAPTEST.fields_by_name['values_test']._options = None
-_MAPTEST.fields_by_name['keys_values_test']._options = None
-_MAPTEST.fields_by_name['ignore_test']._options = None
-_MESSAGETEST.fields_by_name['skip_test']._options = None
-_MESSAGETEST.fields_by_name['required_test']._options = None
-_REPEATEDTEST.fields_by_name['range_test']._options = None
-_REPEATEDTEST.fields_by_name['unique_test']._options = None
-_REPEATEDTEST.fields_by_name['items_string_test']._options = None
-_REPEATEDTEST.fields_by_name['items_double_test']._options = None
-_REPEATEDTEST.fields_by_name['items_int32_test']._options = None
-_REPEATEDTEST.fields_by_name['items_timestamp_test']._options = None
-_REPEATEDTEST.fields_by_name['items_duration_test']._options = None
-_REPEATEDTEST.fields_by_name['items_bytes_test']._options = None
-_REPEATEDTEST.fields_by_name['ignore_test']._options = None
-_ANYTEST.fields_by_name['required_test']._options = None
-_ANYTEST.fields_by_name['not_in_test']._options = None
-_ANYTEST.fields_by_name['in_test']._options = None
-_DURATIONTEST.fields_by_name['required_test']._options = None
-_DURATIONTEST.fields_by_name['const_test']._options = None
-_DURATIONTEST.fields_by_name['range_test']._options = None
-_DURATIONTEST.fields_by_name['range_e_test']._options = None
-_DURATIONTEST.fields_by_name['in_test']._options = None
-_DURATIONTEST.fields_by_name['not_in_test']._options = None
-_TIMESTAMPTEST.fields_by_name['required_test']._options = None
-_TIMESTAMPTEST.fields_by_name['const_test']._options = None
-_TIMESTAMPTEST.fields_by_name['range_test']._options = None
-_TIMESTAMPTEST.fields_by_name['range_e_test']._options = None
-_TIMESTAMPTEST.fields_by_name['lt_now_test']._options = None
-_TIMESTAMPTEST.fields_by_name['gt_now_test']._options = None
-_TIMESTAMPTEST.fields_by_name['within_test']._options = None
-_TIMESTAMPTEST.fields_by_name['within_and_gt_now_test']._options = None
-_MESSAGEDISABLEDTEST.fields_by_name['const_test']._options = None
-_MESSAGEDISABLEDTEST.fields_by_name['range_e_test']._options = None
-_MESSAGEDISABLEDTEST.fields_by_name['range_test']._options = None
-_MESSAGEDISABLEDTEST._options = None
-_MESSAGEIGNOREDTEST.fields_by_name['const_test']._options = None
-_MESSAGEIGNOREDTEST.fields_by_name['range_e_test']._options = None
-_MESSAGEIGNOREDTEST.fields_by_name['range_test']._options = None
-_MESSAGEIGNOREDTEST._options = None
-_ONEOFTEST.oneofs_by_name['id']._options = None
-_NESTEDMESSAGE_USERPAYMESSAGE.fields_by_name['bank_number']._options = None
-_NESTEDMESSAGE_USERPAYMESSAGE.fields_by_name['exp']._options = None
-_NESTEDMESSAGE_USERPAYMESSAGE.fields_by_name['uuid']._options = None
-_NESTEDMESSAGE_NOTENABLEUSERPAYMESSAGE.fields_by_name['bank_number']._options = None
-_NESTEDMESSAGE_NOTENABLEUSERPAYMESSAGE.fields_by_name['exp']._options = None
-_NESTEDMESSAGE_NOTENABLEUSERPAYMESSAGE.fields_by_name['uuid']._options = None
-_NESTEDMESSAGE_STRINGINMAPTESTENTRY._options = None
-_NESTEDMESSAGE_MAPINMAPTESTENTRY._options = None
-_NESTEDMESSAGE.fields_by_name['not_enable_user_pay']._options = None
+  DESCRIPTOR._options = None
+  _FLOATTEST.fields_by_name['const_test']._options = None
+  _FLOATTEST.fields_by_name['const_test']._serialized_options = b'\372B\007\n\005\r\000\000\200?'
+  _FLOATTEST.fields_by_name['range_e_test']._options = None
+  _FLOATTEST.fields_by_name['range_e_test']._serialized_options = b'\372B\014\n\n\035\000\000 A-\000\000\200?'
+  _FLOATTEST.fields_by_name['range_test']._options = None
+  _FLOATTEST.fields_by_name['range_test']._serialized_options = b'\372B\014\n\n\025\000\000 A%\000\000\200?'
+  _FLOATTEST.fields_by_name['in_test']._options = None
+  _FLOATTEST.fields_by_name['in_test']._serialized_options = b'\372B\021\n\0175\000\000\200?5\000\000\000@5\000\000@@'
+  _FLOATTEST.fields_by_name['not_in_test']._options = None
+  _FLOATTEST.fields_by_name['not_in_test']._serialized_options = b'\372B\021\n\017=\000\000\200?=\000\000\000@=\000\000@@'
+  _FLOATTEST.fields_by_name['ignore_test']._options = None
+  _FLOATTEST.fields_by_name['ignore_test']._serialized_options = b'\372B\004\n\002@\001'
+  _DOUBLETEST.fields_by_name['const_test']._options = None
+  _DOUBLETEST.fields_by_name['const_test']._serialized_options = b'\372B\013\022\t\t\000\000\000\000\000\000\360?'
+  _DOUBLETEST.fields_by_name['range_e_test']._options = None
+  _DOUBLETEST.fields_by_name['range_e_test']._serialized_options = b'\372B\024\022\022\031\000\000\000\000\000\000$@)\000\000\000\000\000\000\360?'
+  _DOUBLETEST.fields_by_name['range_test']._options = None
+  _DOUBLETEST.fields_by_name['range_test']._serialized_options = b'\372B\024\022\022\021\000\000\000\000\000\000$@!\000\000\000\000\000\000\360?'
+  _DOUBLETEST.fields_by_name['in_test']._options = None
+  _DOUBLETEST.fields_by_name['in_test']._serialized_options = b'\372B\035\022\0331\000\000\000\000\000\000\360?1\000\000\000\000\000\000\000@1\000\000\000\000\000\000\010@'
+  _DOUBLETEST.fields_by_name['not_in_test']._options = None
+  _DOUBLETEST.fields_by_name['not_in_test']._serialized_options = b'\372B\035\022\0339\000\000\000\000\000\000\360?9\000\000\000\000\000\000\000@9\000\000\000\000\000\000\010@'
+  _DOUBLETEST.fields_by_name['ignore_test']._options = None
+  _DOUBLETEST.fields_by_name['ignore_test']._serialized_options = b'\372B\004\022\002@\001'
+  _INT32TEST.fields_by_name['const_test']._options = None
+  _INT32TEST.fields_by_name['const_test']._serialized_options = b'\372B\004\032\002\010\001'
+  _INT32TEST.fields_by_name['range_e_test']._options = None
+  _INT32TEST.fields_by_name['range_e_test']._serialized_options = b'\372B\006\032\004\030\n(\001'
+  _INT32TEST.fields_by_name['range_test']._options = None
+  _INT32TEST.fields_by_name['range_test']._serialized_options = b'\372B\006\032\004\020\n \001'
+  _INT32TEST.fields_by_name['in_test']._options = None
+  _INT32TEST.fields_by_name['in_test']._serialized_options = b'\372B\010\032\0060\0010\0020\003'
+  _INT32TEST.fields_by_name['not_in_test']._options = None
+  _INT32TEST.fields_by_name['not_in_test']._serialized_options = b'\372B\010\032\0068\0018\0028\003'
+  _INT32TEST.fields_by_name['ignore_test']._options = None
+  _INT32TEST.fields_by_name['ignore_test']._serialized_options = b'\372B\004\032\002@\001'
+  _UINT32TEST.fields_by_name['const_test']._options = None
+  _UINT32TEST.fields_by_name['const_test']._serialized_options = b'\372B\004*\002\010\001'
+  _UINT32TEST.fields_by_name['range_e_test']._options = None
+  _UINT32TEST.fields_by_name['range_e_test']._serialized_options = b'\372B\006*\004\030\n(\001'
+  _UINT32TEST.fields_by_name['range_test']._options = None
+  _UINT32TEST.fields_by_name['range_test']._serialized_options = b'\372B\006*\004\020\n \001'
+  _UINT32TEST.fields_by_name['in_test']._options = None
+  _UINT32TEST.fields_by_name['in_test']._serialized_options = b'\372B\010*\0060\0010\0020\003'
+  _UINT32TEST.fields_by_name['not_in_test']._options = None
+  _UINT32TEST.fields_by_name['not_in_test']._serialized_options = b'\372B\010*\0068\0018\0028\003'
+  _UINT32TEST.fields_by_name['ignore_test']._options = None
+  _UINT32TEST.fields_by_name['ignore_test']._serialized_options = b'\372B\004*\002@\001'
+  _SINT32TEST.fields_by_name['const_test']._options = None
+  _SINT32TEST.fields_by_name['const_test']._serialized_options = b'\372B\004:\002\010\002'
+  _SINT32TEST.fields_by_name['range_e_test']._options = None
+  _SINT32TEST.fields_by_name['range_e_test']._serialized_options = b'\372B\006:\004\030\024(\002'
+  _SINT32TEST.fields_by_name['range_test']._options = None
+  _SINT32TEST.fields_by_name['range_test']._serialized_options = b'\372B\006:\004\020\024 \002'
+  _SINT32TEST.fields_by_name['in_test']._options = None
+  _SINT32TEST.fields_by_name['in_test']._serialized_options = b'\372B\010:\0060\0020\0040\006'
+  _SINT32TEST.fields_by_name['not_in_test']._options = None
+  _SINT32TEST.fields_by_name['not_in_test']._serialized_options = b'\372B\010:\0068\0028\0048\006'
+  _SINT32TEST.fields_by_name['ignore_test']._options = None
+  _SINT32TEST.fields_by_name['ignore_test']._serialized_options = b'\372B\004:\002@\001'
+  _INT64TEST.fields_by_name['const_test']._options = None
+  _INT64TEST.fields_by_name['const_test']._serialized_options = b'\372B\004\"\002\010\001'
+  _INT64TEST.fields_by_name['range_e_test']._options = None
+  _INT64TEST.fields_by_name['range_e_test']._serialized_options = b'\372B\006\"\004\030\n(\001'
+  _INT64TEST.fields_by_name['range_test']._options = None
+  _INT64TEST.fields_by_name['range_test']._serialized_options = b'\372B\006\"\004\020\n \001'
+  _INT64TEST.fields_by_name['in_test']._options = None
+  _INT64TEST.fields_by_name['in_test']._serialized_options = b'\372B\010\"\0060\0010\0020\003'
+  _INT64TEST.fields_by_name['not_in_test']._options = None
+  _INT64TEST.fields_by_name['not_in_test']._serialized_options = b'\372B\010\"\0068\0018\0028\003'
+  _INT64TEST.fields_by_name['ignore_test']._options = None
+  _INT64TEST.fields_by_name['ignore_test']._serialized_options = b'\372B\004\"\002@\001'
+  _UINT64TEST.fields_by_name['const_test']._options = None
+  _UINT64TEST.fields_by_name['const_test']._serialized_options = b'\372B\0042\002\010\001'
+  _UINT64TEST.fields_by_name['range_e_test']._options = None
+  _UINT64TEST.fields_by_name['range_e_test']._serialized_options = b'\372B\0062\004\030\n(\001'
+  _UINT64TEST.fields_by_name['range_test']._options = None
+  _UINT64TEST.fields_by_name['range_test']._serialized_options = b'\372B\0062\004\020\n \001'
+  _UINT64TEST.fields_by_name['in_test']._options = None
+  _UINT64TEST.fields_by_name['in_test']._serialized_options = b'\372B\0102\0060\0010\0020\003'
+  _UINT64TEST.fields_by_name['not_in_test']._options = None
+  _UINT64TEST.fields_by_name['not_in_test']._serialized_options = b'\372B\0102\0068\0018\0028\003'
+  _UINT64TEST.fields_by_name['ignore_test']._options = None
+  _UINT64TEST.fields_by_name['ignore_test']._serialized_options = b'\372B\0042\002@\001'
+  _SINT64TEST.fields_by_name['const_test']._options = None
+  _SINT64TEST.fields_by_name['const_test']._serialized_options = b'\372B\004B\002\010\002'
+  _SINT64TEST.fields_by_name['range_e_test']._options = None
+  _SINT64TEST.fields_by_name['range_e_test']._serialized_options = b'\372B\006B\004\030\024(\002'
+  _SINT64TEST.fields_by_name['range_test']._options = None
+  _SINT64TEST.fields_by_name['range_test']._serialized_options = b'\372B\006B\004\020\024 \002'
+  _SINT64TEST.fields_by_name['in_test']._options = None
+  _SINT64TEST.fields_by_name['in_test']._serialized_options = b'\372B\010B\0060\0020\0040\006'
+  _SINT64TEST.fields_by_name['not_in_test']._options = None
+  _SINT64TEST.fields_by_name['not_in_test']._serialized_options = b'\372B\010B\0068\0028\0048\006'
+  _SINT64TEST.fields_by_name['ignore_test']._options = None
+  _SINT64TEST.fields_by_name['ignore_test']._serialized_options = b'\372B\004B\002@\001'
+  _FIXED32TEST.fields_by_name['const_test']._options = None
+  _FIXED32TEST.fields_by_name['const_test']._serialized_options = b'\372B\007J\005\r\001\000\000\000'
+  _FIXED32TEST.fields_by_name['range_e_test']._options = None
+  _FIXED32TEST.fields_by_name['range_e_test']._serialized_options = b'\372B\014J\n\035\n\000\000\000-\001\000\000\000'
+  _FIXED32TEST.fields_by_name['range_test']._options = None
+  _FIXED32TEST.fields_by_name['range_test']._serialized_options = b'\372B\014J\n\025\n\000\000\000%\001\000\000\000'
+  _FIXED32TEST.fields_by_name['in_test']._options = None
+  _FIXED32TEST.fields_by_name['in_test']._serialized_options = b'\372B\021J\0175\001\000\000\0005\002\000\000\0005\003\000\000\000'
+  _FIXED32TEST.fields_by_name['not_in_test']._options = None
+  _FIXED32TEST.fields_by_name['not_in_test']._serialized_options = b'\372B\021J\017=\001\000\000\000=\002\000\000\000=\003\000\000\000'
+  _FIXED32TEST.fields_by_name['ignore_test']._options = None
+  _FIXED32TEST.fields_by_name['ignore_test']._serialized_options = b'\372B\004J\002@\001'
+  _FIXED64TEST.fields_by_name['const_test']._options = None
+  _FIXED64TEST.fields_by_name['const_test']._serialized_options = b'\372B\013R\t\t\001\000\000\000\000\000\000\000'
+  _FIXED64TEST.fields_by_name['range_e_test']._options = None
+  _FIXED64TEST.fields_by_name['range_e_test']._serialized_options = b'\372B\024R\022\031\n\000\000\000\000\000\000\000)\001\000\000\000\000\000\000\000'
+  _FIXED64TEST.fields_by_name['range_test']._options = None
+  _FIXED64TEST.fields_by_name['range_test']._serialized_options = b'\372B\024R\022\021\n\000\000\000\000\000\000\000!\001\000\000\000\000\000\000\000'
+  _FIXED64TEST.fields_by_name['in_test']._options = None
+  _FIXED64TEST.fields_by_name['in_test']._serialized_options = b'\372B\035R\0331\001\000\000\000\000\000\000\0001\002\000\000\000\000\000\000\0001\003\000\000\000\000\000\000\000'
+  _FIXED64TEST.fields_by_name['not_in_test']._options = None
+  _FIXED64TEST.fields_by_name['not_in_test']._serialized_options = b'\372B\035R\0339\001\000\000\000\000\000\000\0009\002\000\000\000\000\000\000\0009\003\000\000\000\000\000\000\000'
+  _FIXED64TEST.fields_by_name['ignore_test']._options = None
+  _FIXED64TEST.fields_by_name['ignore_test']._serialized_options = b'\372B\004R\002@\001'
+  _SFIXED32TEST.fields_by_name['const_test']._options = None
+  _SFIXED32TEST.fields_by_name['const_test']._serialized_options = b'\372B\007Z\005\r\001\000\000\000'
+  _SFIXED32TEST.fields_by_name['range_e_test']._options = None
+  _SFIXED32TEST.fields_by_name['range_e_test']._serialized_options = b'\372B\014Z\n\035\n\000\000\000-\001\000\000\000'
+  _SFIXED32TEST.fields_by_name['range_test']._options = None
+  _SFIXED32TEST.fields_by_name['range_test']._serialized_options = b'\372B\014Z\n\025\n\000\000\000%\001\000\000\000'
+  _SFIXED32TEST.fields_by_name['in_test']._options = None
+  _SFIXED32TEST.fields_by_name['in_test']._serialized_options = b'\372B\021Z\0175\001\000\000\0005\002\000\000\0005\003\000\000\000'
+  _SFIXED32TEST.fields_by_name['not_in_test']._options = None
+  _SFIXED32TEST.fields_by_name['not_in_test']._serialized_options = b'\372B\021Z\017=\001\000\000\000=\002\000\000\000=\003\000\000\000'
+  _SFIXED32TEST.fields_by_name['ignore_test']._options = None
+  _SFIXED32TEST.fields_by_name['ignore_test']._serialized_options = b'\372B\004Z\002@\001'
+  _SFIXED64TEST.fields_by_name['const_test']._options = None
+  _SFIXED64TEST.fields_by_name['const_test']._serialized_options = b'\372B\013b\t\t\001\000\000\000\000\000\000\000'
+  _SFIXED64TEST.fields_by_name['range_e_test']._options = None
+  _SFIXED64TEST.fields_by_name['range_e_test']._serialized_options = b'\372B\024b\022\031\n\000\000\000\000\000\000\000)\001\000\000\000\000\000\000\000'
+  _SFIXED64TEST.fields_by_name['range_test']._options = None
+  _SFIXED64TEST.fields_by_name['range_test']._serialized_options = b'\372B\024b\022\021\n\000\000\000\000\000\000\000!\001\000\000\000\000\000\000\000'
+  _SFIXED64TEST.fields_by_name['in_test']._options = None
+  _SFIXED64TEST.fields_by_name['in_test']._serialized_options = b'\372B\035b\0331\001\000\000\000\000\000\000\0001\002\000\000\000\000\000\000\0001\003\000\000\000\000\000\000\000'
+  _SFIXED64TEST.fields_by_name['not_in_test']._options = None
+  _SFIXED64TEST.fields_by_name['not_in_test']._serialized_options = b'\372B\035b\0339\001\000\000\000\000\000\000\0009\002\000\000\000\000\000\000\0009\003\000\000\000\000\000\000\000'
+  _SFIXED64TEST.fields_by_name['ignore_test']._options = None
+  _SFIXED64TEST.fields_by_name['ignore_test']._serialized_options = b'\372B\004b\002@\001'
+  _BOOLTEST.fields_by_name['bool_1_test']._options = None
+  _BOOLTEST.fields_by_name['bool_1_test']._serialized_options = b'\372B\004j\002\010\001'
+  _BOOLTEST.fields_by_name['bool_2_test']._options = None
+  _BOOLTEST.fields_by_name['bool_2_test']._serialized_options = b'\372B\004j\002\010\000'
+  _STRINGTEST.fields_by_name['const_test']._options = None
+  _STRINGTEST.fields_by_name['const_test']._serialized_options = b'\372B\007r\005\n\003aaa'
+  _STRINGTEST.fields_by_name['len_test']._options = None
+  _STRINGTEST.fields_by_name['len_test']._serialized_options = b'\372B\005r\003\230\001\003'
+  _STRINGTEST.fields_by_name['s_range_len_test']._options = None
+  _STRINGTEST.fields_by_name['s_range_len_test']._serialized_options = b'\372B\006r\004\020\001\030\003'
+  _STRINGTEST.fields_by_name['b_range_len_test']._options = None
+  _STRINGTEST.fields_by_name['b_range_len_test']._serialized_options = b'\372B\006r\004 \001(\003'
+  _STRINGTEST.fields_by_name['pattern_test']._options = None
+  _STRINGTEST.fields_by_name['pattern_test']._serialized_options = b'\372B\tr\0072\005^test'
+  _STRINGTEST.fields_by_name['prefix_test']._options = None
+  _STRINGTEST.fields_by_name['prefix_test']._serialized_options = b'\372B\nr\010:\006prefix'
+  _STRINGTEST.fields_by_name['suffix_test']._options = None
+  _STRINGTEST.fields_by_name['suffix_test']._serialized_options = b'\372B\nr\010B\006suffix'
+  _STRINGTEST.fields_by_name['contains_test']._options = None
+  _STRINGTEST.fields_by_name['contains_test']._serialized_options = b'\372B\014r\nJ\010contains'
+  _STRINGTEST.fields_by_name['not_contains_test']._options = None
+  _STRINGTEST.fields_by_name['not_contains_test']._serialized_options = b'\372B\021r\017\272\001\014not_contains'
+  _STRINGTEST.fields_by_name['in_test']._options = None
+  _STRINGTEST.fields_by_name['in_test']._serialized_options = b'\372B\013r\tR\001aR\001bR\001c'
+  _STRINGTEST.fields_by_name['not_in_test']._options = None
+  _STRINGTEST.fields_by_name['not_in_test']._serialized_options = b'\372B\013r\tZ\001aZ\001bZ\001c'
+  _STRINGTEST.fields_by_name['email_test']._options = None
+  _STRINGTEST.fields_by_name['email_test']._serialized_options = b'\372B\004r\002`\001'
+  _STRINGTEST.fields_by_name['hostname_test']._options = None
+  _STRINGTEST.fields_by_name['hostname_test']._serialized_options = b'\372B\004r\002h\001'
+  _STRINGTEST.fields_by_name['ip_test']._options = None
+  _STRINGTEST.fields_by_name['ip_test']._serialized_options = b'\372B\004r\002p\001'
+  _STRINGTEST.fields_by_name['ipv4_test']._options = None
+  _STRINGTEST.fields_by_name['ipv4_test']._serialized_options = b'\372B\004r\002x\001'
+  _STRINGTEST.fields_by_name['ipv6_test']._options = None
+  _STRINGTEST.fields_by_name['ipv6_test']._serialized_options = b'\372B\005r\003\200\001\001'
+  _STRINGTEST.fields_by_name['uri_test']._options = None
+  _STRINGTEST.fields_by_name['uri_test']._serialized_options = b'\372B\005r\003\210\001\001'
+  _STRINGTEST.fields_by_name['uri_ref_test']._options = None
+  _STRINGTEST.fields_by_name['uri_ref_test']._serialized_options = b'\372B\005r\003\220\001\001'
+  _STRINGTEST.fields_by_name['address_test']._options = None
+  _STRINGTEST.fields_by_name['address_test']._serialized_options = b'\372B\005r\003\250\001\001'
+  _STRINGTEST.fields_by_name['uuid_test']._options = None
+  _STRINGTEST.fields_by_name['uuid_test']._serialized_options = b'\372B\005r\003\260\001\001'
+  _STRINGTEST.fields_by_name['ignore_test']._options = None
+  _STRINGTEST.fields_by_name['ignore_test']._serialized_options = b'\372B\005r\003\320\001\001'
+  _BYTESTEST.fields_by_name['const_test']._options = None
+  _BYTESTEST.fields_by_name['const_test']._serialized_options = b'\372B\010z\006\n\004demo'
+  _BYTESTEST.fields_by_name['len_test']._options = None
+  _BYTESTEST.fields_by_name['len_test']._serialized_options = b'\372B\004z\002h\004'
+  _BYTESTEST.fields_by_name['range_len_test']._options = None
+  _BYTESTEST.fields_by_name['range_len_test']._serialized_options = b'\372B\006z\004\020\001\030\004'
+  _BYTESTEST.fields_by_name['pattern_test']._options = None
+  _BYTESTEST.fields_by_name['pattern_test']._serialized_options = b'\372B\tz\007\"\005^test'
+  _BYTESTEST.fields_by_name['prefix_test']._options = None
+  _BYTESTEST.fields_by_name['prefix_test']._serialized_options = b'\372B\nz\010*\006prefix'
+  _BYTESTEST.fields_by_name['suffix_test']._options = None
+  _BYTESTEST.fields_by_name['suffix_test']._serialized_options = b'\372B\nz\0102\006suffix'
+  _BYTESTEST.fields_by_name['contains_test']._options = None
+  _BYTESTEST.fields_by_name['contains_test']._serialized_options = b'\372B\014z\n:\010contains'
+  _BYTESTEST.fields_by_name['in_test']._options = None
+  _BYTESTEST.fields_by_name['in_test']._serialized_options = b'\372B\013z\tB\001aB\001bB\001c'
+  _BYTESTEST.fields_by_name['not_in_test']._options = None
+  _BYTESTEST.fields_by_name['not_in_test']._serialized_options = b'\372B\013z\tJ\001aJ\001bJ\001c'
+  _ENUMTEST.fields_by_name['const_test']._options = None
+  _ENUMTEST.fields_by_name['const_test']._serialized_options = b'\372B\005\202\001\002\010\002'
+  _ENUMTEST.fields_by_name['defined_only_test']._options = None
+  _ENUMTEST.fields_by_name['defined_only_test']._serialized_options = b'\372B\005\202\001\002\020\001'
+  _ENUMTEST.fields_by_name['in_test']._options = None
+  _ENUMTEST.fields_by_name['in_test']._serialized_options = b'\372B\007\202\001\004\030\000\030\002'
+  _ENUMTEST.fields_by_name['not_in_test']._options = None
+  _ENUMTEST.fields_by_name['not_in_test']._serialized_options = b'\372B\007\202\001\004 \000 \002'
+  _MAPTEST_PAIRTESTENTRY._options = None
+  _MAPTEST_PAIRTESTENTRY._serialized_options = b'8\001'
+  _MAPTEST_NOPARSETESTENTRY._options = None
+  _MAPTEST_NOPARSETESTENTRY._serialized_options = b'8\001'
+  _MAPTEST_KEYSTESTENTRY._options = None
+  _MAPTEST_KEYSTESTENTRY._serialized_options = b'8\001'
+  _MAPTEST_VALUESTESTENTRY._options = None
+  _MAPTEST_VALUESTESTENTRY._serialized_options = b'8\001'
+  _MAPTEST_KEYSVALUESTESTENTRY._options = None
+  _MAPTEST_KEYSVALUESTESTENTRY._serialized_options = b'8\001'
+  _MAPTEST_IGNORETESTENTRY._options = None
+  _MAPTEST_IGNORETESTENTRY._serialized_options = b'8\001'
+  _MAPTEST.fields_by_name['pair_test']._options = None
+  _MAPTEST.fields_by_name['pair_test']._serialized_options = b'\372B\007\232\001\004\010\001\020\005'
+  _MAPTEST.fields_by_name['no_parse_test']._options = None
+  _MAPTEST.fields_by_name['no_parse_test']._serialized_options = b'\372B\005\232\001\002\030\001'
+  _MAPTEST.fields_by_name['keys_test']._options = None
+  _MAPTEST.fields_by_name['keys_test']._serialized_options = b'\372B\t\232\001\006\"\004r\002\020\001\372B\t\232\001\006\"\004r\002\030\005'
+  _MAPTEST.fields_by_name['values_test']._options = None
+  _MAPTEST.fields_by_name['values_test']._serialized_options = b'\372B\t\232\001\006*\004\032\002(\005\372B\t\232\001\006*\004\032\002\030\005'
+  _MAPTEST.fields_by_name['keys_values_test']._options = None
+  _MAPTEST.fields_by_name['keys_values_test']._serialized_options = b'\372B\t\232\001\006\"\004r\002\020\001\372B\t\232\001\006\"\004r\002\030\005\372B\n\232\001\007*\005\262\001\002@\001'
+  _MAPTEST.fields_by_name['ignore_test']._options = None
+  _MAPTEST.fields_by_name['ignore_test']._serialized_options = b'\372B\005\232\001\0020\001'
+  _MESSAGETEST.fields_by_name['skip_test']._options = None
+  _MESSAGETEST.fields_by_name['skip_test']._serialized_options = b'\372B\005\212\001\002\010\001'
+  _MESSAGETEST.fields_by_name['required_test']._options = None
+  _MESSAGETEST.fields_by_name['required_test']._serialized_options = b'\372B\005\212\001\002\020\001'
+  _REPEATEDTEST.fields_by_name['range_test']._options = None
+  _REPEATEDTEST.fields_by_name['range_test']._serialized_options = b'\372B\007\222\001\004\010\001\020\005'
+  _REPEATEDTEST.fields_by_name['unique_test']._options = None
+  _REPEATEDTEST.fields_by_name['unique_test']._serialized_options = b'\372B\005\222\001\002\030\001'
+  _REPEATEDTEST.fields_by_name['items_string_test']._options = None
+  _REPEATEDTEST.fields_by_name['items_string_test']._serialized_options = b'\372B\007\222\001\004\010\001\020\005\372B\013\222\001\010\"\006r\004\020\001\030\005'
+  _REPEATEDTEST.fields_by_name['items_double_test']._options = None
+  _REPEATEDTEST.fields_by_name['items_double_test']._serialized_options = b'\372B\007\222\001\004\010\001\020\005\372B\031\222\001\026\"\024\022\022\021\000\000\000\000\000\000\024@!\000\000\000\000\000\000\360?'
+  _REPEATEDTEST.fields_by_name['items_int32_test']._options = None
+  _REPEATEDTEST.fields_by_name['items_int32_test']._serialized_options = b'\372B\007\222\001\004\010\001\020\005\372B\013\222\001\010\"\006\032\004\020\005 \001'
+  _REPEATEDTEST.fields_by_name['items_timestamp_test']._options = None
+  _REPEATEDTEST.fields_by_name['items_timestamp_test']._serialized_options = b'\372B\007\222\001\004\010\001\020\005\372B\030\222\001\025\"\023\262\001\020\032\006\010\212\240\370\372\005*\006\010\200\240\370\372\005'
+  _REPEATEDTEST.fields_by_name['items_duration_test']._options = None
+  _REPEATEDTEST.fields_by_name['items_duration_test']._serialized_options = b'\372B\007\222\001\004\010\001\020\005\372B\020\222\001\r\"\013\252\001\010\032\002\010\024*\002\010\n'
+  _REPEATEDTEST.fields_by_name['items_bytes_test']._options = None
+  _REPEATEDTEST.fields_by_name['items_bytes_test']._serialized_options = b'\372B\007\222\001\004\010\001\020\005\372B\013\222\001\010\"\006z\004\020\001\030\005'
+  _REPEATEDTEST.fields_by_name['ignore_test']._options = None
+  _REPEATEDTEST.fields_by_name['ignore_test']._serialized_options = b'\372B\005\222\001\002(\001'
+  _ANYTEST.fields_by_name['required_test']._options = None
+  _ANYTEST.fields_by_name['required_test']._serialized_options = b'\372B\005\242\001\002\010\001'
+  _ANYTEST.fields_by_name['not_in_test']._options = None
+  _ANYTEST.fields_by_name['not_in_test']._serialized_options = b'\372B`\242\001]\032,type.googleapis.com/google.protobuf.Duration\032-type.googleapis.com/google.protobuf.Timestamp'
+  _ANYTEST.fields_by_name['in_test']._options = None
+  _ANYTEST.fields_by_name['in_test']._serialized_options = b'\372B`\242\001]\022,type.googleapis.com/google.protobuf.Duration\022-type.googleapis.com/google.protobuf.Timestamp'
+  _DURATIONTEST.fields_by_name['required_test']._options = None
+  _DURATIONTEST.fields_by_name['required_test']._serialized_options = b'\372B\005\252\001\002\010\001'
+  _DURATIONTEST.fields_by_name['const_test']._options = None
+  _DURATIONTEST.fields_by_name['const_test']._serialized_options = b'\372B\r\252\001\n\022\010\010\001\020\200\312\265\356\001'
+  _DURATIONTEST.fields_by_name['range_test']._options = None
+  _DURATIONTEST.fields_by_name['range_test']._serialized_options = b'\372B\027\252\001\024\032\010\010\n\020\200\312\265\356\001*\010\010\005\020\200\312\265\356\001'
+  _DURATIONTEST.fields_by_name['range_e_test']._options = None
+  _DURATIONTEST.fields_by_name['range_e_test']._serialized_options = b'\372B\027\252\001\024\"\010\010\n\020\200\312\265\356\0012\010\010\005\020\200\312\265\356\001'
+  _DURATIONTEST.fields_by_name['in_test']._options = None
+  _DURATIONTEST.fields_by_name['in_test']._serialized_options = b'\372B\027\252\001\024:\010\010\001\020\200\312\265\356\001:\010\010\003\020\200\312\265\356\001'
+  _DURATIONTEST.fields_by_name['not_in_test']._options = None
+  _DURATIONTEST.fields_by_name['not_in_test']._serialized_options = b'\372B\027\252\001\024B\010\010\001\020\200\312\265\356\001B\010\010\003\020\200\312\265\356\001'
+  _TIMESTAMPTEST.fields_by_name['required_test']._options = None
+  _TIMESTAMPTEST.fields_by_name['required_test']._serialized_options = b'\372B\005\262\001\002\010\001'
+  _TIMESTAMPTEST.fields_by_name['const_test']._options = None
+  _TIMESTAMPTEST.fields_by_name['const_test']._serialized_options = b'\372B\013\262\001\010\022\006\010\200\240\370\372\005'
+  _TIMESTAMPTEST.fields_by_name['range_test']._options = None
+  _TIMESTAMPTEST.fields_by_name['range_test']._serialized_options = b'\372B\023\262\001\020\032\006\010\212\240\370\372\005*\006\010\200\240\370\372\005'
+  _TIMESTAMPTEST.fields_by_name['range_e_test']._options = None
+  _TIMESTAMPTEST.fields_by_name['range_e_test']._serialized_options = b'\372B\023\262\001\020\"\006\010\212\240\370\372\0052\006\010\200\240\370\372\005'
+  _TIMESTAMPTEST.fields_by_name['lt_now_test']._options = None
+  _TIMESTAMPTEST.fields_by_name['lt_now_test']._serialized_options = b'\372B\005\262\001\0028\001'
+  _TIMESTAMPTEST.fields_by_name['gt_now_test']._options = None
+  _TIMESTAMPTEST.fields_by_name['gt_now_test']._serialized_options = b'\372B\005\262\001\002@\001'
+  _TIMESTAMPTEST.fields_by_name['within_test']._options = None
+  _TIMESTAMPTEST.fields_by_name['within_test']._serialized_options = b'\372B\007\262\001\004J\002\010\001'
+  _TIMESTAMPTEST.fields_by_name['within_and_gt_now_test']._options = None
+  _TIMESTAMPTEST.fields_by_name['within_and_gt_now_test']._serialized_options = b'\372B\n\262\001\007@\001J\003\010\220\034'
+  _MESSAGEDISABLEDTEST.fields_by_name['const_test']._options = None
+  _MESSAGEDISABLEDTEST.fields_by_name['const_test']._serialized_options = b'\372B\007\n\005\r\000\000\200?'
+  _MESSAGEDISABLEDTEST.fields_by_name['range_e_test']._options = None
+  _MESSAGEDISABLEDTEST.fields_by_name['range_e_test']._serialized_options = b'\372B\014\n\n\035\000\000 A-\000\000\200?'
+  _MESSAGEDISABLEDTEST.fields_by_name['range_test']._options = None
+  _MESSAGEDISABLEDTEST.fields_by_name['range_test']._serialized_options = b'\372B\014\n\n\025\000\000 A%\000\000\200?'
+  _MESSAGEDISABLEDTEST._options = None
+  _MESSAGEDISABLEDTEST._serialized_options = b'\370B\001'
+  _MESSAGEIGNOREDTEST.fields_by_name['const_test']._options = None
+  _MESSAGEIGNOREDTEST.fields_by_name['const_test']._serialized_options = b'\372B\007\n\005\r\000\000\200?'
+  _MESSAGEIGNOREDTEST.fields_by_name['range_e_test']._options = None
+  _MESSAGEIGNOREDTEST.fields_by_name['range_e_test']._serialized_options = b'\372B\014\n\n\035\000\000 A-\000\000\200?'
+  _MESSAGEIGNOREDTEST.fields_by_name['range_test']._options = None
+  _MESSAGEIGNOREDTEST.fields_by_name['range_test']._serialized_options = b'\372B\014\n\n\025\000\000 A%\000\000\200?'
+  _MESSAGEIGNOREDTEST._options = None
+  _MESSAGEIGNOREDTEST._serialized_options = b'\200C\001'
+  _ONEOFTEST.oneofs_by_name['id']._options = None
+  _ONEOFTEST.oneofs_by_name['id']._serialized_options = b'\370B\001'
+  _NESTEDMESSAGE_USERPAYMESSAGE.fields_by_name['bank_number']._options = None
+  _NESTEDMESSAGE_USERPAYMESSAGE.fields_by_name['bank_number']._serialized_options = b'\372B\006r\004\020\r\030\023'
+  _NESTEDMESSAGE_USERPAYMESSAGE.fields_by_name['exp']._options = None
+  _NESTEDMESSAGE_USERPAYMESSAGE.fields_by_name['exp']._serialized_options = b'\372B\005\262\001\002@\001'
+  _NESTEDMESSAGE_USERPAYMESSAGE.fields_by_name['uuid']._options = None
+  _NESTEDMESSAGE_USERPAYMESSAGE.fields_by_name['uuid']._serialized_options = b'\372B\005r\003\260\001\001'
+  _NESTEDMESSAGE_NOTENABLEUSERPAYMESSAGE.fields_by_name['bank_number']._options = None
+  _NESTEDMESSAGE_NOTENABLEUSERPAYMESSAGE.fields_by_name['bank_number']._serialized_options = b'\372B\006r\004\020\r\030\023'
+  _NESTEDMESSAGE_NOTENABLEUSERPAYMESSAGE.fields_by_name['exp']._options = None
+  _NESTEDMESSAGE_NOTENABLEUSERPAYMESSAGE.fields_by_name['exp']._serialized_options = b'\372B\005\262\001\002@\001'
+  _NESTEDMESSAGE_NOTENABLEUSERPAYMESSAGE.fields_by_name['uuid']._options = None
+  _NESTEDMESSAGE_NOTENABLEUSERPAYMESSAGE.fields_by_name['uuid']._serialized_options = b'\372B\005r\003\260\001\001'
+  _NESTEDMESSAGE_STRINGINMAPTESTENTRY._options = None
+  _NESTEDMESSAGE_STRINGINMAPTESTENTRY._serialized_options = b'8\001'
+  _NESTEDMESSAGE_MAPINMAPTESTENTRY._options = None
+  _NESTEDMESSAGE_MAPINMAPTESTENTRY._serialized_options = b'8\001'
+  _NESTEDMESSAGE.fields_by_name['not_enable_user_pay']._options = None
+  _NESTEDMESSAGE.fields_by_name['not_enable_user_pay']._serialized_options = b'\372B\005\212\001\002\010\001'
+  _STATE._serialized_start=8270
+  _STATE._serialized_end=8316
+  _FLOATTEST._serialized_start=211
+  _FLOATTEST._serialized_end=442
+  _DOUBLETEST._serialized_start=445
+  _DOUBLETEST._serialized_end=721
+  _INT32TEST._serialized_start=724
+  _INT32TEST._serialized_end=922
+  _UINT32TEST._serialized_start=925
+  _UINT32TEST._serialized_end=1124
+  _SINT32TEST._serialized_start=1127
+  _SINT32TEST._serialized_end=1326
+  _INT64TEST._serialized_start=1329
+  _INT64TEST._serialized_end=1527
+  _UINT64TEST._serialized_start=1530
+  _UINT64TEST._serialized_end=1729
+  _SINT64TEST._serialized_start=1732
+  _SINT64TEST._serialized_end=1931
+  _FIXED32TEST._serialized_start=1934
+  _FIXED32TEST._serialized_end=2167
+  _FIXED64TEST._serialized_start=2170
+  _FIXED64TEST._serialized_end=2447
+  _SFIXED32TEST._serialized_start=2450
+  _SFIXED32TEST._serialized_end=2684
+  _SFIXED64TEST._serialized_start=2687
+  _SFIXED64TEST._serialized_end=2965
+  _BOOLTEST._serialized_start=2967
+  _BOOLTEST._serialized_end=3037
+  _STRINGTEST._serialized_start=3040
+  _STRINGTEST._serialized_end=3749
+  _BYTESTEST._serialized_start=3752
+  _BYTESTEST._serialized_end=4076
+  _ENUMTEST._serialized_start=4079
+  _ENUMTEST._serialized_end=4306
+  _MAPTEST._serialized_start=4309
+  _MAPTEST._serialized_end=5146
+  _MAPTEST_PAIRTESTENTRY._serialized_start=4813
+  _MAPTEST_PAIRTESTENTRY._serialized_end=4860
+  _MAPTEST_NOPARSETESTENTRY._serialized_start=4862
+  _MAPTEST_NOPARSETESTENTRY._serialized_end=4912
+  _MAPTEST_KEYSTESTENTRY._serialized_start=4914
+  _MAPTEST_KEYSTESTENTRY._serialized_end=4961
+  _MAPTEST_VALUESTESTENTRY._serialized_start=4963
+  _MAPTEST_VALUESTESTENTRY._serialized_end=5012
+  _MAPTEST_KEYSVALUESTESTENTRY._serialized_start=5014
+  _MAPTEST_KEYSVALUESTESTENTRY._serialized_end=5095
+  _MAPTEST_IGNORETESTENTRY._serialized_start=5097
+  _MAPTEST_IGNORETESTENTRY._serialized_end=5146
+  _MESSAGETEST._serialized_start=5148
+  _MESSAGETEST._serialized_end=5223
+  _REPEATEDTEST._serialized_start=5226
+  _REPEATEDTEST._serialized_end=5742
+  _ANYTEST._serialized_start=5745
+  _ANYTEST._serialized_end=6095
+  _DURATIONTEST._serialized_start=6098
+  _DURATIONTEST._serialized_end=6537
+  _TIMESTAMPTEST._serialized_start=6540
+  _TIMESTAMPTEST._serialized_end=7080
+  _MESSAGEDISABLEDTEST._serialized_start=7083
+  _MESSAGEDISABLEDTEST._serialized_end=7217
+  _MESSAGEIGNOREDTEST._serialized_start=7220
+  _MESSAGEIGNOREDTEST._serialized_end=7353
+  _ONEOFTEST._serialized_start=7355
+  _ONEOFTEST._serialized_end=7419
+  _ONEOFNOTTEST._serialized_start=7421
+  _ONEOFNOTTEST._serialized_end=7483
+  _NESTEDMESSAGE._serialized_start=7486
+  _NESTEDMESSAGE._serialized_end=8268
+  _NESTEDMESSAGE_USERPAYMESSAGE._serialized_start=7850
+  _NESTEDMESSAGE_USERPAYMESSAGE._serialized_end=7973
+  _NESTEDMESSAGE_NOTENABLEUSERPAYMESSAGE._serialized_start=7976
+  _NESTEDMESSAGE_NOTENABLEUSERPAYMESSAGE._serialized_end=8108
+  _NESTEDMESSAGE_STRINGINMAPTESTENTRY._serialized_start=8110
+  _NESTEDMESSAGE_STRINGINMAPTESTENTRY._serialized_end=8191
+  _NESTEDMESSAGE_MAPINMAPTESTENTRY._serialized_start=8193
+  _NESTEDMESSAGE_MAPINMAPTESTENTRY._serialized_end=8268
 # @@protoc_insertion_point(module_scope)
