@@ -53,26 +53,27 @@ class FileDescriptorProtoToCode(BaseP2C):
         self._parse_field_descriptor()
 
     def _add_other_module_pkg(self, other_fd: FileDescriptorProto, type_str: str) -> None:
-        if other_fd.name != self._fd.name:
-            # Generate the corresponding import statement
-            # e.g:
-            #   fd name:example_proto/demo/demo.proto
-            #   other_fd name: example_proto/common/single.proto
-            #   output: from ..common.single_p2p import DemoMessage
-            fd_path_list: Tuple[str, ...] = Path(self._fd.name).parts
-            message_path_list: Tuple[str, ...] = Path(other_fd.name).parts
-            index: int = -1
-            for _index in range(min(len(fd_path_list), len(message_path_list))):
-                if message_path_list[_index] == fd_path_list[_index]:
-                    index = _index
+        if other_fd.name == self._fd.name:
+            return
+        # Generate the corresponding import statement
+        # e.g:
+        #   fd name:example_proto/demo/demo.proto
+        #   other_fd name: example_proto/common/single.proto
+        #   output: from ..common.single_p2p import DemoMessage
+        fd_path_list: Tuple[str, ...] = Path(self._fd.name).parts
+        message_path_list: Tuple[str, ...] = Path(other_fd.name).parts
+        index: int = -1
+        for _index in range(min(len(fd_path_list), len(message_path_list))):
+            if message_path_list[_index] == fd_path_list[_index]:
+                index = _index
 
-            module_name: str = (
-                ".".join(message_path_list[index + 1 : -1]) + "." + message_path_list[-1].replace(".proto", "") + "_p2p"
-            )
-            logger.info((self._fd.name, other_fd.name, index))
-            if index != "-1":
-                module_name = "." * (len(message_path_list) - (index + 1)) + module_name
-            self._add_import_code(module_name, type_str)
+        module_name: str = (
+            ".".join(message_path_list[index + 1 : -1]) + "." + message_path_list[-1].replace(".proto", "") + "_p2p"
+        )
+        logger.info((self._fd.name, other_fd.name, index))
+        if index != "-1":
+            module_name = "." * (len(message_path_list) - (index + 1)) + module_name
+        self._add_import_code(module_name, type_str)
 
     def _enum(self, enums: Iterable[EnumDescriptorProto], scl_prefix: SourceCodeLocation, indent: int = 0) -> str:
         """

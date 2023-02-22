@@ -17,11 +17,10 @@ protoc-gen-protobuf-to-pydantic = "protobuf_to_pydantic.plugin.main:main"
 
 [tool.poetry.dependencies]
 python = "^3.7"
-grpcio-tools = "^1.40.0"
 lark = { version = "^1.1.2", optional = true }
 mypy-protobuf = { version = "^3.2.0", optional = true }
 pydantic = "^1.9.1"
-protobuf = "3.20.3"
+grpcio-tools = "^1.40"
 
 [tool.poetry.extras]
 lark = ["lark"]
