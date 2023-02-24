@@ -69,12 +69,7 @@ class BaseP2C(object):
         try:
             import black  # type: ignore
         except ImportError:
-            try:
-                from yapf.yapflib.yapf_api import FormatCode  # type: ignore
-            except ImportError:
-                pass
-            else:
-                content_str, _ = FormatCode(content_str)
+            pass
         else:
             content_str = black.format_str(content_str, mode=black.Mode(line_length=120))
         return content_str
