@@ -29,13 +29,13 @@ from protobuf_to_pydantic.grpc_types import (
 from protobuf_to_pydantic.plugin.my_types import ProtobufTypeModel
 
 if TYPE_CHECKING:
-    from protobuf_to_pydantic.plugin.config import Config
+    from protobuf_to_pydantic.plugin.config import ConfigModel
 
 logger: logging.Logger = logging.getLogger(__name__)
 
 
 class FileDescriptorProtoToCode(BaseP2C):
-    def __init__(self, fd: FileDescriptorProto, descriptors: Descriptors, config: "Config"):
+    def __init__(self, fd: FileDescriptorProto, descriptors: Descriptors, config: "ConfigModel"):
         super().__init__(
             customer_import_set=config.customer_import_set,
             customer_deque=config.customer_deque,
@@ -44,7 +44,7 @@ class FileDescriptorProtoToCode(BaseP2C):
         )
         self._fd: FileDescriptorProto = fd
         self._descriptors: Descriptors = descriptors
-        self._desc_template: DescTemplate = config.desc_template
+        self._desc_template: DescTemplate = config.desc_template_instance
 
         if config.base_model_class is BaseModel:
             self._import_set.add("from pydantic import BaseModel")

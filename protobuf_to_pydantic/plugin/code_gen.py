@@ -6,7 +6,7 @@ import sys
 from google.protobuf.compiler.plugin_pb2 import CodeGeneratorRequest, CodeGeneratorResponse
 from mypy_protobuf.main import Descriptors, code_generation
 
-from protobuf_to_pydantic.plugin.config import Config, get_config_by_module
+from protobuf_to_pydantic.plugin.config import ConfigModel, get_config_by_module
 
 # If want to parse option, need to import the corresponding file
 #   see details:https://stackoverflow.com/a/59301849
@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 
 class CodeGen(object):
-    config: Config
+    config: ConfigModel
 
     def __init__(self) -> None:
         self.param_dict: dict = {}
@@ -39,7 +39,7 @@ class CodeGen(object):
 
     def gen_config(self) -> None:
         if "config_path" not in self.param_dict:
-            self.config = Config()
+            self.config = ConfigModel()
         else:
             path_obj: pathlib.Path = pathlib.Path(self.param_dict["config_path"]).absolute()
             if not path_obj.exists():
