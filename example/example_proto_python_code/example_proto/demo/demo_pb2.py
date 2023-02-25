@@ -4,7 +4,6 @@
 """Generated protocol buffer code."""
 from google.protobuf.internal import enum_type_wrapper
 from google.protobuf import descriptor as _descriptor
-from google.protobuf import descriptor_pool as _descriptor_pool
 from google.protobuf import message as _message
 from google.protobuf import reflection as _reflection
 from google.protobuf import symbol_database as _symbol_database
@@ -18,24 +17,536 @@ from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__
 from example.example_proto_python_code.example_proto.common import single_pb2 as example__proto_dot_common_dot_single__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1d\x65xample_proto/demo/demo.proto\x12\x04user\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a!example_proto/common/single.proto\"\xc3\x01\n\x0bUserMessage\x12\x0b\n\x03uid\x18\x01 \x01(\t\x12\x0b\n\x03\x61ge\x18\x02 \x01(\x05\x12\x0e\n\x06height\x18\x03 \x01(\x02\x12\x1a\n\x03sex\x18\x04 \x01(\x0e\x32\r.user.SexType\x12\x1e\n\x04\x64\x65mo\x18\x06 \x01(\x0e\x32\x10.single.DemoEnum\x12\x10\n\x08is_adult\x18\x07 \x01(\x08\x12\x11\n\tuser_name\x18\x08 \x01(\t\x12)\n\x0c\x64\x65mo_message\x18\t \x01(\x0b\x32\x13.single.DemoMessage\"\xe4\x01\n\nMapMessage\x12/\n\x08user_map\x18\x01 \x03(\x0b\x32\x1d.user.MapMessage.UserMapEntry\x12\x31\n\tuser_flag\x18\x02 \x03(\x0b\x32\x1e.user.MapMessage.UserFlagEntry\x1a\x41\n\x0cUserMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12 \n\x05value\x18\x02 \x01(\x0b\x32\x11.user.UserMessage:\x02\x38\x01\x1a/\n\rUserFlagEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x08:\x02\x38\x01\"[\n\x0fRepeatedMessage\x12\x10\n\x08str_list\x18\x01 \x03(\t\x12\x10\n\x08int_list\x18\x02 \x03(\x05\x12$\n\tuser_list\x18\x03 \x03(\x0b\x32\x11.user.UserMessage\"\xeb\x04\n\rNestedMessage\x12;\n\ruser_list_map\x18\x01 \x03(\x0b\x32$.user.NestedMessage.UserListMapEntry\x12\x32\n\x08user_map\x18\x02 \x03(\x0b\x32 .user.NestedMessage.UserMapEntry\x12\x34\n\x08user_pay\x18\x03 \x01(\x0b\x32\".user.NestedMessage.UserPayMessage\x12\x35\n\x0cinclude_enum\x18\x04 \x01(\x0e\x32\x1f.user.NestedMessage.IncludeEnum\x12?\n\x13not_enable_user_pay\x18\x05 \x01(\x0b\x32\".user.NestedMessage.UserPayMessage\x12%\n\x05\x65mpty\x18\x06 \x01(\x0b\x32\x16.google.protobuf.Empty\x1a\\\n\x0eUserPayMessage\x12\x13\n\x0b\x62\x61nk_number\x18\x01 \x01(\t\x12\'\n\x03\x65xp\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x0c\n\x04uuid\x18\x03 \x01(\t\x1aI\n\x10UserListMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12$\n\x05value\x18\x02 \x01(\x0b\x32\x15.user.RepeatedMessage:\x02\x38\x01\x1a@\n\x0cUserMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x1f\n\x05value\x18\x02 \x01(\x0b\x32\x10.user.MapMessage:\x02\x38\x01\")\n\x0bIncludeEnum\x12\x08\n\x04zero\x10\x00\x12\x07\n\x03one\x10\x01\x12\x07\n\x03two\x10\x02*\x1d\n\x07SexType\x12\x07\n\x03man\x10\x00\x12\t\n\x05women\x10\x01\x62\x06proto3')
+DESCRIPTOR = _descriptor.FileDescriptor(
+  name='example_proto/demo/demo.proto',
+  package='user',
+  syntax='proto3',
+  serialized_options=None,
+  create_key=_descriptor._internal_create_key,
+  serialized_pb=b'\n\x1d\x65xample_proto/demo/demo.proto\x12\x04user\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a!example_proto/common/single.proto\"\xc3\x01\n\x0bUserMessage\x12\x0b\n\x03uid\x18\x01 \x01(\t\x12\x0b\n\x03\x61ge\x18\x02 \x01(\x05\x12\x0e\n\x06height\x18\x03 \x01(\x02\x12\x1a\n\x03sex\x18\x04 \x01(\x0e\x32\r.user.SexType\x12\x1e\n\x04\x64\x65mo\x18\x06 \x01(\x0e\x32\x10.single.DemoEnum\x12\x10\n\x08is_adult\x18\x07 \x01(\x08\x12\x11\n\tuser_name\x18\x08 \x01(\t\x12)\n\x0c\x64\x65mo_message\x18\t \x01(\x0b\x32\x13.single.DemoMessage\"\xe4\x01\n\nMapMessage\x12/\n\x08user_map\x18\x01 \x03(\x0b\x32\x1d.user.MapMessage.UserMapEntry\x12\x31\n\tuser_flag\x18\x02 \x03(\x0b\x32\x1e.user.MapMessage.UserFlagEntry\x1a\x41\n\x0cUserMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12 \n\x05value\x18\x02 \x01(\x0b\x32\x11.user.UserMessage:\x02\x38\x01\x1a/\n\rUserFlagEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x08:\x02\x38\x01\"[\n\x0fRepeatedMessage\x12\x10\n\x08str_list\x18\x01 \x03(\t\x12\x10\n\x08int_list\x18\x02 \x03(\x05\x12$\n\tuser_list\x18\x03 \x03(\x0b\x32\x11.user.UserMessage\"\xeb\x04\n\rNestedMessage\x12;\n\ruser_list_map\x18\x01 \x03(\x0b\x32$.user.NestedMessage.UserListMapEntry\x12\x32\n\x08user_map\x18\x02 \x03(\x0b\x32 .user.NestedMessage.UserMapEntry\x12\x34\n\x08user_pay\x18\x03 \x01(\x0b\x32\".user.NestedMessage.UserPayMessage\x12\x35\n\x0cinclude_enum\x18\x04 \x01(\x0e\x32\x1f.user.NestedMessage.IncludeEnum\x12?\n\x13not_enable_user_pay\x18\x05 \x01(\x0b\x32\".user.NestedMessage.UserPayMessage\x12%\n\x05\x65mpty\x18\x06 \x01(\x0b\x32\x16.google.protobuf.Empty\x1a\\\n\x0eUserPayMessage\x12\x13\n\x0b\x62\x61nk_number\x18\x01 \x01(\t\x12\'\n\x03\x65xp\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x0c\n\x04uuid\x18\x03 \x01(\t\x1aI\n\x10UserListMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12$\n\x05value\x18\x02 \x01(\x0b\x32\x15.user.RepeatedMessage:\x02\x38\x01\x1a@\n\x0cUserMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x1f\n\x05value\x18\x02 \x01(\x0b\x32\x10.user.MapMessage:\x02\x38\x01\")\n\x0bIncludeEnum\x12\x08\n\x04zero\x10\x00\x12\x07\n\x03one\x10\x01\x12\x07\n\x03two\x10\x02*\x1d\n\x07SexType\x12\x07\n\x03man\x10\x00\x12\t\n\x05women\x10\x01\x62\x06proto3'
+  ,
+  dependencies=[google_dot_protobuf_dot_empty__pb2.DESCRIPTOR,google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,example__proto_dot_common_dot_single__pb2.DESCRIPTOR,])
 
-_SEXTYPE = DESCRIPTOR.enum_types_by_name['SexType']
+_SEXTYPE = _descriptor.EnumDescriptor(
+  name='SexType',
+  full_name='user.SexType',
+  filename=None,
+  file=DESCRIPTOR,
+  create_key=_descriptor._internal_create_key,
+  values=[
+    _descriptor.EnumValueDescriptor(
+      name='man', index=0, number=0,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='women', index=1, number=1,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+  ],
+  containing_type=None,
+  serialized_options=None,
+  serialized_start=1280,
+  serialized_end=1309,
+)
+_sym_db.RegisterEnumDescriptor(_SEXTYPE)
+
 SexType = enum_type_wrapper.EnumTypeWrapper(_SEXTYPE)
 man = 0
 women = 1
 
 
-_USERMESSAGE = DESCRIPTOR.message_types_by_name['UserMessage']
-_MAPMESSAGE = DESCRIPTOR.message_types_by_name['MapMessage']
-_MAPMESSAGE_USERMAPENTRY = _MAPMESSAGE.nested_types_by_name['UserMapEntry']
-_MAPMESSAGE_USERFLAGENTRY = _MAPMESSAGE.nested_types_by_name['UserFlagEntry']
-_REPEATEDMESSAGE = DESCRIPTOR.message_types_by_name['RepeatedMessage']
-_NESTEDMESSAGE = DESCRIPTOR.message_types_by_name['NestedMessage']
-_NESTEDMESSAGE_USERPAYMESSAGE = _NESTEDMESSAGE.nested_types_by_name['UserPayMessage']
-_NESTEDMESSAGE_USERLISTMAPENTRY = _NESTEDMESSAGE.nested_types_by_name['UserListMapEntry']
-_NESTEDMESSAGE_USERMAPENTRY = _NESTEDMESSAGE.nested_types_by_name['UserMapEntry']
-_NESTEDMESSAGE_INCLUDEENUM = _NESTEDMESSAGE.enum_types_by_name['IncludeEnum']
+_NESTEDMESSAGE_INCLUDEENUM = _descriptor.EnumDescriptor(
+  name='IncludeEnum',
+  full_name='user.NestedMessage.IncludeEnum',
+  filename=None,
+  file=DESCRIPTOR,
+  create_key=_descriptor._internal_create_key,
+  values=[
+    _descriptor.EnumValueDescriptor(
+      name='zero', index=0, number=0,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='one', index=1, number=1,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='two', index=2, number=2,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+  ],
+  containing_type=None,
+  serialized_options=None,
+  serialized_start=1237,
+  serialized_end=1278,
+)
+_sym_db.RegisterEnumDescriptor(_NESTEDMESSAGE_INCLUDEENUM)
+
+
+_USERMESSAGE = _descriptor.Descriptor(
+  name='UserMessage',
+  full_name='user.UserMessage',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='uid', full_name='user.UserMessage.uid', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='age', full_name='user.UserMessage.age', index=1,
+      number=2, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='height', full_name='user.UserMessage.height', index=2,
+      number=3, type=2, cpp_type=6, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='sex', full_name='user.UserMessage.sex', index=3,
+      number=4, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='demo', full_name='user.UserMessage.demo', index=4,
+      number=6, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='is_adult', full_name='user.UserMessage.is_adult', index=5,
+      number=7, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='user_name', full_name='user.UserMessage.user_name', index=6,
+      number=8, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='demo_message', full_name='user.UserMessage.demo_message', index=7,
+      number=9, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=137,
+  serialized_end=332,
+)
+
+
+_MAPMESSAGE_USERMAPENTRY = _descriptor.Descriptor(
+  name='UserMapEntry',
+  full_name='user.MapMessage.UserMapEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='user.MapMessage.UserMapEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='user.MapMessage.UserMapEntry.value', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=b'8\001',
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=449,
+  serialized_end=514,
+)
+
+_MAPMESSAGE_USERFLAGENTRY = _descriptor.Descriptor(
+  name='UserFlagEntry',
+  full_name='user.MapMessage.UserFlagEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='user.MapMessage.UserFlagEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='user.MapMessage.UserFlagEntry.value', index=1,
+      number=2, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=b'8\001',
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=516,
+  serialized_end=563,
+)
+
+_MAPMESSAGE = _descriptor.Descriptor(
+  name='MapMessage',
+  full_name='user.MapMessage',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='user_map', full_name='user.MapMessage.user_map', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='user_flag', full_name='user.MapMessage.user_flag', index=1,
+      number=2, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[_MAPMESSAGE_USERMAPENTRY, _MAPMESSAGE_USERFLAGENTRY, ],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=335,
+  serialized_end=563,
+)
+
+
+_REPEATEDMESSAGE = _descriptor.Descriptor(
+  name='RepeatedMessage',
+  full_name='user.RepeatedMessage',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='str_list', full_name='user.RepeatedMessage.str_list', index=0,
+      number=1, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='int_list', full_name='user.RepeatedMessage.int_list', index=1,
+      number=2, type=5, cpp_type=1, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='user_list', full_name='user.RepeatedMessage.user_list', index=2,
+      number=3, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=565,
+  serialized_end=656,
+)
+
+
+_NESTEDMESSAGE_USERPAYMESSAGE = _descriptor.Descriptor(
+  name='UserPayMessage',
+  full_name='user.NestedMessage.UserPayMessage',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='bank_number', full_name='user.NestedMessage.UserPayMessage.bank_number', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='exp', full_name='user.NestedMessage.UserPayMessage.exp', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='uuid', full_name='user.NestedMessage.UserPayMessage.uuid', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1002,
+  serialized_end=1094,
+)
+
+_NESTEDMESSAGE_USERLISTMAPENTRY = _descriptor.Descriptor(
+  name='UserListMapEntry',
+  full_name='user.NestedMessage.UserListMapEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='user.NestedMessage.UserListMapEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='user.NestedMessage.UserListMapEntry.value', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=b'8\001',
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1096,
+  serialized_end=1169,
+)
+
+_NESTEDMESSAGE_USERMAPENTRY = _descriptor.Descriptor(
+  name='UserMapEntry',
+  full_name='user.NestedMessage.UserMapEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='user.NestedMessage.UserMapEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='user.NestedMessage.UserMapEntry.value', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=b'8\001',
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1171,
+  serialized_end=1235,
+)
+
+_NESTEDMESSAGE = _descriptor.Descriptor(
+  name='NestedMessage',
+  full_name='user.NestedMessage',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='user_list_map', full_name='user.NestedMessage.user_list_map', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='user_map', full_name='user.NestedMessage.user_map', index=1,
+      number=2, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='user_pay', full_name='user.NestedMessage.user_pay', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='include_enum', full_name='user.NestedMessage.include_enum', index=3,
+      number=4, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='not_enable_user_pay', full_name='user.NestedMessage.not_enable_user_pay', index=4,
+      number=5, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='empty', full_name='user.NestedMessage.empty', index=5,
+      number=6, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[_NESTEDMESSAGE_USERPAYMESSAGE, _NESTEDMESSAGE_USERLISTMAPENTRY, _NESTEDMESSAGE_USERMAPENTRY, ],
+  enum_types=[
+    _NESTEDMESSAGE_INCLUDEENUM,
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=659,
+  serialized_end=1278,
+)
+
+_USERMESSAGE.fields_by_name['sex'].enum_type = _SEXTYPE
+_USERMESSAGE.fields_by_name['demo'].enum_type = example__proto_dot_common_dot_single__pb2._DEMOENUM
+_USERMESSAGE.fields_by_name['demo_message'].message_type = example__proto_dot_common_dot_single__pb2._DEMOMESSAGE
+_MAPMESSAGE_USERMAPENTRY.fields_by_name['value'].message_type = _USERMESSAGE
+_MAPMESSAGE_USERMAPENTRY.containing_type = _MAPMESSAGE
+_MAPMESSAGE_USERFLAGENTRY.containing_type = _MAPMESSAGE
+_MAPMESSAGE.fields_by_name['user_map'].message_type = _MAPMESSAGE_USERMAPENTRY
+_MAPMESSAGE.fields_by_name['user_flag'].message_type = _MAPMESSAGE_USERFLAGENTRY
+_REPEATEDMESSAGE.fields_by_name['user_list'].message_type = _USERMESSAGE
+_NESTEDMESSAGE_USERPAYMESSAGE.fields_by_name['exp'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
+_NESTEDMESSAGE_USERPAYMESSAGE.containing_type = _NESTEDMESSAGE
+_NESTEDMESSAGE_USERLISTMAPENTRY.fields_by_name['value'].message_type = _REPEATEDMESSAGE
+_NESTEDMESSAGE_USERLISTMAPENTRY.containing_type = _NESTEDMESSAGE
+_NESTEDMESSAGE_USERMAPENTRY.fields_by_name['value'].message_type = _MAPMESSAGE
+_NESTEDMESSAGE_USERMAPENTRY.containing_type = _NESTEDMESSAGE
+_NESTEDMESSAGE.fields_by_name['user_list_map'].message_type = _NESTEDMESSAGE_USERLISTMAPENTRY
+_NESTEDMESSAGE.fields_by_name['user_map'].message_type = _NESTEDMESSAGE_USERMAPENTRY
+_NESTEDMESSAGE.fields_by_name['user_pay'].message_type = _NESTEDMESSAGE_USERPAYMESSAGE
+_NESTEDMESSAGE.fields_by_name['include_enum'].enum_type = _NESTEDMESSAGE_INCLUDEENUM
+_NESTEDMESSAGE.fields_by_name['not_enable_user_pay'].message_type = _NESTEDMESSAGE_USERPAYMESSAGE
+_NESTEDMESSAGE.fields_by_name['empty'].message_type = google_dot_protobuf_dot_empty__pb2._EMPTY
+_NESTEDMESSAGE_INCLUDEENUM.containing_type = _NESTEDMESSAGE
+DESCRIPTOR.message_types_by_name['UserMessage'] = _USERMESSAGE
+DESCRIPTOR.message_types_by_name['MapMessage'] = _MAPMESSAGE
+DESCRIPTOR.message_types_by_name['RepeatedMessage'] = _REPEATEDMESSAGE
+DESCRIPTOR.message_types_by_name['NestedMessage'] = _NESTEDMESSAGE
+DESCRIPTOR.enum_types_by_name['SexType'] = _SEXTYPE
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
+
 UserMessage = _reflection.GeneratedProtocolMessageType('UserMessage', (_message.Message,), {
   'DESCRIPTOR' : _USERMESSAGE,
   '__module__' : 'example_proto.demo.demo_pb2'
@@ -104,37 +615,9 @@ _sym_db.RegisterMessage(NestedMessage.UserPayMessage)
 _sym_db.RegisterMessage(NestedMessage.UserListMapEntry)
 _sym_db.RegisterMessage(NestedMessage.UserMapEntry)
 
-if _descriptor._USE_C_DESCRIPTORS == False:
 
-  DESCRIPTOR._options = None
-  _MAPMESSAGE_USERMAPENTRY._options = None
-  _MAPMESSAGE_USERMAPENTRY._serialized_options = b'8\001'
-  _MAPMESSAGE_USERFLAGENTRY._options = None
-  _MAPMESSAGE_USERFLAGENTRY._serialized_options = b'8\001'
-  _NESTEDMESSAGE_USERLISTMAPENTRY._options = None
-  _NESTEDMESSAGE_USERLISTMAPENTRY._serialized_options = b'8\001'
-  _NESTEDMESSAGE_USERMAPENTRY._options = None
-  _NESTEDMESSAGE_USERMAPENTRY._serialized_options = b'8\001'
-  _SEXTYPE._serialized_start=1280
-  _SEXTYPE._serialized_end=1309
-  _USERMESSAGE._serialized_start=137
-  _USERMESSAGE._serialized_end=332
-  _MAPMESSAGE._serialized_start=335
-  _MAPMESSAGE._serialized_end=563
-  _MAPMESSAGE_USERMAPENTRY._serialized_start=449
-  _MAPMESSAGE_USERMAPENTRY._serialized_end=514
-  _MAPMESSAGE_USERFLAGENTRY._serialized_start=516
-  _MAPMESSAGE_USERFLAGENTRY._serialized_end=563
-  _REPEATEDMESSAGE._serialized_start=565
-  _REPEATEDMESSAGE._serialized_end=656
-  _NESTEDMESSAGE._serialized_start=659
-  _NESTEDMESSAGE._serialized_end=1278
-  _NESTEDMESSAGE_USERPAYMESSAGE._serialized_start=1002
-  _NESTEDMESSAGE_USERPAYMESSAGE._serialized_end=1094
-  _NESTEDMESSAGE_USERLISTMAPENTRY._serialized_start=1096
-  _NESTEDMESSAGE_USERLISTMAPENTRY._serialized_end=1169
-  _NESTEDMESSAGE_USERMAPENTRY._serialized_start=1171
-  _NESTEDMESSAGE_USERMAPENTRY._serialized_end=1235
-  _NESTEDMESSAGE_INCLUDEENUM._serialized_start=1237
-  _NESTEDMESSAGE_INCLUDEENUM._serialized_end=1278
+_MAPMESSAGE_USERMAPENTRY._options = None
+_MAPMESSAGE_USERFLAGENTRY._options = None
+_NESTEDMESSAGE_USERLISTMAPENTRY._options = None
+_NESTEDMESSAGE_USERMAPENTRY._options = None
 # @@protoc_insertion_point(module_scope)
