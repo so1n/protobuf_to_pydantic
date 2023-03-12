@@ -28,6 +28,8 @@ class CodeGen(object):
             self.generate_pydantic_model(Descriptors(request), response)
 
     def parse_param(self, request: CodeGeneratorRequest) -> None:
+        if not request.parameter:
+            return
         try:
             for one_param_str in request.parameter.split(","):
                 k, v = one_param_str.split("=")
