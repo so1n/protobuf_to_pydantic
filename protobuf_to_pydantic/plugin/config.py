@@ -1,10 +1,12 @@
 from collections import deque
-from typing import Any, Deque, Dict, List, Set, Type
+from typing import Any, Deque, Dict, List, Set, Type, TypeVar
 
 from pydantic import BaseModel, Field, root_validator
 
 from protobuf_to_pydantic.gen_model import DescTemplate
 from protobuf_to_pydantic.plugin.field_desc_proto_to_code import FileDescriptorProtoToCode
+
+ConfigT = TypeVar("ConfigT", bound="ConfigModel")
 
 
 class ConfigModel(BaseModel):
@@ -30,10 +32,10 @@ class ConfigModel(BaseModel):
         return values
 
 
-def get_config_by_module(module: Any) -> ConfigModel:
+def get_config_by_module(module: Any, config_class: Type[ConfigT]) -> ConfigT:
     param_dict: dict = {}
-    for key in ConfigModel.__fields__.keys():
+    for key in config_class.__fields__.keys():
         if not hasattr(module, key):
             continue
         param_dict[key] = getattr(module, key)
-    return ConfigModel(**param_dict)
+    return config_class(**param_dict)
