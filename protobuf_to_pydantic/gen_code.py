@@ -14,7 +14,7 @@ from pydantic.fields import FieldInfo
 from protobuf_to_pydantic import customer_validator, gen_model
 from protobuf_to_pydantic.customer_con_type import pydantic_con_dict
 from protobuf_to_pydantic.grpc_types import RepeatedCompositeContainer, RepeatedScalarContainer
-from protobuf_to_pydantic.util import replace_protobuf_type_to_python_type
+from protobuf_to_pydantic.util import format_content, replace_protobuf_type_to_python_type
 
 
 class BaseP2C(object):
@@ -52,27 +52,7 @@ class BaseP2C(object):
         self._module_path: str = module_path
 
     def format_content(self, content_str: str) -> str:
-        try:
-            import isort  # type: ignore
-        except ImportError:
-            pass
-        else:
-            content_str = isort.code(content_str)
-
-        try:
-            import autoflake  # type: ignore
-        except ImportError:
-            pass
-        else:
-            content_str = autoflake.fix_code(content_str)
-
-        try:
-            import black  # type: ignore
-        except ImportError:
-            pass
-        else:
-            content_str = black.format_str(content_str, mode=black.Mode(line_length=120))
-        return content_str
+        return format_content(content_str)
 
     @property
     def content(self) -> str:

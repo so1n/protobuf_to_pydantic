@@ -78,3 +78,27 @@ def gen_dict_from_desc_str(comment_prefix: str, desc: str) -> FieldInfoTypedDict
         line = line.replace(f"{comment_prefix}:", "")
         pait_dict.update(json.loads(line))
     return pait_dict  # type: ignore
+
+
+def format_content(content_str: str) -> str:
+    try:
+        import isort  # type: ignore
+    except ImportError:
+        pass
+    else:
+        content_str = isort.code(content_str)
+
+    try:
+        import autoflake  # type: ignore
+    except ImportError:
+        pass
+    else:
+        content_str = autoflake.fix_code(content_str)
+
+    try:
+        import black  # type: ignore
+    except ImportError:
+        pass
+    else:
+        content_str = black.format_str(content_str, mode=black.Mode(line_length=120))
+    return content_str
