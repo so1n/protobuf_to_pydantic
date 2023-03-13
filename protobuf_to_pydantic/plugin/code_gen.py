@@ -42,18 +42,36 @@ class CodeGen(Generic[ConfigT]):
         print(f"Parse command-line arguments:{self.param_dict}", file=sys.stderr)
 
     def gen_config(self) -> None:
+        default_config = self.config_class()
+        self.config = default_config
         if "config_path" not in self.param_dict:
-            self.config = self.config_class()
-        else:
-            path_obj: pathlib.Path = pathlib.Path(self.param_dict["config_path"]).absolute()
-            if not path_obj.exists():
-                raise SystemError(f"Can not  find config file at {path_obj}")
+            return
 
-            print(f"Load config: {str(path_obj)}", file=sys.stderr)
-            self.config = get_config_by_module(
-                importlib.import_module(f"{path_obj.parent.name}.{path_obj.name.replace('.py', '')}"),
-                self.config_class,
-            )
+        path_obj: pathlib.Path = pathlib.Path(self.param_dict["config_path"]).absolute()
+        if not path_obj.exists():
+            raise SystemError(f"Can not  find config file at {path_obj}")
+        config_path: str = str(path_obj)
+        print(f"Load config: {config_path}", file=sys.stderr)
+
+        try_import_module_path_list: list = [f"{path_obj.name}", f"{path_obj.parent.name}.{path_obj.name}"]
+        for sys_path in sys.path:
+            if not config_path.startswith(sys_path):
+                continue
+            try_import_module_path_list.append(config_path[len(sys_path) + 1 :])
+
+        error_path_dict: dict = {}
+        for module_path in try_import_module_path_list:
+            module_path = module_path.replace("/", ".").replace("\\", ".").replace(".py", "")
+            try:
+                self.config = get_config_by_module(
+                    importlib.import_module(module_path),
+                    self.config_class,
+                )
+                break
+            except ModuleNotFoundError as e:
+                error_path_dict[module_path] = e
+        if self.config == default_config:
+            print(f"load config error. try use path and error:{error_path_dict}")
 
     def generate_pydantic_model(self, descriptors: Descriptors, response: CodeGeneratorResponse) -> None:
         for name, fd in descriptors.to_generate.items():
