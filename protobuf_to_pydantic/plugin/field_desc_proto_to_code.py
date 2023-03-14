@@ -42,6 +42,7 @@ class FileDescriptorProtoToCode(BaseP2C):
             module_path=config.module_path,
             code_indent=config.code_indent,
         )
+        self.config = config
         self._fd: FileDescriptorProto = fd
         self._descriptors: Descriptors = descriptors
         self._desc_template: DescTemplate = config.desc_template_instance
@@ -68,7 +69,10 @@ class FileDescriptorProtoToCode(BaseP2C):
                 index = _index
 
         module_name: str = (
-            ".".join(message_path_list[index + 1 : -1]) + "." + message_path_list[-1].replace(".proto", "") + "_p2p"
+            ".".join(message_path_list[index + 1 : -1])
+            + "."
+            + message_path_list[-1].replace(".proto", "")
+            + self.config.file_name_suffix
         )
         logger.info((self._fd.name, other_fd.name, index))
         if index != "-1":

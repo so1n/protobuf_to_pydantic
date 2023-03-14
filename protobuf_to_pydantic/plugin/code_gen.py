@@ -78,7 +78,7 @@ class CodeGen(Generic[ConfigT]):
             if fd.package in self.config.ignore_pkg_list:
                 continue
             file = response.file.add()
-            file.name = fd.name[:-6].replace("-", "_").replace(".", "/") + "_p2p.py"
+            file.name = fd.name[:-6].replace("-", "_").replace(".", "/") + f"{self.config.file_name_suffix}.py"
             file.content = self.config.file_descriptor_proto_to_code(
                 fd=fd, descriptors=descriptors, config=self.config
             ).content

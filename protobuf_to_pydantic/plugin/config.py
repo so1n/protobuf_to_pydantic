@@ -19,6 +19,13 @@ class ConfigModel(BaseModel):
     code_indent: int = Field(default=4)
     ignore_pkg_list: List[str] = Field(default_factory=list)
     base_model_class: Type[BaseModel] = Field(default=BaseModel)
+    file_name_suffix: str = Field(
+        default="_p2p",
+        description=(
+            "The file name suffix, but not the file type. "
+            "For example, if the name of the proto file is `book`, the generated file name is `book_p2p.py`"
+        ),
+    )
     file_descriptor_proto_to_code: Type[FileDescriptorProtoToCode] = Field(default=FileDescriptorProtoToCode)
 
     desc_template_instance: DescTemplate = Field(default_factory=lambda: DescTemplate({}, ""))
