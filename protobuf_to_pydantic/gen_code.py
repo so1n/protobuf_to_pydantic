@@ -23,6 +23,13 @@ class BaseP2C(object):
     (only protobuf-generated pydantic.BaseModel objects are supported, not overly complex pydantic.BaseModel)
     """
 
+    head_content: str = (
+        "# This is an automatically generated file, please do not change\n"
+        "# gen by protobuf_to_pydantic(https://github.com/so1n/protobuf_to_pydantic)\n"
+        "# type: ignore\n\n"
+    )
+    tail_content: str = ""
+
     def __init__(
         self,
         customer_import_set: Optional[Set[str]] = None,
@@ -56,14 +63,8 @@ class BaseP2C(object):
 
     @property
     def content(self) -> str:
-        content_str: str = (
-            "# This is an automatically generated file, please do not change\n"
-            "# gen by protobuf_to_pydantic(https://github.com/so1n/protobuf_to_pydantic)\n"
-            "# type: ignore\n\n"
-        )
-
         # Regardless of the order of import, you can sort through isort (if installed)
-        content_str += "\n".join(sorted(self._import_set))
+        content_str: str = "\n".join(sorted(self._import_set))
 
         if self._content_deque:
             _content_set: Set[str] = set()
@@ -73,7 +74,7 @@ class BaseP2C(object):
                     continue
                 _content_set.add(content)
                 content_str += f"\n\n{content}"
-        return self.format_content(content_str)
+        return self.format_content(self.head_content + content_str + self.tail_content)
 
     def _add_import_code(self, module_name: str, class_name: str = "", extra_str: str = "") -> None:
         """Generate import statements through module name and class name"""
