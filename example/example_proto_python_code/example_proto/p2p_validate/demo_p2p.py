@@ -1,7 +1,5 @@
 # This is an automatically generated file, please do not change
 # gen by protobuf_to_pydantic(https://github.com/so1n/protobuf_to_pydantic)
-# type: ignore
-
 import typing
 from datetime import datetime, timedelta
 from enum import IntEnum
@@ -10,6 +8,12 @@ from uuid import UUID, uuid4
 
 from google.protobuf.any_pb2 import Any  # type: ignore
 from google.protobuf.message import Message  # type: ignore
+from pydantic import BaseModel, root_validator, validator
+from pydantic.fields import FieldInfo
+from pydantic.networks import AnyUrl, EmailStr, IPvAnyAddress
+from pydantic.types import conbytes, confloat, conint, conlist, constr
+
+from example.plugin_config import CustomerField, customer_any
 from protobuf_to_pydantic.customer_con_type import contimedelta, contimestamp
 from protobuf_to_pydantic.customer_validator import (
     any_in_validator,
@@ -42,12 +46,6 @@ from protobuf_to_pydantic.customer_validator import (
 )
 from protobuf_to_pydantic.get_desc.from_pb_option.types import HostNameStr, UriRefStr
 from protobuf_to_pydantic.util import Timedelta
-from pydantic import BaseModel, root_validator, validator
-from pydantic.fields import FieldInfo
-from pydantic.networks import AnyUrl, EmailStr, IPvAnyAddress
-from pydantic.types import conbytes, confloat, conint, conlist, constr
-
-from example.plugin_config import CustomerField, customer_any
 
 
 class State(IntEnum):

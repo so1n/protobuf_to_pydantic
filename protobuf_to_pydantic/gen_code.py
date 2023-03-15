@@ -26,7 +26,6 @@ class BaseP2C(object):
     head_content: str = (
         "# This is an automatically generated file, please do not change\n"
         "# gen by protobuf_to_pydantic(https://github.com/so1n/protobuf_to_pydantic)\n"
-        "# type: ignore\n\n"
     )
     tail_content: str = ""
 
@@ -36,11 +35,13 @@ class BaseP2C(object):
         customer_deque: Optional[Deque] = None,
         module_path: str = "",
         code_indent: Optional[int] = None,
+        pyproject_file_path: str = "",
     ):
         self._import_set: Set[str] = customer_import_set or set()
         self._content_deque: Deque = customer_deque or deque()
         self._create_set: Set[Type[BaseModel]] = set()
         self.code_indent: int = code_indent or 4
+        self.pyproject_file_path: str = pyproject_file_path
 
         # init module_path
         if module_path:
@@ -59,7 +60,7 @@ class BaseP2C(object):
         self._module_path: str = module_path
 
     def format_content(self, content_str: str) -> str:
-        return format_content(content_str)
+        return format_content(content_str, pyproject_file_path=self.pyproject_file_path)
 
     @property
     def content(self) -> str:
@@ -231,7 +232,16 @@ class BaseP2C(object):
                     value_type_name = getattr(value_outer_type, "__name__", "None")
                     self._parse_type_to_import_code(value_outer_type)
 
+            # TODO fix con_func bug:https://github.com/pydantic/pydantic/issues/156
+            # ignore_flag: bool = False
+            # for con_func in customer_con_type.__all__:
+            #     if con_func in value_type_name:
+            #         pass
+
             field_str += " " * indent + f"{key}: {value_type_name} = {self._field_info_handle(value.field_info)}\n"
+            # if ignore_flag:
+            #     field_str += "  # type: ignore"
+            # field_str += "\n"
         return field_str
 
     def pydantic_con_type_handle(self, type_: Any) -> str:
@@ -374,7 +384,6 @@ class BaseP2C(object):
 
     def _field_info_handle(self, field_info: FieldInfo) -> str:
         # Introduce the corresponding class for FieldInfo's properties
-        self._parse_type_to_import_code(field_info.__class__)
         field_list = []
         for k, v in field_info.__repr_args__():
             if k == "default" and str(v) == "PydanticUndefined":
@@ -391,7 +400,13 @@ class BaseP2C(object):
                 field_list.append(f"{k}={self._get_value_code(v)}")
                 self._parse_type_to_import_code(v)
 
-        return f"{field_info.__class__.__name__}({', '.join(field_list)})"
+        if field_info.__class__.__name__ == "FieldInfo":
+            self._add_import_code("pydantic", "Field")
+            field_info_str: str = f"Field({', '.join(field_list)})"
+        else:
+            self._parse_type_to_import_code(field_info.__class__)
+            field_info_str = f"{field_info.__class__.__name__}({', '.join(field_list)})"
+        return field_info_str
 
     def _model_validator_handle(self, model: Type[BaseModel], indent: int = 0) -> str:
         # TODO Here currently only consider the support for pgv&p2p, the follow-up to fill in
@@ -436,12 +451,14 @@ class P2C(BaseP2C):
         customer_deque: Optional[Deque] = None,
         module_path: str = "",
         code_indent: Optional[int] = None,
+        pyproject_file_path: str = "",
     ):
         super().__init__(
             customer_import_set=customer_import_set,
             customer_deque=customer_deque,
             module_path=module_path,
             code_indent=code_indent,
+            pyproject_file_path=pyproject_file_path,
         )
         for _module in model:
             self._gen_pydantic_model_py_code_to_content_deque(_module)
@@ -454,6 +471,7 @@ def pydantic_model_to_py_code(
     module_path: str = "",
     code_indent: Optional[int] = None,
     p2c_class: Type[P2C] = P2C,
+    pyproject_file_path: str = "",
 ) -> str:
     """
     :param model:  the model(s) to generate code for
@@ -461,6 +479,7 @@ def pydantic_model_to_py_code(
     :param customer_deque: Customize the code to be generated
     :param module_path:
     :param code_indent: Code indentation, default is 4
+    :param pyproject_file_path: pyproject.toml path
     :param p2c_class:  The class that actually executes
     :return:
     """
@@ -470,6 +489,7 @@ def pydantic_model_to_py_code(
         customer_deque=customer_deque,
         module_path=module_path,
         code_indent=code_indent,
+        pyproject_file_path=pyproject_file_path,
     ).content
 
 
@@ -481,6 +501,7 @@ def pydantic_model_to_py_file(
     open_mode: str = "w",
     module_path: str = "",
     code_indent: Optional[int] = None,
+    pyproject_file_path: str = "",
     p2c_class: Type[P2C] = P2C,
 ) -> None:
     py_code_content: str = pydantic_model_to_py_code(
@@ -489,6 +510,7 @@ def pydantic_model_to_py_file(
         customer_deque=customer_deque,
         module_path=module_path,
         code_indent=code_indent,
+        pyproject_file_path=pyproject_file_path,
         p2c_class=p2c_class,
     )
     with open(filename, mode=open_mode) as f:

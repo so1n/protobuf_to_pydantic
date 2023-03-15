@@ -41,6 +41,7 @@ class FileDescriptorProtoToCode(BaseP2C):
             customer_deque=config.customer_deque,
             module_path=config.module_path,
             code_indent=config.code_indent,
+            pyproject_file_path=config.pyproject_file_path,
         )
         self.config = config
         self._fd: FileDescriptorProto = fd

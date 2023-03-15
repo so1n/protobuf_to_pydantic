@@ -1,4 +1,8 @@
+import inspect
 import json
+import logging
+import os
+import sys
 from datetime import timedelta
 from typing import TYPE_CHECKING, Any, Callable, Dict, Generator, Optional, Tuple, Type, Union
 
@@ -80,25 +84,67 @@ def gen_dict_from_desc_str(comment_prefix: str, desc: str) -> FieldInfoTypedDict
     return pait_dict  # type: ignore
 
 
-def format_content(content_str: str) -> str:
+def format_content(content_str: str, pyproject_file_path: str = "") -> str:
+    if not pyproject_file_path:
+        for path in sys.path:
+            pyproject_file_path = os.path.join(path, "pyproject.toml")
+            if os.path.exists(pyproject_file_path):
+                break
+
+    pyproject_dict: dict = {}
+    try:
+        import toml  # type: ignore
+    except ImportError:
+        logging.warning(
+            "The toml module is not installed and the configuration information cannot be obtained through"
+            " pyproject.toml"
+        )
+    else:
+        if pyproject_file_path:
+            with open(pyproject_file_path, "r") as f:
+                pyproject_dict = toml.loads("\n".join(f.readlines()))
     try:
         import isort  # type: ignore
     except ImportError:
         pass
     else:
-        content_str = isort.code(content_str)
+        if pyproject_file_path:
+            content_str = isort.code(content_str, config=isort.Config(settings_file=pyproject_file_path))
+        else:
+            content_str = isort.code(content_str)
 
     try:
         import autoflake  # type: ignore
     except ImportError:
         pass
     else:
-        content_str = autoflake.fix_code(content_str)
+        try:
+            autoflake_dict: dict = {
+                k.replace("-", "_"): v
+                for k, v in pyproject_dict["tool"]["autoflake"].items()
+                if k in inspect.signature(autoflake.fix_code).parameters.keys()
+            }
+            content_str = autoflake.fix_code(content_str, **autoflake_dict)
+        except KeyError:
+            content_str = autoflake.fix_code(content_str)
 
     try:
         import black  # type: ignore
     except ImportError:
         pass
     else:
-        content_str = black.format_str(content_str, mode=black.Mode(line_length=120))
+        try:
+            black_config_dict: dict = {k.replace("-", "_"): v for k, v in pyproject_dict["tool"]["black"].items()}
+            # target_version param replace
+            target_versions = [
+                getattr(black.TargetVersion, i.upper()) for i in black_config_dict.pop("target_version", [])
+            ]
+            if target_versions:
+                black_config_dict["target_versions"] = target_versions
+            black_config_dict = {
+                k: v for k, v in black_config_dict.items() if k in inspect.signature(black.Mode).parameters.keys()
+            }
+            content_str = black.format_str(content_str, mode=black.Mode(**black_config_dict))
+        except KeyError:
+            content_str = black.format_str(content_str, mode=black.Mode())
     return content_str

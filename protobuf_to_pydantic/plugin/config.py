@@ -16,6 +16,7 @@ class ConfigModel(BaseModel):
     customer_import_set: Set[str] = Field(default_factory=set)
     customer_deque: Deque = Field(default_factory=deque)
     module_path: str = Field(default="")
+    pyproject_file_path: str = Field(default="")
     code_indent: int = Field(default=4)
     ignore_pkg_list: List[str] = Field(default_factory=list)
     base_model_class: Type[BaseModel] = Field(default=BaseModel)

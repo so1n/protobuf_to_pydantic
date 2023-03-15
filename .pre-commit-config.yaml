@@ -3,7 +3,7 @@ repos:
     rev: v1.0.0
     hooks:
       - id: mypy
-        exclude: "^example/example_proto_python_code/example_proto|^protobuf_to_pydantic/protos|test_p2p_validate.py$|test_pgv_validate.py$|protobuf_to_pydantic/contrib/proto_parser.py"
+        exclude: "^example/example_proto_python_code/example_proto|^protobuf_to_pydantic/protos|test_p2p_validate.py$|test_pgv_validate.py$|protobuf_to_pydantic/contrib/proto_parser.py|example/validate_example/demo_gen_code_by_pgv.py|example/p2p_validate_example/demo_gen_code_by_p2p.py"
   - repo: https://github.com/PyCQA/isort
     rev: 5.9.3
     hooks:
