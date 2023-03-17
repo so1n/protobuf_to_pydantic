@@ -63,6 +63,12 @@ use_parentheses = true
 ensure_newline_before_comments = true
 line_length = 120
 
+[tool.autoflake]
+in-place = true
+remove-all-unused-imports = true
+remove-unused-variable = true
+ignore-init-module-imports = true
+
 [tool.mypy]
 disallow_untyped_defs = true
 python_executable = ".venv/bin/python"
