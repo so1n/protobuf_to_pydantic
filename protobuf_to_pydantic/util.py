@@ -119,11 +119,12 @@ def format_content(content_str: str, pyproject_file_path: str = "") -> str:
         pass
     else:
         try:
-            autoflake_dict: dict = {
-                k.replace("-", "_"): v
-                for k, v in pyproject_dict["tool"]["autoflake"].items()
-                if k in inspect.signature(autoflake.fix_code).parameters.keys()
-            }
+            autoflake_dict: dict = {}
+            for k, v in pyproject_dict["tool"]["autoflake"].items():
+                k = k.replace("-", "_")
+                if k not in inspect.signature(autoflake.fix_code).parameters.keys():
+                    continue
+                autoflake_dict[k] = v
             content_str = autoflake.fix_code(content_str, **autoflake_dict)
         except KeyError:
             content_str = autoflake.fix_code(content_str)
