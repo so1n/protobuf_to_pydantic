@@ -66,8 +66,7 @@ line_length = 120
 [tool.autoflake]
 in-place = true
 remove-all-unused-imports = true
-remove-unused-variable = true
-ignore-init-module-imports = true
+remove-unused-variables = true
 
 [tool.mypy]
 disallow_untyped_defs = true

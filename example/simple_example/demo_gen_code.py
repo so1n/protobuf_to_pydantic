@@ -52,6 +52,11 @@ class RepeatedMessage(BaseModel):
     user_list: typing.List[UserMessage] = Field(default_factory=list)
 
 
+class AfterReferMessage(BaseModel):
+    uid: str = Field(default="")
+    age: int = Field(default=0)
+
+
 class NestedMessage(BaseModel):
     class UserPayMessage(BaseModel):
         bank_number: str = Field(default="")
@@ -69,3 +74,4 @@ class NestedMessage(BaseModel):
     include_enum: IncludeEnum = Field(default=0)
     not_enable_user_pay: UserPayMessage = Field()
     empty: None = Field()
+    after_refer: AfterReferMessage = Field()

@@ -59,3 +59,10 @@ class NestedMessage(BaseModel):
     include_enum: IncludeEnum = FieldInfo(default=0)
     not_enable_user_pay: UserPayMessage = FieldInfo()
     empty: None = FieldInfo()
+    after_refer: AfterReferMessage = FieldInfo()
+
+
+class AfterReferMessage(BaseModel):
+
+    uid: str = FieldInfo(default="")
+    age: int = FieldInfo(default=0)

@@ -61,4 +61,12 @@ message NestedMessage{
   // p2p: {"enable": false}
   UserPayMessage not_enable_user_pay=5;
   google.protobuf.Empty empty=6;
+  AfterReferMessage after_refer=7;
+}
+
+message AfterReferMessage {
+ // p2p: {"miss_default": true, "example": "10086", "title": "UID", "description": "user union id"}
+  string uid=1;
+  // p2p: {"example": 18, "title": "use age", "ge": 0}
+  int32 age=2;
 }
