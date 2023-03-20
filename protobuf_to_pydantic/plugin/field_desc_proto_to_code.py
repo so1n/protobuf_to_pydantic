@@ -163,6 +163,7 @@ class FileDescriptorProtoToCode(BaseP2C):
                 nested_message_name = type_str
 
                 message_fd: FileDescriptorProto = self._descriptors.message_to_fd[field.type_name]
+                self._content_deque.append(self._message(message, [FileDescriptorProto.ENUM_TYPE_FIELD_NUMBER]))
                 self._add_other_module_pkg(message_fd, type_str)
 
         elif field.type == 14:

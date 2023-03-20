@@ -525,4 +525,9 @@ message NestedMessage{
   UserPayMessage user_pay=3;
   NotEnableUserPayMessage not_enable_user_pay=4[(p2p_validate.rules).message.skip = true];
   google.protobuf.Empty empty=5;
+  AfterReferMessage after_refer=7;
+}
+message AfterReferMessage {
+  string uid=1 [(p2p_validate.rules).string = {example: "10086", title: "UID", description: "user union id", miss_default: true}];
+  int32 age=2 [(p2p_validate.rules).int32 = {example: 18, title: "use age", ge: 0}];
 }
