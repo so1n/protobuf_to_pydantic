@@ -558,6 +558,11 @@ class MessageIgnoredTest(BaseModel):
     range_test: int = Field(default=0)
 
 
+class AfterReferMessage(BaseModel):
+    uid: str = Field(title="UID", description="user union id", example="10086")
+    age: int = Field(default=0, title="use age", ge=0, example=18.0)
+
+
 class NestedMessage(BaseModel):
     class UserPayMessage(BaseModel):
         bank_number: str = Field(default="", min_length=13, max_length=19)
@@ -576,6 +581,7 @@ class NestedMessage(BaseModel):
     user_pay: UserPayMessage = Field()
     not_enable_user_pay: NotEnableUserPayMessage = Field()
     empty: None = Field()
+    after_refer: AfterReferMessage = Field()
 
 
 class OneOfTest(BaseModel):

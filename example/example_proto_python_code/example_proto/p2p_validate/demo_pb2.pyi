@@ -1808,6 +1808,7 @@ class NestedMessage(google.protobuf.message.Message):
     USER_PAY_FIELD_NUMBER: builtins.int
     NOT_ENABLE_USER_PAY_FIELD_NUMBER: builtins.int
     EMPTY_FIELD_NUMBER: builtins.int
+    AFTER_REFER_FIELD_NUMBER: builtins.int
     @property
     def string_in_map_test(self) -> google.protobuf.internal.containers.MessageMap[builtins.str, global___StringTest]: ...
     @property
@@ -1818,6 +1819,8 @@ class NestedMessage(google.protobuf.message.Message):
     def not_enable_user_pay(self) -> global___NestedMessage.NotEnableUserPayMessage: ...
     @property
     def empty(self) -> google.protobuf.empty_pb2.Empty: ...
+    @property
+    def after_refer(self) -> global___AfterReferMessage: ...
     def __init__(
         self,
         *,
@@ -1826,8 +1829,27 @@ class NestedMessage(google.protobuf.message.Message):
         user_pay: global___NestedMessage.UserPayMessage | None = ...,
         not_enable_user_pay: global___NestedMessage.NotEnableUserPayMessage | None = ...,
         empty: google.protobuf.empty_pb2.Empty | None = ...,
+        after_refer: global___AfterReferMessage | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["empty", b"empty", "not_enable_user_pay", b"not_enable_user_pay", "user_pay", b"user_pay"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["empty", b"empty", "map_in_map_test", b"map_in_map_test", "not_enable_user_pay", b"not_enable_user_pay", "string_in_map_test", b"string_in_map_test", "user_pay", b"user_pay"]) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["after_refer", b"after_refer", "empty", b"empty", "not_enable_user_pay", b"not_enable_user_pay", "user_pay", b"user_pay"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["after_refer", b"after_refer", "empty", b"empty", "map_in_map_test", b"map_in_map_test", "not_enable_user_pay", b"not_enable_user_pay", "string_in_map_test", b"string_in_map_test", "user_pay", b"user_pay"]) -> None: ...
 
 global___NestedMessage = NestedMessage
+
+@typing_extensions.final
+class AfterReferMessage(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    UID_FIELD_NUMBER: builtins.int
+    AGE_FIELD_NUMBER: builtins.int
+    uid: builtins.str
+    age: builtins.int
+    def __init__(
+        self,
+        *,
+        uid: builtins.str = ...,
+        age: builtins.int = ...,
+    ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["age", b"age", "uid", b"uid"]) -> None: ...
+
+global___AfterReferMessage = AfterReferMessage

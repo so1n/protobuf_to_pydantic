@@ -442,6 +442,24 @@ class OneOfNotTest(BaseModel):
     y: int = FieldInfo(default=0)
 
 
+class UserPayMessage(BaseModel):
+
+    exp_timestamp_gt_now_validator = validator("exp", allow_reuse=True)(timestamp_gt_now_validator)
+
+    bank_number: str = FieldInfo(default="", min_length=13, max_length=19)
+    exp: datetime = FieldInfo(default_factory=datetime.now, timestamp_gt_now=True)
+    uuid: UUID = FieldInfo(default="")
+
+
+class NotEnableUserPayMessage(BaseModel):
+
+    exp_timestamp_gt_now_validator = validator("exp", allow_reuse=True)(timestamp_gt_now_validator)
+
+    bank_number: str = FieldInfo(default="", min_length=13, max_length=19)
+    exp: datetime = FieldInfo(default_factory=datetime.now, timestamp_gt_now=True)
+    uuid: UUID = FieldInfo(default="")
+
+
 class NestedMessage(BaseModel):
     class UserPayMessage(BaseModel):
 
