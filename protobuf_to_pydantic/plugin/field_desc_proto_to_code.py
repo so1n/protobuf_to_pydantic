@@ -36,6 +36,8 @@ logger: logging.Logger = logging.getLogger(__name__)
 
 class FileDescriptorProtoToCode(BaseP2C):
     def __init__(self, fd: FileDescriptorProto, descriptors: Descriptors, config: "ConfigModel"):
+        # Prevent mutable variables from being shared with other configs
+        config = config.copy(deep=True)
         super().__init__(
             customer_import_set=config.customer_import_set,
             customer_deque=config.customer_deque,
