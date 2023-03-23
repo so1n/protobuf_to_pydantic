@@ -44,15 +44,15 @@ email-validator = "^1.2.1"
 # fix flake8 run bug: https://stackoverflow.com/questions/73929564/entrypoints-object-has-no-attribute-get-digital-ocean
 importlib-metadata = "4.11.4"
 
+[tool.protobuf-to-pydantic.format]
+black = true
+isort = true
+autoflake = true
+
 [tool.black]
 line-length = 120
 target-version = ['py37']
 
-[tool.yapf]
-based_on_style = "google"
-COLUMN_LIMIT = 120
-spaces_before_comment = 4
-# split_before_logical_operator = true
 
 [tool.isort]
 profile = "black"

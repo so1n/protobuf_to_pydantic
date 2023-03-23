@@ -84,6 +84,7 @@ def gen_dict_from_desc_str(comment_prefix: str, desc: str) -> FieldInfoTypedDict
     return pait_dict  # type: ignore
 
 
+# flake8: noqa: C901
 def format_content(content_str: str, pyproject_file_path: str = "") -> str:
     if not pyproject_file_path:
         for path in sys.path:
@@ -104,11 +105,16 @@ def format_content(content_str: str, pyproject_file_path: str = "") -> str:
             with open(pyproject_file_path, "r") as f:
                 pyproject_dict = toml.loads("\n".join(f.readlines()))
     try:
+        p2p_format_dict: dict = pyproject_dict["tool"]["protobuf-to-pydantic"]["format"]
+    except KeyError:
+        p2p_format_dict = {}
+
+    try:
         import isort  # type: ignore
     except ImportError:
         pass
     else:
-        if pyproject_file_path:
+        if p2p_format_dict.get("isort", False):
             content_str = isort.code(content_str, config=isort.Config(settings_file=pyproject_file_path))
         else:
             content_str = isort.code(content_str)
@@ -118,15 +124,19 @@ def format_content(content_str: str, pyproject_file_path: str = "") -> str:
     except ImportError:
         pass
     else:
+        autoflake_dict: dict = {}
         try:
-            autoflake_dict: dict = {}
             for k, v in pyproject_dict["tool"]["autoflake"].items():
                 k = k.replace("-", "_")
                 if k not in inspect.signature(autoflake.fix_code).parameters.keys():
                     continue
                 autoflake_dict[k] = v
-            content_str = autoflake.fix_code(content_str, **autoflake_dict)
+
         except KeyError:
+            pass
+        if p2p_format_dict.get("autoflake", False):
+            content_str = autoflake.fix_code(content_str, **autoflake_dict)
+        else:
             content_str = autoflake.fix_code(content_str)
 
     try:
@@ -134,8 +144,9 @@ def format_content(content_str: str, pyproject_file_path: str = "") -> str:
     except ImportError:
         pass
     else:
+        black_config_dict: dict = {}
         try:
-            black_config_dict: dict = {k.replace("-", "_"): v for k, v in pyproject_dict["tool"]["black"].items()}
+            black_config_dict = {k.replace("-", "_"): v for k, v in pyproject_dict["tool"]["black"].items()}
             # target_version param replace
             target_versions = [
                 getattr(black.TargetVersion, i.upper()) for i in black_config_dict.pop("target_version", [])
@@ -145,7 +156,10 @@ def format_content(content_str: str, pyproject_file_path: str = "") -> str:
             black_config_dict = {
                 k: v for k, v in black_config_dict.items() if k in inspect.signature(black.Mode).parameters.keys()
             }
-            content_str = black.format_str(content_str, mode=black.Mode(**black_config_dict))
         except KeyError:
+            pass
+        if p2p_format_dict.get("black", False):
+            content_str = black.format_str(content_str, mode=black.Mode(**black_config_dict))
+        else:
             content_str = black.format_str(content_str, mode=black.Mode())
     return content_str
