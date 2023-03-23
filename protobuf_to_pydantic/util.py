@@ -114,10 +114,11 @@ def format_content(content_str: str, pyproject_file_path: str = "") -> str:
     except ImportError:
         pass
     else:
-        if p2p_format_dict.get("isort", False):
-            content_str = isort.code(content_str, config=isort.Config(settings_file=pyproject_file_path))
-        else:
-            content_str = isort.code(content_str)
+        if p2p_format_dict.get("isort", True):
+            if pyproject_file_path:
+                content_str = isort.code(content_str, config=isort.Config(settings_file=pyproject_file_path))
+            else:
+                content_str = isort.code(content_str)
 
     try:
         import autoflake  # type: ignore
@@ -135,9 +136,10 @@ def format_content(content_str: str, pyproject_file_path: str = "") -> str:
         except KeyError:
             pass
         if p2p_format_dict.get("autoflake", False):
-            content_str = autoflake.fix_code(content_str, **autoflake_dict)
-        else:
-            content_str = autoflake.fix_code(content_str)
+            if autoflake_dict:
+                content_str = autoflake.fix_code(content_str, **autoflake_dict)
+            else:
+                content_str = autoflake.fix_code(content_str)
 
     try:
         import black  # type: ignore
@@ -159,7 +161,8 @@ def format_content(content_str: str, pyproject_file_path: str = "") -> str:
         except KeyError:
             pass
         if p2p_format_dict.get("black", False):
-            content_str = black.format_str(content_str, mode=black.Mode(**black_config_dict))
-        else:
-            content_str = black.format_str(content_str, mode=black.Mode())
+            if black_config_dict:
+                content_str = black.format_str(content_str, mode=black.Mode(**black_config_dict))
+            else:
+                content_str = black.format_str(content_str, mode=black.Mode())
     return content_str

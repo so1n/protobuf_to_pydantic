@@ -10,15 +10,20 @@ ConfigT = TypeVar("ConfigT", bound="ConfigModel")
 
 
 class ConfigModel(BaseModel):
-    local_dict: dict = Field(default_factory=dict)
-    desc_template: Type[DescTemplate] = Field(default=DescTemplate)
-    comment_prefix: str = Field(default="p2p")
-    customer_import_set: Set[str] = Field(default_factory=set)
+    local_dict: dict = Field(default_factory=dict, description="Dict for local variables")
+    desc_template: Type[DescTemplate] = Field(
+        default=DescTemplate, description="Support more templates by customizing 'Desc Template'"
+    )
+    comment_prefix: str = Field(default="p2p", description="Comment prefix")
+    customer_import_set: Set[str] = Field(default_factory=set, description="customer import code set")
     customer_deque: Deque = Field(default_factory=deque)
     module_path: str = Field(default="")
-    pyproject_file_path: str = Field(default="")
-    code_indent: int = Field(default=4)
-    ignore_pkg_list: List[str] = Field(default_factory=list)
+    pyproject_file_path: str = Field(
+        default="",
+        description="pyproject file path, In general, pyproject.toml of the project can be found automatically",
+    )
+    code_indent: int = Field(default=4, description="Code indent")
+    ignore_pkg_list: List[str] = Field(default_factory=list, description="Ignore package list")
     base_model_class: Type[BaseModel] = Field(default=BaseModel)
     file_name_suffix: str = Field(
         default="_p2p",
@@ -29,7 +34,10 @@ class ConfigModel(BaseModel):
     )
     file_descriptor_proto_to_code: Type[FileDescriptorProtoToCode] = Field(default=FileDescriptorProtoToCode)
 
-    desc_template_instance: DescTemplate = Field(default_factory=lambda: DescTemplate({}, ""))
+    desc_template_instance: DescTemplate = Field(
+        default_factory=lambda: DescTemplate({}, ""),
+        description="This variable does not support configuration and will be overwritten even if configured",
+    )
 
     class Config:
         arbitrary_types_allowed = True

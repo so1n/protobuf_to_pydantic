@@ -15,6 +15,7 @@ pip install protobuf_to_pydantic
 第二种方法是在运行时根据`Message`对象生成对应的`pydantic.BaseModel`对象。
 
 ## 2.1.通过插件直接生成`pydantic.BaseModel`代码文件
+> Note: `protobuf-to-pydantic`插件依赖于`mypy-protobuf`，请通过类似命令`python -m pip install protobuf-to-pydanitc[mypy-protobuf]`安装`mypy-protobuf`。
 ### 2.1.1.插件的使用
 插件方式是`protobuf-to-pydantic`最推荐的使用方式，它支持的功能是最全的，同时使用起来也非常简单，假设平时是通过如下命令生成Protobuf文件对应的代码:
 ```bash
@@ -24,12 +25,10 @@ python -m grpc_tools.protoc -I. example.proto
 ```bash
 python -m grpc_tools.protoc -I. --protobuf-to-pydantic_out=. example.proto
 ```
-> Note: `protobuf-to-pydantic`插件依赖于`mypy-protobuf`，请通过类似命令`python -m pip install protobuf-to-pydanitc[mypy-protobuf]`安装`mypy-protobuf`。
 
 其中`--protobuf-to-pydantic_out=.`表示使用`prorobuf-to-pydanitc`插件，且声明了`protobuf-to-pydantic`插件的输出位置为`.`(表示采用`grpc_tools.proto`使用的输出路径)，
 这样一来`protobuf-to-pydantic`插件会在对应的文件中写入自己生成的内容(文件名以`p2p.py`结尾)，如`protobuf-to-pydantic`为`example.proto`生成的代码文件名为`example_p2p.py`
 
-> Note: 如果当前`Python`环境安装了`isort`和`black`那么`protobuf_to_pydantic`会通过`isort`和`black`格式化生成的代码。
 ### 2.1.2.插件的配置
 `protobuf-to-pydantic`支持通过读取一个`Python`文件来支持配置功能。
 开发者首先需要在运行命令的当前路径创建一个配置文件，文件名如`plugin_config.py`，并写入如下代码:
@@ -68,6 +67,8 @@ comment_prefix = "p2p"
 desc_template: Type[DescTemplate] = DescTemplate
 # 指定要忽略的哪些package的protobuf文件，被忽略的package的message不会被解析
 ignore_pkg_list: List[str] = ["validate", "p2p_validate"]
+# 指定生成的文件名后缀(不包含.py)
+file_name_suffix = "_p2p"
 ```
 接着，将命令中的`--protobuf-to-pydantic_out=.`更改为`--protobuf-to-pydantic_out=config_path=plugin_config.py:.`,如下：
 ```bash
@@ -75,6 +76,8 @@ python -m grpc_tools.protoc -I. --protobuf-to-pydantic_out=config_path=plugin_co
 ```
 其中`:`左边的`config_path=plugin_config.py`表示要读取的配置文件路径为`plugin_config.py`，而`:`的右边还是声明了`protobuf-to-pydantic`插件的输出位置为`.`。
 这样一来`protobuf-to-pydantic`插件在运行的时候可以加载到开发者指定的配置文件，再根据配置文件定义的配置运行。
+
+> Note: 更多配置内容见`protobuf_to_pydantic/plugin/config.py`文件
 ## 2.2.在Python运行时生成`pydantic.BaseModel`对象
 `protobuf_to_pydantic`可以在运行时根据`Message`对象生成对应的 `pydantic.BaseModel`对象。
 
@@ -142,10 +145,9 @@ pydantic_model_to_py_file(
 )
 ```
 该代码会先把`demo_pb2.NestedMessage`转换为`pydantic.BaseModel`对象，然后再被`pydantic_model_to_py_file`方法生成到`demo_gen_code.py`文件中。
-需要注意的是，如果`protobuf_to_pydantic`检查到当前环境安装了`isort`和`black`，则默认会通过它们来格式化生成的代码。
 
 ## 2.3.参数校验
-根据Protobuf文件生成的`Message`对象只会携带少量的信息，这是因为普通的Protobuf文件并没有足够的参数验证相关信息，这需要我们通过一些额外的途径来完善`Message`对象的参数验证信息。
+根据Protobuf文件生成的`Message`对象只会携带少量的信息，这是因为普通的Protobuf文件并没有携带足够的参数验证相关信息，这需要我们通过一些额外的途径来完善`Message`对象的参数验证信息。
 目前`protobuf_to_pydantic`支持多种方式来获取Message的其他信息，使得生成的`pydantic.BaseModel`对象具有参数校验的功能。
 
 > NOTE:
@@ -409,8 +411,13 @@ print(
 - const: 指定字段的常量的值。注：`pydantic.BaseModel`的const只支持bool变量，当`const`为`True`时，接受的值只能是`default`设定的值，而protobuf生成的Message携带的默认值为对应类型的空值与`pydantic.BaseModel`不匹配，所以`protobuf_to_pydantic`对这个值的输入进行了一些变动，但`const`设置了值后，生成的字段中`cost`属性为`True`，而`default`会变为`const`设置的对应值。
 - type: 拓展目前的类型，比如想通过`pydantic.types.PaymentCardNumber`类型来增加对银行卡号码的校验，那么可以通过如下方法来指定字段的类型为`PaymentCardNumber`:
   ```protobuf
+  // common example
   message UserPayMessage {
     string bank_number=1; // p2p: {"type": "p2p@import|pydantic.types|PaymentCardNumber"}
+  }
+  // p2p example
+  message UserPayMessage {
+    string bank_number=1[(p2p_validate.rules).string.type = "p2p@import|pydantic.types|PaymentCardNumber"];
   }
   ```
 
@@ -588,7 +595,41 @@ class TimestampTest(BaseModel):
     timestamp_10: int = FieldInfo(default=1600000000)
     timestamp_13: int = FieldInfo(default=1600000000000)
 ```
-## 3.example
+## 3.代码格式化
+通过`protobuf_to_pydantic`直接生成的代码不是完美的，但是可以通过不同的格式化工具来间接的生成符合`Python`规范的代码。
+目前支持的格式化工具有`autoflake`, `black`和`isort`，不过使用这些工具的前提是当前运行环境有安装对应的格式化工具。
+
+此外，开发者可以通过`pyproject.toml`配置文件来决定格式化工具如何执行，`pyproject.toml`示例内容如下：
+```toml
+# 控制protobuf-to-pydantic使用哪些格式化工具，如果为false则表示不对应的使用格式化工具（默认为true）
+[tool.protobuf-to-pydantic.format]
+black = true
+isort = true
+autoflake = true
+
+# black配置文档见:https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#configuration-format
+[tool.black]
+line-length = 120
+target-version = ['py37']
+
+# isort配置文档见:https://pycqa.github.io/isort/docs/configuration/config_files.html#pyprojecttoml-preferred-format
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+ensure_newline_before_comments = true
+line_length = 120
+
+# autoflake配置文档见:https://github.com/PyCQA/autoflake#configuration
+[tool.autoflake]
+in-place = true
+remove-all-unused-imports = true
+remove-unused-variables = true
+```
+
+## 4.example
 `protobuf_to_pydantic`提供了一些简单的示例代码，以下是示例代码和protobuf文件的路径，仅供参考:
 
 |说明|Protobuf路径|示例代码|
