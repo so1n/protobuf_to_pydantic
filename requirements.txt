@@ -1,6 +1,6 @@
-grpcio-tools==1.40.0 ; python_version >= "3.7" and python_version < "4.0"
+grpcio-tools==1.51.3 ; python_version >= "3.7" and python_version < "4.0"
 grpcio==1.51.3 ; python_version >= "3.7" and python_version < "4.0"
-protobuf==3.20.3 ; python_version >= "3.7" and python_version < "4.0"
+protobuf==4.22.1 ; python_version >= "3.7" and python_version < "4.0"
 pydantic==1.10.7 ; python_version >= "3.7" and python_version < "4.0"
 setuptools==67.6.0 ; python_version >= "3.7" and python_version < "4.0"
 toml==0.10.2 ; python_version >= "3.7" and python_version < "4.0"
