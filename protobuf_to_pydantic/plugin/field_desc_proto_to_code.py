@@ -54,6 +54,7 @@ class FileDescriptorProtoToCode(BaseP2C):
             self._import_set.add("from pydantic import BaseModel")
         else:
             self._add_import_code(config.base_model_class.__module__, config.base_model_class.__name__)
+        self._parse_desc_name_dict: Dict[str, str] = {}
         self._parse_field_descriptor()
 
     def _add_other_module_pkg(self, other_fd: FileDescriptorProto, type_str: str) -> None:
@@ -306,6 +307,8 @@ class FileDescriptorProtoToCode(BaseP2C):
         self._add_import_code("google.protobuf.message", "Message")
         content: str = ""
         class_name = desc.name if desc.name not in PYTHON_RESERVED else "_r_" + desc.name
+        if class_name in self._parse_desc_name_dict:
+            return self._parse_desc_name_dict[class_name]
         class_content = " " * indent + f"class {class_name}(BaseModel):\n"
         class_head_content = ""
         class_field_content = ""
@@ -349,6 +352,7 @@ class FileDescriptorProtoToCode(BaseP2C):
             class_head_content = config_content + class_head_content
         content += "\n".join([i for i in [class_content, class_head_content, class_field_content] if i])
         content += "\n" if indent > 0 else "\n\n"
+        self._parse_desc_name_dict[class_name] = content
         return content
 
     def _get_protobuf_type_model(self, field: FieldDescriptorProto) -> ProtobufTypeModel:
