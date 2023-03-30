@@ -12,7 +12,7 @@ from protobuf_to_pydantic.plugin.config import ConfigT, get_config_by_module
 
 # If want to parse option, need to import the corresponding file
 #   see details:https://stackoverflow.com/a/59301849
-if __version__ < "4.0.0":
+if __version__ > "4.0.0":
     from protobuf_to_pydantic.protos.protos import p2p_validate_pb2  # isort:skip
     from protobuf_to_pydantic.protos.protos import validate_pb2  # isort:skip
 else:
