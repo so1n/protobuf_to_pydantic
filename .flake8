@@ -13,3 +13,4 @@ exclude =
     dist,
     docs,
     migrations
+    *pb2.py
