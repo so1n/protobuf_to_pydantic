@@ -46,19 +46,30 @@ repos:
     hooks:
       - id: poetry-check
       - id: poetry-lock
+        args: ["--no-update"]
   - repo: local
     hooks:
-        - id: local-poetry-export
-          name: my-poetry-export
-          entry: poetry export
-          language: python
-          language_version: python3
-          pass_filenames: false
-          args: ["-o", "requirements.txt", "--without-hashes", "--with-credentials" ]
-        - id: local-poetry-export-dev
-          name: my-poetry-export
-          entry: poetry export
-          language: python
-          language_version: python3
-          pass_filenames: false
-          args: ["-o", "requirements-dev.txt", "--without-hashes", "--with-credentials", "--with", "dev", "--extras=all" ]
+      - id: local-poetry-export
+        name: my-poetry-export
+        entry: poetry export
+        language: python
+        language_version: python3
+        pass_filenames: false
+        args: ["-o", "requirements.txt", "--without-hashes", "--with-credentials" ]
+      - id: local-poetry-export-dev
+        name: my-poetry-export
+        entry: poetry export
+        language: python
+        language_version: python3
+        pass_filenames: false
+        args: ["-o", "requirements-dev.txt", "--without-hashes", "--with-credentials", "--with", "dev", "--extras=all" ]
+      - id: local-poetry-export-no-grpc
+        name: my-poetry-export
+        entry: bash -c 'cat requirements.txt | grep -v "^grpcio\|^protobuf" > requirements-no-grpc.txt'
+        language: system
+        pass_filenames: false
+      - id: local-poetry-export-no-grpc-dev
+        name: my-poetry-export
+        entry: bash -c 'cat requirements-dev.txt | grep -v "^grpcio\|^protobuf" > requirements-no-grpc-dev.txt'
+        language: system
+        pass_filenames: false

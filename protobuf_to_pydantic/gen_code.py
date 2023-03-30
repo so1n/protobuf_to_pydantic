@@ -5,8 +5,19 @@ from collections import deque
 from datetime import datetime
 from enum import IntEnum
 from types import ModuleType
-from typing import _GenericAlias  # type: ignore
-from typing import Any, Callable, Deque, Dict, List, Optional, Set, Type, Union
+from typing import (  # type: ignore
+    Any,
+    Callable,
+    Deque,
+    Dict,
+    List,
+    Optional,
+    Set,
+    Type,
+    Union,
+    _GenericAlias,
+    _SpecialForm,
+)
 
 from pydantic import BaseConfig, BaseModel
 from pydantic.fields import FieldInfo
@@ -224,6 +235,9 @@ class BaseP2C(object):
                         value_type_name = f"typing.{value_outer_type._name}[{sub_type_str}]"
                     else:
                         value_type_name = f"typing.{value_outer_type._name}"
+                    self._import_set.add("import typing")
+                elif isinstance(value_outer_type, _SpecialForm):
+                    value_type_name = f"typing.{value_outer_type._name}"  # type: ignore[attr-defined]
                     self._import_set.add("import typing")
                 elif inspect.isclass(value_outer_type) and value_outer_type.__mro__[1] in pydantic_con_dict:
                     # only support like repeated[string]

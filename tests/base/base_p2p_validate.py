@@ -280,7 +280,11 @@ class BaseTestP2pModelValidator:
                 "exp": datetime.now() - timedelta(days=1),
                 "uuid": "abc"
             },
-            "empty": None
+            "empty": None,
+            "after_refer": {
+                "uid": 10086,
+                "age": 18
+            }
         }
         self.replace_message_fn(model_class, local_dict=local_dict)(**normal_dict)
 
