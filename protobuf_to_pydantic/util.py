@@ -12,7 +12,7 @@ if TYPE_CHECKING:
     from pydantic.main import Model
     from pydantic.typing import AnyClassMethod
 
-from protobuf_to_pydantic.grpc_types import Duration, RepeatedCompositeContainer, RepeatedScalarContainer, Timestamp
+from protobuf_to_pydantic.grpc_types import Duration, ProtobufRepeatedType, Timestamp
 from protobuf_to_pydantic.types import FieldInfoTypedDict
 
 
@@ -67,7 +67,7 @@ def replace_protobuf_type_to_python_type(value: Any) -> Any:
         return timedelta(microseconds=value.ToMicroseconds())
     elif isinstance(value, Timestamp):
         return value.ToMicroseconds() / 1000000
-    elif isinstance(value, (list, RepeatedCompositeContainer, RepeatedScalarContainer)):
+    elif isinstance(value, (list, *ProtobufRepeatedType)):
         return [replace_protobuf_type_to_python_type(i) for i in value]
     else:
         return value
@@ -150,14 +150,13 @@ def format_content(content_str: str, pyproject_file_path: str = "") -> str:
         try:
             black_config_dict = {k.replace("-", "_"): v for k, v in pyproject_dict["tool"]["black"].items()}
             # target_version param replace
-            target_versions = [
+            target_versions = {
                 getattr(black.TargetVersion, i.upper()) for i in black_config_dict.pop("target_version", [])
-            ]
+            }
             if target_versions:
                 black_config_dict["target_versions"] = target_versions
-            black_config_dict = {
-                k: v for k, v in black_config_dict.items() if k in inspect.signature(black.Mode).parameters.keys()
-            }
+
+            black_config_dict = {k: v for k, v in black_config_dict.items() if k in black.Mode.__annotations__}
         except KeyError:
             pass
         if p2p_format_dict.get("black", False):
