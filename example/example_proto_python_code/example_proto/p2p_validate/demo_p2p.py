@@ -55,7 +55,6 @@ class State(IntEnum):
 
 
 class FloatTest(BaseModel):
-
     in_test_in_validator = validator("in_test", allow_reuse=True)(in_validator)
     not_in_test_not_in_validator = validator("not_in_test", allow_reuse=True)(not_in_validator)
 
@@ -78,7 +77,6 @@ class FloatTest(BaseModel):
 
 
 class DoubleTest(BaseModel):
-
     in_test_in_validator = validator("in_test", allow_reuse=True)(in_validator)
     not_in_test_not_in_validator = validator("not_in_test", allow_reuse=True)(not_in_validator)
 
@@ -101,7 +99,6 @@ class DoubleTest(BaseModel):
 
 
 class Int32Test(BaseModel):
-
     in_test_in_validator = validator("in_test", allow_reuse=True)(in_validator)
     not_in_test_not_in_validator = validator("not_in_test", allow_reuse=True)(not_in_validator)
 
@@ -124,7 +121,6 @@ class Int32Test(BaseModel):
 
 
 class Int64Test(BaseModel):
-
     in_test_in_validator = validator("in_test", allow_reuse=True)(in_validator)
     not_in_test_not_in_validator = validator("not_in_test", allow_reuse=True)(not_in_validator)
 
@@ -147,7 +143,6 @@ class Int64Test(BaseModel):
 
 
 class Uint32Test(BaseModel):
-
     in_test_in_validator = validator("in_test", allow_reuse=True)(in_validator)
     not_in_test_not_in_validator = validator("not_in_test", allow_reuse=True)(not_in_validator)
 
@@ -170,7 +165,6 @@ class Uint32Test(BaseModel):
 
 
 class Sint32Test(BaseModel):
-
     in_test_in_validator = validator("in_test", allow_reuse=True)(in_validator)
     not_in_test_not_in_validator = validator("not_in_test", allow_reuse=True)(not_in_validator)
 
@@ -193,7 +187,6 @@ class Sint32Test(BaseModel):
 
 
 class Uint64Test(BaseModel):
-
     in_test_in_validator = validator("in_test", allow_reuse=True)(in_validator)
     not_in_test_not_in_validator = validator("not_in_test", allow_reuse=True)(not_in_validator)
 
@@ -216,7 +209,6 @@ class Uint64Test(BaseModel):
 
 
 class Sint64Test(BaseModel):
-
     in_test_in_validator = validator("in_test", allow_reuse=True)(in_validator)
     not_in_test_not_in_validator = validator("not_in_test", allow_reuse=True)(not_in_validator)
 
@@ -239,7 +231,6 @@ class Sint64Test(BaseModel):
 
 
 class Fixed32Test(BaseModel):
-
     in_test_in_validator = validator("in_test", allow_reuse=True)(in_validator)
     not_in_test_not_in_validator = validator("not_in_test", allow_reuse=True)(not_in_validator)
 
@@ -262,7 +253,6 @@ class Fixed32Test(BaseModel):
 
 
 class Fixed64Test(BaseModel):
-
     in_test_in_validator = validator("in_test", allow_reuse=True)(in_validator)
     not_in_test_not_in_validator = validator("not_in_test", allow_reuse=True)(not_in_validator)
 
@@ -285,7 +275,6 @@ class Fixed64Test(BaseModel):
 
 
 class Sfixed32Test(BaseModel):
-
     in_test_in_validator = validator("in_test", allow_reuse=True)(in_validator)
     not_in_test_not_in_validator = validator("not_in_test", allow_reuse=True)(not_in_validator)
 
@@ -308,7 +297,6 @@ class Sfixed32Test(BaseModel):
 
 
 class Sfixed64Test(BaseModel):
-
     in_test_in_validator = validator("in_test", allow_reuse=True)(in_validator)
     not_in_test_not_in_validator = validator("not_in_test", allow_reuse=True)(not_in_validator)
 
@@ -331,7 +319,6 @@ class Sfixed64Test(BaseModel):
 
 
 class BoolTest(BaseModel):
-
     bool_1_test: bool = FieldInfo(default=True, const=True)
     bool_2_test: bool = FieldInfo(default=False, const=True)
     default_test: bool = FieldInfo(default=True)
@@ -344,7 +331,6 @@ class BoolTest(BaseModel):
 
 
 class StringTest(BaseModel):
-
     len_test_len_validator = validator("len_test", allow_reuse=True)(len_validator)
     prefix_test_prefix_validator = validator("prefix_test", allow_reuse=True)(prefix_validator)
     suffix_test_suffix_validator = validator("suffix_test", allow_reuse=True)(suffix_validator)
@@ -386,7 +372,6 @@ class StringTest(BaseModel):
 
 
 class BytesTest(BaseModel):
-
     prefix_test_prefix_validator = validator("prefix_test", allow_reuse=True)(prefix_validator)
     suffix_test_suffix_validator = validator("suffix_test", allow_reuse=True)(suffix_validator)
     contains_test_contains_validator = validator("contains_test", allow_reuse=True)(contains_validator)
@@ -413,7 +398,6 @@ class BytesTest(BaseModel):
 
 
 class EnumTest(BaseModel):
-
     in_test_in_validator = validator("in_test", allow_reuse=True)(in_validator)
     not_in_test_not_in_validator = validator("not_in_test", allow_reuse=True)(not_in_validator)
 
@@ -430,7 +414,6 @@ class EnumTest(BaseModel):
 
 
 class MapTest(BaseModel):
-
     pair_test_map_min_pairs_validator = validator("pair_test", allow_reuse=True)(map_min_pairs_validator)
     pair_test_map_max_pairs_validator = validator("pair_test", allow_reuse=True)(map_max_pairs_validator)
 
@@ -451,13 +434,11 @@ class MapTest(BaseModel):
 
 
 class MessageTest(BaseModel):
-
     skip_test: str = FieldInfo(default="")
     required_test: str = FieldInfo()
 
 
 class RepeatedTest(BaseModel):
-
     range_test: typing.List[str] = FieldInfo(default_factory=list, min_items=1, max_items=5)
     unique_test: typing.List[str] = FieldInfo(default_factory=list, unique_items=True)
     items_string_test: conlist(item_type=constr(min_length=1, max_length=5), min_items=1, max_items=5) = FieldInfo(
@@ -519,7 +500,6 @@ class AnyTest(BaseModel):
 
 
 class DurationTest(BaseModel):
-
     const_test_duration_const_validator = validator("const_test", allow_reuse=True)(duration_const_validator)
     range_test_duration_lt_validator = validator("range_test", allow_reuse=True)(duration_lt_validator)
     range_test_duration_gt_validator = validator("range_test", allow_reuse=True)(duration_gt_validator)
@@ -562,7 +542,6 @@ class DurationTest(BaseModel):
 
 
 class TimestampTest(BaseModel):
-
     const_test_timestamp_const_validator = validator("const_test", allow_reuse=True)(timestamp_const_validator)
     range_test_timestamp_lt_validator = validator("range_test", allow_reuse=True)(timestamp_lt_validator)
     range_test_timestamp_gt_validator = validator("range_test", allow_reuse=True)(timestamp_gt_validator)
@@ -602,14 +581,12 @@ class TimestampTest(BaseModel):
 
 
 class MessageIgnoredTest(BaseModel):
-
     const_test: int = FieldInfo(default=0)
     range_e_test: int = FieldInfo(default=0)
     range_test: int = FieldInfo(default=0)
 
 
 class OneOfTest(BaseModel):
-
     _one_of_dict = {"OneOfTest.id": {"fields": {"x", "y"}, "required": True}}
     _check_one_of = root_validator(pre=True, allow_reuse=True)(check_one_of)
 
@@ -619,7 +596,6 @@ class OneOfTest(BaseModel):
 
 
 class OneOfNotTest(BaseModel):
-
     _one_of_dict = {"OneOfNotTest.id": {"fields": {"x", "y"}}}
     _check_one_of = root_validator(pre=True, allow_reuse=True)(check_one_of)
 
@@ -628,33 +604,13 @@ class OneOfNotTest(BaseModel):
     y: int = FieldInfo(default=0)
 
 
-class UserPayMessage(BaseModel):
-
-    exp_timestamp_gt_now_validator = validator("exp", allow_reuse=True)(timestamp_gt_now_validator)
-
-    bank_number: str = FieldInfo(default="", min_length=13, max_length=19)
-    exp: datetime = FieldInfo(default_factory=datetime.now, timestamp_gt_now=True)
-    uuid: UUID = FieldInfo(default="")
-
-
-class NotEnableUserPayMessage(BaseModel):
-
-    exp_timestamp_gt_now_validator = validator("exp", allow_reuse=True)(timestamp_gt_now_validator)
-
-    bank_number: str = FieldInfo(default="", min_length=13, max_length=19)
-    exp: datetime = FieldInfo(default_factory=datetime.now, timestamp_gt_now=True)
-    uuid: UUID = FieldInfo(default="")
-
-
 class AfterReferMessage(BaseModel):
-
     uid: str = FieldInfo(example="10086", title="UID", description="user union id")
     age: int = FieldInfo(default=0, example=18.0, title="use age", ge=0)
 
 
 class NestedMessage(BaseModel):
     class UserPayMessage(BaseModel):
-
         exp_timestamp_gt_now_validator = validator("exp", allow_reuse=True)(timestamp_gt_now_validator)
 
         bank_number: str = FieldInfo(default="", min_length=13, max_length=19)
@@ -662,7 +618,6 @@ class NestedMessage(BaseModel):
         uuid: UUID = FieldInfo(default="")
 
     class NotEnableUserPayMessage(BaseModel):
-
         bank_number: str = FieldInfo(default="")
         exp: datetime = FieldInfo(default_factory=datetime.now)
         uuid: str = FieldInfo(default="")

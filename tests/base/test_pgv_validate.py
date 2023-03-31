@@ -252,7 +252,11 @@ class BaseTestPgvModelValidator:
                 "exp": datetime.now() - timedelta(days=1),
                 "uuid": "abc"
             },
-            "empty": None
+            "empty": None,
+            "after_refer": {
+                "uid": 10086,
+                "age": 18
+            }
         }
         self.replace_message_fn(model_class, parse_msg_desc_method="PGV")(**normal_dict)
 

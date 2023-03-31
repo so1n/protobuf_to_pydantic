@@ -403,15 +403,22 @@ class M2P(object):
                         _class_name: str = column.message_type.name
                         if not is_same_pkg:
                             _class_name = replace_file_name_to_class_name(column.message_type.file.name) + _class_name
-                        type_ = self._parse_msg_to_pydantic_model(
-                            descriptor=column.message_type, class_name=_class_name
-                        )
-                        if not is_same_pkg:
+                            type_ = self._parse_msg_to_pydantic_model(
+                                descriptor=column.message_type, class_name=_class_name
+                            )
                             _class_doc: str = (
                                 "Note: The current class does not belong to the package\n"
                                 f"{_class_name} protobuf path:{column.message_type.file.name}"
                             )
                             setattr(type_, "__doc__", _class_doc)
+                        else:
+                            if column.message_type.full_name == descriptor.full_name:
+                                # if self-referencing, need use Python type hints postponed annotations
+                                type_ = f'"{_class_name}"'
+                            else:
+                                type_ = self._parse_msg_to_pydantic_model(
+                                    descriptor=column.message_type, class_name=_class_name
+                                )
             elif column.type == FieldDescriptor.TYPE_ENUM:
                 # support google.protobuf.Enum
                 default = 0

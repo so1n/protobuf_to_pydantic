@@ -76,5 +76,5 @@ class NestedMessage(BaseModel):
     user_map: typing.Dict[str, MapMessage] = Field(default_factory=dict)
     user_pay: UserPayMessage = Field()
     include_enum: IncludeEnum = Field(default=0)
-    empty: None = Field()
+    empty: typing.Any = Field()
     after_refer: AfterReferMessage = Field()

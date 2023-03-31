@@ -132,6 +132,7 @@ class FileDescriptorProtoToCode(BaseP2C):
     # flake8: noqa: C901
     def _message_field_handle(
         self,
+        desc: DescriptorProto,
         field: FieldDescriptorProto,
         indent: int,
         nested_message_config_dict: dict,
@@ -166,8 +167,13 @@ class FileDescriptorProtoToCode(BaseP2C):
                 nested_message_name = type_str
 
                 message_fd: FileDescriptorProto = self._descriptors.message_to_fd[field.type_name]
-                self._content_deque.append(self._message(message, [FileDescriptorProto.ENUM_TYPE_FIELD_NUMBER]))
                 self._add_other_module_pkg(message_fd, type_str)
+                if message == desc:
+                    # if self-referencing, need use Python type hints postponed annotations
+                    type_str = f'"{type_str}"'
+                elif message_fd.name == self._fd.name and message.name not in {i.name for i in desc.nested_type}:
+                    # If the referenced Message is generated later, it needs to be generated in advance
+                    self._content_deque.append(self._message(message, [FileDescriptorProto.ENUM_TYPE_FIELD_NUMBER]))
 
         elif field.type == 14:
             # enum handle
@@ -322,7 +328,7 @@ class FileDescriptorProtoToCode(BaseP2C):
                 use_custom_type = True
 
             _content_tuple: Optional[Tuple[str, str]] = self._message_field_handle(
-                field, indent, nested_message_config_dict, skip_validate_rule=skip_validate_rule
+                desc, field, indent, nested_message_config_dict, skip_validate_rule=skip_validate_rule
             )
             if _content_tuple:
                 class_head_content += _content_tuple[0]

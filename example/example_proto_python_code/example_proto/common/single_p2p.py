@@ -14,7 +14,6 @@ class DemoEnum(IntEnum):
 
 
 class DemoMessage(BaseModel):
-
     earth: str = FieldInfo(default="")
     mercury: str = FieldInfo(default="")
     mars: str = FieldInfo(default="")

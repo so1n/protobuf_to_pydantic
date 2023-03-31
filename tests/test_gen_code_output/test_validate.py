@@ -345,6 +345,11 @@ class MapTest(BaseModel):
     map_max_pairs_validator_pair_test = validator("pair_test", allow_reuse=True)(map_max_pairs_validator)
 
 
+class AfterReferMessage(BaseModel):
+    uid: str = Field(default="", min_length=1)
+    age: int = Field(default=0, ge=0, lt=500)
+
+
 class NestedMessage(BaseModel):
     class UserPayMessage(BaseModel):
         bank_number: str = Field(default="", min_length=13, max_length=19)
@@ -363,7 +368,10 @@ class NestedMessage(BaseModel):
     user_pay: UserPayMessage = Field()
     not_enable_user_pay: NotEnableUserPayMessage = Field()
     empty: typing.Any = Field()
+    after_refer: AfterReferMessage = Field()
 """) in self._model_output(NestedMessage)
+
+
 
     def test_one_of_not(self) -> None:
         assert format_content("""
