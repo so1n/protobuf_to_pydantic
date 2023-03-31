@@ -286,7 +286,7 @@ class BaseTestP2pModelValidator:
                 "age": 18
             }
         }
-        self.replace_message_fn(model_class, local_dict=local_dict)(**normal_dict)
+        self.replace_message_fn(model_class, local_dict=local_dict).update_forward_refs(**normal_dict)
 
     def _test_one_of(self, model_class: Any) -> None:
         # test init

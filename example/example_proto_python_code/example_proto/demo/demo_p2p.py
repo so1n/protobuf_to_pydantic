@@ -16,15 +16,7 @@ class SexType(IntEnum):
     women = 1
 
 
-class DemoMessage(BaseModel):
-
-    earth: str = FieldInfo(default="")
-    mercury: str = FieldInfo(default="")
-    mars: str = FieldInfo(default="")
-
-
 class UserMessage(BaseModel):
-
     uid: str = FieldInfo(default="")
     age: int = FieldInfo(default=0)
     height: float = FieldInfo(default=0.0)
@@ -36,34 +28,23 @@ class UserMessage(BaseModel):
 
 
 class MapMessage(BaseModel):
-
     user_map: typing.Dict[str, UserMessage] = FieldInfo(default_factory=dict)
     user_flag: typing.Dict[str, bool] = FieldInfo(default_factory=dict)
 
 
 class RepeatedMessage(BaseModel):
-
     str_list: typing.List[str] = FieldInfo(default_factory=list)
     int_list: typing.List[int] = FieldInfo(default_factory=list)
     user_list: typing.List[UserMessage] = FieldInfo(default_factory=list)
 
 
-class UserPayMessage(BaseModel):
-
-    bank_number: str = FieldInfo(default="")
-    exp: datetime = FieldInfo(default_factory=datetime.now)
-    uuid: str = FieldInfo(default="")
-
-
 class AfterReferMessage(BaseModel):
-
     uid: str = FieldInfo(default="")
     age: int = FieldInfo(default=0)
 
 
 class NestedMessage(BaseModel):
     class UserPayMessage(BaseModel):
-
         bank_number: str = FieldInfo(default="")
         exp: datetime = FieldInfo(default_factory=datetime.now)
         uuid: str = FieldInfo(default="")
@@ -80,3 +61,10 @@ class NestedMessage(BaseModel):
     not_enable_user_pay: UserPayMessage = FieldInfo()
     empty: None = FieldInfo()
     after_refer: AfterReferMessage = FieldInfo()
+
+
+class InvoiceItem(BaseModel):
+    name: str = FieldInfo(default="")
+    amount: int = FieldInfo(default=0)
+    quantity: int = FieldInfo(default=0)
+    items: typing.List["InvoiceItem"] = FieldInfo(default_factory=list)

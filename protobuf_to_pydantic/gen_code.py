@@ -10,6 +10,7 @@ from typing import (  # type: ignore
     Callable,
     Deque,
     Dict,
+    ForwardRef,
     List,
     Optional,
     Set,
@@ -125,6 +126,8 @@ class BaseP2C(object):
                 return "{" + type_name + "}"
             else:
                 return "(" + type_name + ")"
+        elif isinstance(type_, ForwardRef):
+            return type_.__forward_arg__
         elif inspect.isfunction(type_) or "cyfunction" in str(type_):
             # pydantic confunc support
             if auto_import_type_code:
@@ -229,7 +232,11 @@ class BaseP2C(object):
                 # Extracting the exact Type Hint text
                 if isinstance(value_outer_type, _GenericAlias):
                     sub_type_str = ", ".join(
-                        [self._get_value_code(i) for i in value_outer_type.__args__ if i.__name__ != "T"]
+                        [
+                            self._get_value_code(i)
+                            for i in value_outer_type.__args__
+                            if getattr(i, __name__, None) != "T"
+                        ]
                     )
                     if sub_type_str:
                         value_type_name = f"typing.{value_outer_type._name}[{sub_type_str}]"

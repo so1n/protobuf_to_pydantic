@@ -29,6 +29,8 @@ def _parse_message_result_dict(
                 sub_message = protobuf_msg.messages[sub_type_str]
             else:
                 continue
+            if sub_message is protobuf_msg:
+                continue
             _parse_message_result_dict(sub_message, parse_result, container[message_name]["nested"], comment_prefix)
 
 

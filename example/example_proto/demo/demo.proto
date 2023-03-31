@@ -70,3 +70,12 @@ message AfterReferMessage {
   // p2p: {"example": 18, "title": "use age", "ge": 0}
   int32 age=2;
 }
+
+// Test self-referencing Messages
+// from: https://github.com/so1n/protobuf_to_pydantic/issues/7#issuecomment-1490705932
+message InvoiceItem {
+  string name = 1;
+  int32 amount = 2;
+  int32 quantity = 3;
+  repeated InvoiceItem items = 4;
+}

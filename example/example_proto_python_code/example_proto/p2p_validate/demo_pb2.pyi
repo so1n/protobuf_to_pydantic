@@ -26,7 +26,7 @@ class _State:
     ValueType = typing.NewType("ValueType", builtins.int)
     V: typing_extensions.TypeAlias = ValueType
 
-class _StateEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_State.ValueType], builtins.type):
+class _StateEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_State.ValueType], builtins.type):  # noqa: F821
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
     INACTIVE: _State.ValueType  # 0
     PENDING: _State.ValueType  # 1
@@ -39,7 +39,6 @@ PENDING: State.ValueType  # 1
 ACTIVE: State.ValueType  # 2
 global___State = State
 
-@typing_extensions.final
 class FloatTest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -102,7 +101,6 @@ class FloatTest(google.protobuf.message.Message):
 
 global___FloatTest = FloatTest
 
-@typing_extensions.final
 class DoubleTest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -165,7 +163,6 @@ class DoubleTest(google.protobuf.message.Message):
 
 global___DoubleTest = DoubleTest
 
-@typing_extensions.final
 class Int32Test(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -228,7 +225,6 @@ class Int32Test(google.protobuf.message.Message):
 
 global___Int32Test = Int32Test
 
-@typing_extensions.final
 class Int64Test(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -291,7 +287,6 @@ class Int64Test(google.protobuf.message.Message):
 
 global___Int64Test = Int64Test
 
-@typing_extensions.final
 class Uint32Test(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -354,7 +349,6 @@ class Uint32Test(google.protobuf.message.Message):
 
 global___Uint32Test = Uint32Test
 
-@typing_extensions.final
 class Sint32Test(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -417,7 +411,6 @@ class Sint32Test(google.protobuf.message.Message):
 
 global___Sint32Test = Sint32Test
 
-@typing_extensions.final
 class Uint64Test(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -480,7 +473,6 @@ class Uint64Test(google.protobuf.message.Message):
 
 global___Uint64Test = Uint64Test
 
-@typing_extensions.final
 class Sint64Test(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -543,7 +535,6 @@ class Sint64Test(google.protobuf.message.Message):
 
 global___Sint64Test = Sint64Test
 
-@typing_extensions.final
 class Fixed32Test(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -606,7 +597,6 @@ class Fixed32Test(google.protobuf.message.Message):
 
 global___Fixed32Test = Fixed32Test
 
-@typing_extensions.final
 class Fixed64Test(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -669,7 +659,6 @@ class Fixed64Test(google.protobuf.message.Message):
 
 global___Fixed64Test = Fixed64Test
 
-@typing_extensions.final
 class Sfixed32Test(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -732,7 +721,6 @@ class Sfixed32Test(google.protobuf.message.Message):
 
 global___Sfixed32Test = Sfixed32Test
 
-@typing_extensions.final
 class Sfixed64Test(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -795,7 +783,6 @@ class Sfixed64Test(google.protobuf.message.Message):
 
 global___Sfixed64Test = Sfixed64Test
 
-@typing_extensions.final
 class BoolTest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -837,7 +824,6 @@ class BoolTest(google.protobuf.message.Message):
 
 global___BoolTest = BoolTest
 
-@typing_extensions.final
 class StringTest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -942,7 +928,6 @@ class StringTest(google.protobuf.message.Message):
 
 global___StringTest = StringTest
 
-@typing_extensions.final
 class BytesTest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -1008,7 +993,6 @@ class BytesTest(google.protobuf.message.Message):
 
 global___BytesTest = BytesTest
 
-@typing_extensions.final
 class EnumTest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -1053,11 +1037,9 @@ class EnumTest(google.protobuf.message.Message):
 
 global___EnumTest = EnumTest
 
-@typing_extensions.final
 class MapTest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
-    @typing_extensions.final
     class PairTestEntry(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -1073,7 +1055,6 @@ class MapTest(google.protobuf.message.Message):
         ) -> None: ...
         def ClearField(self, field_name: typing_extensions.Literal["key", b"key", "value", b"value"]) -> None: ...
 
-    @typing_extensions.final
     class KeysTestEntry(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -1089,7 +1070,6 @@ class MapTest(google.protobuf.message.Message):
         ) -> None: ...
         def ClearField(self, field_name: typing_extensions.Literal["key", b"key", "value", b"value"]) -> None: ...
 
-    @typing_extensions.final
     class ValuesTestEntry(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -1105,7 +1085,6 @@ class MapTest(google.protobuf.message.Message):
         ) -> None: ...
         def ClearField(self, field_name: typing_extensions.Literal["key", b"key", "value", b"value"]) -> None: ...
 
-    @typing_extensions.final
     class KeysValuesTestEntry(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -1123,7 +1102,6 @@ class MapTest(google.protobuf.message.Message):
         def HasField(self, field_name: typing_extensions.Literal["value", b"value"]) -> builtins.bool: ...
         def ClearField(self, field_name: typing_extensions.Literal["key", b"key", "value", b"value"]) -> None: ...
 
-    @typing_extensions.final
     class EnableTestEntry(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -1139,7 +1117,6 @@ class MapTest(google.protobuf.message.Message):
         ) -> None: ...
         def ClearField(self, field_name: typing_extensions.Literal["key", b"key", "value", b"value"]) -> None: ...
 
-    @typing_extensions.final
     class DefaultFactoryTestEntry(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -1155,7 +1132,6 @@ class MapTest(google.protobuf.message.Message):
         ) -> None: ...
         def ClearField(self, field_name: typing_extensions.Literal["key", b"key", "value", b"value"]) -> None: ...
 
-    @typing_extensions.final
     class MissDefaultTestEntry(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -1171,7 +1147,6 @@ class MapTest(google.protobuf.message.Message):
         ) -> None: ...
         def ClearField(self, field_name: typing_extensions.Literal["key", b"key", "value", b"value"]) -> None: ...
 
-    @typing_extensions.final
     class AliasTestEntry(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -1187,7 +1162,6 @@ class MapTest(google.protobuf.message.Message):
         ) -> None: ...
         def ClearField(self, field_name: typing_extensions.Literal["key", b"key", "value", b"value"]) -> None: ...
 
-    @typing_extensions.final
     class DescTestEntry(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -1203,7 +1177,6 @@ class MapTest(google.protobuf.message.Message):
         ) -> None: ...
         def ClearField(self, field_name: typing_extensions.Literal["key", b"key", "value", b"value"]) -> None: ...
 
-    @typing_extensions.final
     class ExampleFactoryTestEntry(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -1219,7 +1192,6 @@ class MapTest(google.protobuf.message.Message):
         ) -> None: ...
         def ClearField(self, field_name: typing_extensions.Literal["key", b"key", "value", b"value"]) -> None: ...
 
-    @typing_extensions.final
     class FieldTestEntry(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -1235,7 +1207,6 @@ class MapTest(google.protobuf.message.Message):
         ) -> None: ...
         def ClearField(self, field_name: typing_extensions.Literal["key", b"key", "value", b"value"]) -> None: ...
 
-    @typing_extensions.final
     class TitleTestEntry(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -1251,7 +1222,6 @@ class MapTest(google.protobuf.message.Message):
         ) -> None: ...
         def ClearField(self, field_name: typing_extensions.Literal["key", b"key", "value", b"value"]) -> None: ...
 
-    @typing_extensions.final
     class TypeTestEntry(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -1327,7 +1297,6 @@ class MapTest(google.protobuf.message.Message):
 
 global___MapTest = MapTest
 
-@typing_extensions.final
 class MessageTest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -1345,7 +1314,6 @@ class MessageTest(google.protobuf.message.Message):
 
 global___MessageTest = MessageTest
 
-@typing_extensions.final
 class RepeatedTest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -1425,7 +1393,6 @@ class RepeatedTest(google.protobuf.message.Message):
 
 global___RepeatedTest = RepeatedTest
 
-@typing_extensions.final
 class AnyTest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -1490,7 +1457,6 @@ class AnyTest(google.protobuf.message.Message):
 
 global___AnyTest = AnyTest
 
-@typing_extensions.final
 class DurationTest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -1567,7 +1533,6 @@ class DurationTest(google.protobuf.message.Message):
 
 global___DurationTest = DurationTest
 
-@typing_extensions.final
 class TimestampTest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -1652,7 +1617,6 @@ class TimestampTest(google.protobuf.message.Message):
 
 global___TimestampTest = TimestampTest
 
-@typing_extensions.final
 class MessageIgnoredTest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -1673,7 +1637,6 @@ class MessageIgnoredTest(google.protobuf.message.Message):
 
 global___MessageIgnoredTest = MessageIgnoredTest
 
-@typing_extensions.final
 class OneOfTest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -1696,7 +1659,6 @@ class OneOfTest(google.protobuf.message.Message):
 
 global___OneOfTest = OneOfTest
 
-@typing_extensions.final
 class OneOfNotTest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -1719,13 +1681,11 @@ class OneOfNotTest(google.protobuf.message.Message):
 
 global___OneOfNotTest = OneOfNotTest
 
-@typing_extensions.final
 class NestedMessage(google.protobuf.message.Message):
     """test nested message"""
 
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
-    @typing_extensions.final
     class UserPayMessage(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -1746,7 +1706,6 @@ class NestedMessage(google.protobuf.message.Message):
         def HasField(self, field_name: typing_extensions.Literal["exp", b"exp"]) -> builtins.bool: ...
         def ClearField(self, field_name: typing_extensions.Literal["bank_number", b"bank_number", "exp", b"exp", "uuid", b"uuid"]) -> None: ...
 
-    @typing_extensions.final
     class NotEnableUserPayMessage(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -1767,7 +1726,6 @@ class NestedMessage(google.protobuf.message.Message):
         def HasField(self, field_name: typing_extensions.Literal["exp", b"exp"]) -> builtins.bool: ...
         def ClearField(self, field_name: typing_extensions.Literal["bank_number", b"bank_number", "exp", b"exp", "uuid", b"uuid"]) -> None: ...
 
-    @typing_extensions.final
     class StringInMapTestEntry(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -1785,7 +1743,6 @@ class NestedMessage(google.protobuf.message.Message):
         def HasField(self, field_name: typing_extensions.Literal["value", b"value"]) -> builtins.bool: ...
         def ClearField(self, field_name: typing_extensions.Literal["key", b"key", "value", b"value"]) -> None: ...
 
-    @typing_extensions.final
     class MapInMapTestEntry(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -1836,7 +1793,6 @@ class NestedMessage(google.protobuf.message.Message):
 
 global___NestedMessage = NestedMessage
 
-@typing_extensions.final
 class AfterReferMessage(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 

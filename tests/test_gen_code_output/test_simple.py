@@ -210,3 +210,14 @@ class NestedMessage(BaseModel):
     empty: typing.Any = Field()
     after_refer: AfterReferMessage = Field()
 """) in self._model_output(demo_pb2.NestedMessage)
+
+    def test_invoice_item(self) -> None:
+        assert format_content(
+            """
+class InvoiceItem(BaseModel):
+    name: str = Field(default="")
+    amount: int = Field(default=0)
+    quantity: int = Field(default=0)
+    items: typing.List["InvoiceItem"] = Field(default_factory=list)
+            """
+        ) in self._model_output(demo_pb2.InvoiceItem)

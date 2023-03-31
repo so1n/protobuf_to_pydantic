@@ -73,5 +73,12 @@ class NestedMessage(BaseModel):
     user_pay: UserPayMessage = Field()
     include_enum: IncludeEnum = Field(default=0)
     not_enable_user_pay: UserPayMessage = Field()
-    empty: None = Field()
+    empty: typing.Any = Field()
     after_refer: AfterReferMessage = Field()
+
+
+class InvoiceItem(BaseModel):
+    name: str = Field(default="")
+    amount: int = Field(default=0)
+    quantity: int = Field(default=0)
+    items: typing.List["InvoiceItem"] = Field(default_factory=list)

@@ -54,6 +54,7 @@ class FileDescriptorProtoToCode(BaseP2C):
             self._import_set.add("from pydantic import BaseModel")
         else:
             self._add_import_code(config.base_model_class.__module__, config.base_model_class.__name__)
+        self._parse_desc_name_dict: Dict[str, str] = {}
         self._parse_field_descriptor()
 
     def _add_other_module_pkg(self, other_fd: FileDescriptorProto, type_str: str) -> None:
@@ -131,6 +132,7 @@ class FileDescriptorProtoToCode(BaseP2C):
     # flake8: noqa: C901
     def _message_field_handle(
         self,
+        desc: DescriptorProto,
         field: FieldDescriptorProto,
         indent: int,
         nested_message_config_dict: dict,
@@ -165,8 +167,13 @@ class FileDescriptorProtoToCode(BaseP2C):
                 nested_message_name = type_str
 
                 message_fd: FileDescriptorProto = self._descriptors.message_to_fd[field.type_name]
-                self._content_deque.append(self._message(message, [FileDescriptorProto.ENUM_TYPE_FIELD_NUMBER]))
                 self._add_other_module_pkg(message_fd, type_str)
+                if message == desc:
+                    # if self-referencing, need use Python type hints postponed annotations
+                    type_str = f'"{type_str}"'
+                elif message_fd.name == self._fd.name and message.name not in {i.name for i in desc.nested_type}:
+                    # If the referenced Message is generated later, it needs to be generated in advance
+                    self._content_deque.append(self._message(message, [FileDescriptorProto.ENUM_TYPE_FIELD_NUMBER]))
 
         elif field.type == 14:
             # enum handle
@@ -306,6 +313,8 @@ class FileDescriptorProtoToCode(BaseP2C):
         self._add_import_code("google.protobuf.message", "Message")
         content: str = ""
         class_name = desc.name if desc.name not in PYTHON_RESERVED else "_r_" + desc.name
+        if class_name in self._parse_desc_name_dict:
+            return self._parse_desc_name_dict[class_name]
         class_content = " " * indent + f"class {class_name}(BaseModel):\n"
         class_head_content = ""
         class_field_content = ""
@@ -319,7 +328,7 @@ class FileDescriptorProtoToCode(BaseP2C):
                 use_custom_type = True
 
             _content_tuple: Optional[Tuple[str, str]] = self._message_field_handle(
-                field, indent, nested_message_config_dict, skip_validate_rule=skip_validate_rule
+                desc, field, indent, nested_message_config_dict, skip_validate_rule=skip_validate_rule
             )
             if _content_tuple:
                 class_head_content += _content_tuple[0]
@@ -349,6 +358,7 @@ class FileDescriptorProtoToCode(BaseP2C):
             class_head_content = config_content + class_head_content
         content += "\n".join([i for i in [class_content, class_head_content, class_field_content] if i])
         content += "\n" if indent > 0 else "\n\n"
+        self._parse_desc_name_dict[class_name] = content
         return content
 
     def _get_protobuf_type_model(self, field: FieldDescriptorProto) -> ProtobufTypeModel:

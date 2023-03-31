@@ -21,7 +21,6 @@ else:
 
 DESCRIPTOR: google.protobuf.descriptor.FileDescriptor
 
-@typing_extensions.final
 class FieldRules(google.protobuf.message.Message):
     """FieldRules encapsulates the rules for each type of field. Depending on the
     field, the correct set should be used to ensure proper validations.
@@ -133,7 +132,6 @@ class FieldRules(google.protobuf.message.Message):
 
 global___FieldRules = FieldRules
 
-@typing_extensions.final
 class FloatRules(google.protobuf.message.Message):
     """FloatRules describes the constraints applied to `float` values"""
 
@@ -266,7 +264,6 @@ class FloatRules(google.protobuf.message.Message):
 
 global___FloatRules = FloatRules
 
-@typing_extensions.final
 class DoubleRules(google.protobuf.message.Message):
     """DoubleRules describes the constraints applied to `double` values"""
 
@@ -399,7 +396,6 @@ class DoubleRules(google.protobuf.message.Message):
 
 global___DoubleRules = DoubleRules
 
-@typing_extensions.final
 class Int32Rules(google.protobuf.message.Message):
     """Int32Rules describes the constraints applied to `int32` values"""
 
@@ -532,7 +528,6 @@ class Int32Rules(google.protobuf.message.Message):
 
 global___Int32Rules = Int32Rules
 
-@typing_extensions.final
 class Int64Rules(google.protobuf.message.Message):
     """Int64Rules describes the constraints applied to `int64` values"""
 
@@ -665,7 +660,6 @@ class Int64Rules(google.protobuf.message.Message):
 
 global___Int64Rules = Int64Rules
 
-@typing_extensions.final
 class UInt32Rules(google.protobuf.message.Message):
     """UInt32Rules describes the constraints applied to `uint32` values"""
 
@@ -798,7 +792,6 @@ class UInt32Rules(google.protobuf.message.Message):
 
 global___UInt32Rules = UInt32Rules
 
-@typing_extensions.final
 class UInt64Rules(google.protobuf.message.Message):
     """UInt64Rules describes the constraints applied to `uint64` values"""
 
@@ -931,7 +924,6 @@ class UInt64Rules(google.protobuf.message.Message):
 
 global___UInt64Rules = UInt64Rules
 
-@typing_extensions.final
 class SInt32Rules(google.protobuf.message.Message):
     """SInt32Rules describes the constraints applied to `sint32` values"""
 
@@ -1064,7 +1056,6 @@ class SInt32Rules(google.protobuf.message.Message):
 
 global___SInt32Rules = SInt32Rules
 
-@typing_extensions.final
 class SInt64Rules(google.protobuf.message.Message):
     """SInt64Rules describes the constraints applied to `sint64` values"""
 
@@ -1197,7 +1188,6 @@ class SInt64Rules(google.protobuf.message.Message):
 
 global___SInt64Rules = SInt64Rules
 
-@typing_extensions.final
 class Fixed32Rules(google.protobuf.message.Message):
     """Fixed32Rules describes the constraints applied to `fixed32` values"""
 
@@ -1330,7 +1320,6 @@ class Fixed32Rules(google.protobuf.message.Message):
 
 global___Fixed32Rules = Fixed32Rules
 
-@typing_extensions.final
 class Fixed64Rules(google.protobuf.message.Message):
     """Fixed64Rules describes the constraints applied to `fixed64` values"""
 
@@ -1463,7 +1452,6 @@ class Fixed64Rules(google.protobuf.message.Message):
 
 global___Fixed64Rules = Fixed64Rules
 
-@typing_extensions.final
 class SFixed32Rules(google.protobuf.message.Message):
     """SFixed32Rules describes the constraints applied to `sfixed32` values"""
 
@@ -1596,7 +1584,6 @@ class SFixed32Rules(google.protobuf.message.Message):
 
 global___SFixed32Rules = SFixed32Rules
 
-@typing_extensions.final
 class SFixed64Rules(google.protobuf.message.Message):
     """SFixed64Rules describes the constraints applied to `sfixed64` values"""
 
@@ -1729,7 +1716,6 @@ class SFixed64Rules(google.protobuf.message.Message):
 
 global___SFixed64Rules = SFixed64Rules
 
-@typing_extensions.final
 class BoolRules(google.protobuf.message.Message):
     """BoolRules describes the constraints applied to `bool` values"""
 
@@ -1804,7 +1790,6 @@ class BoolRules(google.protobuf.message.Message):
 
 global___BoolRules = BoolRules
 
-@typing_extensions.final
 class StringRules(google.protobuf.message.Message):
     """StringRules describe the constraints applied to `string` values"""
 
@@ -2028,7 +2013,6 @@ class StringRules(google.protobuf.message.Message):
 
 global___StringRules = StringRules
 
-@typing_extensions.final
 class BytesRules(google.protobuf.message.Message):
     """BytesRules describe the constraints applied to `bytes` values"""
 
@@ -2187,7 +2171,6 @@ class BytesRules(google.protobuf.message.Message):
 
 global___BytesRules = BytesRules
 
-@typing_extensions.final
 class EnumRules(google.protobuf.message.Message):
     """EnumRules describe the constraints applied to enum values"""
 
@@ -2274,7 +2257,6 @@ class EnumRules(google.protobuf.message.Message):
 
 global___EnumRules = EnumRules
 
-@typing_extensions.final
 class MessageRules(google.protobuf.message.Message):
     """MessageRules describe the constraints applied to embedded message values.
     For message-type fields, validation is performed recursively.
@@ -2369,7 +2351,6 @@ class MessageRules(google.protobuf.message.Message):
 
 global___MessageRules = MessageRules
 
-@typing_extensions.final
 class RepeatedRules(google.protobuf.message.Message):
     """RepeatedRules describe the constraints applied to `repeated` values"""
 
@@ -2473,7 +2454,6 @@ class RepeatedRules(google.protobuf.message.Message):
 
 global___RepeatedRules = RepeatedRules
 
-@typing_extensions.final
 class MapRules(google.protobuf.message.Message):
     """MapRules describe the constraints applied to `map` values"""
 
@@ -2575,7 +2555,6 @@ class MapRules(google.protobuf.message.Message):
 
 global___MapRules = MapRules
 
-@typing_extensions.final
 class AnyRules(google.protobuf.message.Message):
     """AnyRules describe constraints applied exclusively to the
     `google.protobuf.Any` well-known type
@@ -2664,7 +2643,6 @@ class AnyRules(google.protobuf.message.Message):
 
 global___AnyRules = AnyRules
 
-@typing_extensions.final
 class DurationRules(google.protobuf.message.Message):
     """DurationRules describe the constraints applied exclusively to the
     `google.protobuf.Duration` well-known type
@@ -2798,7 +2776,6 @@ class DurationRules(google.protobuf.message.Message):
 
 global___DurationRules = DurationRules
 
-@typing_extensions.final
 class TimestampRules(google.protobuf.message.Message):
     """TimestampRules describe the constraints applied exclusively to the
     `google.protobuf.Timestamp` well-known type

@@ -12,6 +12,7 @@ def gen_code() -> None:
                 demo_pb2.MapMessage,
                 demo_pb2.RepeatedMessage,
                 demo_pb2.NestedMessage,
+                demo_pb2.InvoiceItem,
             )
         ],
     )

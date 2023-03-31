@@ -20,7 +20,7 @@ class _DemoEnum:
     ValueType = typing.NewType("ValueType", builtins.int)
     V: typing_extensions.TypeAlias = ValueType
 
-class _DemoEnumEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_DemoEnum.ValueType], builtins.type):
+class _DemoEnumEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_DemoEnum.ValueType], builtins.type):  # noqa: F821
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
     zero: _DemoEnum.ValueType  # 0
     one: _DemoEnum.ValueType  # 1
@@ -33,7 +33,6 @@ one: DemoEnum.ValueType  # 1
 two: DemoEnum.ValueType  # 3
 global___DemoEnum = DemoEnum
 
-@typing_extensions.final
 class DemoMessage(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
