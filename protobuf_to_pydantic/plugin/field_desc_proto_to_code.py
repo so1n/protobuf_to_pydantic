@@ -362,7 +362,7 @@ class FileDescriptorProtoToCode(BaseP2C):
         return content
 
     def _get_protobuf_type_model(self, field: FieldDescriptorProto) -> ProtobufTypeModel:
-        rule_type_str: Optional[str] = None
+        rule_type_str: str = ""
         type_factory: Optional[Any] = None
         if field.type in type_dict:
             type_factory = type_dict[field.type]
@@ -392,9 +392,16 @@ class FileDescriptorProtoToCode(BaseP2C):
                 rule_type_str = "any"
                 type_factory = AnyMessage
                 self._add_import_code("google.protobuf.any_pb2", "Any")
+            elif field.type_name.split(".")[-2] == "Struct":
+                py_type_str = "Dict"
+                rule_type_str = "struct"
+                type_factory = dict
             else:
                 logger.error(f"Not support type {field.type_name}")
-                py_type_str = ""
+                py_type_str = "Any"
+                rule_type_str = "any"
+                type_factory = AnyMessage
+                self._add_import_code("google.protobuf.any_pb2", "Any")
             return ProtobufTypeModel(
                 type_factory=type_factory,
                 rule_type_str=rule_type_str,
