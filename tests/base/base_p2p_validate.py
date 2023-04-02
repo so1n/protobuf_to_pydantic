@@ -6,7 +6,7 @@ from uuid import uuid1, uuid4
 import pytest
 from pydantic import ValidationError
 
-from example.p2p_validate_example.gen_code import CustomerField, confloat, conint, customer_any
+from example.gen_p2p_code import CustomerField, confloat, conint, customer_any
 from protobuf_to_pydantic.grpc_types import AnyMessage
 
 local_dict: dict = {

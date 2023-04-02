@@ -91,6 +91,7 @@ def format_content(content_str: str, pyproject_file_path: str = "") -> str:
             pyproject_file_path = os.path.join(path, "pyproject.toml")
             if os.path.exists(pyproject_file_path):
                 break
+            pyproject_file_path = ""
 
     pyproject_dict: dict = {}
     try:

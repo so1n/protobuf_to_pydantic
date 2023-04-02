@@ -2,7 +2,7 @@ syntax = "proto3";
 package user;
 import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
-import "example_proto/common/single.proto";
+import "example/example_proto/common/single.proto";
 
 enum SexType {
   man = 0;

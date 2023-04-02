@@ -1,6 +1,12 @@
 from typing import Any, Callable, Type
 
-from example.p2p_validate_example import demo_gen_code_by_p2p
+from google.protobuf import __version__
+
+if __version__ > "4.0.0":
+    from example.proto import demo_gen_code_by_p2p
+else:
+    from example.proto_3_20 import demo_gen_code_by_p2p
+
 from tests.base.base_p2p_validate import BaseTestP2pModelValidator, local_dict
 
 

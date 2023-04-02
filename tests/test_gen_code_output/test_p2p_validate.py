@@ -1,34 +1,14 @@
 import time
 from typing import Any
 
-from example.example_proto_python_code.example_proto.p2p_validate.demo_pb2 import (
-    AnyTest,
-    BoolTest,
-    BytesTest,
-    DoubleTest,
-    DurationTest,
-    EnumTest,
-    Fixed32Test,
-    Fixed64Test,
-    FloatTest,
-    Int32Test,
-    Int64Test,
-    MapTest,
-    MessageIgnoredTest,
-    MessageTest,
-    NestedMessage,
-    OneOfNotTest,
-    OneOfTest,
-    RepeatedTest,
-    Sfixed32Test,
-    Sfixed64Test,
-    Sint64Test,
-    StringTest,
-    TimestampTest,
-    Uint32Test,
-    Uint64Test,
-)
-from example.p2p_validate_example.gen_code import CustomerField, confloat, conint, customer_any
+from google.protobuf import __version__
+
+if __version__ > "4.0.0":
+    from example.proto.example.example_proto.p2p_validate import demo_pb2
+else:
+    from example.proto_3_20.example.example_proto.p2p_validate import demo_pb2  # type: ignore[no-redef]
+
+from example.gen_p2p_code import CustomerField, confloat, conint, customer_any
 from protobuf_to_pydantic import msg_to_pydantic_model, pydantic_model_to_py_code
 from protobuf_to_pydantic.util import format_content
 
@@ -78,7 +58,7 @@ class AnyTest(BaseModel):
 
     any_not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(any_not_in_validator)
     any_in_validator_in_test = validator("in_test", allow_reuse=True)(any_in_validator)
-""") in self._model_output(AnyTest)
+""") in self._model_output(demo_pb2.AnyTest)
 
     def test_bool(self) -> None:
         assert format_content("""
@@ -92,7 +72,7 @@ class BoolTest(BaseModel):
     example_test: bool = Field(default=False, example=True)
     field_test: bool = CustomerField(default=False)
     title_test: bool = Field(default=False, title="title_test")
-""") in self._model_output(BoolTest)
+""") in self._model_output(demo_pb2.BoolTest)
 
     def test_bytes(self) -> None:
         assert format_content("""
@@ -120,7 +100,7 @@ class BytesTest(BaseModel):
     contains_validator_contains_test = validator("contains_test", allow_reuse=True)(contains_validator)
     in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
     not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
-""") in self._model_output(BytesTest)
+""") in self._model_output(demo_pb2.BytesTest)
 
     def test_double(self) -> None:
         assert format_content("""
@@ -144,7 +124,7 @@ class DoubleTest(BaseModel):
 
     in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
     not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
-""") in self._model_output(DoubleTest)
+""") in self._model_output(demo_pb2.DoubleTest)
 
     def test_duration(self) -> None:
         assert format_content("""
@@ -188,7 +168,7 @@ class DurationTest(BaseModel):
     duration_ge_validator_range_e_test = validator("range_e_test", allow_reuse=True)(duration_ge_validator)
     duration_in_validator_in_test = validator("in_test", allow_reuse=True)(duration_in_validator)
     duration_not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(duration_not_in_validator)
-""") in self._model_output(DurationTest)
+""") in self._model_output(demo_pb2.DurationTest)
 
     def test_enum(self) -> None:
         assert format_content("""
@@ -212,7 +192,7 @@ class EnumTest(BaseModel):
 
     in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
     not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
-""") in self._model_output(EnumTest)
+""") in self._model_output(demo_pb2.EnumTest)
 
     def test_fixed32(self) -> None:
         assert format_content("""
@@ -236,7 +216,7 @@ class Fixed32Test(BaseModel):
 
     in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
     not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
-""") in self._model_output(Fixed32Test)
+""") in self._model_output(demo_pb2.Fixed32Test)
 
     def test_fixed64(self) -> None:
         assert format_content("""
@@ -260,7 +240,7 @@ class Fixed64Test(BaseModel):
 
     in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
     not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
-""") in self._model_output(Fixed64Test)
+""") in self._model_output(demo_pb2.Fixed64Test)
 
     def test_float(self) -> None:
         assert format_content("""
@@ -284,7 +264,7 @@ class FloatTest(BaseModel):
 
     in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
     not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
-""") in self._model_output(FloatTest)
+""") in self._model_output(demo_pb2.FloatTest)
 
     def test_int32(self) -> None:
         assert format_content("""
@@ -308,7 +288,7 @@ class Int32Test(BaseModel):
 
     in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
     not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
-""") in self._model_output(Int32Test)
+""") in self._model_output(demo_pb2.Int32Test)
 
     def test_int64(self) -> None:
         assert format_content("""
@@ -332,7 +312,7 @@ class Int64Test(BaseModel):
 
     in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
     not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
-""") in self._model_output(Int64Test)
+""") in self._model_output(demo_pb2.Int64Test)
 
     def test_map(self) -> None:
         assert format_content("""
@@ -354,7 +334,7 @@ class MapTest(BaseModel):
 
     map_min_pairs_validator_pair_test = validator("pair_test", allow_reuse=True)(map_min_pairs_validator)
     map_max_pairs_validator_pair_test = validator("pair_test", allow_reuse=True)(map_max_pairs_validator)
-""") in self._model_output(MapTest)
+""") in self._model_output(demo_pb2.MapTest)
 
     def test_message_ignored(self) -> None:
         assert format_content("""
@@ -362,14 +342,14 @@ class MessageIgnoredTest(BaseModel):
     const_test: int = Field(default=0)
     range_e_test: int = Field(default=0)
     range_test: int = Field(default=0)
-""") in self._model_output(MessageIgnoredTest)
+""") in self._model_output(demo_pb2.MessageIgnoredTest)
 
     def test_message(self) -> None:
         assert format_content("""
 class MessageTest(BaseModel):
     skip_test: str = Field(default="")
     required_test: str = Field()
-""") in self._model_output(MessageTest)
+""") in self._model_output(demo_pb2.MessageTest)
 
     def test_nested(self) -> None:
         assert format_content("""
@@ -459,7 +439,7 @@ class NestedMessage(BaseModel):
     not_enable_user_pay: NotEnableUserPayMessage = Field()
     empty: typing.Any = Field()
     after_refer: AfterReferMessage = Field()
-""") in self._model_output(NestedMessage)
+""") in self._model_output(demo_pb2.NestedMessage)
 
     def test_one_of_not(self) -> None:
         assert format_content("""
@@ -471,7 +451,7 @@ class OneOfNotTest(BaseModel):
     y: int = Field(default=0)
 
     _check_one_of = root_validator(pre=True, allow_reuse=True)(check_one_of)
-""") in self._model_output(OneOfNotTest)
+""") in self._model_output(demo_pb2.OneOfNotTest)
 
     def test_one_of(self) -> None:
         assert format_content("""
@@ -483,7 +463,7 @@ class OneOfTest(BaseModel):
     y: int = Field(default=0)
 
     _check_one_of = root_validator(pre=True, allow_reuse=True)(check_one_of)
-""") in self._model_output(OneOfTest)
+""") in self._model_output(demo_pb2.OneOfTest)
 
     def test_repeated(self) -> None:
         assert format_content("""
@@ -516,7 +496,7 @@ class RepeatedTest(BaseModel):
     field_test: typing.List[str] = CustomerField(default_factory=list)
     title_test: typing.List[str] = Field(default_factory=list, title="title_test")
     type_test: list = Field(default_factory=list)
-""") in self._model_output(RepeatedTest)
+""") in self._model_output(demo_pb2.RepeatedTest)
 
     def test_sfixed32(self) -> None:
         assert format_content("""
@@ -540,7 +520,7 @@ class Sfixed32Test(BaseModel):
 
     in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
     not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
-""") in self._model_output(Sfixed32Test)
+""") in self._model_output(demo_pb2.Sfixed32Test)
 
     def test_sfixed64(self) -> None:
         assert format_content("""
@@ -564,7 +544,7 @@ class Sfixed64Test(BaseModel):
 
     in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
     not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
-""") in self._model_output(Sfixed64Test)
+""") in self._model_output(demo_pb2.Sfixed64Test)
 
     def test_sint64(self) -> None:
         assert format_content("""
@@ -588,7 +568,7 @@ class Sint64Test(BaseModel):
 
     in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
     not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
-""") in self._model_output(Sint64Test)
+""") in self._model_output(demo_pb2.Sint64Test)
 
     def test_string(self) -> None:
         assert format_content("""
@@ -631,7 +611,7 @@ class StringTest(BaseModel):
     not_contains_validator_not_contains_test = validator("not_contains_test", allow_reuse=True)(not_contains_validator)
     in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
     not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
-""") in self._model_output(StringTest)
+""") in self._model_output(demo_pb2.StringTest)
 
     def test_timestamp(self) -> None:
         assert format_content("""
@@ -672,7 +652,7 @@ class TimestampTest(BaseModel):
     timestamp_within_validator_within_and_gt_now_test = validator("within_and_gt_now_test", allow_reuse=True)(
         timestamp_within_validator
     )
-""") in self._model_output(TimestampTest)
+""") in self._model_output(demo_pb2.TimestampTest)
 
     def test_unit32(self) -> None:
         assert format_content("""
@@ -696,7 +676,7 @@ class Uint32Test(BaseModel):
 
     in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
     not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
-""") in self._model_output(Uint32Test)
+""") in self._model_output(demo_pb2.Uint32Test)
 
     def test_unit64(self) -> None:
         assert format_content("""
@@ -720,4 +700,4 @@ class Uint64Test(BaseModel):
 
     in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
     not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
-""") in self._model_output(Uint64Test)
+""") in self._model_output(demo_pb2.Uint64Test)

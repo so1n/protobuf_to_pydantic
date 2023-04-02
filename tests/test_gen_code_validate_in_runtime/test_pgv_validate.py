@@ -1,8 +1,13 @@
 from typing import Any, Callable, Type
 
+from google.protobuf import __version__
 from google.protobuf.any_pb2 import Any as AnyMessage  # type: ignore
 
-from example.validate_example import demo_gen_code_by_pgv
+if __version__ > "4.0.0":
+    from example.proto import demo_gen_code_by_pgv
+else:
+    from example.proto_3_20 import demo_gen_code_by_pgv
+
 from tests.base.test_pgv_validate import BaseTestPgvModelValidator
 
 

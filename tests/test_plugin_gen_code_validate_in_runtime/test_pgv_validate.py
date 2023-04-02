@@ -1,8 +1,13 @@
 from typing import Any, Callable, Type
 
+from google.protobuf import __version__
 from pydantic import BaseModel
 
-from example.example_proto_python_code.example_proto.validate import demo_p2p
+if __version__ > "4.0.0":
+    from example.proto.example.example_proto.validate import demo_p2p
+else:
+    from example.proto_3_20.example.example_proto.validate import demo_p2p
+
 from tests.test_gen_model_validate_in_runtime.test_pgv_validate import BaseTestPgvModelValidator
 
 

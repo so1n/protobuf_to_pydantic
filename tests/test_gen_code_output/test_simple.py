@@ -1,6 +1,12 @@
 from typing import Any
 
-from example.example_proto_python_code.example_proto.demo import demo_pb2
+from google.protobuf import __version__
+
+if __version__ > "4.0.0":
+    from example.proto.example.example_proto.demo import demo_pb2
+else:
+    from example.proto_3_20.example.example_proto.demo import demo_pb2  # type: ignore[no-redef]
+
 from protobuf_to_pydantic import msg_to_pydantic_model, pydantic_model_to_py_code
 from protobuf_to_pydantic.util import format_content
 
@@ -17,18 +23,18 @@ class SexType(IntEnum):
     women = 1
 
 
-class ExampleProtoCommonSingleDemoEnum(IntEnum):
+class ExampleExampleProtoCommonSingleDemoEnum(IntEnum):
     \"\"\"Note: The current class does not belong to the package
-    ExampleProtoCommonSingleDemoEnum protobuf path:example_proto/common/single.proto\"\"\"
+    ExampleExampleProtoCommonSingleDemoEnum protobuf path:example/example_proto/common/single.proto\"\"\"
 
     zero = 0
     one = 1
     two = 3
 
 
-class ExampleProtoCommonSingleDemoMessage(BaseModel):
+class ExampleExampleProtoCommonSingleDemoMessage(BaseModel):
     \"\"\"Note: The current class does not belong to the package
-    ExampleProtoCommonSingleDemoMessage protobuf path:example_proto/common/single.proto\"\"\"
+    ExampleExampleProtoCommonSingleDemoMessage protobuf path:example/example_proto/common/single.proto\"\"\"
 
     earth: str = Field(default="")
     mercury: str = Field(default="")
@@ -40,10 +46,10 @@ class UserMessage(BaseModel):
     age: int = Field(default=0)
     height: float = Field(default=0.0)
     sex: SexType = Field(default=0)
-    demo: ExampleProtoCommonSingleDemoEnum = Field(default=0)
+    demo: ExampleExampleProtoCommonSingleDemoEnum = Field(default=0)
     is_adult: bool = Field(default=False)
     user_name: str = Field(default="")
-    demo_message: ExampleProtoCommonSingleDemoMessage = Field()
+    demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field()
 """) in self._model_output(demo_pb2.UserMessage)
 
     def test_map_message(self) -> None:
@@ -53,18 +59,18 @@ class SexType(IntEnum):
     women = 1
 
 
-class ExampleProtoCommonSingleDemoEnum(IntEnum):
+class ExampleExampleProtoCommonSingleDemoEnum(IntEnum):
     \"\"\"Note: The current class does not belong to the package
-    ExampleProtoCommonSingleDemoEnum protobuf path:example_proto/common/single.proto\"\"\"
+    ExampleExampleProtoCommonSingleDemoEnum protobuf path:example/example_proto/common/single.proto\"\"\"
 
     zero = 0
     one = 1
     two = 3
 
 
-class ExampleProtoCommonSingleDemoMessage(BaseModel):
+class ExampleExampleProtoCommonSingleDemoMessage(BaseModel):
     \"\"\"Note: The current class does not belong to the package
-    ExampleProtoCommonSingleDemoMessage protobuf path:example_proto/common/single.proto\"\"\"
+    ExampleExampleProtoCommonSingleDemoMessage protobuf path:example/example_proto/common/single.proto\"\"\"
 
     earth: str = Field(default="")
     mercury: str = Field(default="")
@@ -76,10 +82,10 @@ class UserMessage(BaseModel):
     age: int = Field(default=0)
     height: float = Field(default=0.0)
     sex: SexType = Field(default=0)
-    demo: ExampleProtoCommonSingleDemoEnum = Field(default=0)
+    demo: ExampleExampleProtoCommonSingleDemoEnum = Field(default=0)
     is_adult: bool = Field(default=False)
     user_name: str = Field(default="")
-    demo_message: ExampleProtoCommonSingleDemoMessage = Field()
+    demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field()
 
 
 class MapMessage(BaseModel):
@@ -94,18 +100,18 @@ class SexType(IntEnum):
     women = 1
 
 
-class ExampleProtoCommonSingleDemoEnum(IntEnum):
+class ExampleExampleProtoCommonSingleDemoEnum(IntEnum):
     \"\"\"Note: The current class does not belong to the package
-    ExampleProtoCommonSingleDemoEnum protobuf path:example_proto/common/single.proto\"\"\"
+    ExampleExampleProtoCommonSingleDemoEnum protobuf path:example/example_proto/common/single.proto\"\"\"
 
     zero = 0
     one = 1
     two = 3
 
 
-class ExampleProtoCommonSingleDemoMessage(BaseModel):
+class ExampleExampleProtoCommonSingleDemoMessage(BaseModel):
     \"\"\"Note: The current class does not belong to the package
-    ExampleProtoCommonSingleDemoMessage protobuf path:example_proto/common/single.proto\"\"\"
+    ExampleExampleProtoCommonSingleDemoMessage protobuf path:example/example_proto/common/single.proto\"\"\"
 
     earth: str = Field(default="")
     mercury: str = Field(default="")
@@ -117,10 +123,10 @@ class UserMessage(BaseModel):
     age: int = Field(default=0)
     height: float = Field(default=0.0)
     sex: SexType = Field(default=0)
-    demo: ExampleProtoCommonSingleDemoEnum = Field(default=0)
+    demo: ExampleExampleProtoCommonSingleDemoEnum = Field(default=0)
     is_adult: bool = Field(default=False)
     user_name: str = Field(default="")
-    demo_message: ExampleProtoCommonSingleDemoMessage = Field()
+    demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field()
 
 
 class RepeatedMessage(BaseModel):
@@ -146,18 +152,18 @@ class SexType(IntEnum):
     women = 1
 
 
-class ExampleProtoCommonSingleDemoEnum(IntEnum):
+class ExampleExampleProtoCommonSingleDemoEnum(IntEnum):
     \"\"\"Note: The current class does not belong to the package
-    ExampleProtoCommonSingleDemoEnum protobuf path:example_proto/common/single.proto\"\"\"
+    ExampleExampleProtoCommonSingleDemoEnum protobuf path:example/example_proto/common/single.proto\"\"\"
 
     zero = 0
     one = 1
     two = 3
 
 
-class ExampleProtoCommonSingleDemoMessage(BaseModel):
+class ExampleExampleProtoCommonSingleDemoMessage(BaseModel):
     \"\"\"Note: The current class does not belong to the package
-    ExampleProtoCommonSingleDemoMessage protobuf path:example_proto/common/single.proto\"\"\"
+    ExampleExampleProtoCommonSingleDemoMessage protobuf path:example/example_proto/common/single.proto\"\"\"
 
     earth: str = Field(default="")
     mercury: str = Field(default="")
@@ -169,10 +175,10 @@ class UserMessage(BaseModel):
     age: int = Field(default=0)
     height: float = Field(default=0.0)
     sex: SexType = Field(default=0)
-    demo: ExampleProtoCommonSingleDemoEnum = Field(default=0)
+    demo: ExampleExampleProtoCommonSingleDemoEnum = Field(default=0)
     is_adult: bool = Field(default=False)
     user_name: str = Field(default="")
-    demo_message: ExampleProtoCommonSingleDemoMessage = Field()
+    demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field()
 
 
 class RepeatedMessage(BaseModel):

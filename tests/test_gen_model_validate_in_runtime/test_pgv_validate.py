@@ -1,8 +1,13 @@
 from typing import Callable
 
+from google.protobuf import __version__
 from google.protobuf.any_pb2 import Any as AnyMessage  # type: ignore
 
-from example.example_proto_python_code.example_proto.validate import demo_pb2
+if __version__ > "4.0.0":
+    from example.proto.example.example_proto.validate import demo_pb2
+else:
+    from example.proto_3_20.example.example_proto.validate import demo_pb2
+
 from protobuf_to_pydantic import msg_to_pydantic_model
 from tests.base.test_pgv_validate import BaseTestPgvModelValidator
 
