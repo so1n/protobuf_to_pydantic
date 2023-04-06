@@ -24,6 +24,7 @@ from pydantic import BaseConfig, BaseModel
 from pydantic.fields import FieldInfo
 
 from protobuf_to_pydantic import customer_validator, gen_model
+from protobuf_to_pydantic.__version__ import __version__
 from protobuf_to_pydantic.customer_con_type import pydantic_con_dict
 from protobuf_to_pydantic.grpc_types import RepeatedCompositeContainer, RepeatedScalarContainer
 from protobuf_to_pydantic.util import format_content, replace_protobuf_type_to_python_type
@@ -37,7 +38,7 @@ class BaseP2C(object):
 
     head_content: str = (
         "# This is an automatically generated file, please do not change\n"
-        "# gen by protobuf_to_pydantic(https://github.com/so1n/protobuf_to_pydantic)\n"
+        f"# gen by protobuf_to_pydantic[{__version__}](https://github.com/so1n/protobuf_to_pydantic)\n"
     )
     tail_content: str = ""
 
