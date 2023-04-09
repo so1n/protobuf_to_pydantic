@@ -289,6 +289,7 @@ class FloatRules(google.protobuf.message.Message):
     FIELD_FIELD_NUMBER: builtins.int
     TYPE_FIELD_NUMBER: builtins.int
     TITLE_FIELD_NUMBER: builtins.int
+    EXTRA_FIELD_NUMBER: builtins.int
     const: builtins.float
     """Const specifies that this field must be exactly the specified value"""
     lt: builtins.float
@@ -342,6 +343,8 @@ class FloatRules(google.protobuf.message.Message):
     """Set the type object corresponding to the field, support template variables"""
     title: builtins.str
     """The title corresponding to the field"""
+    extra: builtins.str
+    """Field's custom extension parameter in the format Json"""
     def __init__(
         self,
         *,
@@ -363,6 +366,7 @@ class FloatRules(google.protobuf.message.Message):
         field: builtins.str | None = ...,
         type: builtins.str | None = ...,
         title: builtins.str | None = ...,
+        extra: builtins.str | None = ...,
     ) -> None: ...
     def HasField(
         self,
@@ -375,6 +379,8 @@ class FloatRules(google.protobuf.message.Message):
             b"_description",
             "_enable",
             b"_enable",
+            "_extra",
+            b"_extra",
             "_field",
             b"_field",
             "_ge",
@@ -411,6 +417,8 @@ class FloatRules(google.protobuf.message.Message):
             b"example_config",
             "example_factory",
             b"example_factory",
+            "extra",
+            b"extra",
             "field",
             b"field",
             "ge",
@@ -442,6 +450,8 @@ class FloatRules(google.protobuf.message.Message):
             b"_description",
             "_enable",
             b"_enable",
+            "_extra",
+            b"_extra",
             "_field",
             b"_field",
             "_ge",
@@ -478,6 +488,8 @@ class FloatRules(google.protobuf.message.Message):
             b"example_config",
             "example_factory",
             b"example_factory",
+            "extra",
+            b"extra",
             "field",
             b"field",
             "ge",
@@ -518,6 +530,10 @@ class FloatRules(google.protobuf.message.Message):
     def WhichOneof(
         self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]
     ) -> typing_extensions.Literal["enable"] | None: ...
+    @typing.overload
+    def WhichOneof(
+        self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]
+    ) -> typing_extensions.Literal["extra"] | None: ...
     @typing.overload
     def WhichOneof(
         self, oneof_group: typing_extensions.Literal["_field", b"_field"]
@@ -585,6 +601,7 @@ class DoubleRules(google.protobuf.message.Message):
     FIELD_FIELD_NUMBER: builtins.int
     TYPE_FIELD_NUMBER: builtins.int
     TITLE_FIELD_NUMBER: builtins.int
+    EXTRA_FIELD_NUMBER: builtins.int
     const: builtins.float
     """Const specifies that this field must be exactly the specified value"""
     lt: builtins.float
@@ -638,6 +655,8 @@ class DoubleRules(google.protobuf.message.Message):
     """Set the type object corresponding to the field, support template variables"""
     title: builtins.str
     """The title corresponding to the field"""
+    extra: builtins.str
+    """Field's custom extension parameter in the format Json"""
     def __init__(
         self,
         *,
@@ -659,6 +678,7 @@ class DoubleRules(google.protobuf.message.Message):
         field: builtins.str | None = ...,
         type: builtins.str | None = ...,
         title: builtins.str | None = ...,
+        extra: builtins.str | None = ...,
     ) -> None: ...
     def HasField(
         self,
@@ -671,6 +691,8 @@ class DoubleRules(google.protobuf.message.Message):
             b"_description",
             "_enable",
             b"_enable",
+            "_extra",
+            b"_extra",
             "_field",
             b"_field",
             "_ge",
@@ -707,6 +729,8 @@ class DoubleRules(google.protobuf.message.Message):
             b"example_config",
             "example_factory",
             b"example_factory",
+            "extra",
+            b"extra",
             "field",
             b"field",
             "ge",
@@ -738,6 +762,8 @@ class DoubleRules(google.protobuf.message.Message):
             b"_description",
             "_enable",
             b"_enable",
+            "_extra",
+            b"_extra",
             "_field",
             b"_field",
             "_ge",
@@ -774,6 +800,8 @@ class DoubleRules(google.protobuf.message.Message):
             b"example_config",
             "example_factory",
             b"example_factory",
+            "extra",
+            b"extra",
             "field",
             b"field",
             "ge",
@@ -814,6 +842,10 @@ class DoubleRules(google.protobuf.message.Message):
     def WhichOneof(
         self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]
     ) -> typing_extensions.Literal["enable"] | None: ...
+    @typing.overload
+    def WhichOneof(
+        self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]
+    ) -> typing_extensions.Literal["extra"] | None: ...
     @typing.overload
     def WhichOneof(
         self, oneof_group: typing_extensions.Literal["_field", b"_field"]
@@ -881,6 +913,7 @@ class Int32Rules(google.protobuf.message.Message):
     FIELD_FIELD_NUMBER: builtins.int
     TYPE_FIELD_NUMBER: builtins.int
     TITLE_FIELD_NUMBER: builtins.int
+    EXTRA_FIELD_NUMBER: builtins.int
     const: builtins.int
     """Const specifies that this field must be exactly the specified value"""
     lt: builtins.int
@@ -934,6 +967,8 @@ class Int32Rules(google.protobuf.message.Message):
     """Set the type object corresponding to the field, support template variables"""
     title: builtins.str
     """The title corresponding to the field"""
+    extra: builtins.str
+    """Field's custom extension parameter in the format Json"""
     def __init__(
         self,
         *,
@@ -955,6 +990,7 @@ class Int32Rules(google.protobuf.message.Message):
         field: builtins.str | None = ...,
         type: builtins.str | None = ...,
         title: builtins.str | None = ...,
+        extra: builtins.str | None = ...,
     ) -> None: ...
     def HasField(
         self,
@@ -967,6 +1003,8 @@ class Int32Rules(google.protobuf.message.Message):
             b"_description",
             "_enable",
             b"_enable",
+            "_extra",
+            b"_extra",
             "_field",
             b"_field",
             "_ge",
@@ -1003,6 +1041,8 @@ class Int32Rules(google.protobuf.message.Message):
             b"example_config",
             "example_factory",
             b"example_factory",
+            "extra",
+            b"extra",
             "field",
             b"field",
             "ge",
@@ -1034,6 +1074,8 @@ class Int32Rules(google.protobuf.message.Message):
             b"_description",
             "_enable",
             b"_enable",
+            "_extra",
+            b"_extra",
             "_field",
             b"_field",
             "_ge",
@@ -1070,6 +1112,8 @@ class Int32Rules(google.protobuf.message.Message):
             b"example_config",
             "example_factory",
             b"example_factory",
+            "extra",
+            b"extra",
             "field",
             b"field",
             "ge",
@@ -1110,6 +1154,10 @@ class Int32Rules(google.protobuf.message.Message):
     def WhichOneof(
         self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]
     ) -> typing_extensions.Literal["enable"] | None: ...
+    @typing.overload
+    def WhichOneof(
+        self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]
+    ) -> typing_extensions.Literal["extra"] | None: ...
     @typing.overload
     def WhichOneof(
         self, oneof_group: typing_extensions.Literal["_field", b"_field"]
@@ -1177,6 +1225,7 @@ class Int64Rules(google.protobuf.message.Message):
     FIELD_FIELD_NUMBER: builtins.int
     TYPE_FIELD_NUMBER: builtins.int
     TITLE_FIELD_NUMBER: builtins.int
+    EXTRA_FIELD_NUMBER: builtins.int
     const: builtins.int
     """Const specifies that this field must be exactly the specified value"""
     lt: builtins.int
@@ -1230,6 +1279,8 @@ class Int64Rules(google.protobuf.message.Message):
     """Set the type object corresponding to the field, support template variables"""
     title: builtins.str
     """The title corresponding to the field"""
+    extra: builtins.str
+    """Field's custom extension parameter in the format Json"""
     def __init__(
         self,
         *,
@@ -1251,6 +1302,7 @@ class Int64Rules(google.protobuf.message.Message):
         field: builtins.str | None = ...,
         type: builtins.str | None = ...,
         title: builtins.str | None = ...,
+        extra: builtins.str | None = ...,
     ) -> None: ...
     def HasField(
         self,
@@ -1263,6 +1315,8 @@ class Int64Rules(google.protobuf.message.Message):
             b"_description",
             "_enable",
             b"_enable",
+            "_extra",
+            b"_extra",
             "_field",
             b"_field",
             "_ge",
@@ -1299,6 +1353,8 @@ class Int64Rules(google.protobuf.message.Message):
             b"example_config",
             "example_factory",
             b"example_factory",
+            "extra",
+            b"extra",
             "field",
             b"field",
             "ge",
@@ -1330,6 +1386,8 @@ class Int64Rules(google.protobuf.message.Message):
             b"_description",
             "_enable",
             b"_enable",
+            "_extra",
+            b"_extra",
             "_field",
             b"_field",
             "_ge",
@@ -1366,6 +1424,8 @@ class Int64Rules(google.protobuf.message.Message):
             b"example_config",
             "example_factory",
             b"example_factory",
+            "extra",
+            b"extra",
             "field",
             b"field",
             "ge",
@@ -1406,6 +1466,10 @@ class Int64Rules(google.protobuf.message.Message):
     def WhichOneof(
         self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]
     ) -> typing_extensions.Literal["enable"] | None: ...
+    @typing.overload
+    def WhichOneof(
+        self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]
+    ) -> typing_extensions.Literal["extra"] | None: ...
     @typing.overload
     def WhichOneof(
         self, oneof_group: typing_extensions.Literal["_field", b"_field"]
@@ -1473,6 +1537,7 @@ class UInt32Rules(google.protobuf.message.Message):
     FIELD_FIELD_NUMBER: builtins.int
     TYPE_FIELD_NUMBER: builtins.int
     TITLE_FIELD_NUMBER: builtins.int
+    EXTRA_FIELD_NUMBER: builtins.int
     const: builtins.int
     """Const specifies that this field must be exactly the specified value"""
     lt: builtins.int
@@ -1526,6 +1591,8 @@ class UInt32Rules(google.protobuf.message.Message):
     """Set the type object corresponding to the field, support template variables"""
     title: builtins.str
     """The title corresponding to the field"""
+    extra: builtins.str
+    """Field's custom extension parameter in the format Json"""
     def __init__(
         self,
         *,
@@ -1547,6 +1614,7 @@ class UInt32Rules(google.protobuf.message.Message):
         field: builtins.str | None = ...,
         type: builtins.str | None = ...,
         title: builtins.str | None = ...,
+        extra: builtins.str | None = ...,
     ) -> None: ...
     def HasField(
         self,
@@ -1559,6 +1627,8 @@ class UInt32Rules(google.protobuf.message.Message):
             b"_description",
             "_enable",
             b"_enable",
+            "_extra",
+            b"_extra",
             "_field",
             b"_field",
             "_ge",
@@ -1595,6 +1665,8 @@ class UInt32Rules(google.protobuf.message.Message):
             b"example_config",
             "example_factory",
             b"example_factory",
+            "extra",
+            b"extra",
             "field",
             b"field",
             "ge",
@@ -1626,6 +1698,8 @@ class UInt32Rules(google.protobuf.message.Message):
             b"_description",
             "_enable",
             b"_enable",
+            "_extra",
+            b"_extra",
             "_field",
             b"_field",
             "_ge",
@@ -1662,6 +1736,8 @@ class UInt32Rules(google.protobuf.message.Message):
             b"example_config",
             "example_factory",
             b"example_factory",
+            "extra",
+            b"extra",
             "field",
             b"field",
             "ge",
@@ -1702,6 +1778,10 @@ class UInt32Rules(google.protobuf.message.Message):
     def WhichOneof(
         self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]
     ) -> typing_extensions.Literal["enable"] | None: ...
+    @typing.overload
+    def WhichOneof(
+        self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]
+    ) -> typing_extensions.Literal["extra"] | None: ...
     @typing.overload
     def WhichOneof(
         self, oneof_group: typing_extensions.Literal["_field", b"_field"]
@@ -1769,6 +1849,7 @@ class UInt64Rules(google.protobuf.message.Message):
     FIELD_FIELD_NUMBER: builtins.int
     TYPE_FIELD_NUMBER: builtins.int
     TITLE_FIELD_NUMBER: builtins.int
+    EXTRA_FIELD_NUMBER: builtins.int
     const: builtins.int
     """Const specifies that this field must be exactly the specified value"""
     lt: builtins.int
@@ -1822,6 +1903,8 @@ class UInt64Rules(google.protobuf.message.Message):
     """Set the type object corresponding to the field, support template variables"""
     title: builtins.str
     """The title corresponding to the field"""
+    extra: builtins.str
+    """Field's custom extension parameter in the format Json"""
     def __init__(
         self,
         *,
@@ -1843,6 +1926,7 @@ class UInt64Rules(google.protobuf.message.Message):
         field: builtins.str | None = ...,
         type: builtins.str | None = ...,
         title: builtins.str | None = ...,
+        extra: builtins.str | None = ...,
     ) -> None: ...
     def HasField(
         self,
@@ -1855,6 +1939,8 @@ class UInt64Rules(google.protobuf.message.Message):
             b"_description",
             "_enable",
             b"_enable",
+            "_extra",
+            b"_extra",
             "_field",
             b"_field",
             "_ge",
@@ -1891,6 +1977,8 @@ class UInt64Rules(google.protobuf.message.Message):
             b"example_config",
             "example_factory",
             b"example_factory",
+            "extra",
+            b"extra",
             "field",
             b"field",
             "ge",
@@ -1922,6 +2010,8 @@ class UInt64Rules(google.protobuf.message.Message):
             b"_description",
             "_enable",
             b"_enable",
+            "_extra",
+            b"_extra",
             "_field",
             b"_field",
             "_ge",
@@ -1958,6 +2048,8 @@ class UInt64Rules(google.protobuf.message.Message):
             b"example_config",
             "example_factory",
             b"example_factory",
+            "extra",
+            b"extra",
             "field",
             b"field",
             "ge",
@@ -1998,6 +2090,10 @@ class UInt64Rules(google.protobuf.message.Message):
     def WhichOneof(
         self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]
     ) -> typing_extensions.Literal["enable"] | None: ...
+    @typing.overload
+    def WhichOneof(
+        self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]
+    ) -> typing_extensions.Literal["extra"] | None: ...
     @typing.overload
     def WhichOneof(
         self, oneof_group: typing_extensions.Literal["_field", b"_field"]
@@ -2065,6 +2161,7 @@ class SInt32Rules(google.protobuf.message.Message):
     FIELD_FIELD_NUMBER: builtins.int
     TYPE_FIELD_NUMBER: builtins.int
     TITLE_FIELD_NUMBER: builtins.int
+    EXTRA_FIELD_NUMBER: builtins.int
     const: builtins.int
     """Const specifies that this field must be exactly the specified value"""
     lt: builtins.int
@@ -2118,6 +2215,8 @@ class SInt32Rules(google.protobuf.message.Message):
     """Set the type object corresponding to the field, support template variables"""
     title: builtins.str
     """The title corresponding to the field"""
+    extra: builtins.str
+    """Field's custom extension parameter in the format Json"""
     def __init__(
         self,
         *,
@@ -2139,6 +2238,7 @@ class SInt32Rules(google.protobuf.message.Message):
         field: builtins.str | None = ...,
         type: builtins.str | None = ...,
         title: builtins.str | None = ...,
+        extra: builtins.str | None = ...,
     ) -> None: ...
     def HasField(
         self,
@@ -2151,6 +2251,8 @@ class SInt32Rules(google.protobuf.message.Message):
             b"_description",
             "_enable",
             b"_enable",
+            "_extra",
+            b"_extra",
             "_field",
             b"_field",
             "_ge",
@@ -2187,6 +2289,8 @@ class SInt32Rules(google.protobuf.message.Message):
             b"example_config",
             "example_factory",
             b"example_factory",
+            "extra",
+            b"extra",
             "field",
             b"field",
             "ge",
@@ -2218,6 +2322,8 @@ class SInt32Rules(google.protobuf.message.Message):
             b"_description",
             "_enable",
             b"_enable",
+            "_extra",
+            b"_extra",
             "_field",
             b"_field",
             "_ge",
@@ -2254,6 +2360,8 @@ class SInt32Rules(google.protobuf.message.Message):
             b"example_config",
             "example_factory",
             b"example_factory",
+            "extra",
+            b"extra",
             "field",
             b"field",
             "ge",
@@ -2294,6 +2402,10 @@ class SInt32Rules(google.protobuf.message.Message):
     def WhichOneof(
         self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]
     ) -> typing_extensions.Literal["enable"] | None: ...
+    @typing.overload
+    def WhichOneof(
+        self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]
+    ) -> typing_extensions.Literal["extra"] | None: ...
     @typing.overload
     def WhichOneof(
         self, oneof_group: typing_extensions.Literal["_field", b"_field"]
@@ -2361,6 +2473,7 @@ class SInt64Rules(google.protobuf.message.Message):
     FIELD_FIELD_NUMBER: builtins.int
     TYPE_FIELD_NUMBER: builtins.int
     TITLE_FIELD_NUMBER: builtins.int
+    EXTRA_FIELD_NUMBER: builtins.int
     const: builtins.int
     """Const specifies that this field must be exactly the specified value"""
     lt: builtins.int
@@ -2414,6 +2527,8 @@ class SInt64Rules(google.protobuf.message.Message):
     """Set the type object corresponding to the field, support template variables"""
     title: builtins.str
     """The title corresponding to the field"""
+    extra: builtins.str
+    """Field's custom extension parameter in the format Json"""
     def __init__(
         self,
         *,
@@ -2435,6 +2550,7 @@ class SInt64Rules(google.protobuf.message.Message):
         field: builtins.str | None = ...,
         type: builtins.str | None = ...,
         title: builtins.str | None = ...,
+        extra: builtins.str | None = ...,
     ) -> None: ...
     def HasField(
         self,
@@ -2447,6 +2563,8 @@ class SInt64Rules(google.protobuf.message.Message):
             b"_description",
             "_enable",
             b"_enable",
+            "_extra",
+            b"_extra",
             "_field",
             b"_field",
             "_ge",
@@ -2483,6 +2601,8 @@ class SInt64Rules(google.protobuf.message.Message):
             b"example_config",
             "example_factory",
             b"example_factory",
+            "extra",
+            b"extra",
             "field",
             b"field",
             "ge",
@@ -2514,6 +2634,8 @@ class SInt64Rules(google.protobuf.message.Message):
             b"_description",
             "_enable",
             b"_enable",
+            "_extra",
+            b"_extra",
             "_field",
             b"_field",
             "_ge",
@@ -2550,6 +2672,8 @@ class SInt64Rules(google.protobuf.message.Message):
             b"example_config",
             "example_factory",
             b"example_factory",
+            "extra",
+            b"extra",
             "field",
             b"field",
             "ge",
@@ -2590,6 +2714,10 @@ class SInt64Rules(google.protobuf.message.Message):
     def WhichOneof(
         self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]
     ) -> typing_extensions.Literal["enable"] | None: ...
+    @typing.overload
+    def WhichOneof(
+        self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]
+    ) -> typing_extensions.Literal["extra"] | None: ...
     @typing.overload
     def WhichOneof(
         self, oneof_group: typing_extensions.Literal["_field", b"_field"]
@@ -2657,6 +2785,7 @@ class Fixed32Rules(google.protobuf.message.Message):
     FIELD_FIELD_NUMBER: builtins.int
     TYPE_FIELD_NUMBER: builtins.int
     TITLE_FIELD_NUMBER: builtins.int
+    EXTRA_FIELD_NUMBER: builtins.int
     const: builtins.int
     """Const specifies that this field must be exactly the specified value"""
     lt: builtins.int
@@ -2710,6 +2839,8 @@ class Fixed32Rules(google.protobuf.message.Message):
     """Set the type object corresponding to the field, support template variables"""
     title: builtins.str
     """The title corresponding to the field"""
+    extra: builtins.str
+    """Field's custom extension parameter in the format Json"""
     def __init__(
         self,
         *,
@@ -2731,6 +2862,7 @@ class Fixed32Rules(google.protobuf.message.Message):
         field: builtins.str | None = ...,
         type: builtins.str | None = ...,
         title: builtins.str | None = ...,
+        extra: builtins.str | None = ...,
     ) -> None: ...
     def HasField(
         self,
@@ -2743,6 +2875,8 @@ class Fixed32Rules(google.protobuf.message.Message):
             b"_description",
             "_enable",
             b"_enable",
+            "_extra",
+            b"_extra",
             "_field",
             b"_field",
             "_ge",
@@ -2779,6 +2913,8 @@ class Fixed32Rules(google.protobuf.message.Message):
             b"example_config",
             "example_factory",
             b"example_factory",
+            "extra",
+            b"extra",
             "field",
             b"field",
             "ge",
@@ -2810,6 +2946,8 @@ class Fixed32Rules(google.protobuf.message.Message):
             b"_description",
             "_enable",
             b"_enable",
+            "_extra",
+            b"_extra",
             "_field",
             b"_field",
             "_ge",
@@ -2846,6 +2984,8 @@ class Fixed32Rules(google.protobuf.message.Message):
             b"example_config",
             "example_factory",
             b"example_factory",
+            "extra",
+            b"extra",
             "field",
             b"field",
             "ge",
@@ -2886,6 +3026,10 @@ class Fixed32Rules(google.protobuf.message.Message):
     def WhichOneof(
         self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]
     ) -> typing_extensions.Literal["enable"] | None: ...
+    @typing.overload
+    def WhichOneof(
+        self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]
+    ) -> typing_extensions.Literal["extra"] | None: ...
     @typing.overload
     def WhichOneof(
         self, oneof_group: typing_extensions.Literal["_field", b"_field"]
@@ -2953,6 +3097,7 @@ class Fixed64Rules(google.protobuf.message.Message):
     FIELD_FIELD_NUMBER: builtins.int
     TYPE_FIELD_NUMBER: builtins.int
     TITLE_FIELD_NUMBER: builtins.int
+    EXTRA_FIELD_NUMBER: builtins.int
     const: builtins.int
     """Const specifies that this field must be exactly the specified value"""
     lt: builtins.int
@@ -3006,6 +3151,8 @@ class Fixed64Rules(google.protobuf.message.Message):
     """Set the type object corresponding to the field, support template variables"""
     title: builtins.str
     """The title corresponding to the field"""
+    extra: builtins.str
+    """Field's custom extension parameter in the format Json"""
     def __init__(
         self,
         *,
@@ -3027,6 +3174,7 @@ class Fixed64Rules(google.protobuf.message.Message):
         field: builtins.str | None = ...,
         type: builtins.str | None = ...,
         title: builtins.str | None = ...,
+        extra: builtins.str | None = ...,
     ) -> None: ...
     def HasField(
         self,
@@ -3039,6 +3187,8 @@ class Fixed64Rules(google.protobuf.message.Message):
             b"_description",
             "_enable",
             b"_enable",
+            "_extra",
+            b"_extra",
             "_field",
             b"_field",
             "_ge",
@@ -3075,6 +3225,8 @@ class Fixed64Rules(google.protobuf.message.Message):
             b"example_config",
             "example_factory",
             b"example_factory",
+            "extra",
+            b"extra",
             "field",
             b"field",
             "ge",
@@ -3106,6 +3258,8 @@ class Fixed64Rules(google.protobuf.message.Message):
             b"_description",
             "_enable",
             b"_enable",
+            "_extra",
+            b"_extra",
             "_field",
             b"_field",
             "_ge",
@@ -3142,6 +3296,8 @@ class Fixed64Rules(google.protobuf.message.Message):
             b"example_config",
             "example_factory",
             b"example_factory",
+            "extra",
+            b"extra",
             "field",
             b"field",
             "ge",
@@ -3182,6 +3338,10 @@ class Fixed64Rules(google.protobuf.message.Message):
     def WhichOneof(
         self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]
     ) -> typing_extensions.Literal["enable"] | None: ...
+    @typing.overload
+    def WhichOneof(
+        self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]
+    ) -> typing_extensions.Literal["extra"] | None: ...
     @typing.overload
     def WhichOneof(
         self, oneof_group: typing_extensions.Literal["_field", b"_field"]
@@ -3249,6 +3409,7 @@ class SFixed32Rules(google.protobuf.message.Message):
     FIELD_FIELD_NUMBER: builtins.int
     TYPE_FIELD_NUMBER: builtins.int
     TITLE_FIELD_NUMBER: builtins.int
+    EXTRA_FIELD_NUMBER: builtins.int
     const: builtins.int
     """Const specifies that this field must be exactly the specified value"""
     lt: builtins.int
@@ -3302,6 +3463,8 @@ class SFixed32Rules(google.protobuf.message.Message):
     """Set the type object corresponding to the field, support template variables"""
     title: builtins.str
     """The title corresponding to the field"""
+    extra: builtins.str
+    """Field's custom extension parameter in the format Json"""
     def __init__(
         self,
         *,
@@ -3323,6 +3486,7 @@ class SFixed32Rules(google.protobuf.message.Message):
         field: builtins.str | None = ...,
         type: builtins.str | None = ...,
         title: builtins.str | None = ...,
+        extra: builtins.str | None = ...,
     ) -> None: ...
     def HasField(
         self,
@@ -3335,6 +3499,8 @@ class SFixed32Rules(google.protobuf.message.Message):
             b"_description",
             "_enable",
             b"_enable",
+            "_extra",
+            b"_extra",
             "_field",
             b"_field",
             "_ge",
@@ -3371,6 +3537,8 @@ class SFixed32Rules(google.protobuf.message.Message):
             b"example_config",
             "example_factory",
             b"example_factory",
+            "extra",
+            b"extra",
             "field",
             b"field",
             "ge",
@@ -3402,6 +3570,8 @@ class SFixed32Rules(google.protobuf.message.Message):
             b"_description",
             "_enable",
             b"_enable",
+            "_extra",
+            b"_extra",
             "_field",
             b"_field",
             "_ge",
@@ -3438,6 +3608,8 @@ class SFixed32Rules(google.protobuf.message.Message):
             b"example_config",
             "example_factory",
             b"example_factory",
+            "extra",
+            b"extra",
             "field",
             b"field",
             "ge",
@@ -3478,6 +3650,10 @@ class SFixed32Rules(google.protobuf.message.Message):
     def WhichOneof(
         self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]
     ) -> typing_extensions.Literal["enable"] | None: ...
+    @typing.overload
+    def WhichOneof(
+        self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]
+    ) -> typing_extensions.Literal["extra"] | None: ...
     @typing.overload
     def WhichOneof(
         self, oneof_group: typing_extensions.Literal["_field", b"_field"]
@@ -3545,6 +3721,7 @@ class SFixed64Rules(google.protobuf.message.Message):
     FIELD_FIELD_NUMBER: builtins.int
     TYPE_FIELD_NUMBER: builtins.int
     TITLE_FIELD_NUMBER: builtins.int
+    EXTRA_FIELD_NUMBER: builtins.int
     const: builtins.int
     """Const specifies that this field must be exactly the specified value"""
     lt: builtins.int
@@ -3598,6 +3775,8 @@ class SFixed64Rules(google.protobuf.message.Message):
     """Set the type object corresponding to the field, support template variables"""
     title: builtins.str
     """The title corresponding to the field"""
+    extra: builtins.str
+    """Field's custom extension parameter in the format Json"""
     def __init__(
         self,
         *,
@@ -3619,6 +3798,7 @@ class SFixed64Rules(google.protobuf.message.Message):
         field: builtins.str | None = ...,
         type: builtins.str | None = ...,
         title: builtins.str | None = ...,
+        extra: builtins.str | None = ...,
     ) -> None: ...
     def HasField(
         self,
@@ -3631,6 +3811,8 @@ class SFixed64Rules(google.protobuf.message.Message):
             b"_description",
             "_enable",
             b"_enable",
+            "_extra",
+            b"_extra",
             "_field",
             b"_field",
             "_ge",
@@ -3667,6 +3849,8 @@ class SFixed64Rules(google.protobuf.message.Message):
             b"example_config",
             "example_factory",
             b"example_factory",
+            "extra",
+            b"extra",
             "field",
             b"field",
             "ge",
@@ -3698,6 +3882,8 @@ class SFixed64Rules(google.protobuf.message.Message):
             b"_description",
             "_enable",
             b"_enable",
+            "_extra",
+            b"_extra",
             "_field",
             b"_field",
             "_ge",
@@ -3734,6 +3920,8 @@ class SFixed64Rules(google.protobuf.message.Message):
             b"example_config",
             "example_factory",
             b"example_factory",
+            "extra",
+            b"extra",
             "field",
             b"field",
             "ge",
@@ -3774,6 +3962,10 @@ class SFixed64Rules(google.protobuf.message.Message):
     def WhichOneof(
         self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]
     ) -> typing_extensions.Literal["enable"] | None: ...
+    @typing.overload
+    def WhichOneof(
+        self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]
+    ) -> typing_extensions.Literal["extra"] | None: ...
     @typing.overload
     def WhichOneof(
         self, oneof_group: typing_extensions.Literal["_field", b"_field"]
@@ -3832,6 +4024,7 @@ class BoolRules(google.protobuf.message.Message):
     FIELD_FIELD_NUMBER: builtins.int
     TYPE_FIELD_NUMBER: builtins.int
     TITLE_FIELD_NUMBER: builtins.int
+    EXTRA_FIELD_NUMBER: builtins.int
     const: builtins.bool
     """Const specifies that this field must be exactly the specified value"""
     enable: builtins.bool
@@ -3854,6 +4047,8 @@ class BoolRules(google.protobuf.message.Message):
     """Set the type object corresponding to the field, support template variables"""
     title: builtins.str
     """The title corresponding to the field"""
+    extra: builtins.str
+    """Field's custom extension parameter in the format Json"""
     def __init__(
         self,
         *,
@@ -3867,6 +4062,7 @@ class BoolRules(google.protobuf.message.Message):
         field: builtins.str | None = ...,
         type: builtins.str | None = ...,
         title: builtins.str | None = ...,
+        extra: builtins.str | None = ...,
     ) -> None: ...
     def HasField(
         self,
@@ -3881,6 +4077,8 @@ class BoolRules(google.protobuf.message.Message):
             b"_enable",
             "_example",
             b"_example",
+            "_extra",
+            b"_extra",
             "_field",
             b"_field",
             "_title",
@@ -3901,6 +4099,8 @@ class BoolRules(google.protobuf.message.Message):
             b"enable",
             "example",
             b"example",
+            "extra",
+            b"extra",
             "field",
             b"field",
             "miss_default",
@@ -3924,6 +4124,8 @@ class BoolRules(google.protobuf.message.Message):
             b"_enable",
             "_example",
             b"_example",
+            "_extra",
+            b"_extra",
             "_field",
             b"_field",
             "_title",
@@ -3944,6 +4146,8 @@ class BoolRules(google.protobuf.message.Message):
             b"enable",
             "example",
             b"example",
+            "extra",
+            b"extra",
             "field",
             b"field",
             "miss_default",
@@ -3974,6 +4178,10 @@ class BoolRules(google.protobuf.message.Message):
     def WhichOneof(
         self, oneof_group: typing_extensions.Literal["_example", b"_example"]
     ) -> typing_extensions.Literal["example"] | None: ...
+    @typing.overload
+    def WhichOneof(
+        self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]
+    ) -> typing_extensions.Literal["extra"] | None: ...
     @typing.overload
     def WhichOneof(
         self, oneof_group: typing_extensions.Literal["_field", b"_field"]
@@ -4030,6 +4238,7 @@ class StringRules(google.protobuf.message.Message):
     FIELD_FIELD_NUMBER: builtins.int
     TYPE_FIELD_NUMBER: builtins.int
     TITLE_FIELD_NUMBER: builtins.int
+    EXTRA_FIELD_NUMBER: builtins.int
     const: builtins.str
     """Const specifies that this field must be exactly the specified value"""
     len: builtins.int
@@ -4140,6 +4349,8 @@ class StringRules(google.protobuf.message.Message):
     """Set the type object corresponding to the field, support template variables"""
     title: builtins.str
     """The title corresponding to the field"""
+    extra: builtins.str
+    """Field's custom extension parameter in the format Json"""
     def __init__(
         self,
         *,
@@ -4174,6 +4385,7 @@ class StringRules(google.protobuf.message.Message):
         field: builtins.str | None = ...,
         type: builtins.str | None = ...,
         title: builtins.str | None = ...,
+        extra: builtins.str | None = ...,
     ) -> None: ...
     def HasField(
         self,
@@ -4188,6 +4400,8 @@ class StringRules(google.protobuf.message.Message):
             b"_description",
             "_enable",
             b"_enable",
+            "_extra",
+            b"_extra",
             "_field",
             b"_field",
             "_len",
@@ -4234,6 +4448,8 @@ class StringRules(google.protobuf.message.Message):
             b"example_config",
             "example_factory",
             b"example_factory",
+            "extra",
+            b"extra",
             "field",
             b"field",
             "hostname",
@@ -4289,6 +4505,8 @@ class StringRules(google.protobuf.message.Message):
             b"_description",
             "_enable",
             b"_enable",
+            "_extra",
+            b"_extra",
             "_field",
             b"_field",
             "_len",
@@ -4335,6 +4553,8 @@ class StringRules(google.protobuf.message.Message):
             b"example_config",
             "example_factory",
             b"example_factory",
+            "extra",
+            b"extra",
             "field",
             b"field",
             "hostname",
@@ -4401,6 +4621,10 @@ class StringRules(google.protobuf.message.Message):
     def WhichOneof(
         self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]
     ) -> typing_extensions.Literal["enable"] | None: ...
+    @typing.overload
+    def WhichOneof(
+        self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]
+    ) -> typing_extensions.Literal["extra"] | None: ...
     @typing.overload
     def WhichOneof(
         self, oneof_group: typing_extensions.Literal["_field", b"_field"]
@@ -4489,6 +4713,7 @@ class BytesRules(google.protobuf.message.Message):
     IPV4_FIELD_NUMBER: builtins.int
     IPV6_FIELD_NUMBER: builtins.int
     TITLE_FIELD_NUMBER: builtins.int
+    EXTRA_FIELD_NUMBER: builtins.int
     const: builtins.bytes
     """Const specifies that this field must be exactly the specified value"""
     min_length: builtins.int
@@ -4556,6 +4781,8 @@ class BytesRules(google.protobuf.message.Message):
     """
     title: builtins.str
     """The title corresponding to the field"""
+    extra: builtins.str
+    """Field's custom extension parameter in the format Json"""
     def __init__(
         self,
         *,
@@ -4581,6 +4808,7 @@ class BytesRules(google.protobuf.message.Message):
         ipv4: builtins.bool = ...,
         ipv6: builtins.bool = ...,
         title: builtins.str | None = ...,
+        extra: builtins.str | None = ...,
     ) -> None: ...
     def HasField(
         self,
@@ -4595,6 +4823,8 @@ class BytesRules(google.protobuf.message.Message):
             b"_description",
             "_enable",
             b"_enable",
+            "_extra",
+            b"_extra",
             "_field",
             b"_field",
             "_max_length",
@@ -4633,6 +4863,8 @@ class BytesRules(google.protobuf.message.Message):
             b"example_config",
             "example_factory",
             b"example_factory",
+            "extra",
+            b"extra",
             "field",
             b"field",
             "ip",
@@ -4674,6 +4906,8 @@ class BytesRules(google.protobuf.message.Message):
             b"_description",
             "_enable",
             b"_enable",
+            "_extra",
+            b"_extra",
             "_field",
             b"_field",
             "_max_length",
@@ -4712,6 +4946,8 @@ class BytesRules(google.protobuf.message.Message):
             b"example_config",
             "example_factory",
             b"example_factory",
+            "extra",
+            b"extra",
             "field",
             b"field",
             "in",
@@ -4764,6 +5000,10 @@ class BytesRules(google.protobuf.message.Message):
     def WhichOneof(
         self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]
     ) -> typing_extensions.Literal["enable"] | None: ...
+    @typing.overload
+    def WhichOneof(
+        self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]
+    ) -> typing_extensions.Literal["extra"] | None: ...
     @typing.overload
     def WhichOneof(
         self, oneof_group: typing_extensions.Literal["_field", b"_field"]
@@ -4829,6 +5069,7 @@ class EnumRules(google.protobuf.message.Message):
     EXAMPLE_FACTORY_FIELD_NUMBER: builtins.int
     FIELD_FIELD_NUMBER: builtins.int
     TITLE_FIELD_NUMBER: builtins.int
+    EXTRA_FIELD_NUMBER: builtins.int
     const: builtins.int
     """Const specifies that this field must be exactly the specified value"""
     @property
@@ -4860,6 +5101,8 @@ class EnumRules(google.protobuf.message.Message):
     """Set the Field object corresponding to the field, support template variables"""
     title: builtins.str
     """The title corresponding to the field"""
+    extra: builtins.str
+    """Field's custom extension parameter in the format Json"""
     def __init__(
         self,
         *,
@@ -4875,6 +5118,7 @@ class EnumRules(google.protobuf.message.Message):
         example_factory: builtins.str = ...,
         field: builtins.str | None = ...,
         title: builtins.str | None = ...,
+        extra: builtins.str | None = ...,
     ) -> None: ...
     def HasField(
         self,
@@ -4887,6 +5131,8 @@ class EnumRules(google.protobuf.message.Message):
             b"_description",
             "_enable",
             b"_enable",
+            "_extra",
+            b"_extra",
             "_field",
             b"_field",
             "_title",
@@ -4911,6 +5157,8 @@ class EnumRules(google.protobuf.message.Message):
             b"example_config",
             "example_factory",
             b"example_factory",
+            "extra",
+            b"extra",
             "field",
             b"field",
             "miss_default",
@@ -4930,6 +5178,8 @@ class EnumRules(google.protobuf.message.Message):
             b"_description",
             "_enable",
             b"_enable",
+            "_extra",
+            b"_extra",
             "_field",
             b"_field",
             "_title",
@@ -4954,6 +5204,8 @@ class EnumRules(google.protobuf.message.Message):
             b"example_config",
             "example_factory",
             b"example_factory",
+            "extra",
+            b"extra",
             "field",
             b"field",
             "in",
@@ -4982,6 +5234,10 @@ class EnumRules(google.protobuf.message.Message):
     def WhichOneof(
         self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]
     ) -> typing_extensions.Literal["enable"] | None: ...
+    @typing.overload
+    def WhichOneof(
+        self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]
+    ) -> typing_extensions.Literal["extra"] | None: ...
     @typing.overload
     def WhichOneof(
         self, oneof_group: typing_extensions.Literal["_field", b"_field"]
@@ -5021,6 +5277,7 @@ class MessageRules(google.protobuf.message.Message):
     FIELD_FIELD_NUMBER: builtins.int
     TYPE_FIELD_NUMBER: builtins.int
     TITLE_FIELD_NUMBER: builtins.int
+    EXTRA_FIELD_NUMBER: builtins.int
     skip: builtins.bool
     """Skip specifies that the validation rules of this field should not be
     evaluated
@@ -5053,6 +5310,8 @@ class MessageRules(google.protobuf.message.Message):
     """Set the type object corresponding to the field, support template variables"""
     title: builtins.str
     """The title corresponding to the field"""
+    extra: builtins.str
+    """Field's custom extension parameter in the format Json"""
     def __init__(
         self,
         *,
@@ -5069,6 +5328,7 @@ class MessageRules(google.protobuf.message.Message):
         field: builtins.str | None = ...,
         type: builtins.str | None = ...,
         title: builtins.str | None = ...,
+        extra: builtins.str | None = ...,
     ) -> None: ...
     def HasField(
         self,
@@ -5079,6 +5339,8 @@ class MessageRules(google.protobuf.message.Message):
             b"_description",
             "_enable",
             b"_enable",
+            "_extra",
+            b"_extra",
             "_field",
             b"_field",
             "_required",
@@ -5107,6 +5369,8 @@ class MessageRules(google.protobuf.message.Message):
             b"example_config",
             "example_factory",
             b"example_factory",
+            "extra",
+            b"extra",
             "field",
             b"field",
             "miss_default",
@@ -5130,6 +5394,8 @@ class MessageRules(google.protobuf.message.Message):
             b"_description",
             "_enable",
             b"_enable",
+            "_extra",
+            b"_extra",
             "_field",
             b"_field",
             "_required",
@@ -5158,6 +5424,8 @@ class MessageRules(google.protobuf.message.Message):
             b"example_config",
             "example_factory",
             b"example_factory",
+            "extra",
+            b"extra",
             "field",
             b"field",
             "miss_default",
@@ -5184,6 +5452,10 @@ class MessageRules(google.protobuf.message.Message):
     def WhichOneof(
         self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]
     ) -> typing_extensions.Literal["enable"] | None: ...
+    @typing.overload
+    def WhichOneof(
+        self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]
+    ) -> typing_extensions.Literal["extra"] | None: ...
     @typing.overload
     def WhichOneof(
         self, oneof_group: typing_extensions.Literal["_field", b"_field"]
@@ -5233,6 +5505,7 @@ class RepeatedRules(google.protobuf.message.Message):
     FIELD_FIELD_NUMBER: builtins.int
     TYPE_FIELD_NUMBER: builtins.int
     TITLE_FIELD_NUMBER: builtins.int
+    EXTRA_FIELD_NUMBER: builtins.int
     min_items: builtins.int
     """MinItems specifies that this field must have the specified number of
     items at a minimum
@@ -5272,6 +5545,8 @@ class RepeatedRules(google.protobuf.message.Message):
     """Set the type object corresponding to the field, support template variables"""
     title: builtins.str
     """The title corresponding to the field"""
+    extra: builtins.str
+    """Field's custom extension parameter in the format Json"""
     def __init__(
         self,
         *,
@@ -5288,6 +5563,7 @@ class RepeatedRules(google.protobuf.message.Message):
         field: builtins.str | None = ...,
         type: builtins.str | None = ...,
         title: builtins.str | None = ...,
+        extra: builtins.str | None = ...,
     ) -> None: ...
     def HasField(
         self,
@@ -5298,6 +5574,8 @@ class RepeatedRules(google.protobuf.message.Message):
             b"_description",
             "_enable",
             b"_enable",
+            "_extra",
+            b"_extra",
             "_field",
             b"_field",
             "_items",
@@ -5326,6 +5604,8 @@ class RepeatedRules(google.protobuf.message.Message):
             b"example_config",
             "example_factory",
             b"example_factory",
+            "extra",
+            b"extra",
             "field",
             b"field",
             "items",
@@ -5353,6 +5633,8 @@ class RepeatedRules(google.protobuf.message.Message):
             b"_description",
             "_enable",
             b"_enable",
+            "_extra",
+            b"_extra",
             "_field",
             b"_field",
             "_items",
@@ -5381,6 +5663,8 @@ class RepeatedRules(google.protobuf.message.Message):
             b"example_config",
             "example_factory",
             b"example_factory",
+            "extra",
+            b"extra",
             "field",
             b"field",
             "items",
@@ -5411,6 +5695,10 @@ class RepeatedRules(google.protobuf.message.Message):
     def WhichOneof(
         self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]
     ) -> typing_extensions.Literal["enable"] | None: ...
+    @typing.overload
+    def WhichOneof(
+        self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]
+    ) -> typing_extensions.Literal["extra"] | None: ...
     @typing.overload
     def WhichOneof(
         self, oneof_group: typing_extensions.Literal["_field", b"_field"]
@@ -5468,6 +5756,7 @@ class MapRules(google.protobuf.message.Message):
     FIELD_FIELD_NUMBER: builtins.int
     TYPE_FIELD_NUMBER: builtins.int
     TITLE_FIELD_NUMBER: builtins.int
+    EXTRA_FIELD_NUMBER: builtins.int
     min_pairs: builtins.int
     """MinPairs specifies that this field must have the specified number of
     KVs at a minimum
@@ -5505,6 +5794,8 @@ class MapRules(google.protobuf.message.Message):
     """Set the type object corresponding to the field, support template variables"""
     title: builtins.str
     """The title corresponding to the field"""
+    extra: builtins.str
+    """Field's custom extension parameter in the format Json"""
     def __init__(
         self,
         *,
@@ -5521,6 +5812,7 @@ class MapRules(google.protobuf.message.Message):
         field: builtins.str | None = ...,
         type: builtins.str | None = ...,
         title: builtins.str | None = ...,
+        extra: builtins.str | None = ...,
     ) -> None: ...
     def HasField(
         self,
@@ -5531,6 +5823,8 @@ class MapRules(google.protobuf.message.Message):
             b"_description",
             "_enable",
             b"_enable",
+            "_extra",
+            b"_extra",
             "_field",
             b"_field",
             "_keys",
@@ -5559,6 +5853,8 @@ class MapRules(google.protobuf.message.Message):
             b"example_config",
             "example_factory",
             b"example_factory",
+            "extra",
+            b"extra",
             "field",
             b"field",
             "keys",
@@ -5586,6 +5882,8 @@ class MapRules(google.protobuf.message.Message):
             b"_description",
             "_enable",
             b"_enable",
+            "_extra",
+            b"_extra",
             "_field",
             b"_field",
             "_keys",
@@ -5614,6 +5912,8 @@ class MapRules(google.protobuf.message.Message):
             b"example_config",
             "example_factory",
             b"example_factory",
+            "extra",
+            b"extra",
             "field",
             b"field",
             "keys",
@@ -5644,6 +5944,10 @@ class MapRules(google.protobuf.message.Message):
     def WhichOneof(
         self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]
     ) -> typing_extensions.Literal["enable"] | None: ...
+    @typing.overload
+    def WhichOneof(
+        self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]
+    ) -> typing_extensions.Literal["extra"] | None: ...
     @typing.overload
     def WhichOneof(
         self, oneof_group: typing_extensions.Literal["_field", b"_field"]
@@ -5703,6 +6007,7 @@ class AnyRules(google.protobuf.message.Message):
     EXAMPLE_FACTORY_FIELD_NUMBER: builtins.int
     FIELD_FIELD_NUMBER: builtins.int
     TITLE_FIELD_NUMBER: builtins.int
+    EXTRA_FIELD_NUMBER: builtins.int
     required: builtins.bool
     """Required specifies that this field must be set"""
     @property
@@ -5734,6 +6039,8 @@ class AnyRules(google.protobuf.message.Message):
     """Set the Field object corresponding to the field, support template variables"""
     title: builtins.str
     """The title corresponding to the field"""
+    extra: builtins.str
+    """Field's custom extension parameter in the format Json"""
     def __init__(
         self,
         *,
@@ -5749,6 +6056,7 @@ class AnyRules(google.protobuf.message.Message):
         example_factory: builtins.str = ...,
         field: builtins.str | None = ...,
         title: builtins.str | None = ...,
+        extra: builtins.str | None = ...,
     ) -> None: ...
     def HasField(
         self,
@@ -5759,6 +6067,8 @@ class AnyRules(google.protobuf.message.Message):
             b"_description",
             "_enable",
             b"_enable",
+            "_extra",
+            b"_extra",
             "_field",
             b"_field",
             "_required",
@@ -5783,6 +6093,8 @@ class AnyRules(google.protobuf.message.Message):
             b"example_config",
             "example_factory",
             b"example_factory",
+            "extra",
+            b"extra",
             "field",
             b"field",
             "miss_default",
@@ -5802,6 +6114,8 @@ class AnyRules(google.protobuf.message.Message):
             b"_description",
             "_enable",
             b"_enable",
+            "_extra",
+            b"_extra",
             "_field",
             b"_field",
             "_required",
@@ -5826,6 +6140,8 @@ class AnyRules(google.protobuf.message.Message):
             b"example_config",
             "example_factory",
             b"example_factory",
+            "extra",
+            b"extra",
             "field",
             b"field",
             "in",
@@ -5852,6 +6168,10 @@ class AnyRules(google.protobuf.message.Message):
     def WhichOneof(
         self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]
     ) -> typing_extensions.Literal["enable"] | None: ...
+    @typing.overload
+    def WhichOneof(
+        self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]
+    ) -> typing_extensions.Literal["extra"] | None: ...
     @typing.overload
     def WhichOneof(
         self, oneof_group: typing_extensions.Literal["_field", b"_field"]
@@ -5900,6 +6220,7 @@ class DurationRules(google.protobuf.message.Message):
     FIELD_FIELD_NUMBER: builtins.int
     TYPE_FIELD_NUMBER: builtins.int
     TITLE_FIELD_NUMBER: builtins.int
+    EXTRA_FIELD_NUMBER: builtins.int
     @property
     def const(self) -> google.protobuf.duration_pb2.Duration:
         """Const specifies that this field must be exactly the specified value"""
@@ -5958,6 +6279,8 @@ class DurationRules(google.protobuf.message.Message):
     """Set the type object corresponding to the field, support template variables"""
     title: builtins.str
     """The title corresponding to the field"""
+    extra: builtins.str
+    """Field's custom extension parameter in the format Json"""
     def __init__(
         self,
         *,
@@ -5978,6 +6301,7 @@ class DurationRules(google.protobuf.message.Message):
         field: builtins.str | None = ...,
         type: builtins.str | None = ...,
         title: builtins.str | None = ...,
+        extra: builtins.str | None = ...,
     ) -> None: ...
     def HasField(
         self,
@@ -5990,6 +6314,8 @@ class DurationRules(google.protobuf.message.Message):
             b"_description",
             "_enable",
             b"_enable",
+            "_extra",
+            b"_extra",
             "_field",
             b"_field",
             "_ge",
@@ -6024,6 +6350,8 @@ class DurationRules(google.protobuf.message.Message):
             b"example_config",
             "example_factory",
             b"example_factory",
+            "extra",
+            b"extra",
             "field",
             b"field",
             "ge",
@@ -6053,6 +6381,8 @@ class DurationRules(google.protobuf.message.Message):
             b"_description",
             "_enable",
             b"_enable",
+            "_extra",
+            b"_extra",
             "_field",
             b"_field",
             "_ge",
@@ -6087,6 +6417,8 @@ class DurationRules(google.protobuf.message.Message):
             b"example_config",
             "example_factory",
             b"example_factory",
+            "extra",
+            b"extra",
             "field",
             b"field",
             "ge",
@@ -6125,6 +6457,10 @@ class DurationRules(google.protobuf.message.Message):
     def WhichOneof(
         self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]
     ) -> typing_extensions.Literal["enable"] | None: ...
+    @typing.overload
+    def WhichOneof(
+        self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]
+    ) -> typing_extensions.Literal["extra"] | None: ...
     @typing.overload
     def WhichOneof(
         self, oneof_group: typing_extensions.Literal["_field", b"_field"]
@@ -6190,6 +6526,7 @@ class TimestampRules(google.protobuf.message.Message):
     FIELD_FIELD_NUMBER: builtins.int
     TYPE_FIELD_NUMBER: builtins.int
     TITLE_FIELD_NUMBER: builtins.int
+    EXTRA_FIELD_NUMBER: builtins.int
     @property
     def const(self) -> google.protobuf.timestamp_pb2.Timestamp:
         """Const specifies that this field must be exactly the specified value"""
@@ -6255,6 +6592,8 @@ class TimestampRules(google.protobuf.message.Message):
     """Set the type object corresponding to the field, support template variables"""
     title: builtins.str
     """The title corresponding to the field"""
+    extra: builtins.str
+    """Field's custom extension parameter in the format Json"""
     def __init__(
         self,
         *,
@@ -6277,6 +6616,7 @@ class TimestampRules(google.protobuf.message.Message):
         field: builtins.str | None = ...,
         type: builtins.str | None = ...,
         title: builtins.str | None = ...,
+        extra: builtins.str | None = ...,
     ) -> None: ...
     def HasField(
         self,
@@ -6289,6 +6629,8 @@ class TimestampRules(google.protobuf.message.Message):
             b"_description",
             "_enable",
             b"_enable",
+            "_extra",
+            b"_extra",
             "_field",
             b"_field",
             "_ge",
@@ -6329,6 +6671,8 @@ class TimestampRules(google.protobuf.message.Message):
             b"example_config",
             "example_factory",
             b"example_factory",
+            "extra",
+            b"extra",
             "field",
             b"field",
             "ge",
@@ -6364,6 +6708,8 @@ class TimestampRules(google.protobuf.message.Message):
             b"_description",
             "_enable",
             b"_enable",
+            "_extra",
+            b"_extra",
             "_field",
             b"_field",
             "_ge",
@@ -6404,6 +6750,8 @@ class TimestampRules(google.protobuf.message.Message):
             b"example_config",
             "example_factory",
             b"example_factory",
+            "extra",
+            b"extra",
             "field",
             b"field",
             "ge",
@@ -6444,6 +6792,10 @@ class TimestampRules(google.protobuf.message.Message):
     def WhichOneof(
         self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]
     ) -> typing_extensions.Literal["enable"] | None: ...
+    @typing.overload
+    def WhichOneof(
+        self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]
+    ) -> typing_extensions.Literal["extra"] | None: ...
     @typing.overload
     def WhichOneof(
         self, oneof_group: typing_extensions.Literal["_field", b"_field"]

@@ -62,7 +62,7 @@ class UserMessage(BaseModel):
     demo: ExampleExampleProtoCommonSingleDemoEnum = Field(default=0)
     is_adult: bool = Field(default=False)
     user_name: str = Field(default="", description="user name", min_length=1, max_length=10, example="so1n")
-    demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field()
+    demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field(customer_string="c1", customer_int=1)
 """) in self._model_output(demo_pb2.UserMessage)
 
     def test_map_message(self) -> None:
@@ -98,7 +98,7 @@ class UserMessage(BaseModel):
     demo: ExampleExampleProtoCommonSingleDemoEnum = Field(default=0)
     is_adult: bool = Field(default=False)
     user_name: str = Field(default="", description="user name", min_length=1, max_length=10, example="so1n")
-    demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field()
+    demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field(customer_string="c1", customer_int=1)
 
 
 class MapMessage(BaseModel):
@@ -139,7 +139,7 @@ class UserMessage(BaseModel):
     demo: ExampleExampleProtoCommonSingleDemoEnum = Field(default=0)
     is_adult: bool = Field(default=False)
     user_name: str = Field(default="", description="user name", min_length=1, max_length=10, example="so1n")
-    demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field()
+    demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field(customer_string="c1", customer_int=1)
 
 
 class RepeatedMessage(BaseModel):
@@ -181,7 +181,7 @@ class UserMessage(BaseModel):
     demo: ExampleExampleProtoCommonSingleDemoEnum = Field(default=0)
     is_adult: bool = Field(default=False)
     user_name: str = Field(default="", description="user name", min_length=1, max_length=10, example="so1n")
-    demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field()
+    demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field(customer_string="c1", customer_int=1)
 
 
 class RepeatedMessage(BaseModel):

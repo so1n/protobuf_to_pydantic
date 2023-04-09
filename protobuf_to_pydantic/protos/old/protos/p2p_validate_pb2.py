@@ -22,7 +22,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x19protos/p2p_validate.proto\x12\x0cp2p_validate\x1a google/protobuf/descriptor.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\x81\x08\n\nFieldRules\x12\x30\n\x07message\x18\x11 \x01(\x0b\x32\x1a.p2p_validate.MessageRulesH\x01\x88\x01\x01\x12)\n\x05\x66loat\x18\x01 \x01(\x0b\x32\x18.p2p_validate.FloatRulesH\x00\x12+\n\x06\x64ouble\x18\x02 \x01(\x0b\x32\x19.p2p_validate.DoubleRulesH\x00\x12)\n\x05int32\x18\x03 \x01(\x0b\x32\x18.p2p_validate.Int32RulesH\x00\x12)\n\x05int64\x18\x04 \x01(\x0b\x32\x18.p2p_validate.Int64RulesH\x00\x12+\n\x06uint32\x18\x05 \x01(\x0b\x32\x19.p2p_validate.UInt32RulesH\x00\x12+\n\x06uint64\x18\x06 \x01(\x0b\x32\x19.p2p_validate.UInt64RulesH\x00\x12+\n\x06sint32\x18\x07 \x01(\x0b\x32\x19.p2p_validate.SInt32RulesH\x00\x12+\n\x06sint64\x18\x08 \x01(\x0b\x32\x19.p2p_validate.SInt64RulesH\x00\x12-\n\x07\x66ixed32\x18\t \x01(\x0b\x32\x1a.p2p_validate.Fixed32RulesH\x00\x12-\n\x07\x66ixed64\x18\n \x01(\x0b\x32\x1a.p2p_validate.Fixed64RulesH\x00\x12/\n\x08sfixed32\x18\x0b \x01(\x0b\x32\x1b.p2p_validate.SFixed32RulesH\x00\x12/\n\x08sfixed64\x18\x0c \x01(\x0b\x32\x1b.p2p_validate.SFixed64RulesH\x00\x12\'\n\x04\x62ool\x18\r \x01(\x0b\x32\x17.p2p_validate.BoolRulesH\x00\x12+\n\x06string\x18\x0e \x01(\x0b\x32\x19.p2p_validate.StringRulesH\x00\x12)\n\x05\x62ytes\x18\x0f \x01(\x0b\x32\x18.p2p_validate.BytesRulesH\x00\x12\'\n\x04\x65num\x18\x10 \x01(\x0b\x32\x17.p2p_validate.EnumRulesH\x00\x12/\n\x08repeated\x18\x12 \x01(\x0b\x32\x1b.p2p_validate.RepeatedRulesH\x00\x12%\n\x03map\x18\x13 \x01(\x0b\x32\x16.p2p_validate.MapRulesH\x00\x12%\n\x03\x61ny\x18\x14 \x01(\x0b\x32\x16.p2p_validate.AnyRulesH\x00\x12/\n\x08\x64uration\x18\x15 \x01(\x0b\x32\x1b.p2p_validate.DurationRulesH\x00\x12\x31\n\ttimestamp\x18\x16 \x01(\x0b\x32\x1c.p2p_validate.TimestampRulesH\x00\x42\x06\n\x04typeB\n\n\x08_message\"\xa8\x04\n\nFloatRules\x12\x12\n\x05\x63onst\x18\x01 \x01(\x02H\x02\x88\x01\x01\x12\x0f\n\x02lt\x18\x02 \x01(\x02H\x03\x88\x01\x01\x12\x0f\n\x02le\x18\x03 \x01(\x02H\x04\x88\x01\x01\x12\x0f\n\x02gt\x18\x04 \x01(\x02H\x05\x88\x01\x01\x12\x0f\n\x02ge\x18\x05 \x01(\x02H\x06\x88\x01\x01\x12\n\n\x02in\x18\x06 \x03(\x02\x12\x0e\n\x06not_in\x18\x07 \x03(\x02\x12\x13\n\x06\x65nable\x18\x08 \x01(\x08H\x07\x88\x01\x01\x12\x11\n\x07\x64\x65\x66\x61ult\x18\t \x01(\x02H\x00\x12\x19\n\x0f\x64\x65\x66\x61ult_factory\x18\n \x01(\tH\x00\x12\x16\n\x0cmiss_default\x18\x0b \x01(\x08H\x00\x12\x12\n\x05\x61lias\x18\x0c \x01(\tH\x08\x88\x01\x01\x12\x18\n\x0b\x64\x65scription\x18\r \x01(\tH\t\x88\x01\x01\x12\x18\n\x0bmultiple_of\x18\x0e \x01(\x02H\n\x88\x01\x01\x12\x11\n\x07\x65xample\x18\x0f \x01(\x02H\x01\x12\x19\n\x0f\x65xample_factory\x18\x10 \x01(\tH\x01\x12\x12\n\x05\x66ield\x18\x11 \x01(\tH\x0b\x88\x01\x01\x12\x11\n\x04type\x18\x12 \x01(\tH\x0c\x88\x01\x01\x12\x12\n\x05title\x18\x13 \x01(\tH\r\x88\x01\x01\x42\x10\n\x0e\x64\x65\x66\x61ult_configB\x10\n\x0e\x65xample_configB\x08\n\x06_constB\x05\n\x03_ltB\x05\n\x03_leB\x05\n\x03_gtB\x05\n\x03_geB\t\n\x07_enableB\x08\n\x06_aliasB\x0e\n\x0c_descriptionB\x0e\n\x0c_multiple_ofB\x08\n\x06_fieldB\x07\n\x05_typeB\x08\n\x06_title\"\xa9\x04\n\x0b\x44oubleRules\x12\x12\n\x05\x63onst\x18\x01 \x01(\x01H\x02\x88\x01\x01\x12\x0f\n\x02lt\x18\x02 \x01(\x01H\x03\x88\x01\x01\x12\x0f\n\x02le\x18\x03 \x01(\x01H\x04\x88\x01\x01\x12\x0f\n\x02gt\x18\x04 \x01(\x01H\x05\x88\x01\x01\x12\x0f\n\x02ge\x18\x05 \x01(\x01H\x06\x88\x01\x01\x12\n\n\x02in\x18\x06 \x03(\x01\x12\x0e\n\x06not_in\x18\x07 \x03(\x01\x12\x13\n\x06\x65nable\x18\x08 \x01(\x08H\x07\x88\x01\x01\x12\x11\n\x07\x64\x65\x66\x61ult\x18\t \x01(\x02H\x00\x12\x19\n\x0f\x64\x65\x66\x61ult_factory\x18\n \x01(\tH\x00\x12\x16\n\x0cmiss_default\x18\x0b \x01(\x08H\x00\x12\x12\n\x05\x61lias\x18\x0c \x01(\tH\x08\x88\x01\x01\x12\x18\n\x0b\x64\x65scription\x18\r \x01(\tH\t\x88\x01\x01\x12\x18\n\x0bmultiple_of\x18\x0e \x01(\x02H\n\x88\x01\x01\x12\x11\n\x07\x65xample\x18\x0f \x01(\x02H\x01\x12\x19\n\x0f\x65xample_factory\x18\x10 \x01(\tH\x01\x12\x12\n\x05\x66ield\x18\x11 \x01(\tH\x0b\x88\x01\x01\x12\x11\n\x04type\x18\x12 \x01(\tH\x0c\x88\x01\x01\x12\x12\n\x05title\x18\x13 \x01(\tH\r\x88\x01\x01\x42\x10\n\x0e\x64\x65\x66\x61ult_configB\x10\n\x0e\x65xample_configB\x08\n\x06_constB\x05\n\x03_ltB\x05\n\x03_leB\x05\n\x03_gtB\x05\n\x03_geB\t\n\x07_enableB\x08\n\x06_aliasB\x0e\n\x0c_descriptionB\x0e\n\x0c_multiple_ofB\x08\n\x06_fieldB\x07\n\x05_typeB\x08\n\x06_title\"\xa8\x04\n\nInt32Rules\x12\x12\n\x05\x63onst\x18\x01 \x01(\x05H\x02\x88\x01\x01\x12\x0f\n\x02lt\x18\x02 \x01(\x05H\x03\x88\x01\x01\x12\x0f\n\x02le\x18\x03 \x01(\x05H\x04\x88\x01\x01\x12\x0f\n\x02gt\x18\x04 \x01(\x05H\x05\x88\x01\x01\x12\x0f\n\x02ge\x18\x05 \x01(\x05H\x06\x88\x01\x01\x12\n\n\x02in\x18\x06 \x03(\x05\x12\x0e\n\x06not_in\x18\x07 \x03(\x05\x12\x13\n\x06\x65nable\x18\x08 \x01(\x08H\x07\x88\x01\x01\x12\x11\n\x07\x64\x65\x66\x61ult\x18\t \x01(\x02H\x00\x12\x19\n\x0f\x64\x65\x66\x61ult_factory\x18\n \x01(\tH\x00\x12\x16\n\x0cmiss_default\x18\x0b \x01(\x08H\x00\x12\x12\n\x05\x61lias\x18\x0c \x01(\tH\x08\x88\x01\x01\x12\x18\n\x0b\x64\x65scription\x18\r \x01(\tH\t\x88\x01\x01\x12\x18\n\x0bmultiple_of\x18\x0e \x01(\x02H\n\x88\x01\x01\x12\x11\n\x07\x65xample\x18\x0f \x01(\x02H\x01\x12\x19\n\x0f\x65xample_factory\x18\x10 \x01(\tH\x01\x12\x12\n\x05\x66ield\x18\x11 \x01(\tH\x0b\x88\x01\x01\x12\x11\n\x04type\x18\x12 \x01(\tH\x0c\x88\x01\x01\x12\x12\n\x05title\x18\x13 \x01(\tH\r\x88\x01\x01\x42\x10\n\x0e\x64\x65\x66\x61ult_configB\x10\n\x0e\x65xample_configB\x08\n\x06_constB\x05\n\x03_ltB\x05\n\x03_leB\x05\n\x03_gtB\x05\n\x03_geB\t\n\x07_enableB\x08\n\x06_aliasB\x0e\n\x0c_descriptionB\x0e\n\x0c_multiple_ofB\x08\n\x06_fieldB\x07\n\x05_typeB\x08\n\x06_title\"\xa8\x04\n\nInt64Rules\x12\x12\n\x05\x63onst\x18\x01 \x01(\x03H\x02\x88\x01\x01\x12\x0f\n\x02lt\x18\x02 \x01(\x03H\x03\x88\x01\x01\x12\x0f\n\x02le\x18\x03 \x01(\x03H\x04\x88\x01\x01\x12\x0f\n\x02gt\x18\x04 \x01(\x03H\x05\x88\x01\x01\x12\x0f\n\x02ge\x18\x05 \x01(\x03H\x06\x88\x01\x01\x12\n\n\x02in\x18\x06 \x03(\x03\x12\x0e\n\x06not_in\x18\x07 \x03(\x03\x12\x13\n\x06\x65nable\x18\x08 \x01(\x08H\x07\x88\x01\x01\x12\x11\n\x07\x64\x65\x66\x61ult\x18\t \x01(\x02H\x00\x12\x19\n\x0f\x64\x65\x66\x61ult_factory\x18\n \x01(\tH\x00\x12\x16\n\x0cmiss_default\x18\x0b \x01(\x08H\x00\x12\x12\n\x05\x61lias\x18\x0c \x01(\tH\x08\x88\x01\x01\x12\x18\n\x0b\x64\x65scription\x18\r \x01(\tH\t\x88\x01\x01\x12\x18\n\x0bmultiple_of\x18\x0e \x01(\x02H\n\x88\x01\x01\x12\x11\n\x07\x65xample\x18\x0f \x01(\x02H\x01\x12\x19\n\x0f\x65xample_factory\x18\x10 \x01(\tH\x01\x12\x12\n\x05\x66ield\x18\x11 \x01(\tH\x0b\x88\x01\x01\x12\x11\n\x04type\x18\x12 \x01(\tH\x0c\x88\x01\x01\x12\x12\n\x05title\x18\x13 \x01(\tH\r\x88\x01\x01\x42\x10\n\x0e\x64\x65\x66\x61ult_configB\x10\n\x0e\x65xample_configB\x08\n\x06_constB\x05\n\x03_ltB\x05\n\x03_leB\x05\n\x03_gtB\x05\n\x03_geB\t\n\x07_enableB\x08\n\x06_aliasB\x0e\n\x0c_descriptionB\x0e\n\x0c_multiple_ofB\x08\n\x06_fieldB\x07\n\x05_typeB\x08\n\x06_title\"\xa9\x04\n\x0bUInt32Rules\x12\x12\n\x05\x63onst\x18\x01 \x01(\rH\x02\x88\x01\x01\x12\x0f\n\x02lt\x18\x02 \x01(\rH\x03\x88\x01\x01\x12\x0f\n\x02le\x18\x03 \x01(\rH\x04\x88\x01\x01\x12\x0f\n\x02gt\x18\x04 \x01(\rH\x05\x88\x01\x01\x12\x0f\n\x02ge\x18\x05 \x01(\rH\x06\x88\x01\x01\x12\n\n\x02in\x18\x06 \x03(\r\x12\x0e\n\x06not_in\x18\x07 \x03(\r\x12\x13\n\x06\x65nable\x18\x08 \x01(\x08H\x07\x88\x01\x01\x12\x11\n\x07\x64\x65\x66\x61ult\x18\t \x01(\x02H\x00\x12\x19\n\x0f\x64\x65\x66\x61ult_factory\x18\n \x01(\tH\x00\x12\x16\n\x0cmiss_default\x18\x0b \x01(\x08H\x00\x12\x12\n\x05\x61lias\x18\x0c \x01(\tH\x08\x88\x01\x01\x12\x18\n\x0b\x64\x65scription\x18\r \x01(\tH\t\x88\x01\x01\x12\x18\n\x0bmultiple_of\x18\x0e \x01(\x02H\n\x88\x01\x01\x12\x11\n\x07\x65xample\x18\x0f \x01(\x02H\x01\x12\x19\n\x0f\x65xample_factory\x18\x10 \x01(\tH\x01\x12\x12\n\x05\x66ield\x18\x11 \x01(\tH\x0b\x88\x01\x01\x12\x11\n\x04type\x18\x12 \x01(\tH\x0c\x88\x01\x01\x12\x12\n\x05title\x18\x13 \x01(\tH\r\x88\x01\x01\x42\x10\n\x0e\x64\x65\x66\x61ult_configB\x10\n\x0e\x65xample_configB\x08\n\x06_constB\x05\n\x03_ltB\x05\n\x03_leB\x05\n\x03_gtB\x05\n\x03_geB\t\n\x07_enableB\x08\n\x06_aliasB\x0e\n\x0c_descriptionB\x0e\n\x0c_multiple_ofB\x08\n\x06_fieldB\x07\n\x05_typeB\x08\n\x06_title\"\xa9\x04\n\x0bUInt64Rules\x12\x12\n\x05\x63onst\x18\x01 \x01(\x04H\x02\x88\x01\x01\x12\x0f\n\x02lt\x18\x02 \x01(\x04H\x03\x88\x01\x01\x12\x0f\n\x02le\x18\x03 \x01(\x04H\x04\x88\x01\x01\x12\x0f\n\x02gt\x18\x04 \x01(\x04H\x05\x88\x01\x01\x12\x0f\n\x02ge\x18\x05 \x01(\x04H\x06\x88\x01\x01\x12\n\n\x02in\x18\x06 \x03(\x04\x12\x0e\n\x06not_in\x18\x07 \x03(\x04\x12\x13\n\x06\x65nable\x18\x08 \x01(\x08H\x07\x88\x01\x01\x12\x11\n\x07\x64\x65\x66\x61ult\x18\t \x01(\x02H\x00\x12\x19\n\x0f\x64\x65\x66\x61ult_factory\x18\n \x01(\tH\x00\x12\x16\n\x0cmiss_default\x18\x0b \x01(\x08H\x00\x12\x12\n\x05\x61lias\x18\x0c \x01(\tH\x08\x88\x01\x01\x12\x18\n\x0b\x64\x65scription\x18\r \x01(\tH\t\x88\x01\x01\x12\x18\n\x0bmultiple_of\x18\x0e \x01(\x02H\n\x88\x01\x01\x12\x11\n\x07\x65xample\x18\x0f \x01(\x02H\x01\x12\x19\n\x0f\x65xample_factory\x18\x10 \x01(\tH\x01\x12\x12\n\x05\x66ield\x18\x11 \x01(\tH\x0b\x88\x01\x01\x12\x11\n\x04type\x18\x12 \x01(\tH\x0c\x88\x01\x01\x12\x12\n\x05title\x18\x13 \x01(\tH\r\x88\x01\x01\x42\x10\n\x0e\x64\x65\x66\x61ult_configB\x10\n\x0e\x65xample_configB\x08\n\x06_constB\x05\n\x03_ltB\x05\n\x03_leB\x05\n\x03_gtB\x05\n\x03_geB\t\n\x07_enableB\x08\n\x06_aliasB\x0e\n\x0c_descriptionB\x0e\n\x0c_multiple_ofB\x08\n\x06_fieldB\x07\n\x05_typeB\x08\n\x06_title\"\xa9\x04\n\x0bSInt32Rules\x12\x12\n\x05\x63onst\x18\x01 \x01(\x11H\x02\x88\x01\x01\x12\x0f\n\x02lt\x18\x02 \x01(\x11H\x03\x88\x01\x01\x12\x0f\n\x02le\x18\x03 \x01(\x11H\x04\x88\x01\x01\x12\x0f\n\x02gt\x18\x04 \x01(\x11H\x05\x88\x01\x01\x12\x0f\n\x02ge\x18\x05 \x01(\x11H\x06\x88\x01\x01\x12\n\n\x02in\x18\x06 \x03(\x11\x12\x0e\n\x06not_in\x18\x07 \x03(\x11\x12\x13\n\x06\x65nable\x18\x08 \x01(\x08H\x07\x88\x01\x01\x12\x11\n\x07\x64\x65\x66\x61ult\x18\t \x01(\x02H\x00\x12\x19\n\x0f\x64\x65\x66\x61ult_factory\x18\n \x01(\tH\x00\x12\x16\n\x0cmiss_default\x18\x0b \x01(\x08H\x00\x12\x12\n\x05\x61lias\x18\x0c \x01(\tH\x08\x88\x01\x01\x12\x18\n\x0b\x64\x65scription\x18\r \x01(\tH\t\x88\x01\x01\x12\x18\n\x0bmultiple_of\x18\x0e \x01(\x02H\n\x88\x01\x01\x12\x11\n\x07\x65xample\x18\x0f \x01(\x02H\x01\x12\x19\n\x0f\x65xample_factory\x18\x10 \x01(\tH\x01\x12\x12\n\x05\x66ield\x18\x11 \x01(\tH\x0b\x88\x01\x01\x12\x11\n\x04type\x18\x12 \x01(\tH\x0c\x88\x01\x01\x12\x12\n\x05title\x18\x13 \x01(\tH\r\x88\x01\x01\x42\x10\n\x0e\x64\x65\x66\x61ult_configB\x10\n\x0e\x65xample_configB\x08\n\x06_constB\x05\n\x03_ltB\x05\n\x03_leB\x05\n\x03_gtB\x05\n\x03_geB\t\n\x07_enableB\x08\n\x06_aliasB\x0e\n\x0c_descriptionB\x0e\n\x0c_multiple_ofB\x08\n\x06_fieldB\x07\n\x05_typeB\x08\n\x06_title\"\xa9\x04\n\x0bSInt64Rules\x12\x12\n\x05\x63onst\x18\x01 \x01(\x12H\x02\x88\x01\x01\x12\x0f\n\x02lt\x18\x02 \x01(\x12H\x03\x88\x01\x01\x12\x0f\n\x02le\x18\x03 \x01(\x12H\x04\x88\x01\x01\x12\x0f\n\x02gt\x18\x04 \x01(\x12H\x05\x88\x01\x01\x12\x0f\n\x02ge\x18\x05 \x01(\x12H\x06\x88\x01\x01\x12\n\n\x02in\x18\x06 \x03(\x12\x12\x0e\n\x06not_in\x18\x07 \x03(\x12\x12\x13\n\x06\x65nable\x18\x08 \x01(\x08H\x07\x88\x01\x01\x12\x11\n\x07\x64\x65\x66\x61ult\x18\t \x01(\x02H\x00\x12\x19\n\x0f\x64\x65\x66\x61ult_factory\x18\n \x01(\tH\x00\x12\x16\n\x0cmiss_default\x18\x0b \x01(\x08H\x00\x12\x12\n\x05\x61lias\x18\x0c \x01(\tH\x08\x88\x01\x01\x12\x18\n\x0b\x64\x65scription\x18\r \x01(\tH\t\x88\x01\x01\x12\x18\n\x0bmultiple_of\x18\x0e \x01(\x02H\n\x88\x01\x01\x12\x11\n\x07\x65xample\x18\x0f \x01(\x02H\x01\x12\x19\n\x0f\x65xample_factory\x18\x10 \x01(\tH\x01\x12\x12\n\x05\x66ield\x18\x11 \x01(\tH\x0b\x88\x01\x01\x12\x11\n\x04type\x18\x12 \x01(\tH\x0c\x88\x01\x01\x12\x12\n\x05title\x18\x13 \x01(\tH\r\x88\x01\x01\x42\x10\n\x0e\x64\x65\x66\x61ult_configB\x10\n\x0e\x65xample_configB\x08\n\x06_constB\x05\n\x03_ltB\x05\n\x03_leB\x05\n\x03_gtB\x05\n\x03_geB\t\n\x07_enableB\x08\n\x06_aliasB\x0e\n\x0c_descriptionB\x0e\n\x0c_multiple_ofB\x08\n\x06_fieldB\x07\n\x05_typeB\x08\n\x06_title\"\xaa\x04\n\x0c\x46ixed32Rules\x12\x12\n\x05\x63onst\x18\x01 \x01(\x07H\x02\x88\x01\x01\x12\x0f\n\x02lt\x18\x02 \x01(\x07H\x03\x88\x01\x01\x12\x0f\n\x02le\x18\x03 \x01(\x07H\x04\x88\x01\x01\x12\x0f\n\x02gt\x18\x04 \x01(\x07H\x05\x88\x01\x01\x12\x0f\n\x02ge\x18\x05 \x01(\x07H\x06\x88\x01\x01\x12\n\n\x02in\x18\x06 \x03(\x07\x12\x0e\n\x06not_in\x18\x07 \x03(\x07\x12\x13\n\x06\x65nable\x18\x08 \x01(\x08H\x07\x88\x01\x01\x12\x11\n\x07\x64\x65\x66\x61ult\x18\t \x01(\x02H\x00\x12\x19\n\x0f\x64\x65\x66\x61ult_factory\x18\n \x01(\tH\x00\x12\x16\n\x0cmiss_default\x18\x0b \x01(\x08H\x00\x12\x12\n\x05\x61lias\x18\x0c \x01(\tH\x08\x88\x01\x01\x12\x18\n\x0b\x64\x65scription\x18\r \x01(\tH\t\x88\x01\x01\x12\x18\n\x0bmultiple_of\x18\x0e \x01(\x02H\n\x88\x01\x01\x12\x11\n\x07\x65xample\x18\x0f \x01(\x02H\x01\x12\x19\n\x0f\x65xample_factory\x18\x10 \x01(\tH\x01\x12\x12\n\x05\x66ield\x18\x11 \x01(\tH\x0b\x88\x01\x01\x12\x11\n\x04type\x18\x12 \x01(\tH\x0c\x88\x01\x01\x12\x12\n\x05title\x18\x13 \x01(\tH\r\x88\x01\x01\x42\x10\n\x0e\x64\x65\x66\x61ult_configB\x10\n\x0e\x65xample_configB\x08\n\x06_constB\x05\n\x03_ltB\x05\n\x03_leB\x05\n\x03_gtB\x05\n\x03_geB\t\n\x07_enableB\x08\n\x06_aliasB\x0e\n\x0c_descriptionB\x0e\n\x0c_multiple_ofB\x08\n\x06_fieldB\x07\n\x05_typeB\x08\n\x06_title\"\xaa\x04\n\x0c\x46ixed64Rules\x12\x12\n\x05\x63onst\x18\x01 \x01(\x06H\x02\x88\x01\x01\x12\x0f\n\x02lt\x18\x02 \x01(\x06H\x03\x88\x01\x01\x12\x0f\n\x02le\x18\x03 \x01(\x06H\x04\x88\x01\x01\x12\x0f\n\x02gt\x18\x04 \x01(\x06H\x05\x88\x01\x01\x12\x0f\n\x02ge\x18\x05 \x01(\x06H\x06\x88\x01\x01\x12\n\n\x02in\x18\x06 \x03(\x06\x12\x0e\n\x06not_in\x18\x07 \x03(\x06\x12\x13\n\x06\x65nable\x18\x08 \x01(\x08H\x07\x88\x01\x01\x12\x11\n\x07\x64\x65\x66\x61ult\x18\t \x01(\x02H\x00\x12\x19\n\x0f\x64\x65\x66\x61ult_factory\x18\n \x01(\tH\x00\x12\x16\n\x0cmiss_default\x18\x0b \x01(\x08H\x00\x12\x12\n\x05\x61lias\x18\x0c \x01(\tH\x08\x88\x01\x01\x12\x18\n\x0b\x64\x65scription\x18\r \x01(\tH\t\x88\x01\x01\x12\x18\n\x0bmultiple_of\x18\x0e \x01(\x02H\n\x88\x01\x01\x12\x11\n\x07\x65xample\x18\x0f \x01(\x02H\x01\x12\x19\n\x0f\x65xample_factory\x18\x10 \x01(\tH\x01\x12\x12\n\x05\x66ield\x18\x11 \x01(\tH\x0b\x88\x01\x01\x12\x11\n\x04type\x18\x12 \x01(\tH\x0c\x88\x01\x01\x12\x12\n\x05title\x18\x13 \x01(\tH\r\x88\x01\x01\x42\x10\n\x0e\x64\x65\x66\x61ult_configB\x10\n\x0e\x65xample_configB\x08\n\x06_constB\x05\n\x03_ltB\x05\n\x03_leB\x05\n\x03_gtB\x05\n\x03_geB\t\n\x07_enableB\x08\n\x06_aliasB\x0e\n\x0c_descriptionB\x0e\n\x0c_multiple_ofB\x08\n\x06_fieldB\x07\n\x05_typeB\x08\n\x06_title\"\xab\x04\n\rSFixed32Rules\x12\x12\n\x05\x63onst\x18\x01 \x01(\x0fH\x02\x88\x01\x01\x12\x0f\n\x02lt\x18\x02 \x01(\x0fH\x03\x88\x01\x01\x12\x0f\n\x02le\x18\x03 \x01(\x0fH\x04\x88\x01\x01\x12\x0f\n\x02gt\x18\x04 \x01(\x0fH\x05\x88\x01\x01\x12\x0f\n\x02ge\x18\x05 \x01(\x0fH\x06\x88\x01\x01\x12\n\n\x02in\x18\x06 \x03(\x0f\x12\x0e\n\x06not_in\x18\x07 \x03(\x0f\x12\x13\n\x06\x65nable\x18\x08 \x01(\x08H\x07\x88\x01\x01\x12\x11\n\x07\x64\x65\x66\x61ult\x18\t \x01(\x02H\x00\x12\x19\n\x0f\x64\x65\x66\x61ult_factory\x18\n \x01(\tH\x00\x12\x16\n\x0cmiss_default\x18\x0b \x01(\x08H\x00\x12\x12\n\x05\x61lias\x18\x0c \x01(\tH\x08\x88\x01\x01\x12\x18\n\x0b\x64\x65scription\x18\r \x01(\tH\t\x88\x01\x01\x12\x18\n\x0bmultiple_of\x18\x0e \x01(\x02H\n\x88\x01\x01\x12\x11\n\x07\x65xample\x18\x0f \x01(\x02H\x01\x12\x19\n\x0f\x65xample_factory\x18\x10 \x01(\tH\x01\x12\x12\n\x05\x66ield\x18\x11 \x01(\tH\x0b\x88\x01\x01\x12\x11\n\x04type\x18\x12 \x01(\tH\x0c\x88\x01\x01\x12\x12\n\x05title\x18\x13 \x01(\tH\r\x88\x01\x01\x42\x10\n\x0e\x64\x65\x66\x61ult_configB\x10\n\x0e\x65xample_configB\x08\n\x06_constB\x05\n\x03_ltB\x05\n\x03_leB\x05\n\x03_gtB\x05\n\x03_geB\t\n\x07_enableB\x08\n\x06_aliasB\x0e\n\x0c_descriptionB\x0e\n\x0c_multiple_ofB\x08\n\x06_fieldB\x07\n\x05_typeB\x08\n\x06_title\"\xab\x04\n\rSFixed64Rules\x12\x12\n\x05\x63onst\x18\x01 \x01(\x10H\x02\x88\x01\x01\x12\x0f\n\x02lt\x18\x02 \x01(\x10H\x03\x88\x01\x01\x12\x0f\n\x02le\x18\x03 \x01(\x10H\x04\x88\x01\x01\x12\x0f\n\x02gt\x18\x04 \x01(\x10H\x05\x88\x01\x01\x12\x0f\n\x02ge\x18\x05 \x01(\x10H\x06\x88\x01\x01\x12\n\n\x02in\x18\x06 \x03(\x10\x12\x0e\n\x06not_in\x18\x07 \x03(\x10\x12\x13\n\x06\x65nable\x18\x08 \x01(\x08H\x07\x88\x01\x01\x12\x11\n\x07\x64\x65\x66\x61ult\x18\t \x01(\x02H\x00\x12\x19\n\x0f\x64\x65\x66\x61ult_factory\x18\n \x01(\tH\x00\x12\x16\n\x0cmiss_default\x18\x0b \x01(\x08H\x00\x12\x12\n\x05\x61lias\x18\x0c \x01(\tH\x08\x88\x01\x01\x12\x18\n\x0b\x64\x65scription\x18\r \x01(\tH\t\x88\x01\x01\x12\x18\n\x0bmultiple_of\x18\x0e \x01(\x02H\n\x88\x01\x01\x12\x11\n\x07\x65xample\x18\x0f \x01(\x02H\x01\x12\x19\n\x0f\x65xample_factory\x18\x10 \x01(\tH\x01\x12\x12\n\x05\x66ield\x18\x11 \x01(\tH\x0b\x88\x01\x01\x12\x11\n\x04type\x18\x12 \x01(\tH\x0c\x88\x01\x01\x12\x12\n\x05title\x18\x13 \x01(\tH\r\x88\x01\x01\x42\x10\n\x0e\x64\x65\x66\x61ult_configB\x10\n\x0e\x65xample_configB\x08\n\x06_constB\x05\n\x03_ltB\x05\n\x03_leB\x05\n\x03_gtB\x05\n\x03_geB\t\n\x07_enableB\x08\n\x06_aliasB\x0e\n\x0c_descriptionB\x0e\n\x0c_multiple_ofB\x08\n\x06_fieldB\x07\n\x05_typeB\x08\n\x06_title\"\xc8\x02\n\tBoolRules\x12\x12\n\x05\x63onst\x18\x01 \x01(\x08H\x01\x88\x01\x01\x12\x13\n\x06\x65nable\x18\x02 \x01(\x08H\x02\x88\x01\x01\x12\x11\n\x07\x64\x65\x66\x61ult\x18\x03 \x01(\x08H\x00\x12\x16\n\x0cmiss_default\x18\x04 \x01(\x08H\x00\x12\x12\n\x05\x61lias\x18\x05 \x01(\tH\x03\x88\x01\x01\x12\x18\n\x0b\x64\x65scription\x18\x06 \x01(\tH\x04\x88\x01\x01\x12\x14\n\x07\x65xample\x18\x07 \x01(\x08H\x05\x88\x01\x01\x12\x12\n\x05\x66ield\x18\x08 \x01(\tH\x06\x88\x01\x01\x12\x11\n\x04type\x18\t \x01(\tH\x07\x88\x01\x01\x12\x12\n\x05title\x18\x13 \x01(\tH\x08\x88\x01\x01\x42\x10\n\x0e\x64\x65\x66\x61ult_configB\x08\n\x06_constB\t\n\x07_enableB\x08\n\x06_aliasB\x0e\n\x0c_descriptionB\n\n\x08_exampleB\x08\n\x06_fieldB\x07\n\x05_typeB\x08\n\x06_title\"\xfa\x06\n\x0bStringRules\x12\x12\n\x05\x63onst\x18\x01 \x01(\tH\x03\x88\x01\x01\x12\x10\n\x03len\x18\x02 \x01(\x04H\x04\x88\x01\x01\x12\x17\n\nmin_length\x18\x03 \x01(\x04H\x05\x88\x01\x01\x12\x17\n\nmax_length\x18\x04 \x01(\x04H\x06\x88\x01\x01\x12\x14\n\x07pattern\x18\x05 \x01(\tH\x07\x88\x01\x01\x12\x13\n\x06prefix\x18\x06 \x01(\tH\x08\x88\x01\x01\x12\x13\n\x06suffix\x18\x07 \x01(\tH\t\x88\x01\x01\x12\x15\n\x08\x63ontains\x18\x08 \x01(\tH\n\x88\x01\x01\x12\x19\n\x0cnot_contains\x18\t \x01(\tH\x0b\x88\x01\x01\x12\n\n\x02in\x18\n \x03(\t\x12\x0e\n\x06not_in\x18\x0b \x03(\t\x12\x0f\n\x05\x65mail\x18\x0c \x01(\x08H\x00\x12\x12\n\x08hostname\x18\r \x01(\x08H\x00\x12\x0c\n\x02ip\x18\x0e \x01(\x08H\x00\x12\x0e\n\x04ipv4\x18\x0f \x01(\x08H\x00\x12\x0e\n\x04ipv6\x18\x10 \x01(\x08H\x00\x12\r\n\x03uri\x18\x11 \x01(\x08H\x00\x12\x11\n\x07uri_ref\x18\x12 \x01(\x08H\x00\x12\x11\n\x07\x61\x64\x64ress\x18\x15 \x01(\x08H\x00\x12\x0e\n\x04uuid\x18\x16 \x01(\x08H\x00\x12\x17\n\rpydantic_type\x18\x63 \x01(\tH\x00\x12\x13\n\x06\x65nable\x18\x17 \x01(\x08H\x0c\x88\x01\x01\x12\x11\n\x07\x64\x65\x66\x61ult\x18\x18 \x01(\tH\x01\x12\x19\n\x0f\x64\x65\x66\x61ult_factory\x18\x19 \x01(\tH\x01\x12\x16\n\x0cmiss_default\x18\x1a \x01(\x08H\x01\x12\x12\n\x05\x61lias\x18\x1b \x01(\tH\r\x88\x01\x01\x12\x18\n\x0b\x64\x65scription\x18\x1c \x01(\tH\x0e\x88\x01\x01\x12\x11\n\x07\x65xample\x18\x1e \x01(\tH\x02\x12\x19\n\x0f\x65xample_factory\x18\x1f \x01(\tH\x02\x12\x12\n\x05\x66ield\x18  \x01(\tH\x0f\x88\x01\x01\x12\x11\n\x04type\x18! \x01(\tH\x10\x88\x01\x01\x12\x12\n\x05title\x18\" \x01(\tH\x11\x88\x01\x01\x42\x0c\n\nwell_knownB\x10\n\x0e\x64\x65\x66\x61ult_configB\x10\n\x0e\x65xample_configB\x08\n\x06_constB\x06\n\x04_lenB\r\n\x0b_min_lengthB\r\n\x0b_max_lengthB\n\n\x08_patternB\t\n\x07_prefixB\t\n\x07_suffixB\x0b\n\t_containsB\x0f\n\r_not_containsB\t\n\x07_enableB\x08\n\x06_aliasB\x0e\n\x0c_descriptionB\x08\n\x06_fieldB\x07\n\x05_typeB\x08\n\x06_title\"\xb8\x05\n\nBytesRules\x12\x12\n\x05\x63onst\x18\x01 \x01(\x0cH\x03\x88\x01\x01\x12\x17\n\nmin_length\x18\x02 \x01(\x04H\x04\x88\x01\x01\x12\x17\n\nmax_length\x18\x03 \x01(\x04H\x05\x88\x01\x01\x12\x13\n\x06prefix\x18\x05 \x01(\x0cH\x06\x88\x01\x01\x12\x13\n\x06suffix\x18\x06 \x01(\x0cH\x07\x88\x01\x01\x12\x15\n\x08\x63ontains\x18\x07 \x01(\x0cH\x08\x88\x01\x01\x12\n\n\x02in\x18\x08 \x03(\x0c\x12\x0e\n\x06not_in\x18\t \x03(\x0c\x12\x13\n\x06\x65nable\x18\n \x01(\x08H\t\x88\x01\x01\x12\x11\n\x07\x64\x65\x66\x61ult\x18\x0b \x01(\x0cH\x00\x12\x19\n\x0f\x64\x65\x66\x61ult_factory\x18\x0c \x01(\tH\x00\x12\x16\n\x0cmiss_default\x18\r \x01(\x08H\x00\x12\x12\n\x05\x61lias\x18\x0e \x01(\tH\n\x88\x01\x01\x12\x18\n\x0b\x64\x65scription\x18\x0f \x01(\tH\x0b\x88\x01\x01\x12\x18\n\x0bmultiple_of\x18\x10 \x01(\x02H\x0c\x88\x01\x01\x12\x11\n\x07\x65xample\x18\x11 \x01(\x0cH\x01\x12\x19\n\x0f\x65xample_factory\x18\x12 \x01(\tH\x01\x12\x12\n\x05\x66ield\x18\x13 \x01(\tH\r\x88\x01\x01\x12\x11\n\x04type\x18\x14 \x01(\tH\x0e\x88\x01\x01\x12\x0c\n\x02ip\x18\x15 \x01(\x08H\x02\x12\x0e\n\x04ipv4\x18\x16 \x01(\x08H\x02\x12\x0e\n\x04ipv6\x18\x17 \x01(\x08H\x02\x12\x12\n\x05title\x18\x18 \x01(\tH\x0f\x88\x01\x01\x42\x10\n\x0e\x64\x65\x66\x61ult_configB\x10\n\x0e\x65xample_configB\x0c\n\nwell_knownB\x08\n\x06_constB\r\n\x0b_min_lengthB\r\n\x0b_max_lengthB\t\n\x07_prefixB\t\n\x07_suffixB\x0b\n\t_containsB\t\n\x07_enableB\x08\n\x06_aliasB\x0e\n\x0c_descriptionB\x0e\n\x0c_multiple_ofB\x08\n\x06_fieldB\x07\n\x05_typeB\x08\n\x06_title\"\x81\x03\n\tEnumRules\x12\x12\n\x05\x63onst\x18\x01 \x01(\x05H\x02\x88\x01\x01\x12\n\n\x02in\x18\x03 \x03(\x05\x12\x0e\n\x06not_in\x18\x04 \x03(\x05\x12\x13\n\x06\x65nable\x18\x08 \x01(\x08H\x03\x88\x01\x01\x12\x11\n\x07\x64\x65\x66\x61ult\x18\t \x01(\x05H\x00\x12\x19\n\x0f\x64\x65\x66\x61ult_factory\x18\n \x01(\tH\x00\x12\x16\n\x0cmiss_default\x18\x0b \x01(\x08H\x00\x12\x12\n\x05\x61lias\x18\x0c \x01(\tH\x04\x88\x01\x01\x12\x18\n\x0b\x64\x65scription\x18\r \x01(\tH\x05\x88\x01\x01\x12\x11\n\x07\x65xample\x18\x0f \x01(\x05H\x01\x12\x19\n\x0f\x65xample_factory\x18\x10 \x01(\tH\x01\x12\x12\n\x05\x66ield\x18\x11 \x01(\tH\x06\x88\x01\x01\x12\x12\n\x05title\x18\x12 \x01(\tH\x07\x88\x01\x01\x42\x10\n\x0e\x64\x65\x66\x61ult_configB\x10\n\x0e\x65xample_configB\x08\n\x06_constB\t\n\x07_enableB\x08\n\x06_aliasB\x0e\n\x0c_descriptionB\x08\n\x06_fieldB\x08\n\x06_title\"\xa6\x03\n\x0cMessageRules\x12\x11\n\x04skip\x18\x01 \x01(\x08H\x02\x88\x01\x01\x12\x15\n\x08required\x18\x02 \x01(\x08H\x03\x88\x01\x01\x12\x13\n\x06\x65nable\x18\x08 \x01(\x08H\x04\x88\x01\x01\x12\x11\n\x07\x64\x65\x66\x61ult\x18\t \x01(\x02H\x00\x12\x19\n\x0f\x64\x65\x66\x61ult_factory\x18\n \x01(\tH\x00\x12\x16\n\x0cmiss_default\x18\x0b \x01(\x08H\x00\x12\x12\n\x05\x61lias\x18\x0c \x01(\tH\x05\x88\x01\x01\x12\x18\n\x0b\x64\x65scription\x18\r \x01(\tH\x06\x88\x01\x01\x12\x11\n\x07\x65xample\x18\x0f \x01(\x02H\x01\x12\x19\n\x0f\x65xample_factory\x18\x10 \x01(\tH\x01\x12\x12\n\x05\x66ield\x18\x11 \x01(\tH\x07\x88\x01\x01\x12\x11\n\x04type\x18\x12 \x01(\tH\x08\x88\x01\x01\x12\x12\n\x05title\x18\x13 \x01(\tH\t\x88\x01\x01\x42\x10\n\x0e\x64\x65\x66\x61ult_configB\x10\n\x0e\x65xample_configB\x07\n\x05_skipB\x0b\n\t_requiredB\t\n\x07_enableB\x08\n\x06_aliasB\x0e\n\x0c_descriptionB\x08\n\x06_fieldB\x07\n\x05_typeB\x08\n\x06_title\"\xe5\x03\n\rRepeatedRules\x12\x16\n\tmin_items\x18\x01 \x01(\x04H\x02\x88\x01\x01\x12\x16\n\tmax_items\x18\x02 \x01(\x04H\x03\x88\x01\x01\x12\x13\n\x06unique\x18\x03 \x01(\x08H\x04\x88\x01\x01\x12,\n\x05items\x18\x04 \x01(\x0b\x32\x18.p2p_validate.FieldRulesH\x05\x88\x01\x01\x12\x13\n\x06\x65nable\x18\x08 \x01(\x08H\x06\x88\x01\x01\x12\x19\n\x0f\x64\x65\x66\x61ult_factory\x18\n \x01(\tH\x00\x12\x16\n\x0cmiss_default\x18\x0b \x01(\x08H\x00\x12\x12\n\x05\x61lias\x18\x0c \x01(\tH\x07\x88\x01\x01\x12\x18\n\x0b\x64\x65scription\x18\r \x01(\tH\x08\x88\x01\x01\x12\x19\n\x0f\x65xample_factory\x18\x10 \x01(\tH\x01\x12\x12\n\x05\x66ield\x18\x11 \x01(\tH\t\x88\x01\x01\x12\x11\n\x04type\x18\x12 \x01(\tH\n\x88\x01\x01\x12\x12\n\x05title\x18\x13 \x01(\tH\x0b\x88\x01\x01\x42\x10\n\x0e\x64\x65\x66\x61ult_configB\x10\n\x0e\x65xample_configB\x0c\n\n_min_itemsB\x0c\n\n_max_itemsB\t\n\x07_uniqueB\x08\n\x06_itemsB\t\n\x07_enableB\x08\n\x06_aliasB\x0e\n\x0c_descriptionB\x08\n\x06_fieldB\x07\n\x05_typeB\x08\n\x06_title\"\xf8\x03\n\x08MapRules\x12\x16\n\tmin_pairs\x18\x01 \x01(\x04H\x02\x88\x01\x01\x12\x16\n\tmax_pairs\x18\x02 \x01(\x04H\x03\x88\x01\x01\x12+\n\x04keys\x18\x04 \x01(\x0b\x32\x18.p2p_validate.FieldRulesH\x04\x88\x01\x01\x12-\n\x06values\x18\x05 \x01(\x0b\x32\x18.p2p_validate.FieldRulesH\x05\x88\x01\x01\x12\x13\n\x06\x65nable\x18\x08 \x01(\x08H\x06\x88\x01\x01\x12\x19\n\x0f\x64\x65\x66\x61ult_factory\x18\n \x01(\tH\x00\x12\x16\n\x0cmiss_default\x18\x0b \x01(\x08H\x00\x12\x12\n\x05\x61lias\x18\x0c \x01(\tH\x07\x88\x01\x01\x12\x18\n\x0b\x64\x65scription\x18\r \x01(\tH\x08\x88\x01\x01\x12\x19\n\x0f\x65xample_factory\x18\x10 \x01(\tH\x01\x12\x12\n\x05\x66ield\x18\x11 \x01(\tH\t\x88\x01\x01\x12\x11\n\x04type\x18\x12 \x01(\tH\n\x88\x01\x01\x12\x12\n\x05title\x18\x13 \x01(\tH\x0b\x88\x01\x01\x42\x10\n\x0e\x64\x65\x66\x61ult_configB\x10\n\x0e\x65xample_configB\x0c\n\n_min_pairsB\x0c\n\n_max_pairsB\x07\n\x05_keysB\t\n\x07_valuesB\t\n\x07_enableB\x08\n\x06_aliasB\x0e\n\x0c_descriptionB\x08\n\x06_fieldB\x07\n\x05_typeB\x08\n\x06_title\"\x86\x03\n\x08\x41nyRules\x12\x15\n\x08required\x18\x01 \x01(\x08H\x02\x88\x01\x01\x12\n\n\x02in\x18\x02 \x03(\t\x12\x0e\n\x06not_in\x18\x03 \x03(\t\x12\x13\n\x06\x65nable\x18\x08 \x01(\x08H\x03\x88\x01\x01\x12\x11\n\x07\x64\x65\x66\x61ult\x18\t \x01(\tH\x00\x12\x19\n\x0f\x64\x65\x66\x61ult_factory\x18\n \x01(\tH\x00\x12\x16\n\x0cmiss_default\x18\x0b \x01(\x08H\x00\x12\x12\n\x05\x61lias\x18\x0c \x01(\tH\x04\x88\x01\x01\x12\x18\n\x0b\x64\x65scription\x18\r \x01(\tH\x05\x88\x01\x01\x12\x11\n\x07\x65xample\x18\x0e \x01(\tH\x01\x12\x19\n\x0f\x65xample_factory\x18\x0f \x01(\tH\x01\x12\x12\n\x05\x66ield\x18\x10 \x01(\tH\x06\x88\x01\x01\x12\x12\n\x05title\x18\x11 \x01(\tH\x07\x88\x01\x01\x42\x10\n\x0e\x64\x65\x66\x61ult_configB\x10\n\x0e\x65xample_configB\x0b\n\t_requiredB\t\n\x07_enableB\x08\n\x06_aliasB\x0e\n\x0c_descriptionB\x08\n\x06_fieldB\x08\n\x06_title\"\xf4\x05\n\rDurationRules\x12-\n\x05\x63onst\x18\x02 \x01(\x0b\x32\x19.google.protobuf.DurationH\x02\x88\x01\x01\x12*\n\x02lt\x18\x03 \x01(\x0b\x32\x19.google.protobuf.DurationH\x03\x88\x01\x01\x12*\n\x02le\x18\x04 \x01(\x0b\x32\x19.google.protobuf.DurationH\x04\x88\x01\x01\x12*\n\x02gt\x18\x05 \x01(\x0b\x32\x19.google.protobuf.DurationH\x05\x88\x01\x01\x12*\n\x02ge\x18\x06 \x01(\x0b\x32\x19.google.protobuf.DurationH\x06\x88\x01\x01\x12%\n\x02in\x18\x07 \x03(\x0b\x32\x19.google.protobuf.Duration\x12)\n\x06not_in\x18\x08 \x03(\x0b\x32\x19.google.protobuf.Duration\x12\x13\n\x06\x65nable\x18\x0e \x01(\x08H\x07\x88\x01\x01\x12,\n\x07\x64\x65\x66\x61ult\x18\t \x01(\x0b\x32\x19.google.protobuf.DurationH\x00\x12\x19\n\x0f\x64\x65\x66\x61ult_factory\x18\n \x01(\tH\x00\x12\x16\n\x0cmiss_default\x18\x0b \x01(\x08H\x00\x12\x12\n\x05\x61lias\x18\x0c \x01(\tH\x08\x88\x01\x01\x12\x18\n\x0b\x64\x65scription\x18\r \x01(\tH\t\x88\x01\x01\x12,\n\x07\x65xample\x18\x0f \x01(\x0b\x32\x19.google.protobuf.DurationH\x01\x12\x19\n\x0f\x65xample_factory\x18\x10 \x01(\tH\x01\x12\x12\n\x05\x66ield\x18\x11 \x01(\tH\n\x88\x01\x01\x12\x11\n\x04type\x18\x12 \x01(\tH\x0b\x88\x01\x01\x12\x12\n\x05title\x18\x13 \x01(\tH\x0c\x88\x01\x01\x42\x10\n\x0e\x64\x65\x66\x61ult_configB\x10\n\x0e\x65xample_configB\x08\n\x06_constB\x05\n\x03_ltB\x05\n\x03_leB\x05\n\x03_gtB\x05\n\x03_geB\t\n\x07_enableB\x08\n\x06_aliasB\x0e\n\x0c_descriptionB\x08\n\x06_fieldB\x07\n\x05_typeB\x08\n\x06_title\"\xa5\x06\n\x0eTimestampRules\x12.\n\x05\x63onst\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.TimestampH\x02\x88\x01\x01\x12+\n\x02lt\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.TimestampH\x03\x88\x01\x01\x12+\n\x02le\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.TimestampH\x04\x88\x01\x01\x12+\n\x02gt\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.TimestampH\x05\x88\x01\x01\x12+\n\x02ge\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.TimestampH\x06\x88\x01\x01\x12\x13\n\x06lt_now\x18\x07 \x01(\x08H\x07\x88\x01\x01\x12\x13\n\x06gt_now\x18\x08 \x01(\x08H\x08\x88\x01\x01\x12.\n\x06within\x18\t \x01(\x0b\x32\x19.google.protobuf.DurationH\t\x88\x01\x01\x12\x13\n\x06\x65nable\x18\n \x01(\x08H\n\x88\x01\x01\x12-\n\x07\x64\x65\x66\x61ult\x18\x0b \x01(\x0b\x32\x1a.google.protobuf.TimestampH\x00\x12\x19\n\x0f\x64\x65\x66\x61ult_factory\x18\x0c \x01(\tH\x00\x12\x16\n\x0cmiss_default\x18\r \x01(\x08H\x00\x12\x12\n\x05\x61lias\x18\x0e \x01(\tH\x0b\x88\x01\x01\x12\x18\n\x0b\x64\x65scription\x18\x0f \x01(\tH\x0c\x88\x01\x01\x12-\n\x07\x65xample\x18\x10 \x01(\x0b\x32\x1a.google.protobuf.TimestampH\x01\x12\x19\n\x0f\x65xample_factory\x18\x11 \x01(\tH\x01\x12\x12\n\x05\x66ield\x18\x12 \x01(\tH\r\x88\x01\x01\x12\x11\n\x04type\x18\x13 \x01(\tH\x0e\x88\x01\x01\x12\x12\n\x05title\x18\x14 \x01(\tH\x0f\x88\x01\x01\x42\x10\n\x0e\x64\x65\x66\x61ult_configB\x10\n\x0e\x65xample_configB\x08\n\x06_constB\x05\n\x03_ltB\x05\n\x03_leB\x05\n\x03_gtB\x05\n\x03_geB\t\n\x07_lt_nowB\t\n\x07_gt_nowB\t\n\x07_withinB\t\n\x07_enableB\x08\n\x06_aliasB\x0e\n\x0c_descriptionB\x08\n\x06_fieldB\x07\n\x05_typeB\x08\n\x06_title:4\n\x07ignored\x12\x1f.google.protobuf.MessageOptions\x18\xb1\x08 \x01(\x08\x88\x01\x01:3\n\x08required\x12\x1d.google.protobuf.OneofOptions\x18\xb1\x08 \x01(\x08\x88\x01\x01:J\n\x05rules\x12\x1d.google.protobuf.FieldOptions\x18\xb1\x08 \x01(\x0b\x32\x18.p2p_validate.FieldRules\x88\x01\x01\x62\x06proto3'
+  serialized_pb=b'\n\x19protos/p2p_validate.proto\x12\x0cp2p_validate\x1a google/protobuf/descriptor.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\x81\x08\n\nFieldRules\x12\x30\n\x07message\x18\x11 \x01(\x0b\x32\x1a.p2p_validate.MessageRulesH\x01\x88\x01\x01\x12)\n\x05\x66loat\x18\x01 \x01(\x0b\x32\x18.p2p_validate.FloatRulesH\x00\x12+\n\x06\x64ouble\x18\x02 \x01(\x0b\x32\x19.p2p_validate.DoubleRulesH\x00\x12)\n\x05int32\x18\x03 \x01(\x0b\x32\x18.p2p_validate.Int32RulesH\x00\x12)\n\x05int64\x18\x04 \x01(\x0b\x32\x18.p2p_validate.Int64RulesH\x00\x12+\n\x06uint32\x18\x05 \x01(\x0b\x32\x19.p2p_validate.UInt32RulesH\x00\x12+\n\x06uint64\x18\x06 \x01(\x0b\x32\x19.p2p_validate.UInt64RulesH\x00\x12+\n\x06sint32\x18\x07 \x01(\x0b\x32\x19.p2p_validate.SInt32RulesH\x00\x12+\n\x06sint64\x18\x08 \x01(\x0b\x32\x19.p2p_validate.SInt64RulesH\x00\x12-\n\x07\x66ixed32\x18\t \x01(\x0b\x32\x1a.p2p_validate.Fixed32RulesH\x00\x12-\n\x07\x66ixed64\x18\n \x01(\x0b\x32\x1a.p2p_validate.Fixed64RulesH\x00\x12/\n\x08sfixed32\x18\x0b \x01(\x0b\x32\x1b.p2p_validate.SFixed32RulesH\x00\x12/\n\x08sfixed64\x18\x0c \x01(\x0b\x32\x1b.p2p_validate.SFixed64RulesH\x00\x12\'\n\x04\x62ool\x18\r \x01(\x0b\x32\x17.p2p_validate.BoolRulesH\x00\x12+\n\x06string\x18\x0e \x01(\x0b\x32\x19.p2p_validate.StringRulesH\x00\x12)\n\x05\x62ytes\x18\x0f \x01(\x0b\x32\x18.p2p_validate.BytesRulesH\x00\x12\'\n\x04\x65num\x18\x10 \x01(\x0b\x32\x17.p2p_validate.EnumRulesH\x00\x12/\n\x08repeated\x18\x12 \x01(\x0b\x32\x1b.p2p_validate.RepeatedRulesH\x00\x12%\n\x03map\x18\x13 \x01(\x0b\x32\x16.p2p_validate.MapRulesH\x00\x12%\n\x03\x61ny\x18\x14 \x01(\x0b\x32\x16.p2p_validate.AnyRulesH\x00\x12/\n\x08\x64uration\x18\x15 \x01(\x0b\x32\x1b.p2p_validate.DurationRulesH\x00\x12\x31\n\ttimestamp\x18\x16 \x01(\x0b\x32\x1c.p2p_validate.TimestampRulesH\x00\x42\x06\n\x04typeB\n\n\x08_message\"\xc6\x04\n\nFloatRules\x12\x12\n\x05\x63onst\x18\x01 \x01(\x02H\x02\x88\x01\x01\x12\x0f\n\x02lt\x18\x02 \x01(\x02H\x03\x88\x01\x01\x12\x0f\n\x02le\x18\x03 \x01(\x02H\x04\x88\x01\x01\x12\x0f\n\x02gt\x18\x04 \x01(\x02H\x05\x88\x01\x01\x12\x0f\n\x02ge\x18\x05 \x01(\x02H\x06\x88\x01\x01\x12\n\n\x02in\x18\x06 \x03(\x02\x12\x0e\n\x06not_in\x18\x07 \x03(\x02\x12\x13\n\x06\x65nable\x18\x08 \x01(\x08H\x07\x88\x01\x01\x12\x11\n\x07\x64\x65\x66\x61ult\x18\t \x01(\x02H\x00\x12\x19\n\x0f\x64\x65\x66\x61ult_factory\x18\n \x01(\tH\x00\x12\x16\n\x0cmiss_default\x18\x0b \x01(\x08H\x00\x12\x12\n\x05\x61lias\x18\x0c \x01(\tH\x08\x88\x01\x01\x12\x18\n\x0b\x64\x65scription\x18\r \x01(\tH\t\x88\x01\x01\x12\x18\n\x0bmultiple_of\x18\x0e \x01(\x02H\n\x88\x01\x01\x12\x11\n\x07\x65xample\x18\x0f \x01(\x02H\x01\x12\x19\n\x0f\x65xample_factory\x18\x10 \x01(\tH\x01\x12\x12\n\x05\x66ield\x18\x11 \x01(\tH\x0b\x88\x01\x01\x12\x11\n\x04type\x18\x12 \x01(\tH\x0c\x88\x01\x01\x12\x12\n\x05title\x18\x13 \x01(\tH\r\x88\x01\x01\x12\x12\n\x05\x65xtra\x18\x14 \x01(\tH\x0e\x88\x01\x01\x42\x10\n\x0e\x64\x65\x66\x61ult_configB\x10\n\x0e\x65xample_configB\x08\n\x06_constB\x05\n\x03_ltB\x05\n\x03_leB\x05\n\x03_gtB\x05\n\x03_geB\t\n\x07_enableB\x08\n\x06_aliasB\x0e\n\x0c_descriptionB\x0e\n\x0c_multiple_ofB\x08\n\x06_fieldB\x07\n\x05_typeB\x08\n\x06_titleB\x08\n\x06_extra\"\xc7\x04\n\x0b\x44oubleRules\x12\x12\n\x05\x63onst\x18\x01 \x01(\x01H\x02\x88\x01\x01\x12\x0f\n\x02lt\x18\x02 \x01(\x01H\x03\x88\x01\x01\x12\x0f\n\x02le\x18\x03 \x01(\x01H\x04\x88\x01\x01\x12\x0f\n\x02gt\x18\x04 \x01(\x01H\x05\x88\x01\x01\x12\x0f\n\x02ge\x18\x05 \x01(\x01H\x06\x88\x01\x01\x12\n\n\x02in\x18\x06 \x03(\x01\x12\x0e\n\x06not_in\x18\x07 \x03(\x01\x12\x13\n\x06\x65nable\x18\x08 \x01(\x08H\x07\x88\x01\x01\x12\x11\n\x07\x64\x65\x66\x61ult\x18\t \x01(\x02H\x00\x12\x19\n\x0f\x64\x65\x66\x61ult_factory\x18\n \x01(\tH\x00\x12\x16\n\x0cmiss_default\x18\x0b \x01(\x08H\x00\x12\x12\n\x05\x61lias\x18\x0c \x01(\tH\x08\x88\x01\x01\x12\x18\n\x0b\x64\x65scription\x18\r \x01(\tH\t\x88\x01\x01\x12\x18\n\x0bmultiple_of\x18\x0e \x01(\x02H\n\x88\x01\x01\x12\x11\n\x07\x65xample\x18\x0f \x01(\x02H\x01\x12\x19\n\x0f\x65xample_factory\x18\x10 \x01(\tH\x01\x12\x12\n\x05\x66ield\x18\x11 \x01(\tH\x0b\x88\x01\x01\x12\x11\n\x04type\x18\x12 \x01(\tH\x0c\x88\x01\x01\x12\x12\n\x05title\x18\x13 \x01(\tH\r\x88\x01\x01\x12\x12\n\x05\x65xtra\x18\x14 \x01(\tH\x0e\x88\x01\x01\x42\x10\n\x0e\x64\x65\x66\x61ult_configB\x10\n\x0e\x65xample_configB\x08\n\x06_constB\x05\n\x03_ltB\x05\n\x03_leB\x05\n\x03_gtB\x05\n\x03_geB\t\n\x07_enableB\x08\n\x06_aliasB\x0e\n\x0c_descriptionB\x0e\n\x0c_multiple_ofB\x08\n\x06_fieldB\x07\n\x05_typeB\x08\n\x06_titleB\x08\n\x06_extra\"\xc6\x04\n\nInt32Rules\x12\x12\n\x05\x63onst\x18\x01 \x01(\x05H\x02\x88\x01\x01\x12\x0f\n\x02lt\x18\x02 \x01(\x05H\x03\x88\x01\x01\x12\x0f\n\x02le\x18\x03 \x01(\x05H\x04\x88\x01\x01\x12\x0f\n\x02gt\x18\x04 \x01(\x05H\x05\x88\x01\x01\x12\x0f\n\x02ge\x18\x05 \x01(\x05H\x06\x88\x01\x01\x12\n\n\x02in\x18\x06 \x03(\x05\x12\x0e\n\x06not_in\x18\x07 \x03(\x05\x12\x13\n\x06\x65nable\x18\x08 \x01(\x08H\x07\x88\x01\x01\x12\x11\n\x07\x64\x65\x66\x61ult\x18\t \x01(\x02H\x00\x12\x19\n\x0f\x64\x65\x66\x61ult_factory\x18\n \x01(\tH\x00\x12\x16\n\x0cmiss_default\x18\x0b \x01(\x08H\x00\x12\x12\n\x05\x61lias\x18\x0c \x01(\tH\x08\x88\x01\x01\x12\x18\n\x0b\x64\x65scription\x18\r \x01(\tH\t\x88\x01\x01\x12\x18\n\x0bmultiple_of\x18\x0e \x01(\x02H\n\x88\x01\x01\x12\x11\n\x07\x65xample\x18\x0f \x01(\x02H\x01\x12\x19\n\x0f\x65xample_factory\x18\x10 \x01(\tH\x01\x12\x12\n\x05\x66ield\x18\x11 \x01(\tH\x0b\x88\x01\x01\x12\x11\n\x04type\x18\x12 \x01(\tH\x0c\x88\x01\x01\x12\x12\n\x05title\x18\x13 \x01(\tH\r\x88\x01\x01\x12\x12\n\x05\x65xtra\x18\x14 \x01(\tH\x0e\x88\x01\x01\x42\x10\n\x0e\x64\x65\x66\x61ult_configB\x10\n\x0e\x65xample_configB\x08\n\x06_constB\x05\n\x03_ltB\x05\n\x03_leB\x05\n\x03_gtB\x05\n\x03_geB\t\n\x07_enableB\x08\n\x06_aliasB\x0e\n\x0c_descriptionB\x0e\n\x0c_multiple_ofB\x08\n\x06_fieldB\x07\n\x05_typeB\x08\n\x06_titleB\x08\n\x06_extra\"\xc6\x04\n\nInt64Rules\x12\x12\n\x05\x63onst\x18\x01 \x01(\x03H\x02\x88\x01\x01\x12\x0f\n\x02lt\x18\x02 \x01(\x03H\x03\x88\x01\x01\x12\x0f\n\x02le\x18\x03 \x01(\x03H\x04\x88\x01\x01\x12\x0f\n\x02gt\x18\x04 \x01(\x03H\x05\x88\x01\x01\x12\x0f\n\x02ge\x18\x05 \x01(\x03H\x06\x88\x01\x01\x12\n\n\x02in\x18\x06 \x03(\x03\x12\x0e\n\x06not_in\x18\x07 \x03(\x03\x12\x13\n\x06\x65nable\x18\x08 \x01(\x08H\x07\x88\x01\x01\x12\x11\n\x07\x64\x65\x66\x61ult\x18\t \x01(\x02H\x00\x12\x19\n\x0f\x64\x65\x66\x61ult_factory\x18\n \x01(\tH\x00\x12\x16\n\x0cmiss_default\x18\x0b \x01(\x08H\x00\x12\x12\n\x05\x61lias\x18\x0c \x01(\tH\x08\x88\x01\x01\x12\x18\n\x0b\x64\x65scription\x18\r \x01(\tH\t\x88\x01\x01\x12\x18\n\x0bmultiple_of\x18\x0e \x01(\x02H\n\x88\x01\x01\x12\x11\n\x07\x65xample\x18\x0f \x01(\x02H\x01\x12\x19\n\x0f\x65xample_factory\x18\x10 \x01(\tH\x01\x12\x12\n\x05\x66ield\x18\x11 \x01(\tH\x0b\x88\x01\x01\x12\x11\n\x04type\x18\x12 \x01(\tH\x0c\x88\x01\x01\x12\x12\n\x05title\x18\x13 \x01(\tH\r\x88\x01\x01\x12\x12\n\x05\x65xtra\x18\x14 \x01(\tH\x0e\x88\x01\x01\x42\x10\n\x0e\x64\x65\x66\x61ult_configB\x10\n\x0e\x65xample_configB\x08\n\x06_constB\x05\n\x03_ltB\x05\n\x03_leB\x05\n\x03_gtB\x05\n\x03_geB\t\n\x07_enableB\x08\n\x06_aliasB\x0e\n\x0c_descriptionB\x0e\n\x0c_multiple_ofB\x08\n\x06_fieldB\x07\n\x05_typeB\x08\n\x06_titleB\x08\n\x06_extra\"\xc7\x04\n\x0bUInt32Rules\x12\x12\n\x05\x63onst\x18\x01 \x01(\rH\x02\x88\x01\x01\x12\x0f\n\x02lt\x18\x02 \x01(\rH\x03\x88\x01\x01\x12\x0f\n\x02le\x18\x03 \x01(\rH\x04\x88\x01\x01\x12\x0f\n\x02gt\x18\x04 \x01(\rH\x05\x88\x01\x01\x12\x0f\n\x02ge\x18\x05 \x01(\rH\x06\x88\x01\x01\x12\n\n\x02in\x18\x06 \x03(\r\x12\x0e\n\x06not_in\x18\x07 \x03(\r\x12\x13\n\x06\x65nable\x18\x08 \x01(\x08H\x07\x88\x01\x01\x12\x11\n\x07\x64\x65\x66\x61ult\x18\t \x01(\x02H\x00\x12\x19\n\x0f\x64\x65\x66\x61ult_factory\x18\n \x01(\tH\x00\x12\x16\n\x0cmiss_default\x18\x0b \x01(\x08H\x00\x12\x12\n\x05\x61lias\x18\x0c \x01(\tH\x08\x88\x01\x01\x12\x18\n\x0b\x64\x65scription\x18\r \x01(\tH\t\x88\x01\x01\x12\x18\n\x0bmultiple_of\x18\x0e \x01(\x02H\n\x88\x01\x01\x12\x11\n\x07\x65xample\x18\x0f \x01(\x02H\x01\x12\x19\n\x0f\x65xample_factory\x18\x10 \x01(\tH\x01\x12\x12\n\x05\x66ield\x18\x11 \x01(\tH\x0b\x88\x01\x01\x12\x11\n\x04type\x18\x12 \x01(\tH\x0c\x88\x01\x01\x12\x12\n\x05title\x18\x13 \x01(\tH\r\x88\x01\x01\x12\x12\n\x05\x65xtra\x18\x14 \x01(\tH\x0e\x88\x01\x01\x42\x10\n\x0e\x64\x65\x66\x61ult_configB\x10\n\x0e\x65xample_configB\x08\n\x06_constB\x05\n\x03_ltB\x05\n\x03_leB\x05\n\x03_gtB\x05\n\x03_geB\t\n\x07_enableB\x08\n\x06_aliasB\x0e\n\x0c_descriptionB\x0e\n\x0c_multiple_ofB\x08\n\x06_fieldB\x07\n\x05_typeB\x08\n\x06_titleB\x08\n\x06_extra\"\xc7\x04\n\x0bUInt64Rules\x12\x12\n\x05\x63onst\x18\x01 \x01(\x04H\x02\x88\x01\x01\x12\x0f\n\x02lt\x18\x02 \x01(\x04H\x03\x88\x01\x01\x12\x0f\n\x02le\x18\x03 \x01(\x04H\x04\x88\x01\x01\x12\x0f\n\x02gt\x18\x04 \x01(\x04H\x05\x88\x01\x01\x12\x0f\n\x02ge\x18\x05 \x01(\x04H\x06\x88\x01\x01\x12\n\n\x02in\x18\x06 \x03(\x04\x12\x0e\n\x06not_in\x18\x07 \x03(\x04\x12\x13\n\x06\x65nable\x18\x08 \x01(\x08H\x07\x88\x01\x01\x12\x11\n\x07\x64\x65\x66\x61ult\x18\t \x01(\x02H\x00\x12\x19\n\x0f\x64\x65\x66\x61ult_factory\x18\n \x01(\tH\x00\x12\x16\n\x0cmiss_default\x18\x0b \x01(\x08H\x00\x12\x12\n\x05\x61lias\x18\x0c \x01(\tH\x08\x88\x01\x01\x12\x18\n\x0b\x64\x65scription\x18\r \x01(\tH\t\x88\x01\x01\x12\x18\n\x0bmultiple_of\x18\x0e \x01(\x02H\n\x88\x01\x01\x12\x11\n\x07\x65xample\x18\x0f \x01(\x02H\x01\x12\x19\n\x0f\x65xample_factory\x18\x10 \x01(\tH\x01\x12\x12\n\x05\x66ield\x18\x11 \x01(\tH\x0b\x88\x01\x01\x12\x11\n\x04type\x18\x12 \x01(\tH\x0c\x88\x01\x01\x12\x12\n\x05title\x18\x13 \x01(\tH\r\x88\x01\x01\x12\x12\n\x05\x65xtra\x18\x14 \x01(\tH\x0e\x88\x01\x01\x42\x10\n\x0e\x64\x65\x66\x61ult_configB\x10\n\x0e\x65xample_configB\x08\n\x06_constB\x05\n\x03_ltB\x05\n\x03_leB\x05\n\x03_gtB\x05\n\x03_geB\t\n\x07_enableB\x08\n\x06_aliasB\x0e\n\x0c_descriptionB\x0e\n\x0c_multiple_ofB\x08\n\x06_fieldB\x07\n\x05_typeB\x08\n\x06_titleB\x08\n\x06_extra\"\xc7\x04\n\x0bSInt32Rules\x12\x12\n\x05\x63onst\x18\x01 \x01(\x11H\x02\x88\x01\x01\x12\x0f\n\x02lt\x18\x02 \x01(\x11H\x03\x88\x01\x01\x12\x0f\n\x02le\x18\x03 \x01(\x11H\x04\x88\x01\x01\x12\x0f\n\x02gt\x18\x04 \x01(\x11H\x05\x88\x01\x01\x12\x0f\n\x02ge\x18\x05 \x01(\x11H\x06\x88\x01\x01\x12\n\n\x02in\x18\x06 \x03(\x11\x12\x0e\n\x06not_in\x18\x07 \x03(\x11\x12\x13\n\x06\x65nable\x18\x08 \x01(\x08H\x07\x88\x01\x01\x12\x11\n\x07\x64\x65\x66\x61ult\x18\t \x01(\x02H\x00\x12\x19\n\x0f\x64\x65\x66\x61ult_factory\x18\n \x01(\tH\x00\x12\x16\n\x0cmiss_default\x18\x0b \x01(\x08H\x00\x12\x12\n\x05\x61lias\x18\x0c \x01(\tH\x08\x88\x01\x01\x12\x18\n\x0b\x64\x65scription\x18\r \x01(\tH\t\x88\x01\x01\x12\x18\n\x0bmultiple_of\x18\x0e \x01(\x02H\n\x88\x01\x01\x12\x11\n\x07\x65xample\x18\x0f \x01(\x02H\x01\x12\x19\n\x0f\x65xample_factory\x18\x10 \x01(\tH\x01\x12\x12\n\x05\x66ield\x18\x11 \x01(\tH\x0b\x88\x01\x01\x12\x11\n\x04type\x18\x12 \x01(\tH\x0c\x88\x01\x01\x12\x12\n\x05title\x18\x13 \x01(\tH\r\x88\x01\x01\x12\x12\n\x05\x65xtra\x18\x14 \x01(\tH\x0e\x88\x01\x01\x42\x10\n\x0e\x64\x65\x66\x61ult_configB\x10\n\x0e\x65xample_configB\x08\n\x06_constB\x05\n\x03_ltB\x05\n\x03_leB\x05\n\x03_gtB\x05\n\x03_geB\t\n\x07_enableB\x08\n\x06_aliasB\x0e\n\x0c_descriptionB\x0e\n\x0c_multiple_ofB\x08\n\x06_fieldB\x07\n\x05_typeB\x08\n\x06_titleB\x08\n\x06_extra\"\xc7\x04\n\x0bSInt64Rules\x12\x12\n\x05\x63onst\x18\x01 \x01(\x12H\x02\x88\x01\x01\x12\x0f\n\x02lt\x18\x02 \x01(\x12H\x03\x88\x01\x01\x12\x0f\n\x02le\x18\x03 \x01(\x12H\x04\x88\x01\x01\x12\x0f\n\x02gt\x18\x04 \x01(\x12H\x05\x88\x01\x01\x12\x0f\n\x02ge\x18\x05 \x01(\x12H\x06\x88\x01\x01\x12\n\n\x02in\x18\x06 \x03(\x12\x12\x0e\n\x06not_in\x18\x07 \x03(\x12\x12\x13\n\x06\x65nable\x18\x08 \x01(\x08H\x07\x88\x01\x01\x12\x11\n\x07\x64\x65\x66\x61ult\x18\t \x01(\x02H\x00\x12\x19\n\x0f\x64\x65\x66\x61ult_factory\x18\n \x01(\tH\x00\x12\x16\n\x0cmiss_default\x18\x0b \x01(\x08H\x00\x12\x12\n\x05\x61lias\x18\x0c \x01(\tH\x08\x88\x01\x01\x12\x18\n\x0b\x64\x65scription\x18\r \x01(\tH\t\x88\x01\x01\x12\x18\n\x0bmultiple_of\x18\x0e \x01(\x02H\n\x88\x01\x01\x12\x11\n\x07\x65xample\x18\x0f \x01(\x02H\x01\x12\x19\n\x0f\x65xample_factory\x18\x10 \x01(\tH\x01\x12\x12\n\x05\x66ield\x18\x11 \x01(\tH\x0b\x88\x01\x01\x12\x11\n\x04type\x18\x12 \x01(\tH\x0c\x88\x01\x01\x12\x12\n\x05title\x18\x13 \x01(\tH\r\x88\x01\x01\x12\x12\n\x05\x65xtra\x18\x14 \x01(\tH\x0e\x88\x01\x01\x42\x10\n\x0e\x64\x65\x66\x61ult_configB\x10\n\x0e\x65xample_configB\x08\n\x06_constB\x05\n\x03_ltB\x05\n\x03_leB\x05\n\x03_gtB\x05\n\x03_geB\t\n\x07_enableB\x08\n\x06_aliasB\x0e\n\x0c_descriptionB\x0e\n\x0c_multiple_ofB\x08\n\x06_fieldB\x07\n\x05_typeB\x08\n\x06_titleB\x08\n\x06_extra\"\xc8\x04\n\x0c\x46ixed32Rules\x12\x12\n\x05\x63onst\x18\x01 \x01(\x07H\x02\x88\x01\x01\x12\x0f\n\x02lt\x18\x02 \x01(\x07H\x03\x88\x01\x01\x12\x0f\n\x02le\x18\x03 \x01(\x07H\x04\x88\x01\x01\x12\x0f\n\x02gt\x18\x04 \x01(\x07H\x05\x88\x01\x01\x12\x0f\n\x02ge\x18\x05 \x01(\x07H\x06\x88\x01\x01\x12\n\n\x02in\x18\x06 \x03(\x07\x12\x0e\n\x06not_in\x18\x07 \x03(\x07\x12\x13\n\x06\x65nable\x18\x08 \x01(\x08H\x07\x88\x01\x01\x12\x11\n\x07\x64\x65\x66\x61ult\x18\t \x01(\x02H\x00\x12\x19\n\x0f\x64\x65\x66\x61ult_factory\x18\n \x01(\tH\x00\x12\x16\n\x0cmiss_default\x18\x0b \x01(\x08H\x00\x12\x12\n\x05\x61lias\x18\x0c \x01(\tH\x08\x88\x01\x01\x12\x18\n\x0b\x64\x65scription\x18\r \x01(\tH\t\x88\x01\x01\x12\x18\n\x0bmultiple_of\x18\x0e \x01(\x02H\n\x88\x01\x01\x12\x11\n\x07\x65xample\x18\x0f \x01(\x02H\x01\x12\x19\n\x0f\x65xample_factory\x18\x10 \x01(\tH\x01\x12\x12\n\x05\x66ield\x18\x11 \x01(\tH\x0b\x88\x01\x01\x12\x11\n\x04type\x18\x12 \x01(\tH\x0c\x88\x01\x01\x12\x12\n\x05title\x18\x13 \x01(\tH\r\x88\x01\x01\x12\x12\n\x05\x65xtra\x18\x14 \x01(\tH\x0e\x88\x01\x01\x42\x10\n\x0e\x64\x65\x66\x61ult_configB\x10\n\x0e\x65xample_configB\x08\n\x06_constB\x05\n\x03_ltB\x05\n\x03_leB\x05\n\x03_gtB\x05\n\x03_geB\t\n\x07_enableB\x08\n\x06_aliasB\x0e\n\x0c_descriptionB\x0e\n\x0c_multiple_ofB\x08\n\x06_fieldB\x07\n\x05_typeB\x08\n\x06_titleB\x08\n\x06_extra\"\xc8\x04\n\x0c\x46ixed64Rules\x12\x12\n\x05\x63onst\x18\x01 \x01(\x06H\x02\x88\x01\x01\x12\x0f\n\x02lt\x18\x02 \x01(\x06H\x03\x88\x01\x01\x12\x0f\n\x02le\x18\x03 \x01(\x06H\x04\x88\x01\x01\x12\x0f\n\x02gt\x18\x04 \x01(\x06H\x05\x88\x01\x01\x12\x0f\n\x02ge\x18\x05 \x01(\x06H\x06\x88\x01\x01\x12\n\n\x02in\x18\x06 \x03(\x06\x12\x0e\n\x06not_in\x18\x07 \x03(\x06\x12\x13\n\x06\x65nable\x18\x08 \x01(\x08H\x07\x88\x01\x01\x12\x11\n\x07\x64\x65\x66\x61ult\x18\t \x01(\x02H\x00\x12\x19\n\x0f\x64\x65\x66\x61ult_factory\x18\n \x01(\tH\x00\x12\x16\n\x0cmiss_default\x18\x0b \x01(\x08H\x00\x12\x12\n\x05\x61lias\x18\x0c \x01(\tH\x08\x88\x01\x01\x12\x18\n\x0b\x64\x65scription\x18\r \x01(\tH\t\x88\x01\x01\x12\x18\n\x0bmultiple_of\x18\x0e \x01(\x02H\n\x88\x01\x01\x12\x11\n\x07\x65xample\x18\x0f \x01(\x02H\x01\x12\x19\n\x0f\x65xample_factory\x18\x10 \x01(\tH\x01\x12\x12\n\x05\x66ield\x18\x11 \x01(\tH\x0b\x88\x01\x01\x12\x11\n\x04type\x18\x12 \x01(\tH\x0c\x88\x01\x01\x12\x12\n\x05title\x18\x13 \x01(\tH\r\x88\x01\x01\x12\x12\n\x05\x65xtra\x18\x14 \x01(\tH\x0e\x88\x01\x01\x42\x10\n\x0e\x64\x65\x66\x61ult_configB\x10\n\x0e\x65xample_configB\x08\n\x06_constB\x05\n\x03_ltB\x05\n\x03_leB\x05\n\x03_gtB\x05\n\x03_geB\t\n\x07_enableB\x08\n\x06_aliasB\x0e\n\x0c_descriptionB\x0e\n\x0c_multiple_ofB\x08\n\x06_fieldB\x07\n\x05_typeB\x08\n\x06_titleB\x08\n\x06_extra\"\xc9\x04\n\rSFixed32Rules\x12\x12\n\x05\x63onst\x18\x01 \x01(\x0fH\x02\x88\x01\x01\x12\x0f\n\x02lt\x18\x02 \x01(\x0fH\x03\x88\x01\x01\x12\x0f\n\x02le\x18\x03 \x01(\x0fH\x04\x88\x01\x01\x12\x0f\n\x02gt\x18\x04 \x01(\x0fH\x05\x88\x01\x01\x12\x0f\n\x02ge\x18\x05 \x01(\x0fH\x06\x88\x01\x01\x12\n\n\x02in\x18\x06 \x03(\x0f\x12\x0e\n\x06not_in\x18\x07 \x03(\x0f\x12\x13\n\x06\x65nable\x18\x08 \x01(\x08H\x07\x88\x01\x01\x12\x11\n\x07\x64\x65\x66\x61ult\x18\t \x01(\x02H\x00\x12\x19\n\x0f\x64\x65\x66\x61ult_factory\x18\n \x01(\tH\x00\x12\x16\n\x0cmiss_default\x18\x0b \x01(\x08H\x00\x12\x12\n\x05\x61lias\x18\x0c \x01(\tH\x08\x88\x01\x01\x12\x18\n\x0b\x64\x65scription\x18\r \x01(\tH\t\x88\x01\x01\x12\x18\n\x0bmultiple_of\x18\x0e \x01(\x02H\n\x88\x01\x01\x12\x11\n\x07\x65xample\x18\x0f \x01(\x02H\x01\x12\x19\n\x0f\x65xample_factory\x18\x10 \x01(\tH\x01\x12\x12\n\x05\x66ield\x18\x11 \x01(\tH\x0b\x88\x01\x01\x12\x11\n\x04type\x18\x12 \x01(\tH\x0c\x88\x01\x01\x12\x12\n\x05title\x18\x13 \x01(\tH\r\x88\x01\x01\x12\x12\n\x05\x65xtra\x18\x14 \x01(\tH\x0e\x88\x01\x01\x42\x10\n\x0e\x64\x65\x66\x61ult_configB\x10\n\x0e\x65xample_configB\x08\n\x06_constB\x05\n\x03_ltB\x05\n\x03_leB\x05\n\x03_gtB\x05\n\x03_geB\t\n\x07_enableB\x08\n\x06_aliasB\x0e\n\x0c_descriptionB\x0e\n\x0c_multiple_ofB\x08\n\x06_fieldB\x07\n\x05_typeB\x08\n\x06_titleB\x08\n\x06_extra\"\xc9\x04\n\rSFixed64Rules\x12\x12\n\x05\x63onst\x18\x01 \x01(\x10H\x02\x88\x01\x01\x12\x0f\n\x02lt\x18\x02 \x01(\x10H\x03\x88\x01\x01\x12\x0f\n\x02le\x18\x03 \x01(\x10H\x04\x88\x01\x01\x12\x0f\n\x02gt\x18\x04 \x01(\x10H\x05\x88\x01\x01\x12\x0f\n\x02ge\x18\x05 \x01(\x10H\x06\x88\x01\x01\x12\n\n\x02in\x18\x06 \x03(\x10\x12\x0e\n\x06not_in\x18\x07 \x03(\x10\x12\x13\n\x06\x65nable\x18\x08 \x01(\x08H\x07\x88\x01\x01\x12\x11\n\x07\x64\x65\x66\x61ult\x18\t \x01(\x02H\x00\x12\x19\n\x0f\x64\x65\x66\x61ult_factory\x18\n \x01(\tH\x00\x12\x16\n\x0cmiss_default\x18\x0b \x01(\x08H\x00\x12\x12\n\x05\x61lias\x18\x0c \x01(\tH\x08\x88\x01\x01\x12\x18\n\x0b\x64\x65scription\x18\r \x01(\tH\t\x88\x01\x01\x12\x18\n\x0bmultiple_of\x18\x0e \x01(\x02H\n\x88\x01\x01\x12\x11\n\x07\x65xample\x18\x0f \x01(\x02H\x01\x12\x19\n\x0f\x65xample_factory\x18\x10 \x01(\tH\x01\x12\x12\n\x05\x66ield\x18\x11 \x01(\tH\x0b\x88\x01\x01\x12\x11\n\x04type\x18\x12 \x01(\tH\x0c\x88\x01\x01\x12\x12\n\x05title\x18\x13 \x01(\tH\r\x88\x01\x01\x12\x12\n\x05\x65xtra\x18\x14 \x01(\tH\x0e\x88\x01\x01\x42\x10\n\x0e\x64\x65\x66\x61ult_configB\x10\n\x0e\x65xample_configB\x08\n\x06_constB\x05\n\x03_ltB\x05\n\x03_leB\x05\n\x03_gtB\x05\n\x03_geB\t\n\x07_enableB\x08\n\x06_aliasB\x0e\n\x0c_descriptionB\x0e\n\x0c_multiple_ofB\x08\n\x06_fieldB\x07\n\x05_typeB\x08\n\x06_titleB\x08\n\x06_extra\"\xe6\x02\n\tBoolRules\x12\x12\n\x05\x63onst\x18\x01 \x01(\x08H\x01\x88\x01\x01\x12\x13\n\x06\x65nable\x18\x02 \x01(\x08H\x02\x88\x01\x01\x12\x11\n\x07\x64\x65\x66\x61ult\x18\x03 \x01(\x08H\x00\x12\x16\n\x0cmiss_default\x18\x04 \x01(\x08H\x00\x12\x12\n\x05\x61lias\x18\x05 \x01(\tH\x03\x88\x01\x01\x12\x18\n\x0b\x64\x65scription\x18\x06 \x01(\tH\x04\x88\x01\x01\x12\x14\n\x07\x65xample\x18\x07 \x01(\x08H\x05\x88\x01\x01\x12\x12\n\x05\x66ield\x18\x08 \x01(\tH\x06\x88\x01\x01\x12\x11\n\x04type\x18\t \x01(\tH\x07\x88\x01\x01\x12\x12\n\x05title\x18\x13 \x01(\tH\x08\x88\x01\x01\x12\x12\n\x05\x65xtra\x18\x14 \x01(\tH\t\x88\x01\x01\x42\x10\n\x0e\x64\x65\x66\x61ult_configB\x08\n\x06_constB\t\n\x07_enableB\x08\n\x06_aliasB\x0e\n\x0c_descriptionB\n\n\x08_exampleB\x08\n\x06_fieldB\x07\n\x05_typeB\x08\n\x06_titleB\x08\n\x06_extra\"\x98\x07\n\x0bStringRules\x12\x12\n\x05\x63onst\x18\x01 \x01(\tH\x03\x88\x01\x01\x12\x10\n\x03len\x18\x02 \x01(\x04H\x04\x88\x01\x01\x12\x17\n\nmin_length\x18\x03 \x01(\x04H\x05\x88\x01\x01\x12\x17\n\nmax_length\x18\x04 \x01(\x04H\x06\x88\x01\x01\x12\x14\n\x07pattern\x18\x05 \x01(\tH\x07\x88\x01\x01\x12\x13\n\x06prefix\x18\x06 \x01(\tH\x08\x88\x01\x01\x12\x13\n\x06suffix\x18\x07 \x01(\tH\t\x88\x01\x01\x12\x15\n\x08\x63ontains\x18\x08 \x01(\tH\n\x88\x01\x01\x12\x19\n\x0cnot_contains\x18\t \x01(\tH\x0b\x88\x01\x01\x12\n\n\x02in\x18\n \x03(\t\x12\x0e\n\x06not_in\x18\x0b \x03(\t\x12\x0f\n\x05\x65mail\x18\x0c \x01(\x08H\x00\x12\x12\n\x08hostname\x18\r \x01(\x08H\x00\x12\x0c\n\x02ip\x18\x0e \x01(\x08H\x00\x12\x0e\n\x04ipv4\x18\x0f \x01(\x08H\x00\x12\x0e\n\x04ipv6\x18\x10 \x01(\x08H\x00\x12\r\n\x03uri\x18\x11 \x01(\x08H\x00\x12\x11\n\x07uri_ref\x18\x12 \x01(\x08H\x00\x12\x11\n\x07\x61\x64\x64ress\x18\x15 \x01(\x08H\x00\x12\x0e\n\x04uuid\x18\x16 \x01(\x08H\x00\x12\x17\n\rpydantic_type\x18\x63 \x01(\tH\x00\x12\x13\n\x06\x65nable\x18\x17 \x01(\x08H\x0c\x88\x01\x01\x12\x11\n\x07\x64\x65\x66\x61ult\x18\x18 \x01(\tH\x01\x12\x19\n\x0f\x64\x65\x66\x61ult_factory\x18\x19 \x01(\tH\x01\x12\x16\n\x0cmiss_default\x18\x1a \x01(\x08H\x01\x12\x12\n\x05\x61lias\x18\x1b \x01(\tH\r\x88\x01\x01\x12\x18\n\x0b\x64\x65scription\x18\x1c \x01(\tH\x0e\x88\x01\x01\x12\x11\n\x07\x65xample\x18\x1e \x01(\tH\x02\x12\x19\n\x0f\x65xample_factory\x18\x1f \x01(\tH\x02\x12\x12\n\x05\x66ield\x18  \x01(\tH\x0f\x88\x01\x01\x12\x11\n\x04type\x18! \x01(\tH\x10\x88\x01\x01\x12\x12\n\x05title\x18\" \x01(\tH\x11\x88\x01\x01\x12\x12\n\x05\x65xtra\x18\x14 \x01(\tH\x12\x88\x01\x01\x42\x0c\n\nwell_knownB\x10\n\x0e\x64\x65\x66\x61ult_configB\x10\n\x0e\x65xample_configB\x08\n\x06_constB\x06\n\x04_lenB\r\n\x0b_min_lengthB\r\n\x0b_max_lengthB\n\n\x08_patternB\t\n\x07_prefixB\t\n\x07_suffixB\x0b\n\t_containsB\x0f\n\r_not_containsB\t\n\x07_enableB\x08\n\x06_aliasB\x0e\n\x0c_descriptionB\x08\n\x06_fieldB\x07\n\x05_typeB\x08\n\x06_titleB\x08\n\x06_extra\"\xd6\x05\n\nBytesRules\x12\x12\n\x05\x63onst\x18\x01 \x01(\x0cH\x03\x88\x01\x01\x12\x17\n\nmin_length\x18\x02 \x01(\x04H\x04\x88\x01\x01\x12\x17\n\nmax_length\x18\x03 \x01(\x04H\x05\x88\x01\x01\x12\x13\n\x06prefix\x18\x05 \x01(\x0cH\x06\x88\x01\x01\x12\x13\n\x06suffix\x18\x06 \x01(\x0cH\x07\x88\x01\x01\x12\x15\n\x08\x63ontains\x18\x07 \x01(\x0cH\x08\x88\x01\x01\x12\n\n\x02in\x18\x08 \x03(\x0c\x12\x0e\n\x06not_in\x18\t \x03(\x0c\x12\x13\n\x06\x65nable\x18\n \x01(\x08H\t\x88\x01\x01\x12\x11\n\x07\x64\x65\x66\x61ult\x18\x0b \x01(\x0cH\x00\x12\x19\n\x0f\x64\x65\x66\x61ult_factory\x18\x0c \x01(\tH\x00\x12\x16\n\x0cmiss_default\x18\r \x01(\x08H\x00\x12\x12\n\x05\x61lias\x18\x0e \x01(\tH\n\x88\x01\x01\x12\x18\n\x0b\x64\x65scription\x18\x0f \x01(\tH\x0b\x88\x01\x01\x12\x18\n\x0bmultiple_of\x18\x10 \x01(\x02H\x0c\x88\x01\x01\x12\x11\n\x07\x65xample\x18\x11 \x01(\x0cH\x01\x12\x19\n\x0f\x65xample_factory\x18\x12 \x01(\tH\x01\x12\x12\n\x05\x66ield\x18\x13 \x01(\tH\r\x88\x01\x01\x12\x11\n\x04type\x18\x14 \x01(\tH\x0e\x88\x01\x01\x12\x0c\n\x02ip\x18\x15 \x01(\x08H\x02\x12\x0e\n\x04ipv4\x18\x16 \x01(\x08H\x02\x12\x0e\n\x04ipv6\x18\x17 \x01(\x08H\x02\x12\x12\n\x05title\x18\x18 \x01(\tH\x0f\x88\x01\x01\x12\x12\n\x05\x65xtra\x18\x19 \x01(\tH\x10\x88\x01\x01\x42\x10\n\x0e\x64\x65\x66\x61ult_configB\x10\n\x0e\x65xample_configB\x0c\n\nwell_knownB\x08\n\x06_constB\r\n\x0b_min_lengthB\r\n\x0b_max_lengthB\t\n\x07_prefixB\t\n\x07_suffixB\x0b\n\t_containsB\t\n\x07_enableB\x08\n\x06_aliasB\x0e\n\x0c_descriptionB\x0e\n\x0c_multiple_ofB\x08\n\x06_fieldB\x07\n\x05_typeB\x08\n\x06_titleB\x08\n\x06_extra\"\x9f\x03\n\tEnumRules\x12\x12\n\x05\x63onst\x18\x01 \x01(\x05H\x02\x88\x01\x01\x12\n\n\x02in\x18\x03 \x03(\x05\x12\x0e\n\x06not_in\x18\x04 \x03(\x05\x12\x13\n\x06\x65nable\x18\x08 \x01(\x08H\x03\x88\x01\x01\x12\x11\n\x07\x64\x65\x66\x61ult\x18\t \x01(\x05H\x00\x12\x19\n\x0f\x64\x65\x66\x61ult_factory\x18\n \x01(\tH\x00\x12\x16\n\x0cmiss_default\x18\x0b \x01(\x08H\x00\x12\x12\n\x05\x61lias\x18\x0c \x01(\tH\x04\x88\x01\x01\x12\x18\n\x0b\x64\x65scription\x18\r \x01(\tH\x05\x88\x01\x01\x12\x11\n\x07\x65xample\x18\x0f \x01(\x05H\x01\x12\x19\n\x0f\x65xample_factory\x18\x10 \x01(\tH\x01\x12\x12\n\x05\x66ield\x18\x11 \x01(\tH\x06\x88\x01\x01\x12\x12\n\x05title\x18\x12 \x01(\tH\x07\x88\x01\x01\x12\x12\n\x05\x65xtra\x18\x14 \x01(\tH\x08\x88\x01\x01\x42\x10\n\x0e\x64\x65\x66\x61ult_configB\x10\n\x0e\x65xample_configB\x08\n\x06_constB\t\n\x07_enableB\x08\n\x06_aliasB\x0e\n\x0c_descriptionB\x08\n\x06_fieldB\x08\n\x06_titleB\x08\n\x06_extra\"\xc4\x03\n\x0cMessageRules\x12\x11\n\x04skip\x18\x01 \x01(\x08H\x02\x88\x01\x01\x12\x15\n\x08required\x18\x02 \x01(\x08H\x03\x88\x01\x01\x12\x13\n\x06\x65nable\x18\x08 \x01(\x08H\x04\x88\x01\x01\x12\x11\n\x07\x64\x65\x66\x61ult\x18\t \x01(\x02H\x00\x12\x19\n\x0f\x64\x65\x66\x61ult_factory\x18\n \x01(\tH\x00\x12\x16\n\x0cmiss_default\x18\x0b \x01(\x08H\x00\x12\x12\n\x05\x61lias\x18\x0c \x01(\tH\x05\x88\x01\x01\x12\x18\n\x0b\x64\x65scription\x18\r \x01(\tH\x06\x88\x01\x01\x12\x11\n\x07\x65xample\x18\x0f \x01(\x02H\x01\x12\x19\n\x0f\x65xample_factory\x18\x10 \x01(\tH\x01\x12\x12\n\x05\x66ield\x18\x11 \x01(\tH\x07\x88\x01\x01\x12\x11\n\x04type\x18\x12 \x01(\tH\x08\x88\x01\x01\x12\x12\n\x05title\x18\x13 \x01(\tH\t\x88\x01\x01\x12\x12\n\x05\x65xtra\x18\x14 \x01(\tH\n\x88\x01\x01\x42\x10\n\x0e\x64\x65\x66\x61ult_configB\x10\n\x0e\x65xample_configB\x07\n\x05_skipB\x0b\n\t_requiredB\t\n\x07_enableB\x08\n\x06_aliasB\x0e\n\x0c_descriptionB\x08\n\x06_fieldB\x07\n\x05_typeB\x08\n\x06_titleB\x08\n\x06_extra\"\x83\x04\n\rRepeatedRules\x12\x16\n\tmin_items\x18\x01 \x01(\x04H\x02\x88\x01\x01\x12\x16\n\tmax_items\x18\x02 \x01(\x04H\x03\x88\x01\x01\x12\x13\n\x06unique\x18\x03 \x01(\x08H\x04\x88\x01\x01\x12,\n\x05items\x18\x04 \x01(\x0b\x32\x18.p2p_validate.FieldRulesH\x05\x88\x01\x01\x12\x13\n\x06\x65nable\x18\x08 \x01(\x08H\x06\x88\x01\x01\x12\x19\n\x0f\x64\x65\x66\x61ult_factory\x18\n \x01(\tH\x00\x12\x16\n\x0cmiss_default\x18\x0b \x01(\x08H\x00\x12\x12\n\x05\x61lias\x18\x0c \x01(\tH\x07\x88\x01\x01\x12\x18\n\x0b\x64\x65scription\x18\r \x01(\tH\x08\x88\x01\x01\x12\x19\n\x0f\x65xample_factory\x18\x10 \x01(\tH\x01\x12\x12\n\x05\x66ield\x18\x11 \x01(\tH\t\x88\x01\x01\x12\x11\n\x04type\x18\x12 \x01(\tH\n\x88\x01\x01\x12\x12\n\x05title\x18\x13 \x01(\tH\x0b\x88\x01\x01\x12\x12\n\x05\x65xtra\x18\x14 \x01(\tH\x0c\x88\x01\x01\x42\x10\n\x0e\x64\x65\x66\x61ult_configB\x10\n\x0e\x65xample_configB\x0c\n\n_min_itemsB\x0c\n\n_max_itemsB\t\n\x07_uniqueB\x08\n\x06_itemsB\t\n\x07_enableB\x08\n\x06_aliasB\x0e\n\x0c_descriptionB\x08\n\x06_fieldB\x07\n\x05_typeB\x08\n\x06_titleB\x08\n\x06_extra\"\x96\x04\n\x08MapRules\x12\x16\n\tmin_pairs\x18\x01 \x01(\x04H\x02\x88\x01\x01\x12\x16\n\tmax_pairs\x18\x02 \x01(\x04H\x03\x88\x01\x01\x12+\n\x04keys\x18\x04 \x01(\x0b\x32\x18.p2p_validate.FieldRulesH\x04\x88\x01\x01\x12-\n\x06values\x18\x05 \x01(\x0b\x32\x18.p2p_validate.FieldRulesH\x05\x88\x01\x01\x12\x13\n\x06\x65nable\x18\x08 \x01(\x08H\x06\x88\x01\x01\x12\x19\n\x0f\x64\x65\x66\x61ult_factory\x18\n \x01(\tH\x00\x12\x16\n\x0cmiss_default\x18\x0b \x01(\x08H\x00\x12\x12\n\x05\x61lias\x18\x0c \x01(\tH\x07\x88\x01\x01\x12\x18\n\x0b\x64\x65scription\x18\r \x01(\tH\x08\x88\x01\x01\x12\x19\n\x0f\x65xample_factory\x18\x10 \x01(\tH\x01\x12\x12\n\x05\x66ield\x18\x11 \x01(\tH\t\x88\x01\x01\x12\x11\n\x04type\x18\x12 \x01(\tH\n\x88\x01\x01\x12\x12\n\x05title\x18\x13 \x01(\tH\x0b\x88\x01\x01\x12\x12\n\x05\x65xtra\x18\x14 \x01(\tH\x0c\x88\x01\x01\x42\x10\n\x0e\x64\x65\x66\x61ult_configB\x10\n\x0e\x65xample_configB\x0c\n\n_min_pairsB\x0c\n\n_max_pairsB\x07\n\x05_keysB\t\n\x07_valuesB\t\n\x07_enableB\x08\n\x06_aliasB\x0e\n\x0c_descriptionB\x08\n\x06_fieldB\x07\n\x05_typeB\x08\n\x06_titleB\x08\n\x06_extra\"\xa4\x03\n\x08\x41nyRules\x12\x15\n\x08required\x18\x01 \x01(\x08H\x02\x88\x01\x01\x12\n\n\x02in\x18\x02 \x03(\t\x12\x0e\n\x06not_in\x18\x03 \x03(\t\x12\x13\n\x06\x65nable\x18\x08 \x01(\x08H\x03\x88\x01\x01\x12\x11\n\x07\x64\x65\x66\x61ult\x18\t \x01(\tH\x00\x12\x19\n\x0f\x64\x65\x66\x61ult_factory\x18\n \x01(\tH\x00\x12\x16\n\x0cmiss_default\x18\x0b \x01(\x08H\x00\x12\x12\n\x05\x61lias\x18\x0c \x01(\tH\x04\x88\x01\x01\x12\x18\n\x0b\x64\x65scription\x18\r \x01(\tH\x05\x88\x01\x01\x12\x11\n\x07\x65xample\x18\x0e \x01(\tH\x01\x12\x19\n\x0f\x65xample_factory\x18\x0f \x01(\tH\x01\x12\x12\n\x05\x66ield\x18\x10 \x01(\tH\x06\x88\x01\x01\x12\x12\n\x05title\x18\x11 \x01(\tH\x07\x88\x01\x01\x12\x12\n\x05\x65xtra\x18\x14 \x01(\tH\x08\x88\x01\x01\x42\x10\n\x0e\x64\x65\x66\x61ult_configB\x10\n\x0e\x65xample_configB\x0b\n\t_requiredB\t\n\x07_enableB\x08\n\x06_aliasB\x0e\n\x0c_descriptionB\x08\n\x06_fieldB\x08\n\x06_titleB\x08\n\x06_extra\"\x92\x06\n\rDurationRules\x12-\n\x05\x63onst\x18\x02 \x01(\x0b\x32\x19.google.protobuf.DurationH\x02\x88\x01\x01\x12*\n\x02lt\x18\x03 \x01(\x0b\x32\x19.google.protobuf.DurationH\x03\x88\x01\x01\x12*\n\x02le\x18\x04 \x01(\x0b\x32\x19.google.protobuf.DurationH\x04\x88\x01\x01\x12*\n\x02gt\x18\x05 \x01(\x0b\x32\x19.google.protobuf.DurationH\x05\x88\x01\x01\x12*\n\x02ge\x18\x06 \x01(\x0b\x32\x19.google.protobuf.DurationH\x06\x88\x01\x01\x12%\n\x02in\x18\x07 \x03(\x0b\x32\x19.google.protobuf.Duration\x12)\n\x06not_in\x18\x08 \x03(\x0b\x32\x19.google.protobuf.Duration\x12\x13\n\x06\x65nable\x18\x0e \x01(\x08H\x07\x88\x01\x01\x12,\n\x07\x64\x65\x66\x61ult\x18\t \x01(\x0b\x32\x19.google.protobuf.DurationH\x00\x12\x19\n\x0f\x64\x65\x66\x61ult_factory\x18\n \x01(\tH\x00\x12\x16\n\x0cmiss_default\x18\x0b \x01(\x08H\x00\x12\x12\n\x05\x61lias\x18\x0c \x01(\tH\x08\x88\x01\x01\x12\x18\n\x0b\x64\x65scription\x18\r \x01(\tH\t\x88\x01\x01\x12,\n\x07\x65xample\x18\x0f \x01(\x0b\x32\x19.google.protobuf.DurationH\x01\x12\x19\n\x0f\x65xample_factory\x18\x10 \x01(\tH\x01\x12\x12\n\x05\x66ield\x18\x11 \x01(\tH\n\x88\x01\x01\x12\x11\n\x04type\x18\x12 \x01(\tH\x0b\x88\x01\x01\x12\x12\n\x05title\x18\x13 \x01(\tH\x0c\x88\x01\x01\x12\x12\n\x05\x65xtra\x18\x14 \x01(\tH\r\x88\x01\x01\x42\x10\n\x0e\x64\x65\x66\x61ult_configB\x10\n\x0e\x65xample_configB\x08\n\x06_constB\x05\n\x03_ltB\x05\n\x03_leB\x05\n\x03_gtB\x05\n\x03_geB\t\n\x07_enableB\x08\n\x06_aliasB\x0e\n\x0c_descriptionB\x08\n\x06_fieldB\x07\n\x05_typeB\x08\n\x06_titleB\x08\n\x06_extra\"\xc3\x06\n\x0eTimestampRules\x12.\n\x05\x63onst\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.TimestampH\x02\x88\x01\x01\x12+\n\x02lt\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.TimestampH\x03\x88\x01\x01\x12+\n\x02le\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.TimestampH\x04\x88\x01\x01\x12+\n\x02gt\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.TimestampH\x05\x88\x01\x01\x12+\n\x02ge\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.TimestampH\x06\x88\x01\x01\x12\x13\n\x06lt_now\x18\x07 \x01(\x08H\x07\x88\x01\x01\x12\x13\n\x06gt_now\x18\x08 \x01(\x08H\x08\x88\x01\x01\x12.\n\x06within\x18\t \x01(\x0b\x32\x19.google.protobuf.DurationH\t\x88\x01\x01\x12\x13\n\x06\x65nable\x18\n \x01(\x08H\n\x88\x01\x01\x12-\n\x07\x64\x65\x66\x61ult\x18\x0b \x01(\x0b\x32\x1a.google.protobuf.TimestampH\x00\x12\x19\n\x0f\x64\x65\x66\x61ult_factory\x18\x0c \x01(\tH\x00\x12\x16\n\x0cmiss_default\x18\r \x01(\x08H\x00\x12\x12\n\x05\x61lias\x18\x0e \x01(\tH\x0b\x88\x01\x01\x12\x18\n\x0b\x64\x65scription\x18\x0f \x01(\tH\x0c\x88\x01\x01\x12-\n\x07\x65xample\x18\x10 \x01(\x0b\x32\x1a.google.protobuf.TimestampH\x01\x12\x19\n\x0f\x65xample_factory\x18\x11 \x01(\tH\x01\x12\x12\n\x05\x66ield\x18\x12 \x01(\tH\r\x88\x01\x01\x12\x11\n\x04type\x18\x13 \x01(\tH\x0e\x88\x01\x01\x12\x12\n\x05title\x18\x14 \x01(\tH\x0f\x88\x01\x01\x12\x12\n\x05\x65xtra\x18\x15 \x01(\tH\x10\x88\x01\x01\x42\x10\n\x0e\x64\x65\x66\x61ult_configB\x10\n\x0e\x65xample_configB\x08\n\x06_constB\x05\n\x03_ltB\x05\n\x03_leB\x05\n\x03_gtB\x05\n\x03_geB\t\n\x07_lt_nowB\t\n\x07_gt_nowB\t\n\x07_withinB\t\n\x07_enableB\x08\n\x06_aliasB\x0e\n\x0c_descriptionB\x08\n\x06_fieldB\x07\n\x05_typeB\x08\n\x06_titleB\x08\n\x06_extra:4\n\x07ignored\x12\x1f.google.protobuf.MessageOptions\x18\xb1\x08 \x01(\x08\x88\x01\x01:3\n\x08required\x12\x1d.google.protobuf.OneofOptions\x18\xb1\x08 \x01(\x08\x88\x01\x01:J\n\x05rules\x12\x1d.google.protobuf.FieldOptions\x18\xb1\x08 \x01(\x0b\x32\x18.p2p_validate.FieldRules\x88\x01\x01\x62\x06proto3'
   ,
   dependencies=[google_dot_protobuf_dot_descriptor__pb2.DESCRIPTOR,google_dot_protobuf_dot_duration__pb2.DESCRIPTOR,google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,])
 
@@ -383,6 +383,13 @@ _FLOATRULES = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='extra', full_name='p2p_validate.FloatRules.extra', index=19,
+      number=20, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -464,9 +471,14 @@ _FLOATRULES = _descriptor.Descriptor(
       index=13, containing_type=None,
       create_key=_descriptor._internal_create_key,
     fields=[]),
+    _descriptor.OneofDescriptor(
+      name='_extra', full_name='p2p_validate.FloatRules._extra',
+      index=14, containing_type=None,
+      create_key=_descriptor._internal_create_key,
+    fields=[]),
   ],
   serialized_start=1171,
-  serialized_end=1723,
+  serialized_end=1753,
 )
 
 
@@ -611,6 +623,13 @@ _DOUBLERULES = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='extra', full_name='p2p_validate.DoubleRules.extra', index=19,
+      number=20, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -692,9 +711,14 @@ _DOUBLERULES = _descriptor.Descriptor(
       index=13, containing_type=None,
       create_key=_descriptor._internal_create_key,
     fields=[]),
+    _descriptor.OneofDescriptor(
+      name='_extra', full_name='p2p_validate.DoubleRules._extra',
+      index=14, containing_type=None,
+      create_key=_descriptor._internal_create_key,
+    fields=[]),
   ],
-  serialized_start=1726,
-  serialized_end=2279,
+  serialized_start=1756,
+  serialized_end=2339,
 )
 
 
@@ -839,6 +863,13 @@ _INT32RULES = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='extra', full_name='p2p_validate.Int32Rules.extra', index=19,
+      number=20, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -920,9 +951,14 @@ _INT32RULES = _descriptor.Descriptor(
       index=13, containing_type=None,
       create_key=_descriptor._internal_create_key,
     fields=[]),
+    _descriptor.OneofDescriptor(
+      name='_extra', full_name='p2p_validate.Int32Rules._extra',
+      index=14, containing_type=None,
+      create_key=_descriptor._internal_create_key,
+    fields=[]),
   ],
-  serialized_start=2282,
-  serialized_end=2834,
+  serialized_start=2342,
+  serialized_end=2924,
 )
 
 
@@ -1067,6 +1103,13 @@ _INT64RULES = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='extra', full_name='p2p_validate.Int64Rules.extra', index=19,
+      number=20, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -1148,9 +1191,14 @@ _INT64RULES = _descriptor.Descriptor(
       index=13, containing_type=None,
       create_key=_descriptor._internal_create_key,
     fields=[]),
+    _descriptor.OneofDescriptor(
+      name='_extra', full_name='p2p_validate.Int64Rules._extra',
+      index=14, containing_type=None,
+      create_key=_descriptor._internal_create_key,
+    fields=[]),
   ],
-  serialized_start=2837,
-  serialized_end=3389,
+  serialized_start=2927,
+  serialized_end=3509,
 )
 
 
@@ -1295,6 +1343,13 @@ _UINT32RULES = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='extra', full_name='p2p_validate.UInt32Rules.extra', index=19,
+      number=20, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -1376,9 +1431,14 @@ _UINT32RULES = _descriptor.Descriptor(
       index=13, containing_type=None,
       create_key=_descriptor._internal_create_key,
     fields=[]),
+    _descriptor.OneofDescriptor(
+      name='_extra', full_name='p2p_validate.UInt32Rules._extra',
+      index=14, containing_type=None,
+      create_key=_descriptor._internal_create_key,
+    fields=[]),
   ],
-  serialized_start=3392,
-  serialized_end=3945,
+  serialized_start=3512,
+  serialized_end=4095,
 )
 
 
@@ -1523,6 +1583,13 @@ _UINT64RULES = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='extra', full_name='p2p_validate.UInt64Rules.extra', index=19,
+      number=20, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -1604,9 +1671,14 @@ _UINT64RULES = _descriptor.Descriptor(
       index=13, containing_type=None,
       create_key=_descriptor._internal_create_key,
     fields=[]),
+    _descriptor.OneofDescriptor(
+      name='_extra', full_name='p2p_validate.UInt64Rules._extra',
+      index=14, containing_type=None,
+      create_key=_descriptor._internal_create_key,
+    fields=[]),
   ],
-  serialized_start=3948,
-  serialized_end=4501,
+  serialized_start=4098,
+  serialized_end=4681,
 )
 
 
@@ -1751,6 +1823,13 @@ _SINT32RULES = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='extra', full_name='p2p_validate.SInt32Rules.extra', index=19,
+      number=20, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -1832,9 +1911,14 @@ _SINT32RULES = _descriptor.Descriptor(
       index=13, containing_type=None,
       create_key=_descriptor._internal_create_key,
     fields=[]),
+    _descriptor.OneofDescriptor(
+      name='_extra', full_name='p2p_validate.SInt32Rules._extra',
+      index=14, containing_type=None,
+      create_key=_descriptor._internal_create_key,
+    fields=[]),
   ],
-  serialized_start=4504,
-  serialized_end=5057,
+  serialized_start=4684,
+  serialized_end=5267,
 )
 
 
@@ -1979,6 +2063,13 @@ _SINT64RULES = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='extra', full_name='p2p_validate.SInt64Rules.extra', index=19,
+      number=20, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -2060,9 +2151,14 @@ _SINT64RULES = _descriptor.Descriptor(
       index=13, containing_type=None,
       create_key=_descriptor._internal_create_key,
     fields=[]),
+    _descriptor.OneofDescriptor(
+      name='_extra', full_name='p2p_validate.SInt64Rules._extra',
+      index=14, containing_type=None,
+      create_key=_descriptor._internal_create_key,
+    fields=[]),
   ],
-  serialized_start=5060,
-  serialized_end=5613,
+  serialized_start=5270,
+  serialized_end=5853,
 )
 
 
@@ -2207,6 +2303,13 @@ _FIXED32RULES = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='extra', full_name='p2p_validate.Fixed32Rules.extra', index=19,
+      number=20, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -2288,9 +2391,14 @@ _FIXED32RULES = _descriptor.Descriptor(
       index=13, containing_type=None,
       create_key=_descriptor._internal_create_key,
     fields=[]),
+    _descriptor.OneofDescriptor(
+      name='_extra', full_name='p2p_validate.Fixed32Rules._extra',
+      index=14, containing_type=None,
+      create_key=_descriptor._internal_create_key,
+    fields=[]),
   ],
-  serialized_start=5616,
-  serialized_end=6170,
+  serialized_start=5856,
+  serialized_end=6440,
 )
 
 
@@ -2435,6 +2543,13 @@ _FIXED64RULES = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='extra', full_name='p2p_validate.Fixed64Rules.extra', index=19,
+      number=20, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -2516,9 +2631,14 @@ _FIXED64RULES = _descriptor.Descriptor(
       index=13, containing_type=None,
       create_key=_descriptor._internal_create_key,
     fields=[]),
+    _descriptor.OneofDescriptor(
+      name='_extra', full_name='p2p_validate.Fixed64Rules._extra',
+      index=14, containing_type=None,
+      create_key=_descriptor._internal_create_key,
+    fields=[]),
   ],
-  serialized_start=6173,
-  serialized_end=6727,
+  serialized_start=6443,
+  serialized_end=7027,
 )
 
 
@@ -2663,6 +2783,13 @@ _SFIXED32RULES = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='extra', full_name='p2p_validate.SFixed32Rules.extra', index=19,
+      number=20, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -2744,9 +2871,14 @@ _SFIXED32RULES = _descriptor.Descriptor(
       index=13, containing_type=None,
       create_key=_descriptor._internal_create_key,
     fields=[]),
+    _descriptor.OneofDescriptor(
+      name='_extra', full_name='p2p_validate.SFixed32Rules._extra',
+      index=14, containing_type=None,
+      create_key=_descriptor._internal_create_key,
+    fields=[]),
   ],
-  serialized_start=6730,
-  serialized_end=7285,
+  serialized_start=7030,
+  serialized_end=7615,
 )
 
 
@@ -2891,6 +3023,13 @@ _SFIXED64RULES = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='extra', full_name='p2p_validate.SFixed64Rules.extra', index=19,
+      number=20, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -2972,9 +3111,14 @@ _SFIXED64RULES = _descriptor.Descriptor(
       index=13, containing_type=None,
       create_key=_descriptor._internal_create_key,
     fields=[]),
+    _descriptor.OneofDescriptor(
+      name='_extra', full_name='p2p_validate.SFixed64Rules._extra',
+      index=14, containing_type=None,
+      create_key=_descriptor._internal_create_key,
+    fields=[]),
   ],
-  serialized_start=7288,
-  serialized_end=7843,
+  serialized_start=7618,
+  serialized_end=8203,
 )
 
 
@@ -3056,6 +3200,13 @@ _BOOLRULES = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='extra', full_name='p2p_validate.BoolRules.extra', index=10,
+      number=20, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -3112,9 +3263,14 @@ _BOOLRULES = _descriptor.Descriptor(
       index=8, containing_type=None,
       create_key=_descriptor._internal_create_key,
     fields=[]),
+    _descriptor.OneofDescriptor(
+      name='_extra', full_name='p2p_validate.BoolRules._extra',
+      index=9, containing_type=None,
+      create_key=_descriptor._internal_create_key,
+    fields=[]),
   ],
-  serialized_start=7846,
-  serialized_end=8174,
+  serialized_start=8206,
+  serialized_end=8564,
 )
 
 
@@ -3350,6 +3506,13 @@ _STRINGRULES = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='extra', full_name='p2p_validate.StringRules.extra', index=32,
+      number=20, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -3451,9 +3614,14 @@ _STRINGRULES = _descriptor.Descriptor(
       index=17, containing_type=None,
       create_key=_descriptor._internal_create_key,
     fields=[]),
+    _descriptor.OneofDescriptor(
+      name='_extra', full_name='p2p_validate.StringRules._extra',
+      index=18, containing_type=None,
+      create_key=_descriptor._internal_create_key,
+    fields=[]),
   ],
-  serialized_start=8177,
-  serialized_end=9067,
+  serialized_start=8567,
+  serialized_end=9487,
 )
 
 
@@ -3626,6 +3794,13 @@ _BYTESRULES = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='extra', full_name='p2p_validate.BytesRules.extra', index=23,
+      number=25, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -3717,9 +3892,14 @@ _BYTESRULES = _descriptor.Descriptor(
       index=15, containing_type=None,
       create_key=_descriptor._internal_create_key,
     fields=[]),
+    _descriptor.OneofDescriptor(
+      name='_extra', full_name='p2p_validate.BytesRules._extra',
+      index=16, containing_type=None,
+      create_key=_descriptor._internal_create_key,
+    fields=[]),
   ],
-  serialized_start=9070,
-  serialized_end=9766,
+  serialized_start=9490,
+  serialized_end=10216,
 )
 
 
@@ -3822,6 +4002,13 @@ _ENUMRULES = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='extra', full_name='p2p_validate.EnumRules.extra', index=13,
+      number=20, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -3873,9 +4060,14 @@ _ENUMRULES = _descriptor.Descriptor(
       index=7, containing_type=None,
       create_key=_descriptor._internal_create_key,
     fields=[]),
+    _descriptor.OneofDescriptor(
+      name='_extra', full_name='p2p_validate.EnumRules._extra',
+      index=8, containing_type=None,
+      create_key=_descriptor._internal_create_key,
+    fields=[]),
   ],
-  serialized_start=9769,
-  serialized_end=10154,
+  serialized_start=10219,
+  serialized_end=10634,
 )
 
 
@@ -3978,6 +4170,13 @@ _MESSAGERULES = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='extra', full_name='p2p_validate.MessageRules.extra', index=13,
+      number=20, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -4039,9 +4238,14 @@ _MESSAGERULES = _descriptor.Descriptor(
       index=9, containing_type=None,
       create_key=_descriptor._internal_create_key,
     fields=[]),
+    _descriptor.OneofDescriptor(
+      name='_extra', full_name='p2p_validate.MessageRules._extra',
+      index=10, containing_type=None,
+      create_key=_descriptor._internal_create_key,
+    fields=[]),
   ],
-  serialized_start=10157,
-  serialized_end=10579,
+  serialized_start=10637,
+  serialized_end=11089,
 )
 
 
@@ -4144,6 +4348,13 @@ _REPEATEDRULES = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='extra', full_name='p2p_validate.RepeatedRules.extra', index=13,
+      number=20, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -4215,9 +4426,14 @@ _REPEATEDRULES = _descriptor.Descriptor(
       index=11, containing_type=None,
       create_key=_descriptor._internal_create_key,
     fields=[]),
+    _descriptor.OneofDescriptor(
+      name='_extra', full_name='p2p_validate.RepeatedRules._extra',
+      index=12, containing_type=None,
+      create_key=_descriptor._internal_create_key,
+    fields=[]),
   ],
-  serialized_start=10582,
-  serialized_end=11067,
+  serialized_start=11092,
+  serialized_end=11607,
 )
 
 
@@ -4320,6 +4536,13 @@ _MAPRULES = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='extra', full_name='p2p_validate.MapRules.extra', index=13,
+      number=20, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -4391,9 +4614,14 @@ _MAPRULES = _descriptor.Descriptor(
       index=11, containing_type=None,
       create_key=_descriptor._internal_create_key,
     fields=[]),
+    _descriptor.OneofDescriptor(
+      name='_extra', full_name='p2p_validate.MapRules._extra',
+      index=12, containing_type=None,
+      create_key=_descriptor._internal_create_key,
+    fields=[]),
   ],
-  serialized_start=11070,
-  serialized_end=11574,
+  serialized_start=11610,
+  serialized_end=12144,
 )
 
 
@@ -4496,6 +4724,13 @@ _ANYRULES = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='extra', full_name='p2p_validate.AnyRules.extra', index=13,
+      number=20, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -4547,9 +4782,14 @@ _ANYRULES = _descriptor.Descriptor(
       index=7, containing_type=None,
       create_key=_descriptor._internal_create_key,
     fields=[]),
+    _descriptor.OneofDescriptor(
+      name='_extra', full_name='p2p_validate.AnyRules._extra',
+      index=8, containing_type=None,
+      create_key=_descriptor._internal_create_key,
+    fields=[]),
   ],
-  serialized_start=11577,
-  serialized_end=11967,
+  serialized_start=12147,
+  serialized_end=12567,
 )
 
 
@@ -4687,6 +4927,13 @@ _DURATIONRULES = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='extra', full_name='p2p_validate.DurationRules.extra', index=18,
+      number=20, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -4763,9 +5010,14 @@ _DURATIONRULES = _descriptor.Descriptor(
       index=12, containing_type=None,
       create_key=_descriptor._internal_create_key,
     fields=[]),
+    _descriptor.OneofDescriptor(
+      name='_extra', full_name='p2p_validate.DurationRules._extra',
+      index=13, containing_type=None,
+      create_key=_descriptor._internal_create_key,
+    fields=[]),
   ],
-  serialized_start=11970,
-  serialized_end=12726,
+  serialized_start=12570,
+  serialized_end=13356,
 )
 
 
@@ -4910,6 +5162,13 @@ _TIMESTAMPRULES = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='extra', full_name='p2p_validate.TimestampRules.extra', index=19,
+      number=21, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -5001,9 +5260,14 @@ _TIMESTAMPRULES = _descriptor.Descriptor(
       index=15, containing_type=None,
       create_key=_descriptor._internal_create_key,
     fields=[]),
+    _descriptor.OneofDescriptor(
+      name='_extra', full_name='p2p_validate.TimestampRules._extra',
+      index=16, containing_type=None,
+      create_key=_descriptor._internal_create_key,
+    fields=[]),
   ],
-  serialized_start=12729,
-  serialized_end=13534,
+  serialized_start=13359,
+  serialized_end=14194,
 )
 
 _FIELDRULES.fields_by_name['message'].message_type = _MESSAGERULES
@@ -5145,6 +5409,9 @@ _FLOATRULES.fields_by_name['type'].containing_oneof = _FLOATRULES.oneofs_by_name
 _FLOATRULES.oneofs_by_name['_title'].fields.append(
   _FLOATRULES.fields_by_name['title'])
 _FLOATRULES.fields_by_name['title'].containing_oneof = _FLOATRULES.oneofs_by_name['_title']
+_FLOATRULES.oneofs_by_name['_extra'].fields.append(
+  _FLOATRULES.fields_by_name['extra'])
+_FLOATRULES.fields_by_name['extra'].containing_oneof = _FLOATRULES.oneofs_by_name['_extra']
 _DOUBLERULES.oneofs_by_name['default_config'].fields.append(
   _DOUBLERULES.fields_by_name['default'])
 _DOUBLERULES.fields_by_name['default'].containing_oneof = _DOUBLERULES.oneofs_by_name['default_config']
@@ -5196,6 +5463,9 @@ _DOUBLERULES.fields_by_name['type'].containing_oneof = _DOUBLERULES.oneofs_by_na
 _DOUBLERULES.oneofs_by_name['_title'].fields.append(
   _DOUBLERULES.fields_by_name['title'])
 _DOUBLERULES.fields_by_name['title'].containing_oneof = _DOUBLERULES.oneofs_by_name['_title']
+_DOUBLERULES.oneofs_by_name['_extra'].fields.append(
+  _DOUBLERULES.fields_by_name['extra'])
+_DOUBLERULES.fields_by_name['extra'].containing_oneof = _DOUBLERULES.oneofs_by_name['_extra']
 _INT32RULES.oneofs_by_name['default_config'].fields.append(
   _INT32RULES.fields_by_name['default'])
 _INT32RULES.fields_by_name['default'].containing_oneof = _INT32RULES.oneofs_by_name['default_config']
@@ -5247,6 +5517,9 @@ _INT32RULES.fields_by_name['type'].containing_oneof = _INT32RULES.oneofs_by_name
 _INT32RULES.oneofs_by_name['_title'].fields.append(
   _INT32RULES.fields_by_name['title'])
 _INT32RULES.fields_by_name['title'].containing_oneof = _INT32RULES.oneofs_by_name['_title']
+_INT32RULES.oneofs_by_name['_extra'].fields.append(
+  _INT32RULES.fields_by_name['extra'])
+_INT32RULES.fields_by_name['extra'].containing_oneof = _INT32RULES.oneofs_by_name['_extra']
 _INT64RULES.oneofs_by_name['default_config'].fields.append(
   _INT64RULES.fields_by_name['default'])
 _INT64RULES.fields_by_name['default'].containing_oneof = _INT64RULES.oneofs_by_name['default_config']
@@ -5298,6 +5571,9 @@ _INT64RULES.fields_by_name['type'].containing_oneof = _INT64RULES.oneofs_by_name
 _INT64RULES.oneofs_by_name['_title'].fields.append(
   _INT64RULES.fields_by_name['title'])
 _INT64RULES.fields_by_name['title'].containing_oneof = _INT64RULES.oneofs_by_name['_title']
+_INT64RULES.oneofs_by_name['_extra'].fields.append(
+  _INT64RULES.fields_by_name['extra'])
+_INT64RULES.fields_by_name['extra'].containing_oneof = _INT64RULES.oneofs_by_name['_extra']
 _UINT32RULES.oneofs_by_name['default_config'].fields.append(
   _UINT32RULES.fields_by_name['default'])
 _UINT32RULES.fields_by_name['default'].containing_oneof = _UINT32RULES.oneofs_by_name['default_config']
@@ -5349,6 +5625,9 @@ _UINT32RULES.fields_by_name['type'].containing_oneof = _UINT32RULES.oneofs_by_na
 _UINT32RULES.oneofs_by_name['_title'].fields.append(
   _UINT32RULES.fields_by_name['title'])
 _UINT32RULES.fields_by_name['title'].containing_oneof = _UINT32RULES.oneofs_by_name['_title']
+_UINT32RULES.oneofs_by_name['_extra'].fields.append(
+  _UINT32RULES.fields_by_name['extra'])
+_UINT32RULES.fields_by_name['extra'].containing_oneof = _UINT32RULES.oneofs_by_name['_extra']
 _UINT64RULES.oneofs_by_name['default_config'].fields.append(
   _UINT64RULES.fields_by_name['default'])
 _UINT64RULES.fields_by_name['default'].containing_oneof = _UINT64RULES.oneofs_by_name['default_config']
@@ -5400,6 +5679,9 @@ _UINT64RULES.fields_by_name['type'].containing_oneof = _UINT64RULES.oneofs_by_na
 _UINT64RULES.oneofs_by_name['_title'].fields.append(
   _UINT64RULES.fields_by_name['title'])
 _UINT64RULES.fields_by_name['title'].containing_oneof = _UINT64RULES.oneofs_by_name['_title']
+_UINT64RULES.oneofs_by_name['_extra'].fields.append(
+  _UINT64RULES.fields_by_name['extra'])
+_UINT64RULES.fields_by_name['extra'].containing_oneof = _UINT64RULES.oneofs_by_name['_extra']
 _SINT32RULES.oneofs_by_name['default_config'].fields.append(
   _SINT32RULES.fields_by_name['default'])
 _SINT32RULES.fields_by_name['default'].containing_oneof = _SINT32RULES.oneofs_by_name['default_config']
@@ -5451,6 +5733,9 @@ _SINT32RULES.fields_by_name['type'].containing_oneof = _SINT32RULES.oneofs_by_na
 _SINT32RULES.oneofs_by_name['_title'].fields.append(
   _SINT32RULES.fields_by_name['title'])
 _SINT32RULES.fields_by_name['title'].containing_oneof = _SINT32RULES.oneofs_by_name['_title']
+_SINT32RULES.oneofs_by_name['_extra'].fields.append(
+  _SINT32RULES.fields_by_name['extra'])
+_SINT32RULES.fields_by_name['extra'].containing_oneof = _SINT32RULES.oneofs_by_name['_extra']
 _SINT64RULES.oneofs_by_name['default_config'].fields.append(
   _SINT64RULES.fields_by_name['default'])
 _SINT64RULES.fields_by_name['default'].containing_oneof = _SINT64RULES.oneofs_by_name['default_config']
@@ -5502,6 +5787,9 @@ _SINT64RULES.fields_by_name['type'].containing_oneof = _SINT64RULES.oneofs_by_na
 _SINT64RULES.oneofs_by_name['_title'].fields.append(
   _SINT64RULES.fields_by_name['title'])
 _SINT64RULES.fields_by_name['title'].containing_oneof = _SINT64RULES.oneofs_by_name['_title']
+_SINT64RULES.oneofs_by_name['_extra'].fields.append(
+  _SINT64RULES.fields_by_name['extra'])
+_SINT64RULES.fields_by_name['extra'].containing_oneof = _SINT64RULES.oneofs_by_name['_extra']
 _FIXED32RULES.oneofs_by_name['default_config'].fields.append(
   _FIXED32RULES.fields_by_name['default'])
 _FIXED32RULES.fields_by_name['default'].containing_oneof = _FIXED32RULES.oneofs_by_name['default_config']
@@ -5553,6 +5841,9 @@ _FIXED32RULES.fields_by_name['type'].containing_oneof = _FIXED32RULES.oneofs_by_
 _FIXED32RULES.oneofs_by_name['_title'].fields.append(
   _FIXED32RULES.fields_by_name['title'])
 _FIXED32RULES.fields_by_name['title'].containing_oneof = _FIXED32RULES.oneofs_by_name['_title']
+_FIXED32RULES.oneofs_by_name['_extra'].fields.append(
+  _FIXED32RULES.fields_by_name['extra'])
+_FIXED32RULES.fields_by_name['extra'].containing_oneof = _FIXED32RULES.oneofs_by_name['_extra']
 _FIXED64RULES.oneofs_by_name['default_config'].fields.append(
   _FIXED64RULES.fields_by_name['default'])
 _FIXED64RULES.fields_by_name['default'].containing_oneof = _FIXED64RULES.oneofs_by_name['default_config']
@@ -5604,6 +5895,9 @@ _FIXED64RULES.fields_by_name['type'].containing_oneof = _FIXED64RULES.oneofs_by_
 _FIXED64RULES.oneofs_by_name['_title'].fields.append(
   _FIXED64RULES.fields_by_name['title'])
 _FIXED64RULES.fields_by_name['title'].containing_oneof = _FIXED64RULES.oneofs_by_name['_title']
+_FIXED64RULES.oneofs_by_name['_extra'].fields.append(
+  _FIXED64RULES.fields_by_name['extra'])
+_FIXED64RULES.fields_by_name['extra'].containing_oneof = _FIXED64RULES.oneofs_by_name['_extra']
 _SFIXED32RULES.oneofs_by_name['default_config'].fields.append(
   _SFIXED32RULES.fields_by_name['default'])
 _SFIXED32RULES.fields_by_name['default'].containing_oneof = _SFIXED32RULES.oneofs_by_name['default_config']
@@ -5655,6 +5949,9 @@ _SFIXED32RULES.fields_by_name['type'].containing_oneof = _SFIXED32RULES.oneofs_b
 _SFIXED32RULES.oneofs_by_name['_title'].fields.append(
   _SFIXED32RULES.fields_by_name['title'])
 _SFIXED32RULES.fields_by_name['title'].containing_oneof = _SFIXED32RULES.oneofs_by_name['_title']
+_SFIXED32RULES.oneofs_by_name['_extra'].fields.append(
+  _SFIXED32RULES.fields_by_name['extra'])
+_SFIXED32RULES.fields_by_name['extra'].containing_oneof = _SFIXED32RULES.oneofs_by_name['_extra']
 _SFIXED64RULES.oneofs_by_name['default_config'].fields.append(
   _SFIXED64RULES.fields_by_name['default'])
 _SFIXED64RULES.fields_by_name['default'].containing_oneof = _SFIXED64RULES.oneofs_by_name['default_config']
@@ -5706,6 +6003,9 @@ _SFIXED64RULES.fields_by_name['type'].containing_oneof = _SFIXED64RULES.oneofs_b
 _SFIXED64RULES.oneofs_by_name['_title'].fields.append(
   _SFIXED64RULES.fields_by_name['title'])
 _SFIXED64RULES.fields_by_name['title'].containing_oneof = _SFIXED64RULES.oneofs_by_name['_title']
+_SFIXED64RULES.oneofs_by_name['_extra'].fields.append(
+  _SFIXED64RULES.fields_by_name['extra'])
+_SFIXED64RULES.fields_by_name['extra'].containing_oneof = _SFIXED64RULES.oneofs_by_name['_extra']
 _BOOLRULES.oneofs_by_name['default_config'].fields.append(
   _BOOLRULES.fields_by_name['default'])
 _BOOLRULES.fields_by_name['default'].containing_oneof = _BOOLRULES.oneofs_by_name['default_config']
@@ -5736,6 +6036,9 @@ _BOOLRULES.fields_by_name['type'].containing_oneof = _BOOLRULES.oneofs_by_name['
 _BOOLRULES.oneofs_by_name['_title'].fields.append(
   _BOOLRULES.fields_by_name['title'])
 _BOOLRULES.fields_by_name['title'].containing_oneof = _BOOLRULES.oneofs_by_name['_title']
+_BOOLRULES.oneofs_by_name['_extra'].fields.append(
+  _BOOLRULES.fields_by_name['extra'])
+_BOOLRULES.fields_by_name['extra'].containing_oneof = _BOOLRULES.oneofs_by_name['_extra']
 _STRINGRULES.oneofs_by_name['well_known'].fields.append(
   _STRINGRULES.fields_by_name['email'])
 _STRINGRULES.fields_by_name['email'].containing_oneof = _STRINGRULES.oneofs_by_name['well_known']
@@ -5826,6 +6129,9 @@ _STRINGRULES.fields_by_name['type'].containing_oneof = _STRINGRULES.oneofs_by_na
 _STRINGRULES.oneofs_by_name['_title'].fields.append(
   _STRINGRULES.fields_by_name['title'])
 _STRINGRULES.fields_by_name['title'].containing_oneof = _STRINGRULES.oneofs_by_name['_title']
+_STRINGRULES.oneofs_by_name['_extra'].fields.append(
+  _STRINGRULES.fields_by_name['extra'])
+_STRINGRULES.fields_by_name['extra'].containing_oneof = _STRINGRULES.oneofs_by_name['_extra']
 _BYTESRULES.oneofs_by_name['default_config'].fields.append(
   _BYTESRULES.fields_by_name['default'])
 _BYTESRULES.fields_by_name['default'].containing_oneof = _BYTESRULES.oneofs_by_name['default_config']
@@ -5889,6 +6195,9 @@ _BYTESRULES.fields_by_name['type'].containing_oneof = _BYTESRULES.oneofs_by_name
 _BYTESRULES.oneofs_by_name['_title'].fields.append(
   _BYTESRULES.fields_by_name['title'])
 _BYTESRULES.fields_by_name['title'].containing_oneof = _BYTESRULES.oneofs_by_name['_title']
+_BYTESRULES.oneofs_by_name['_extra'].fields.append(
+  _BYTESRULES.fields_by_name['extra'])
+_BYTESRULES.fields_by_name['extra'].containing_oneof = _BYTESRULES.oneofs_by_name['_extra']
 _ENUMRULES.oneofs_by_name['default_config'].fields.append(
   _ENUMRULES.fields_by_name['default'])
 _ENUMRULES.fields_by_name['default'].containing_oneof = _ENUMRULES.oneofs_by_name['default_config']
@@ -5922,6 +6231,9 @@ _ENUMRULES.fields_by_name['field'].containing_oneof = _ENUMRULES.oneofs_by_name[
 _ENUMRULES.oneofs_by_name['_title'].fields.append(
   _ENUMRULES.fields_by_name['title'])
 _ENUMRULES.fields_by_name['title'].containing_oneof = _ENUMRULES.oneofs_by_name['_title']
+_ENUMRULES.oneofs_by_name['_extra'].fields.append(
+  _ENUMRULES.fields_by_name['extra'])
+_ENUMRULES.fields_by_name['extra'].containing_oneof = _ENUMRULES.oneofs_by_name['_extra']
 _MESSAGERULES.oneofs_by_name['default_config'].fields.append(
   _MESSAGERULES.fields_by_name['default'])
 _MESSAGERULES.fields_by_name['default'].containing_oneof = _MESSAGERULES.oneofs_by_name['default_config']
@@ -5961,6 +6273,9 @@ _MESSAGERULES.fields_by_name['type'].containing_oneof = _MESSAGERULES.oneofs_by_
 _MESSAGERULES.oneofs_by_name['_title'].fields.append(
   _MESSAGERULES.fields_by_name['title'])
 _MESSAGERULES.fields_by_name['title'].containing_oneof = _MESSAGERULES.oneofs_by_name['_title']
+_MESSAGERULES.oneofs_by_name['_extra'].fields.append(
+  _MESSAGERULES.fields_by_name['extra'])
+_MESSAGERULES.fields_by_name['extra'].containing_oneof = _MESSAGERULES.oneofs_by_name['_extra']
 _REPEATEDRULES.fields_by_name['items'].message_type = _FIELDRULES
 _REPEATEDRULES.oneofs_by_name['default_config'].fields.append(
   _REPEATEDRULES.fields_by_name['default_factory'])
@@ -6001,6 +6316,9 @@ _REPEATEDRULES.fields_by_name['type'].containing_oneof = _REPEATEDRULES.oneofs_b
 _REPEATEDRULES.oneofs_by_name['_title'].fields.append(
   _REPEATEDRULES.fields_by_name['title'])
 _REPEATEDRULES.fields_by_name['title'].containing_oneof = _REPEATEDRULES.oneofs_by_name['_title']
+_REPEATEDRULES.oneofs_by_name['_extra'].fields.append(
+  _REPEATEDRULES.fields_by_name['extra'])
+_REPEATEDRULES.fields_by_name['extra'].containing_oneof = _REPEATEDRULES.oneofs_by_name['_extra']
 _MAPRULES.fields_by_name['keys'].message_type = _FIELDRULES
 _MAPRULES.fields_by_name['values'].message_type = _FIELDRULES
 _MAPRULES.oneofs_by_name['default_config'].fields.append(
@@ -6042,6 +6360,9 @@ _MAPRULES.fields_by_name['type'].containing_oneof = _MAPRULES.oneofs_by_name['_t
 _MAPRULES.oneofs_by_name['_title'].fields.append(
   _MAPRULES.fields_by_name['title'])
 _MAPRULES.fields_by_name['title'].containing_oneof = _MAPRULES.oneofs_by_name['_title']
+_MAPRULES.oneofs_by_name['_extra'].fields.append(
+  _MAPRULES.fields_by_name['extra'])
+_MAPRULES.fields_by_name['extra'].containing_oneof = _MAPRULES.oneofs_by_name['_extra']
 _ANYRULES.oneofs_by_name['default_config'].fields.append(
   _ANYRULES.fields_by_name['default'])
 _ANYRULES.fields_by_name['default'].containing_oneof = _ANYRULES.oneofs_by_name['default_config']
@@ -6075,6 +6396,9 @@ _ANYRULES.fields_by_name['field'].containing_oneof = _ANYRULES.oneofs_by_name['_
 _ANYRULES.oneofs_by_name['_title'].fields.append(
   _ANYRULES.fields_by_name['title'])
 _ANYRULES.fields_by_name['title'].containing_oneof = _ANYRULES.oneofs_by_name['_title']
+_ANYRULES.oneofs_by_name['_extra'].fields.append(
+  _ANYRULES.fields_by_name['extra'])
+_ANYRULES.fields_by_name['extra'].containing_oneof = _ANYRULES.oneofs_by_name['_extra']
 _DURATIONRULES.fields_by_name['const'].message_type = google_dot_protobuf_dot_duration__pb2._DURATION
 _DURATIONRULES.fields_by_name['lt'].message_type = google_dot_protobuf_dot_duration__pb2._DURATION
 _DURATIONRULES.fields_by_name['le'].message_type = google_dot_protobuf_dot_duration__pb2._DURATION
@@ -6132,6 +6456,9 @@ _DURATIONRULES.fields_by_name['type'].containing_oneof = _DURATIONRULES.oneofs_b
 _DURATIONRULES.oneofs_by_name['_title'].fields.append(
   _DURATIONRULES.fields_by_name['title'])
 _DURATIONRULES.fields_by_name['title'].containing_oneof = _DURATIONRULES.oneofs_by_name['_title']
+_DURATIONRULES.oneofs_by_name['_extra'].fields.append(
+  _DURATIONRULES.fields_by_name['extra'])
+_DURATIONRULES.fields_by_name['extra'].containing_oneof = _DURATIONRULES.oneofs_by_name['_extra']
 _TIMESTAMPRULES.fields_by_name['const'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _TIMESTAMPRULES.fields_by_name['lt'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _TIMESTAMPRULES.fields_by_name['le'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
@@ -6197,6 +6524,9 @@ _TIMESTAMPRULES.fields_by_name['type'].containing_oneof = _TIMESTAMPRULES.oneofs
 _TIMESTAMPRULES.oneofs_by_name['_title'].fields.append(
   _TIMESTAMPRULES.fields_by_name['title'])
 _TIMESTAMPRULES.fields_by_name['title'].containing_oneof = _TIMESTAMPRULES.oneofs_by_name['_title']
+_TIMESTAMPRULES.oneofs_by_name['_extra'].fields.append(
+  _TIMESTAMPRULES.fields_by_name['extra'])
+_TIMESTAMPRULES.fields_by_name['extra'].containing_oneof = _TIMESTAMPRULES.oneofs_by_name['_extra']
 DESCRIPTOR.message_types_by_name['FieldRules'] = _FIELDRULES
 DESCRIPTOR.message_types_by_name['FloatRules'] = _FLOATRULES
 DESCRIPTOR.message_types_by_name['DoubleRules'] = _DOUBLERULES

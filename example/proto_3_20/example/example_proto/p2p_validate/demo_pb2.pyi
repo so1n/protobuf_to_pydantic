@@ -61,6 +61,7 @@ class FloatTest(google.protobuf.message.Message):
     FIELD_TEST_FIELD_NUMBER: builtins.int
     TYPE_TEST_FIELD_NUMBER: builtins.int
     TITLE_TEST_FIELD_NUMBER: builtins.int
+    EXTRA_TEST_FIELD_NUMBER: builtins.int
     const_test: builtins.float
     range_e_test: builtins.float
     range_test: builtins.float
@@ -78,6 +79,7 @@ class FloatTest(google.protobuf.message.Message):
     field_test: builtins.float
     type_test: builtins.float
     title_test: builtins.float
+    extra_test: builtins.float
     def __init__(
         self,
         *,
@@ -98,6 +100,7 @@ class FloatTest(google.protobuf.message.Message):
         field_test: builtins.float = ...,
         type_test: builtins.float = ...,
         title_test: builtins.float = ...,
+        extra_test: builtins.float = ...,
     ) -> None: ...
     def ClearField(
         self,
@@ -116,6 +119,8 @@ class FloatTest(google.protobuf.message.Message):
             b"example_factory",
             "example_test",
             b"example_test",
+            "extra_test",
+            b"extra_test",
             "field_test",
             b"field_test",
             "in_test",
@@ -161,6 +166,7 @@ class DoubleTest(google.protobuf.message.Message):
     FIELD_TEST_FIELD_NUMBER: builtins.int
     TYPE_TEST_FIELD_NUMBER: builtins.int
     TITLE_TEST_FIELD_NUMBER: builtins.int
+    EXTRA_TEST_FIELD_NUMBER: builtins.int
     const_test: builtins.float
     range_e_test: builtins.float
     range_test: builtins.float
@@ -178,6 +184,7 @@ class DoubleTest(google.protobuf.message.Message):
     field_test: builtins.float
     type_test: builtins.float
     title_test: builtins.float
+    extra_test: builtins.float
     def __init__(
         self,
         *,
@@ -198,6 +205,7 @@ class DoubleTest(google.protobuf.message.Message):
         field_test: builtins.float = ...,
         type_test: builtins.float = ...,
         title_test: builtins.float = ...,
+        extra_test: builtins.float = ...,
     ) -> None: ...
     def ClearField(
         self,
@@ -216,6 +224,8 @@ class DoubleTest(google.protobuf.message.Message):
             b"example_factory",
             "example_test",
             b"example_test",
+            "extra_test",
+            b"extra_test",
             "field_test",
             b"field_test",
             "in_test",
@@ -261,6 +271,7 @@ class Int32Test(google.protobuf.message.Message):
     FIELD_TEST_FIELD_NUMBER: builtins.int
     TYPE_TEST_FIELD_NUMBER: builtins.int
     TITLE_TEST_FIELD_NUMBER: builtins.int
+    EXTRA_TEST_FIELD_NUMBER: builtins.int
     const_test: builtins.int
     range_e_test: builtins.int
     range_test: builtins.int
@@ -278,6 +289,7 @@ class Int32Test(google.protobuf.message.Message):
     field_test: builtins.int
     type_test: builtins.int
     title_test: builtins.int
+    extra_test: builtins.int
     def __init__(
         self,
         *,
@@ -298,6 +310,7 @@ class Int32Test(google.protobuf.message.Message):
         field_test: builtins.int = ...,
         type_test: builtins.int = ...,
         title_test: builtins.int = ...,
+        extra_test: builtins.int = ...,
     ) -> None: ...
     def ClearField(
         self,
@@ -316,6 +329,8 @@ class Int32Test(google.protobuf.message.Message):
             b"example_factory",
             "example_test",
             b"example_test",
+            "extra_test",
+            b"extra_test",
             "field_test",
             b"field_test",
             "in_test",
@@ -361,6 +376,7 @@ class Int64Test(google.protobuf.message.Message):
     FIELD_TEST_FIELD_NUMBER: builtins.int
     TYPE_TEST_FIELD_NUMBER: builtins.int
     TITLE_TEST_FIELD_NUMBER: builtins.int
+    EXTRA_TEST_FIELD_NUMBER: builtins.int
     const_test: builtins.int
     range_e_test: builtins.int
     range_test: builtins.int
@@ -378,6 +394,7 @@ class Int64Test(google.protobuf.message.Message):
     field_test: builtins.int
     type_test: builtins.int
     title_test: builtins.int
+    extra_test: builtins.int
     def __init__(
         self,
         *,
@@ -398,6 +415,7 @@ class Int64Test(google.protobuf.message.Message):
         field_test: builtins.int = ...,
         type_test: builtins.int = ...,
         title_test: builtins.int = ...,
+        extra_test: builtins.int = ...,
     ) -> None: ...
     def ClearField(
         self,
@@ -416,6 +434,8 @@ class Int64Test(google.protobuf.message.Message):
             b"example_factory",
             "example_test",
             b"example_test",
+            "extra_test",
+            b"extra_test",
             "field_test",
             b"field_test",
             "in_test",
@@ -461,6 +481,7 @@ class Uint32Test(google.protobuf.message.Message):
     FIELD_TEST_FIELD_NUMBER: builtins.int
     TYPE_TEST_FIELD_NUMBER: builtins.int
     TITLE_TEST_FIELD_NUMBER: builtins.int
+    EXTRA_TEST_FIELD_NUMBER: builtins.int
     const_test: builtins.int
     range_e_test: builtins.int
     range_test: builtins.int
@@ -478,6 +499,7 @@ class Uint32Test(google.protobuf.message.Message):
     field_test: builtins.int
     type_test: builtins.int
     title_test: builtins.int
+    extra_test: builtins.int
     def __init__(
         self,
         *,
@@ -498,6 +520,7 @@ class Uint32Test(google.protobuf.message.Message):
         field_test: builtins.int = ...,
         type_test: builtins.int = ...,
         title_test: builtins.int = ...,
+        extra_test: builtins.int = ...,
     ) -> None: ...
     def ClearField(
         self,
@@ -516,6 +539,8 @@ class Uint32Test(google.protobuf.message.Message):
             b"example_factory",
             "example_test",
             b"example_test",
+            "extra_test",
+            b"extra_test",
             "field_test",
             b"field_test",
             "in_test",
@@ -561,6 +586,7 @@ class Sint32Test(google.protobuf.message.Message):
     FIELD_TEST_FIELD_NUMBER: builtins.int
     TYPE_TEST_FIELD_NUMBER: builtins.int
     TITLE_TEST_FIELD_NUMBER: builtins.int
+    EXTRA_TEST_FIELD_NUMBER: builtins.int
     const_test: builtins.int
     range_e_test: builtins.int
     range_test: builtins.int
@@ -578,6 +604,7 @@ class Sint32Test(google.protobuf.message.Message):
     field_test: builtins.int
     type_test: builtins.int
     title_test: builtins.int
+    extra_test: builtins.int
     def __init__(
         self,
         *,
@@ -598,6 +625,7 @@ class Sint32Test(google.protobuf.message.Message):
         field_test: builtins.int = ...,
         type_test: builtins.int = ...,
         title_test: builtins.int = ...,
+        extra_test: builtins.int = ...,
     ) -> None: ...
     def ClearField(
         self,
@@ -616,6 +644,8 @@ class Sint32Test(google.protobuf.message.Message):
             b"example_factory",
             "example_test",
             b"example_test",
+            "extra_test",
+            b"extra_test",
             "field_test",
             b"field_test",
             "in_test",
@@ -661,6 +691,7 @@ class Uint64Test(google.protobuf.message.Message):
     FIELD_TEST_FIELD_NUMBER: builtins.int
     TYPE_TEST_FIELD_NUMBER: builtins.int
     TITLE_TEST_FIELD_NUMBER: builtins.int
+    EXTRA_TEST_FIELD_NUMBER: builtins.int
     const_test: builtins.int
     range_e_test: builtins.int
     range_test: builtins.int
@@ -678,6 +709,7 @@ class Uint64Test(google.protobuf.message.Message):
     field_test: builtins.int
     type_test: builtins.int
     title_test: builtins.int
+    extra_test: builtins.int
     def __init__(
         self,
         *,
@@ -698,6 +730,7 @@ class Uint64Test(google.protobuf.message.Message):
         field_test: builtins.int = ...,
         type_test: builtins.int = ...,
         title_test: builtins.int = ...,
+        extra_test: builtins.int = ...,
     ) -> None: ...
     def ClearField(
         self,
@@ -716,6 +749,8 @@ class Uint64Test(google.protobuf.message.Message):
             b"example_factory",
             "example_test",
             b"example_test",
+            "extra_test",
+            b"extra_test",
             "field_test",
             b"field_test",
             "in_test",
@@ -761,6 +796,7 @@ class Sint64Test(google.protobuf.message.Message):
     FIELD_TEST_FIELD_NUMBER: builtins.int
     TYPE_TEST_FIELD_NUMBER: builtins.int
     TITLE_TEST_FIELD_NUMBER: builtins.int
+    EXTRA_TEST_FIELD_NUMBER: builtins.int
     const_test: builtins.int
     range_e_test: builtins.int
     range_test: builtins.int
@@ -778,6 +814,7 @@ class Sint64Test(google.protobuf.message.Message):
     field_test: builtins.int
     type_test: builtins.int
     title_test: builtins.int
+    extra_test: builtins.int
     def __init__(
         self,
         *,
@@ -798,6 +835,7 @@ class Sint64Test(google.protobuf.message.Message):
         field_test: builtins.int = ...,
         type_test: builtins.int = ...,
         title_test: builtins.int = ...,
+        extra_test: builtins.int = ...,
     ) -> None: ...
     def ClearField(
         self,
@@ -816,6 +854,8 @@ class Sint64Test(google.protobuf.message.Message):
             b"example_factory",
             "example_test",
             b"example_test",
+            "extra_test",
+            b"extra_test",
             "field_test",
             b"field_test",
             "in_test",
@@ -861,6 +901,7 @@ class Fixed32Test(google.protobuf.message.Message):
     FIELD_TEST_FIELD_NUMBER: builtins.int
     TYPE_TEST_FIELD_NUMBER: builtins.int
     TITLE_TEST_FIELD_NUMBER: builtins.int
+    EXTRA_TEST_FIELD_NUMBER: builtins.int
     const_test: builtins.int
     range_e_test: builtins.int
     range_test: builtins.int
@@ -878,6 +919,7 @@ class Fixed32Test(google.protobuf.message.Message):
     field_test: builtins.int
     type_test: builtins.int
     title_test: builtins.int
+    extra_test: builtins.int
     def __init__(
         self,
         *,
@@ -898,6 +940,7 @@ class Fixed32Test(google.protobuf.message.Message):
         field_test: builtins.int = ...,
         type_test: builtins.int = ...,
         title_test: builtins.int = ...,
+        extra_test: builtins.int = ...,
     ) -> None: ...
     def ClearField(
         self,
@@ -916,6 +959,8 @@ class Fixed32Test(google.protobuf.message.Message):
             b"example_factory",
             "example_test",
             b"example_test",
+            "extra_test",
+            b"extra_test",
             "field_test",
             b"field_test",
             "in_test",
@@ -961,6 +1006,7 @@ class Fixed64Test(google.protobuf.message.Message):
     FIELD_TEST_FIELD_NUMBER: builtins.int
     TYPE_TEST_FIELD_NUMBER: builtins.int
     TITLE_TEST_FIELD_NUMBER: builtins.int
+    EXTRA_TEST_FIELD_NUMBER: builtins.int
     const_test: builtins.int
     range_e_test: builtins.int
     range_test: builtins.int
@@ -978,6 +1024,7 @@ class Fixed64Test(google.protobuf.message.Message):
     field_test: builtins.int
     type_test: builtins.int
     title_test: builtins.int
+    extra_test: builtins.int
     def __init__(
         self,
         *,
@@ -998,6 +1045,7 @@ class Fixed64Test(google.protobuf.message.Message):
         field_test: builtins.int = ...,
         type_test: builtins.int = ...,
         title_test: builtins.int = ...,
+        extra_test: builtins.int = ...,
     ) -> None: ...
     def ClearField(
         self,
@@ -1016,6 +1064,8 @@ class Fixed64Test(google.protobuf.message.Message):
             b"example_factory",
             "example_test",
             b"example_test",
+            "extra_test",
+            b"extra_test",
             "field_test",
             b"field_test",
             "in_test",
@@ -1061,6 +1111,7 @@ class Sfixed32Test(google.protobuf.message.Message):
     FIELD_TEST_FIELD_NUMBER: builtins.int
     TYPE_TEST_FIELD_NUMBER: builtins.int
     TITLE_TEST_FIELD_NUMBER: builtins.int
+    EXTRA_TEST_FIELD_NUMBER: builtins.int
     const_test: builtins.int
     range_e_test: builtins.int
     range_test: builtins.int
@@ -1078,6 +1129,7 @@ class Sfixed32Test(google.protobuf.message.Message):
     field_test: builtins.int
     type_test: builtins.int
     title_test: builtins.int
+    extra_test: builtins.int
     def __init__(
         self,
         *,
@@ -1098,6 +1150,7 @@ class Sfixed32Test(google.protobuf.message.Message):
         field_test: builtins.int = ...,
         type_test: builtins.int = ...,
         title_test: builtins.int = ...,
+        extra_test: builtins.int = ...,
     ) -> None: ...
     def ClearField(
         self,
@@ -1116,6 +1169,8 @@ class Sfixed32Test(google.protobuf.message.Message):
             b"example_factory",
             "example_test",
             b"example_test",
+            "extra_test",
+            b"extra_test",
             "field_test",
             b"field_test",
             "in_test",
@@ -1161,6 +1216,7 @@ class Sfixed64Test(google.protobuf.message.Message):
     FIELD_TEST_FIELD_NUMBER: builtins.int
     TYPE_TEST_FIELD_NUMBER: builtins.int
     TITLE_TEST_FIELD_NUMBER: builtins.int
+    EXTRA_TEST_FIELD_NUMBER: builtins.int
     const_test: builtins.int
     range_e_test: builtins.int
     range_test: builtins.int
@@ -1178,6 +1234,7 @@ class Sfixed64Test(google.protobuf.message.Message):
     field_test: builtins.int
     type_test: builtins.int
     title_test: builtins.int
+    extra_test: builtins.int
     def __init__(
         self,
         *,
@@ -1198,6 +1255,7 @@ class Sfixed64Test(google.protobuf.message.Message):
         field_test: builtins.int = ...,
         type_test: builtins.int = ...,
         title_test: builtins.int = ...,
+        extra_test: builtins.int = ...,
     ) -> None: ...
     def ClearField(
         self,
@@ -1216,6 +1274,8 @@ class Sfixed64Test(google.protobuf.message.Message):
             b"example_factory",
             "example_test",
             b"example_test",
+            "extra_test",
+            b"extra_test",
             "field_test",
             b"field_test",
             "in_test",
@@ -1254,6 +1314,7 @@ class BoolTest(google.protobuf.message.Message):
     EXAMPLE_TEST_FIELD_NUMBER: builtins.int
     FIELD_TEST_FIELD_NUMBER: builtins.int
     TITLE_TEST_FIELD_NUMBER: builtins.int
+    EXTRA_TEST_FIELD_NUMBER: builtins.int
     bool_1_test: builtins.bool
     bool_2_test: builtins.bool
     enable_test: builtins.bool
@@ -1264,6 +1325,7 @@ class BoolTest(google.protobuf.message.Message):
     example_test: builtins.bool
     field_test: builtins.bool
     title_test: builtins.bool
+    extra_test: builtins.bool
     def __init__(
         self,
         *,
@@ -1277,6 +1339,7 @@ class BoolTest(google.protobuf.message.Message):
         example_test: builtins.bool = ...,
         field_test: builtins.bool = ...,
         title_test: builtins.bool = ...,
+        extra_test: builtins.bool = ...,
     ) -> None: ...
     def ClearField(
         self,
@@ -1295,6 +1358,8 @@ class BoolTest(google.protobuf.message.Message):
             b"enable_test",
             "example_test",
             b"example_test",
+            "extra_test",
+            b"extra_test",
             "field_test",
             b"field_test",
             "miss_default_test",
@@ -1340,6 +1405,7 @@ class StringTest(google.protobuf.message.Message):
     FIELD_TEST_FIELD_NUMBER: builtins.int
     TITLE_TEST_FIELD_NUMBER: builtins.int
     TYPE_TEST_FIELD_NUMBER: builtins.int
+    EXTRA_TEST_FIELD_NUMBER: builtins.int
     const_test: builtins.str
     len_test: builtins.str
     s_range_len_test: builtins.str
@@ -1371,6 +1437,7 @@ class StringTest(google.protobuf.message.Message):
     field_test: builtins.str
     title_test: builtins.str
     type_test: builtins.str
+    extra_test: builtins.str
     def __init__(
         self,
         *,
@@ -1405,6 +1472,7 @@ class StringTest(google.protobuf.message.Message):
         field_test: builtins.str = ...,
         title_test: builtins.str = ...,
         type_test: builtins.str = ...,
+        extra_test: builtins.str = ...,
     ) -> None: ...
     def ClearField(
         self,
@@ -1431,6 +1499,8 @@ class StringTest(google.protobuf.message.Message):
             b"example_factory_test",
             "example_test",
             b"example_test",
+            "extra_test",
+            b"extra_test",
             "field_test",
             b"field_test",
             "hostname_test",
@@ -1497,6 +1567,7 @@ class BytesTest(google.protobuf.message.Message):
     FIELD_TEST_FIELD_NUMBER: builtins.int
     TITLE_TEST_FIELD_NUMBER: builtins.int
     TYPE_TEST_FIELD_NUMBER: builtins.int
+    EXTRA_TEST_FIELD_NUMBER: builtins.int
     const_test: builtins.bytes
     range_len_test: builtins.bytes
     prefix_test: builtins.bytes
@@ -1515,6 +1586,7 @@ class BytesTest(google.protobuf.message.Message):
     field_test: builtins.bytes
     title_test: builtins.bytes
     type_test: builtins.bytes
+    extra_test: builtins.bytes
     def __init__(
         self,
         *,
@@ -1536,6 +1608,7 @@ class BytesTest(google.protobuf.message.Message):
         field_test: builtins.bytes = ...,
         title_test: builtins.bytes = ...,
         type_test: builtins.bytes = ...,
+        extra_test: builtins.bytes = ...,
     ) -> None: ...
     def ClearField(
         self,
@@ -1558,6 +1631,8 @@ class BytesTest(google.protobuf.message.Message):
             b"example_factory_test",
             "example_test",
             b"example_test",
+            "extra_test",
+            b"extra_test",
             "field_test",
             b"field_test",
             "in_test",
@@ -1595,6 +1670,7 @@ class EnumTest(google.protobuf.message.Message):
     EXAMPLE_TEST_FIELD_NUMBER: builtins.int
     FIELD_TEST_FIELD_NUMBER: builtins.int
     TITLE_TEST_FIELD_NUMBER: builtins.int
+    EXTRA_TEST_FIELD_NUMBER: builtins.int
     const_test: global___State.ValueType
     in_test: global___State.ValueType
     not_in_test: global___State.ValueType
@@ -1606,6 +1682,7 @@ class EnumTest(google.protobuf.message.Message):
     example_test: global___State.ValueType
     field_test: global___State.ValueType
     title_test: global___State.ValueType
+    extra_test: global___State.ValueType
     def __init__(
         self,
         *,
@@ -1620,6 +1697,7 @@ class EnumTest(google.protobuf.message.Message):
         example_test: global___State.ValueType = ...,
         field_test: global___State.ValueType = ...,
         title_test: global___State.ValueType = ...,
+        extra_test: global___State.ValueType = ...,
     ) -> None: ...
     def ClearField(
         self,
@@ -1636,6 +1714,8 @@ class EnumTest(google.protobuf.message.Message):
             b"enable_test",
             "example_test",
             b"example_test",
+            "extra_test",
+            b"extra_test",
             "field_test",
             b"field_test",
             "in_test",
@@ -1851,6 +1931,21 @@ class MapTest(google.protobuf.message.Message):
         ) -> None: ...
         def ClearField(self, field_name: typing_extensions.Literal["key", b"key", "value", b"value"]) -> None: ...
 
+    class ExtraTestEntry(google.protobuf.message.Message):
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+        KEY_FIELD_NUMBER: builtins.int
+        VALUE_FIELD_NUMBER: builtins.int
+        key: builtins.str
+        value: builtins.int
+        def __init__(
+            self,
+            *,
+            key: builtins.str = ...,
+            value: builtins.int = ...,
+        ) -> None: ...
+        def ClearField(self, field_name: typing_extensions.Literal["key", b"key", "value", b"value"]) -> None: ...
+
     PAIR_TEST_FIELD_NUMBER: builtins.int
     KEYS_TEST_FIELD_NUMBER: builtins.int
     VALUES_TEST_FIELD_NUMBER: builtins.int
@@ -1864,6 +1959,7 @@ class MapTest(google.protobuf.message.Message):
     FIELD_TEST_FIELD_NUMBER: builtins.int
     TITLE_TEST_FIELD_NUMBER: builtins.int
     TYPE_TEST_FIELD_NUMBER: builtins.int
+    EXTRA_TEST_FIELD_NUMBER: builtins.int
     @property
     def pair_test(self) -> google.protobuf.internal.containers.ScalarMap[builtins.str, builtins.int]: ...
     @property
@@ -1892,6 +1988,8 @@ class MapTest(google.protobuf.message.Message):
     def title_test(self) -> google.protobuf.internal.containers.ScalarMap[builtins.str, builtins.int]: ...
     @property
     def type_test(self) -> google.protobuf.internal.containers.ScalarMap[builtins.str, builtins.int]: ...
+    @property
+    def extra_test(self) -> google.protobuf.internal.containers.ScalarMap[builtins.str, builtins.int]: ...
     def __init__(
         self,
         *,
@@ -1908,6 +2006,7 @@ class MapTest(google.protobuf.message.Message):
         field_test: collections.abc.Mapping[builtins.str, builtins.int] | None = ...,
         title_test: collections.abc.Mapping[builtins.str, builtins.int] | None = ...,
         type_test: collections.abc.Mapping[builtins.str, builtins.int] | None = ...,
+        extra_test: collections.abc.Mapping[builtins.str, builtins.int] | None = ...,
     ) -> None: ...
     def ClearField(
         self,
@@ -1922,6 +2021,8 @@ class MapTest(google.protobuf.message.Message):
             b"enable_test",
             "example_factory_test",
             b"example_factory_test",
+            "extra_test",
+            b"extra_test",
             "field_test",
             b"field_test",
             "keys_test",
@@ -1948,16 +2049,22 @@ class MessageTest(google.protobuf.message.Message):
 
     SKIP_TEST_FIELD_NUMBER: builtins.int
     REQUIRED_TEST_FIELD_NUMBER: builtins.int
+    EXTRA_TEST_FIELD_NUMBER: builtins.int
     skip_test: builtins.str
     required_test: builtins.str
+    extra_test: builtins.str
     def __init__(
         self,
         *,
         skip_test: builtins.str = ...,
         required_test: builtins.str = ...,
+        extra_test: builtins.str = ...,
     ) -> None: ...
     def ClearField(
-        self, field_name: typing_extensions.Literal["required_test", b"required_test", "skip_test", b"skip_test"]
+        self,
+        field_name: typing_extensions.Literal[
+            "extra_test", b"extra_test", "required_test", b"required_test", "skip_test", b"skip_test"
+        ],
     ) -> None: ...
 
 global___MessageTest = MessageTest
@@ -1982,6 +2089,7 @@ class RepeatedTest(google.protobuf.message.Message):
     FIELD_TEST_FIELD_NUMBER: builtins.int
     TITLE_TEST_FIELD_NUMBER: builtins.int
     TYPE_TEST_FIELD_NUMBER: builtins.int
+    EXTRA_TEST_FIELD_NUMBER: builtins.int
     @property
     def range_test(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[builtins.str]: ...
     @property
@@ -2026,6 +2134,8 @@ class RepeatedTest(google.protobuf.message.Message):
     def title_test(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[builtins.str]: ...
     @property
     def type_test(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[builtins.str]: ...
+    @property
+    def extra_test(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[builtins.str]: ...
     def __init__(
         self,
         *,
@@ -2046,6 +2156,7 @@ class RepeatedTest(google.protobuf.message.Message):
         field_test: collections.abc.Iterable[builtins.str] | None = ...,
         title_test: collections.abc.Iterable[builtins.str] | None = ...,
         type_test: collections.abc.Iterable[builtins.str] | None = ...,
+        extra_test: collections.abc.Iterable[builtins.str] | None = ...,
     ) -> None: ...
     def ClearField(
         self,
@@ -2060,6 +2171,8 @@ class RepeatedTest(google.protobuf.message.Message):
             b"enable_test",
             "example_factory_test",
             b"example_factory_test",
+            "extra_test",
+            b"extra_test",
             "field_test",
             b"field_test",
             "items_bytes_test",
@@ -2105,6 +2218,7 @@ class AnyTest(google.protobuf.message.Message):
     EXAMPLE_FACTORY_TEST_FIELD_NUMBER: builtins.int
     FIELD_TEST_FIELD_NUMBER: builtins.int
     TITLE_TEST_FIELD_NUMBER: builtins.int
+    EXTRA_TEST_FIELD_NUMBER: builtins.int
     @property
     def required_test(self) -> google.protobuf.any_pb2.Any: ...
     @property
@@ -2131,6 +2245,8 @@ class AnyTest(google.protobuf.message.Message):
     def field_test(self) -> google.protobuf.any_pb2.Any: ...
     @property
     def title_test(self) -> google.protobuf.any_pb2.Any: ...
+    @property
+    def extra_test(self) -> google.protobuf.any_pb2.Any: ...
     def __init__(
         self,
         *,
@@ -2147,6 +2263,7 @@ class AnyTest(google.protobuf.message.Message):
         example_factory_test: google.protobuf.any_pb2.Any | None = ...,
         field_test: google.protobuf.any_pb2.Any | None = ...,
         title_test: google.protobuf.any_pb2.Any | None = ...,
+        extra_test: google.protobuf.any_pb2.Any | None = ...,
     ) -> None: ...
     def HasField(
         self,
@@ -2165,6 +2282,8 @@ class AnyTest(google.protobuf.message.Message):
             b"example_factory_test",
             "example_test",
             b"example_test",
+            "extra_test",
+            b"extra_test",
             "field_test",
             b"field_test",
             "in_test",
@@ -2196,6 +2315,8 @@ class AnyTest(google.protobuf.message.Message):
             b"example_factory_test",
             "example_test",
             b"example_test",
+            "extra_test",
+            b"extra_test",
             "field_test",
             b"field_test",
             "in_test",
@@ -2232,6 +2353,7 @@ class DurationTest(google.protobuf.message.Message):
     FIELD_TEST_FIELD_NUMBER: builtins.int
     TITLE_TEST_FIELD_NUMBER: builtins.int
     TYPE_TEST_FIELD_NUMBER: builtins.int
+    EXTRA_TEST_FIELD_NUMBER: builtins.int
     @property
     def const_test(self) -> google.protobuf.duration_pb2.Duration: ...
     @property
@@ -2264,6 +2386,8 @@ class DurationTest(google.protobuf.message.Message):
     def title_test(self) -> google.protobuf.duration_pb2.Duration: ...
     @property
     def type_test(self) -> google.protobuf.duration_pb2.Duration: ...
+    @property
+    def extra_test(self) -> google.protobuf.duration_pb2.Duration: ...
     def __init__(
         self,
         *,
@@ -2283,6 +2407,7 @@ class DurationTest(google.protobuf.message.Message):
         field_test: google.protobuf.duration_pb2.Duration | None = ...,
         title_test: google.protobuf.duration_pb2.Duration | None = ...,
         type_test: google.protobuf.duration_pb2.Duration | None = ...,
+        extra_test: google.protobuf.duration_pb2.Duration | None = ...,
     ) -> None: ...
     def HasField(
         self,
@@ -2303,6 +2428,8 @@ class DurationTest(google.protobuf.message.Message):
             b"example_factory_test",
             "example_test",
             b"example_test",
+            "extra_test",
+            b"extra_test",
             "field_test",
             b"field_test",
             "in_test",
@@ -2340,6 +2467,8 @@ class DurationTest(google.protobuf.message.Message):
             b"example_factory_test",
             "example_test",
             b"example_test",
+            "extra_test",
+            b"extra_test",
             "field_test",
             b"field_test",
             "in_test",
@@ -2382,6 +2511,7 @@ class TimestampTest(google.protobuf.message.Message):
     FIELD_TEST_FIELD_NUMBER: builtins.int
     TITLE_TEST_FIELD_NUMBER: builtins.int
     TYPE_TEST_FIELD_NUMBER: builtins.int
+    EXTRA_TEST_FIELD_NUMBER: builtins.int
     @property
     def const_test(self) -> google.protobuf.timestamp_pb2.Timestamp: ...
     @property
@@ -2418,6 +2548,8 @@ class TimestampTest(google.protobuf.message.Message):
     def title_test(self) -> google.protobuf.timestamp_pb2.Timestamp: ...
     @property
     def type_test(self) -> google.protobuf.timestamp_pb2.Timestamp: ...
+    @property
+    def extra_test(self) -> google.protobuf.timestamp_pb2.Timestamp: ...
     def __init__(
         self,
         *,
@@ -2439,6 +2571,7 @@ class TimestampTest(google.protobuf.message.Message):
         field_test: google.protobuf.timestamp_pb2.Timestamp | None = ...,
         title_test: google.protobuf.timestamp_pb2.Timestamp | None = ...,
         type_test: google.protobuf.timestamp_pb2.Timestamp | None = ...,
+        extra_test: google.protobuf.timestamp_pb2.Timestamp | None = ...,
     ) -> None: ...
     def HasField(
         self,
@@ -2459,6 +2592,8 @@ class TimestampTest(google.protobuf.message.Message):
             b"example_factory_test",
             "example_test",
             b"example_test",
+            "extra_test",
+            b"extra_test",
             "field_test",
             b"field_test",
             "gt_now_test",
@@ -2500,6 +2635,8 @@ class TimestampTest(google.protobuf.message.Message):
             b"example_factory_test",
             "example_test",
             b"example_test",
+            "extra_test",
+            b"extra_test",
             "field_test",
             b"field_test",
             "gt_now_test",

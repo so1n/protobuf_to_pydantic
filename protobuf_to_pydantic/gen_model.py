@@ -6,7 +6,7 @@ from enum import IntEnum
 from importlib import import_module
 from pathlib import Path
 from types import ModuleType
-from typing import TYPE_CHECKING, Any, Callable, Dict, List, Optional, Tuple, Type, Union
+from typing import TYPE_CHECKING, Any, Callable, Dict, Generator, List, Optional, Tuple, Type, Union
 
 from pydantic import BaseModel, Field, root_validator
 from pydantic.fields import FieldInfo, Undefined
@@ -163,6 +163,23 @@ def field_param_dict_handle(field_param_dict: dict, default: Any, default_factor
             field_param_dict["type_"] = field_type(**type_param_dict)
 
 
+class JsonAndDict(dict):
+    @classmethod
+    def __get_validators__(cls) -> Generator[Callable, None, None]:
+        yield cls.validate
+
+    @classmethod
+    def validate(cls, v: Union[str, dict]) -> dict:
+        if isinstance(v, str):
+            try:
+                v = json.loads(v)
+            except json.JSONDecodeError:
+                raise ValueError("JSON string is not valid JSON")
+        elif not isinstance(v, dict):
+            raise ValueError("JSON string is not a dict")
+        return v  # type: ignore[return-value]
+
+
 class MessagePaitModel(BaseModel):
     field: Optional[Type[FieldInfo]] = Field(None)
     enable: bool = Field(True)
@@ -186,7 +203,7 @@ class MessagePaitModel(BaseModel):
     unique_items: Optional[bool] = Field(None)
     multiple_of: Optional[int] = Field(None)
     regex: Optional[str] = Field(None)
-    extra: dict = Field(default_factory=dict)
+    extra: JsonAndDict = Field(default_factory=dict)
     type_: Any = Field(None, alias="type")
     validator: Optional[Dict[str, Any]] = Field(None)
     sub: Optional["MessagePaitModel"] = Field(None)

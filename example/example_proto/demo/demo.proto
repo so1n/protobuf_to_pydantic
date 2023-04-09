@@ -24,7 +24,7 @@ message UserMessage {
   // p2p: {"description": "user name"}
   // p2p: {"default": "", "min_length": 1, "max_length": "10", "example": "so1n"}
   string user_name=8;
-  single.DemoMessage demo_message=9;
+  single.DemoMessage demo_message=9; // p2p: {"extra": {"customer_string": "c1", "customer_int": 1}}
 }
 
 

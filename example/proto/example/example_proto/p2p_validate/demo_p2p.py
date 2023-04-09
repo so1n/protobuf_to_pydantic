@@ -74,6 +74,7 @@ class FloatTest(BaseModel):
     field_test: float = CustomerField(default=0.0)
     type_test: confloat() = FieldInfo(default=0.0)
     title_test: float = FieldInfo(default=0.0, title="title_test")
+    extra_test: float = FieldInfo(default=0.0, customer_string="c1", customer_int=1)
 
 
 class DoubleTest(BaseModel):
@@ -96,6 +97,7 @@ class DoubleTest(BaseModel):
     field_test: float = CustomerField(default=0.0)
     type_test: confloat() = FieldInfo(default=0.0)
     title_test: float = FieldInfo(default=0.0, title="title_test")
+    extra_test: float = FieldInfo(default=0.0, customer_string="c1", customer_int=1)
 
 
 class Int32Test(BaseModel):
@@ -118,6 +120,7 @@ class Int32Test(BaseModel):
     field_test: int = CustomerField(default=0)
     type_test: confloat() = FieldInfo(default=0)
     title_test: int = FieldInfo(default=0, title="title_test")
+    extra_test: int = FieldInfo(default=0, customer_string="c1", customer_int=1)
 
 
 class Int64Test(BaseModel):
@@ -140,6 +143,7 @@ class Int64Test(BaseModel):
     field_test: int = CustomerField(default=0)
     type_test: confloat() = FieldInfo(default=0)
     title_test: int = FieldInfo(default=0, title="title_test")
+    extra_test: int = FieldInfo(default=0, customer_string="c1", customer_int=1)
 
 
 class Uint32Test(BaseModel):
@@ -162,6 +166,7 @@ class Uint32Test(BaseModel):
     field_test: int = CustomerField(default=0)
     type_test: conint() = FieldInfo(default=0)
     title_test: int = FieldInfo(default=0, title="title_test")
+    extra_test: int = FieldInfo(default=0, customer_string="c1", customer_int=1)
 
 
 class Sint32Test(BaseModel):
@@ -184,6 +189,7 @@ class Sint32Test(BaseModel):
     field_test: int = CustomerField(default=0)
     type_test: conint() = FieldInfo(default=0)
     title_test: int = FieldInfo(default=0, title="title_test")
+    extra_test: int = FieldInfo(default=0, customer_string="c1", customer_int=1)
 
 
 class Uint64Test(BaseModel):
@@ -206,6 +212,7 @@ class Uint64Test(BaseModel):
     field_test: int = CustomerField(default=0)
     type_test: conint() = FieldInfo(default=0)
     title_test: int = FieldInfo(default=0, title="title_test")
+    extra_test: int = FieldInfo(default=0, customer_string="c1", customer_int=1)
 
 
 class Sint64Test(BaseModel):
@@ -228,6 +235,7 @@ class Sint64Test(BaseModel):
     field_test: int = CustomerField(default=0)
     type_test: conint() = FieldInfo(default=0)
     title_test: int = FieldInfo(default=0, title="title_test")
+    extra_test: int = FieldInfo(default=0, customer_string="c1", customer_int=1)
 
 
 class Fixed32Test(BaseModel):
@@ -250,6 +258,7 @@ class Fixed32Test(BaseModel):
     field_test: float = CustomerField(default=0.0)
     type_test: confloat() = FieldInfo(default=0.0)
     title_test: float = FieldInfo(default=0.0, title="title_test")
+    extra_test: float = FieldInfo(default=0.0, customer_string="c1", customer_int=1)
 
 
 class Fixed64Test(BaseModel):
@@ -272,6 +281,7 @@ class Fixed64Test(BaseModel):
     field_test: float = CustomerField(default=0.0)
     type_test: confloat() = FieldInfo(default=0.0)
     title_test: float = FieldInfo(default=0.0, title="title_test")
+    extra_test: float = FieldInfo(default=0.0, customer_string="c1", customer_int=1)
 
 
 class Sfixed32Test(BaseModel):
@@ -294,6 +304,7 @@ class Sfixed32Test(BaseModel):
     field_test: float = CustomerField(default=0.0)
     type_test: confloat() = FieldInfo(default=0.0)
     title_test: float = FieldInfo(default=0.0, title="title_test")
+    extra_test: float = FieldInfo(default=0.0, customer_string="c1", customer_int=1)
 
 
 class Sfixed64Test(BaseModel):
@@ -316,6 +327,7 @@ class Sfixed64Test(BaseModel):
     field_test: float = CustomerField(default=0.0)
     type_test: confloat() = FieldInfo(default=0.0)
     title_test: float = FieldInfo(default=0.0, title="title_test")
+    extra_test: float = FieldInfo(default=0.0, customer_string="c1", customer_int=1)
 
 
 class BoolTest(BaseModel):
@@ -328,6 +340,7 @@ class BoolTest(BaseModel):
     example_test: bool = FieldInfo(default=False, example=True)
     field_test: bool = CustomerField(default=False)
     title_test: bool = FieldInfo(default=False, title="title_test")
+    extra_test: bool = FieldInfo(default=False, customer_string="c1", customer_int=1)
 
 
 class StringTest(BaseModel):
@@ -369,6 +382,7 @@ class StringTest(BaseModel):
     field_test: str = CustomerField(default="")
     title_test: str = FieldInfo(default="", title="title_test")
     type_test: constr() = FieldInfo(default="")
+    extra_test: str = FieldInfo(default="", customer_string="c1", customer_int=1)
 
 
 class BytesTest(BaseModel):
@@ -395,6 +409,7 @@ class BytesTest(BaseModel):
     field_test: bytes = CustomerField(default=b"")
     title_test: bytes = FieldInfo(default=b"", title="title_test")
     type_test: constr() = FieldInfo(default=b"")
+    extra_test: bytes = FieldInfo(default=b"", customer_string="c1", customer_int=1)
 
 
 class EnumTest(BaseModel):
@@ -411,6 +426,7 @@ class EnumTest(BaseModel):
     example_test: State = FieldInfo(default=0, example=2)
     field_test: State = CustomerField(default=0)
     title_test: State = FieldInfo(default=0, title="title_test")
+    extra_test: State = FieldInfo(default=0, customer_string="c1", customer_int=1)
 
 
 class MapTest(BaseModel):
@@ -431,11 +447,13 @@ class MapTest(BaseModel):
     field_test: typing.Dict[str, int] = CustomerField(default_factory=dict)
     title_test: typing.Dict[str, int] = FieldInfo(default_factory=dict, title="title_test")
     type_test: dict = FieldInfo(default_factory=dict)
+    extra_test: typing.Dict[str, int] = FieldInfo(default_factory=dict, customer_string="c1", customer_int=1)
 
 
 class MessageTest(BaseModel):
     skip_test: str = FieldInfo(default="")
     required_test: str = FieldInfo()
+    extra_test: str = FieldInfo(default="")
 
 
 class RepeatedTest(BaseModel):
@@ -467,6 +485,7 @@ class RepeatedTest(BaseModel):
     field_test: typing.List[str] = CustomerField(default_factory=list)
     title_test: typing.List[str] = FieldInfo(default_factory=list, title="title_test")
     type_test: list = FieldInfo(default_factory=list)
+    extra_test: typing.List[str] = FieldInfo(default_factory=list, customer_string="c1", customer_int=1)
 
 
 class AnyTest(BaseModel):
@@ -497,6 +516,7 @@ class AnyTest(BaseModel):
     example_factory_test: Any = FieldInfo(default_factory=Any, example=customer_any)
     field_test: Any = CustomerField(default_factory=Any)
     title_test: Any = FieldInfo(default_factory=Any, title="title_test")
+    extra_test: Any = FieldInfo(default_factory=Any, customer_string="c1", customer_int=1)
 
 
 class DurationTest(BaseModel):
@@ -539,6 +559,7 @@ class DurationTest(BaseModel):
     field_test: Timedelta = CustomerField(default_factory=timedelta)
     title_test: Timedelta = FieldInfo(default_factory=timedelta, title="title_test")
     type_test: timedelta = FieldInfo(default_factory=timedelta)
+    extra_test: Timedelta = FieldInfo(default_factory=timedelta, customer_string="c1", customer_int=1)
 
 
 class TimestampTest(BaseModel):
@@ -578,6 +599,7 @@ class TimestampTest(BaseModel):
     field_test: datetime = CustomerField(default_factory=datetime.now)
     title_test: datetime = FieldInfo(default_factory=datetime.now, title="title_test")
     type_test: datetime = FieldInfo(default_factory=datetime.now)
+    extra_test: datetime = FieldInfo(default_factory=datetime.now, customer_string="c1", customer_int=1)
 
 
 class MessageIgnoredTest(BaseModel):

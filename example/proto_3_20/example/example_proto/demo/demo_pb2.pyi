@@ -65,7 +65,8 @@ class UserMessage(google.protobuf.message.Message):
     p2p: {"default": "", "min_length": 1, "max_length": "10", "example": "so1n"}
     """
     @property
-    def demo_message(self) -> example.example_proto.common.single_pb2.DemoMessage: ...
+    def demo_message(self) -> example.example_proto.common.single_pb2.DemoMessage:
+        """p2p: {"extra": {"customer_string": "c1", "customer_int": 1}}"""
     def __init__(
         self,
         *,

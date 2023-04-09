@@ -78,6 +78,7 @@ class AnyTest(BaseModel):
     example_factory_test: Any = Field(default_factory=Any, example=customer_any)
     field_test: Any = CustomerField(default_factory=Any)
     title_test: Any = Field(default_factory=Any, title="title_test")
+    extra_test: Any = Field(default_factory=Any, customer_string="c1", customer_int=1)
 
     any_not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(any_not_in_validator)
     any_in_validator_in_test = validator("in_test", allow_reuse=True)(any_in_validator)
@@ -93,6 +94,7 @@ class BoolTest(BaseModel):
     example_test: bool = Field(default=False, example=True)
     field_test: bool = CustomerField(default=False)
     title_test: bool = Field(default=False, title="title_test")
+    extra_test: bool = Field(default=False, customer_string="c1", customer_int=1)
 
 
 class BytesTest(BaseModel):
@@ -113,6 +115,7 @@ class BytesTest(BaseModel):
     field_test: bytes = CustomerField(default=b"")
     title_test: bytes = Field(default=b"", title="title_test")
     type_test: constr() = Field(default=b"")
+    extra_test: bytes = Field(default=b"", customer_string="c1", customer_int=1)
 
     prefix_validator_prefix_test = validator("prefix_test", allow_reuse=True)(prefix_validator)
     suffix_validator_suffix_test = validator("suffix_test", allow_reuse=True)(suffix_validator)
@@ -138,6 +141,7 @@ class DoubleTest(BaseModel):
     field_test: float = CustomerField(default=0.0)
     type_test: confloat() = Field(default=0.0)
     title_test: float = Field(default=0.0, title="title_test")
+    extra_test: float = Field(default=0.0, customer_string="c1", customer_int=1)
 
     in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
     not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
@@ -173,6 +177,7 @@ class DurationTest(BaseModel):
     field_test: Timedelta = CustomerField(default_factory=Timedelta)
     title_test: Timedelta = Field(default_factory=Timedelta, title="title_test")
     type_test: timedelta = Field(default_factory=Timedelta)
+    extra_test: Timedelta = Field(default_factory=Timedelta, customer_string="c1", customer_int=1)
 
     duration_const_validator_const_test = validator("const_test", allow_reuse=True)(duration_const_validator)
     duration_lt_validator_range_test = validator("range_test", allow_reuse=True)(duration_lt_validator)
@@ -200,6 +205,7 @@ class EnumTest(BaseModel):
     example_test: State = Field(default=0, example=2)
     field_test: State = CustomerField(default=0)
     title_test: State = Field(default=0, title="title_test")
+    extra_test: State = Field(default=0, customer_string="c1", customer_int=1)
 
     in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
     not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
@@ -222,6 +228,7 @@ class Fixed32Test(BaseModel):
     field_test: float = CustomerField(default=0)
     type_test: confloat() = Field(default=0)
     title_test: float = Field(default=0, title="title_test")
+    extra_test: float = Field(default=0, customer_string="c1", customer_int=1)
 
     in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
     not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
@@ -244,6 +251,7 @@ class Fixed64Test(BaseModel):
     field_test: float = CustomerField(default=0)
     type_test: confloat() = Field(default=0)
     title_test: float = Field(default=0, title="title_test")
+    extra_test: float = Field(default=0, customer_string="c1", customer_int=1)
 
     in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
     not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
@@ -266,6 +274,7 @@ class FloatTest(BaseModel):
     field_test: float = CustomerField(default=0.0)
     type_test: confloat() = Field(default=0.0)
     title_test: float = Field(default=0.0, title="title_test")
+    extra_test: float = Field(default=0.0, customer_string="c1", customer_int=1)
 
     in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
     not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
@@ -288,6 +297,7 @@ class Int32Test(BaseModel):
     field_test: int = CustomerField(default=0)
     type_test: confloat() = Field(default=0)
     title_test: int = Field(default=0, title="title_test")
+    extra_test: int = Field(default=0, customer_string="c1", customer_int=1)
 
     in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
     not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
@@ -310,6 +320,7 @@ class Int64Test(BaseModel):
     field_test: int = CustomerField(default=0)
     type_test: confloat() = Field(default=0)
     title_test: int = Field(default=0, title="title_test")
+    extra_test: int = Field(default=0, customer_string="c1", customer_int=1)
 
     in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
     not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
@@ -330,6 +341,7 @@ class MapTest(BaseModel):
     field_test: typing.Dict[str, int] = CustomerField(default_factory=dict)
     title_test: typing.Dict[str, int] = Field(default_factory=dict, title="title_test")
     type_test: dict = Field(default_factory=dict)
+    extra_test: typing.Dict[str, int] = Field(default_factory=dict, customer_string="c1", customer_int=1)
 
     map_min_pairs_validator_pair_test = validator("pair_test", allow_reuse=True)(map_min_pairs_validator)
     map_max_pairs_validator_pair_test = validator("pair_test", allow_reuse=True)(map_max_pairs_validator)
@@ -344,6 +356,7 @@ class MessageIgnoredTest(BaseModel):
 class MessageTest(BaseModel):
     skip_test: str = Field(default="")
     required_test: str = Field()
+    extra_test: str = Field(default="")
 
 
 class StringTest(BaseModel):
@@ -377,6 +390,7 @@ class StringTest(BaseModel):
     field_test: str = CustomerField(default="")
     title_test: str = Field(default="", title="title_test")
     type_test: constr() = Field(default="")
+    extra_test: str = Field(default="", customer_string="c1", customer_int=1)
 
     len_validator_len_test = validator("len_test", allow_reuse=True)(len_validator)
     prefix_validator_prefix_test = validator("prefix_test", allow_reuse=True)(prefix_validator)
@@ -455,6 +469,7 @@ class RepeatedTest(BaseModel):
     field_test: typing.List[str] = CustomerField(default_factory=list)
     title_test: typing.List[str] = Field(default_factory=list, title="title_test")
     type_test: list = Field(default_factory=list)
+    extra_test: typing.List[str] = Field(default_factory=list, customer_string="c1", customer_int=1)
 
 
 class Sfixed32Test(BaseModel):
@@ -474,6 +489,7 @@ class Sfixed32Test(BaseModel):
     field_test: float = CustomerField(default=0)
     type_test: confloat() = Field(default=0)
     title_test: float = Field(default=0, title="title_test")
+    extra_test: float = Field(default=0, customer_string="c1", customer_int=1)
 
     in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
     not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
@@ -496,6 +512,7 @@ class Sfixed64Test(BaseModel):
     field_test: float = CustomerField(default=0)
     type_test: confloat() = Field(default=0)
     title_test: float = Field(default=0, title="title_test")
+    extra_test: float = Field(default=0, customer_string="c1", customer_int=1)
 
     in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
     not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
@@ -518,6 +535,7 @@ class Sint32Test(BaseModel):
     field_test: int = CustomerField(default=0)
     type_test: conint() = Field(default=0)
     title_test: int = Field(default=0, title="title_test")
+    extra_test: int = Field(default=0, customer_string="c1", customer_int=1)
 
     in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
     not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
@@ -540,6 +558,7 @@ class Sint64Test(BaseModel):
     field_test: int = CustomerField(default=0)
     type_test: conint() = Field(default=0)
     title_test: int = Field(default=0, title="title_test")
+    extra_test: int = Field(default=0, customer_string="c1", customer_int=1)
 
     in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
     not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
@@ -565,6 +584,7 @@ class TimestampTest(BaseModel):
     field_test: datetime = CustomerField(default_factory=datetime.now)
     title_test: datetime = Field(default_factory=datetime.now, title="title_test")
     type_test: datetime = Field(default_factory=datetime.now)
+    extra_test: datetime = Field(default_factory=datetime.now, customer_string="c1", customer_int=1)
 
     timestamp_const_validator_const_test = validator("const_test", allow_reuse=True)(timestamp_const_validator)
     timestamp_lt_validator_range_test = validator("range_test", allow_reuse=True)(timestamp_lt_validator)
@@ -599,6 +619,7 @@ class Uint32Test(BaseModel):
     field_test: int = CustomerField(default=0)
     type_test: conint() = Field(default=0)
     title_test: int = Field(default=0, title="title_test")
+    extra_test: int = Field(default=0, customer_string="c1", customer_int=1)
 
     in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
     not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
@@ -621,6 +642,7 @@ class Uint64Test(BaseModel):
     field_test: int = CustomerField(default=0)
     type_test: conint() = Field(default=0)
     title_test: int = Field(default=0, title="title_test")
+    extra_test: int = Field(default=0, customer_string="c1", customer_int=1)
 
     in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
     not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)

@@ -27,6 +27,7 @@ message FloatTest {
   float field_test = 15[(p2p_validate.rules).float.field = "p2p@local|CustomerField"];
   float type_test = 16[(p2p_validate.rules).float.type = "p2p@local|confloat"];
   float title_test = 17 [(p2p_validate.rules).float.title = "title_test"];
+  float extra_test = 18 [(p2p_validate.rules).float.extra = '{"customer_string": "c1", "customer_int": 1}'];
 }
 
 message DoubleTest {
@@ -47,6 +48,7 @@ message DoubleTest {
   double field_test = 15[(p2p_validate.rules).double.field = "p2p@local|CustomerField"];
   double type_test = 16[(p2p_validate.rules).double.type = "p2p@local|confloat"];
   double title_test = 17 [(p2p_validate.rules).double.title = "title_test"];
+  double extra_test = 18 [(p2p_validate.rules).double.extra = '{"customer_string": "c1", "customer_int": 1}'];
 }
 
 message Int32Test {
@@ -67,6 +69,7 @@ message Int32Test {
   int32 field_test = 15[(p2p_validate.rules).int32.field = "p2p@local|CustomerField"];
   int32 type_test = 16[(p2p_validate.rules).int32.type = "p2p@local|confloat"];
   int32 title_test = 17 [(p2p_validate.rules).int32.title = "title_test"];
+  int32 extra_test = 18 [(p2p_validate.rules).int32.extra = '{"customer_string": "c1", "customer_int": 1}'];
 }
 
 message Int64Test {
@@ -87,6 +90,7 @@ message Int64Test {
   int64 field_test = 15[(p2p_validate.rules).int64.field = "p2p@local|CustomerField"];
   int64 type_test = 16[(p2p_validate.rules).int64.type = "p2p@local|confloat"];
   int64 title_test = 17 [(p2p_validate.rules).int64.title = "title_test"];
+  int64 extra_test = 18 [(p2p_validate.rules).int64.extra = '{"customer_string": "c1", "customer_int": 1}'];
 }
 
 message Uint32Test {
@@ -107,6 +111,7 @@ message Uint32Test {
   uint32 field_test = 15[(p2p_validate.rules).uint32.field = "p2p@local|CustomerField"];
   uint32 type_test = 16[(p2p_validate.rules).uint32.type = "p2p@local|conint"];
   uint32 title_test = 17 [(p2p_validate.rules).uint32.title = "title_test"];
+  uint32 extra_test = 18 [(p2p_validate.rules).uint32.extra = '{"customer_string": "c1", "customer_int": 1}'];
 }
 
 message Sint32Test {
@@ -127,6 +132,7 @@ message Sint32Test {
   sint32 field_test = 15[(p2p_validate.rules).sint32.field = "p2p@local|CustomerField"];
   sint32 type_test = 16[(p2p_validate.rules).sint32.type = "p2p@local|conint"];
   sint32 title_test = 17 [(p2p_validate.rules).sint32.title = "title_test"];
+  sint32 extra_test = 18 [(p2p_validate.rules).sint32.extra = '{"customer_string": "c1", "customer_int": 1}'];
 }
 
 message Uint64Test {
@@ -147,6 +153,7 @@ message Uint64Test {
   uint64 field_test = 15[(p2p_validate.rules).uint64.field = "p2p@local|CustomerField"];
   uint64 type_test = 16[(p2p_validate.rules).uint64.type = "p2p@local|conint"];
   uint64 title_test = 17 [(p2p_validate.rules).uint64.title = "title_test"];
+  uint64 extra_test = 18 [(p2p_validate.rules).uint64.extra = '{"customer_string": "c1", "customer_int": 1}'];
 }
 
 message Sint64Test {
@@ -167,6 +174,7 @@ message Sint64Test {
   sint64 field_test = 15[(p2p_validate.rules).sint64.field = "p2p@local|CustomerField"];
   sint64 type_test = 16[(p2p_validate.rules).sint64.type = "p2p@local|conint"];
   sint64 title_test = 17 [(p2p_validate.rules).sint64.title = "title_test"];
+  sint64 extra_test = 18 [(p2p_validate.rules).sint64.extra = '{"customer_string": "c1", "customer_int": 1}'];
 }
 
 message Fixed32Test {
@@ -187,6 +195,7 @@ message Fixed32Test {
   fixed32 field_test = 15[(p2p_validate.rules).fixed32.field = "p2p@local|CustomerField"];
   fixed32 type_test = 16[(p2p_validate.rules).fixed32.type = "p2p@local|confloat"];
   fixed32 title_test = 17 [(p2p_validate.rules).fixed32.title = "title_test"];
+  fixed32 extra_test = 18 [(p2p_validate.rules).fixed32.extra = '{"customer_string": "c1", "customer_int": 1}'];
 }
 
 message Fixed64Test {
@@ -207,6 +216,7 @@ message Fixed64Test {
   fixed64 field_test = 15[(p2p_validate.rules).fixed64.field = "p2p@local|CustomerField"];
   fixed64 type_test = 16[(p2p_validate.rules).fixed64.type = "p2p@local|confloat"];
   fixed64 title_test = 17 [(p2p_validate.rules).fixed64.title = "title_test"];
+  fixed64 extra_test = 18 [(p2p_validate.rules).fixed64.extra = '{"customer_string": "c1", "customer_int": 1}'];
 }
 
 message Sfixed32Test {
@@ -227,6 +237,7 @@ message Sfixed32Test {
   sfixed32 field_test = 15[(p2p_validate.rules).sfixed32.field = "p2p@local|CustomerField"];
   sfixed32 type_test = 16[(p2p_validate.rules).sfixed32.type = "p2p@local|confloat"];
   sfixed32 title_test = 17 [(p2p_validate.rules).sfixed32.title = "title_test"];
+  sfixed32 extra_test = 18 [(p2p_validate.rules).sfixed32.extra = '{"customer_string": "c1", "customer_int": 1}'];
 }
 
 message Sfixed64Test {
@@ -247,6 +258,7 @@ message Sfixed64Test {
   sfixed64 field_test = 15[(p2p_validate.rules).sfixed64.field = "p2p@local|CustomerField"];
   sfixed64 type_test = 16[(p2p_validate.rules).sfixed64.type = "p2p@local|confloat"];
   sfixed64 title_test = 17 [(p2p_validate.rules).sfixed64.title = "title_test"];
+  sfixed64 extra_test = 18 [(p2p_validate.rules).sfixed64.extra = '{"customer_string": "c1", "customer_int": 1}'];
 }
 
 message BoolTest {
@@ -260,6 +272,7 @@ message BoolTest {
   bool example_test = 13 [(p2p_validate.rules).bool.example = true];
   bool field_test = 15[(p2p_validate.rules).bool.field = "p2p@local|CustomerField"];
   bool title_test = 17 [(p2p_validate.rules).bool.title = "title_test"];
+  bool extra_test = 18 [(p2p_validate.rules).bool.extra = '{"customer_string": "c1", "customer_int": 1}'];
 }
 
 message StringTest {
@@ -294,6 +307,7 @@ message StringTest {
   string field_test = 30[(p2p_validate.rules).string.field = "p2p@local|CustomerField"];
   string title_test = 31 [(p2p_validate.rules).string.title = "title_test"];
   string type_test = 32 [(p2p_validate.rules).string.type = "p2p@import|pydantic|constr"];
+  string extra_test = 33 [(p2p_validate.rules).string.extra = '{"customer_string": "c1", "customer_int": 1}'];
 }
 
 
@@ -316,6 +330,7 @@ message BytesTest {
   bytes field_test = 30[(p2p_validate.rules).bytes.field = "p2p@local|CustomerField"];
   bytes title_test = 31 [(p2p_validate.rules).bytes.title = "title_test"];
   bytes type_test = 32 [(p2p_validate.rules).bytes.type = "p2p@import|pydantic|constr"];
+  bytes extra_test = 33 [(p2p_validate.rules).bytes.extra = '{"customer_string": "c1", "customer_int": 1}'];
 }
 
 enum State {
@@ -336,6 +351,7 @@ message EnumTest {
   State example_test = 28 [(p2p_validate.rules).enum.example = 2];
   State field_test = 30[(p2p_validate.rules).enum.field = "p2p@local|CustomerField"];
   State title_test = 31 [(p2p_validate.rules).enum.title = "title_test"];
+  State extra_test = 33 [(p2p_validate.rules).enum.extra = '{"customer_string": "c1", "customer_int": 1}'];
 }
 
 
@@ -363,12 +379,14 @@ message MapTest {
   map<string, int32> field_test = 30[(p2p_validate.rules).map.field = "p2p@local|CustomerField"];
   map<string, int32> title_test = 31 [(p2p_validate.rules).map.title = "title_test"];
   map<string, int32> type_test = 32 [(p2p_validate.rules).map.type = "p2p@builtin|dict"];
+  map<string, int32> extra_test = 33 [(p2p_validate.rules).map.extra = '{"customer_string": "c1", "customer_int": 1}'];
 }
 
 
 message MessageTest {
   string skip_test = 1 [(p2p_validate.rules).message.skip = true];
   string required_test = 2 [(p2p_validate.rules).message.required = true];
+  string extra_test = 33 [(p2p_validate.rules).message.extra = '{"customer_string": "c1", "customer_int": 1}'];
 }
 
 message RepeatedTest {
@@ -407,6 +425,7 @@ message RepeatedTest {
   repeated string field_test = 30[(p2p_validate.rules).repeated.field = "p2p@local|CustomerField"];
   repeated string title_test = 31 [(p2p_validate.rules).repeated.title = "title_test"];
   repeated string type_test = 32 [(p2p_validate.rules).repeated.type = "p2p@builtin|list"];
+  repeated string extra_test = 33 [(p2p_validate.rules).repeated.extra = '{"customer_string": "c1", "customer_int": 1}'];
 }
 
 
@@ -437,6 +456,7 @@ message AnyTest {
   google.protobuf.Any example_factory_test = 29 [(p2p_validate.rules).any.example_factory= "p2p@local|customer_any"];
   google.protobuf.Any field_test = 30[(p2p_validate.rules).any.field = "p2p@local|CustomerField"];
   google.protobuf.Any title_test = 31 [(p2p_validate.rules).any.title = "title_test"];
+  google.protobuf.Any extra_test = 33 [(p2p_validate.rules).any.extra = '{"customer_string": "c1", "customer_int": 1}'];
 }
 
 message DurationTest {
@@ -456,6 +476,7 @@ message DurationTest {
   google.protobuf.Duration field_test = 30[(p2p_validate.rules).duration.field = "p2p@local|CustomerField"];
   google.protobuf.Duration title_test = 31 [(p2p_validate.rules).duration.title = "title_test"];
   google.protobuf.Duration type_test = 32 [(p2p_validate.rules).duration.type = "p2p@import|datetime|timedelta"];
+  google.protobuf.Duration extra_test = 33 [(p2p_validate.rules).duration.extra = '{"customer_string": "c1", "customer_int": 1}'];
 }
 
 message TimestampTest {
@@ -480,6 +501,7 @@ message TimestampTest {
   google.protobuf.Timestamp field_test = 30[(p2p_validate.rules).timestamp.field = "p2p@local|CustomerField"];
   google.protobuf.Timestamp title_test = 31 [(p2p_validate.rules).timestamp.title = "title_test"];
   google.protobuf.Timestamp type_test = 32 [(p2p_validate.rules).timestamp.type = "p2p@import|datetime|datetime"];
+  google.protobuf.Timestamp extra_test = 33 [(p2p_validate.rules).timestamp.extra = '{"customer_string": "c1", "customer_int": 1}'];
 }
 
 
