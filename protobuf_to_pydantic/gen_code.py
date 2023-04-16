@@ -329,6 +329,8 @@ class BaseP2C(object):
         validator_str: str = self._model_validator_handle(model, indent=indent + self.code_indent)
         if validator_str:
             class_str += f"{validator_str}\n"
+        if not any([model.__doc__, config_class, nested_class_str, attribute_str, field_str, validator_str]):
+            class_str += " " * (indent + self.code_indent) + "pass\n"
 
         if class_str.endswith("\n\n"):
             class_str = class_str[:-1]

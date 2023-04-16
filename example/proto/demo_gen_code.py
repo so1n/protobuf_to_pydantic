@@ -1,5 +1,5 @@
 # This is an automatically generated file, please do not change
-# gen by protobuf_to_pydantic[v0.1.7](https://github.com/so1n/protobuf_to_pydantic)
+# gen by protobuf_to_pydantic[v0.1.7.1](https://github.com/so1n/protobuf_to_pydantic)
 import typing
 from datetime import datetime
 from enum import IntEnum
@@ -10,6 +10,10 @@ from pydantic import BaseModel, Field
 class AfterReferMessage(BaseModel):
     uid: str = Field(default="")
     age: int = Field(default=0)
+
+
+class EmptyMessage(BaseModel):
+    pass
 
 
 class InvoiceItem(BaseModel):
