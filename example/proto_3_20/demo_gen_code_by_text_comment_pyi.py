@@ -1,5 +1,5 @@
 # This is an automatically generated file, please do not change
-# gen by protobuf_to_pydantic[v0.1.7](https://github.com/so1n/protobuf_to_pydantic)
+# gen by protobuf_to_pydantic[v0.1.7.1](https://github.com/so1n/protobuf_to_pydantic)
 import typing
 from datetime import datetime
 from enum import IntEnum
@@ -14,6 +14,10 @@ from example.gen_text_comment_code import exp_time
 class AfterReferMessage(BaseModel):
     uid: str = Field(title="UID", description="user union id", example="10086")
     age: int = Field(default=0, title="use age", ge=0, example=18)
+
+
+class EmptyMessage(BaseModel):
+    pass
 
 
 class InvoiceItem(BaseModel):

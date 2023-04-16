@@ -394,3 +394,12 @@ class InvoiceItem(google.protobuf.message.Message):
     ) -> None: ...
 
 global___InvoiceItem = InvoiceItem
+
+class EmptyMessage(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    def __init__(
+        self,
+    ) -> None: ...
+
+global___EmptyMessage = EmptyMessage

@@ -1,5 +1,5 @@
 # This is an automatically generated file, please do not change
-# gen by protobuf_to_pydantic[v0.1.7](https://github.com/so1n/protobuf_to_pydantic)
+# gen by protobuf_to_pydantic[v0.1.7.1](https://github.com/so1n/protobuf_to_pydantic)
 import typing
 from datetime import datetime
 from enum import IntEnum
@@ -68,3 +68,7 @@ class InvoiceItem(BaseModel):
     amount: int = FieldInfo(default=0)
     quantity: int = FieldInfo(default=0)
     items: typing.List["InvoiceItem"] = FieldInfo(default_factory=list)
+
+
+class EmptyMessage(BaseModel):
+    pass

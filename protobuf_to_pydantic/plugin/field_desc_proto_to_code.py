@@ -357,6 +357,12 @@ class FileDescriptorProtoToCode(BaseP2C):
             config_content += f"{' ' * (indent + self.code_indent * 2)}arbitrary_types_allowed = True\n\n"
             class_head_content = config_content + class_head_content
         content += "\n".join([i for i in [class_content, class_head_content, class_field_content] if i])
+        if not any([class_head_content, class_field_content]):
+            content += " " * (indent + self.code_indent) + "pass\n"
+        while True:
+            if content[-1] != "\n":
+                break
+            content = content[:-1]
         content += "\n" if indent > 0 else "\n\n"
         self._parse_desc_name_dict[class_name] = content
         return content

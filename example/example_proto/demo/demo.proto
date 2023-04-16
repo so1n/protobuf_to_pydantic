@@ -79,3 +79,5 @@ message InvoiceItem {
   int32 quantity = 3;
   repeated InvoiceItem items = 4;
 }
+
+message EmptyMessage {};

@@ -16,6 +16,12 @@ class TestSimpleTest:
     def _model_output(msg: Any) -> str:
         return pydantic_model_to_py_code(msg_to_pydantic_model(msg, parse_msg_desc_method="ignore"))
 
+    def test_empty_message(self) -> None:
+        assert format_content("""
+class EmptyMessage(BaseModel):
+    pass
+""")in self._model_output(demo_pb2.EmptyMessage)  # type: ignore
+
     def test_user_message(self) -> None:
         assert format_content("""
 class SexType(IntEnum):
