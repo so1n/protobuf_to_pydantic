@@ -266,8 +266,8 @@ class FileDescriptorProtoToCode(BaseP2C):
         if field_class:
             field_name: str = self._get_value_code(field_class)
         else:
-            field_name = "FieldInfo"
-            self._add_import_code("pydantic.fields", "FieldInfo")
+            field_name = "Field"
+            self._add_import_code("pydantic", "Field")
 
         # arranging  field info parameters
         for key in FieldInfo.__slots__:
