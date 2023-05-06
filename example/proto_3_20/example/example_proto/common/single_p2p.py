@@ -1,10 +1,9 @@
 # This is an automatically generated file, please do not change
-# gen by protobuf_to_pydantic[v0.1.7.1](https://github.com/so1n/protobuf_to_pydantic)
+# gen by protobuf_to_pydantic[v0.1.7.2](https://github.com/so1n/protobuf_to_pydantic)
 from enum import IntEnum
 
 from google.protobuf.message import Message  # type: ignore
-from pydantic import BaseModel
-from pydantic.fields import FieldInfo
+from pydantic import BaseModel, Field
 
 
 class DemoEnum(IntEnum):
@@ -14,6 +13,6 @@ class DemoEnum(IntEnum):
 
 
 class DemoMessage(BaseModel):
-    earth: str = FieldInfo(default="")
-    mercury: str = FieldInfo(default="")
-    mars: str = FieldInfo(default="")
+    earth: str = Field(default="")
+    mercury: str = Field(default="")
+    mars: str = Field(default="")

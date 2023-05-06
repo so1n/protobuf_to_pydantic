@@ -1,5 +1,5 @@
 # This is an automatically generated file, please do not change
-# gen by protobuf_to_pydantic[v0.1.7.1](https://github.com/so1n/protobuf_to_pydantic)
+# gen by protobuf_to_pydantic[v0.1.7.2](https://github.com/so1n/protobuf_to_pydantic)
 import typing
 from datetime import datetime, timedelta
 from enum import IntEnum
