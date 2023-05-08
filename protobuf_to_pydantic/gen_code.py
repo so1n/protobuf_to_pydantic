@@ -101,25 +101,27 @@ class BaseP2C(object):
         else:
             self._import_set.add(f"import {module_name}")
 
-    def _get_value_code(self, type_: Any, auto_import_type_code: bool = True) -> str:
+    def _get_value_code(self, type_: Any, auto_import_type_code: bool = True, sort: bool = True) -> str:
         """
         Get the output string corresponding to the type
         :param type_: needs to be parsed type
         :param auto_import_type_code: If True, will generate by the way import code
+        :param sort: If True, will sort item (Ensure that the order of code generated multiple times is consistent)
         :return:
         """
         type_ = replace_protobuf_type_to_python_type(type_)
         if isinstance(type_, dict):
             sort_list: list = [(k, v) for k, v in type_.items()]
-            # Ensure that the order of code generated multiple times is consistent
-            sort_list.sort()
+            if sort:
+                sort_list.sort()
             type_name: str = ", ".join(
                 sorted([f"{self._get_value_code(k)}: {self._get_value_code(v)}" for k, v in sort_list])
             )
             return "{" + type_name + "}"
         elif isinstance(type_, (list, tuple, set)):
             sort_list = [self._get_value_code(i) for i in type_]
-            sort_list.sort()
+            if sort:
+                sort_list.sort()
             type_name = ", ".join(sort_list)
             if isinstance(type_, list):
                 return "[" + type_name + "]"
