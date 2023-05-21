@@ -79,7 +79,7 @@ class FileDescriptorProtoToCode(BaseP2C):
             + self.config.file_name_suffix
         )
         logger.info((self._fd.name, other_fd.name, index))
-        if index != "-1":
+        if index != -1:
             module_name = "." * (len(message_path_list) - (index + 1)) + module_name
         self._add_import_code(module_name, type_str)
 
