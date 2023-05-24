@@ -101,7 +101,7 @@ class BaseP2C(object):
         else:
             self._import_set.add(f"import {module_name}")
 
-    def _get_value_code(self, type_: Any, auto_import_type_code: bool = True, sort: bool = True) -> str:
+    def _get_value_code(self, type_: Any, auto_import_type_code: bool = True, sort: bool = False) -> str:
         """
         Get the output string corresponding to the type
         :param type_: needs to be parsed type
@@ -120,7 +120,7 @@ class BaseP2C(object):
             return "{" + type_name + "}"
         elif isinstance(type_, (list, tuple, set)):
             sort_list = [self._get_value_code(i) for i in type_]
-            if sort:
+            if sort or isinstance(type_, set):
                 sort_list.sort()
             type_name = ", ".join(sort_list)
             if isinstance(type_, list):

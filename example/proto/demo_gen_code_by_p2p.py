@@ -1,5 +1,5 @@
 # This is an automatically generated file, please do not change
-# gen by protobuf_to_pydantic[v0.1.7.2](https://github.com/so1n/protobuf_to_pydantic)
+# gen by protobuf_to_pydantic[v0.1.7.3](https://github.com/so1n/protobuf_to_pydantic)
 import typing
 from datetime import datetime, timedelta
 from enum import IntEnum
@@ -65,8 +65,8 @@ class AnyTest(BaseModel):
     in_test: Any = Field(
         default_factory=Any,
         any_in=[
-            "type.googleapis.com/google.protobuf.Timestamp",
             Any(type_url="type.googleapis.com/google.protobuf.Duration"),
+            "type.googleapis.com/google.protobuf.Timestamp",
         ],
     )
     default_test: Any = Field(default=Any(type_url="type.googleapis.com/google.protobuf.Duration"))

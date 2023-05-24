@@ -42,8 +42,8 @@ class AnyTest(BaseModel):
     in_test: Any = Field(
         default_factory=Any,
         any_in=[
-            "type.googleapis.com/google.protobuf.Timestamp",
             Any(type_url="type.googleapis.com/google.protobuf.Duration"),
+            "type.googleapis.com/google.protobuf.Timestamp",
         ],
     )
     default_test: Any = Field(default=Any(type_url="type.googleapis.com/google.protobuf.Duration"))
