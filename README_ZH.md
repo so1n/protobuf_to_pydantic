@@ -15,7 +15,7 @@ pip install protobuf_to_pydantic
 第二种方法是在运行时根据`Message`对象生成对应的`pydantic.BaseModel`对象。
 
 ## 2.1.通过插件直接生成`pydantic.BaseModel`代码文件
-> Note: `protobuf-to-pydantic`插件依赖于`mypy-protobuf`，请通过类似命令`python -m pip install protobuf-to-pydanitc[mypy-protobuf]`安装`mypy-protobuf`。
+> Note: `protobuf-to-pydantic`插件依赖于`mypy-protobuf`，请通过类似命令`python -m pip install protobuf-to-pydantic[mypy-protobuf]`安装`mypy-protobuf`。
 ### 2.1.1.插件的使用
 插件方式是`protobuf-to-pydantic`最推荐的使用方式，它支持的功能是最全的，同时使用起来也非常简单，假设平时是通过如下命令生成Protobuf文件对应的代码:
 ```bash
@@ -26,7 +26,7 @@ python -m grpc_tools.protoc -I. example.proto
 python -m grpc_tools.protoc -I. --protobuf-to-pydantic_out=. example.proto
 ```
 
-其中`--protobuf-to-pydantic_out=.`表示使用`prorobuf-to-pydanitc`插件，且声明了`protobuf-to-pydantic`插件的输出位置为`.`(表示采用`grpc_tools.proto`使用的输出路径)，
+其中`--protobuf-to-pydantic_out=.`表示使用`prorobuf-to-pydantic`插件，且声明了`protobuf-to-pydantic`插件的输出位置为`.`(表示采用`grpc_tools.proto`使用的输出路径)，
 这样一来`protobuf-to-pydantic`插件会在对应的文件中写入自己生成的内容(文件名以`p2p.py`结尾)，如`protobuf-to-pydantic`为`example.proto`生成的代码文件名为`example_p2p.py`
 
 ### 2.1.2.插件的配置
