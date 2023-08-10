@@ -4,10 +4,18 @@ from uuid import uuid4
 
 from google.protobuf import __version__
 
+from protobuf_to_pydantic._pydantic_adapter import is_v1
+
 if __version__ > "4.0.0":
-    from example.proto.example.example_proto.demo import demo_pb2
+    if is_v1:
+        from example.proto_pydanticv1.example.example_proto.demo import demo_pb2
+    else:
+        from example.proto_pydanticv2.example.example_proto.demo import demo_pb2  # type: ignore[no-redef]
 else:
-    from example.proto_3_20.example.example_proto.demo import demo_pb2  # type: ignore[no-redef]
+    if is_v1:
+        from example.proto_3_20_pydanticv1.example.example_proto.demo import demo_pb2  # type: ignore[no-redef]
+    else:
+        from example.proto_3_20_pydanticv2.example.example_proto.demo import demo_pb2  # type: ignore[no-redef]
 
 from protobuf_to_pydantic import msg_to_pydantic_model, pydantic_model_to_py_code
 from protobuf_to_pydantic.util import format_content

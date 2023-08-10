@@ -3,10 +3,18 @@ from typing import Any
 
 from google.protobuf import __version__
 
+from protobuf_to_pydantic._pydantic_adapter import is_v1
+
 if __version__ > "4.0.0":
-    from example.proto.example.example_proto.p2p_validate import demo_pb2
+    if is_v1:
+        from example.proto_pydanticv1.example.example_proto.p2p_validate import demo_pb2
+    else:
+        from example.proto_pydanticv2.example.example_proto.p2p_validate import demo_pb2
 else:
-    from example.proto_3_20.example.example_proto.p2p_validate import demo_pb2  # type: ignore[no-redef]
+    if is_v1:
+        from example.proto_3_20_pydanticv1.example.example_proto.p2p_validate import demo_pb2  # type: ignore[no-redef]
+    else:
+        from example.proto_3_20_pydanticv2.example.example_proto.p2p_validate import demo_pb2  # type: ignore[no-redef]
 
 from example.gen_p2p_code import CustomerField, confloat, conint, customer_any
 from protobuf_to_pydantic import msg_to_pydantic_model, pydantic_model_to_py_code
@@ -28,9 +36,14 @@ class TestP2pValidate:
         }
         return pydantic_model_to_py_code(msg_to_pydantic_model(msg, local_dict=local_dict))
 
+    @staticmethod
+    def assert_contains(content: str, other_content: str) -> None:
+        content = format_content(content)
+        assert content in other_content or content.replace(", alias_priority=2", "") in other_content
+
     def test_any(self) -> None:
-        assert format_content("""
-class AnyTest(BaseModel):
+        content = """
+ class AnyTest(BaseModel):
     class Config:
         arbitrary_types_allowed = True
 
@@ -59,10 +72,11 @@ class AnyTest(BaseModel):
 
     any_not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(any_not_in_validator)
     any_in_validator_in_test = validator("in_test", allow_reuse=True)(any_in_validator)
-""") in self._model_output(demo_pb2.AnyTest)
+"""
+        self.assert_contains(content, self._model_output(demo_pb2.AnyTest))
 
     def test_bool(self) -> None:
-        assert format_content("""
+        content = """
 class BoolTest(BaseModel):
     bool_1_test: bool = Field(default=True, const=True)
     bool_2_test: bool = Field(default=False, const=True)
@@ -74,10 +88,11 @@ class BoolTest(BaseModel):
     field_test: bool = CustomerField(default=False)
     title_test: bool = Field(default=False, title="title_test")
     extra_test: bool = Field(default=False, customer_string="c1", customer_int=1)
-""") in self._model_output(demo_pb2.BoolTest)
+"""
+        self.assert_contains(content, self._model_output(demo_pb2.BoolTest))
 
     def test_bytes(self) -> None:
-        assert format_content("""
+        content = """
 class BytesTest(BaseModel):
     const_test: bytes = Field(default=b"demo", const=True)
     range_len_test: bytes = Field(default=b"", min_length=1, max_length=4)
@@ -103,10 +118,11 @@ class BytesTest(BaseModel):
     contains_validator_contains_test = validator("contains_test", allow_reuse=True)(contains_validator)
     in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
     not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
-""") in self._model_output(demo_pb2.BytesTest)
+"""
+        self.assert_contains(content, self._model_output(demo_pb2.BytesTest))
 
     def test_double(self) -> None:
-        assert format_content("""
+        content = """
 class DoubleTest(BaseModel):
     const_test: float = Field(default=1.0, const=True)
     range_e_test: float = Field(default=0.0, ge=1, le=10)
@@ -128,10 +144,11 @@ class DoubleTest(BaseModel):
 
     in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
     not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
-""") in self._model_output(demo_pb2.DoubleTest)
+"""
+        self.assert_contains(content, self._model_output(demo_pb2.DoubleTest))
 
     def test_duration(self) -> None:
-        assert format_content("""
+        content = """
 class DurationTest(BaseModel):
     const_test: Timedelta = Field(
         default_factory=Timedelta, duration_const=timedelta(seconds=1, microseconds=500000)
@@ -173,10 +190,11 @@ class DurationTest(BaseModel):
     duration_ge_validator_range_e_test = validator("range_e_test", allow_reuse=True)(duration_ge_validator)
     duration_in_validator_in_test = validator("in_test", allow_reuse=True)(duration_in_validator)
     duration_not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(duration_not_in_validator)
-""") in self._model_output(demo_pb2.DurationTest)
+"""
+        self.assert_contains(content, self._model_output(demo_pb2.DurationTest))
 
     def test_enum(self) -> None:
-        assert format_content("""
+        content = """
 class State(IntEnum):
     INACTIVE = 0
     PENDING = 1
@@ -198,10 +216,11 @@ class EnumTest(BaseModel):
 
     in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
     not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
-""") in self._model_output(demo_pb2.EnumTest)
+"""
+        self.assert_contains(content, self._model_output(demo_pb2.EnumTest))
 
     def test_fixed32(self) -> None:
-        assert format_content("""
+        content = """
 class Fixed32Test(BaseModel):
     const_test: float = Field(default=1, const=True)
     range_e_test: float = Field(default=0, ge=1, le=10)
@@ -223,10 +242,11 @@ class Fixed32Test(BaseModel):
 
     in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
     not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
-""") in self._model_output(demo_pb2.Fixed32Test)
+"""
+        self.assert_contains(content, self._model_output(demo_pb2.Fixed32Test))
 
     def test_fixed64(self) -> None:
-        assert format_content("""
+        content = """
 class Fixed64Test(BaseModel):
     const_test: float = Field(default=0)
     range_e_test: float = Field(default=0, ge=1, le=10)
@@ -248,10 +268,11 @@ class Fixed64Test(BaseModel):
 
     in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
     not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
-""") in self._model_output(demo_pb2.Fixed64Test)
+"""
+        self.assert_contains(content, self._model_output(demo_pb2.Fixed64Test))
 
     def test_float(self) -> None:
-        assert format_content("""
+        content = """
 class FloatTest(BaseModel):
     const_test: float = Field(default=1.0, const=True)
     range_e_test: float = Field(default=0.0, ge=1, le=10)
@@ -273,10 +294,11 @@ class FloatTest(BaseModel):
 
     in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
     not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
-""") in self._model_output(demo_pb2.FloatTest)
+"""
+        self.assert_contains(content, self._model_output(demo_pb2.FloatTest))
 
     def test_int32(self) -> None:
-        assert format_content("""
+        content = """
 class Int32Test(BaseModel):
     const_test: int = Field(default=1, const=True)
     range_e_test: int = Field(default=0, ge=1, le=10)
@@ -298,10 +320,11 @@ class Int32Test(BaseModel):
 
     in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
     not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
-""") in self._model_output(demo_pb2.Int32Test)
+"""
+        self.assert_contains(content, self._model_output(demo_pb2.Int32Test))
 
     def test_int64(self) -> None:
-        assert format_content("""
+        content = """
 class Int64Test(BaseModel):
     const_test: int = Field(default=1, const=True)
     range_e_test: int = Field(default=0, ge=1, le=10)
@@ -323,10 +346,11 @@ class Int64Test(BaseModel):
 
     in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
     not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
-""") in self._model_output(demo_pb2.Int64Test)
+"""
+        self.assert_contains(content, self._model_output(demo_pb2.Int64Test))
 
     def test_map(self) -> None:
-        assert format_content("""
+        content = """
 class MapTest(BaseModel):
     pair_test: typing.Dict[str, int] = Field(default_factory=dict, map_min_pairs=1, map_max_pairs=5)
     keys_test: typing.Dict[constr(min_length=1, max_length=5), int] = Field(default_factory=dict)
@@ -346,7 +370,9 @@ class MapTest(BaseModel):
 
     map_min_pairs_validator_pair_test = validator("pair_test", allow_reuse=True)(map_min_pairs_validator)
     map_max_pairs_validator_pair_test = validator("pair_test", allow_reuse=True)(map_max_pairs_validator)
-""") in self._model_output(demo_pb2.MapTest)
+"""
+        self.assert_contains(content, self._model_output(demo_pb2.MapTest))
+
 
     def test_message_ignored(self) -> None:
         assert format_content("""
@@ -365,7 +391,7 @@ class MessageTest(BaseModel):
 """) in self._model_output(demo_pb2.MessageTest)
 
     def test_nested(self) -> None:
-        assert format_content("""
+        content = """
 class StringTest(BaseModel):
     const_test: str = Field(default="aaa", const=True)
     len_test: str = Field(default="", len=3)
@@ -454,7 +480,8 @@ class NestedMessage(BaseModel):
     not_enable_user_pay: NotEnableUserPayMessage = Field()
     empty: typing.Any = Field()
     after_refer: AfterReferMessage = Field()
-""") in self._model_output(demo_pb2.NestedMessage)
+"""
+        self.assert_contains(content, self._model_output(demo_pb2.NestedMessage))
 
     def test_one_of_not(self) -> None:
         assert format_content("""
@@ -481,8 +508,8 @@ class OneOfTest(BaseModel):
 """) in self._model_output(demo_pb2.OneOfTest)
 
     def test_repeated(self) -> None:
-        assert format_content("""
-class RepeatedTest(BaseModel):
+        content = """
+        class RepeatedTest(BaseModel):
     range_test: typing.List[str] = Field(default_factory=list, min_items=1, max_items=5)
     unique_test: typing.List[str] = Field(default_factory=list, unique_items=True)
     items_string_test: conlist(item_type=constr(min_length=1, max_length=5), min_items=1, max_items=5) = Field(
@@ -512,10 +539,11 @@ class RepeatedTest(BaseModel):
     title_test: typing.List[str] = Field(default_factory=list, title="title_test")
     type_test: list = Field(default_factory=list)
     extra_test: typing.List[str] = Field(default_factory=list, customer_string="c1", customer_int=1)
-""") in self._model_output(demo_pb2.RepeatedTest)
+"""
+        self.assert_contains(content, self._model_output(demo_pb2.RepeatedTest))
 
     def test_sfixed32(self) -> None:
-        assert format_content("""
+        content = """
 class Sfixed32Test(BaseModel):
     const_test: float = Field(default=0)
     range_e_test: float = Field(default=0, ge=1, le=10)
@@ -537,10 +565,11 @@ class Sfixed32Test(BaseModel):
 
     in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
     not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
-""") in self._model_output(demo_pb2.Sfixed32Test)
+"""
+        self.assert_contains(content, self._model_output(demo_pb2.Sfixed32Test))
 
     def test_sfixed64(self) -> None:
-        assert format_content("""
+        content = """
 class Sfixed64Test(BaseModel):
     const_test: float = Field(default=0)
     range_e_test: float = Field(default=0, ge=1, le=10)
@@ -562,10 +591,11 @@ class Sfixed64Test(BaseModel):
 
     in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
     not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
-""") in self._model_output(demo_pb2.Sfixed64Test)
+"""
+        self.assert_contains(content, self._model_output(demo_pb2.Sfixed64Test))
 
     def test_sint64(self) -> None:
-        assert format_content("""
+        content = """
 class Sint64Test(BaseModel):
     const_test: int = Field(default=1, const=True)
     range_e_test: int = Field(default=0, ge=1, le=10)
@@ -587,10 +617,11 @@ class Sint64Test(BaseModel):
 
     in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
     not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
-""") in self._model_output(demo_pb2.Sint64Test)
+"""
+        self.assert_contains(content, self._model_output(demo_pb2.Sint64Test))
 
     def test_string(self) -> None:
-        assert format_content("""
+        content = """
 class StringTest(BaseModel):
     const_test: str = Field(default="aaa", const=True)
     len_test: str = Field(default="", len=3)
@@ -631,10 +662,12 @@ class StringTest(BaseModel):
     not_contains_validator_not_contains_test = validator("not_contains_test", allow_reuse=True)(not_contains_validator)
     in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
     not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
-""") in self._model_output(demo_pb2.StringTest)
+"""
+        self.assert_contains(content, self._model_output(demo_pb2.StringTest))
+
 
     def test_timestamp(self) -> None:
-        assert format_content("""
+        content = """
 class TimestampTest(BaseModel):
     const_test: datetime = Field(default_factory=datetime.now, timestamp_const=1600000000.0)
     range_test: datetime = Field(default_factory=datetime.now, timestamp_lt=1600000010.0, timestamp_gt=1600000000.0)
@@ -673,10 +706,11 @@ class TimestampTest(BaseModel):
     timestamp_within_validator_within_and_gt_now_test = validator("within_and_gt_now_test", allow_reuse=True)(
         timestamp_within_validator
     )
-""") in self._model_output(demo_pb2.TimestampTest)
+"""
+        self.assert_contains(content, self._model_output(demo_pb2.TimestampTest))
 
     def test_unit32(self) -> None:
-        assert format_content("""
+        content = """
 class Uint32Test(BaseModel):
     const_test: int = Field(default=1, const=True)
     range_e_test: int = Field(default=0, ge=1, le=10)
@@ -698,10 +732,11 @@ class Uint32Test(BaseModel):
 
     in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
     not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
-""") in self._model_output(demo_pb2.Uint32Test)
+"""
+        self.assert_contains(content, self._model_output(demo_pb2.Uint32Test))
 
     def test_unit64(self) -> None:
-        assert format_content("""
+        content = """
 class Uint64Test(BaseModel):
     const_test: int = Field(default=1, const=True)
     range_e_test: int = Field(default=0, ge=1, le=10)
@@ -723,4 +758,5 @@ class Uint64Test(BaseModel):
 
     in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
     not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
-""") in self._model_output(demo_pb2.Uint64Test)
+"""
+        self.assert_contains(content, self._model_output(demo_pb2.Uint64Test))
