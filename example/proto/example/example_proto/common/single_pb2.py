@@ -16,12 +16,13 @@ DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(
     b'\n)example/example_proto/common/single.proto\x12\x06single";\n\x0b\x44\x65moMessage\x12\r\n\x05\x65\x61rth\x18\x01 \x01(\t\x12\x0f\n\x07mercury\x18\x02 \x01(\t\x12\x0c\n\x04mars\x18\x03 \x01(\t*&\n\x08\x44\x65moEnum\x12\x08\n\x04zero\x10\x00\x12\x07\n\x03one\x10\x01\x12\x07\n\x03two\x10\x03\x62\x06proto3'
 )
 
-_builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
-_builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, "example.example_proto.common.single_pb2", globals())
+_globals = globals()
+_builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
+_builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, "example.example_proto.common.single_pb2", _globals)
 if _descriptor._USE_C_DESCRIPTORS == False:
     DESCRIPTOR._options = None
-    _DEMOENUM._serialized_start = 114
-    _DEMOENUM._serialized_end = 152
-    _DEMOMESSAGE._serialized_start = 53
-    _DEMOMESSAGE._serialized_end = 112
+    _globals["_DEMOENUM"]._serialized_start = 114
+    _globals["_DEMOENUM"]._serialized_end = 152
+    _globals["_DEMOMESSAGE"]._serialized_start = 53
+    _globals["_DEMOMESSAGE"]._serialized_end = 112
 # @@protoc_insertion_point(module_scope)
