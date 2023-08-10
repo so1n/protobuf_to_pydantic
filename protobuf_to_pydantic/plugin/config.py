@@ -1,8 +1,9 @@
 from collections import deque
-from typing import Any, Deque, Dict, List, Set, Type, TypeVar
+from typing import Any, Deque, List, Set, Type, TypeVar
 
-from pydantic import BaseModel, Field, root_validator
+from pydantic import BaseModel, Field
 
+from protobuf_to_pydantic import _pydantic_adapter
 from protobuf_to_pydantic.gen_model import DescTemplate
 from protobuf_to_pydantic.plugin.field_desc_proto_to_code import FileDescriptorProtoToCode
 
@@ -42,10 +43,15 @@ class ConfigModel(BaseModel):
     class Config:
         arbitrary_types_allowed = True
 
-    @root_validator
-    def after_init(cls, values: Dict[str, Any]) -> Dict[str, Any]:
-        values["desc_template_instance"] = values["desc_template"](values["local_dict"], values["comment_prefix"])
-        return values
+    @_pydantic_adapter.model_validator(mode="after")
+    def after_init(cls, values: Any) -> Any:
+        if _pydantic_adapter.is_v1:
+            # values: Dict[str, Any]
+            values["desc_template_instance"] = values["desc_template"](values["local_dict"], values["comment_prefix"])
+            return values
+        else:
+            # values: "ConfigModel"
+            values.desc_template_instance = values.desc_template(values.local_dict, values.comment_prefix)
 
 
 def get_config_by_module(module: Any, config_class: Type[ConfigT]) -> ConfigT:

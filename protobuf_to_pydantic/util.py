@@ -4,7 +4,7 @@ import logging
 import os
 import sys
 from datetime import timedelta
-from typing import TYPE_CHECKING, Any, Callable, Dict, Generator, Optional, Tuple, Type, Union
+from typing import TYPE_CHECKING, Any, Callable, Dict, Generator, Optional, Sequence, Tuple, Type, Union
 
 from pydantic import BaseConfig, BaseModel, create_model
 
@@ -166,3 +166,16 @@ def format_content(content_str: str, pyproject_file_path: str = "") -> str:
             else:
                 content_str = black.format_str(content_str, mode=black.Mode())
     return content_str
+
+
+class SourceCodeModel(object):
+    def __init__(self, source_obj: Any, _callable: Callable, param: Sequence) -> None:
+        self.source_obj = source_obj
+        self._callable = _callable
+        self.param = param
+
+        setattr(source_obj, "__source_code", self)
+
+    @classmethod
+    def from_obj(cls, obj: Any) -> Optional["SourceCodeModel"]:
+        return getattr(obj, "__source_code", None)

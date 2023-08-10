@@ -2,6 +2,7 @@ import inspect
 import pathlib
 import sys
 from collections import deque
+from dataclasses import is_dataclass
 from datetime import datetime
 from enum import IntEnum
 from types import ModuleType
@@ -15,19 +16,26 @@ from typing import (  # type: ignore
     Optional,
     Set,
     Type,
+    TypeVar,
     Union,
     _GenericAlias,
     _SpecialForm,
 )
 
-from pydantic import BaseConfig, BaseModel
+from pydantic import BaseModel, Field
 from pydantic.fields import FieldInfo
+from typing_extensions import Annotated, get_args, get_origin
 
-from protobuf_to_pydantic import customer_validator, gen_model
+from protobuf_to_pydantic import _pydantic_adapter, customer_validator, gen_model
 from protobuf_to_pydantic.__version__ import __version__
-from protobuf_to_pydantic.customer_con_type import pydantic_con_dict
+from protobuf_to_pydantic.customer_con_type import get_origin_code, pydantic_con_dict
+from protobuf_to_pydantic.gen_model import CodeRefModel
 from protobuf_to_pydantic.grpc_types import RepeatedCompositeContainer, RepeatedScalarContainer
 from protobuf_to_pydantic.util import format_content, replace_protobuf_type_to_python_type
+
+# You can decide whether to generate the 'Field' parameter by modifying the 'field_param_set'
+field_param_set = set(inspect.signature(Field).parameters.keys())
+field_param_set.add("metadata")
 
 
 class BaseP2C(object):
@@ -101,6 +109,42 @@ class BaseP2C(object):
         else:
             self._import_set.add(f"import {module_name}")
 
+    def _get_typing_value_code(self, type_: Any, auto_import_type_code: bool = True) -> Optional[str]:
+        """
+        parse typing type to python code
+        :param type_: typing type
+        :param auto_import_type_code: if true, add import type module code
+        :return: if type_ is typing type, return python code, else return None
+        """
+        origin_type: Optional[_GenericAlias] = get_origin(type_)
+        if origin_type is None:
+            if isinstance(type_, TypeVar):
+                if auto_import_type_code:
+                    self._add_import_code(type_.__module__, type_.__name__)
+                return type_.__name__
+            return None
+        if origin_type is Annotated:
+            # Support Annotated
+            # TODO Analysis according to different Python versions
+            args_str = self._get_value_code(list(get_args(type_)))
+            if auto_import_type_code:
+                self._import_set.add("import typing_extensions")
+            return "typing_extensions.Annotated" + args_str
+        else:
+            type_name = type_._name
+            sub_type_str = self._get_value_code(list(get_args(type_)))
+            if not type_name:
+                # typing_extensions.Literal[True]
+                if auto_import_type_code:
+                    self._import_set.add(f"import {origin_type.__module__}")
+                return f"{origin_type.__module__}.{origin_type._name}{sub_type_str}"
+            else:
+                if auto_import_type_code:
+                    self._import_set.add("import typing")
+                return f"typing.{type_._name}{sub_type_str}"
+
+    # TODO remove flake8: noqa: C901
+    # flake8: noqa: C901
     def _get_value_code(self, type_: Any, auto_import_type_code: bool = True, sort: bool = False) -> str:
         """
         Get the output string corresponding to the type
@@ -110,11 +154,19 @@ class BaseP2C(object):
         :return:
         """
         type_ = replace_protobuf_type_to_python_type(type_)
+
+        customer_con_type_origin_code = get_origin_code(type_)
+        if customer_con_type_origin_code:
+            module_name, type_name, param_list = customer_con_type_origin_code
+            if auto_import_type_code:
+                self._add_import_code(module_name, type_name)
+            return f"{type_name}({', '.join([self._get_value_code(i) for i in param_list])})"
+
         if isinstance(type_, dict):
             sort_list: list = [(k, v) for k, v in type_.items()]
             if sort:
                 sort_list.sort()
-            type_name: str = ", ".join(
+            type_name = ", ".join(
                 sorted([f"{self._get_value_code(k)}: {self._get_value_code(v)}" for k, v in sort_list])
             )
             return "{" + type_name + "}"
@@ -128,14 +180,29 @@ class BaseP2C(object):
             elif isinstance(type_, set):
                 return "{" + type_name + "}"
             else:
+                if len(sort_list) == 1:
+                    return "(" + type_name + ", )"
                 return "(" + type_name + ")"
         elif isinstance(type_, ForwardRef):
             return type_.__forward_arg__
+        elif is_dataclass(type_):
+            # dataclass support
+            field_param_code_list = []
+            for field in type_.__dataclass_fields__.keys():
+                field_param_code_list.append(f"{field}={self._get_value_code(getattr(type_, field))}")
+            if auto_import_type_code:
+                self._parse_type_to_import_code(type_)
+            return f"{type_.__class__.__name__}({', '.join(field_param_code_list)})"
         elif inspect.isfunction(type_) or "cyfunction" in str(type_):
             # pydantic confunc support
             if auto_import_type_code:
                 self._parse_type_to_import_code(type_)
             return type_.__name__
+        elif getattr(type_, "__module__", None) == "pydantic.functional_validators":
+            # support BeforeValidator(func=xxx)
+            if auto_import_type_code:
+                self._parse_type_to_import_code(type_)
+            return f"{type_.__class__.__name__}(func={self._get_value_code(type_.func)})"
         elif inspect.isclass(type_):
             if type_.__mro__[1] in pydantic_con_dict:
                 # pydantic con class support
@@ -152,11 +219,27 @@ class BaseP2C(object):
                 self._parse_type_to_import_code(type_)
             return f"{message_name}({attr_str})"
         else:
+            # origin_type = get_origin(type_)
+            # if origin_type is Annotated:
+            #     # Support Annotated
+            #     # TODO Analysis according to different Python versions
+            #     args_str = self._get_value_code(list(get_args(type_)))
+            #     if auto_import_type_code:
+            #         self._import_set.add("import typing_extensions")
+            #     return "typing_extensions.Annotated" + args_str
+            # elif origin_type is not None:
+            #     return f"typing.{type_._name}{self._get_value_code(list(get_args(type_)))}"
+            typing_code = self._get_typing_value_code(type_, auto_import_type_code=auto_import_type_code)
+            if typing_code:
+                return typing_code
             if auto_import_type_code:
                 self._parse_type_to_import_code(type_)
 
             qualname: str = getattr(type_, "__qualname__", "")
-            if (
+            if inspect.ismethod(type_):
+                type_name = qualname
+                self._parse_type_to_import_code(type_name)
+            elif (
                 qualname
                 and qualname.startswith("datetime")
                 and (
@@ -169,6 +252,7 @@ class BaseP2C(object):
             else:
                 type_module = inspect.getmodule(type_)
                 if type_module and type_module.__name__ == "builtins" or inspect.isfunction(type_module):
+                    print(type_)
                     type_name = type_.__name__
                 else:
                     type_name = repr(type_)
@@ -178,26 +262,35 @@ class BaseP2C(object):
             return type_name
 
     def _model_config_handle(self, model: Type[BaseModel], indent: int = 0) -> str:
-        config_str: str = ""
-        for key in dir(model.Config):
-            if key.startswith("_"):
-                continue
-            value = getattr(model.Config, key)
-            if value == getattr(BaseConfig, key) or inspect.isfunction(value) or inspect.ismethod(value):
-                continue
-            config_str += f"{' ' * (indent + self.code_indent)}{key} = {value}\n"
-        if config_str:
+        model_config = _pydantic_adapter.get_model_config_dict(model)
+        if not model_config:
+            return ""
+        if _pydantic_adapter.is_v1:
+            config_str: str = ""
+            for key, value in model_config.items():
+                config_str += f"{' ' * (indent + self.code_indent)}{key} = {value}\n"
             # The Config class does not need to consider inheritance relationships
             # because pydantic.BaseModel only reads the values of the Config class
+            # output:
+            #   class Config:
+            #       allow_mutation = False
             config_str = f"{' ' * indent}class Config:\n" + config_str
+        else:
+            # output:
+            #   model_config = ConfigDict(allow_mutation=False)
+            self._add_import_code("pydantic", "ConfigDict")
+            config_list = []
+            for k, v in model_config.items():
+                config_list.append(f"{k}={self._get_value_code(v)}")
+            config_str = f"{' ' * indent}model_config = ConfigDict({','.join(config_list)})\n"
         return config_str
 
     def _model_nested_handle(self, model: Type[BaseModel], indent: int = 0) -> str:
-        nested_message_dict: Dict[str, Type[Union[BaseModel, IntEnum]]] = getattr(model, "_nested_message_dict", {})
-        if not nested_message_dict:
+        code_ref = CodeRefModel.from_model(model)
+        if not code_ref.nested_message_dict:
             return ""
         nested_str = ""
-        for _, msg in nested_message_dict.items():
+        for _, msg in code_ref.nested_message_dict.items():
             if issubclass(msg, IntEnum):
                 nested_str += self._gen_enum_py_code(msg, indent=indent, ignore_nested_model=False)
             else:
@@ -216,16 +309,21 @@ class BaseP2C(object):
 
     def _model_field_handle(self, model: Type[BaseModel], indent: int = 0) -> str:
         field_str: str = ""
-        for key, value in model.__fields__.items():
-            value_outer_type = value.outer_type_
+        for key, value in _pydantic_adapter.model_fields(model).items():
+            if _pydantic_adapter.is_v1:
+                value_outer_type = value.outer_type_
+                value_type = value.type_
+            else:
+                value_outer_type = value.annotation
+                value_type = value.annotation
             value_type_name: str = getattr(value_outer_type, "__name__", "None")
 
             # Type Hint handler
             if value_outer_type.__module__ != "builtins":
-                if inspect.isclass(value.type_) and issubclass(value.type_, IntEnum):
+                if inspect.isclass(value_type) and issubclass(value_type, IntEnum):
                     # Parse protobuf enum
                     self._import_set.add("from enum import IntEnum")
-                    enum_code: str = self._gen_enum_py_code(value.type_, indent=indent - self.code_indent)
+                    enum_code: str = self._gen_enum_py_code(value_type, indent=indent - self.code_indent)
                     if enum_code:
                         self._content_deque.append(enum_code)
                 else:
@@ -234,18 +332,33 @@ class BaseP2C(object):
                     value_outer_type = model.__annotations__[key]
                 # Extracting the exact Type Hint text
                 if isinstance(value_outer_type, _GenericAlias):
-                    sub_type_str = ", ".join(
-                        [
-                            self._get_value_code(i)
-                            for i in value_outer_type.__args__
-                            if getattr(i, __name__, None) != "T"
-                        ]
-                    )
-                    if sub_type_str:
-                        value_type_name = f"typing.{value_outer_type._name}[{sub_type_str}]"
-                    else:
-                        value_type_name = f"typing.{value_outer_type._name}"
-                    self._import_set.add("import typing")
+                    value_type_name = self._get_typing_value_code(value_outer_type) or ""
+                    # if get_origin(value_outer_type) is Annotated:
+                    #     # Support Annotated
+                    #     # TODO Analysis according to different Python versions
+                    #     args_str = self._get_value_code(list(get_args(value_outer_type)))
+                    #     value_type_name = "typing_extensions.Annotated" + args_str
+                    #     self._import_set.add("import typing_extensions")
+                    # else:
+                    #     sub_type_str = ", ".join(
+                    #         [
+                    #             self._get_value_code(i)
+                    #             for i in value_outer_type.__args__
+                    #             if getattr(i, __name__, None) != "T"
+                    #         ]
+                    #     )
+                    #     type_name = value_outer_type._name
+                    #     if not type_name:
+                    #         # typing_extensions.Literal[True]
+                    #         origin_type = get_origin(value_type)
+                    #         value_type_name = f"{origin_type.__module__}.{origin_type._name}[{sub_type_str}]"
+                    #         self._import_set.add(f"import {origin_type.__module__}")
+                    #     else:
+                    #         if sub_type_str:
+                    #             value_type_name = f"typing.{value_outer_type._name}[{sub_type_str}]"
+                    #         else:
+                    #             value_type_name = f"typing.{value_outer_type._name}"
+                    #         self._import_set.add("import typing")
                 elif isinstance(value_outer_type, _SpecialForm):
                     value_type_name = f"typing.{value_outer_type._name}"  # type: ignore[attr-defined]
                     self._import_set.add("import typing")
@@ -262,7 +375,7 @@ class BaseP2C(object):
             #     if con_func in value_type_name:
             #         pass
 
-            field_str += " " * indent + f"{key}: {value_type_name} = {self._field_info_handle(value.field_info)}\n"
+            field_str += " " * indent + f"{key}: {value_type_name} = {self._field_info_handle(value)}\n"
             # if ignore_flag:
             #     field_str += "  # type: ignore"
             # field_str += "\n"
@@ -302,7 +415,17 @@ class BaseP2C(object):
     ) -> str:
         if ignore_nested_model and getattr(model, "_is_nested", False):
             return ""
-        base_class: type = getattr(model, "_base_model", model.__mro__[1])
+        if hasattr(model, "_base_model"):
+            base_class: type = getattr(model, "_base_model")
+        else:
+            base_class = BaseModel
+            for mro_model in model.__mro__[1:]:
+                # pydantic v2 first mro model is "abc.BaseModel"
+                if mro_model.__module__ is "abc":
+                    continue
+                base_class = mro_model
+                break
+
         if base_class is BaseModel:
             self._import_set.add("from pydantic import BaseModel")
         else:
@@ -367,6 +490,10 @@ class BaseP2C(object):
         elif getattr(type_module, "__name__", "builtins") == "builtins":
             # The built-in method does not use a guide package
             return
+        elif inspect.ismethod(type_) and hasattr(type_, "__self__"):
+            # If is bound method, should import class
+            self._parse_type_to_import_code(type_.__self__)
+            return
         elif isinstance(type_, _GenericAlias):
             # type hint handle
             self._import_set.add("import typing")
@@ -410,57 +537,109 @@ class BaseP2C(object):
 
     def _field_info_handle(self, field_info: FieldInfo) -> str:
         # Introduce the corresponding class for FieldInfo's properties
-        field_list = []
+        if _pydantic_adapter.is_v1:
+            # in v1, field_info is ModelField
+            field_info = field_info.field_info  # type: ignore[attr-defined]
+
+        field_param_dict: Dict[str, Any] = {}
+        field_param_code_list: List[str] = []
         for k, v in field_info.__repr_args__():
+            if k not in field_param_set:
+                continue
+            v = getattr(field_info, k)
             if k == "default" and str(v) == "PydanticUndefined":
                 # Ignore the default value of the pydantic field
                 continue
-            if k == "extra":
+            if k == "metadata":
+                for metadata in v:
+                    if not metadata:
+                        continue
+                    for metadata_key in getattr(metadata, "__annotations__", []):
+                        if metadata_key not in field_info.metadata_lookup:
+                            continue
+                        metadata_value = metadata.__dict__[metadata_key]
+                        # Field's metadata will hold duplicate values, but Field only needs the first value
+                        if metadata_key in field_param_dict:
+                            continue
+                        field_param_dict[metadata_key] = metadata_value
+            elif k == "extra" or k == "json_schema_extra":
                 if not v:
                     # Ignore cases where the value of extra is empty
                     continue
                 for extra_k, extra_v in v.items():
-                    field_list.append(f"{extra_k}={self._get_value_code(extra_v)}")
-                    self._parse_type_to_import_code(extra_v)
+                    field_param_dict[extra_k] = extra_v
             else:
-                field_list.append(f"{k}={self._get_value_code(v)}")
-                self._parse_type_to_import_code(v)
+                field_param_dict[k] = v
+
+        for k, v in field_param_dict.items():
+            field_param_code_list.append(f"{k}={self._get_value_code(v)}")
+            self._parse_type_to_import_code(v)
 
         if field_info.__class__.__name__ == "FieldInfo":
             self._add_import_code("pydantic", "Field")
-            field_info_str: str = f"Field({', '.join(field_list)})"
+            field_info_str: str = f"Field({', '.join(field_param_code_list)})"
         else:
             self._parse_type_to_import_code(field_info.__class__)
-            field_info_str = f"{field_info.__class__.__name__}({', '.join(field_list)})"
+            field_info_str = f"{field_info.__class__.__name__}({', '.join(field_param_code_list)})"
         return field_info_str
 
     def _model_validator_handle(self, model: Type[BaseModel], indent: int = 0) -> str:
         # TODO Here currently only consider the support for pgv&p2p, the follow-up to fill in
         validator_str: str = ""
-
-        for root_validator in model.__pre_root_validators__:
-            if root_validator.__module__ != customer_validator.__name__:
-                continue
-            self._import_set.add("from pydantic import root_validator")
-            self._add_import_code(root_validator.__module__, root_validator.__name__)
-            validator_str += (
-                f"{' ' * indent}"
-                f"_{root_validator.__name__} = root_validator(pre=True, allow_reuse=True)({root_validator.__name__})\n"
-            )
-
-        for key, value in model.__fields__.items():
-            if not value.class_validators:
-                continue
-            for class_validator_key, class_validator_value in value.class_validators.items():
-                if class_validator_value.func.__module__ != customer_validator.__name__:
+        if _pydantic_adapter.is_v1:
+            for root_validator in model.__pre_root_validators__:  # type: ignore[attr-defined]
+                if not root_validator.__module__.startswith(customer_validator.__name__):
                     continue
-                self._import_set.add("from pydantic import validator")
-                self._add_import_code(class_validator_value.func.__module__, class_validator_value.func.__name__)
+                validator_name = root_validator.__name__
+                self._import_set.add("from pydantic import root_validator")
+                self._add_import_code(root_validator.__module__, validator_name)
                 validator_str += (
                     f"{' ' * indent}"
-                    f"{class_validator_key}_{key} = validator("
-                    f"'{key}', allow_reuse=True)({class_validator_value.func.__name__})\n"
+                    f"_{validator_name} = root_validator(pre=True, allow_reuse=True)({validator_name})\n"
                 )
+            for key, value in model.__fields__.items():
+                if not value.class_validators:
+                    continue
+                for class_validator_key, class_validator_value in value.class_validators.items():
+                    if not class_validator_value.func.__module__.startswith(customer_validator.__name__):
+                        continue
+                    self._import_set.add("from pydantic import validator")
+                    self._add_import_code(class_validator_value.func.__module__, class_validator_value.func.__name__)
+                    validator_str += (
+                        f"{' ' * indent}"
+                        f"{class_validator_key}_{key} = validator("
+                        f"'{key}', allow_reuse=True)({class_validator_value.func.__name__})\n"
+                    )
+
+        else:
+            # pydantic v2 can not get validators from model
+            code_ref = CodeRefModel.from_model(model)
+            for name, validator in code_ref.validators.items():
+                validator_wrapper_func_name = self._get_value_code(validator.wrapped.__func__)  # type: ignore[attr-defined]
+
+                if "fields" in validator.decorator_info.__dict__:  # type: ignore[attr-defined]
+                    validator_func_name = "field_validator"
+                    validator_field_param_str = (
+                        ",".join([f'"{i}"' for i in validator.decorator_info.__dict__["fields"]]) + ", "  # type: ignore[attr-defined]
+                    )
+                else:
+                    validator_func_name = "model_validator"
+                    validator_field_param_str = ""
+                    name = f"_{validator_wrapper_func_name}"
+
+                validator_param_str = validator_field_param_str + ",".join(
+                    [
+                        f"{k}={self._get_value_code(v)}"
+                        for k, v in validator.decorator_info.__dict__.items()  # type: ignore[attr-defined]
+                        if k != "fields"
+                    ]
+                )
+                validator_str += (
+                    f"{' ' * indent}"
+                    f"{name} = {validator_func_name}({validator_param_str})({validator_wrapper_func_name})\n"
+                )
+                self._import_set.add(f"from pydantic import {validator_func_name}")
+
         return validator_str
 
 
