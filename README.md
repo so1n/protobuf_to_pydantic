@@ -1,10 +1,13 @@
 # protobuf_to_pydantic
-Generate the `pydantic.Base Model` class (and the corresponding source code) with parameter verification function through the Protobuf file
+Generate the `pydantic.BaseModel` class (and the corresponding source code) with parameter verification function through the Protobuf file
 
 > NOTE:
 >  - Only supports proto3
 
 [中文文档](https://github.com/so1n/protobuf_to_pydantic/blob/master/README_ZH.md)
+
+> Current version 0.2.0 is under development, available version is [v0.1.7.4](https://github.com/so1n/protobuf_to_pydantic/tree/v0.1.7.4)
+
 # 1.Installation
 ```bash
 pip install protobuf_to_pydantic
