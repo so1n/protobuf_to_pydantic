@@ -15,6 +15,7 @@ from pydantic import (
     validate_arguments,
     validator,
 )
+
 from pydantic.types import update_not_none
 
 from protobuf_to_pydantic import customer_validator
@@ -35,6 +36,7 @@ __all__ = [
     "ConstrainedTimestamp",
     "pydantic_con_dict",
     "set_ignore_param_value_tz",
+    "get_origin_code",
 ]
 
 _ignore_param_value_tz: bool = False
@@ -222,3 +224,6 @@ pydantic_con_dict: Dict[Type, Callable] = {
     ConstrainedTimedelta: contimedelta,
     ConstrainedTimestamp: contimestamp,
 }
+
+def get_origin_code(type_: Any) -> Any:
+    return None

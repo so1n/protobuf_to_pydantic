@@ -63,13 +63,13 @@ repos:
         language_version: python3
         pass_filenames: false
         args: ["-o", "requirements-dev.txt", "--without-hashes", "--with-credentials", "--with", "dev", "--extras=all" ]
-      - id: local-poetry-export-no-grpc
+      - id: local-poetry-export-tox
         name: my-poetry-export
-        entry: bash -c 'cat requirements.txt | grep -v "^grpcio\|^protobuf" > requirements-no-grpc.txt'
+        entry: bash -c 'cat requirements.txt | grep -v "^grpcio\|^protobuf\|^pydantic" > requirements-no-grpc.txt'
         language: system
         pass_filenames: false
-      - id: local-poetry-export-no-grpc-dev
+      - id: local-poetry-export-tox-dev
         name: my-poetry-export
-        entry: bash -c 'cat requirements-dev.txt | grep -v "^grpcio\|^protobuf" > requirements-no-grpc-dev.txt'
+        entry: bash -c 'cat requirements-dev.txt | grep -v "^grpcio\|^protobuf\|^pydantic" > requirements-no-grpc-dev.txt'
         language: system
         pass_filenames: false
