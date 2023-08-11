@@ -25,7 +25,9 @@ class _SexType:
     ValueType = typing.NewType("ValueType", builtins.int)
     V: typing_extensions.TypeAlias = ValueType
 
-class _SexTypeEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_SexType.ValueType], builtins.type):  # noqa: F821
+class _SexTypeEnumTypeWrapper(
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_SexType.ValueType], builtins.type
+):  # noqa: F821
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
     man: _SexType.ValueType  # 0
     women: _SexType.ValueType  # 1
@@ -78,7 +80,27 @@ class UserMessage(google.protobuf.message.Message):
         demo_message: example.example_proto.common.single_pb2.DemoMessage | None = ...,
     ) -> None: ...
     def HasField(self, field_name: typing_extensions.Literal["demo_message", b"demo_message"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["age", b"age", "demo", b"demo", "demo_message", b"demo_message", "height", b"height", "is_adult", b"is_adult", "sex", b"sex", "uid", b"uid", "user_name", b"user_name"]) -> None: ...
+    def ClearField(
+        self,
+        field_name: typing_extensions.Literal[
+            "age",
+            b"age",
+            "demo",
+            b"demo",
+            "demo_message",
+            b"demo_message",
+            "height",
+            b"height",
+            "is_adult",
+            b"is_adult",
+            "sex",
+            b"sex",
+            "uid",
+            b"uid",
+            "user_name",
+            b"user_name",
+        ],
+    ) -> None: ...
 
 global___UserMessage = UserMessage
 
@@ -131,7 +153,9 @@ class MapMessage(google.protobuf.message.Message):
         user_map: collections.abc.Mapping[builtins.str, global___UserMessage] | None = ...,
         user_flag: collections.abc.Mapping[builtins.str, builtins.bool] | None = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["user_flag", b"user_flag", "user_map", b"user_map"]) -> None: ...
+    def ClearField(
+        self, field_name: typing_extensions.Literal["user_flag", b"user_flag", "user_map", b"user_map"]
+    ) -> None: ...
 
 global___MapMessage = MapMessage
 
@@ -150,7 +174,9 @@ class RepeatedMessage(google.protobuf.message.Message):
     def int_list(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[builtins.int]:
         """p2p: {"min_items": 1, "max_items": 5, "unique_items": true}"""
     @property
-    def user_list(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___UserMessage]: ...
+    def user_list(
+        self,
+    ) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___UserMessage]: ...
     def __init__(
         self,
         *,
@@ -158,7 +184,12 @@ class RepeatedMessage(google.protobuf.message.Message):
         int_list: collections.abc.Iterable[builtins.int] | None = ...,
         user_list: collections.abc.Iterable[global___UserMessage] | None = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["int_list", b"int_list", "str_list", b"str_list", "user_list", b"user_list"]) -> None: ...
+    def ClearField(
+        self,
+        field_name: typing_extensions.Literal[
+            "int_list", b"int_list", "str_list", b"str_list", "user_list", b"user_list"
+        ],
+    ) -> None: ...
 
 global___RepeatedMessage = RepeatedMessage
 
@@ -171,7 +202,9 @@ class NestedMessage(google.protobuf.message.Message):
         ValueType = typing.NewType("ValueType", builtins.int)
         V: typing_extensions.TypeAlias = ValueType
 
-    class _IncludeEnumEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[NestedMessage._IncludeEnum.ValueType], builtins.type):  # noqa: F821
+    class _IncludeEnumEnumTypeWrapper(
+        google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[NestedMessage._IncludeEnum.ValueType], builtins.type
+    ):  # noqa: F821
         DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
         zero: NestedMessage._IncludeEnum.ValueType  # 0
         one: NestedMessage._IncludeEnum.ValueType  # 1
@@ -203,7 +236,9 @@ class NestedMessage(google.protobuf.message.Message):
             uuid: builtins.str = ...,
         ) -> None: ...
         def HasField(self, field_name: typing_extensions.Literal["exp", b"exp"]) -> builtins.bool: ...
-        def ClearField(self, field_name: typing_extensions.Literal["bank_number", b"bank_number", "exp", b"exp", "uuid", b"uuid"]) -> None: ...
+        def ClearField(
+            self, field_name: typing_extensions.Literal["bank_number", b"bank_number", "exp", b"exp", "uuid", b"uuid"]
+        ) -> None: ...
 
     class UserListMapEntry(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
@@ -247,7 +282,9 @@ class NestedMessage(google.protobuf.message.Message):
     EMPTY_FIELD_NUMBER: builtins.int
     AFTER_REFER_FIELD_NUMBER: builtins.int
     @property
-    def user_list_map(self) -> google.protobuf.internal.containers.MessageMap[builtins.str, global___RepeatedMessage]: ...
+    def user_list_map(
+        self,
+    ) -> google.protobuf.internal.containers.MessageMap[builtins.str, global___RepeatedMessage]: ...
     @property
     def user_map(self) -> google.protobuf.internal.containers.MessageMap[builtins.str, global___MapMessage]: ...
     @property
@@ -271,8 +308,38 @@ class NestedMessage(google.protobuf.message.Message):
         empty: google.protobuf.empty_pb2.Empty | None = ...,
         after_refer: global___AfterReferMessage | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["after_refer", b"after_refer", "empty", b"empty", "not_enable_user_pay", b"not_enable_user_pay", "user_pay", b"user_pay"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["after_refer", b"after_refer", "empty", b"empty", "include_enum", b"include_enum", "not_enable_user_pay", b"not_enable_user_pay", "user_list_map", b"user_list_map", "user_map", b"user_map", "user_pay", b"user_pay"]) -> None: ...
+    def HasField(
+        self,
+        field_name: typing_extensions.Literal[
+            "after_refer",
+            b"after_refer",
+            "empty",
+            b"empty",
+            "not_enable_user_pay",
+            b"not_enable_user_pay",
+            "user_pay",
+            b"user_pay",
+        ],
+    ) -> builtins.bool: ...
+    def ClearField(
+        self,
+        field_name: typing_extensions.Literal[
+            "after_refer",
+            b"after_refer",
+            "empty",
+            b"empty",
+            "include_enum",
+            b"include_enum",
+            "not_enable_user_pay",
+            b"not_enable_user_pay",
+            "user_list_map",
+            b"user_list_map",
+            "user_map",
+            b"user_map",
+            "user_pay",
+            b"user_pay",
+        ],
+    ) -> None: ...
 
 global___NestedMessage = NestedMessage
 
@@ -319,7 +386,12 @@ class InvoiceItem(google.protobuf.message.Message):
         quantity: builtins.int = ...,
         items: collections.abc.Iterable[global___InvoiceItem] | None = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["amount", b"amount", "items", b"items", "name", b"name", "quantity", b"quantity"]) -> None: ...
+    def ClearField(
+        self,
+        field_name: typing_extensions.Literal[
+            "amount", b"amount", "items", b"items", "name", b"name", "quantity", b"quantity"
+        ],
+    ) -> None: ...
 
 global___InvoiceItem = InvoiceItem
 

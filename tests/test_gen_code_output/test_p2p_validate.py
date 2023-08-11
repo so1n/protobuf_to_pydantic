@@ -509,7 +509,7 @@ class OneOfTest(BaseModel):
 
     def test_repeated(self) -> None:
         content = """
-        class RepeatedTest(BaseModel):
+class RepeatedTest(BaseModel):
     range_test: typing.List[str] = Field(default_factory=list, min_items=1, max_items=5)
     unique_test: typing.List[str] = Field(default_factory=list, unique_items=True)
     items_string_test: conlist(item_type=constr(min_length=1, max_length=5), min_items=1, max_items=5) = Field(

@@ -1,10 +1,12 @@
 from datetime import datetime
-from typing import Any, Callable, Dict, Tuple, Type, Optional, Union
-from pydantic import FieldValidationInfo, BaseModel
+from typing import Any, Callable, Dict, Tuple, Type, Union
+
+from pydantic import BaseModel, FieldValidationInfo
 from pydantic.fields import ModelPrivateAttr
 
 from protobuf_to_pydantic.grpc_types import AnyMessage
 from protobuf_to_pydantic.types import OneOfTypedDict
+
 from . import rule
 
 
@@ -14,7 +16,7 @@ from . import rule
 def _get_name_and_value(
     cls: Type[BaseModel], key: str, info: FieldValidationInfo, enable_timestamp_to_datetime: bool = False
 ) -> Tuple[str, Any]:
-    field_name: str = info.field_name 
+    field_name: str = info.field_name
     field_value = cls.model_fields[field_name].json_schema_extra[key]
     if enable_timestamp_to_datetime and not isinstance(field_value, datetime):
         if isinstance(field_value, (list, tuple)):
@@ -30,7 +32,7 @@ def _get_name_and_value(
 #################
 def check_one_of(cls: Type[BaseModel], values: tuple) -> tuple:
     """validatorValidator for supporting protobuf one_of"""
-    _one_of_private_attr: Union[ModelPrivateAttr, Dict[str, Any], None]  = getattr(cls, "_one_of_dict", None)
+    _one_of_private_attr: Union[ModelPrivateAttr, Dict[str, Any], None] = getattr(cls, "_one_of_dict", None)
     if not _one_of_private_attr:
         return values
     # if model is dynamic gen, _one_of_dict is a dict, else model code run, _one_of_dict is a ModelPrivateAttr
@@ -131,6 +133,7 @@ def duration_not_in_validator(cls: Type[BaseModel], v: Any, info: FieldValidatio
     field_name, field_value = _get_name_and_value(cls, "duration_not_in", info)
     return rule.duration_not_in_validator(v, field_name, field_value)
 
+
 #####################
 # timestamp support #
 #####################
@@ -152,7 +155,7 @@ def timestamp_lt_validator(cls: Type[BaseModel], v: Any, info: FieldValidationIn
 def timestamp_lt_now_validator(cls: Type[BaseModel], v: Any, info: FieldValidationInfo) -> Any:
     field_name, field_value = _get_name_and_value(cls, "timestamp_lt_now", info)
     return rule.timestamp_lt_now_validator(v, field_name, field_value)
-    
+
 
 def timestamp_le_validator(cls: Type[BaseModel], v: Any, info: FieldValidationInfo) -> Any:
     field_name, field_value = _get_name_and_value(
@@ -171,19 +174,19 @@ def timestamp_gt_validator(cls: Type[BaseModel], v: Any, info: FieldValidationIn
 def timestamp_gt_now_validator(cls: Type[BaseModel], v: Any, info: FieldValidationInfo) -> Any:
     field_name, field_value = _get_name_and_value(cls, "timestamp_gt_now", info)
     return rule.timestamp_gt_now_validator(v, field_name, field_value)
-        
+
 
 def timestamp_within_validator(cls: Type[BaseModel], v: Any, info: FieldValidationInfo) -> Any:
     field_name, field_value = _get_name_and_value(cls, "timestamp_within", info)
     return rule.timestamp_within_validator(v, field_name, field_value)
-    
+
 
 def timestamp_ge_validator(cls: Type[BaseModel], v: Any, info: FieldValidationInfo) -> Any:
     field_name, field_value = _get_name_and_value(
         cls, "timestamp_ge", info, enable_timestamp_to_datetime=isinstance(v, datetime)
     )
     return rule.timestamp_ge_validator(v, field_name, field_value)
-    
+
 
 def timestamp_const_validator(cls: Type[BaseModel], v: Any, info: FieldValidationInfo) -> Any:
     field_name, field_value = _get_name_and_value(

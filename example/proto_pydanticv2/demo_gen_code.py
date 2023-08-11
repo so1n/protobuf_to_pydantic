@@ -30,7 +30,8 @@ class SexType(IntEnum):
 
 class ExampleExampleProtoCommonSingleDemoEnum(IntEnum):
     """Note: The current class does not belong to the package
-ExampleExampleProtoCommonSingleDemoEnum protobuf path:example/example_proto/common/single.proto"""
+    ExampleExampleProtoCommonSingleDemoEnum protobuf path:example/example_proto/common/single.proto"""
+
     zero = 0
     one = 1
     two = 3
@@ -38,7 +39,8 @@ ExampleExampleProtoCommonSingleDemoEnum protobuf path:example/example_proto/comm
 
 class ExampleExampleProtoCommonSingleDemoMessage(BaseModel):
     """Note: The current class does not belong to the package
-ExampleExampleProtoCommonSingleDemoMessage protobuf path:example/example_proto/common/single.proto"""
+    ExampleExampleProtoCommonSingleDemoMessage protobuf path:example/example_proto/common/single.proto"""
+
     earth: str = Field(default="")
     mercury: str = Field(default="")
     mars: str = Field(default="")
@@ -71,6 +73,7 @@ class NestedMessage(BaseModel):
         bank_number: str = Field(default="")
         exp: datetime = Field(default_factory=datetime.now)
         uuid: str = Field(default="")
+
     class IncludeEnum(IntEnum):
         zero = 0
         one = 1

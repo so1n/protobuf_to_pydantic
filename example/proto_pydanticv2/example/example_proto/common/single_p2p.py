@@ -12,11 +12,7 @@ class DemoEnum(IntEnum):
     two = 3
 
 
-
-
 class DemoMessage(BaseModel):
-
-    earth: str = Field(default="", json_schema_extra={}) 
-    mercury: str = Field(default="", json_schema_extra={}) 
-    mars: str = Field(default="", json_schema_extra={}) 
-
+    earth: str = Field(default="", json_schema_extra={})
+    mercury: str = Field(default="", json_schema_extra={})
+    mars: str = Field(default="", json_schema_extra={})

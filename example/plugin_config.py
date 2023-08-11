@@ -5,7 +5,7 @@ from google.protobuf.any_pb2 import Any  # type: ignore
 from pydantic import confloat, conint
 from pydantic.fields import FieldInfo
 
-from protobuf_to_pydantic.gen_model import DescTemplate
+from protobuf_to_pydantic.desc_template import DescTemplate
 
 logging.basicConfig(format="[%(asctime)s %(levelname)s] %(message)s", datefmt="%y-%m-%d %H:%M:%S", level=logging.INFO)
 

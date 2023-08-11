@@ -2,8 +2,9 @@ from datetime import datetime
 from typing import Any, Callable, Dict, Tuple
 
 from pydantic.fields import ModelField
-from protobuf_to_pydantic.grpc_types import AnyMessage
+
 from protobuf_to_pydantic.types import OneOfTypedDict
+
 from . import rule
 
 
@@ -68,6 +69,7 @@ def len_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
     field_name, field_value = _get_name_value_from_kwargs("len", kwargs["field"])
     return rule.len_validator(v, field_name, field_value)
 
+
 def prefix_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
     field_name, field_value = _get_name_value_from_kwargs("prefix", kwargs["field"])
     return rule.prefix_validator(v, field_name, field_value)
@@ -86,6 +88,7 @@ def contains_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
 def not_contains_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
     field_name, field_value = _get_name_value_from_kwargs("not_contains", kwargs["field"])
     return rule.not_contains_validator(v, field_name, field_value)
+
 
 ####################
 # duration support #
@@ -143,7 +146,6 @@ def timestamp_lt_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
     return rule.timestamp_lt_validator(v, field_name, field_value)
 
 
-
 def timestamp_lt_now_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
     field_name, field_value = _get_name_value_from_kwargs("timestamp_lt_now", kwargs["field"])
     return rule.timestamp_lt_now_validator(v, field_name, field_value)
@@ -178,6 +180,7 @@ def timestamp_ge_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
         "timestamp_ge", kwargs["field"], enable_timestamp_to_datetime=isinstance(v, datetime)
     )
     return rule.timestamp_ge_validator(v, field_name, field_value)
+
 
 def timestamp_const_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
     field_name, field_value = _get_name_value_from_kwargs(

@@ -1,100 +1,38 @@
+import dataclasses
 import datetime
 import inspect
-import json
 import warnings
 from dataclasses import MISSING
 from enum import IntEnum
-from importlib import import_module
 from pathlib import Path
 from types import ModuleType
-from typing import TYPE_CHECKING, Any, Callable, Dict, Generator, List, Optional, Set, Tuple, Type, Union
+from typing import TYPE_CHECKING, Any, Callable, Dict, List, Optional, Set, Tuple, Type, Union
 
 from pydantic import BaseModel, Field
 from pydantic.fields import FieldInfo
 from typing_extensions import Annotated, Literal, get_args, get_origin
 
-from protobuf_to_pydantic import _pydantic_adapter
+from protobuf_to_pydantic import _pydantic_adapter, constant
 from protobuf_to_pydantic.customer_validator import check_one_of
+from protobuf_to_pydantic.desc_template import DescTemplate
 from protobuf_to_pydantic.get_desc import (
     get_desc_from_p2p,
     get_desc_from_pgv,
     get_desc_from_proto_file,
     get_desc_from_pyi_file,
 )
-from protobuf_to_pydantic.grpc_types import (
-    AnyMessage,
-    Descriptor,
-    FieldDescriptor,
-    Message,
-    RepeatedCompositeContainer,
-    RepeatedScalarContainer,
-)
-from protobuf_to_pydantic.util import Timedelta, create_pydantic_model
+from protobuf_to_pydantic.grpc_types import AnyMessage, Descriptor, FieldDescriptor, Message
+from protobuf_to_pydantic.types import JsonAndDict
+from protobuf_to_pydantic.util import check_dict_one_of, create_pydantic_model
 
 if TYPE_CHECKING:
     from protobuf_to_pydantic.types import DescFromOptionTypedDict, FieldInfoTypedDict, OneOfTypedDict
-
-type_dict: Dict[int, Type] = {
-    FieldDescriptor.TYPE_DOUBLE: float,
-    FieldDescriptor.TYPE_FLOAT: float,
-    FieldDescriptor.TYPE_INT64: int,
-    FieldDescriptor.TYPE_UINT64: int,
-    FieldDescriptor.TYPE_INT32: int,
-    FieldDescriptor.TYPE_FIXED64: float,
-    FieldDescriptor.TYPE_FIXED32: float,
-    FieldDescriptor.TYPE_BOOL: bool,
-    FieldDescriptor.TYPE_STRING: str,
-    FieldDescriptor.TYPE_BYTES: bytes,
-    FieldDescriptor.TYPE_UINT32: int,
-    FieldDescriptor.TYPE_SFIXED32: float,
-    FieldDescriptor.TYPE_SFIXED64: float,
-    FieldDescriptor.TYPE_SINT32: int,
-    FieldDescriptor.TYPE_SINT64: int,
-}
-
-python_type_default_value_dict: Dict[type, Any] = {
-    float: 0.0,
-    int: 0,
-    bool: False,
-    str: "",
-    bytes: b"",
-}
-
-_message_type_dict_by_type_name: Dict[str, Any] = {
-    "Timestamp": datetime.datetime,
-    "Struct": Dict[str, Any],
-    "Empty": Any,
-    "Duration": Timedelta,
-    "Any": AnyMessage,
-}
-
-if not _pydantic_adapter.is_v1:
-    from pydantic import BeforeValidator
-    from typing_extensions import Annotated
-
-    _message_type_dict_by_type_name["Duration"] = Annotated[datetime.timedelta, BeforeValidator(Timedelta.validate)]
-
-_message_default_factory_dict_by_type_name: Dict[str, Any] = {
-    "Timestamp": datetime.datetime.now,
-    "Struct": Dict[str, Any],
-    "Duration": Timedelta,
-    "Any": AnyMessage,
-}
-
-field_v1_migration_v2_dict = {
-    "min_items": "min_length",
-    "max_items": "max_length",
-    "allow_mutation": "frozen",
-    "regex": "pattern",
-    "const": None,
-    "unique_items": None,
-}
 
 
 def field_param_dict_migration_v2_handler(field_param_dict: Dict[str, Any]) -> None:
     json_schema_extra = {}
     for k in list(field_param_dict.keys()):
-        new_k = field_v1_migration_v2_dict.get(k, k)
+        new_k = constant.pydantic_field_v1_migration_v2_dict.get(k, k)
         if new_k != k:
             if new_k is None:
                 warnings.warn(
@@ -114,22 +52,6 @@ def field_param_dict_migration_v2_handler(field_param_dict: Dict[str, Any]) -> N
             if k not in field_param_set:
                 json_schema_extra[k] = field_param_dict.pop(k)
     field_param_dict["json_schema_extra"] = json_schema_extra
-
-
-def check_dict_one_of(desc_dict: dict, key_list: List[str]) -> bool:
-    """Check if the key also appears in the dict"""
-    if (
-        len(
-            [
-                desc_dict.get(key, None)
-                for key in key_list
-                if desc_dict.get(key, None) and desc_dict[key].__class__ != MISSING.__class__
-            ]
-        )
-        > 1
-    ):
-        raise RuntimeError(f"Field:{key_list} cannot have both values: {desc_dict}")
-    return True
 
 
 def replace_file_name_to_class_name(filename: str) -> str:
@@ -193,7 +115,7 @@ def field_param_dict_handle(
         # In pydantic v2, not support unique_items
         # only use the Set type instead of this feature
         if not field_type or get_origin(field_type) != list:
-            raise RuntimeError(f"unique_items only support List (protobuf type: repeated) not {field_type}")
+            raise RuntimeError(f"unique_items only support type List (protobuf type: repeated) not {field_type}")
         field_param_dict["type_"] = Set.__getitem__(get_args(field_type))  # type: ignore[index]
         if field_param_dict["default_factory"]:
             field_param_dict["default_factory"] = set
@@ -243,85 +165,6 @@ def field_param_dict_handle(
             field_param_dict["type_"] = field_type(sub_field_param_dict["type_"], **type_param_dict)
         else:
             field_param_dict["type_"] = field_type(**type_param_dict)
-
-    # if _pydantic_adapter.is_v1:
-    #     if (
-    #         field_type
-    #         and not inspect.isclass(field_type)
-    #         and field_type_model
-    #         and field_type_model.__name__ in ("pydantic.types", "protobuf_to_pydantic.customer_con_type")
-    #     ):
-    #         # support https://pydantic-docs.helpmanual.io/usage/types/#constrained-types
-    #         # Parameters needed to extract `constrained-types`
-    #         type_param_dict: dict = {}
-    #         for key in inspect.signature(field_type).parameters.keys():
-    #             if key in field_param_dict:
-    #                 type_param_dict[key] = field_param_dict.pop(key)
-    #
-    #         if sub_field_param_dict and "type_" in sub_field_param_dict:
-    #             # If a nested type is found, use the same treatment
-    #             field_param_dict_handle(
-    #                 sub_field_param_dict, default, default_factory, nested_call_count=nested_call_count + 1
-    #             )
-    #             field_param_dict["type_"] = field_type(sub_field_param_dict["type_"], **type_param_dict)
-    #         else:
-    #             field_param_dict["type_"] = field_type(**type_param_dict)
-    # else:
-    #     if field_type.__module__ == "pydantic.types" and inspect.isfunction(field_type):
-    #         # pydantic v2 confunc will return Annotated
-    #         field_type = field_type()
-    #     if sub_field_param_dict and "type_" in sub_field_param_dict:
-    #         # If a nested type is found, use the same treatment
-    #         field_param_dict_handle(
-    #             sub_field_param_dict, default, default_factory, nested_call_count=nested_call_count + 1
-    #         )
-    #         field_type = field_type[sub_field_param_dict["type_"]]
-    #     if nested_call_count == 1:
-    #         # If it is the first layer, all parameters need to be passed to Field, not Type
-    #         field_param_dict["type_"] = field_type
-    #     else:
-    #         with_validator_param_field = Field(
-    #             **{k: v for k, v in field_param_dict.items() if k not in ("const", "unique_items")}
-    #         )
-    #         if with_validator_param_field.metadata:
-    #             for metadata in with_validator_param_field.metadata:
-    #                 for key in metadata.__annotations__:
-    #                     field_param_dict.pop(key, None)
-    #             field_param_dict["type_"] = Annotated.__class_getitem__(
-    #                 (field_type, *with_validator_param_field.metadata)
-    #             )
-    #         else:
-    #             field_param_dict["type_"] = field_type
-
-
-def json_to_dict(v: Union[str, dict]) -> dict:
-    if isinstance(v, str):
-        try:
-            v = json.loads(v)
-        except json.JSONDecodeError:
-            raise ValueError("JSON string is not valid JSON")
-    elif not isinstance(v, dict):
-        raise ValueError("JSON string is not a dict")
-    return v  # type: ignore[return-value]
-
-
-if _pydantic_adapter.is_v1:
-
-    class JsonAndDict(dict):
-        # v1 support
-        @classmethod
-        def __get_validators__(cls) -> Generator[Callable, None, None]:
-            yield cls.validate
-
-        @classmethod
-        def validate(cls, v: Union[str, dict]) -> dict:
-            return json_to_dict(v)
-
-else:
-    from pydantic import BeforeValidator
-    from typing_extensions import Annotated
-
-    JsonAndDict = Annotated[dict, BeforeValidator(json_to_dict)]  # type: ignore[misc, assignment]
 
 
 class MessagePaitModel(BaseModel):
@@ -397,55 +240,18 @@ class CodeRefModel(object):
 field_param_set = set(inspect.signature(Field).parameters.keys())
 
 
-class DescTemplate(object):
-    def __init__(self, local_dict: dict, comment_prefix: str) -> None:
-        self._local_dict: dict = local_dict
-        self._comment_prefix: str = comment_prefix
-        self._support_template_list: List[str] = [i for i in dir(self) if i.startswith("template")]
-
-    def template_import_instance(self, module_str: str, var_str: str, json_param: str) -> Any:
-        module: Any = import_module(module_str, module_str)
-        for sub_var_str in var_str.split("."):
-            module = getattr(module, sub_var_str)
-        if json_param:
-            var = module(**json.loads(json_param))  # type: ignore
-        else:
-            var = module
-        return var
-
-    def template_import(self, module_str: str, var_str: str) -> Any:
-        module = import_module(module_str, module_str)
-        for sub_var_str in var_str.split("."):
-            module = getattr(module, sub_var_str)
-        return module
-
-    def template_local(self, local_var_name: str) -> Any:
-        return self._local_dict[local_var_name]
-
-    def template_builtin(self, builtin_name: str) -> Any:
-        return __builtins__.get(builtin_name)  # type: ignore
-
-    def _template_str_handler(self, template_str: str) -> Any:
-        try:
-            template_str_list: List[str] = template_str.split("|")
-            template_rule, *template_var_list = template_str_list
-            template_fn: Optional[Callable] = getattr(self, f"template_{template_rule}", None)
-            if not template_fn:
-                raise ValueError(f"Only support {' ,'.join(self._support_template_list)}. not {template_str}")
-            return template_fn(*template_var_list)
-        except Exception as e:
-            raise ValueError(f"parse {template_str} error: {e}") from e
-
-    def handle_template_var(self, container: Any) -> Any:
-        if isinstance(container, (list, RepeatedCompositeContainer, RepeatedScalarContainer)):
-            return [self.handle_template_var(i) for i in container]
-        elif isinstance(container, dict):
-            return {k: self.handle_template_var(v) for k, v in container.items()}
-        elif isinstance(container, str) and container.startswith(f"{self._comment_prefix}@"):
-            container = container.replace(f"{self._comment_prefix}@", "")
-            return self._template_str_handler(container)
-        else:
-            return container
+@dataclasses.dataclass
+class FieldDataClass(object):
+    # field data
+    field_name: str
+    field_type: Any
+    field_default: Any
+    field_default_factory: Optional[_pydantic_adapter.NoArgAnyCallable]
+    # metadate
+    protobuf_field: FieldDescriptor
+    nested_message_dict: Dict[str, Type[Union[BaseModel, IntEnum]]]
+    descriptor: Descriptor
+    validators: Dict[str, classmethod]
 
 
 class M2P(object):
@@ -499,19 +305,40 @@ class M2P(object):
         self._pydantic_module: str = pydantic_module or __name__
         self._desc_template: DescTemplate = (desc_template or DescTemplate)(local_dict or {}, self._comment_prefix)
         self._message_type_dict_by_type_name: Dict[str, Any] = (
-            message_type_dict_by_type_name or _message_type_dict_by_type_name
+            message_type_dict_by_type_name or constant.message_name_type_dict
         )
         self._message_default_factory_dict_by_type_name: Dict[str, Any] = (
-            message_default_factory_dict_by_type_name or _message_default_factory_dict_by_type_name
+            message_default_factory_dict_by_type_name or constant.message_name_default_factory_dict
         )
 
         self._gen_model: Type[BaseModel] = self._parse_msg_to_pydantic_model(
             descriptor=msg if isinstance(msg, Descriptor) else msg.DESCRIPTOR,
         )
 
+    #################
+    # caller method #
+    #################
     @property
     def model(self) -> Type[BaseModel]:
         return self._gen_model
+
+    ###############
+    # util method #
+    ###############
+    def _get_field_info_dict_by_full_name(self, full_name: str) -> Optional["FieldInfoTypedDict"]:
+        message_name, *key_list = full_name.split(".")[1:]  # ignore package name
+        if message_name not in self._field_doc_dict:
+            return None
+        desc_dict: "DescFromOptionTypedDict" = self._field_doc_dict[message_name]
+
+        for key in key_list:
+            if key in desc_dict["message"]:
+                return desc_dict["message"][key]
+            elif key in desc_dict["nested"]:
+                desc_dict = desc_dict["nested"][key]
+            else:
+                return None
+        return None
 
     def _one_of_handle(self, descriptor: Descriptor) -> Dict[str, "OneOfTypedDict"]:
         desc_dict: "DescFromOptionTypedDict" = self._field_doc_dict.get(descriptor.name, {})  # type: ignore
@@ -529,40 +356,23 @@ class M2P(object):
 
     def _get_pydantic_base(self, config_dict: Dict[str, Any]) -> Type[BaseModel]:
         if config_dict:
-            # Changing the configuration of Config by inheritance
             if _pydantic_adapter.is_v1:
                 config_class = self._pydantic_base.Config  # type: ignore
-                pydantic_base: Type[BaseModel] = type(  # type: ignore
-                    self._pydantic_base.__name__,
-                    (self._pydantic_base,),
-                    {"Config": type(config_class.__name__, (config_class,), config_dict)},
-                )
+                _config_dict: Dict[str, Any] = {"Config": type(config_class.__name__, (config_class,), config_dict)}
             else:
                 from pydantic import ConfigDict
 
-                pydantic_base: Type[BaseModel] = type(  # type: ignore
-                    self._pydantic_base.__name__,
-                    (self._pydantic_base,),
-                    {"model_config": ConfigDict(**config_dict)},  # type: ignore[misc]
-                )
+                _config_dict = {"model_config": ConfigDict(**config_dict)}  # type: ignore[misc]
+
+            # Changing the configuration of Config by inheritance
+            pydantic_base: Type[BaseModel] = type(  # type: ignore
+                self._pydantic_base.__name__, (self._pydantic_base,), _config_dict
+            )
         else:
             pydantic_base = self._pydantic_base
         return pydantic_base
 
-    # flake8: noqa: C901
-    def _parse_msg_to_pydantic_model(self, *, descriptor: Descriptor, class_name: str = "") -> Type[BaseModel]:
-        if descriptor in self._creat_cache:
-            return self._creat_cache[descriptor]
-
-        annotation_dict: Dict[str, Tuple[Type, Any]] = {}
-        validators: Dict[str, classmethod] = {}
-        pydantic_model_config_dict: Dict[str, Any] = {}
-        one_of_dict: Dict[str, "OneOfTypedDict"] = self._one_of_handle(descriptor)
-        if one_of_dict:
-            validators["one_of_validator"] = _pydantic_adapter.model_validator(mode="before", allow_reuse=True)(
-                check_one_of
-            )
-
+    def get_nested_message_dict_by_message(self, descriptor: Descriptor) -> Dict[str, Type[Union[BaseModel, IntEnum]]]:
         # nested support
         nested_message_dict: Dict[str, Type[Union[BaseModel, IntEnum]]] = {}
         for message in descriptor.nested_types:
@@ -572,7 +382,7 @@ class M2P(object):
             nested_message_dict[message.full_name] = nested_type
             # Facilitate the analysis of `gen code`
             setattr(nested_type, "_is_nested", True)
-
+        # enum support
         for enum_type in descriptor.enum_types:
             class_dict: dict = {v.name: v.number for v in enum_type.values}
             class_dict["__doc__"] = ""
@@ -580,167 +390,218 @@ class M2P(object):
             nested_message_dict[enum_type.full_name] = nested_type
             # Facilitate the analysis of `gen code`
             setattr(nested_type, "_is_nested", True)
+        return nested_message_dict
+
+    ####################
+    # field  handler   #
+    ####################
+    def _protobuf_field_type_is_type_message_handler(self, field_dataclass: FieldDataClass) -> None:
+        protobuf_field = field_dataclass.protobuf_field
+        if protobuf_field.message_type.name in self._message_type_dict_by_type_name:
+            # Timestamp, Struct, Empty, Duration, Any support
+            field_dataclass.field_type = self._message_type_dict_by_type_name[protobuf_field.message_type.name]
+            if protobuf_field.message_type.name in self._message_default_factory_dict_by_type_name:
+                # Default factory has a higher priority
+                field_dataclass.field_default_factory = self._message_default_factory_dict_by_type_name[
+                    protobuf_field.message_type.name
+                ]
+        elif protobuf_field.message_type.name.endswith("Entry"):
+            # support google.protobuf.MapEntry
+            # key, value = column.message_type.fields
+            dict_type_param_list = []
+            for k_v_field in protobuf_field.message_type.fields:
+                if not k_v_field.message_type:
+                    k_v_type: Any = constant.protobuf_desc_python_type_dict[k_v_field.type]
+                elif k_v_field.message_type.name in self._message_type_dict_by_type_name:
+                    k_v_type = self._message_type_dict_by_type_name[k_v_field.message_type.name]
+                else:
+                    k_v_type = self._parse_msg_to_pydantic_model(descriptor=k_v_field.message_type)
+                dict_type_param_list.append(k_v_type)
+
+            field_dataclass.field_type = Dict[tuple(dict_type_param_list)]  # type: ignore
+            field_dataclass.field_default_factory = dict
+        else:
+            # support google.protobuf.Message
+            if protobuf_field.message_type.full_name in field_dataclass.nested_message_dict:
+                field_dataclass.field_type = field_dataclass.nested_message_dict[protobuf_field.message_type.full_name]
+            else:
+                # Python Protobuf does not solve the namespace problem of modules,
+                # so there is no uniform cross-module reference
+                # see issue: https://github.com/protocolbuffers/protobuf/issues/1491
+                is_same_pkg: bool = field_dataclass.descriptor.file.name == protobuf_field.message_type.file.name
+                _class_name: str = protobuf_field.message_type.name
+                if not is_same_pkg:
+                    _class_name = replace_file_name_to_class_name(protobuf_field.message_type.file.name) + _class_name
+                    field_dataclass.field_type = self._parse_msg_to_pydantic_model(
+                        descriptor=protobuf_field.message_type, class_name=_class_name
+                    )
+                    _class_doc: str = (
+                        "Note: The current class does not belong to the package\n"
+                        f"{_class_name} protobuf path:{protobuf_field.message_type.file.name}"
+                    )
+                    setattr(field_dataclass.field_type, "__doc__", _class_doc)
+                else:
+                    if protobuf_field.message_type.full_name == field_dataclass.descriptor.full_name:
+                        # if self-referencing, need use Python type hints postponed annotations
+                        field_dataclass.field_type = f'"{_class_name}"'
+                    else:
+                        field_dataclass.field_type = self._parse_msg_to_pydantic_model(
+                            descriptor=protobuf_field.message_type, class_name=_class_name
+                        )
+
+    def _protobuf_field_type_is_type_enum_handler(self, field_dataclass: FieldDataClass) -> None:
+        # support google.protobuf.Enum
+        field_dataclass.field_default = 0
+        protobuf_field = field_dataclass.protobuf_field
+        if protobuf_field.enum_type.full_name in field_dataclass.nested_message_dict:
+            field_dataclass.field_type = field_dataclass.nested_message_dict[protobuf_field.enum_type.full_name]
+        else:
+            enum_class_dict = {v.name: v.number for v in protobuf_field.enum_type.values}
+            _class_name = protobuf_field.enum_type.name
+            _class_doc = ""
+            if field_dataclass.descriptor.file.name != protobuf_field.enum_type.file.name:
+                _class_name = replace_file_name_to_class_name(protobuf_field.enum_type.file.name) + _class_name
+                _class_doc = (
+                    "Note: The current class does not belong to the package\n"
+                    f"{_class_name} protobuf path:{protobuf_field.enum_type.file.name}"
+                )
+            enum_class_dict["__doc__"] = _class_doc
+            field_dataclass.field_type = IntEnum(_class_name, enum_class_dict)  # type: ignore
+
+    def _protobuf_field_lable_is_label_repeated_handler(self, field_dataclass: FieldDataClass) -> None:
+        # support google.protobuf.array
+        protobuf_field = field_dataclass.protobuf_field
+        if not (protobuf_field.message_type and protobuf_field.message_type.name.endswith("Entry")):
+            # I didn't know that Protobuf's Design of Maps and Lists would be so weird
+            field_dataclass.field_type = List[field_dataclass.field_type]  # type: ignore
+            field_dataclass.field_default_factory = list
+            # TODO support lambda
+            if field_dataclass.field_default is not _pydantic_adapter.PydanticUndefined:
+                field_dataclass.field_default = _pydantic_adapter.PydanticUndefined
+
+    def _gen_field_info(self, field_dataclass: FieldDataClass) -> Optional[FieldInfo]:
+        field = self._default_field
+        field_doc_dict = self._get_field_info_dict_by_full_name(field_dataclass.protobuf_field.full_name)
+
+        if field_doc_dict is not None:
+            if self._parse_msg_desc_method != "PGV":
+                # pgv method not support template var
+                field_doc_dict = self._desc_template.handle_template_var(field_doc_dict)
+            field_param_dict: dict = MessagePaitModel(**field_doc_dict).dict()  # type: ignore
+            # Nested types do not include the `enable`, `field` and `validator`  attributes
+            if not field_param_dict.pop("enable"):
+                return None
+            _field = field_param_dict.pop("field")
+            if _field:
+                field = _field
+            validator_dict = field_param_dict.pop("validator")
+            if validator_dict:
+                if _pydantic_adapter.is_v1:
+                    field_dataclass.validators.update(validator_dict)
+                else:
+                    # In Pydantic v2:
+                    #     field_doc_dict["validatos"] = {
+                    #       'not_in_test_any_not_in_validator': PydanticDescriptorProxy(
+                    #             wrapped=<classmethod object at 0x7f28943c8128>,
+                    #             decorator_info=FieldValidatorDecoratorInfo(fields=('not_in_test',),
+                    #             mode='after', check_fields=None),
+                    #             shim=None
+                    #        )
+                    #     }
+                    #  But validator_dict output:
+                    #   {
+                    #       'not_in_test_any_not_in_validator': {
+                    #           'wrapped': <classmethod object at 0x7f28943c8128>,
+                    #           'decorator_info': {
+                    #               'fields': ('not_in_test',),
+                    #               'mode': 'after',
+                    #               'check_fields': None
+                    #            },
+                    #           'shim': None
+                    #       }
+                    #   }
+                    field_dataclass.validators.update(field_doc_dict["validator"])  # type: ignore[index]
+
+            # Unified field parameter handling
+            field_param_dict_handle(
+                field_param_dict,
+                field_dataclass.field_default,
+                field_dataclass.field_default_factory,
+                field_dataclass.field_type,
+            )
+
+            # Type will change in the unified processing logic
+            field_type = field_param_dict.pop("type_", field_dataclass.field_type)
+            map_type_dict = field_param_dict.pop("map_type", {})
+            if field_type:
+                field_dataclass.field_type = field_type
+            elif map_type_dict and field_dataclass.field_type._name == "Dict":
+                new_args_list: List = list(field_dataclass.field_type.__args__)
+                for index, k_v_column in enumerate(["keys", "values"]):
+                    raw_k_v_type = new_args_list[index]
+                    if k_v_column not in map_type_dict:
+                        continue
+                    new_k_v_type = map_type_dict[k_v_column]
+
+                    if (
+                        get_origin(new_k_v_type) is Annotated
+                        or issubclass(new_k_v_type, raw_k_v_type)
+                        or raw_k_v_type is datetime.datetime
+                    ):
+                        new_args_list[index] = new_k_v_type
+                field_dataclass.field_type = Dict[tuple(new_args_list)]  # type: ignore
+        else:
+            field_param_dict = {
+                "default": field_dataclass.field_default,
+                "default_factory": field_dataclass.field_default_factory,
+            }
+        if not _pydantic_adapter.is_v1:
+            field_param_dict_migration_v2_handler(field_param_dict)
+        return field(**field_param_dict)  # type: ignore
+
+    def _parse_msg_to_pydantic_model(self, *, descriptor: Descriptor, class_name: str = "") -> Type[BaseModel]:
+        if descriptor in self._creat_cache:
+            return self._creat_cache[descriptor]
+
+        annotation_dict: Dict[str, Tuple[Type, Any]] = {}
+        validators: Dict[str, classmethod] = {}
+        pydantic_model_config_dict: Dict[str, Any] = {}
+        nested_message_dict = self.get_nested_message_dict_by_message(descriptor)
+        one_of_dict: Dict[str, "OneOfTypedDict"] = self._one_of_handle(descriptor)
+        if one_of_dict:
+            validators["one_of_validator"] = _pydantic_adapter.model_validator(mode="before", allow_reuse=True)(
+                check_one_of
+            )
 
         # parse field
-        for column in descriptor.fields:
-            type_: Any = type_dict.get(column.type, None)
-            name: str = column.name
-            default: Any = _pydantic_adapter.PydanticUndefined
-            default_factory: Optional[_pydantic_adapter.NoArgAnyCallable] = None
-
-            if column.type == FieldDescriptor.TYPE_MESSAGE:
-                if column.message_type.name in self._message_type_dict_by_type_name:
-                    type_ = self._message_type_dict_by_type_name[column.message_type.name]
-                    if column.message_type.name in self._message_default_factory_dict_by_type_name:
-                        # Default factory has a higher priority
-                        default_factory = self._message_default_factory_dict_by_type_name[column.message_type.name]
-                elif column.message_type.name.endswith("Entry"):
-                    # support google.protobuf.MapEntry
-                    # key, value = column.message_type.fields
-
-                    dict_type_param_list = []
-                    for k_v_field in column.message_type.fields:
-                        if not k_v_field.message_type:
-                            k_v_type: Any = type_dict[k_v_field.type]
-                        elif k_v_field.message_type.name in self._message_type_dict_by_type_name:
-                            k_v_type = self._message_type_dict_by_type_name[k_v_field.message_type.name]
-                        else:
-                            k_v_type = self._parse_msg_to_pydantic_model(descriptor=k_v_field.message_type)
-                        dict_type_param_list.append(k_v_type)
-
-                    type_ = Dict[tuple(dict_type_param_list)]  # type: ignore
-                    default_factory = dict
-                else:
-                    # support google.protobuf.Message
-                    if column.message_type.full_name in nested_message_dict:
-                        type_ = nested_message_dict[column.message_type.full_name]
-                    else:
-                        is_same_pkg: bool = descriptor.file.name == column.message_type.file.name
-                        _class_name: str = column.message_type.name
-                        if not is_same_pkg:
-                            _class_name = replace_file_name_to_class_name(column.message_type.file.name) + _class_name
-                            type_ = self._parse_msg_to_pydantic_model(
-                                descriptor=column.message_type, class_name=_class_name
-                            )
-                            _class_doc: str = (
-                                "Note: The current class does not belong to the package\n"
-                                f"{_class_name} protobuf path:{column.message_type.file.name}"
-                            )
-                            setattr(type_, "__doc__", _class_doc)
-                        else:
-                            if column.message_type.full_name == descriptor.full_name:
-                                # if self-referencing, need use Python type hints postponed annotations
-                                type_ = f'"{_class_name}"'
-                            else:
-                                type_ = self._parse_msg_to_pydantic_model(
-                                    descriptor=column.message_type, class_name=_class_name
-                                )
-            elif column.type == FieldDescriptor.TYPE_ENUM:
-                # support google.protobuf.Enum
-                default = 0
-                if column.enum_type.full_name in nested_message_dict:
-                    type_ = nested_message_dict[column.enum_type.full_name]
-                else:
-                    enum_class_dict = {v.name: v.number for v in column.enum_type.values}
-                    _class_name = column.enum_type.name
-                    _class_doc = ""
-                    if descriptor.file.name != column.enum_type.file.name:
-                        _class_name = replace_file_name_to_class_name(column.enum_type.file.name) + _class_name
-                        _class_doc = (
-                            "Note: The current class does not belong to the package\n"
-                            f"{_class_name} protobuf path:{column.enum_type.file.name}"
-                        )
-                    enum_class_dict["__doc__"] = _class_doc
-                    type_ = IntEnum(_class_name, enum_class_dict)  # type: ignore
+        for protobuf_field in descriptor.fields:
+            field_dataclass = FieldDataClass(
+                field_name=protobuf_field.name,
+                field_type=constant.protobuf_desc_python_type_dict.get(protobuf_field.type, None),
+                field_default=_pydantic_adapter.PydanticUndefined,
+                field_default_factory=None,
+                protobuf_field=protobuf_field,
+                nested_message_dict=nested_message_dict,
+                descriptor=descriptor,
+                validators=validators,
+            )
+            if protobuf_field.type == FieldDescriptor.TYPE_MESSAGE:
+                self._protobuf_field_type_is_type_message_handler(field_dataclass)
+            elif protobuf_field.type == FieldDescriptor.TYPE_ENUM:
+                self._protobuf_field_type_is_type_enum_handler(field_dataclass)
             else:
-                if column.label == FieldDescriptor.LABEL_REQUIRED:
-                    default = _pydantic_adapter.PydanticUndefined
-                else:
-                    default = column.default_value
+                field_dataclass.field_default = protobuf_field.default_value
 
-            if column.label == FieldDescriptor.LABEL_REPEATED:
-                # support google.protobuf.array
-                if not (column.message_type and column.message_type.name.endswith("Entry")):
-                    # I didn't know that Protobuf's Design of Maps and Lists would be so weird
-                    type_ = List[type_]  # type: ignore
-                    default_factory = list
-                    # TODO support lambda
-                    if default is not _pydantic_adapter.PydanticUndefined:
-                        default = _pydantic_adapter.PydanticUndefined
+            # At this time, the field type may be modified by the above logic, so it needs to be handled separately
+            if protobuf_field.label == FieldDescriptor.LABEL_REPEATED:
+                self._protobuf_field_lable_is_label_repeated_handler(field_dataclass)
 
-            field = self._default_field
-            field_doc_dict = self._get_field_info_dict_by_full_name(column.full_name)
+            field_info = self._gen_field_info(field_dataclass)
+            if not field_info:
+                continue
+            annotation_dict[field_dataclass.field_name] = (field_dataclass.field_type, field_info)
 
-            if field_doc_dict is not None:
-                if self._parse_msg_desc_method != "PGV":
-                    # pgv method not support template var
-                    field_doc_dict = self._desc_template.handle_template_var(field_doc_dict)
-                field_param_dict: dict = MessagePaitModel(**field_doc_dict).dict()  # type: ignore
-                # Nested types do not include the `enable`, `field` and `validator`  attributes
-                if not field_param_dict.pop("enable"):
-                    continue
-                _field = field_param_dict.pop("field")
-                if _field:
-                    field = _field
-                validator_dict = field_param_dict.pop("validator")
-                if validator_dict:
-                    if _pydantic_adapter.is_v1:
-                        validators.update(validator_dict)
-                    else:
-                        # In Pydantic v2:
-                        #     field_doc_dict["validatos"] = {
-                        #       'not_in_test_any_not_in_validator': PydanticDescriptorProxy(
-                        #             wrapped=<classmethod object at 0x7f28943c8128>,
-                        #             decorator_info=FieldValidatorDecoratorInfo(fields=('not_in_test',),
-                        #             mode='after', check_fields=None),
-                        #             shim=None
-                        #        )
-                        #     }
-                        #  But validator_dict output:
-                        #   {
-                        #       'not_in_test_any_not_in_validator': {
-                        #           'wrapped': <classmethod object at 0x7f28943c8128>,
-                        #           'decorator_info': {
-                        #               'fields': ('not_in_test',),
-                        #               'mode': 'after',
-                        #               'check_fields': None
-                        #            },
-                        #           'shim': None
-                        #       }
-                        #   }
-                        validators.update(field_doc_dict["validator"])  # type: ignore[index]
-
-                # Unified field parameter handling
-                field_param_dict_handle(field_param_dict, default, default_factory, type_)
-
-                # Type will change in the unified processing logic
-                field_type = field_param_dict.pop("type_", type_)
-                map_type_dict = field_param_dict.pop("map_type", {})
-                if field_type:
-                    type_ = field_type
-                elif map_type_dict and type_._name == "Dict":
-                    new_args_list: List = list(type_.__args__)
-                    for index, k_v_column in enumerate(["keys", "values"]):
-                        raw_k_v_type = new_args_list[index]
-                        if k_v_column not in map_type_dict:
-                            continue
-                        new_k_v_type = map_type_dict[k_v_column]
-
-                        if (
-                            get_origin(new_k_v_type) is Annotated
-                            or issubclass(new_k_v_type, raw_k_v_type)
-                            or raw_k_v_type is datetime.datetime
-                        ):
-                            new_args_list[index] = new_k_v_type
-                    type_ = Dict[tuple(new_args_list)]  # type: ignore
-            else:
-                field_param_dict = {"default": default, "default_factory": default_factory}
-            if not _pydantic_adapter.is_v1:
-                field_param_dict_migration_v2_handler(field_param_dict)
-            use_field = field(**field_param_dict)  # type: ignore
-            annotation_dict[name] = (type_, use_field)
-
-            if type_ in (AnyMessage,) and not _pydantic_adapter.get_model_config_value(
+            if field_dataclass.field_type in (AnyMessage,) and not _pydantic_adapter.get_model_config_value(
                 self._pydantic_base, "arbitrary_types_allowed"
             ):
                 pydantic_model_config_dict["arbitrary_types_allowed"] = True
@@ -761,36 +622,8 @@ class M2P(object):
             validators=validators,
         )
         setattr(pydantic_model, "_one_of_dict", one_of_dict)
-        # setattr(pydantic_model, "_base_model", self._pydantic_base)
-        # # Facilitate the analysis of `gen code`
-        # setattr(pydantic_model, "_nested_message_dict", nested_message_dict)
         self._creat_cache[descriptor] = pydantic_model
         return pydantic_model
-
-    def _gen_dict_from_desc_str(self, desc: str) -> dict:
-        pait_dict: dict = {}
-        for line in desc.split("\n"):
-            line = line.strip()
-            if not line.startswith(f"{self._comment_prefix}:"):
-                continue
-            line = line.replace(f"{self._comment_prefix}:", "")
-            pait_dict.update(json.loads(line))
-        return pait_dict
-
-    def _get_field_info_dict_by_full_name(self, full_name: str) -> Optional["FieldInfoTypedDict"]:
-        message_name, *key_list = full_name.split(".")[1:]  # ignore package name
-        if message_name not in self._field_doc_dict:
-            return None
-        desc_dict: "DescFromOptionTypedDict" = self._field_doc_dict[message_name]
-
-        for key in key_list:
-            if key in desc_dict["message"]:
-                return desc_dict["message"][key]
-            elif key in desc_dict["nested"]:
-                desc_dict = desc_dict["nested"][key]
-            else:
-                return None
-        return None
 
 
 def msg_to_pydantic_model(

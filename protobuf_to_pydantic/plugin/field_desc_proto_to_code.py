@@ -9,14 +9,13 @@ from pydantic import BaseModel
 from pydantic.fields import FieldInfo
 
 from protobuf_to_pydantic import _pydantic_adapter, customer_validator
+from protobuf_to_pydantic.constant import protobuf_desc_python_type_dict, python_type_default_value_dict
+from protobuf_to_pydantic.desc_template import DescTemplate
 from protobuf_to_pydantic.gen_code import BaseP2C
 from protobuf_to_pydantic.gen_model import (
-    DescTemplate,
     MessagePaitModel,
     field_param_dict_handle,
     field_param_dict_migration_v2_handler,
-    python_type_default_value_dict,
-    type_dict,
 )
 from protobuf_to_pydantic.get_desc.from_pb_option.base import field_option_handle, protobuf_common_type_dict
 from protobuf_to_pydantic.grpc_types import (
@@ -186,11 +185,11 @@ class FileDescriptorProtoToCode(BaseP2C):
             rule_type_str = "enum"
             message_fd = self._descriptors.message_to_fd[field.type_name]
             self._add_other_module_pkg(message_fd, type_str)
-        elif field.type not in type_dict:
+        elif field.type not in protobuf_desc_python_type_dict:
             logger.error(f"Not found {field.type} in type_dict")
             return None
         else:
-            field_info_dict["default"] = python_type_default_value_dict[type_dict[field.type]]
+            field_info_dict["default"] = python_type_default_value_dict[protobuf_desc_python_type_dict[field.type]]
             protobuf_type_model = self._get_protobuf_type_model(field)
             type_str = protobuf_type_model.py_type_str
             rule_type_str = protobuf_type_model.rule_type_str
@@ -417,8 +416,8 @@ class FileDescriptorProtoToCode(BaseP2C):
         rule_type_str: str = ""
         type_factory: Optional[Any] = None
         # TODO use gen_model.py _message_default_factory_dict_by_type_name
-        if field.type in type_dict:
-            type_factory = type_dict[field.type]
+        if field.type in protobuf_desc_python_type_dict:
+            type_factory = protobuf_desc_python_type_dict[field.type]
             return ProtobufTypeModel(
                 type_factory=type_factory,
                 py_type_str=self._get_value_code(type_factory),

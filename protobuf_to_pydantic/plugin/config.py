@@ -4,7 +4,7 @@ from typing import Any, Deque, List, Set, Type, TypeVar
 from pydantic import BaseModel, Field
 
 from protobuf_to_pydantic import _pydantic_adapter
-from protobuf_to_pydantic.gen_model import DescTemplate
+from protobuf_to_pydantic.desc_template import DescTemplate
 from protobuf_to_pydantic.plugin.field_desc_proto_to_code import FileDescriptorProtoToCode
 
 ConfigT = TypeVar("ConfigT", bound="ConfigModel")

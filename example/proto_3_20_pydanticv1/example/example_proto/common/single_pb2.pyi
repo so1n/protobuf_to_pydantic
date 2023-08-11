@@ -20,7 +20,9 @@ class _DemoEnum:
     ValueType = typing.NewType("ValueType", builtins.int)
     V: typing_extensions.TypeAlias = ValueType
 
-class _DemoEnumEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_DemoEnum.ValueType], builtins.type):  # noqa: F821
+class _DemoEnumEnumTypeWrapper(
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_DemoEnum.ValueType], builtins.type
+):  # noqa: F821
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
     zero: _DemoEnum.ValueType  # 0
     one: _DemoEnum.ValueType  # 1
@@ -49,6 +51,8 @@ class DemoMessage(google.protobuf.message.Message):
         mercury: builtins.str = ...,
         mars: builtins.str = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["earth", b"earth", "mars", b"mars", "mercury", b"mercury"]) -> None: ...
+    def ClearField(
+        self, field_name: typing_extensions.Literal["earth", b"earth", "mars", b"mars", "mercury", b"mercury"]
+    ) -> None: ...
 
 global___DemoMessage = DemoMessage

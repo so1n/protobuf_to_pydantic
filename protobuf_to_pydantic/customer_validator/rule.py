@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Any, Callable, Dict, Tuple, Type
+from typing import Any, Callable, Dict
 
 from protobuf_to_pydantic.grpc_types import AnyMessage
 from protobuf_to_pydantic.types import OneOfTypedDict

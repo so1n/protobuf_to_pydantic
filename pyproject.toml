@@ -75,7 +75,14 @@ remove-unused-variables = true
 disallow_untyped_defs = true
 python_executable = ".venv/bin/python"
 exclude = [
-    "^example/python_example_proto_code/example_proto"
+    "^example/python_example_proto_code/example_proto",
+    "^protobuf_to_pydantic/_pydantic_adapter.py",
+    "^protobuf_to_pydantic/customer_validator/__init__.py",
+    "^protobuf_to_pydantic/customer_validator/v1.py",
+    "^protobuf_to_pydantic/customer_validator/v2.py",
+    "^protobuf_to_pydantic/customer_con_type/__init__.py",
+    "^protobuf_to_pydantic/customer_con_type/v1.py",
+    "^protobuf_to_pydantic/customer_con_type/v2.py",
 ]
 
 
