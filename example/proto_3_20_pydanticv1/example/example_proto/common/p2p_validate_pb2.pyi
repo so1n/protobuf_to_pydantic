@@ -123,145 +123,12 @@ class FieldRules(google.protobuf.message.Message):
         duration: global___DurationRules | None = ...,
         timestamp: global___TimestampRules | None = ...,
     ) -> None: ...
-    def HasField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_message",
-            b"_message",
-            "any",
-            b"any",
-            "bool",
-            b"bool",
-            "bytes",
-            b"bytes",
-            "double",
-            b"double",
-            "duration",
-            b"duration",
-            "enum",
-            b"enum",
-            "fixed32",
-            b"fixed32",
-            "fixed64",
-            b"fixed64",
-            "float",
-            b"float",
-            "int32",
-            b"int32",
-            "int64",
-            b"int64",
-            "map",
-            b"map",
-            "message",
-            b"message",
-            "repeated",
-            b"repeated",
-            "sfixed32",
-            b"sfixed32",
-            "sfixed64",
-            b"sfixed64",
-            "sint32",
-            b"sint32",
-            "sint64",
-            b"sint64",
-            "string",
-            b"string",
-            "timestamp",
-            b"timestamp",
-            "type",
-            b"type",
-            "uint32",
-            b"uint32",
-            "uint64",
-            b"uint64",
-        ],
-    ) -> builtins.bool: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_message",
-            b"_message",
-            "any",
-            b"any",
-            "bool",
-            b"bool",
-            "bytes",
-            b"bytes",
-            "double",
-            b"double",
-            "duration",
-            b"duration",
-            "enum",
-            b"enum",
-            "fixed32",
-            b"fixed32",
-            "fixed64",
-            b"fixed64",
-            "float",
-            b"float",
-            "int32",
-            b"int32",
-            "int64",
-            b"int64",
-            "map",
-            b"map",
-            "message",
-            b"message",
-            "repeated",
-            b"repeated",
-            "sfixed32",
-            b"sfixed32",
-            "sfixed64",
-            b"sfixed64",
-            "sint32",
-            b"sint32",
-            "sint64",
-            b"sint64",
-            "string",
-            b"string",
-            "timestamp",
-            b"timestamp",
-            "type",
-            b"type",
-            "uint32",
-            b"uint32",
-            "uint64",
-            b"uint64",
-        ],
-    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_message", b"_message", "any", b"any", "bool", b"bool", "bytes", b"bytes", "double", b"double", "duration", b"duration", "enum", b"enum", "fixed32", b"fixed32", "fixed64", b"fixed64", "float", b"float", "int32", b"int32", "int64", b"int64", "map", b"map", "message", b"message", "repeated", b"repeated", "sfixed32", b"sfixed32", "sfixed64", b"sfixed64", "sint32", b"sint32", "sint64", b"sint64", "string", b"string", "timestamp", b"timestamp", "type", b"type", "uint32", b"uint32", "uint64", b"uint64"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_message", b"_message", "any", b"any", "bool", b"bool", "bytes", b"bytes", "double", b"double", "duration", b"duration", "enum", b"enum", "fixed32", b"fixed32", "fixed64", b"fixed64", "float", b"float", "int32", b"int32", "int64", b"int64", "map", b"map", "message", b"message", "repeated", b"repeated", "sfixed32", b"sfixed32", "sfixed64", b"sfixed64", "sint32", b"sint32", "sint64", b"sint64", "string", b"string", "timestamp", b"timestamp", "type", b"type", "uint32", b"uint32", "uint64", b"uint64"]) -> None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_message", b"_message"]
-    ) -> typing_extensions.Literal["message"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_message", b"_message"]) -> typing_extensions.Literal["message"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["type", b"type"]
-    ) -> (
-        typing_extensions.Literal[
-            "float",
-            "double",
-            "int32",
-            "int64",
-            "uint32",
-            "uint64",
-            "sint32",
-            "sint64",
-            "fixed32",
-            "fixed64",
-            "sfixed32",
-            "sfixed64",
-            "bool",
-            "string",
-            "bytes",
-            "enum",
-            "repeated",
-            "map",
-            "any",
-            "duration",
-            "timestamp",
-        ]
-        | None
-    ): ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["type", b"type"]) -> typing_extensions.Literal["float", "double", "int32", "int64", "uint32", "uint64", "sint32", "sint64", "fixed32", "fixed64", "sfixed32", "sfixed64", "bool", "string", "bytes", "enum", "repeated", "map", "any", "duration", "timestamp"] | None: ...
 
 global___FieldRules = FieldRules
 
@@ -368,212 +235,38 @@ class FloatRules(google.protobuf.message.Message):
         title: builtins.str | None = ...,
         extra: builtins.str | None = ...,
     ) -> None: ...
-    def HasField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_alias",
-            b"_alias",
-            "_const",
-            b"_const",
-            "_description",
-            b"_description",
-            "_enable",
-            b"_enable",
-            "_extra",
-            b"_extra",
-            "_field",
-            b"_field",
-            "_ge",
-            b"_ge",
-            "_gt",
-            b"_gt",
-            "_le",
-            b"_le",
-            "_lt",
-            b"_lt",
-            "_multiple_of",
-            b"_multiple_of",
-            "_title",
-            b"_title",
-            "_type",
-            b"_type",
-            "alias",
-            b"alias",
-            "const",
-            b"const",
-            "default",
-            b"default",
-            "default_config",
-            b"default_config",
-            "default_factory",
-            b"default_factory",
-            "description",
-            b"description",
-            "enable",
-            b"enable",
-            "example",
-            b"example",
-            "example_config",
-            b"example_config",
-            "example_factory",
-            b"example_factory",
-            "extra",
-            b"extra",
-            "field",
-            b"field",
-            "ge",
-            b"ge",
-            "gt",
-            b"gt",
-            "le",
-            b"le",
-            "lt",
-            b"lt",
-            "miss_default",
-            b"miss_default",
-            "multiple_of",
-            b"multiple_of",
-            "title",
-            b"title",
-            "type",
-            b"type",
-        ],
-    ) -> builtins.bool: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_alias",
-            b"_alias",
-            "_const",
-            b"_const",
-            "_description",
-            b"_description",
-            "_enable",
-            b"_enable",
-            "_extra",
-            b"_extra",
-            "_field",
-            b"_field",
-            "_ge",
-            b"_ge",
-            "_gt",
-            b"_gt",
-            "_le",
-            b"_le",
-            "_lt",
-            b"_lt",
-            "_multiple_of",
-            b"_multiple_of",
-            "_title",
-            b"_title",
-            "_type",
-            b"_type",
-            "alias",
-            b"alias",
-            "const",
-            b"const",
-            "default",
-            b"default",
-            "default_config",
-            b"default_config",
-            "default_factory",
-            b"default_factory",
-            "description",
-            b"description",
-            "enable",
-            b"enable",
-            "example",
-            b"example",
-            "example_config",
-            b"example_config",
-            "example_factory",
-            b"example_factory",
-            "extra",
-            b"extra",
-            "field",
-            b"field",
-            "ge",
-            b"ge",
-            "gt",
-            b"gt",
-            "in",
-            b"in",
-            "le",
-            b"le",
-            "lt",
-            b"lt",
-            "miss_default",
-            b"miss_default",
-            "multiple_of",
-            b"multiple_of",
-            "not_in",
-            b"not_in",
-            "title",
-            b"title",
-            "type",
-            b"type",
-        ],
-    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_alias", b"_alias", "_const", b"_const", "_description", b"_description", "_enable", b"_enable", "_extra", b"_extra", "_field", b"_field", "_ge", b"_ge", "_gt", b"_gt", "_le", b"_le", "_lt", b"_lt", "_multiple_of", b"_multiple_of", "_title", b"_title", "_type", b"_type", "alias", b"alias", "const", b"const", "default", b"default", "default_config", b"default_config", "default_factory", b"default_factory", "description", b"description", "enable", b"enable", "example", b"example", "example_config", b"example_config", "example_factory", b"example_factory", "extra", b"extra", "field", b"field", "ge", b"ge", "gt", b"gt", "le", b"le", "lt", b"lt", "miss_default", b"miss_default", "multiple_of", b"multiple_of", "title", b"title", "type", b"type"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_alias", b"_alias", "_const", b"_const", "_description", b"_description", "_enable", b"_enable", "_extra", b"_extra", "_field", b"_field", "_ge", b"_ge", "_gt", b"_gt", "_le", b"_le", "_lt", b"_lt", "_multiple_of", b"_multiple_of", "_title", b"_title", "_type", b"_type", "alias", b"alias", "const", b"const", "default", b"default", "default_config", b"default_config", "default_factory", b"default_factory", "description", b"description", "enable", b"enable", "example", b"example", "example_config", b"example_config", "example_factory", b"example_factory", "extra", b"extra", "field", b"field", "ge", b"ge", "gt", b"gt", "in", b"in", "le", b"le", "lt", b"lt", "miss_default", b"miss_default", "multiple_of", b"multiple_of", "not_in", b"not_in", "title", b"title", "type", b"type"]) -> None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_alias", b"_alias"]
-    ) -> typing_extensions.Literal["alias"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_alias", b"_alias"]) -> typing_extensions.Literal["alias"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_const", b"_const"]
-    ) -> typing_extensions.Literal["const"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_const", b"_const"]) -> typing_extensions.Literal["const"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_description", b"_description"]
-    ) -> typing_extensions.Literal["description"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_description", b"_description"]) -> typing_extensions.Literal["description"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]
-    ) -> typing_extensions.Literal["enable"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]) -> typing_extensions.Literal["enable"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]
-    ) -> typing_extensions.Literal["extra"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]) -> typing_extensions.Literal["extra"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_field", b"_field"]
-    ) -> typing_extensions.Literal["field"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_field", b"_field"]) -> typing_extensions.Literal["field"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_ge", b"_ge"]
-    ) -> typing_extensions.Literal["ge"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_ge", b"_ge"]) -> typing_extensions.Literal["ge"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_gt", b"_gt"]
-    ) -> typing_extensions.Literal["gt"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_gt", b"_gt"]) -> typing_extensions.Literal["gt"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_le", b"_le"]
-    ) -> typing_extensions.Literal["le"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_le", b"_le"]) -> typing_extensions.Literal["le"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_lt", b"_lt"]
-    ) -> typing_extensions.Literal["lt"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_lt", b"_lt"]) -> typing_extensions.Literal["lt"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_multiple_of", b"_multiple_of"]
-    ) -> typing_extensions.Literal["multiple_of"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_multiple_of", b"_multiple_of"]) -> typing_extensions.Literal["multiple_of"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_title", b"_title"]
-    ) -> typing_extensions.Literal["title"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_title", b"_title"]) -> typing_extensions.Literal["title"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_type", b"_type"]
-    ) -> typing_extensions.Literal["type"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_type", b"_type"]) -> typing_extensions.Literal["type"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["default_config", b"default_config"]
-    ) -> typing_extensions.Literal["default", "default_factory", "miss_default"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["default_config", b"default_config"]) -> typing_extensions.Literal["default", "default_factory", "miss_default"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["example_config", b"example_config"]
-    ) -> typing_extensions.Literal["example", "example_factory"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["example_config", b"example_config"]) -> typing_extensions.Literal["example", "example_factory"] | None: ...
 
 global___FloatRules = FloatRules
 
@@ -680,212 +373,38 @@ class DoubleRules(google.protobuf.message.Message):
         title: builtins.str | None = ...,
         extra: builtins.str | None = ...,
     ) -> None: ...
-    def HasField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_alias",
-            b"_alias",
-            "_const",
-            b"_const",
-            "_description",
-            b"_description",
-            "_enable",
-            b"_enable",
-            "_extra",
-            b"_extra",
-            "_field",
-            b"_field",
-            "_ge",
-            b"_ge",
-            "_gt",
-            b"_gt",
-            "_le",
-            b"_le",
-            "_lt",
-            b"_lt",
-            "_multiple_of",
-            b"_multiple_of",
-            "_title",
-            b"_title",
-            "_type",
-            b"_type",
-            "alias",
-            b"alias",
-            "const",
-            b"const",
-            "default",
-            b"default",
-            "default_config",
-            b"default_config",
-            "default_factory",
-            b"default_factory",
-            "description",
-            b"description",
-            "enable",
-            b"enable",
-            "example",
-            b"example",
-            "example_config",
-            b"example_config",
-            "example_factory",
-            b"example_factory",
-            "extra",
-            b"extra",
-            "field",
-            b"field",
-            "ge",
-            b"ge",
-            "gt",
-            b"gt",
-            "le",
-            b"le",
-            "lt",
-            b"lt",
-            "miss_default",
-            b"miss_default",
-            "multiple_of",
-            b"multiple_of",
-            "title",
-            b"title",
-            "type",
-            b"type",
-        ],
-    ) -> builtins.bool: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_alias",
-            b"_alias",
-            "_const",
-            b"_const",
-            "_description",
-            b"_description",
-            "_enable",
-            b"_enable",
-            "_extra",
-            b"_extra",
-            "_field",
-            b"_field",
-            "_ge",
-            b"_ge",
-            "_gt",
-            b"_gt",
-            "_le",
-            b"_le",
-            "_lt",
-            b"_lt",
-            "_multiple_of",
-            b"_multiple_of",
-            "_title",
-            b"_title",
-            "_type",
-            b"_type",
-            "alias",
-            b"alias",
-            "const",
-            b"const",
-            "default",
-            b"default",
-            "default_config",
-            b"default_config",
-            "default_factory",
-            b"default_factory",
-            "description",
-            b"description",
-            "enable",
-            b"enable",
-            "example",
-            b"example",
-            "example_config",
-            b"example_config",
-            "example_factory",
-            b"example_factory",
-            "extra",
-            b"extra",
-            "field",
-            b"field",
-            "ge",
-            b"ge",
-            "gt",
-            b"gt",
-            "in",
-            b"in",
-            "le",
-            b"le",
-            "lt",
-            b"lt",
-            "miss_default",
-            b"miss_default",
-            "multiple_of",
-            b"multiple_of",
-            "not_in",
-            b"not_in",
-            "title",
-            b"title",
-            "type",
-            b"type",
-        ],
-    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_alias", b"_alias", "_const", b"_const", "_description", b"_description", "_enable", b"_enable", "_extra", b"_extra", "_field", b"_field", "_ge", b"_ge", "_gt", b"_gt", "_le", b"_le", "_lt", b"_lt", "_multiple_of", b"_multiple_of", "_title", b"_title", "_type", b"_type", "alias", b"alias", "const", b"const", "default", b"default", "default_config", b"default_config", "default_factory", b"default_factory", "description", b"description", "enable", b"enable", "example", b"example", "example_config", b"example_config", "example_factory", b"example_factory", "extra", b"extra", "field", b"field", "ge", b"ge", "gt", b"gt", "le", b"le", "lt", b"lt", "miss_default", b"miss_default", "multiple_of", b"multiple_of", "title", b"title", "type", b"type"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_alias", b"_alias", "_const", b"_const", "_description", b"_description", "_enable", b"_enable", "_extra", b"_extra", "_field", b"_field", "_ge", b"_ge", "_gt", b"_gt", "_le", b"_le", "_lt", b"_lt", "_multiple_of", b"_multiple_of", "_title", b"_title", "_type", b"_type", "alias", b"alias", "const", b"const", "default", b"default", "default_config", b"default_config", "default_factory", b"default_factory", "description", b"description", "enable", b"enable", "example", b"example", "example_config", b"example_config", "example_factory", b"example_factory", "extra", b"extra", "field", b"field", "ge", b"ge", "gt", b"gt", "in", b"in", "le", b"le", "lt", b"lt", "miss_default", b"miss_default", "multiple_of", b"multiple_of", "not_in", b"not_in", "title", b"title", "type", b"type"]) -> None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_alias", b"_alias"]
-    ) -> typing_extensions.Literal["alias"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_alias", b"_alias"]) -> typing_extensions.Literal["alias"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_const", b"_const"]
-    ) -> typing_extensions.Literal["const"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_const", b"_const"]) -> typing_extensions.Literal["const"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_description", b"_description"]
-    ) -> typing_extensions.Literal["description"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_description", b"_description"]) -> typing_extensions.Literal["description"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]
-    ) -> typing_extensions.Literal["enable"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]) -> typing_extensions.Literal["enable"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]
-    ) -> typing_extensions.Literal["extra"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]) -> typing_extensions.Literal["extra"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_field", b"_field"]
-    ) -> typing_extensions.Literal["field"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_field", b"_field"]) -> typing_extensions.Literal["field"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_ge", b"_ge"]
-    ) -> typing_extensions.Literal["ge"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_ge", b"_ge"]) -> typing_extensions.Literal["ge"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_gt", b"_gt"]
-    ) -> typing_extensions.Literal["gt"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_gt", b"_gt"]) -> typing_extensions.Literal["gt"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_le", b"_le"]
-    ) -> typing_extensions.Literal["le"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_le", b"_le"]) -> typing_extensions.Literal["le"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_lt", b"_lt"]
-    ) -> typing_extensions.Literal["lt"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_lt", b"_lt"]) -> typing_extensions.Literal["lt"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_multiple_of", b"_multiple_of"]
-    ) -> typing_extensions.Literal["multiple_of"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_multiple_of", b"_multiple_of"]) -> typing_extensions.Literal["multiple_of"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_title", b"_title"]
-    ) -> typing_extensions.Literal["title"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_title", b"_title"]) -> typing_extensions.Literal["title"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_type", b"_type"]
-    ) -> typing_extensions.Literal["type"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_type", b"_type"]) -> typing_extensions.Literal["type"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["default_config", b"default_config"]
-    ) -> typing_extensions.Literal["default", "default_factory", "miss_default"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["default_config", b"default_config"]) -> typing_extensions.Literal["default", "default_factory", "miss_default"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["example_config", b"example_config"]
-    ) -> typing_extensions.Literal["example", "example_factory"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["example_config", b"example_config"]) -> typing_extensions.Literal["example", "example_factory"] | None: ...
 
 global___DoubleRules = DoubleRules
 
@@ -992,212 +511,38 @@ class Int32Rules(google.protobuf.message.Message):
         title: builtins.str | None = ...,
         extra: builtins.str | None = ...,
     ) -> None: ...
-    def HasField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_alias",
-            b"_alias",
-            "_const",
-            b"_const",
-            "_description",
-            b"_description",
-            "_enable",
-            b"_enable",
-            "_extra",
-            b"_extra",
-            "_field",
-            b"_field",
-            "_ge",
-            b"_ge",
-            "_gt",
-            b"_gt",
-            "_le",
-            b"_le",
-            "_lt",
-            b"_lt",
-            "_multiple_of",
-            b"_multiple_of",
-            "_title",
-            b"_title",
-            "_type",
-            b"_type",
-            "alias",
-            b"alias",
-            "const",
-            b"const",
-            "default",
-            b"default",
-            "default_config",
-            b"default_config",
-            "default_factory",
-            b"default_factory",
-            "description",
-            b"description",
-            "enable",
-            b"enable",
-            "example",
-            b"example",
-            "example_config",
-            b"example_config",
-            "example_factory",
-            b"example_factory",
-            "extra",
-            b"extra",
-            "field",
-            b"field",
-            "ge",
-            b"ge",
-            "gt",
-            b"gt",
-            "le",
-            b"le",
-            "lt",
-            b"lt",
-            "miss_default",
-            b"miss_default",
-            "multiple_of",
-            b"multiple_of",
-            "title",
-            b"title",
-            "type",
-            b"type",
-        ],
-    ) -> builtins.bool: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_alias",
-            b"_alias",
-            "_const",
-            b"_const",
-            "_description",
-            b"_description",
-            "_enable",
-            b"_enable",
-            "_extra",
-            b"_extra",
-            "_field",
-            b"_field",
-            "_ge",
-            b"_ge",
-            "_gt",
-            b"_gt",
-            "_le",
-            b"_le",
-            "_lt",
-            b"_lt",
-            "_multiple_of",
-            b"_multiple_of",
-            "_title",
-            b"_title",
-            "_type",
-            b"_type",
-            "alias",
-            b"alias",
-            "const",
-            b"const",
-            "default",
-            b"default",
-            "default_config",
-            b"default_config",
-            "default_factory",
-            b"default_factory",
-            "description",
-            b"description",
-            "enable",
-            b"enable",
-            "example",
-            b"example",
-            "example_config",
-            b"example_config",
-            "example_factory",
-            b"example_factory",
-            "extra",
-            b"extra",
-            "field",
-            b"field",
-            "ge",
-            b"ge",
-            "gt",
-            b"gt",
-            "in",
-            b"in",
-            "le",
-            b"le",
-            "lt",
-            b"lt",
-            "miss_default",
-            b"miss_default",
-            "multiple_of",
-            b"multiple_of",
-            "not_in",
-            b"not_in",
-            "title",
-            b"title",
-            "type",
-            b"type",
-        ],
-    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_alias", b"_alias", "_const", b"_const", "_description", b"_description", "_enable", b"_enable", "_extra", b"_extra", "_field", b"_field", "_ge", b"_ge", "_gt", b"_gt", "_le", b"_le", "_lt", b"_lt", "_multiple_of", b"_multiple_of", "_title", b"_title", "_type", b"_type", "alias", b"alias", "const", b"const", "default", b"default", "default_config", b"default_config", "default_factory", b"default_factory", "description", b"description", "enable", b"enable", "example", b"example", "example_config", b"example_config", "example_factory", b"example_factory", "extra", b"extra", "field", b"field", "ge", b"ge", "gt", b"gt", "le", b"le", "lt", b"lt", "miss_default", b"miss_default", "multiple_of", b"multiple_of", "title", b"title", "type", b"type"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_alias", b"_alias", "_const", b"_const", "_description", b"_description", "_enable", b"_enable", "_extra", b"_extra", "_field", b"_field", "_ge", b"_ge", "_gt", b"_gt", "_le", b"_le", "_lt", b"_lt", "_multiple_of", b"_multiple_of", "_title", b"_title", "_type", b"_type", "alias", b"alias", "const", b"const", "default", b"default", "default_config", b"default_config", "default_factory", b"default_factory", "description", b"description", "enable", b"enable", "example", b"example", "example_config", b"example_config", "example_factory", b"example_factory", "extra", b"extra", "field", b"field", "ge", b"ge", "gt", b"gt", "in", b"in", "le", b"le", "lt", b"lt", "miss_default", b"miss_default", "multiple_of", b"multiple_of", "not_in", b"not_in", "title", b"title", "type", b"type"]) -> None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_alias", b"_alias"]
-    ) -> typing_extensions.Literal["alias"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_alias", b"_alias"]) -> typing_extensions.Literal["alias"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_const", b"_const"]
-    ) -> typing_extensions.Literal["const"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_const", b"_const"]) -> typing_extensions.Literal["const"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_description", b"_description"]
-    ) -> typing_extensions.Literal["description"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_description", b"_description"]) -> typing_extensions.Literal["description"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]
-    ) -> typing_extensions.Literal["enable"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]) -> typing_extensions.Literal["enable"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]
-    ) -> typing_extensions.Literal["extra"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]) -> typing_extensions.Literal["extra"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_field", b"_field"]
-    ) -> typing_extensions.Literal["field"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_field", b"_field"]) -> typing_extensions.Literal["field"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_ge", b"_ge"]
-    ) -> typing_extensions.Literal["ge"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_ge", b"_ge"]) -> typing_extensions.Literal["ge"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_gt", b"_gt"]
-    ) -> typing_extensions.Literal["gt"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_gt", b"_gt"]) -> typing_extensions.Literal["gt"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_le", b"_le"]
-    ) -> typing_extensions.Literal["le"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_le", b"_le"]) -> typing_extensions.Literal["le"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_lt", b"_lt"]
-    ) -> typing_extensions.Literal["lt"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_lt", b"_lt"]) -> typing_extensions.Literal["lt"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_multiple_of", b"_multiple_of"]
-    ) -> typing_extensions.Literal["multiple_of"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_multiple_of", b"_multiple_of"]) -> typing_extensions.Literal["multiple_of"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_title", b"_title"]
-    ) -> typing_extensions.Literal["title"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_title", b"_title"]) -> typing_extensions.Literal["title"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_type", b"_type"]
-    ) -> typing_extensions.Literal["type"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_type", b"_type"]) -> typing_extensions.Literal["type"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["default_config", b"default_config"]
-    ) -> typing_extensions.Literal["default", "default_factory", "miss_default"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["default_config", b"default_config"]) -> typing_extensions.Literal["default", "default_factory", "miss_default"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["example_config", b"example_config"]
-    ) -> typing_extensions.Literal["example", "example_factory"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["example_config", b"example_config"]) -> typing_extensions.Literal["example", "example_factory"] | None: ...
 
 global___Int32Rules = Int32Rules
 
@@ -1304,212 +649,38 @@ class Int64Rules(google.protobuf.message.Message):
         title: builtins.str | None = ...,
         extra: builtins.str | None = ...,
     ) -> None: ...
-    def HasField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_alias",
-            b"_alias",
-            "_const",
-            b"_const",
-            "_description",
-            b"_description",
-            "_enable",
-            b"_enable",
-            "_extra",
-            b"_extra",
-            "_field",
-            b"_field",
-            "_ge",
-            b"_ge",
-            "_gt",
-            b"_gt",
-            "_le",
-            b"_le",
-            "_lt",
-            b"_lt",
-            "_multiple_of",
-            b"_multiple_of",
-            "_title",
-            b"_title",
-            "_type",
-            b"_type",
-            "alias",
-            b"alias",
-            "const",
-            b"const",
-            "default",
-            b"default",
-            "default_config",
-            b"default_config",
-            "default_factory",
-            b"default_factory",
-            "description",
-            b"description",
-            "enable",
-            b"enable",
-            "example",
-            b"example",
-            "example_config",
-            b"example_config",
-            "example_factory",
-            b"example_factory",
-            "extra",
-            b"extra",
-            "field",
-            b"field",
-            "ge",
-            b"ge",
-            "gt",
-            b"gt",
-            "le",
-            b"le",
-            "lt",
-            b"lt",
-            "miss_default",
-            b"miss_default",
-            "multiple_of",
-            b"multiple_of",
-            "title",
-            b"title",
-            "type",
-            b"type",
-        ],
-    ) -> builtins.bool: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_alias",
-            b"_alias",
-            "_const",
-            b"_const",
-            "_description",
-            b"_description",
-            "_enable",
-            b"_enable",
-            "_extra",
-            b"_extra",
-            "_field",
-            b"_field",
-            "_ge",
-            b"_ge",
-            "_gt",
-            b"_gt",
-            "_le",
-            b"_le",
-            "_lt",
-            b"_lt",
-            "_multiple_of",
-            b"_multiple_of",
-            "_title",
-            b"_title",
-            "_type",
-            b"_type",
-            "alias",
-            b"alias",
-            "const",
-            b"const",
-            "default",
-            b"default",
-            "default_config",
-            b"default_config",
-            "default_factory",
-            b"default_factory",
-            "description",
-            b"description",
-            "enable",
-            b"enable",
-            "example",
-            b"example",
-            "example_config",
-            b"example_config",
-            "example_factory",
-            b"example_factory",
-            "extra",
-            b"extra",
-            "field",
-            b"field",
-            "ge",
-            b"ge",
-            "gt",
-            b"gt",
-            "in",
-            b"in",
-            "le",
-            b"le",
-            "lt",
-            b"lt",
-            "miss_default",
-            b"miss_default",
-            "multiple_of",
-            b"multiple_of",
-            "not_in",
-            b"not_in",
-            "title",
-            b"title",
-            "type",
-            b"type",
-        ],
-    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_alias", b"_alias", "_const", b"_const", "_description", b"_description", "_enable", b"_enable", "_extra", b"_extra", "_field", b"_field", "_ge", b"_ge", "_gt", b"_gt", "_le", b"_le", "_lt", b"_lt", "_multiple_of", b"_multiple_of", "_title", b"_title", "_type", b"_type", "alias", b"alias", "const", b"const", "default", b"default", "default_config", b"default_config", "default_factory", b"default_factory", "description", b"description", "enable", b"enable", "example", b"example", "example_config", b"example_config", "example_factory", b"example_factory", "extra", b"extra", "field", b"field", "ge", b"ge", "gt", b"gt", "le", b"le", "lt", b"lt", "miss_default", b"miss_default", "multiple_of", b"multiple_of", "title", b"title", "type", b"type"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_alias", b"_alias", "_const", b"_const", "_description", b"_description", "_enable", b"_enable", "_extra", b"_extra", "_field", b"_field", "_ge", b"_ge", "_gt", b"_gt", "_le", b"_le", "_lt", b"_lt", "_multiple_of", b"_multiple_of", "_title", b"_title", "_type", b"_type", "alias", b"alias", "const", b"const", "default", b"default", "default_config", b"default_config", "default_factory", b"default_factory", "description", b"description", "enable", b"enable", "example", b"example", "example_config", b"example_config", "example_factory", b"example_factory", "extra", b"extra", "field", b"field", "ge", b"ge", "gt", b"gt", "in", b"in", "le", b"le", "lt", b"lt", "miss_default", b"miss_default", "multiple_of", b"multiple_of", "not_in", b"not_in", "title", b"title", "type", b"type"]) -> None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_alias", b"_alias"]
-    ) -> typing_extensions.Literal["alias"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_alias", b"_alias"]) -> typing_extensions.Literal["alias"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_const", b"_const"]
-    ) -> typing_extensions.Literal["const"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_const", b"_const"]) -> typing_extensions.Literal["const"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_description", b"_description"]
-    ) -> typing_extensions.Literal["description"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_description", b"_description"]) -> typing_extensions.Literal["description"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]
-    ) -> typing_extensions.Literal["enable"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]) -> typing_extensions.Literal["enable"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]
-    ) -> typing_extensions.Literal["extra"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]) -> typing_extensions.Literal["extra"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_field", b"_field"]
-    ) -> typing_extensions.Literal["field"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_field", b"_field"]) -> typing_extensions.Literal["field"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_ge", b"_ge"]
-    ) -> typing_extensions.Literal["ge"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_ge", b"_ge"]) -> typing_extensions.Literal["ge"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_gt", b"_gt"]
-    ) -> typing_extensions.Literal["gt"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_gt", b"_gt"]) -> typing_extensions.Literal["gt"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_le", b"_le"]
-    ) -> typing_extensions.Literal["le"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_le", b"_le"]) -> typing_extensions.Literal["le"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_lt", b"_lt"]
-    ) -> typing_extensions.Literal["lt"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_lt", b"_lt"]) -> typing_extensions.Literal["lt"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_multiple_of", b"_multiple_of"]
-    ) -> typing_extensions.Literal["multiple_of"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_multiple_of", b"_multiple_of"]) -> typing_extensions.Literal["multiple_of"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_title", b"_title"]
-    ) -> typing_extensions.Literal["title"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_title", b"_title"]) -> typing_extensions.Literal["title"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_type", b"_type"]
-    ) -> typing_extensions.Literal["type"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_type", b"_type"]) -> typing_extensions.Literal["type"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["default_config", b"default_config"]
-    ) -> typing_extensions.Literal["default", "default_factory", "miss_default"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["default_config", b"default_config"]) -> typing_extensions.Literal["default", "default_factory", "miss_default"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["example_config", b"example_config"]
-    ) -> typing_extensions.Literal["example", "example_factory"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["example_config", b"example_config"]) -> typing_extensions.Literal["example", "example_factory"] | None: ...
 
 global___Int64Rules = Int64Rules
 
@@ -1616,212 +787,38 @@ class UInt32Rules(google.protobuf.message.Message):
         title: builtins.str | None = ...,
         extra: builtins.str | None = ...,
     ) -> None: ...
-    def HasField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_alias",
-            b"_alias",
-            "_const",
-            b"_const",
-            "_description",
-            b"_description",
-            "_enable",
-            b"_enable",
-            "_extra",
-            b"_extra",
-            "_field",
-            b"_field",
-            "_ge",
-            b"_ge",
-            "_gt",
-            b"_gt",
-            "_le",
-            b"_le",
-            "_lt",
-            b"_lt",
-            "_multiple_of",
-            b"_multiple_of",
-            "_title",
-            b"_title",
-            "_type",
-            b"_type",
-            "alias",
-            b"alias",
-            "const",
-            b"const",
-            "default",
-            b"default",
-            "default_config",
-            b"default_config",
-            "default_factory",
-            b"default_factory",
-            "description",
-            b"description",
-            "enable",
-            b"enable",
-            "example",
-            b"example",
-            "example_config",
-            b"example_config",
-            "example_factory",
-            b"example_factory",
-            "extra",
-            b"extra",
-            "field",
-            b"field",
-            "ge",
-            b"ge",
-            "gt",
-            b"gt",
-            "le",
-            b"le",
-            "lt",
-            b"lt",
-            "miss_default",
-            b"miss_default",
-            "multiple_of",
-            b"multiple_of",
-            "title",
-            b"title",
-            "type",
-            b"type",
-        ],
-    ) -> builtins.bool: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_alias",
-            b"_alias",
-            "_const",
-            b"_const",
-            "_description",
-            b"_description",
-            "_enable",
-            b"_enable",
-            "_extra",
-            b"_extra",
-            "_field",
-            b"_field",
-            "_ge",
-            b"_ge",
-            "_gt",
-            b"_gt",
-            "_le",
-            b"_le",
-            "_lt",
-            b"_lt",
-            "_multiple_of",
-            b"_multiple_of",
-            "_title",
-            b"_title",
-            "_type",
-            b"_type",
-            "alias",
-            b"alias",
-            "const",
-            b"const",
-            "default",
-            b"default",
-            "default_config",
-            b"default_config",
-            "default_factory",
-            b"default_factory",
-            "description",
-            b"description",
-            "enable",
-            b"enable",
-            "example",
-            b"example",
-            "example_config",
-            b"example_config",
-            "example_factory",
-            b"example_factory",
-            "extra",
-            b"extra",
-            "field",
-            b"field",
-            "ge",
-            b"ge",
-            "gt",
-            b"gt",
-            "in",
-            b"in",
-            "le",
-            b"le",
-            "lt",
-            b"lt",
-            "miss_default",
-            b"miss_default",
-            "multiple_of",
-            b"multiple_of",
-            "not_in",
-            b"not_in",
-            "title",
-            b"title",
-            "type",
-            b"type",
-        ],
-    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_alias", b"_alias", "_const", b"_const", "_description", b"_description", "_enable", b"_enable", "_extra", b"_extra", "_field", b"_field", "_ge", b"_ge", "_gt", b"_gt", "_le", b"_le", "_lt", b"_lt", "_multiple_of", b"_multiple_of", "_title", b"_title", "_type", b"_type", "alias", b"alias", "const", b"const", "default", b"default", "default_config", b"default_config", "default_factory", b"default_factory", "description", b"description", "enable", b"enable", "example", b"example", "example_config", b"example_config", "example_factory", b"example_factory", "extra", b"extra", "field", b"field", "ge", b"ge", "gt", b"gt", "le", b"le", "lt", b"lt", "miss_default", b"miss_default", "multiple_of", b"multiple_of", "title", b"title", "type", b"type"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_alias", b"_alias", "_const", b"_const", "_description", b"_description", "_enable", b"_enable", "_extra", b"_extra", "_field", b"_field", "_ge", b"_ge", "_gt", b"_gt", "_le", b"_le", "_lt", b"_lt", "_multiple_of", b"_multiple_of", "_title", b"_title", "_type", b"_type", "alias", b"alias", "const", b"const", "default", b"default", "default_config", b"default_config", "default_factory", b"default_factory", "description", b"description", "enable", b"enable", "example", b"example", "example_config", b"example_config", "example_factory", b"example_factory", "extra", b"extra", "field", b"field", "ge", b"ge", "gt", b"gt", "in", b"in", "le", b"le", "lt", b"lt", "miss_default", b"miss_default", "multiple_of", b"multiple_of", "not_in", b"not_in", "title", b"title", "type", b"type"]) -> None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_alias", b"_alias"]
-    ) -> typing_extensions.Literal["alias"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_alias", b"_alias"]) -> typing_extensions.Literal["alias"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_const", b"_const"]
-    ) -> typing_extensions.Literal["const"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_const", b"_const"]) -> typing_extensions.Literal["const"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_description", b"_description"]
-    ) -> typing_extensions.Literal["description"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_description", b"_description"]) -> typing_extensions.Literal["description"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]
-    ) -> typing_extensions.Literal["enable"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]) -> typing_extensions.Literal["enable"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]
-    ) -> typing_extensions.Literal["extra"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]) -> typing_extensions.Literal["extra"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_field", b"_field"]
-    ) -> typing_extensions.Literal["field"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_field", b"_field"]) -> typing_extensions.Literal["field"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_ge", b"_ge"]
-    ) -> typing_extensions.Literal["ge"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_ge", b"_ge"]) -> typing_extensions.Literal["ge"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_gt", b"_gt"]
-    ) -> typing_extensions.Literal["gt"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_gt", b"_gt"]) -> typing_extensions.Literal["gt"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_le", b"_le"]
-    ) -> typing_extensions.Literal["le"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_le", b"_le"]) -> typing_extensions.Literal["le"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_lt", b"_lt"]
-    ) -> typing_extensions.Literal["lt"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_lt", b"_lt"]) -> typing_extensions.Literal["lt"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_multiple_of", b"_multiple_of"]
-    ) -> typing_extensions.Literal["multiple_of"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_multiple_of", b"_multiple_of"]) -> typing_extensions.Literal["multiple_of"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_title", b"_title"]
-    ) -> typing_extensions.Literal["title"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_title", b"_title"]) -> typing_extensions.Literal["title"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_type", b"_type"]
-    ) -> typing_extensions.Literal["type"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_type", b"_type"]) -> typing_extensions.Literal["type"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["default_config", b"default_config"]
-    ) -> typing_extensions.Literal["default", "default_factory", "miss_default"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["default_config", b"default_config"]) -> typing_extensions.Literal["default", "default_factory", "miss_default"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["example_config", b"example_config"]
-    ) -> typing_extensions.Literal["example", "example_factory"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["example_config", b"example_config"]) -> typing_extensions.Literal["example", "example_factory"] | None: ...
 
 global___UInt32Rules = UInt32Rules
 
@@ -1928,212 +925,38 @@ class UInt64Rules(google.protobuf.message.Message):
         title: builtins.str | None = ...,
         extra: builtins.str | None = ...,
     ) -> None: ...
-    def HasField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_alias",
-            b"_alias",
-            "_const",
-            b"_const",
-            "_description",
-            b"_description",
-            "_enable",
-            b"_enable",
-            "_extra",
-            b"_extra",
-            "_field",
-            b"_field",
-            "_ge",
-            b"_ge",
-            "_gt",
-            b"_gt",
-            "_le",
-            b"_le",
-            "_lt",
-            b"_lt",
-            "_multiple_of",
-            b"_multiple_of",
-            "_title",
-            b"_title",
-            "_type",
-            b"_type",
-            "alias",
-            b"alias",
-            "const",
-            b"const",
-            "default",
-            b"default",
-            "default_config",
-            b"default_config",
-            "default_factory",
-            b"default_factory",
-            "description",
-            b"description",
-            "enable",
-            b"enable",
-            "example",
-            b"example",
-            "example_config",
-            b"example_config",
-            "example_factory",
-            b"example_factory",
-            "extra",
-            b"extra",
-            "field",
-            b"field",
-            "ge",
-            b"ge",
-            "gt",
-            b"gt",
-            "le",
-            b"le",
-            "lt",
-            b"lt",
-            "miss_default",
-            b"miss_default",
-            "multiple_of",
-            b"multiple_of",
-            "title",
-            b"title",
-            "type",
-            b"type",
-        ],
-    ) -> builtins.bool: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_alias",
-            b"_alias",
-            "_const",
-            b"_const",
-            "_description",
-            b"_description",
-            "_enable",
-            b"_enable",
-            "_extra",
-            b"_extra",
-            "_field",
-            b"_field",
-            "_ge",
-            b"_ge",
-            "_gt",
-            b"_gt",
-            "_le",
-            b"_le",
-            "_lt",
-            b"_lt",
-            "_multiple_of",
-            b"_multiple_of",
-            "_title",
-            b"_title",
-            "_type",
-            b"_type",
-            "alias",
-            b"alias",
-            "const",
-            b"const",
-            "default",
-            b"default",
-            "default_config",
-            b"default_config",
-            "default_factory",
-            b"default_factory",
-            "description",
-            b"description",
-            "enable",
-            b"enable",
-            "example",
-            b"example",
-            "example_config",
-            b"example_config",
-            "example_factory",
-            b"example_factory",
-            "extra",
-            b"extra",
-            "field",
-            b"field",
-            "ge",
-            b"ge",
-            "gt",
-            b"gt",
-            "in",
-            b"in",
-            "le",
-            b"le",
-            "lt",
-            b"lt",
-            "miss_default",
-            b"miss_default",
-            "multiple_of",
-            b"multiple_of",
-            "not_in",
-            b"not_in",
-            "title",
-            b"title",
-            "type",
-            b"type",
-        ],
-    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_alias", b"_alias", "_const", b"_const", "_description", b"_description", "_enable", b"_enable", "_extra", b"_extra", "_field", b"_field", "_ge", b"_ge", "_gt", b"_gt", "_le", b"_le", "_lt", b"_lt", "_multiple_of", b"_multiple_of", "_title", b"_title", "_type", b"_type", "alias", b"alias", "const", b"const", "default", b"default", "default_config", b"default_config", "default_factory", b"default_factory", "description", b"description", "enable", b"enable", "example", b"example", "example_config", b"example_config", "example_factory", b"example_factory", "extra", b"extra", "field", b"field", "ge", b"ge", "gt", b"gt", "le", b"le", "lt", b"lt", "miss_default", b"miss_default", "multiple_of", b"multiple_of", "title", b"title", "type", b"type"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_alias", b"_alias", "_const", b"_const", "_description", b"_description", "_enable", b"_enable", "_extra", b"_extra", "_field", b"_field", "_ge", b"_ge", "_gt", b"_gt", "_le", b"_le", "_lt", b"_lt", "_multiple_of", b"_multiple_of", "_title", b"_title", "_type", b"_type", "alias", b"alias", "const", b"const", "default", b"default", "default_config", b"default_config", "default_factory", b"default_factory", "description", b"description", "enable", b"enable", "example", b"example", "example_config", b"example_config", "example_factory", b"example_factory", "extra", b"extra", "field", b"field", "ge", b"ge", "gt", b"gt", "in", b"in", "le", b"le", "lt", b"lt", "miss_default", b"miss_default", "multiple_of", b"multiple_of", "not_in", b"not_in", "title", b"title", "type", b"type"]) -> None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_alias", b"_alias"]
-    ) -> typing_extensions.Literal["alias"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_alias", b"_alias"]) -> typing_extensions.Literal["alias"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_const", b"_const"]
-    ) -> typing_extensions.Literal["const"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_const", b"_const"]) -> typing_extensions.Literal["const"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_description", b"_description"]
-    ) -> typing_extensions.Literal["description"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_description", b"_description"]) -> typing_extensions.Literal["description"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]
-    ) -> typing_extensions.Literal["enable"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]) -> typing_extensions.Literal["enable"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]
-    ) -> typing_extensions.Literal["extra"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]) -> typing_extensions.Literal["extra"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_field", b"_field"]
-    ) -> typing_extensions.Literal["field"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_field", b"_field"]) -> typing_extensions.Literal["field"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_ge", b"_ge"]
-    ) -> typing_extensions.Literal["ge"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_ge", b"_ge"]) -> typing_extensions.Literal["ge"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_gt", b"_gt"]
-    ) -> typing_extensions.Literal["gt"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_gt", b"_gt"]) -> typing_extensions.Literal["gt"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_le", b"_le"]
-    ) -> typing_extensions.Literal["le"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_le", b"_le"]) -> typing_extensions.Literal["le"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_lt", b"_lt"]
-    ) -> typing_extensions.Literal["lt"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_lt", b"_lt"]) -> typing_extensions.Literal["lt"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_multiple_of", b"_multiple_of"]
-    ) -> typing_extensions.Literal["multiple_of"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_multiple_of", b"_multiple_of"]) -> typing_extensions.Literal["multiple_of"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_title", b"_title"]
-    ) -> typing_extensions.Literal["title"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_title", b"_title"]) -> typing_extensions.Literal["title"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_type", b"_type"]
-    ) -> typing_extensions.Literal["type"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_type", b"_type"]) -> typing_extensions.Literal["type"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["default_config", b"default_config"]
-    ) -> typing_extensions.Literal["default", "default_factory", "miss_default"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["default_config", b"default_config"]) -> typing_extensions.Literal["default", "default_factory", "miss_default"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["example_config", b"example_config"]
-    ) -> typing_extensions.Literal["example", "example_factory"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["example_config", b"example_config"]) -> typing_extensions.Literal["example", "example_factory"] | None: ...
 
 global___UInt64Rules = UInt64Rules
 
@@ -2240,212 +1063,38 @@ class SInt32Rules(google.protobuf.message.Message):
         title: builtins.str | None = ...,
         extra: builtins.str | None = ...,
     ) -> None: ...
-    def HasField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_alias",
-            b"_alias",
-            "_const",
-            b"_const",
-            "_description",
-            b"_description",
-            "_enable",
-            b"_enable",
-            "_extra",
-            b"_extra",
-            "_field",
-            b"_field",
-            "_ge",
-            b"_ge",
-            "_gt",
-            b"_gt",
-            "_le",
-            b"_le",
-            "_lt",
-            b"_lt",
-            "_multiple_of",
-            b"_multiple_of",
-            "_title",
-            b"_title",
-            "_type",
-            b"_type",
-            "alias",
-            b"alias",
-            "const",
-            b"const",
-            "default",
-            b"default",
-            "default_config",
-            b"default_config",
-            "default_factory",
-            b"default_factory",
-            "description",
-            b"description",
-            "enable",
-            b"enable",
-            "example",
-            b"example",
-            "example_config",
-            b"example_config",
-            "example_factory",
-            b"example_factory",
-            "extra",
-            b"extra",
-            "field",
-            b"field",
-            "ge",
-            b"ge",
-            "gt",
-            b"gt",
-            "le",
-            b"le",
-            "lt",
-            b"lt",
-            "miss_default",
-            b"miss_default",
-            "multiple_of",
-            b"multiple_of",
-            "title",
-            b"title",
-            "type",
-            b"type",
-        ],
-    ) -> builtins.bool: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_alias",
-            b"_alias",
-            "_const",
-            b"_const",
-            "_description",
-            b"_description",
-            "_enable",
-            b"_enable",
-            "_extra",
-            b"_extra",
-            "_field",
-            b"_field",
-            "_ge",
-            b"_ge",
-            "_gt",
-            b"_gt",
-            "_le",
-            b"_le",
-            "_lt",
-            b"_lt",
-            "_multiple_of",
-            b"_multiple_of",
-            "_title",
-            b"_title",
-            "_type",
-            b"_type",
-            "alias",
-            b"alias",
-            "const",
-            b"const",
-            "default",
-            b"default",
-            "default_config",
-            b"default_config",
-            "default_factory",
-            b"default_factory",
-            "description",
-            b"description",
-            "enable",
-            b"enable",
-            "example",
-            b"example",
-            "example_config",
-            b"example_config",
-            "example_factory",
-            b"example_factory",
-            "extra",
-            b"extra",
-            "field",
-            b"field",
-            "ge",
-            b"ge",
-            "gt",
-            b"gt",
-            "in",
-            b"in",
-            "le",
-            b"le",
-            "lt",
-            b"lt",
-            "miss_default",
-            b"miss_default",
-            "multiple_of",
-            b"multiple_of",
-            "not_in",
-            b"not_in",
-            "title",
-            b"title",
-            "type",
-            b"type",
-        ],
-    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_alias", b"_alias", "_const", b"_const", "_description", b"_description", "_enable", b"_enable", "_extra", b"_extra", "_field", b"_field", "_ge", b"_ge", "_gt", b"_gt", "_le", b"_le", "_lt", b"_lt", "_multiple_of", b"_multiple_of", "_title", b"_title", "_type", b"_type", "alias", b"alias", "const", b"const", "default", b"default", "default_config", b"default_config", "default_factory", b"default_factory", "description", b"description", "enable", b"enable", "example", b"example", "example_config", b"example_config", "example_factory", b"example_factory", "extra", b"extra", "field", b"field", "ge", b"ge", "gt", b"gt", "le", b"le", "lt", b"lt", "miss_default", b"miss_default", "multiple_of", b"multiple_of", "title", b"title", "type", b"type"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_alias", b"_alias", "_const", b"_const", "_description", b"_description", "_enable", b"_enable", "_extra", b"_extra", "_field", b"_field", "_ge", b"_ge", "_gt", b"_gt", "_le", b"_le", "_lt", b"_lt", "_multiple_of", b"_multiple_of", "_title", b"_title", "_type", b"_type", "alias", b"alias", "const", b"const", "default", b"default", "default_config", b"default_config", "default_factory", b"default_factory", "description", b"description", "enable", b"enable", "example", b"example", "example_config", b"example_config", "example_factory", b"example_factory", "extra", b"extra", "field", b"field", "ge", b"ge", "gt", b"gt", "in", b"in", "le", b"le", "lt", b"lt", "miss_default", b"miss_default", "multiple_of", b"multiple_of", "not_in", b"not_in", "title", b"title", "type", b"type"]) -> None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_alias", b"_alias"]
-    ) -> typing_extensions.Literal["alias"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_alias", b"_alias"]) -> typing_extensions.Literal["alias"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_const", b"_const"]
-    ) -> typing_extensions.Literal["const"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_const", b"_const"]) -> typing_extensions.Literal["const"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_description", b"_description"]
-    ) -> typing_extensions.Literal["description"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_description", b"_description"]) -> typing_extensions.Literal["description"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]
-    ) -> typing_extensions.Literal["enable"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]) -> typing_extensions.Literal["enable"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]
-    ) -> typing_extensions.Literal["extra"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]) -> typing_extensions.Literal["extra"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_field", b"_field"]
-    ) -> typing_extensions.Literal["field"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_field", b"_field"]) -> typing_extensions.Literal["field"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_ge", b"_ge"]
-    ) -> typing_extensions.Literal["ge"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_ge", b"_ge"]) -> typing_extensions.Literal["ge"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_gt", b"_gt"]
-    ) -> typing_extensions.Literal["gt"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_gt", b"_gt"]) -> typing_extensions.Literal["gt"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_le", b"_le"]
-    ) -> typing_extensions.Literal["le"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_le", b"_le"]) -> typing_extensions.Literal["le"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_lt", b"_lt"]
-    ) -> typing_extensions.Literal["lt"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_lt", b"_lt"]) -> typing_extensions.Literal["lt"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_multiple_of", b"_multiple_of"]
-    ) -> typing_extensions.Literal["multiple_of"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_multiple_of", b"_multiple_of"]) -> typing_extensions.Literal["multiple_of"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_title", b"_title"]
-    ) -> typing_extensions.Literal["title"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_title", b"_title"]) -> typing_extensions.Literal["title"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_type", b"_type"]
-    ) -> typing_extensions.Literal["type"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_type", b"_type"]) -> typing_extensions.Literal["type"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["default_config", b"default_config"]
-    ) -> typing_extensions.Literal["default", "default_factory", "miss_default"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["default_config", b"default_config"]) -> typing_extensions.Literal["default", "default_factory", "miss_default"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["example_config", b"example_config"]
-    ) -> typing_extensions.Literal["example", "example_factory"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["example_config", b"example_config"]) -> typing_extensions.Literal["example", "example_factory"] | None: ...
 
 global___SInt32Rules = SInt32Rules
 
@@ -2552,212 +1201,38 @@ class SInt64Rules(google.protobuf.message.Message):
         title: builtins.str | None = ...,
         extra: builtins.str | None = ...,
     ) -> None: ...
-    def HasField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_alias",
-            b"_alias",
-            "_const",
-            b"_const",
-            "_description",
-            b"_description",
-            "_enable",
-            b"_enable",
-            "_extra",
-            b"_extra",
-            "_field",
-            b"_field",
-            "_ge",
-            b"_ge",
-            "_gt",
-            b"_gt",
-            "_le",
-            b"_le",
-            "_lt",
-            b"_lt",
-            "_multiple_of",
-            b"_multiple_of",
-            "_title",
-            b"_title",
-            "_type",
-            b"_type",
-            "alias",
-            b"alias",
-            "const",
-            b"const",
-            "default",
-            b"default",
-            "default_config",
-            b"default_config",
-            "default_factory",
-            b"default_factory",
-            "description",
-            b"description",
-            "enable",
-            b"enable",
-            "example",
-            b"example",
-            "example_config",
-            b"example_config",
-            "example_factory",
-            b"example_factory",
-            "extra",
-            b"extra",
-            "field",
-            b"field",
-            "ge",
-            b"ge",
-            "gt",
-            b"gt",
-            "le",
-            b"le",
-            "lt",
-            b"lt",
-            "miss_default",
-            b"miss_default",
-            "multiple_of",
-            b"multiple_of",
-            "title",
-            b"title",
-            "type",
-            b"type",
-        ],
-    ) -> builtins.bool: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_alias",
-            b"_alias",
-            "_const",
-            b"_const",
-            "_description",
-            b"_description",
-            "_enable",
-            b"_enable",
-            "_extra",
-            b"_extra",
-            "_field",
-            b"_field",
-            "_ge",
-            b"_ge",
-            "_gt",
-            b"_gt",
-            "_le",
-            b"_le",
-            "_lt",
-            b"_lt",
-            "_multiple_of",
-            b"_multiple_of",
-            "_title",
-            b"_title",
-            "_type",
-            b"_type",
-            "alias",
-            b"alias",
-            "const",
-            b"const",
-            "default",
-            b"default",
-            "default_config",
-            b"default_config",
-            "default_factory",
-            b"default_factory",
-            "description",
-            b"description",
-            "enable",
-            b"enable",
-            "example",
-            b"example",
-            "example_config",
-            b"example_config",
-            "example_factory",
-            b"example_factory",
-            "extra",
-            b"extra",
-            "field",
-            b"field",
-            "ge",
-            b"ge",
-            "gt",
-            b"gt",
-            "in",
-            b"in",
-            "le",
-            b"le",
-            "lt",
-            b"lt",
-            "miss_default",
-            b"miss_default",
-            "multiple_of",
-            b"multiple_of",
-            "not_in",
-            b"not_in",
-            "title",
-            b"title",
-            "type",
-            b"type",
-        ],
-    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_alias", b"_alias", "_const", b"_const", "_description", b"_description", "_enable", b"_enable", "_extra", b"_extra", "_field", b"_field", "_ge", b"_ge", "_gt", b"_gt", "_le", b"_le", "_lt", b"_lt", "_multiple_of", b"_multiple_of", "_title", b"_title", "_type", b"_type", "alias", b"alias", "const", b"const", "default", b"default", "default_config", b"default_config", "default_factory", b"default_factory", "description", b"description", "enable", b"enable", "example", b"example", "example_config", b"example_config", "example_factory", b"example_factory", "extra", b"extra", "field", b"field", "ge", b"ge", "gt", b"gt", "le", b"le", "lt", b"lt", "miss_default", b"miss_default", "multiple_of", b"multiple_of", "title", b"title", "type", b"type"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_alias", b"_alias", "_const", b"_const", "_description", b"_description", "_enable", b"_enable", "_extra", b"_extra", "_field", b"_field", "_ge", b"_ge", "_gt", b"_gt", "_le", b"_le", "_lt", b"_lt", "_multiple_of", b"_multiple_of", "_title", b"_title", "_type", b"_type", "alias", b"alias", "const", b"const", "default", b"default", "default_config", b"default_config", "default_factory", b"default_factory", "description", b"description", "enable", b"enable", "example", b"example", "example_config", b"example_config", "example_factory", b"example_factory", "extra", b"extra", "field", b"field", "ge", b"ge", "gt", b"gt", "in", b"in", "le", b"le", "lt", b"lt", "miss_default", b"miss_default", "multiple_of", b"multiple_of", "not_in", b"not_in", "title", b"title", "type", b"type"]) -> None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_alias", b"_alias"]
-    ) -> typing_extensions.Literal["alias"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_alias", b"_alias"]) -> typing_extensions.Literal["alias"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_const", b"_const"]
-    ) -> typing_extensions.Literal["const"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_const", b"_const"]) -> typing_extensions.Literal["const"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_description", b"_description"]
-    ) -> typing_extensions.Literal["description"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_description", b"_description"]) -> typing_extensions.Literal["description"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]
-    ) -> typing_extensions.Literal["enable"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]) -> typing_extensions.Literal["enable"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]
-    ) -> typing_extensions.Literal["extra"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]) -> typing_extensions.Literal["extra"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_field", b"_field"]
-    ) -> typing_extensions.Literal["field"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_field", b"_field"]) -> typing_extensions.Literal["field"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_ge", b"_ge"]
-    ) -> typing_extensions.Literal["ge"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_ge", b"_ge"]) -> typing_extensions.Literal["ge"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_gt", b"_gt"]
-    ) -> typing_extensions.Literal["gt"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_gt", b"_gt"]) -> typing_extensions.Literal["gt"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_le", b"_le"]
-    ) -> typing_extensions.Literal["le"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_le", b"_le"]) -> typing_extensions.Literal["le"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_lt", b"_lt"]
-    ) -> typing_extensions.Literal["lt"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_lt", b"_lt"]) -> typing_extensions.Literal["lt"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_multiple_of", b"_multiple_of"]
-    ) -> typing_extensions.Literal["multiple_of"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_multiple_of", b"_multiple_of"]) -> typing_extensions.Literal["multiple_of"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_title", b"_title"]
-    ) -> typing_extensions.Literal["title"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_title", b"_title"]) -> typing_extensions.Literal["title"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_type", b"_type"]
-    ) -> typing_extensions.Literal["type"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_type", b"_type"]) -> typing_extensions.Literal["type"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["default_config", b"default_config"]
-    ) -> typing_extensions.Literal["default", "default_factory", "miss_default"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["default_config", b"default_config"]) -> typing_extensions.Literal["default", "default_factory", "miss_default"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["example_config", b"example_config"]
-    ) -> typing_extensions.Literal["example", "example_factory"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["example_config", b"example_config"]) -> typing_extensions.Literal["example", "example_factory"] | None: ...
 
 global___SInt64Rules = SInt64Rules
 
@@ -2864,212 +1339,38 @@ class Fixed32Rules(google.protobuf.message.Message):
         title: builtins.str | None = ...,
         extra: builtins.str | None = ...,
     ) -> None: ...
-    def HasField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_alias",
-            b"_alias",
-            "_const",
-            b"_const",
-            "_description",
-            b"_description",
-            "_enable",
-            b"_enable",
-            "_extra",
-            b"_extra",
-            "_field",
-            b"_field",
-            "_ge",
-            b"_ge",
-            "_gt",
-            b"_gt",
-            "_le",
-            b"_le",
-            "_lt",
-            b"_lt",
-            "_multiple_of",
-            b"_multiple_of",
-            "_title",
-            b"_title",
-            "_type",
-            b"_type",
-            "alias",
-            b"alias",
-            "const",
-            b"const",
-            "default",
-            b"default",
-            "default_config",
-            b"default_config",
-            "default_factory",
-            b"default_factory",
-            "description",
-            b"description",
-            "enable",
-            b"enable",
-            "example",
-            b"example",
-            "example_config",
-            b"example_config",
-            "example_factory",
-            b"example_factory",
-            "extra",
-            b"extra",
-            "field",
-            b"field",
-            "ge",
-            b"ge",
-            "gt",
-            b"gt",
-            "le",
-            b"le",
-            "lt",
-            b"lt",
-            "miss_default",
-            b"miss_default",
-            "multiple_of",
-            b"multiple_of",
-            "title",
-            b"title",
-            "type",
-            b"type",
-        ],
-    ) -> builtins.bool: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_alias",
-            b"_alias",
-            "_const",
-            b"_const",
-            "_description",
-            b"_description",
-            "_enable",
-            b"_enable",
-            "_extra",
-            b"_extra",
-            "_field",
-            b"_field",
-            "_ge",
-            b"_ge",
-            "_gt",
-            b"_gt",
-            "_le",
-            b"_le",
-            "_lt",
-            b"_lt",
-            "_multiple_of",
-            b"_multiple_of",
-            "_title",
-            b"_title",
-            "_type",
-            b"_type",
-            "alias",
-            b"alias",
-            "const",
-            b"const",
-            "default",
-            b"default",
-            "default_config",
-            b"default_config",
-            "default_factory",
-            b"default_factory",
-            "description",
-            b"description",
-            "enable",
-            b"enable",
-            "example",
-            b"example",
-            "example_config",
-            b"example_config",
-            "example_factory",
-            b"example_factory",
-            "extra",
-            b"extra",
-            "field",
-            b"field",
-            "ge",
-            b"ge",
-            "gt",
-            b"gt",
-            "in",
-            b"in",
-            "le",
-            b"le",
-            "lt",
-            b"lt",
-            "miss_default",
-            b"miss_default",
-            "multiple_of",
-            b"multiple_of",
-            "not_in",
-            b"not_in",
-            "title",
-            b"title",
-            "type",
-            b"type",
-        ],
-    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_alias", b"_alias", "_const", b"_const", "_description", b"_description", "_enable", b"_enable", "_extra", b"_extra", "_field", b"_field", "_ge", b"_ge", "_gt", b"_gt", "_le", b"_le", "_lt", b"_lt", "_multiple_of", b"_multiple_of", "_title", b"_title", "_type", b"_type", "alias", b"alias", "const", b"const", "default", b"default", "default_config", b"default_config", "default_factory", b"default_factory", "description", b"description", "enable", b"enable", "example", b"example", "example_config", b"example_config", "example_factory", b"example_factory", "extra", b"extra", "field", b"field", "ge", b"ge", "gt", b"gt", "le", b"le", "lt", b"lt", "miss_default", b"miss_default", "multiple_of", b"multiple_of", "title", b"title", "type", b"type"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_alias", b"_alias", "_const", b"_const", "_description", b"_description", "_enable", b"_enable", "_extra", b"_extra", "_field", b"_field", "_ge", b"_ge", "_gt", b"_gt", "_le", b"_le", "_lt", b"_lt", "_multiple_of", b"_multiple_of", "_title", b"_title", "_type", b"_type", "alias", b"alias", "const", b"const", "default", b"default", "default_config", b"default_config", "default_factory", b"default_factory", "description", b"description", "enable", b"enable", "example", b"example", "example_config", b"example_config", "example_factory", b"example_factory", "extra", b"extra", "field", b"field", "ge", b"ge", "gt", b"gt", "in", b"in", "le", b"le", "lt", b"lt", "miss_default", b"miss_default", "multiple_of", b"multiple_of", "not_in", b"not_in", "title", b"title", "type", b"type"]) -> None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_alias", b"_alias"]
-    ) -> typing_extensions.Literal["alias"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_alias", b"_alias"]) -> typing_extensions.Literal["alias"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_const", b"_const"]
-    ) -> typing_extensions.Literal["const"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_const", b"_const"]) -> typing_extensions.Literal["const"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_description", b"_description"]
-    ) -> typing_extensions.Literal["description"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_description", b"_description"]) -> typing_extensions.Literal["description"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]
-    ) -> typing_extensions.Literal["enable"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]) -> typing_extensions.Literal["enable"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]
-    ) -> typing_extensions.Literal["extra"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]) -> typing_extensions.Literal["extra"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_field", b"_field"]
-    ) -> typing_extensions.Literal["field"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_field", b"_field"]) -> typing_extensions.Literal["field"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_ge", b"_ge"]
-    ) -> typing_extensions.Literal["ge"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_ge", b"_ge"]) -> typing_extensions.Literal["ge"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_gt", b"_gt"]
-    ) -> typing_extensions.Literal["gt"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_gt", b"_gt"]) -> typing_extensions.Literal["gt"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_le", b"_le"]
-    ) -> typing_extensions.Literal["le"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_le", b"_le"]) -> typing_extensions.Literal["le"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_lt", b"_lt"]
-    ) -> typing_extensions.Literal["lt"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_lt", b"_lt"]) -> typing_extensions.Literal["lt"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_multiple_of", b"_multiple_of"]
-    ) -> typing_extensions.Literal["multiple_of"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_multiple_of", b"_multiple_of"]) -> typing_extensions.Literal["multiple_of"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_title", b"_title"]
-    ) -> typing_extensions.Literal["title"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_title", b"_title"]) -> typing_extensions.Literal["title"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_type", b"_type"]
-    ) -> typing_extensions.Literal["type"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_type", b"_type"]) -> typing_extensions.Literal["type"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["default_config", b"default_config"]
-    ) -> typing_extensions.Literal["default", "default_factory", "miss_default"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["default_config", b"default_config"]) -> typing_extensions.Literal["default", "default_factory", "miss_default"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["example_config", b"example_config"]
-    ) -> typing_extensions.Literal["example", "example_factory"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["example_config", b"example_config"]) -> typing_extensions.Literal["example", "example_factory"] | None: ...
 
 global___Fixed32Rules = Fixed32Rules
 
@@ -3176,212 +1477,38 @@ class Fixed64Rules(google.protobuf.message.Message):
         title: builtins.str | None = ...,
         extra: builtins.str | None = ...,
     ) -> None: ...
-    def HasField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_alias",
-            b"_alias",
-            "_const",
-            b"_const",
-            "_description",
-            b"_description",
-            "_enable",
-            b"_enable",
-            "_extra",
-            b"_extra",
-            "_field",
-            b"_field",
-            "_ge",
-            b"_ge",
-            "_gt",
-            b"_gt",
-            "_le",
-            b"_le",
-            "_lt",
-            b"_lt",
-            "_multiple_of",
-            b"_multiple_of",
-            "_title",
-            b"_title",
-            "_type",
-            b"_type",
-            "alias",
-            b"alias",
-            "const",
-            b"const",
-            "default",
-            b"default",
-            "default_config",
-            b"default_config",
-            "default_factory",
-            b"default_factory",
-            "description",
-            b"description",
-            "enable",
-            b"enable",
-            "example",
-            b"example",
-            "example_config",
-            b"example_config",
-            "example_factory",
-            b"example_factory",
-            "extra",
-            b"extra",
-            "field",
-            b"field",
-            "ge",
-            b"ge",
-            "gt",
-            b"gt",
-            "le",
-            b"le",
-            "lt",
-            b"lt",
-            "miss_default",
-            b"miss_default",
-            "multiple_of",
-            b"multiple_of",
-            "title",
-            b"title",
-            "type",
-            b"type",
-        ],
-    ) -> builtins.bool: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_alias",
-            b"_alias",
-            "_const",
-            b"_const",
-            "_description",
-            b"_description",
-            "_enable",
-            b"_enable",
-            "_extra",
-            b"_extra",
-            "_field",
-            b"_field",
-            "_ge",
-            b"_ge",
-            "_gt",
-            b"_gt",
-            "_le",
-            b"_le",
-            "_lt",
-            b"_lt",
-            "_multiple_of",
-            b"_multiple_of",
-            "_title",
-            b"_title",
-            "_type",
-            b"_type",
-            "alias",
-            b"alias",
-            "const",
-            b"const",
-            "default",
-            b"default",
-            "default_config",
-            b"default_config",
-            "default_factory",
-            b"default_factory",
-            "description",
-            b"description",
-            "enable",
-            b"enable",
-            "example",
-            b"example",
-            "example_config",
-            b"example_config",
-            "example_factory",
-            b"example_factory",
-            "extra",
-            b"extra",
-            "field",
-            b"field",
-            "ge",
-            b"ge",
-            "gt",
-            b"gt",
-            "in",
-            b"in",
-            "le",
-            b"le",
-            "lt",
-            b"lt",
-            "miss_default",
-            b"miss_default",
-            "multiple_of",
-            b"multiple_of",
-            "not_in",
-            b"not_in",
-            "title",
-            b"title",
-            "type",
-            b"type",
-        ],
-    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_alias", b"_alias", "_const", b"_const", "_description", b"_description", "_enable", b"_enable", "_extra", b"_extra", "_field", b"_field", "_ge", b"_ge", "_gt", b"_gt", "_le", b"_le", "_lt", b"_lt", "_multiple_of", b"_multiple_of", "_title", b"_title", "_type", b"_type", "alias", b"alias", "const", b"const", "default", b"default", "default_config", b"default_config", "default_factory", b"default_factory", "description", b"description", "enable", b"enable", "example", b"example", "example_config", b"example_config", "example_factory", b"example_factory", "extra", b"extra", "field", b"field", "ge", b"ge", "gt", b"gt", "le", b"le", "lt", b"lt", "miss_default", b"miss_default", "multiple_of", b"multiple_of", "title", b"title", "type", b"type"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_alias", b"_alias", "_const", b"_const", "_description", b"_description", "_enable", b"_enable", "_extra", b"_extra", "_field", b"_field", "_ge", b"_ge", "_gt", b"_gt", "_le", b"_le", "_lt", b"_lt", "_multiple_of", b"_multiple_of", "_title", b"_title", "_type", b"_type", "alias", b"alias", "const", b"const", "default", b"default", "default_config", b"default_config", "default_factory", b"default_factory", "description", b"description", "enable", b"enable", "example", b"example", "example_config", b"example_config", "example_factory", b"example_factory", "extra", b"extra", "field", b"field", "ge", b"ge", "gt", b"gt", "in", b"in", "le", b"le", "lt", b"lt", "miss_default", b"miss_default", "multiple_of", b"multiple_of", "not_in", b"not_in", "title", b"title", "type", b"type"]) -> None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_alias", b"_alias"]
-    ) -> typing_extensions.Literal["alias"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_alias", b"_alias"]) -> typing_extensions.Literal["alias"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_const", b"_const"]
-    ) -> typing_extensions.Literal["const"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_const", b"_const"]) -> typing_extensions.Literal["const"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_description", b"_description"]
-    ) -> typing_extensions.Literal["description"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_description", b"_description"]) -> typing_extensions.Literal["description"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]
-    ) -> typing_extensions.Literal["enable"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]) -> typing_extensions.Literal["enable"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]
-    ) -> typing_extensions.Literal["extra"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]) -> typing_extensions.Literal["extra"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_field", b"_field"]
-    ) -> typing_extensions.Literal["field"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_field", b"_field"]) -> typing_extensions.Literal["field"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_ge", b"_ge"]
-    ) -> typing_extensions.Literal["ge"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_ge", b"_ge"]) -> typing_extensions.Literal["ge"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_gt", b"_gt"]
-    ) -> typing_extensions.Literal["gt"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_gt", b"_gt"]) -> typing_extensions.Literal["gt"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_le", b"_le"]
-    ) -> typing_extensions.Literal["le"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_le", b"_le"]) -> typing_extensions.Literal["le"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_lt", b"_lt"]
-    ) -> typing_extensions.Literal["lt"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_lt", b"_lt"]) -> typing_extensions.Literal["lt"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_multiple_of", b"_multiple_of"]
-    ) -> typing_extensions.Literal["multiple_of"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_multiple_of", b"_multiple_of"]) -> typing_extensions.Literal["multiple_of"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_title", b"_title"]
-    ) -> typing_extensions.Literal["title"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_title", b"_title"]) -> typing_extensions.Literal["title"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_type", b"_type"]
-    ) -> typing_extensions.Literal["type"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_type", b"_type"]) -> typing_extensions.Literal["type"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["default_config", b"default_config"]
-    ) -> typing_extensions.Literal["default", "default_factory", "miss_default"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["default_config", b"default_config"]) -> typing_extensions.Literal["default", "default_factory", "miss_default"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["example_config", b"example_config"]
-    ) -> typing_extensions.Literal["example", "example_factory"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["example_config", b"example_config"]) -> typing_extensions.Literal["example", "example_factory"] | None: ...
 
 global___Fixed64Rules = Fixed64Rules
 
@@ -3488,212 +1615,38 @@ class SFixed32Rules(google.protobuf.message.Message):
         title: builtins.str | None = ...,
         extra: builtins.str | None = ...,
     ) -> None: ...
-    def HasField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_alias",
-            b"_alias",
-            "_const",
-            b"_const",
-            "_description",
-            b"_description",
-            "_enable",
-            b"_enable",
-            "_extra",
-            b"_extra",
-            "_field",
-            b"_field",
-            "_ge",
-            b"_ge",
-            "_gt",
-            b"_gt",
-            "_le",
-            b"_le",
-            "_lt",
-            b"_lt",
-            "_multiple_of",
-            b"_multiple_of",
-            "_title",
-            b"_title",
-            "_type",
-            b"_type",
-            "alias",
-            b"alias",
-            "const",
-            b"const",
-            "default",
-            b"default",
-            "default_config",
-            b"default_config",
-            "default_factory",
-            b"default_factory",
-            "description",
-            b"description",
-            "enable",
-            b"enable",
-            "example",
-            b"example",
-            "example_config",
-            b"example_config",
-            "example_factory",
-            b"example_factory",
-            "extra",
-            b"extra",
-            "field",
-            b"field",
-            "ge",
-            b"ge",
-            "gt",
-            b"gt",
-            "le",
-            b"le",
-            "lt",
-            b"lt",
-            "miss_default",
-            b"miss_default",
-            "multiple_of",
-            b"multiple_of",
-            "title",
-            b"title",
-            "type",
-            b"type",
-        ],
-    ) -> builtins.bool: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_alias",
-            b"_alias",
-            "_const",
-            b"_const",
-            "_description",
-            b"_description",
-            "_enable",
-            b"_enable",
-            "_extra",
-            b"_extra",
-            "_field",
-            b"_field",
-            "_ge",
-            b"_ge",
-            "_gt",
-            b"_gt",
-            "_le",
-            b"_le",
-            "_lt",
-            b"_lt",
-            "_multiple_of",
-            b"_multiple_of",
-            "_title",
-            b"_title",
-            "_type",
-            b"_type",
-            "alias",
-            b"alias",
-            "const",
-            b"const",
-            "default",
-            b"default",
-            "default_config",
-            b"default_config",
-            "default_factory",
-            b"default_factory",
-            "description",
-            b"description",
-            "enable",
-            b"enable",
-            "example",
-            b"example",
-            "example_config",
-            b"example_config",
-            "example_factory",
-            b"example_factory",
-            "extra",
-            b"extra",
-            "field",
-            b"field",
-            "ge",
-            b"ge",
-            "gt",
-            b"gt",
-            "in",
-            b"in",
-            "le",
-            b"le",
-            "lt",
-            b"lt",
-            "miss_default",
-            b"miss_default",
-            "multiple_of",
-            b"multiple_of",
-            "not_in",
-            b"not_in",
-            "title",
-            b"title",
-            "type",
-            b"type",
-        ],
-    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_alias", b"_alias", "_const", b"_const", "_description", b"_description", "_enable", b"_enable", "_extra", b"_extra", "_field", b"_field", "_ge", b"_ge", "_gt", b"_gt", "_le", b"_le", "_lt", b"_lt", "_multiple_of", b"_multiple_of", "_title", b"_title", "_type", b"_type", "alias", b"alias", "const", b"const", "default", b"default", "default_config", b"default_config", "default_factory", b"default_factory", "description", b"description", "enable", b"enable", "example", b"example", "example_config", b"example_config", "example_factory", b"example_factory", "extra", b"extra", "field", b"field", "ge", b"ge", "gt", b"gt", "le", b"le", "lt", b"lt", "miss_default", b"miss_default", "multiple_of", b"multiple_of", "title", b"title", "type", b"type"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_alias", b"_alias", "_const", b"_const", "_description", b"_description", "_enable", b"_enable", "_extra", b"_extra", "_field", b"_field", "_ge", b"_ge", "_gt", b"_gt", "_le", b"_le", "_lt", b"_lt", "_multiple_of", b"_multiple_of", "_title", b"_title", "_type", b"_type", "alias", b"alias", "const", b"const", "default", b"default", "default_config", b"default_config", "default_factory", b"default_factory", "description", b"description", "enable", b"enable", "example", b"example", "example_config", b"example_config", "example_factory", b"example_factory", "extra", b"extra", "field", b"field", "ge", b"ge", "gt", b"gt", "in", b"in", "le", b"le", "lt", b"lt", "miss_default", b"miss_default", "multiple_of", b"multiple_of", "not_in", b"not_in", "title", b"title", "type", b"type"]) -> None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_alias", b"_alias"]
-    ) -> typing_extensions.Literal["alias"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_alias", b"_alias"]) -> typing_extensions.Literal["alias"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_const", b"_const"]
-    ) -> typing_extensions.Literal["const"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_const", b"_const"]) -> typing_extensions.Literal["const"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_description", b"_description"]
-    ) -> typing_extensions.Literal["description"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_description", b"_description"]) -> typing_extensions.Literal["description"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]
-    ) -> typing_extensions.Literal["enable"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]) -> typing_extensions.Literal["enable"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]
-    ) -> typing_extensions.Literal["extra"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]) -> typing_extensions.Literal["extra"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_field", b"_field"]
-    ) -> typing_extensions.Literal["field"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_field", b"_field"]) -> typing_extensions.Literal["field"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_ge", b"_ge"]
-    ) -> typing_extensions.Literal["ge"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_ge", b"_ge"]) -> typing_extensions.Literal["ge"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_gt", b"_gt"]
-    ) -> typing_extensions.Literal["gt"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_gt", b"_gt"]) -> typing_extensions.Literal["gt"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_le", b"_le"]
-    ) -> typing_extensions.Literal["le"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_le", b"_le"]) -> typing_extensions.Literal["le"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_lt", b"_lt"]
-    ) -> typing_extensions.Literal["lt"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_lt", b"_lt"]) -> typing_extensions.Literal["lt"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_multiple_of", b"_multiple_of"]
-    ) -> typing_extensions.Literal["multiple_of"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_multiple_of", b"_multiple_of"]) -> typing_extensions.Literal["multiple_of"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_title", b"_title"]
-    ) -> typing_extensions.Literal["title"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_title", b"_title"]) -> typing_extensions.Literal["title"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_type", b"_type"]
-    ) -> typing_extensions.Literal["type"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_type", b"_type"]) -> typing_extensions.Literal["type"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["default_config", b"default_config"]
-    ) -> typing_extensions.Literal["default", "default_factory", "miss_default"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["default_config", b"default_config"]) -> typing_extensions.Literal["default", "default_factory", "miss_default"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["example_config", b"example_config"]
-    ) -> typing_extensions.Literal["example", "example_factory"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["example_config", b"example_config"]) -> typing_extensions.Literal["example", "example_factory"] | None: ...
 
 global___SFixed32Rules = SFixed32Rules
 
@@ -3800,212 +1753,38 @@ class SFixed64Rules(google.protobuf.message.Message):
         title: builtins.str | None = ...,
         extra: builtins.str | None = ...,
     ) -> None: ...
-    def HasField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_alias",
-            b"_alias",
-            "_const",
-            b"_const",
-            "_description",
-            b"_description",
-            "_enable",
-            b"_enable",
-            "_extra",
-            b"_extra",
-            "_field",
-            b"_field",
-            "_ge",
-            b"_ge",
-            "_gt",
-            b"_gt",
-            "_le",
-            b"_le",
-            "_lt",
-            b"_lt",
-            "_multiple_of",
-            b"_multiple_of",
-            "_title",
-            b"_title",
-            "_type",
-            b"_type",
-            "alias",
-            b"alias",
-            "const",
-            b"const",
-            "default",
-            b"default",
-            "default_config",
-            b"default_config",
-            "default_factory",
-            b"default_factory",
-            "description",
-            b"description",
-            "enable",
-            b"enable",
-            "example",
-            b"example",
-            "example_config",
-            b"example_config",
-            "example_factory",
-            b"example_factory",
-            "extra",
-            b"extra",
-            "field",
-            b"field",
-            "ge",
-            b"ge",
-            "gt",
-            b"gt",
-            "le",
-            b"le",
-            "lt",
-            b"lt",
-            "miss_default",
-            b"miss_default",
-            "multiple_of",
-            b"multiple_of",
-            "title",
-            b"title",
-            "type",
-            b"type",
-        ],
-    ) -> builtins.bool: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_alias",
-            b"_alias",
-            "_const",
-            b"_const",
-            "_description",
-            b"_description",
-            "_enable",
-            b"_enable",
-            "_extra",
-            b"_extra",
-            "_field",
-            b"_field",
-            "_ge",
-            b"_ge",
-            "_gt",
-            b"_gt",
-            "_le",
-            b"_le",
-            "_lt",
-            b"_lt",
-            "_multiple_of",
-            b"_multiple_of",
-            "_title",
-            b"_title",
-            "_type",
-            b"_type",
-            "alias",
-            b"alias",
-            "const",
-            b"const",
-            "default",
-            b"default",
-            "default_config",
-            b"default_config",
-            "default_factory",
-            b"default_factory",
-            "description",
-            b"description",
-            "enable",
-            b"enable",
-            "example",
-            b"example",
-            "example_config",
-            b"example_config",
-            "example_factory",
-            b"example_factory",
-            "extra",
-            b"extra",
-            "field",
-            b"field",
-            "ge",
-            b"ge",
-            "gt",
-            b"gt",
-            "in",
-            b"in",
-            "le",
-            b"le",
-            "lt",
-            b"lt",
-            "miss_default",
-            b"miss_default",
-            "multiple_of",
-            b"multiple_of",
-            "not_in",
-            b"not_in",
-            "title",
-            b"title",
-            "type",
-            b"type",
-        ],
-    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_alias", b"_alias", "_const", b"_const", "_description", b"_description", "_enable", b"_enable", "_extra", b"_extra", "_field", b"_field", "_ge", b"_ge", "_gt", b"_gt", "_le", b"_le", "_lt", b"_lt", "_multiple_of", b"_multiple_of", "_title", b"_title", "_type", b"_type", "alias", b"alias", "const", b"const", "default", b"default", "default_config", b"default_config", "default_factory", b"default_factory", "description", b"description", "enable", b"enable", "example", b"example", "example_config", b"example_config", "example_factory", b"example_factory", "extra", b"extra", "field", b"field", "ge", b"ge", "gt", b"gt", "le", b"le", "lt", b"lt", "miss_default", b"miss_default", "multiple_of", b"multiple_of", "title", b"title", "type", b"type"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_alias", b"_alias", "_const", b"_const", "_description", b"_description", "_enable", b"_enable", "_extra", b"_extra", "_field", b"_field", "_ge", b"_ge", "_gt", b"_gt", "_le", b"_le", "_lt", b"_lt", "_multiple_of", b"_multiple_of", "_title", b"_title", "_type", b"_type", "alias", b"alias", "const", b"const", "default", b"default", "default_config", b"default_config", "default_factory", b"default_factory", "description", b"description", "enable", b"enable", "example", b"example", "example_config", b"example_config", "example_factory", b"example_factory", "extra", b"extra", "field", b"field", "ge", b"ge", "gt", b"gt", "in", b"in", "le", b"le", "lt", b"lt", "miss_default", b"miss_default", "multiple_of", b"multiple_of", "not_in", b"not_in", "title", b"title", "type", b"type"]) -> None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_alias", b"_alias"]
-    ) -> typing_extensions.Literal["alias"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_alias", b"_alias"]) -> typing_extensions.Literal["alias"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_const", b"_const"]
-    ) -> typing_extensions.Literal["const"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_const", b"_const"]) -> typing_extensions.Literal["const"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_description", b"_description"]
-    ) -> typing_extensions.Literal["description"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_description", b"_description"]) -> typing_extensions.Literal["description"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]
-    ) -> typing_extensions.Literal["enable"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]) -> typing_extensions.Literal["enable"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]
-    ) -> typing_extensions.Literal["extra"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]) -> typing_extensions.Literal["extra"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_field", b"_field"]
-    ) -> typing_extensions.Literal["field"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_field", b"_field"]) -> typing_extensions.Literal["field"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_ge", b"_ge"]
-    ) -> typing_extensions.Literal["ge"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_ge", b"_ge"]) -> typing_extensions.Literal["ge"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_gt", b"_gt"]
-    ) -> typing_extensions.Literal["gt"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_gt", b"_gt"]) -> typing_extensions.Literal["gt"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_le", b"_le"]
-    ) -> typing_extensions.Literal["le"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_le", b"_le"]) -> typing_extensions.Literal["le"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_lt", b"_lt"]
-    ) -> typing_extensions.Literal["lt"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_lt", b"_lt"]) -> typing_extensions.Literal["lt"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_multiple_of", b"_multiple_of"]
-    ) -> typing_extensions.Literal["multiple_of"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_multiple_of", b"_multiple_of"]) -> typing_extensions.Literal["multiple_of"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_title", b"_title"]
-    ) -> typing_extensions.Literal["title"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_title", b"_title"]) -> typing_extensions.Literal["title"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_type", b"_type"]
-    ) -> typing_extensions.Literal["type"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_type", b"_type"]) -> typing_extensions.Literal["type"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["default_config", b"default_config"]
-    ) -> typing_extensions.Literal["default", "default_factory", "miss_default"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["default_config", b"default_config"]) -> typing_extensions.Literal["default", "default_factory", "miss_default"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["example_config", b"example_config"]
-    ) -> typing_extensions.Literal["example", "example_factory"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["example_config", b"example_config"]) -> typing_extensions.Literal["example", "example_factory"] | None: ...
 
 global___SFixed64Rules = SFixed64Rules
 
@@ -4064,140 +1843,28 @@ class BoolRules(google.protobuf.message.Message):
         title: builtins.str | None = ...,
         extra: builtins.str | None = ...,
     ) -> None: ...
-    def HasField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_alias",
-            b"_alias",
-            "_const",
-            b"_const",
-            "_description",
-            b"_description",
-            "_enable",
-            b"_enable",
-            "_example",
-            b"_example",
-            "_extra",
-            b"_extra",
-            "_field",
-            b"_field",
-            "_title",
-            b"_title",
-            "_type",
-            b"_type",
-            "alias",
-            b"alias",
-            "const",
-            b"const",
-            "default",
-            b"default",
-            "default_config",
-            b"default_config",
-            "description",
-            b"description",
-            "enable",
-            b"enable",
-            "example",
-            b"example",
-            "extra",
-            b"extra",
-            "field",
-            b"field",
-            "miss_default",
-            b"miss_default",
-            "title",
-            b"title",
-            "type",
-            b"type",
-        ],
-    ) -> builtins.bool: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_alias",
-            b"_alias",
-            "_const",
-            b"_const",
-            "_description",
-            b"_description",
-            "_enable",
-            b"_enable",
-            "_example",
-            b"_example",
-            "_extra",
-            b"_extra",
-            "_field",
-            b"_field",
-            "_title",
-            b"_title",
-            "_type",
-            b"_type",
-            "alias",
-            b"alias",
-            "const",
-            b"const",
-            "default",
-            b"default",
-            "default_config",
-            b"default_config",
-            "description",
-            b"description",
-            "enable",
-            b"enable",
-            "example",
-            b"example",
-            "extra",
-            b"extra",
-            "field",
-            b"field",
-            "miss_default",
-            b"miss_default",
-            "title",
-            b"title",
-            "type",
-            b"type",
-        ],
-    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_alias", b"_alias", "_const", b"_const", "_description", b"_description", "_enable", b"_enable", "_example", b"_example", "_extra", b"_extra", "_field", b"_field", "_title", b"_title", "_type", b"_type", "alias", b"alias", "const", b"const", "default", b"default", "default_config", b"default_config", "description", b"description", "enable", b"enable", "example", b"example", "extra", b"extra", "field", b"field", "miss_default", b"miss_default", "title", b"title", "type", b"type"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_alias", b"_alias", "_const", b"_const", "_description", b"_description", "_enable", b"_enable", "_example", b"_example", "_extra", b"_extra", "_field", b"_field", "_title", b"_title", "_type", b"_type", "alias", b"alias", "const", b"const", "default", b"default", "default_config", b"default_config", "description", b"description", "enable", b"enable", "example", b"example", "extra", b"extra", "field", b"field", "miss_default", b"miss_default", "title", b"title", "type", b"type"]) -> None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_alias", b"_alias"]
-    ) -> typing_extensions.Literal["alias"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_alias", b"_alias"]) -> typing_extensions.Literal["alias"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_const", b"_const"]
-    ) -> typing_extensions.Literal["const"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_const", b"_const"]) -> typing_extensions.Literal["const"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_description", b"_description"]
-    ) -> typing_extensions.Literal["description"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_description", b"_description"]) -> typing_extensions.Literal["description"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]
-    ) -> typing_extensions.Literal["enable"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]) -> typing_extensions.Literal["enable"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_example", b"_example"]
-    ) -> typing_extensions.Literal["example"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_example", b"_example"]) -> typing_extensions.Literal["example"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]
-    ) -> typing_extensions.Literal["extra"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]) -> typing_extensions.Literal["extra"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_field", b"_field"]
-    ) -> typing_extensions.Literal["field"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_field", b"_field"]) -> typing_extensions.Literal["field"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_title", b"_title"]
-    ) -> typing_extensions.Literal["title"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_title", b"_title"]) -> typing_extensions.Literal["title"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_type", b"_type"]
-    ) -> typing_extensions.Literal["type"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_type", b"_type"]) -> typing_extensions.Literal["type"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["default_config", b"default_config"]
-    ) -> typing_extensions.Literal["default", "miss_default"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["default_config", b"default_config"]) -> typing_extensions.Literal["default", "miss_default"] | None: ...
 
 global___BoolRules = BoolRules
 
@@ -4387,301 +2054,46 @@ class StringRules(google.protobuf.message.Message):
         title: builtins.str | None = ...,
         extra: builtins.str | None = ...,
     ) -> None: ...
-    def HasField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_alias",
-            b"_alias",
-            "_const",
-            b"_const",
-            "_contains",
-            b"_contains",
-            "_description",
-            b"_description",
-            "_enable",
-            b"_enable",
-            "_extra",
-            b"_extra",
-            "_field",
-            b"_field",
-            "_len",
-            b"_len",
-            "_max_length",
-            b"_max_length",
-            "_min_length",
-            b"_min_length",
-            "_not_contains",
-            b"_not_contains",
-            "_pattern",
-            b"_pattern",
-            "_prefix",
-            b"_prefix",
-            "_suffix",
-            b"_suffix",
-            "_title",
-            b"_title",
-            "_type",
-            b"_type",
-            "address",
-            b"address",
-            "alias",
-            b"alias",
-            "const",
-            b"const",
-            "contains",
-            b"contains",
-            "default",
-            b"default",
-            "default_config",
-            b"default_config",
-            "default_factory",
-            b"default_factory",
-            "description",
-            b"description",
-            "email",
-            b"email",
-            "enable",
-            b"enable",
-            "example",
-            b"example",
-            "example_config",
-            b"example_config",
-            "example_factory",
-            b"example_factory",
-            "extra",
-            b"extra",
-            "field",
-            b"field",
-            "hostname",
-            b"hostname",
-            "ip",
-            b"ip",
-            "ipv4",
-            b"ipv4",
-            "ipv6",
-            b"ipv6",
-            "len",
-            b"len",
-            "max_length",
-            b"max_length",
-            "min_length",
-            b"min_length",
-            "miss_default",
-            b"miss_default",
-            "not_contains",
-            b"not_contains",
-            "pattern",
-            b"pattern",
-            "prefix",
-            b"prefix",
-            "pydantic_type",
-            b"pydantic_type",
-            "suffix",
-            b"suffix",
-            "title",
-            b"title",
-            "type",
-            b"type",
-            "uri",
-            b"uri",
-            "uri_ref",
-            b"uri_ref",
-            "uuid",
-            b"uuid",
-            "well_known",
-            b"well_known",
-        ],
-    ) -> builtins.bool: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_alias",
-            b"_alias",
-            "_const",
-            b"_const",
-            "_contains",
-            b"_contains",
-            "_description",
-            b"_description",
-            "_enable",
-            b"_enable",
-            "_extra",
-            b"_extra",
-            "_field",
-            b"_field",
-            "_len",
-            b"_len",
-            "_max_length",
-            b"_max_length",
-            "_min_length",
-            b"_min_length",
-            "_not_contains",
-            b"_not_contains",
-            "_pattern",
-            b"_pattern",
-            "_prefix",
-            b"_prefix",
-            "_suffix",
-            b"_suffix",
-            "_title",
-            b"_title",
-            "_type",
-            b"_type",
-            "address",
-            b"address",
-            "alias",
-            b"alias",
-            "const",
-            b"const",
-            "contains",
-            b"contains",
-            "default",
-            b"default",
-            "default_config",
-            b"default_config",
-            "default_factory",
-            b"default_factory",
-            "description",
-            b"description",
-            "email",
-            b"email",
-            "enable",
-            b"enable",
-            "example",
-            b"example",
-            "example_config",
-            b"example_config",
-            "example_factory",
-            b"example_factory",
-            "extra",
-            b"extra",
-            "field",
-            b"field",
-            "hostname",
-            b"hostname",
-            "in",
-            b"in",
-            "ip",
-            b"ip",
-            "ipv4",
-            b"ipv4",
-            "ipv6",
-            b"ipv6",
-            "len",
-            b"len",
-            "max_length",
-            b"max_length",
-            "min_length",
-            b"min_length",
-            "miss_default",
-            b"miss_default",
-            "not_contains",
-            b"not_contains",
-            "not_in",
-            b"not_in",
-            "pattern",
-            b"pattern",
-            "prefix",
-            b"prefix",
-            "pydantic_type",
-            b"pydantic_type",
-            "suffix",
-            b"suffix",
-            "title",
-            b"title",
-            "type",
-            b"type",
-            "uri",
-            b"uri",
-            "uri_ref",
-            b"uri_ref",
-            "uuid",
-            b"uuid",
-            "well_known",
-            b"well_known",
-        ],
-    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_alias", b"_alias", "_const", b"_const", "_contains", b"_contains", "_description", b"_description", "_enable", b"_enable", "_extra", b"_extra", "_field", b"_field", "_len", b"_len", "_max_length", b"_max_length", "_min_length", b"_min_length", "_not_contains", b"_not_contains", "_pattern", b"_pattern", "_prefix", b"_prefix", "_suffix", b"_suffix", "_title", b"_title", "_type", b"_type", "address", b"address", "alias", b"alias", "const", b"const", "contains", b"contains", "default", b"default", "default_config", b"default_config", "default_factory", b"default_factory", "description", b"description", "email", b"email", "enable", b"enable", "example", b"example", "example_config", b"example_config", "example_factory", b"example_factory", "extra", b"extra", "field", b"field", "hostname", b"hostname", "ip", b"ip", "ipv4", b"ipv4", "ipv6", b"ipv6", "len", b"len", "max_length", b"max_length", "min_length", b"min_length", "miss_default", b"miss_default", "not_contains", b"not_contains", "pattern", b"pattern", "prefix", b"prefix", "pydantic_type", b"pydantic_type", "suffix", b"suffix", "title", b"title", "type", b"type", "uri", b"uri", "uri_ref", b"uri_ref", "uuid", b"uuid", "well_known", b"well_known"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_alias", b"_alias", "_const", b"_const", "_contains", b"_contains", "_description", b"_description", "_enable", b"_enable", "_extra", b"_extra", "_field", b"_field", "_len", b"_len", "_max_length", b"_max_length", "_min_length", b"_min_length", "_not_contains", b"_not_contains", "_pattern", b"_pattern", "_prefix", b"_prefix", "_suffix", b"_suffix", "_title", b"_title", "_type", b"_type", "address", b"address", "alias", b"alias", "const", b"const", "contains", b"contains", "default", b"default", "default_config", b"default_config", "default_factory", b"default_factory", "description", b"description", "email", b"email", "enable", b"enable", "example", b"example", "example_config", b"example_config", "example_factory", b"example_factory", "extra", b"extra", "field", b"field", "hostname", b"hostname", "in", b"in", "ip", b"ip", "ipv4", b"ipv4", "ipv6", b"ipv6", "len", b"len", "max_length", b"max_length", "min_length", b"min_length", "miss_default", b"miss_default", "not_contains", b"not_contains", "not_in", b"not_in", "pattern", b"pattern", "prefix", b"prefix", "pydantic_type", b"pydantic_type", "suffix", b"suffix", "title", b"title", "type", b"type", "uri", b"uri", "uri_ref", b"uri_ref", "uuid", b"uuid", "well_known", b"well_known"]) -> None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_alias", b"_alias"]
-    ) -> typing_extensions.Literal["alias"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_alias", b"_alias"]) -> typing_extensions.Literal["alias"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_const", b"_const"]
-    ) -> typing_extensions.Literal["const"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_const", b"_const"]) -> typing_extensions.Literal["const"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_contains", b"_contains"]
-    ) -> typing_extensions.Literal["contains"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_contains", b"_contains"]) -> typing_extensions.Literal["contains"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_description", b"_description"]
-    ) -> typing_extensions.Literal["description"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_description", b"_description"]) -> typing_extensions.Literal["description"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]
-    ) -> typing_extensions.Literal["enable"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]) -> typing_extensions.Literal["enable"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]
-    ) -> typing_extensions.Literal["extra"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]) -> typing_extensions.Literal["extra"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_field", b"_field"]
-    ) -> typing_extensions.Literal["field"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_field", b"_field"]) -> typing_extensions.Literal["field"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_len", b"_len"]
-    ) -> typing_extensions.Literal["len"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_len", b"_len"]) -> typing_extensions.Literal["len"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_max_length", b"_max_length"]
-    ) -> typing_extensions.Literal["max_length"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_max_length", b"_max_length"]) -> typing_extensions.Literal["max_length"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_min_length", b"_min_length"]
-    ) -> typing_extensions.Literal["min_length"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_min_length", b"_min_length"]) -> typing_extensions.Literal["min_length"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_not_contains", b"_not_contains"]
-    ) -> typing_extensions.Literal["not_contains"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_not_contains", b"_not_contains"]) -> typing_extensions.Literal["not_contains"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_pattern", b"_pattern"]
-    ) -> typing_extensions.Literal["pattern"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_pattern", b"_pattern"]) -> typing_extensions.Literal["pattern"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_prefix", b"_prefix"]
-    ) -> typing_extensions.Literal["prefix"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_prefix", b"_prefix"]) -> typing_extensions.Literal["prefix"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_suffix", b"_suffix"]
-    ) -> typing_extensions.Literal["suffix"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_suffix", b"_suffix"]) -> typing_extensions.Literal["suffix"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_title", b"_title"]
-    ) -> typing_extensions.Literal["title"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_title", b"_title"]) -> typing_extensions.Literal["title"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_type", b"_type"]
-    ) -> typing_extensions.Literal["type"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_type", b"_type"]) -> typing_extensions.Literal["type"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["default_config", b"default_config"]
-    ) -> typing_extensions.Literal["default", "default_factory", "miss_default"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["default_config", b"default_config"]) -> typing_extensions.Literal["default", "default_factory", "miss_default"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["example_config", b"example_config"]
-    ) -> typing_extensions.Literal["example", "example_factory"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["example_config", b"example_config"]) -> typing_extensions.Literal["example", "example_factory"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["well_known", b"well_known"]
-    ) -> (
-        typing_extensions.Literal[
-            "email", "hostname", "ip", "ipv4", "ipv6", "uri", "uri_ref", "address", "uuid", "pydantic_type"
-        ]
-        | None
-    ): ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["well_known", b"well_known"]) -> typing_extensions.Literal["email", "hostname", "ip", "ipv4", "ipv6", "uri", "uri_ref", "address", "uuid", "pydantic_type"] | None: ...
 
 global___StringRules = StringRules
 
@@ -4810,244 +2222,42 @@ class BytesRules(google.protobuf.message.Message):
         title: builtins.str | None = ...,
         extra: builtins.str | None = ...,
     ) -> None: ...
-    def HasField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_alias",
-            b"_alias",
-            "_const",
-            b"_const",
-            "_contains",
-            b"_contains",
-            "_description",
-            b"_description",
-            "_enable",
-            b"_enable",
-            "_extra",
-            b"_extra",
-            "_field",
-            b"_field",
-            "_max_length",
-            b"_max_length",
-            "_min_length",
-            b"_min_length",
-            "_multiple_of",
-            b"_multiple_of",
-            "_prefix",
-            b"_prefix",
-            "_suffix",
-            b"_suffix",
-            "_title",
-            b"_title",
-            "_type",
-            b"_type",
-            "alias",
-            b"alias",
-            "const",
-            b"const",
-            "contains",
-            b"contains",
-            "default",
-            b"default",
-            "default_config",
-            b"default_config",
-            "default_factory",
-            b"default_factory",
-            "description",
-            b"description",
-            "enable",
-            b"enable",
-            "example",
-            b"example",
-            "example_config",
-            b"example_config",
-            "example_factory",
-            b"example_factory",
-            "extra",
-            b"extra",
-            "field",
-            b"field",
-            "ip",
-            b"ip",
-            "ipv4",
-            b"ipv4",
-            "ipv6",
-            b"ipv6",
-            "max_length",
-            b"max_length",
-            "min_length",
-            b"min_length",
-            "miss_default",
-            b"miss_default",
-            "multiple_of",
-            b"multiple_of",
-            "prefix",
-            b"prefix",
-            "suffix",
-            b"suffix",
-            "title",
-            b"title",
-            "type",
-            b"type",
-            "well_known",
-            b"well_known",
-        ],
-    ) -> builtins.bool: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_alias",
-            b"_alias",
-            "_const",
-            b"_const",
-            "_contains",
-            b"_contains",
-            "_description",
-            b"_description",
-            "_enable",
-            b"_enable",
-            "_extra",
-            b"_extra",
-            "_field",
-            b"_field",
-            "_max_length",
-            b"_max_length",
-            "_min_length",
-            b"_min_length",
-            "_multiple_of",
-            b"_multiple_of",
-            "_prefix",
-            b"_prefix",
-            "_suffix",
-            b"_suffix",
-            "_title",
-            b"_title",
-            "_type",
-            b"_type",
-            "alias",
-            b"alias",
-            "const",
-            b"const",
-            "contains",
-            b"contains",
-            "default",
-            b"default",
-            "default_config",
-            b"default_config",
-            "default_factory",
-            b"default_factory",
-            "description",
-            b"description",
-            "enable",
-            b"enable",
-            "example",
-            b"example",
-            "example_config",
-            b"example_config",
-            "example_factory",
-            b"example_factory",
-            "extra",
-            b"extra",
-            "field",
-            b"field",
-            "in",
-            b"in",
-            "ip",
-            b"ip",
-            "ipv4",
-            b"ipv4",
-            "ipv6",
-            b"ipv6",
-            "max_length",
-            b"max_length",
-            "min_length",
-            b"min_length",
-            "miss_default",
-            b"miss_default",
-            "multiple_of",
-            b"multiple_of",
-            "not_in",
-            b"not_in",
-            "prefix",
-            b"prefix",
-            "suffix",
-            b"suffix",
-            "title",
-            b"title",
-            "type",
-            b"type",
-            "well_known",
-            b"well_known",
-        ],
-    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_alias", b"_alias", "_const", b"_const", "_contains", b"_contains", "_description", b"_description", "_enable", b"_enable", "_extra", b"_extra", "_field", b"_field", "_max_length", b"_max_length", "_min_length", b"_min_length", "_multiple_of", b"_multiple_of", "_prefix", b"_prefix", "_suffix", b"_suffix", "_title", b"_title", "_type", b"_type", "alias", b"alias", "const", b"const", "contains", b"contains", "default", b"default", "default_config", b"default_config", "default_factory", b"default_factory", "description", b"description", "enable", b"enable", "example", b"example", "example_config", b"example_config", "example_factory", b"example_factory", "extra", b"extra", "field", b"field", "ip", b"ip", "ipv4", b"ipv4", "ipv6", b"ipv6", "max_length", b"max_length", "min_length", b"min_length", "miss_default", b"miss_default", "multiple_of", b"multiple_of", "prefix", b"prefix", "suffix", b"suffix", "title", b"title", "type", b"type", "well_known", b"well_known"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_alias", b"_alias", "_const", b"_const", "_contains", b"_contains", "_description", b"_description", "_enable", b"_enable", "_extra", b"_extra", "_field", b"_field", "_max_length", b"_max_length", "_min_length", b"_min_length", "_multiple_of", b"_multiple_of", "_prefix", b"_prefix", "_suffix", b"_suffix", "_title", b"_title", "_type", b"_type", "alias", b"alias", "const", b"const", "contains", b"contains", "default", b"default", "default_config", b"default_config", "default_factory", b"default_factory", "description", b"description", "enable", b"enable", "example", b"example", "example_config", b"example_config", "example_factory", b"example_factory", "extra", b"extra", "field", b"field", "in", b"in", "ip", b"ip", "ipv4", b"ipv4", "ipv6", b"ipv6", "max_length", b"max_length", "min_length", b"min_length", "miss_default", b"miss_default", "multiple_of", b"multiple_of", "not_in", b"not_in", "prefix", b"prefix", "suffix", b"suffix", "title", b"title", "type", b"type", "well_known", b"well_known"]) -> None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_alias", b"_alias"]
-    ) -> typing_extensions.Literal["alias"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_alias", b"_alias"]) -> typing_extensions.Literal["alias"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_const", b"_const"]
-    ) -> typing_extensions.Literal["const"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_const", b"_const"]) -> typing_extensions.Literal["const"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_contains", b"_contains"]
-    ) -> typing_extensions.Literal["contains"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_contains", b"_contains"]) -> typing_extensions.Literal["contains"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_description", b"_description"]
-    ) -> typing_extensions.Literal["description"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_description", b"_description"]) -> typing_extensions.Literal["description"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]
-    ) -> typing_extensions.Literal["enable"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]) -> typing_extensions.Literal["enable"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]
-    ) -> typing_extensions.Literal["extra"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]) -> typing_extensions.Literal["extra"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_field", b"_field"]
-    ) -> typing_extensions.Literal["field"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_field", b"_field"]) -> typing_extensions.Literal["field"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_max_length", b"_max_length"]
-    ) -> typing_extensions.Literal["max_length"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_max_length", b"_max_length"]) -> typing_extensions.Literal["max_length"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_min_length", b"_min_length"]
-    ) -> typing_extensions.Literal["min_length"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_min_length", b"_min_length"]) -> typing_extensions.Literal["min_length"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_multiple_of", b"_multiple_of"]
-    ) -> typing_extensions.Literal["multiple_of"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_multiple_of", b"_multiple_of"]) -> typing_extensions.Literal["multiple_of"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_prefix", b"_prefix"]
-    ) -> typing_extensions.Literal["prefix"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_prefix", b"_prefix"]) -> typing_extensions.Literal["prefix"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_suffix", b"_suffix"]
-    ) -> typing_extensions.Literal["suffix"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_suffix", b"_suffix"]) -> typing_extensions.Literal["suffix"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_title", b"_title"]
-    ) -> typing_extensions.Literal["title"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_title", b"_title"]) -> typing_extensions.Literal["title"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_type", b"_type"]
-    ) -> typing_extensions.Literal["type"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_type", b"_type"]) -> typing_extensions.Literal["type"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["default_config", b"default_config"]
-    ) -> typing_extensions.Literal["default", "default_factory", "miss_default"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["default_config", b"default_config"]) -> typing_extensions.Literal["default", "default_factory", "miss_default"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["example_config", b"example_config"]
-    ) -> typing_extensions.Literal["example", "example_factory"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["example_config", b"example_config"]) -> typing_extensions.Literal["example", "example_factory"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["well_known", b"well_known"]
-    ) -> typing_extensions.Literal["ip", "ipv4", "ipv6"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["well_known", b"well_known"]) -> typing_extensions.Literal["ip", "ipv4", "ipv6"] | None: ...
 
 global___BytesRules = BytesRules
 
@@ -5120,140 +2330,26 @@ class EnumRules(google.protobuf.message.Message):
         title: builtins.str | None = ...,
         extra: builtins.str | None = ...,
     ) -> None: ...
-    def HasField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_alias",
-            b"_alias",
-            "_const",
-            b"_const",
-            "_description",
-            b"_description",
-            "_enable",
-            b"_enable",
-            "_extra",
-            b"_extra",
-            "_field",
-            b"_field",
-            "_title",
-            b"_title",
-            "alias",
-            b"alias",
-            "const",
-            b"const",
-            "default",
-            b"default",
-            "default_config",
-            b"default_config",
-            "default_factory",
-            b"default_factory",
-            "description",
-            b"description",
-            "enable",
-            b"enable",
-            "example",
-            b"example",
-            "example_config",
-            b"example_config",
-            "example_factory",
-            b"example_factory",
-            "extra",
-            b"extra",
-            "field",
-            b"field",
-            "miss_default",
-            b"miss_default",
-            "title",
-            b"title",
-        ],
-    ) -> builtins.bool: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_alias",
-            b"_alias",
-            "_const",
-            b"_const",
-            "_description",
-            b"_description",
-            "_enable",
-            b"_enable",
-            "_extra",
-            b"_extra",
-            "_field",
-            b"_field",
-            "_title",
-            b"_title",
-            "alias",
-            b"alias",
-            "const",
-            b"const",
-            "default",
-            b"default",
-            "default_config",
-            b"default_config",
-            "default_factory",
-            b"default_factory",
-            "description",
-            b"description",
-            "enable",
-            b"enable",
-            "example",
-            b"example",
-            "example_config",
-            b"example_config",
-            "example_factory",
-            b"example_factory",
-            "extra",
-            b"extra",
-            "field",
-            b"field",
-            "in",
-            b"in",
-            "miss_default",
-            b"miss_default",
-            "not_in",
-            b"not_in",
-            "title",
-            b"title",
-        ],
-    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_alias", b"_alias", "_const", b"_const", "_description", b"_description", "_enable", b"_enable", "_extra", b"_extra", "_field", b"_field", "_title", b"_title", "alias", b"alias", "const", b"const", "default", b"default", "default_config", b"default_config", "default_factory", b"default_factory", "description", b"description", "enable", b"enable", "example", b"example", "example_config", b"example_config", "example_factory", b"example_factory", "extra", b"extra", "field", b"field", "miss_default", b"miss_default", "title", b"title"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_alias", b"_alias", "_const", b"_const", "_description", b"_description", "_enable", b"_enable", "_extra", b"_extra", "_field", b"_field", "_title", b"_title", "alias", b"alias", "const", b"const", "default", b"default", "default_config", b"default_config", "default_factory", b"default_factory", "description", b"description", "enable", b"enable", "example", b"example", "example_config", b"example_config", "example_factory", b"example_factory", "extra", b"extra", "field", b"field", "in", b"in", "miss_default", b"miss_default", "not_in", b"not_in", "title", b"title"]) -> None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_alias", b"_alias"]
-    ) -> typing_extensions.Literal["alias"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_alias", b"_alias"]) -> typing_extensions.Literal["alias"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_const", b"_const"]
-    ) -> typing_extensions.Literal["const"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_const", b"_const"]) -> typing_extensions.Literal["const"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_description", b"_description"]
-    ) -> typing_extensions.Literal["description"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_description", b"_description"]) -> typing_extensions.Literal["description"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]
-    ) -> typing_extensions.Literal["enable"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]) -> typing_extensions.Literal["enable"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]
-    ) -> typing_extensions.Literal["extra"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]) -> typing_extensions.Literal["extra"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_field", b"_field"]
-    ) -> typing_extensions.Literal["field"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_field", b"_field"]) -> typing_extensions.Literal["field"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_title", b"_title"]
-    ) -> typing_extensions.Literal["title"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_title", b"_title"]) -> typing_extensions.Literal["title"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["default_config", b"default_config"]
-    ) -> typing_extensions.Literal["default", "default_factory", "miss_default"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["default_config", b"default_config"]) -> typing_extensions.Literal["default", "default_factory", "miss_default"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["example_config", b"example_config"]
-    ) -> typing_extensions.Literal["example", "example_factory"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["example_config", b"example_config"]) -> typing_extensions.Literal["example", "example_factory"] | None: ...
 
 global___EnumRules = EnumRules
 
@@ -5330,160 +2426,30 @@ class MessageRules(google.protobuf.message.Message):
         title: builtins.str | None = ...,
         extra: builtins.str | None = ...,
     ) -> None: ...
-    def HasField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_alias",
-            b"_alias",
-            "_description",
-            b"_description",
-            "_enable",
-            b"_enable",
-            "_extra",
-            b"_extra",
-            "_field",
-            b"_field",
-            "_required",
-            b"_required",
-            "_skip",
-            b"_skip",
-            "_title",
-            b"_title",
-            "_type",
-            b"_type",
-            "alias",
-            b"alias",
-            "default",
-            b"default",
-            "default_config",
-            b"default_config",
-            "default_factory",
-            b"default_factory",
-            "description",
-            b"description",
-            "enable",
-            b"enable",
-            "example",
-            b"example",
-            "example_config",
-            b"example_config",
-            "example_factory",
-            b"example_factory",
-            "extra",
-            b"extra",
-            "field",
-            b"field",
-            "miss_default",
-            b"miss_default",
-            "required",
-            b"required",
-            "skip",
-            b"skip",
-            "title",
-            b"title",
-            "type",
-            b"type",
-        ],
-    ) -> builtins.bool: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_alias",
-            b"_alias",
-            "_description",
-            b"_description",
-            "_enable",
-            b"_enable",
-            "_extra",
-            b"_extra",
-            "_field",
-            b"_field",
-            "_required",
-            b"_required",
-            "_skip",
-            b"_skip",
-            "_title",
-            b"_title",
-            "_type",
-            b"_type",
-            "alias",
-            b"alias",
-            "default",
-            b"default",
-            "default_config",
-            b"default_config",
-            "default_factory",
-            b"default_factory",
-            "description",
-            b"description",
-            "enable",
-            b"enable",
-            "example",
-            b"example",
-            "example_config",
-            b"example_config",
-            "example_factory",
-            b"example_factory",
-            "extra",
-            b"extra",
-            "field",
-            b"field",
-            "miss_default",
-            b"miss_default",
-            "required",
-            b"required",
-            "skip",
-            b"skip",
-            "title",
-            b"title",
-            "type",
-            b"type",
-        ],
-    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_alias", b"_alias", "_description", b"_description", "_enable", b"_enable", "_extra", b"_extra", "_field", b"_field", "_required", b"_required", "_skip", b"_skip", "_title", b"_title", "_type", b"_type", "alias", b"alias", "default", b"default", "default_config", b"default_config", "default_factory", b"default_factory", "description", b"description", "enable", b"enable", "example", b"example", "example_config", b"example_config", "example_factory", b"example_factory", "extra", b"extra", "field", b"field", "miss_default", b"miss_default", "required", b"required", "skip", b"skip", "title", b"title", "type", b"type"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_alias", b"_alias", "_description", b"_description", "_enable", b"_enable", "_extra", b"_extra", "_field", b"_field", "_required", b"_required", "_skip", b"_skip", "_title", b"_title", "_type", b"_type", "alias", b"alias", "default", b"default", "default_config", b"default_config", "default_factory", b"default_factory", "description", b"description", "enable", b"enable", "example", b"example", "example_config", b"example_config", "example_factory", b"example_factory", "extra", b"extra", "field", b"field", "miss_default", b"miss_default", "required", b"required", "skip", b"skip", "title", b"title", "type", b"type"]) -> None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_alias", b"_alias"]
-    ) -> typing_extensions.Literal["alias"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_alias", b"_alias"]) -> typing_extensions.Literal["alias"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_description", b"_description"]
-    ) -> typing_extensions.Literal["description"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_description", b"_description"]) -> typing_extensions.Literal["description"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]
-    ) -> typing_extensions.Literal["enable"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]) -> typing_extensions.Literal["enable"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]
-    ) -> typing_extensions.Literal["extra"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]) -> typing_extensions.Literal["extra"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_field", b"_field"]
-    ) -> typing_extensions.Literal["field"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_field", b"_field"]) -> typing_extensions.Literal["field"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_required", b"_required"]
-    ) -> typing_extensions.Literal["required"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_required", b"_required"]) -> typing_extensions.Literal["required"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_skip", b"_skip"]
-    ) -> typing_extensions.Literal["skip"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_skip", b"_skip"]) -> typing_extensions.Literal["skip"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_title", b"_title"]
-    ) -> typing_extensions.Literal["title"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_title", b"_title"]) -> typing_extensions.Literal["title"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_type", b"_type"]
-    ) -> typing_extensions.Literal["type"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_type", b"_type"]) -> typing_extensions.Literal["type"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["default_config", b"default_config"]
-    ) -> typing_extensions.Literal["default", "default_factory", "miss_default"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["default_config", b"default_config"]) -> typing_extensions.Literal["default", "default_factory", "miss_default"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["example_config", b"example_config"]
-    ) -> typing_extensions.Literal["example", "example_factory"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["example_config", b"example_config"]) -> typing_extensions.Literal["example", "example_factory"] | None: ...
 
 global___MessageRules = MessageRules
 
@@ -5565,176 +2531,34 @@ class RepeatedRules(google.protobuf.message.Message):
         title: builtins.str | None = ...,
         extra: builtins.str | None = ...,
     ) -> None: ...
-    def HasField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_alias",
-            b"_alias",
-            "_description",
-            b"_description",
-            "_enable",
-            b"_enable",
-            "_extra",
-            b"_extra",
-            "_field",
-            b"_field",
-            "_items",
-            b"_items",
-            "_max_items",
-            b"_max_items",
-            "_min_items",
-            b"_min_items",
-            "_title",
-            b"_title",
-            "_type",
-            b"_type",
-            "_unique",
-            b"_unique",
-            "alias",
-            b"alias",
-            "default_config",
-            b"default_config",
-            "default_factory",
-            b"default_factory",
-            "description",
-            b"description",
-            "enable",
-            b"enable",
-            "example_config",
-            b"example_config",
-            "example_factory",
-            b"example_factory",
-            "extra",
-            b"extra",
-            "field",
-            b"field",
-            "items",
-            b"items",
-            "max_items",
-            b"max_items",
-            "min_items",
-            b"min_items",
-            "miss_default",
-            b"miss_default",
-            "title",
-            b"title",
-            "type",
-            b"type",
-            "unique",
-            b"unique",
-        ],
-    ) -> builtins.bool: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_alias",
-            b"_alias",
-            "_description",
-            b"_description",
-            "_enable",
-            b"_enable",
-            "_extra",
-            b"_extra",
-            "_field",
-            b"_field",
-            "_items",
-            b"_items",
-            "_max_items",
-            b"_max_items",
-            "_min_items",
-            b"_min_items",
-            "_title",
-            b"_title",
-            "_type",
-            b"_type",
-            "_unique",
-            b"_unique",
-            "alias",
-            b"alias",
-            "default_config",
-            b"default_config",
-            "default_factory",
-            b"default_factory",
-            "description",
-            b"description",
-            "enable",
-            b"enable",
-            "example_config",
-            b"example_config",
-            "example_factory",
-            b"example_factory",
-            "extra",
-            b"extra",
-            "field",
-            b"field",
-            "items",
-            b"items",
-            "max_items",
-            b"max_items",
-            "min_items",
-            b"min_items",
-            "miss_default",
-            b"miss_default",
-            "title",
-            b"title",
-            "type",
-            b"type",
-            "unique",
-            b"unique",
-        ],
-    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_alias", b"_alias", "_description", b"_description", "_enable", b"_enable", "_extra", b"_extra", "_field", b"_field", "_items", b"_items", "_max_items", b"_max_items", "_min_items", b"_min_items", "_title", b"_title", "_type", b"_type", "_unique", b"_unique", "alias", b"alias", "default_config", b"default_config", "default_factory", b"default_factory", "description", b"description", "enable", b"enable", "example_config", b"example_config", "example_factory", b"example_factory", "extra", b"extra", "field", b"field", "items", b"items", "max_items", b"max_items", "min_items", b"min_items", "miss_default", b"miss_default", "title", b"title", "type", b"type", "unique", b"unique"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_alias", b"_alias", "_description", b"_description", "_enable", b"_enable", "_extra", b"_extra", "_field", b"_field", "_items", b"_items", "_max_items", b"_max_items", "_min_items", b"_min_items", "_title", b"_title", "_type", b"_type", "_unique", b"_unique", "alias", b"alias", "default_config", b"default_config", "default_factory", b"default_factory", "description", b"description", "enable", b"enable", "example_config", b"example_config", "example_factory", b"example_factory", "extra", b"extra", "field", b"field", "items", b"items", "max_items", b"max_items", "min_items", b"min_items", "miss_default", b"miss_default", "title", b"title", "type", b"type", "unique", b"unique"]) -> None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_alias", b"_alias"]
-    ) -> typing_extensions.Literal["alias"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_alias", b"_alias"]) -> typing_extensions.Literal["alias"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_description", b"_description"]
-    ) -> typing_extensions.Literal["description"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_description", b"_description"]) -> typing_extensions.Literal["description"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]
-    ) -> typing_extensions.Literal["enable"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]) -> typing_extensions.Literal["enable"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]
-    ) -> typing_extensions.Literal["extra"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]) -> typing_extensions.Literal["extra"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_field", b"_field"]
-    ) -> typing_extensions.Literal["field"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_field", b"_field"]) -> typing_extensions.Literal["field"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_items", b"_items"]
-    ) -> typing_extensions.Literal["items"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_items", b"_items"]) -> typing_extensions.Literal["items"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_max_items", b"_max_items"]
-    ) -> typing_extensions.Literal["max_items"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_max_items", b"_max_items"]) -> typing_extensions.Literal["max_items"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_min_items", b"_min_items"]
-    ) -> typing_extensions.Literal["min_items"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_min_items", b"_min_items"]) -> typing_extensions.Literal["min_items"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_title", b"_title"]
-    ) -> typing_extensions.Literal["title"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_title", b"_title"]) -> typing_extensions.Literal["title"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_type", b"_type"]
-    ) -> typing_extensions.Literal["type"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_type", b"_type"]) -> typing_extensions.Literal["type"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_unique", b"_unique"]
-    ) -> typing_extensions.Literal["unique"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_unique", b"_unique"]) -> typing_extensions.Literal["unique"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["default_config", b"default_config"]
-    ) -> typing_extensions.Literal["default_factory", "miss_default"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["default_config", b"default_config"]) -> typing_extensions.Literal["default_factory", "miss_default"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["example_config", b"example_config"]
-    ) -> typing_extensions.Literal["example_factory"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["example_config", b"example_config"]) -> typing_extensions.Literal["example_factory"] | None: ...
 
 global___RepeatedRules = RepeatedRules
 
@@ -5814,176 +2638,34 @@ class MapRules(google.protobuf.message.Message):
         title: builtins.str | None = ...,
         extra: builtins.str | None = ...,
     ) -> None: ...
-    def HasField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_alias",
-            b"_alias",
-            "_description",
-            b"_description",
-            "_enable",
-            b"_enable",
-            "_extra",
-            b"_extra",
-            "_field",
-            b"_field",
-            "_keys",
-            b"_keys",
-            "_max_pairs",
-            b"_max_pairs",
-            "_min_pairs",
-            b"_min_pairs",
-            "_title",
-            b"_title",
-            "_type",
-            b"_type",
-            "_values",
-            b"_values",
-            "alias",
-            b"alias",
-            "default_config",
-            b"default_config",
-            "default_factory",
-            b"default_factory",
-            "description",
-            b"description",
-            "enable",
-            b"enable",
-            "example_config",
-            b"example_config",
-            "example_factory",
-            b"example_factory",
-            "extra",
-            b"extra",
-            "field",
-            b"field",
-            "keys",
-            b"keys",
-            "max_pairs",
-            b"max_pairs",
-            "min_pairs",
-            b"min_pairs",
-            "miss_default",
-            b"miss_default",
-            "title",
-            b"title",
-            "type",
-            b"type",
-            "values",
-            b"values",
-        ],
-    ) -> builtins.bool: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_alias",
-            b"_alias",
-            "_description",
-            b"_description",
-            "_enable",
-            b"_enable",
-            "_extra",
-            b"_extra",
-            "_field",
-            b"_field",
-            "_keys",
-            b"_keys",
-            "_max_pairs",
-            b"_max_pairs",
-            "_min_pairs",
-            b"_min_pairs",
-            "_title",
-            b"_title",
-            "_type",
-            b"_type",
-            "_values",
-            b"_values",
-            "alias",
-            b"alias",
-            "default_config",
-            b"default_config",
-            "default_factory",
-            b"default_factory",
-            "description",
-            b"description",
-            "enable",
-            b"enable",
-            "example_config",
-            b"example_config",
-            "example_factory",
-            b"example_factory",
-            "extra",
-            b"extra",
-            "field",
-            b"field",
-            "keys",
-            b"keys",
-            "max_pairs",
-            b"max_pairs",
-            "min_pairs",
-            b"min_pairs",
-            "miss_default",
-            b"miss_default",
-            "title",
-            b"title",
-            "type",
-            b"type",
-            "values",
-            b"values",
-        ],
-    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_alias", b"_alias", "_description", b"_description", "_enable", b"_enable", "_extra", b"_extra", "_field", b"_field", "_keys", b"_keys", "_max_pairs", b"_max_pairs", "_min_pairs", b"_min_pairs", "_title", b"_title", "_type", b"_type", "_values", b"_values", "alias", b"alias", "default_config", b"default_config", "default_factory", b"default_factory", "description", b"description", "enable", b"enable", "example_config", b"example_config", "example_factory", b"example_factory", "extra", b"extra", "field", b"field", "keys", b"keys", "max_pairs", b"max_pairs", "min_pairs", b"min_pairs", "miss_default", b"miss_default", "title", b"title", "type", b"type", "values", b"values"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_alias", b"_alias", "_description", b"_description", "_enable", b"_enable", "_extra", b"_extra", "_field", b"_field", "_keys", b"_keys", "_max_pairs", b"_max_pairs", "_min_pairs", b"_min_pairs", "_title", b"_title", "_type", b"_type", "_values", b"_values", "alias", b"alias", "default_config", b"default_config", "default_factory", b"default_factory", "description", b"description", "enable", b"enable", "example_config", b"example_config", "example_factory", b"example_factory", "extra", b"extra", "field", b"field", "keys", b"keys", "max_pairs", b"max_pairs", "min_pairs", b"min_pairs", "miss_default", b"miss_default", "title", b"title", "type", b"type", "values", b"values"]) -> None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_alias", b"_alias"]
-    ) -> typing_extensions.Literal["alias"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_alias", b"_alias"]) -> typing_extensions.Literal["alias"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_description", b"_description"]
-    ) -> typing_extensions.Literal["description"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_description", b"_description"]) -> typing_extensions.Literal["description"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]
-    ) -> typing_extensions.Literal["enable"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]) -> typing_extensions.Literal["enable"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]
-    ) -> typing_extensions.Literal["extra"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]) -> typing_extensions.Literal["extra"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_field", b"_field"]
-    ) -> typing_extensions.Literal["field"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_field", b"_field"]) -> typing_extensions.Literal["field"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_keys", b"_keys"]
-    ) -> typing_extensions.Literal["keys"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_keys", b"_keys"]) -> typing_extensions.Literal["keys"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_max_pairs", b"_max_pairs"]
-    ) -> typing_extensions.Literal["max_pairs"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_max_pairs", b"_max_pairs"]) -> typing_extensions.Literal["max_pairs"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_min_pairs", b"_min_pairs"]
-    ) -> typing_extensions.Literal["min_pairs"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_min_pairs", b"_min_pairs"]) -> typing_extensions.Literal["min_pairs"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_title", b"_title"]
-    ) -> typing_extensions.Literal["title"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_title", b"_title"]) -> typing_extensions.Literal["title"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_type", b"_type"]
-    ) -> typing_extensions.Literal["type"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_type", b"_type"]) -> typing_extensions.Literal["type"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_values", b"_values"]
-    ) -> typing_extensions.Literal["values"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_values", b"_values"]) -> typing_extensions.Literal["values"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["default_config", b"default_config"]
-    ) -> typing_extensions.Literal["default_factory", "miss_default"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["default_config", b"default_config"]) -> typing_extensions.Literal["default_factory", "miss_default"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["example_config", b"example_config"]
-    ) -> typing_extensions.Literal["example_factory"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["example_config", b"example_config"]) -> typing_extensions.Literal["example_factory"] | None: ...
 
 global___MapRules = MapRules
 
@@ -6058,140 +2740,26 @@ class AnyRules(google.protobuf.message.Message):
         title: builtins.str | None = ...,
         extra: builtins.str | None = ...,
     ) -> None: ...
-    def HasField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_alias",
-            b"_alias",
-            "_description",
-            b"_description",
-            "_enable",
-            b"_enable",
-            "_extra",
-            b"_extra",
-            "_field",
-            b"_field",
-            "_required",
-            b"_required",
-            "_title",
-            b"_title",
-            "alias",
-            b"alias",
-            "default",
-            b"default",
-            "default_config",
-            b"default_config",
-            "default_factory",
-            b"default_factory",
-            "description",
-            b"description",
-            "enable",
-            b"enable",
-            "example",
-            b"example",
-            "example_config",
-            b"example_config",
-            "example_factory",
-            b"example_factory",
-            "extra",
-            b"extra",
-            "field",
-            b"field",
-            "miss_default",
-            b"miss_default",
-            "required",
-            b"required",
-            "title",
-            b"title",
-        ],
-    ) -> builtins.bool: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_alias",
-            b"_alias",
-            "_description",
-            b"_description",
-            "_enable",
-            b"_enable",
-            "_extra",
-            b"_extra",
-            "_field",
-            b"_field",
-            "_required",
-            b"_required",
-            "_title",
-            b"_title",
-            "alias",
-            b"alias",
-            "default",
-            b"default",
-            "default_config",
-            b"default_config",
-            "default_factory",
-            b"default_factory",
-            "description",
-            b"description",
-            "enable",
-            b"enable",
-            "example",
-            b"example",
-            "example_config",
-            b"example_config",
-            "example_factory",
-            b"example_factory",
-            "extra",
-            b"extra",
-            "field",
-            b"field",
-            "in",
-            b"in",
-            "miss_default",
-            b"miss_default",
-            "not_in",
-            b"not_in",
-            "required",
-            b"required",
-            "title",
-            b"title",
-        ],
-    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_alias", b"_alias", "_description", b"_description", "_enable", b"_enable", "_extra", b"_extra", "_field", b"_field", "_required", b"_required", "_title", b"_title", "alias", b"alias", "default", b"default", "default_config", b"default_config", "default_factory", b"default_factory", "description", b"description", "enable", b"enable", "example", b"example", "example_config", b"example_config", "example_factory", b"example_factory", "extra", b"extra", "field", b"field", "miss_default", b"miss_default", "required", b"required", "title", b"title"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_alias", b"_alias", "_description", b"_description", "_enable", b"_enable", "_extra", b"_extra", "_field", b"_field", "_required", b"_required", "_title", b"_title", "alias", b"alias", "default", b"default", "default_config", b"default_config", "default_factory", b"default_factory", "description", b"description", "enable", b"enable", "example", b"example", "example_config", b"example_config", "example_factory", b"example_factory", "extra", b"extra", "field", b"field", "in", b"in", "miss_default", b"miss_default", "not_in", b"not_in", "required", b"required", "title", b"title"]) -> None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_alias", b"_alias"]
-    ) -> typing_extensions.Literal["alias"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_alias", b"_alias"]) -> typing_extensions.Literal["alias"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_description", b"_description"]
-    ) -> typing_extensions.Literal["description"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_description", b"_description"]) -> typing_extensions.Literal["description"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]
-    ) -> typing_extensions.Literal["enable"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]) -> typing_extensions.Literal["enable"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]
-    ) -> typing_extensions.Literal["extra"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]) -> typing_extensions.Literal["extra"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_field", b"_field"]
-    ) -> typing_extensions.Literal["field"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_field", b"_field"]) -> typing_extensions.Literal["field"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_required", b"_required"]
-    ) -> typing_extensions.Literal["required"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_required", b"_required"]) -> typing_extensions.Literal["required"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_title", b"_title"]
-    ) -> typing_extensions.Literal["title"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_title", b"_title"]) -> typing_extensions.Literal["title"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["default_config", b"default_config"]
-    ) -> typing_extensions.Literal["default", "default_factory", "miss_default"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["default_config", b"default_config"]) -> typing_extensions.Literal["default", "default_factory", "miss_default"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["example_config", b"example_config"]
-    ) -> typing_extensions.Literal["example", "example_factory"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["example_config", b"example_config"]) -> typing_extensions.Literal["example", "example_factory"] | None: ...
 
 global___AnyRules = AnyRules
 
@@ -6245,9 +2813,7 @@ class DurationRules(google.protobuf.message.Message):
         inclusive
         """
     @property
-    def not_in(
-        self,
-    ) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[google.protobuf.duration_pb2.Duration]:
+    def not_in(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[google.protobuf.duration_pb2.Duration]:
         """NotIn specifies that this field cannot be equal to one of the specified
         values
         """
@@ -6303,200 +2869,36 @@ class DurationRules(google.protobuf.message.Message):
         title: builtins.str | None = ...,
         extra: builtins.str | None = ...,
     ) -> None: ...
-    def HasField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_alias",
-            b"_alias",
-            "_const",
-            b"_const",
-            "_description",
-            b"_description",
-            "_enable",
-            b"_enable",
-            "_extra",
-            b"_extra",
-            "_field",
-            b"_field",
-            "_ge",
-            b"_ge",
-            "_gt",
-            b"_gt",
-            "_le",
-            b"_le",
-            "_lt",
-            b"_lt",
-            "_title",
-            b"_title",
-            "_type",
-            b"_type",
-            "alias",
-            b"alias",
-            "const",
-            b"const",
-            "default",
-            b"default",
-            "default_config",
-            b"default_config",
-            "default_factory",
-            b"default_factory",
-            "description",
-            b"description",
-            "enable",
-            b"enable",
-            "example",
-            b"example",
-            "example_config",
-            b"example_config",
-            "example_factory",
-            b"example_factory",
-            "extra",
-            b"extra",
-            "field",
-            b"field",
-            "ge",
-            b"ge",
-            "gt",
-            b"gt",
-            "le",
-            b"le",
-            "lt",
-            b"lt",
-            "miss_default",
-            b"miss_default",
-            "title",
-            b"title",
-            "type",
-            b"type",
-        ],
-    ) -> builtins.bool: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_alias",
-            b"_alias",
-            "_const",
-            b"_const",
-            "_description",
-            b"_description",
-            "_enable",
-            b"_enable",
-            "_extra",
-            b"_extra",
-            "_field",
-            b"_field",
-            "_ge",
-            b"_ge",
-            "_gt",
-            b"_gt",
-            "_le",
-            b"_le",
-            "_lt",
-            b"_lt",
-            "_title",
-            b"_title",
-            "_type",
-            b"_type",
-            "alias",
-            b"alias",
-            "const",
-            b"const",
-            "default",
-            b"default",
-            "default_config",
-            b"default_config",
-            "default_factory",
-            b"default_factory",
-            "description",
-            b"description",
-            "enable",
-            b"enable",
-            "example",
-            b"example",
-            "example_config",
-            b"example_config",
-            "example_factory",
-            b"example_factory",
-            "extra",
-            b"extra",
-            "field",
-            b"field",
-            "ge",
-            b"ge",
-            "gt",
-            b"gt",
-            "in",
-            b"in",
-            "le",
-            b"le",
-            "lt",
-            b"lt",
-            "miss_default",
-            b"miss_default",
-            "not_in",
-            b"not_in",
-            "title",
-            b"title",
-            "type",
-            b"type",
-        ],
-    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_alias", b"_alias", "_const", b"_const", "_description", b"_description", "_enable", b"_enable", "_extra", b"_extra", "_field", b"_field", "_ge", b"_ge", "_gt", b"_gt", "_le", b"_le", "_lt", b"_lt", "_title", b"_title", "_type", b"_type", "alias", b"alias", "const", b"const", "default", b"default", "default_config", b"default_config", "default_factory", b"default_factory", "description", b"description", "enable", b"enable", "example", b"example", "example_config", b"example_config", "example_factory", b"example_factory", "extra", b"extra", "field", b"field", "ge", b"ge", "gt", b"gt", "le", b"le", "lt", b"lt", "miss_default", b"miss_default", "title", b"title", "type", b"type"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_alias", b"_alias", "_const", b"_const", "_description", b"_description", "_enable", b"_enable", "_extra", b"_extra", "_field", b"_field", "_ge", b"_ge", "_gt", b"_gt", "_le", b"_le", "_lt", b"_lt", "_title", b"_title", "_type", b"_type", "alias", b"alias", "const", b"const", "default", b"default", "default_config", b"default_config", "default_factory", b"default_factory", "description", b"description", "enable", b"enable", "example", b"example", "example_config", b"example_config", "example_factory", b"example_factory", "extra", b"extra", "field", b"field", "ge", b"ge", "gt", b"gt", "in", b"in", "le", b"le", "lt", b"lt", "miss_default", b"miss_default", "not_in", b"not_in", "title", b"title", "type", b"type"]) -> None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_alias", b"_alias"]
-    ) -> typing_extensions.Literal["alias"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_alias", b"_alias"]) -> typing_extensions.Literal["alias"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_const", b"_const"]
-    ) -> typing_extensions.Literal["const"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_const", b"_const"]) -> typing_extensions.Literal["const"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_description", b"_description"]
-    ) -> typing_extensions.Literal["description"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_description", b"_description"]) -> typing_extensions.Literal["description"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]
-    ) -> typing_extensions.Literal["enable"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]) -> typing_extensions.Literal["enable"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]
-    ) -> typing_extensions.Literal["extra"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]) -> typing_extensions.Literal["extra"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_field", b"_field"]
-    ) -> typing_extensions.Literal["field"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_field", b"_field"]) -> typing_extensions.Literal["field"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_ge", b"_ge"]
-    ) -> typing_extensions.Literal["ge"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_ge", b"_ge"]) -> typing_extensions.Literal["ge"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_gt", b"_gt"]
-    ) -> typing_extensions.Literal["gt"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_gt", b"_gt"]) -> typing_extensions.Literal["gt"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_le", b"_le"]
-    ) -> typing_extensions.Literal["le"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_le", b"_le"]) -> typing_extensions.Literal["le"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_lt", b"_lt"]
-    ) -> typing_extensions.Literal["lt"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_lt", b"_lt"]) -> typing_extensions.Literal["lt"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_title", b"_title"]
-    ) -> typing_extensions.Literal["title"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_title", b"_title"]) -> typing_extensions.Literal["title"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_type", b"_type"]
-    ) -> typing_extensions.Literal["type"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_type", b"_type"]) -> typing_extensions.Literal["type"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["default_config", b"default_config"]
-    ) -> typing_extensions.Literal["default", "default_factory", "miss_default"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["default_config", b"default_config"]) -> typing_extensions.Literal["default", "default_factory", "miss_default"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["example_config", b"example_config"]
-    ) -> typing_extensions.Literal["example", "example_factory"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["example_config", b"example_config"]) -> typing_extensions.Literal["example", "example_factory"] | None: ...
 
 global___DurationRules = DurationRules
 
@@ -6618,251 +3020,55 @@ class TimestampRules(google.protobuf.message.Message):
         title: builtins.str | None = ...,
         extra: builtins.str | None = ...,
     ) -> None: ...
-    def HasField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_alias",
-            b"_alias",
-            "_const",
-            b"_const",
-            "_description",
-            b"_description",
-            "_enable",
-            b"_enable",
-            "_extra",
-            b"_extra",
-            "_field",
-            b"_field",
-            "_ge",
-            b"_ge",
-            "_gt",
-            b"_gt",
-            "_gt_now",
-            b"_gt_now",
-            "_le",
-            b"_le",
-            "_lt",
-            b"_lt",
-            "_lt_now",
-            b"_lt_now",
-            "_title",
-            b"_title",
-            "_type",
-            b"_type",
-            "_within",
-            b"_within",
-            "alias",
-            b"alias",
-            "const",
-            b"const",
-            "default",
-            b"default",
-            "default_config",
-            b"default_config",
-            "default_factory",
-            b"default_factory",
-            "description",
-            b"description",
-            "enable",
-            b"enable",
-            "example",
-            b"example",
-            "example_config",
-            b"example_config",
-            "example_factory",
-            b"example_factory",
-            "extra",
-            b"extra",
-            "field",
-            b"field",
-            "ge",
-            b"ge",
-            "gt",
-            b"gt",
-            "gt_now",
-            b"gt_now",
-            "le",
-            b"le",
-            "lt",
-            b"lt",
-            "lt_now",
-            b"lt_now",
-            "miss_default",
-            b"miss_default",
-            "title",
-            b"title",
-            "type",
-            b"type",
-            "within",
-            b"within",
-        ],
-    ) -> builtins.bool: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal[
-            "_alias",
-            b"_alias",
-            "_const",
-            b"_const",
-            "_description",
-            b"_description",
-            "_enable",
-            b"_enable",
-            "_extra",
-            b"_extra",
-            "_field",
-            b"_field",
-            "_ge",
-            b"_ge",
-            "_gt",
-            b"_gt",
-            "_gt_now",
-            b"_gt_now",
-            "_le",
-            b"_le",
-            "_lt",
-            b"_lt",
-            "_lt_now",
-            b"_lt_now",
-            "_title",
-            b"_title",
-            "_type",
-            b"_type",
-            "_within",
-            b"_within",
-            "alias",
-            b"alias",
-            "const",
-            b"const",
-            "default",
-            b"default",
-            "default_config",
-            b"default_config",
-            "default_factory",
-            b"default_factory",
-            "description",
-            b"description",
-            "enable",
-            b"enable",
-            "example",
-            b"example",
-            "example_config",
-            b"example_config",
-            "example_factory",
-            b"example_factory",
-            "extra",
-            b"extra",
-            "field",
-            b"field",
-            "ge",
-            b"ge",
-            "gt",
-            b"gt",
-            "gt_now",
-            b"gt_now",
-            "le",
-            b"le",
-            "lt",
-            b"lt",
-            "lt_now",
-            b"lt_now",
-            "miss_default",
-            b"miss_default",
-            "title",
-            b"title",
-            "type",
-            b"type",
-            "within",
-            b"within",
-        ],
-    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_alias", b"_alias", "_const", b"_const", "_description", b"_description", "_enable", b"_enable", "_extra", b"_extra", "_field", b"_field", "_ge", b"_ge", "_gt", b"_gt", "_gt_now", b"_gt_now", "_le", b"_le", "_lt", b"_lt", "_lt_now", b"_lt_now", "_title", b"_title", "_type", b"_type", "_within", b"_within", "alias", b"alias", "const", b"const", "default", b"default", "default_config", b"default_config", "default_factory", b"default_factory", "description", b"description", "enable", b"enable", "example", b"example", "example_config", b"example_config", "example_factory", b"example_factory", "extra", b"extra", "field", b"field", "ge", b"ge", "gt", b"gt", "gt_now", b"gt_now", "le", b"le", "lt", b"lt", "lt_now", b"lt_now", "miss_default", b"miss_default", "title", b"title", "type", b"type", "within", b"within"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_alias", b"_alias", "_const", b"_const", "_description", b"_description", "_enable", b"_enable", "_extra", b"_extra", "_field", b"_field", "_ge", b"_ge", "_gt", b"_gt", "_gt_now", b"_gt_now", "_le", b"_le", "_lt", b"_lt", "_lt_now", b"_lt_now", "_title", b"_title", "_type", b"_type", "_within", b"_within", "alias", b"alias", "const", b"const", "default", b"default", "default_config", b"default_config", "default_factory", b"default_factory", "description", b"description", "enable", b"enable", "example", b"example", "example_config", b"example_config", "example_factory", b"example_factory", "extra", b"extra", "field", b"field", "ge", b"ge", "gt", b"gt", "gt_now", b"gt_now", "le", b"le", "lt", b"lt", "lt_now", b"lt_now", "miss_default", b"miss_default", "title", b"title", "type", b"type", "within", b"within"]) -> None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_alias", b"_alias"]
-    ) -> typing_extensions.Literal["alias"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_alias", b"_alias"]) -> typing_extensions.Literal["alias"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_const", b"_const"]
-    ) -> typing_extensions.Literal["const"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_const", b"_const"]) -> typing_extensions.Literal["const"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_description", b"_description"]
-    ) -> typing_extensions.Literal["description"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_description", b"_description"]) -> typing_extensions.Literal["description"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]
-    ) -> typing_extensions.Literal["enable"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_enable", b"_enable"]) -> typing_extensions.Literal["enable"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]
-    ) -> typing_extensions.Literal["extra"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_extra", b"_extra"]) -> typing_extensions.Literal["extra"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_field", b"_field"]
-    ) -> typing_extensions.Literal["field"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_field", b"_field"]) -> typing_extensions.Literal["field"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_ge", b"_ge"]
-    ) -> typing_extensions.Literal["ge"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_ge", b"_ge"]) -> typing_extensions.Literal["ge"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_gt", b"_gt"]
-    ) -> typing_extensions.Literal["gt"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_gt", b"_gt"]) -> typing_extensions.Literal["gt"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_gt_now", b"_gt_now"]
-    ) -> typing_extensions.Literal["gt_now"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_gt_now", b"_gt_now"]) -> typing_extensions.Literal["gt_now"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_le", b"_le"]
-    ) -> typing_extensions.Literal["le"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_le", b"_le"]) -> typing_extensions.Literal["le"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_lt", b"_lt"]
-    ) -> typing_extensions.Literal["lt"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_lt", b"_lt"]) -> typing_extensions.Literal["lt"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_lt_now", b"_lt_now"]
-    ) -> typing_extensions.Literal["lt_now"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_lt_now", b"_lt_now"]) -> typing_extensions.Literal["lt_now"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_title", b"_title"]
-    ) -> typing_extensions.Literal["title"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_title", b"_title"]) -> typing_extensions.Literal["title"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_type", b"_type"]
-    ) -> typing_extensions.Literal["type"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_type", b"_type"]) -> typing_extensions.Literal["type"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["_within", b"_within"]
-    ) -> typing_extensions.Literal["within"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_within", b"_within"]) -> typing_extensions.Literal["within"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["default_config", b"default_config"]
-    ) -> typing_extensions.Literal["default", "default_factory", "miss_default"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["default_config", b"default_config"]) -> typing_extensions.Literal["default", "default_factory", "miss_default"] | None: ...
     @typing.overload
-    def WhichOneof(
-        self, oneof_group: typing_extensions.Literal["example_config", b"example_config"]
-    ) -> typing_extensions.Literal["example", "example_factory"] | None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["example_config", b"example_config"]) -> typing_extensions.Literal["example", "example_factory"] | None: ...
 
 global___TimestampRules = TimestampRules
 
 IGNORED_FIELD_NUMBER: builtins.int
 REQUIRED_FIELD_NUMBER: builtins.int
 RULES_FIELD_NUMBER: builtins.int
-ignored: google.protobuf.internal.extension_dict._ExtensionFieldDescriptor[
-    google.protobuf.descriptor_pb2.MessageOptions, builtins.bool
-]
+ignored: google.protobuf.internal.extension_dict._ExtensionFieldDescriptor[google.protobuf.descriptor_pb2.MessageOptions, builtins.bool]
 """Ignore skips generation of validation methods for this message."""
-required: google.protobuf.internal.extension_dict._ExtensionFieldDescriptor[
-    google.protobuf.descriptor_pb2.OneofOptions, builtins.bool
-]
+required: google.protobuf.internal.extension_dict._ExtensionFieldDescriptor[google.protobuf.descriptor_pb2.OneofOptions, builtins.bool]
 """Required ensures that exactly one the field options in a oneof is set;
 validation fails if no fields in the oneof are set.
 """
-rules: google.protobuf.internal.extension_dict._ExtensionFieldDescriptor[
-    google.protobuf.descriptor_pb2.FieldOptions, global___FieldRules
-]
+rules: google.protobuf.internal.extension_dict._ExtensionFieldDescriptor[google.protobuf.descriptor_pb2.FieldOptions, global___FieldRules]
 """Rules specify the validations to be performed on this field. By default,
 no validation is performed against a field.
 """
