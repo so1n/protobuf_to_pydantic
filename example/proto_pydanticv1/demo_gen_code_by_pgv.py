@@ -1,5 +1,7 @@
 # This is an automatically generated file, please do not change
 # gen by protobuf_to_pydantic[v0.1.7.4](https://github.com/so1n/protobuf_to_pydantic)
+# Protobuf Version: 4.24.0
+# Pydantic Version: 1.10.7
 import typing
 from datetime import datetime, timedelta
 from enum import IntEnum
@@ -64,8 +66,8 @@ class AnyTest(BaseModel):
         any_in=["type.googleapis.com/google.protobuf.Duration", "type.googleapis.com/google.protobuf.Timestamp"],
     )
 
-    any_not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(any_not_in_validator)
-    any_in_validator_in_test = validator("in_test", allow_reuse=True)(any_in_validator)
+    not_in_test_any_not_in_validator = validator("not_in_test", allow_reuse=True)(any_not_in_validator)
+    in_test_any_in_validator = validator("in_test", allow_reuse=True)(any_in_validator)
 
 
 class BoolTest(BaseModel):
@@ -84,12 +86,12 @@ class BytesTest(BaseModel):
     in_test: bytes = Field(default=b"", in_=[b"a", b"b", b"c"])
     not_in_test: bytes = Field(default=b"", not_in=[b"a", b"b", b"c"])
 
-    len_validator_len_test = validator("len_test", allow_reuse=True)(len_validator)
-    prefix_validator_prefix_test = validator("prefix_test", allow_reuse=True)(prefix_validator)
-    suffix_validator_suffix_test = validator("suffix_test", allow_reuse=True)(suffix_validator)
-    contains_validator_contains_test = validator("contains_test", allow_reuse=True)(contains_validator)
-    in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
-    not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
+    len_test_len_validator = validator("len_test", allow_reuse=True)(len_validator)
+    prefix_test_prefix_validator = validator("prefix_test", allow_reuse=True)(prefix_validator)
+    suffix_test_suffix_validator = validator("suffix_test", allow_reuse=True)(suffix_validator)
+    contains_test_contains_validator = validator("contains_test", allow_reuse=True)(contains_validator)
+    in_test_in_validator = validator("in_test", allow_reuse=True)(in_validator)
+    not_in_test_not_in_validator = validator("not_in_test", allow_reuse=True)(not_in_validator)
 
 
 class DoubleTest(BaseModel):
@@ -100,8 +102,8 @@ class DoubleTest(BaseModel):
     not_in_test: float = Field(default=0.0, not_in=[1.0, 2.0, 3.0])
     ignore_test: float = Field(default=0.0)
 
-    in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
-    not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
+    in_test_in_validator = validator("in_test", allow_reuse=True)(in_validator)
+    not_in_test_not_in_validator = validator("not_in_test", allow_reuse=True)(not_in_validator)
 
 
 class DurationTest(BaseModel):
@@ -126,13 +128,13 @@ class DurationTest(BaseModel):
         duration_not_in=[timedelta(seconds=1, microseconds=500000), timedelta(seconds=3, microseconds=500000)],
     )
 
-    duration_const_validator_const_test = validator("const_test", allow_reuse=True)(duration_const_validator)
-    duration_lt_validator_range_test = validator("range_test", allow_reuse=True)(duration_lt_validator)
-    duration_gt_validator_range_test = validator("range_test", allow_reuse=True)(duration_gt_validator)
-    duration_le_validator_range_e_test = validator("range_e_test", allow_reuse=True)(duration_le_validator)
-    duration_ge_validator_range_e_test = validator("range_e_test", allow_reuse=True)(duration_ge_validator)
-    duration_in_validator_in_test = validator("in_test", allow_reuse=True)(duration_in_validator)
-    duration_not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(duration_not_in_validator)
+    const_test_duration_const_validator = validator("const_test", allow_reuse=True)(duration_const_validator)
+    range_test_duration_lt_validator = validator("range_test", allow_reuse=True)(duration_lt_validator)
+    range_test_duration_gt_validator = validator("range_test", allow_reuse=True)(duration_gt_validator)
+    range_e_test_duration_le_validator = validator("range_e_test", allow_reuse=True)(duration_le_validator)
+    range_e_test_duration_ge_validator = validator("range_e_test", allow_reuse=True)(duration_ge_validator)
+    in_test_duration_in_validator = validator("in_test", allow_reuse=True)(duration_in_validator)
+    not_in_test_duration_not_in_validator = validator("not_in_test", allow_reuse=True)(duration_not_in_validator)
 
 
 class State(IntEnum):
@@ -147,8 +149,8 @@ class EnumTest(BaseModel):
     in_test: State = Field(default=0, in_=[0, 2])
     not_in_test: State = Field(default=0, not_in=[0, 2])
 
-    in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
-    not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
+    in_test_in_validator = validator("in_test", allow_reuse=True)(in_validator)
+    not_in_test_not_in_validator = validator("not_in_test", allow_reuse=True)(not_in_validator)
 
 
 class Fixed32Test(BaseModel):
@@ -159,8 +161,8 @@ class Fixed32Test(BaseModel):
     not_in_test: float = Field(default=0, not_in=[1, 2, 3])
     ignore_test: float = Field(default=0)
 
-    in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
-    not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
+    in_test_in_validator = validator("in_test", allow_reuse=True)(in_validator)
+    not_in_test_not_in_validator = validator("not_in_test", allow_reuse=True)(not_in_validator)
 
 
 class Fixed64Test(BaseModel):
@@ -171,8 +173,8 @@ class Fixed64Test(BaseModel):
     not_in_test: float = Field(default=0, not_in=[1, 2, 3])
     ignore_test: float = Field(default=0)
 
-    in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
-    not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
+    in_test_in_validator = validator("in_test", allow_reuse=True)(in_validator)
+    not_in_test_not_in_validator = validator("not_in_test", allow_reuse=True)(not_in_validator)
 
 
 class FloatTest(BaseModel):
@@ -183,8 +185,8 @@ class FloatTest(BaseModel):
     not_in_test: float = Field(default=0.0, not_in=[1.0, 2.0, 3.0])
     ignore_test: float = Field(default=0.0)
 
-    in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
-    not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
+    in_test_in_validator = validator("in_test", allow_reuse=True)(in_validator)
+    not_in_test_not_in_validator = validator("not_in_test", allow_reuse=True)(not_in_validator)
 
 
 class Int32Test(BaseModel):
@@ -195,8 +197,8 @@ class Int32Test(BaseModel):
     not_in_test: int = Field(default=0, not_in=[1, 2, 3])
     ignore_test: int = Field(default=0)
 
-    in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
-    not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
+    in_test_in_validator = validator("in_test", allow_reuse=True)(in_validator)
+    not_in_test_not_in_validator = validator("not_in_test", allow_reuse=True)(not_in_validator)
 
 
 class Int64Test(BaseModel):
@@ -207,8 +209,8 @@ class Int64Test(BaseModel):
     not_in_test: int = Field(default=0, not_in=[1, 2, 3])
     ignore_test: int = Field(default=0)
 
-    in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
-    not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
+    in_test_in_validator = validator("in_test", allow_reuse=True)(in_validator)
+    not_in_test_not_in_validator = validator("not_in_test", allow_reuse=True)(not_in_validator)
 
 
 class MapTest(BaseModel):
@@ -221,8 +223,8 @@ class MapTest(BaseModel):
     )
     ignore_test: typing.Dict[str, int] = Field(default_factory=dict)
 
-    map_min_pairs_validator_pair_test = validator("pair_test", allow_reuse=True)(map_min_pairs_validator)
-    map_max_pairs_validator_pair_test = validator("pair_test", allow_reuse=True)(map_max_pairs_validator)
+    pair_test_map_min_pairs_validator = validator("pair_test", allow_reuse=True)(map_min_pairs_validator)
+    pair_test_map_max_pairs_validator = validator("pair_test", allow_reuse=True)(map_max_pairs_validator)
 
 
 class MessageDisabledTest(BaseModel):
@@ -265,13 +267,13 @@ class StringTest(BaseModel):
     uuid_test: UUID = Field(default="")
     ignore_test: str = Field(default="")
 
-    len_validator_len_test = validator("len_test", allow_reuse=True)(len_validator)
-    prefix_validator_prefix_test = validator("prefix_test", allow_reuse=True)(prefix_validator)
-    suffix_validator_suffix_test = validator("suffix_test", allow_reuse=True)(suffix_validator)
-    contains_validator_contains_test = validator("contains_test", allow_reuse=True)(contains_validator)
-    not_contains_validator_not_contains_test = validator("not_contains_test", allow_reuse=True)(not_contains_validator)
-    in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
-    not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
+    len_test_len_validator = validator("len_test", allow_reuse=True)(len_validator)
+    prefix_test_prefix_validator = validator("prefix_test", allow_reuse=True)(prefix_validator)
+    suffix_test_suffix_validator = validator("suffix_test", allow_reuse=True)(suffix_validator)
+    contains_test_contains_validator = validator("contains_test", allow_reuse=True)(contains_validator)
+    not_contains_test_not_contains_validator = validator("not_contains_test", allow_reuse=True)(not_contains_validator)
+    in_test_in_validator = validator("in_test", allow_reuse=True)(in_validator)
+    not_in_test_not_in_validator = validator("not_in_test", allow_reuse=True)(not_in_validator)
 
 
 class NestedMessage(BaseModel):
@@ -280,7 +282,7 @@ class NestedMessage(BaseModel):
         exp: datetime = Field(default_factory=datetime.now, timestamp_gt_now=True)
         uuid: UUID = Field(default="")
 
-        timestamp_gt_now_validator_exp = validator("exp", allow_reuse=True)(timestamp_gt_now_validator)
+        exp_timestamp_gt_now_validator = validator("exp", allow_reuse=True)(timestamp_gt_now_validator)
 
     class NotEnableUserPayMessage(BaseModel):
         bank_number: str = Field(default="")
@@ -302,7 +304,7 @@ class OneOfNotTest(BaseModel):
     x: str = Field(default="")
     y: int = Field(default=0)
 
-    _check_one_of = root_validator(pre=True, allow_reuse=True)(check_one_of)
+    one_of_validator = root_validator(pre=True, allow_reuse=True)(check_one_of)
 
 
 class OneOfTest(BaseModel):
@@ -312,7 +314,7 @@ class OneOfTest(BaseModel):
     x: str = Field(default="")
     y: int = Field(default=0)
 
-    _check_one_of = root_validator(pre=True, allow_reuse=True)(check_one_of)
+    one_of_validator = root_validator(pre=True, allow_reuse=True)(check_one_of)
 
 
 class RepeatedTest(BaseModel):
@@ -345,8 +347,8 @@ class Sfixed32Test(BaseModel):
     not_in_test: float = Field(default=0, not_in=[1, 2, 3])
     ignore_test: float = Field(default=0)
 
-    in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
-    not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
+    in_test_in_validator = validator("in_test", allow_reuse=True)(in_validator)
+    not_in_test_not_in_validator = validator("not_in_test", allow_reuse=True)(not_in_validator)
 
 
 class Sfixed64Test(BaseModel):
@@ -357,8 +359,8 @@ class Sfixed64Test(BaseModel):
     not_in_test: float = Field(default=0, not_in=[1, 2, 3])
     ignore_test: float = Field(default=0)
 
-    in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
-    not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
+    in_test_in_validator = validator("in_test", allow_reuse=True)(in_validator)
+    not_in_test_not_in_validator = validator("not_in_test", allow_reuse=True)(not_in_validator)
 
 
 class Sint32Test(BaseModel):
@@ -369,8 +371,8 @@ class Sint32Test(BaseModel):
     not_in_test: int = Field(default=0, not_in=[1, 2, 3])
     ignore_test: int = Field(default=0)
 
-    in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
-    not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
+    in_test_in_validator = validator("in_test", allow_reuse=True)(in_validator)
+    not_in_test_not_in_validator = validator("not_in_test", allow_reuse=True)(not_in_validator)
 
 
 class Sint64Test(BaseModel):
@@ -381,8 +383,8 @@ class Sint64Test(BaseModel):
     not_in_test: int = Field(default=0, not_in=[1, 2, 3])
     ignore_test: int = Field(default=0)
 
-    in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
-    not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
+    in_test_in_validator = validator("in_test", allow_reuse=True)(in_validator)
+    not_in_test_not_in_validator = validator("not_in_test", allow_reuse=True)(not_in_validator)
 
 
 class TimestampTest(BaseModel):
@@ -397,18 +399,18 @@ class TimestampTest(BaseModel):
         default_factory=datetime.now, timestamp_gt_now=True, timestamp_within=timedelta(seconds=3600)
     )
 
-    timestamp_const_validator_const_test = validator("const_test", allow_reuse=True)(timestamp_const_validator)
-    timestamp_lt_validator_range_test = validator("range_test", allow_reuse=True)(timestamp_lt_validator)
-    timestamp_gt_validator_range_test = validator("range_test", allow_reuse=True)(timestamp_gt_validator)
-    timestamp_le_validator_range_e_test = validator("range_e_test", allow_reuse=True)(timestamp_le_validator)
-    timestamp_ge_validator_range_e_test = validator("range_e_test", allow_reuse=True)(timestamp_ge_validator)
-    timestamp_lt_now_validator_lt_now_test = validator("lt_now_test", allow_reuse=True)(timestamp_lt_now_validator)
-    timestamp_gt_now_validator_gt_now_test = validator("gt_now_test", allow_reuse=True)(timestamp_gt_now_validator)
-    timestamp_within_validator_within_test = validator("within_test", allow_reuse=True)(timestamp_within_validator)
-    timestamp_gt_now_validator_within_and_gt_now_test = validator("within_and_gt_now_test", allow_reuse=True)(
+    const_test_timestamp_const_validator = validator("const_test", allow_reuse=True)(timestamp_const_validator)
+    range_test_timestamp_lt_validator = validator("range_test", allow_reuse=True)(timestamp_lt_validator)
+    range_test_timestamp_gt_validator = validator("range_test", allow_reuse=True)(timestamp_gt_validator)
+    range_e_test_timestamp_le_validator = validator("range_e_test", allow_reuse=True)(timestamp_le_validator)
+    range_e_test_timestamp_ge_validator = validator("range_e_test", allow_reuse=True)(timestamp_ge_validator)
+    lt_now_test_timestamp_lt_now_validator = validator("lt_now_test", allow_reuse=True)(timestamp_lt_now_validator)
+    gt_now_test_timestamp_gt_now_validator = validator("gt_now_test", allow_reuse=True)(timestamp_gt_now_validator)
+    within_test_timestamp_within_validator = validator("within_test", allow_reuse=True)(timestamp_within_validator)
+    within_and_gt_now_test_timestamp_gt_now_validator = validator("within_and_gt_now_test", allow_reuse=True)(
         timestamp_gt_now_validator
     )
-    timestamp_within_validator_within_and_gt_now_test = validator("within_and_gt_now_test", allow_reuse=True)(
+    within_and_gt_now_test_timestamp_within_validator = validator("within_and_gt_now_test", allow_reuse=True)(
         timestamp_within_validator
     )
 
@@ -421,8 +423,8 @@ class Uint32Test(BaseModel):
     not_in_test: int = Field(default=0, not_in=[1, 2, 3])
     ignore_test: int = Field(default=0)
 
-    in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
-    not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
+    in_test_in_validator = validator("in_test", allow_reuse=True)(in_validator)
+    not_in_test_not_in_validator = validator("not_in_test", allow_reuse=True)(not_in_validator)
 
 
 class Uint64Test(BaseModel):
@@ -433,5 +435,5 @@ class Uint64Test(BaseModel):
     not_in_test: int = Field(default=0, not_in=[1, 2, 3])
     ignore_test: int = Field(default=0)
 
-    in_validator_in_test = validator("in_test", allow_reuse=True)(in_validator)
-    not_in_validator_not_in_test = validator("not_in_test", allow_reuse=True)(not_in_validator)
+    in_test_in_validator = validator("in_test", allow_reuse=True)(in_validator)
+    not_in_test_not_in_validator = validator("not_in_test", allow_reuse=True)(not_in_validator)

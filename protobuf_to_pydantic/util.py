@@ -60,8 +60,7 @@ def replace_protobuf_type_to_python_type(value: Any) -> Any:
     """
     protobuf.Duration -> datetime.timedelta
     protobuf.Timestamp -> timestamp e.g 1600000000.000000
-    like list -> list
-
+    like list type -> list
     other type -> raw...
     """
     if isinstance(value, Duration):

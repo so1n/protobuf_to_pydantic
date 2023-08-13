@@ -1,5 +1,7 @@
 # This is an automatically generated file, please do not change
 # gen by protobuf_to_pydantic[v0.1.7.4](https://github.com/so1n/protobuf_to_pydantic)
+# Protobuf Version: 3.20.3
+# Pydantic Version: 2.0.3
 import typing
 from datetime import datetime, timedelta
 from enum import IntEnum
@@ -10,7 +12,7 @@ import typing_extensions
 from annotated_types import Ge, Gt, Interval, Le, Len, Lt, MaxLen, MinLen
 from google.protobuf.any_pb2 import Any  # type: ignore
 from google.protobuf.message import Message  # type: ignore
-from pydantic import BaseModel, BeforeValidator, Field, field_validator, root_validator
+from pydantic import BaseModel, BeforeValidator, ConfigDict, Field, field_validator, model_validator
 from pydantic._internal._fields import PydanticGeneralMetadata
 from pydantic.networks import EmailStr, IPvAnyAddress
 from pydantic_core._pydantic_core import Url
@@ -541,8 +543,7 @@ class RepeatedTest(BaseModel):
 
 
 class AnyTest(BaseModel):
-    class Config:
-        arbitrary_types_allowed = True
+    model_config = ConfigDict(arbitrary_types_allowed=True)
 
     not_in_test_any_not_in_validator = field_validator("not_in_test", mode="after", check_fields=None)(
         any_not_in_validator
@@ -736,7 +737,7 @@ class MessageIgnoredTest(BaseModel):
 
 class OneOfTest(BaseModel):
     _one_of_dict = {"OneOfTest.id": {"fields": {"x", "y"}, "required": True}}
-    _check_one_of = root_validator(pre=True, allow_reuse=True)(check_one_of)
+    _check_one_of = model_validator(mode="before")(check_one_of)
 
     header: str = Field(default="", json_schema_extra={})
     x: str = Field(default="", json_schema_extra={})
@@ -745,7 +746,7 @@ class OneOfTest(BaseModel):
 
 class OneOfNotTest(BaseModel):
     _one_of_dict = {"OneOfNotTest.id": {"fields": {"x", "y"}}}
-    _check_one_of = root_validator(pre=True, allow_reuse=True)(check_one_of)
+    _check_one_of = model_validator(mode="before")(check_one_of)
 
     header: str = Field(default="", json_schema_extra={})
     x: str = Field(default="", json_schema_extra={})
