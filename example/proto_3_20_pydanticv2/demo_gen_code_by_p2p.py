@@ -19,7 +19,7 @@ from pydantic.networks import EmailStr, IPvAnyAddress
 from pydantic_core._pydantic_core import Url
 
 from example.gen_p2p_code import CustomerField, customer_any
-from protobuf_to_pydantic.customer_con_type.v2 import DatetimeType, TimedeltaType, gt_now
+from protobuf_to_pydantic.customer_con_type.v2 import DatetimeType, TimedeltaType, gt_now, t_gt, t_lt
 from protobuf_to_pydantic.customer_validator.v2 import (
     any_in_validator,
     any_not_in_validator,
@@ -482,7 +482,7 @@ class OneOfNotTest(BaseModel):
     x: str = Field(default="")
     y: int = Field(default=0)
 
-    _check_one_of = model_validator(mode="before")(check_one_of)
+    one_of_validator = model_validator(mode="before")(check_one_of)
 
 
 class OneOfTest(BaseModel):
@@ -492,7 +492,7 @@ class OneOfTest(BaseModel):
     x: str = Field(default="")
     y: int = Field(default=0)
 
-    _check_one_of = model_validator(mode="before")(check_one_of)
+    one_of_validator = model_validator(mode="before")(check_one_of)
 
 
 class RepeatedTest(BaseModel):
@@ -508,7 +508,7 @@ class RepeatedTest(BaseModel):
         default_factory=list, min_length=1, max_length=5
     )
     items_timestamp_test: typing.List[
-        typing_extensions.Annotated[DatetimeType, Gt(gt=1600000000.0), Lt(lt=1600000010.0)]
+        typing_extensions.Annotated[DatetimeType, t_gt(1600000000.0), t_lt(1600000010.0)]
     ] = Field(default_factory=list, min_length=1, max_length=5)
     items_duration_test: typing.List[
         typing_extensions.Annotated[TimedeltaType, Ge(ge=timedelta(seconds=10)), Le(le=timedelta(seconds=10))]

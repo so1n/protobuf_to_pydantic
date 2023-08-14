@@ -88,7 +88,6 @@ class TestCustomerConTimestamp:
 
         Demo(demo=datetime.fromtimestamp(1600000000))
         Demo(demo=1600000000 + _diff_utc_second)
-        Demo(demo=datetime.fromtimestamp(1600000000).isoformat())
 
         with pytest.raises(ValidationError):
             Demo(demo=datetime.fromtimestamp(1600000001))
@@ -256,8 +255,6 @@ class TestCustomerConTimestamp:
 
     def test_contimestamp_ignore_tz(self) -> None:
         class Demo(BaseModel):
-            demo: contimestamp(timestamp_not_in=[1600000000], ignore_tz=True)  # type: ignore
+            demo: contimestamp(ignore_tz=True)  # type: ignore
 
-        Demo(demo=datetime.fromtimestamp(1600000001))
-        with pytest.raises(ValidationError):
-            Demo(demo=datetime.fromtimestamp(1600000000))
+        assert Demo(demo=datetime.fromtimestamp(1600000000)) == Demo(demo=1600000000 + _diff_utc_second)

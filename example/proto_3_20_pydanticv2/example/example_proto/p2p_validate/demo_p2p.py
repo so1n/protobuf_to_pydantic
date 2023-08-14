@@ -19,7 +19,7 @@ from pydantic_core._pydantic_core import Url
 from typing_extensions import Annotated
 
 from example.plugin_config import CustomerField, customer_any
-from protobuf_to_pydantic.customer_con_type.v2 import DatetimeType, TimedeltaType, gt_now
+from protobuf_to_pydantic.customer_con_type.v2 import DatetimeType, TimedeltaType, gt_now, t_gt, t_lt
 from protobuf_to_pydantic.customer_validator import check_one_of
 from protobuf_to_pydantic.customer_validator.v2 import (
     any_in_validator,
@@ -521,7 +521,7 @@ class RepeatedTest(BaseModel):
         default_factory=list, min_length=1, max_length=5, json_schema_extra={}
     )
     items_timestamp_test: typing.List[
-        typing_extensions.Annotated[DatetimeType, Gt(gt=1600000000.0), Lt(lt=1600000010.0)]
+        typing_extensions.Annotated[DatetimeType, t_gt(1600000000.0), t_lt(1600000010.0)]
     ] = Field(default_factory=list, min_length=1, max_length=5, json_schema_extra={})
     items_duration_test: typing.List[
         typing_extensions.Annotated[TimedeltaType, Ge(ge=timedelta(seconds=10)), Le(le=timedelta(seconds=10))]
@@ -737,7 +737,7 @@ class MessageIgnoredTest(BaseModel):
 
 class OneOfTest(BaseModel):
     _one_of_dict = {"OneOfTest.id": {"fields": {"x", "y"}, "required": True}}
-    _check_one_of = model_validator(mode="before")(check_one_of)
+    one_of_validator = model_validator(mode="before")(check_one_of)
 
     header: str = Field(default="", json_schema_extra={})
     x: str = Field(default="", json_schema_extra={})
@@ -746,7 +746,7 @@ class OneOfTest(BaseModel):
 
 class OneOfNotTest(BaseModel):
     _one_of_dict = {"OneOfNotTest.id": {"fields": {"x", "y"}}}
-    _check_one_of = model_validator(mode="before")(check_one_of)
+    one_of_validator = model_validator(mode="before")(check_one_of)
 
     header: str = Field(default="", json_schema_extra={})
     x: str = Field(default="", json_schema_extra={})

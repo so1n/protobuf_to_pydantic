@@ -605,7 +605,7 @@ class MessageIgnoredTest(BaseModel):
 
 class OneOfTest(BaseModel):
     _one_of_dict = {"OneOfTest.id": {"fields": {"x", "y"}, "required": True}}
-    _check_one_of = root_validator(pre=True, allow_reuse=True)(check_one_of)
+    one_of_validator = root_validator(pre=True, allow_reuse=True)(check_one_of)
 
     header: str = Field(default="")
     x: str = Field(default="")
@@ -614,7 +614,7 @@ class OneOfTest(BaseModel):
 
 class OneOfNotTest(BaseModel):
     _one_of_dict = {"OneOfNotTest.id": {"fields": {"x", "y"}}}
-    _check_one_of = root_validator(pre=True, allow_reuse=True)(check_one_of)
+    one_of_validator = root_validator(pre=True, allow_reuse=True)(check_one_of)
 
     header: str = Field(default="")
     x: str = Field(default="")
