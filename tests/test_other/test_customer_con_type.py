@@ -3,8 +3,9 @@ from datetime import datetime, timedelta
 import pytest
 from pydantic import BaseModel, ValidationError
 
+from protobuf_to_pydantic import _pydantic_adapter
 from protobuf_to_pydantic.customer_con_type import contimedelta, contimestamp
-from protobuf_to_pydantic.customer_validator import _now_default_factory, set_now_default_factory
+from protobuf_to_pydantic.customer_validator.rule import _now_default_factory, set_now_default_factory
 
 _diff_utc_second: float = datetime.now().astimezone().utcoffset().total_seconds()  # type: ignore
 
@@ -87,7 +88,6 @@ class TestCustomerConTimestamp:
 
         Demo(demo=datetime.fromtimestamp(1600000000))
         Demo(demo=1600000000 + _diff_utc_second)
-        Demo(demo=datetime.fromtimestamp(1600000000).isoformat())
 
         with pytest.raises(ValidationError):
             Demo(demo=datetime.fromtimestamp(1600000001))
@@ -255,8 +255,6 @@ class TestCustomerConTimestamp:
 
     def test_contimestamp_ignore_tz(self) -> None:
         class Demo(BaseModel):
-            demo: contimestamp(timestamp_not_in=[1600000000], ignore_tz=True)  # type: ignore
+            demo: contimestamp(ignore_tz=True)  # type: ignore
 
-        Demo(demo=datetime.fromtimestamp(1600000001))
-        with pytest.raises(ValidationError):
-            Demo(demo=datetime.fromtimestamp(1600000000))
+        assert Demo(demo=datetime.fromtimestamp(1600000000)) == Demo(demo=1600000000 + _diff_utc_second)

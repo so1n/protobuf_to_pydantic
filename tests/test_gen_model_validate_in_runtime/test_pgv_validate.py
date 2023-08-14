@@ -3,10 +3,18 @@ from typing import Callable
 from google.protobuf import __version__
 from google.protobuf.any_pb2 import Any as AnyMessage  # type: ignore
 
+from protobuf_to_pydantic._pydantic_adapter import is_v1
+
 if __version__ > "4.0.0":
-    from example.proto.example.example_proto.validate import demo_pb2
+    if is_v1:
+        from example.proto_pydanticv1.example.example_proto.validate import demo_pb2
+    else:
+        from example.proto_pydanticv2.example.example_proto.validate import demo_pb2
 else:
-    from example.proto_3_20.example.example_proto.validate import demo_pb2
+    if is_v1:
+        from example.proto_3_20_pydanticv1.example.example_proto.validate import demo_pb2
+    else:
+        from example.proto_3_20_pydanticv2.example.example_proto.validate import demo_pb2
 
 from protobuf_to_pydantic import msg_to_pydantic_model
 from tests.base.test_pgv_validate import BaseTestPgvModelValidator

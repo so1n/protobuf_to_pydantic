@@ -2,10 +2,18 @@ from typing import Any, Callable, Type
 
 from google.protobuf import __version__
 
+from protobuf_to_pydantic._pydantic_adapter import is_v1
+
 if __version__ > "4.0.0":
-    from example.proto.example.example_proto.p2p_validate import demo_p2p
+    if is_v1:
+        from example.proto_pydanticv1.example.example_proto.p2p_validate import demo_p2p
+    else:
+        from example.proto_pydanticv2.example.example_proto.p2p_validate import demo_p2p
 else:
-    from example.proto_3_20.example.example_proto.p2p_validate import demo_p2p
+    if is_v1:
+        from example.proto_3_20_pydanticv1.example.example_proto.p2p_validate import demo_p2p
+    else:
+        from example.proto_3_20_pydanticv2.example.example_proto.p2p_validate import demo_p2p
 
 from tests.test_gen_model_validate_in_runtime.test_p2p_validate import BaseTestP2pModelValidator, local_dict
 

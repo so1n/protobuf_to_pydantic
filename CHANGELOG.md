@@ -1,3 +1,7 @@
+## 0.2.0[Future]
+- Feature, support Pydantic Version 2.0.0+
+- Feature, datetime compared by timestamp
+- Refactor, refactor model's validator code gen(Use Pydantic's validator naming standard)
 ## 0.1.7[now]
 - Fix, fix plugin cli not use param
 - Feature, Plugin CodeGen support customer config and support Field config

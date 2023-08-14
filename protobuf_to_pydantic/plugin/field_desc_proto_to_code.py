@@ -6,17 +6,16 @@ from typing import TYPE_CHECKING, Any, Dict, Iterable, Optional, Set, Tuple
 
 from mypy_protobuf.main import PYTHON_RESERVED, Descriptors, SourceCodeLocation
 from pydantic import BaseModel
-from pydantic.fields import FieldInfo, Undefined
+from pydantic.fields import FieldInfo
 
-from protobuf_to_pydantic import customer_validator
-from protobuf_to_pydantic.customer_con_type import pydantic_con_dict
+from protobuf_to_pydantic import _pydantic_adapter
+from protobuf_to_pydantic.constant import protobuf_desc_python_type_dict, python_type_default_value_dict
+from protobuf_to_pydantic.desc_template import DescTemplate
 from protobuf_to_pydantic.gen_code import BaseP2C
 from protobuf_to_pydantic.gen_model import (
-    DescTemplate,
     MessagePaitModel,
     field_param_dict_handle,
-    python_type_default_value_dict,
-    type_dict,
+    field_param_dict_migration_v2_handler,
 )
 from protobuf_to_pydantic.get_desc.from_pb_option.base import field_option_handle, protobuf_common_type_dict
 from protobuf_to_pydantic.grpc_types import (
@@ -30,6 +29,10 @@ from protobuf_to_pydantic.plugin.my_types import ProtobufTypeModel
 
 if TYPE_CHECKING:
     from protobuf_to_pydantic.plugin.config import ConfigModel
+if _pydantic_adapter.is_v1:
+    from protobuf_to_pydantic.customer_con_type import pydantic_con_dict
+else:
+    pydantic_con_dict = {}
 
 logger: logging.Logger = logging.getLogger(__name__)
 
@@ -58,13 +61,16 @@ class FileDescriptorProtoToCode(BaseP2C):
         self._parse_field_descriptor()
 
     def _add_other_module_pkg(self, other_fd: FileDescriptorProto, type_str: str) -> None:
+        """
+        Generate the corresponding import statement
+        e.g:
+          fd name:example_proto/demo/demo.proto
+          other_fd name: example_proto/common/single.proto
+          output: from ..common.single_p2p import DemoMessage
+        """
         if other_fd.name == self._fd.name:
             return
-        # Generate the corresponding import statement
-        # e.g:
-        #   fd name:example_proto/demo/demo.proto
-        #   other_fd name: example_proto/common/single.proto
-        #   output: from ..common.single_p2p import DemoMessage
+
         fd_path_list: Tuple[str, ...] = Path(self._fd.name).parts
         message_path_list: Tuple[str, ...] = Path(other_fd.name).parts
         index: int = -1
@@ -140,8 +146,8 @@ class FileDescriptorProtoToCode(BaseP2C):
     ) -> Optional[Tuple[str, str]]:
         """generate message's field to Pydantic.FieldInfo code"""
         field_info_dict: dict = {}
-        rule_type_str: Optional[str] = None
         nested_message_name: Optional[str] = None
+        raw_validator_dict = {}
         if field.type == 11:
             # message handle
             message = self._descriptors.messages[field.type_name]
@@ -174,7 +180,6 @@ class FileDescriptorProtoToCode(BaseP2C):
                 elif message_fd.name == self._fd.name and message.name not in {i.name for i in desc.nested_type}:
                     # If the referenced Message is generated later, it needs to be generated in advance
                     self._content_deque.append(self._message(message, [FileDescriptorProto.ENUM_TYPE_FIELD_NUMBER]))
-
         elif field.type == 14:
             # enum handle
             type_str = field.type_name.split(".")[-1]
@@ -182,11 +187,11 @@ class FileDescriptorProtoToCode(BaseP2C):
             rule_type_str = "enum"
             message_fd = self._descriptors.message_to_fd[field.type_name]
             self._add_other_module_pkg(message_fd, type_str)
-        elif field.type not in type_dict:
+        elif field.type not in protobuf_desc_python_type_dict:
             logger.error(f"Not found {field.type} in type_dict")
             return None
         else:
-            field_info_dict["default"] = python_type_default_value_dict[type_dict[field.type]]
+            field_info_dict["default"] = python_type_default_value_dict[protobuf_desc_python_type_dict[field.type]]
             protobuf_type_model = self._get_protobuf_type_model(field)
             type_str = protobuf_type_model.py_type_str
             rule_type_str = protobuf_type_model.rule_type_str
@@ -198,9 +203,11 @@ class FileDescriptorProtoToCode(BaseP2C):
             field_info_dict.pop("default", "")
             field_info_dict["default_factory"] = list
             rule_type_str = "repeated"
+
         if len(field.options.ListFields()) != 0 and rule_type_str and not skip_validate_rule:
             # protobuf option support
             field_option_info_dict: dict = field_option_handle(rule_type_str, field.type_name, field)  # type: ignore
+            raw_validator_dict = field_option_info_dict.get("validator", {})
 
             skip = field_option_info_dict.pop("skip", False)
             if nested_message_name:
@@ -213,31 +220,47 @@ class FileDescriptorProtoToCode(BaseP2C):
             ).dict()
             if not field_option_info_dict.pop("enable", False):
                 return None
+            try:
+                if type_str.startswith("typing"):
+                    import typing  # isort:skip
+                field_type = eval(type_str)
+            except NameError:
+                field_type = None
             field_param_dict_handle(
                 field_option_info_dict,
-                field_info_dict.get("default", Undefined),
+                field_info_dict.get("default", _pydantic_adapter.PydanticUndefined),
                 field_info_dict.get("default_factory", None),
+                field_type=field_type,
             )
             field_info_dict = field_option_info_dict
 
-        validator_dict = field_info_dict.pop("validator", None)
         class_head_content = ""
-        if validator_dict:
-            # validator support
-            self._add_import_code("pydantic", "validator")
-            for validator_name, validator_class in validator_dict.items():
-                param, validator_instance = validator_class.__validator_config__
-                func = validator_instance.func
-                # TODO get allow_reuse, pre from validator_instance
-                if func.__module__ != customer_validator.__name__:
-                    continue
-
-                self._add_import_code(func.__module__, func.__name__)
-                param_str = ", ".join([self._get_value_code(i) for i in param])
-                class_head_content += (
-                    " " * (self.code_indent + indent)
-                    + f"{validator_name} = validator({param_str},  allow_reuse=True)({func.__name__})\n"
-                )
+        #
+        field_info_dict.pop("validator", None)
+        if raw_validator_dict:
+            # use raw validator
+            # In Pydantic v2:
+            #     field_doc_dict["validatos"] = {
+            #       'not_in_test_any_not_in_validator': PydanticDescriptorProxy(
+            #             wrapped=<classmethod object at 0x7f28943c8128>,
+            #             decorator_info=FieldValidatorDecoratorInfo(fields=('not_in_test',),
+            #             mode='after', check_fields=None),
+            #             shim=None
+            #        )
+            #     }
+            #  But validator_dict output:
+            #   {
+            #       'not_in_test_any_not_in_validator': {
+            #           'wrapped': <classmethod object at 0x7f28943c8128>,
+            #           'decorator_info': {
+            #               'fields': ('not_in_test',),
+            #               'mode': 'after',
+            #               'check_fields': None
+            #            },
+            #           'shim': None
+            #       }
+            #   }
+            class_head_content += self._validator_handle(raw_validator_dict, self.code_indent + indent)
 
         # type support
         type_: Any = field_info_dict.pop("type_", None)
@@ -245,7 +268,7 @@ class FileDescriptorProtoToCode(BaseP2C):
         if type_:
             # Custom types have the highest priority
             if inspect.isclass(type_) and type_.__mro__[1] in pydantic_con_dict:
-                type_str = self.pydantic_con_type_handle(type_)
+                type_str = self._get_pydantic_con_type_code(type_)
             else:
                 type_str = self._get_value_code(type_)
         elif map_type_dict:
@@ -269,13 +292,24 @@ class FileDescriptorProtoToCode(BaseP2C):
             field_name = "Field"
             self._add_import_code("pydantic", "Field")
 
+        if not _pydantic_adapter.is_v1:
+            field_param_dict_migration_v2_handler(field_info_dict)
         # arranging  field info parameters
         for key in FieldInfo.__slots__:
             value: Any = field_info_dict.get(key, None)
             if value is getattr(FieldInfo(), key):
                 field_info_dict.pop(key, None)
 
-        field_info_str: str = ", ".join([f"{k}={self._get_value_code(v)}" for k, v in field_info_dict.items()]) or ""
+        field_info_str: str = (
+            ", ".join(
+                [
+                    f"{k}={self._get_value_code(v)}"
+                    for k, v in field_info_dict.items()
+                    if v is not None or k == "default"
+                ]
+            )
+            or ""
+        )
         class_field_content: str = (
             " " * (self.code_indent + indent) + f"{field.name}: {type_str} = {field_name}({field_info_str}) \n"
         )
@@ -311,7 +345,6 @@ class FileDescriptorProtoToCode(BaseP2C):
         self, desc: DescriptorProto, scl_prefix: SourceCodeLocation, indent: int = 0, skip_validate_rule: bool = False
     ) -> str:
         self._add_import_code("google.protobuf.message", "Message")
-        content: str = ""
         class_name = desc.name if desc.name not in PYTHON_RESERVED else "_r_" + desc.name
         if class_name in self._parse_desc_name_dict:
             return self._parse_desc_name_dict[class_name]
@@ -345,18 +378,39 @@ class FileDescriptorProtoToCode(BaseP2C):
                 class_head_content += (
                     f"{' ' * (indent + self.code_indent)}_one_of_dict = {self._get_value_code(one_of_dict)}\n"
                 )
-                class_head_content += (
-                    f"{' ' * (indent + self.code_indent)}"
-                    f"_check_one_of = root_validator(pre=True, allow_reuse=True)(check_one_of)\n"
-                )
-                self._add_import_code("pydantic", "root_validator")
+
                 self._add_import_code("protobuf_to_pydantic.customer_validator", "check_one_of")
+                if _pydantic_adapter.is_v1:
+                    class_head_content += (
+                        f"{' ' * (indent + self.code_indent)}"
+                        f"one_of_validator = root_validator(pre=True, allow_reuse=True)(check_one_of)\n"
+                    )
+                    self._add_import_code("pydantic", "root_validator")
+                else:
+                    class_head_content += (
+                        f"{' ' * (indent + self.code_indent)}"
+                        f'one_of_validator = model_validator(mode="before")(check_one_of)\n'
+                    )
+                    self._add_import_code("pydantic", "model_validator")
 
         if use_custom_type:
-            config_content: str = f"{' ' * (indent + self.code_indent)}class Config:\n"
-            config_content += f"{' ' * (indent + self.code_indent * 2)}arbitrary_types_allowed = True\n\n"
+            if _pydantic_adapter.is_v1:
+                # Pydantic V1 output:
+                #   class Config:
+                #       arbitrary_types_allowed = False
+                config_content: str = f"{' ' * (indent + self.code_indent)}class Config:\n"
+                config_content += f"{' ' * (indent + self.code_indent * 2)}arbitrary_types_allowed = True\n\n"
+            else:
+                # Pydantic V2 output:
+                #   model_config = ConfigDict(arbitrary_types_allowed=False)
+                config_content = (
+                    f"{' ' * (indent + self.code_indent)}model_config = ConfigDict(arbitrary_types_allowed=True)\n\n"
+                )
+                self._add_import_code("pydantic", "ConfigDict")
+
             class_head_content = config_content + class_head_content
-        content += "\n".join([i for i in [class_content, class_head_content, class_field_content] if i])
+
+        content = "\n".join([i for i in [class_content, class_head_content, class_field_content] if i])
         if not any([class_head_content, class_field_content]):
             content += " " * (indent + self.code_indent) + "pass\n"
         while True:
@@ -368,10 +422,10 @@ class FileDescriptorProtoToCode(BaseP2C):
         return content
 
     def _get_protobuf_type_model(self, field: FieldDescriptorProto) -> ProtobufTypeModel:
-        rule_type_str: str = ""
         type_factory: Optional[Any] = None
-        if field.type in type_dict:
-            type_factory = type_dict[field.type]
+        # TODO use gen_model.py _message_default_factory_dict_by_type_name
+        if field.type in protobuf_desc_python_type_dict:
+            type_factory = protobuf_desc_python_type_dict[field.type]
             return ProtobufTypeModel(
                 type_factory=type_factory,
                 py_type_str=self._get_value_code(type_factory),
@@ -388,11 +442,21 @@ class FileDescriptorProtoToCode(BaseP2C):
                 type_factory = datetime.now
                 self._add_import_code("datetime", "datetime")
             elif _type_str == "Duration":
-                py_type_str = "Timedelta"
-                rule_type_str = "duration"
-                type_factory = timedelta
-                self._add_import_code("datetime", "timedelta")
-                self._add_import_code("protobuf_to_pydantic.util", py_type_str)
+                if _pydantic_adapter.is_v1:
+                    py_type_str = "Timedelta"
+                    rule_type_str = "duration"
+                    type_factory = timedelta
+                    self._add_import_code("datetime", "timedelta")
+                    self._add_import_code("protobuf_to_pydantic.util", py_type_str)
+                else:
+                    py_type_str = "Annotated[timedelta, BeforeValidator(Timedelta.validate)]"
+                    rule_type_str = "duration"
+                    type_factory = timedelta
+
+                    self._add_import_code("pydantic", "BeforeValidator")
+                    self._add_import_code("typing_extensions", "Annotated")
+                    self._add_import_code("datetime", "timedelta")
+                    self._add_import_code("protobuf_to_pydantic.util", "Timedelta")
             elif _type_str == "Any":
                 py_type_str = "Any"
                 rule_type_str = "any"

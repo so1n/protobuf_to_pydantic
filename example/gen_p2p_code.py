@@ -8,9 +8,14 @@ from google.protobuf.message import Message
 from pydantic import confloat, conint
 from pydantic.fields import FieldInfo
 
-from protobuf_to_pydantic import msg_to_pydantic_model, pydantic_model_to_py_file
+from protobuf_to_pydantic import _pydantic_adapter, msg_to_pydantic_model, pydantic_model_to_py_file
 
 target_p: str = "proto" if __version__ > "4.0.0" else "proto_3_20"
+if not _pydantic_adapter.is_v1:
+    target_p += "_pydanticv2"
+else:
+    target_p += "_pydanticv1"
+
 module = importlib.import_module(f"example.{target_p}.example.example_proto.p2p_validate.demo_pb2")
 message_class_list = []
 for module_name in dir(module):
@@ -53,4 +58,5 @@ def gen_code() -> None:
 
 
 if __name__ == "__main__":
+    print(target_p)
     gen_code()

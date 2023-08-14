@@ -1,7 +1,9 @@
 import inspect
 import logging
+from datetime import datetime, timedelta
 from typing import Any, Callable, Dict, List, Optional, Set, Type, Union
 
+from protobuf_to_pydantic import _pydantic_adapter
 from protobuf_to_pydantic.customer_con_type import (
     conbytes,
     confloat,
@@ -10,7 +12,6 @@ from protobuf_to_pydantic.customer_con_type import (
     constr,
     contimedelta,
     contimestamp,
-    validator,
 )
 from protobuf_to_pydantic.customer_validator import validate_validator_dict
 from protobuf_to_pydantic.grpc_types import Descriptor, FieldDescriptor, FieldDescriptorProto, Message
@@ -75,6 +76,23 @@ def _has_raw_message_field(column: str, message: Message) -> bool:
     return True
 
 
+def get_type_hints_from_type_name(type_name: str) -> Optional[Type]:
+    if type_name == "string":
+        return str
+    elif "double" in type_name or "float" in type_name:
+        return float
+    elif "int" in type_name:
+        return int
+    elif type_name == "duration":
+        return timedelta
+    elif type_name == "timestamp":
+        return datetime
+    elif type_name == "bytes":
+        return bytes
+    else:
+        return None
+
+
 def get_con_type_func_from_type_name(type_name: str) -> Optional[Callable]:
     if type_name == "string":
         return constr
@@ -98,9 +116,13 @@ def option_descriptor_to_desc_dict(
     type_name: str,
     full_name: str,
     desc_dict: FieldInfoTypedDict,
+    extra_name_with_type_name_prefix: bool = True,
 ) -> None:
     """Parse the data of option and store it in dict.
     Since array and map are supported, the complexity is relatively high
+
+    The field names used by validator need to be prefixed with type_name, such as timestamp_gt,
+    while the built-in validation of Pydantic V2 does not require type_name prefix, such as gt
     """
     if hasattr(option_descriptor, "ListFields"):
         column_list = [column[0].name for column in option_descriptor.ListFields()]  # type: ignore
@@ -141,11 +163,16 @@ def option_descriptor_to_desc_dict(
             # Types of priority treatment for special cases
             if "validator" not in desc_dict:
                 desc_dict["validator"] = {}
+
             _column: str = f"{type_name}_{column}"
             desc_dict["extra"][_column] = replace_protobuf_type_to_python_type(value)
-            desc_dict["validator"][f"{field.name}_{_column}_validator"] = validator(field.name, allow_reuse=True)(
-                validate_validator_dict[f"{_column}_validator"]
-            )
+            # if extra_name_with_type_name_prefix:
+            #     desc_dict["extra"][_column] = replace_protobuf_type_to_python_type(value)
+            # else:
+            #     desc_dict["extra"][column] = replace_protobuf_type_to_python_type(value)
+            desc_dict["validator"][f"{field.name}_{_column}_validator"] = _pydantic_adapter.field_validator(
+                field.name, allow_reuse=True
+            )(validate_validator_dict[f"{_column}_validator"])
             continue
         elif column in ("in", "not_in", "len", "prefix", "suffix", "contains", "not_contains"):
             # The verification of these parameters is handed over to the validator,
@@ -156,9 +183,9 @@ def option_descriptor_to_desc_dict(
                 desc_dict["validator"] = {}
             _column = column + "_" if column in ("in",) else column
             desc_dict["extra"][_column] = replace_protobuf_type_to_python_type(value)
-            desc_dict["validator"][f"{field.name}_{column}_validator"] = validator(field.name, allow_reuse=True)(
-                validate_validator_dict[f"{column}_validator"]
-            )
+            desc_dict["validator"][f"{field.name}_{column}_validator"] = _pydantic_adapter.field_validator(
+                field.name, allow_reuse=True
+            )(validate_validator_dict[f"{column}_validator"])
             continue
         elif column in column_pydantic_type_dict:
             # Support some built-in type judgments of PGV
@@ -168,14 +195,22 @@ def option_descriptor_to_desc_dict(
             # Parse the field data of the key and value in the map
             type_name = value.ListFields()[0][0].full_name.split(".")[-1]
             # Nested types are supported via like constr
+
+            # Generate information corresponding to the nested type
+            sub_dict: FieldInfoTypedDict = {"extra": {}, "skip": False}
+            option_descriptor_to_desc_dict(
+                getattr(value, type_name),
+                field,
+                type_name,
+                full_name,
+                sub_dict,
+                extra_name_with_type_name_prefix=_pydantic_adapter.is_v1,
+            )
             con_type = get_con_type_func_from_type_name(type_name)
             if not con_type:
                 # TODO nested message
                 _logger.warning(f"{__name__} not support sub type `{type_name}`, please reset {full_name}")
                 continue
-            # Generate information corresponding to the nested type
-            sub_dict: FieldInfoTypedDict = {"extra": {}, "skip": False}
-            option_descriptor_to_desc_dict(getattr(value, type_name), field, type_name, full_name, sub_dict)
             if "map_type" not in desc_dict:
                 desc_dict["map_type"] = {}
             con_type_param_dict: dict = {}
@@ -188,12 +223,64 @@ def option_descriptor_to_desc_dict(
                         con_type_param_dict[_key] = sub_dict["extra"][_key]
 
             desc_dict["map_type"][column] = con_type(**con_type_param_dict)
-            continue
+            # if _pydantic_adapter.is_v1:
+            #     con_type = get_con_type_func_from_type_name(type_name)
+            #     if not con_type:
+            #         # TODO nested message
+            #         _logger.warning(f"{__name__} not support sub type `{type_name}`, please reset {full_name}")
+            #         continue
+            #     if "map_type" not in desc_dict:
+            #         desc_dict["map_type"] = {}
+            #     con_type_param_dict: dict = {}
+            #     for _key in inspect.signature(con_type).parameters.keys():
+            #         param_value = sub_dict.get(_key, None)  # type: ignore
+            #         if param_value is not None:
+            #             con_type_param_dict[_key] = param_value
+            #         elif "extra" in sub_dict:
+            #             if sub_dict["extra"].get(_key, None) is not None:
+            #                 con_type_param_dict[_key] = sub_dict["extra"][_key]
+            #
+            #     desc_dict["map_type"][column] = con_type(**con_type_param_dict)
+            # else:
+            #     _type = get_type_hints_from_type_name(type_name)
+            #     if not _type:
+            #         # TODO nested message
+            #         _logger.warning(f"{__name__} not support sub type `{type_name}`, please reset {full_name}")
+            #         continue
+            #     if "map_type" not in desc_dict:
+            #         desc_dict["map_type"] = {}
+            #
+            #     from pydantic import Field
+            #
+            #     with_validator_param_field = Field(**sub_dict)
+            #     if not with_validator_param_field.metadata:
+            #         desc_dict["map_type"][column] = _type
+            #     else:
+            #         desc_dict["map_type"][column] = Annotated.__class_getitem__(
+            #             (_type, *with_validator_param_field.metadata)
+            #         )
+            # TODO extra handler
+            #
+            # con_type_param_dict: dict = {}
+            # for _key in inspect.signature(con_type).parameters.keys():
+            #     param_value = sub_dict.get(_key, None)  # type: ignore
+            #     if param_value is not None:
+            #         con_type_param_dict[_key] = param_value
+            #     elif "extra" in sub_dict:
+            #         if sub_dict["extra"].get(_key, None) is not None:
+            #             con_type_param_dict[_key] = sub_dict["extra"][_key]
+            #
+            # desc_dict["map_type"][column] = con_type(**con_type_param_dict)
         elif column == "items":
             # Process array data
             type_name = value.ListFields()[0][0].full_name.split(".")[-1]
             # Nested types are supported via like constr
+            # TODO pydantic v2
             con_type = get_con_type_func_from_type_name(type_name)
+            # if _pydantic_adapter.is_v1:
+            #     con_type = get_con_type_func_from_type_name(type_name)
+            # else:
+            #     con_type = get_type_hints_from_type_name(type_name)
             if not con_type:
                 # TODO nested message
                 _logger.warning(
@@ -202,8 +289,22 @@ def option_descriptor_to_desc_dict(
                 desc_dict["type"] = List
                 continue
             sub_dict = {"extra": {}, "type": con_type, "skip": False}
-            option_descriptor_to_desc_dict(getattr(value, type_name), field, type_name, full_name, sub_dict)
+            option_descriptor_to_desc_dict(
+                getattr(value, type_name),
+                field,
+                type_name,
+                full_name,
+                sub_dict,
+                extra_name_with_type_name_prefix=_pydantic_adapter.is_v1,
+            )
+
             desc_dict["type"] = conlist
+            # if _pydantic_adapter.is_v1:
+            #     from protobuf_to_pydantic.customer_con_type import conlist
+            #
+            #     desc_dict["type"] = conlist
+            # else:
+            #     desc_dict["type"] = List
             desc_dict["sub"] = sub_dict
         desc_dict[column] = value  # type: ignore
 

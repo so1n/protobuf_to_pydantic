@@ -1,6 +1,6 @@
 #!/bin/bash
 # Executed at the root of the project
-proto_target=$(poetry run python -c "from google.protobuf import __version__; print('proto' if __version__ > '4.0.0' else 'proto_3_20')")
+proto_target=$(poetry run python -c "from google.protobuf import __version__;from protobuf_to_pydantic._pydantic_adapter import is_v1;target_p = 'proto' if __version__ > '4.0.0' else 'proto_3_20';target_p += '_pydanticv1' if is_v1 else '_pydanticv2';print(target_p)")
 echo "Using proto_target: ${proto_target}"
 # gen python protos code path
 target_p="example/$proto_target"

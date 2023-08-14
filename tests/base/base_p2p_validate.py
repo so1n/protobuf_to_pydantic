@@ -7,6 +7,7 @@ import pytest
 from pydantic import ValidationError
 
 from example.gen_p2p_code import CustomerField, confloat, conint, customer_any
+from protobuf_to_pydantic._pydantic_adapter import is_v1
 from protobuf_to_pydantic.grpc_types import AnyMessage
 
 local_dict: dict = {
@@ -161,14 +162,17 @@ class BaseTestP2pModelValidator:
             "items_string_test": ["abc", "def"],
             "items_double_test": [1.2, 3.4],
             "items_int32_test": [2, 3],
-            "items_timestamp_test": [datetime.fromtimestamp(1600000001)],
+            # In pydantic v2 support datetime gt, ge, lt and le validate
+            # But when their parameter timestamp, the generated datetime is with the time zone
+            # So Gt(16000000000) can only be compared with 1600000000,
+            # GT(datetime.fromtimestamp(1600000000)) can only be compared with datetime.fromtimestamp(16000000000).
+            "items_timestamp_test": [datetime.fromtimestamp(1600000001) if is_v1 else 1600000001],
             "items_duration_test": [timedelta(seconds=10)],
             "items_bytes_test": [b"a", b"b"],
             "miss_default_test": ["a", "b"]
         }
         error_map_dict: dict = {
             "range_test": ["a", "b", "c", "d", "e", "f"],
-            "unique_test": ["a", "b", "c", "c"],
             "items_string_test": ["abc", "def", "abcdef"],
             "items_double_test": [1.2, 3.4, "5.6"],
             "items_int32_test": [2, 3, 6],
@@ -176,6 +180,10 @@ class BaseTestP2pModelValidator:
             "items_duration_test": [timedelta(seconds=25)],
             "items_bytes_test": [b"a", b"b", b"c", b"d", b"e", b"f"],
         }
+        if is_v1:
+            # In pydantic v2, unique_test will not raise error when the repeated field is not unique
+            error_map_dict["unique_test"] = ["a", "b", "c", "c"]
+
         self._check_message_validate(model_class, normal_dict, error_map_dict)
 
     def _test_any(self, model_class: Type) -> None:
@@ -282,11 +290,16 @@ class BaseTestP2pModelValidator:
             },
             "empty": None,
             "after_refer": {
-                "uid": 10086,
+                "uid": "10086",
                 "age": 18
             }
         }
-        self.replace_message_fn(model_class, local_dict=local_dict).update_forward_refs(**normal_dict)
+        if is_v1:
+            self.replace_message_fn(model_class, local_dict=local_dict).update_forward_refs(**normal_dict)
+        else:
+            model_class = self.replace_message_fn(model_class, local_dict=local_dict)
+            model_class.model_rebuild()
+            model_class(**normal_dict)
 
     def _test_one_of(self, model_class: Any) -> None:
         # test init

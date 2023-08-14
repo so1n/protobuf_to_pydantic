@@ -4,10 +4,18 @@ from uuid import uuid4
 
 from google.protobuf import __version__
 
+from protobuf_to_pydantic._pydantic_adapter import is_v1
+
 if __version__ > "4.0.0":
-    from example.proto.example.example_proto.demo import demo_pb2
+    if is_v1:
+        from example.proto_pydanticv1.example.example_proto.demo import demo_pb2
+    else:
+        from example.proto_pydanticv2.example.example_proto.demo import demo_pb2  # type: ignore[no-redef]
 else:
-    from example.proto_3_20.example.example_proto.demo import demo_pb2  # type: ignore[no-redef]
+    if is_v1:
+        from example.proto_3_20_pydanticv1.example.example_proto.demo import demo_pb2  # type: ignore[no-redef]
+    else:
+        from example.proto_3_20_pydanticv2.example.example_proto.demo import demo_pb2  # type: ignore[no-redef]
 
 from protobuf_to_pydantic import msg_to_pydantic_model, pydantic_model_to_py_code
 from protobuf_to_pydantic.util import format_content
@@ -30,7 +38,7 @@ class BaseTestTextComment:
         )
 
     def test_user_message(self) -> None:
-        assert format_content("""
+        content = """
 class SexType(IntEnum):
     man = 0
     women = 1
@@ -63,10 +71,47 @@ class UserMessage(BaseModel):
     is_adult: bool = Field(default=False)
     user_name: str = Field(default="", description="user name", min_length=1, max_length=10, example="so1n")
     demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field(customer_string="c1", customer_int=1)
-""") in self._model_output(demo_pb2.UserMessage)
+"""
+        if not is_v1:
+            content = """
+class SexType(IntEnum):
+    man = 0
+    women = 1
+
+
+class ExampleExampleProtoCommonSingleDemoEnum(IntEnum):
+    \"\"\"Note: The current class does not belong to the package
+    ExampleExampleProtoCommonSingleDemoEnum protobuf path:example/example_proto/common/single.proto\"\"\"
+
+    zero = 0
+    one = 1
+    two = 3
+
+
+class ExampleExampleProtoCommonSingleDemoMessage(BaseModel):
+    \"\"\"Note: The current class does not belong to the package
+    ExampleExampleProtoCommonSingleDemoMessage protobuf path:example/example_proto/common/single.proto\"\"\"
+
+    earth: str = Field(default="")
+    mercury: str = Field(default="")
+    mars: str = Field(default="")
+
+
+class UserMessage(BaseModel):
+    uid: str = Field(title="UID", description="user union id", example="10086")
+    age: int = Field(default=0, title="use age", example=18, ge=0)
+    height: float = Field(default=0.0, ge=0, le=2.5)
+    sex: SexType = Field(default=0)
+    demo: ExampleExampleProtoCommonSingleDemoEnum = Field(default=0)
+    is_adult: bool = Field(default=False)
+    user_name: str = Field(default="", description="user name", example="so1n", min_length=1, max_length=10)
+    demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field(customer_string="c1", customer_int=1)
+
+"""
+        assert format_content(content) in self._model_output(demo_pb2.UserMessage)
 
     def test_map_message(self) -> None:
-            assert format_content("""
+        content = """
 class SexType(IntEnum):
     man = 0
     women = 1
@@ -104,10 +149,51 @@ class UserMessage(BaseModel):
 class MapMessage(BaseModel):
     user_map: typing.Dict[str, UserMessage] = Field(default_factory=dict)
     user_flag: typing.Dict[str, bool] = Field(default_factory=dict)
-""") in self._model_output(demo_pb2.MapMessage)
+"""
+        if not is_v1:
+            content = """
+class SexType(IntEnum):
+    man = 0
+    women = 1
+
+
+class ExampleExampleProtoCommonSingleDemoEnum(IntEnum):
+    \"\"\"Note: The current class does not belong to the package
+    ExampleExampleProtoCommonSingleDemoEnum protobuf path:example/example_proto/common/single.proto\"\"\"
+
+    zero = 0
+    one = 1
+    two = 3
+
+
+class ExampleExampleProtoCommonSingleDemoMessage(BaseModel):
+    \"\"\"Note: The current class does not belong to the package
+    ExampleExampleProtoCommonSingleDemoMessage protobuf path:example/example_proto/common/single.proto\"\"\"
+
+    earth: str = Field(default="")
+    mercury: str = Field(default="")
+    mars: str = Field(default="")
+
+
+class UserMessage(BaseModel):
+    uid: str = Field(title="UID", description="user union id", example="10086")
+    age: int = Field(default=0, title="use age", example=18, ge=0)
+    height: float = Field(default=0.0, ge=0, le=2.5)
+    sex: SexType = Field(default=0)
+    demo: ExampleExampleProtoCommonSingleDemoEnum = Field(default=0)
+    is_adult: bool = Field(default=False)
+    user_name: str = Field(default="", description="user name", example="so1n", min_length=1, max_length=10)
+    demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field(customer_string="c1", customer_int=1)
+
+
+class MapMessage(BaseModel):
+    user_map: typing.Dict[str, UserMessage] = Field(default_factory=dict)
+    user_flag: typing.Dict[str, bool] = Field(default_factory=dict)
+"""
+        assert format_content(content) in self._model_output(demo_pb2.MapMessage)
 
     def test_repeated_message(self) -> None:
-            assert format_content("""
+        content = """
 class SexType(IntEnum):
     man = 0
     women = 1
@@ -146,10 +232,53 @@ class RepeatedMessage(BaseModel):
     str_list: typing.List[str] = Field(default_factory=list, min_items=3, max_items=5)
     int_list: typing.List[int] = Field(default_factory=list, min_items=1, max_items=5, unique_items=True)
     user_list: typing.List[UserMessage] = Field(default_factory=list)
-""") in self._model_output(demo_pb2.RepeatedMessage)
+"""
+        if not is_v1:
+            content = """
+class SexType(IntEnum):
+    man = 0
+    women = 1
+
+
+class ExampleExampleProtoCommonSingleDemoEnum(IntEnum):
+    \"\"\"Note: The current class does not belong to the package
+    ExampleExampleProtoCommonSingleDemoEnum protobuf path:example/example_proto/common/single.proto\"\"\"
+
+    zero = 0
+    one = 1
+    two = 3
+
+
+class ExampleExampleProtoCommonSingleDemoMessage(BaseModel):
+    \"\"\"Note: The current class does not belong to the package
+    ExampleExampleProtoCommonSingleDemoMessage protobuf path:example/example_proto/common/single.proto\"\"\"
+
+    earth: str = Field(default="")
+    mercury: str = Field(default="")
+    mars: str = Field(default="")
+
+
+class UserMessage(BaseModel):
+    uid: str = Field(title="UID", description="user union id", example="10086")
+    age: int = Field(default=0, title="use age", example=18, ge=0)
+    height: float = Field(default=0.0, ge=0, le=2.5)
+    sex: SexType = Field(default=0)
+    demo: ExampleExampleProtoCommonSingleDemoEnum = Field(default=0)
+    is_adult: bool = Field(default=False)
+    user_name: str = Field(default="", description="user name", example="so1n", min_length=1, max_length=10)
+    demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field(customer_string="c1", customer_int=1)
+
+
+class RepeatedMessage(BaseModel):
+    str_list: typing.List[str] = Field(default_factory=list, min_length=3, max_length=5)
+    int_list: typing.Set[int] = Field(default_factory=set, min_length=1, max_length=5)
+    user_list: typing.List[UserMessage] = Field(default_factory=list)
+
+"""
+        assert format_content(content) in self._model_output(demo_pb2.RepeatedMessage)
 
     def test_nested_message(self) -> None:
-        assert format_content("""
+        content = """
 class SexType(IntEnum):
     man = 0
     women = 1
@@ -217,7 +346,78 @@ class NestedMessage(BaseModel):
     include_enum: IncludeEnum = Field(default=0)
     empty: typing.Any = Field()
     after_refer: AfterReferMessage = Field()
-""") in self._model_output(demo_pb2.NestedMessage)
+"""
+        if not is_v1:
+            content = """
+class SexType(IntEnum):
+    man = 0
+    women = 1
+
+
+class ExampleExampleProtoCommonSingleDemoEnum(IntEnum):
+    \"\"\"Note: The current class does not belong to the package
+    ExampleExampleProtoCommonSingleDemoEnum protobuf path:example/example_proto/common/single.proto\"\"\"
+
+    zero = 0
+    one = 1
+    two = 3
+
+
+class ExampleExampleProtoCommonSingleDemoMessage(BaseModel):
+    \"\"\"Note: The current class does not belong to the package
+    ExampleExampleProtoCommonSingleDemoMessage protobuf path:example/example_proto/common/single.proto\"\"\"
+
+    earth: str = Field(default="")
+    mercury: str = Field(default="")
+    mars: str = Field(default="")
+
+
+class UserMessage(BaseModel):
+    uid: str = Field(title="UID", description="user union id", example="10086")
+    age: int = Field(default=0, title="use age", example=18, ge=0)
+    height: float = Field(default=0.0, ge=0, le=2.5)
+    sex: SexType = Field(default=0)
+    demo: ExampleExampleProtoCommonSingleDemoEnum = Field(default=0)
+    is_adult: bool = Field(default=False)
+    user_name: str = Field(default="", description="user name", example="so1n", min_length=1, max_length=10)
+    demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field(customer_string="c1", customer_int=1)
+
+
+class RepeatedMessage(BaseModel):
+    str_list: typing.List[str] = Field(default_factory=list, min_length=3, max_length=5)
+    int_list: typing.Set[int] = Field(default_factory=set, min_length=1, max_length=5)
+    user_list: typing.List[UserMessage] = Field(default_factory=list)
+
+
+class MapMessage(BaseModel):
+    user_map: typing.Dict[str, UserMessage] = Field(default_factory=dict)
+    user_flag: typing.Dict[str, bool] = Field(default_factory=dict)
+
+
+class AfterReferMessage(BaseModel):
+    uid: str = Field(title="UID", description="user union id", example="10086")
+    age: int = Field(default=0, title="use age", example=18, ge=0)
+
+
+class NestedMessage(BaseModel):
+    class UserPayMessage(BaseModel):
+        bank_number: PaymentCardNumber = Field(default="")
+        exp: datetime = Field(default_factory=exp_time)
+        uuid: str = Field(default_factory=uuid4)
+
+    class IncludeEnum(IntEnum):
+        zero = 0
+        one = 1
+        two = 2
+
+    user_list_map: typing.Dict[str, RepeatedMessage] = Field(default_factory=dict)
+    user_map: typing.Dict[str, MapMessage] = Field(default_factory=dict)
+    user_pay: UserPayMessage = Field()
+    include_enum: IncludeEnum = Field(default=0)
+    empty: typing.Any = Field()
+    after_refer: AfterReferMessage = Field()
+"""
+        assert format_content(content) in self._model_output(demo_pb2.NestedMessage)
 
     def test_invoice_item(self) -> None:
         assert format_content(

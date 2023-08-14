@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "protobuf_to_pydantic"
-version = "0.0.0"
-description = "Convert Protobuf-generated Python objects to Pydantic.BaseModel objects with parameter checksum"
+version = "v0.1.7.4"
+description = "Generate the `pydantic.BaseModel` class (and the corresponding source code) with parameter verification function through the Protobuf file"
 authors = ["So1n <so1n897046026@gmail.com>"]
 license = "Apache Software License"
 readme = "./README.md"
@@ -17,13 +17,12 @@ protoc-gen-protobuf-to-pydantic = "protobuf_to_pydantic.plugin.main:main"
 
 [tool.poetry.dependencies]
 python = "^3.7"
+pydantic = ">=1.9.2, <3.0.0"
+grpcio-tools = "^1.40.0"
+
+toml = {version = "^0.10.2", optional = true}
 lark = { version = "^1.1.2", optional = true }
 mypy-protobuf = { version = "^3.2.0", optional = true }
-pydantic = "^1.9.1"
-# grpcio-tools = "1.40.0"
-# protobuf=="3.20.3"
-toml = {version = "^0.10.2", optional = true}
-grpcio-tools = "^1.40.0"
 
 [tool.poetry.extras]
 lark = ["lark"]
@@ -40,7 +39,8 @@ coverage = "5.5"
 pre-commit = "2.14.0"
 autoflake = "1.4"
 flake8 = "3.9.2"
-email-validator = "^1.2.1"
+# if pydantic version >= 2.0.0, email-validator version must >= 2.0.0
+email-validator = "2.0.0"
 # fix flake8 run bug: https://stackoverflow.com/questions/73929564/entrypoints-object-has-no-attribute-get-digital-ocean
 importlib-metadata = "4.11.4"
 
@@ -75,7 +75,14 @@ remove-unused-variables = true
 disallow_untyped_defs = true
 python_executable = ".venv/bin/python"
 exclude = [
-    "^example/python_example_proto_code/example_proto"
+    "^example/python_example_proto_code/example_proto",
+    "^protobuf_to_pydantic/_pydantic_adapter.py",
+    "^protobuf_to_pydantic/customer_validator/__init__.py",
+    "^protobuf_to_pydantic/customer_validator/v1.py",
+    "^protobuf_to_pydantic/customer_validator/v2.py",
+    "^protobuf_to_pydantic/customer_con_type/__init__.py",
+    "^protobuf_to_pydantic/customer_con_type/v1.py",
+    "^protobuf_to_pydantic/customer_con_type/v2.py",
 ]
 
 
@@ -120,7 +127,7 @@ exclude_lines = [
 
 
 [tool.poetry-dynamic-versioning]
-enable = true
+enable = false
 metadata=false
 vcs = "git"
 format = "v{base}"

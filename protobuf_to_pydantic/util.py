@@ -3,8 +3,9 @@ import json
 import logging
 import os
 import sys
+from dataclasses import MISSING
 from datetime import timedelta
-from typing import TYPE_CHECKING, Any, Callable, Dict, Generator, Optional, Tuple, Type, Union
+from typing import TYPE_CHECKING, Any, Callable, Dict, Generator, List, Optional, Sequence, Tuple, Type, Union
 
 from pydantic import BaseConfig, BaseModel, create_model
 
@@ -59,8 +60,7 @@ def replace_protobuf_type_to_python_type(value: Any) -> Any:
     """
     protobuf.Duration -> datetime.timedelta
     protobuf.Timestamp -> timestamp e.g 1600000000.000000
-    like list -> list
-
+    like list type -> list
     other type -> raw...
     """
     if isinstance(value, Duration):
@@ -166,3 +166,32 @@ def format_content(content_str: str, pyproject_file_path: str = "") -> str:
             else:
                 content_str = black.format_str(content_str, mode=black.Mode())
     return content_str
+
+
+class SourceCodeModel(object):
+    def __init__(self, source_obj: Any, _callable: Callable, param: Sequence) -> None:
+        self.source_obj = source_obj
+        self._callable = _callable
+        self.param = param
+
+        setattr(source_obj, "__source_code", self)
+
+    @classmethod
+    def from_obj(cls, obj: Any) -> Optional["SourceCodeModel"]:
+        return getattr(obj, "__source_code", None)
+
+
+def check_dict_one_of(desc_dict: dict, key_list: List[str]) -> bool:
+    """Check if the key also appears in the dict"""
+    if (
+        len(
+            [
+                desc_dict.get(key, None)
+                for key in key_list
+                if desc_dict.get(key, None) and desc_dict[key].__class__ != MISSING.__class__
+            ]
+        )
+        > 1
+    ):
+        raise RuntimeError(f"Field:{key_list} cannot have both values: {desc_dict}")
+    return True

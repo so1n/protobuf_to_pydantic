@@ -35,6 +35,7 @@ __all__ = [
     "ConstrainedTimestamp",
     "pydantic_con_dict",
     "set_ignore_param_value_tz",
+    "get_origin_code",
 ]
 
 _ignore_param_value_tz: bool = False
@@ -222,3 +223,7 @@ pydantic_con_dict: Dict[Type, Callable] = {
     ConstrainedTimedelta: contimedelta,
     ConstrainedTimestamp: contimestamp,
 }
+
+
+def get_origin_code(type_: Any) -> Any:
+    return None

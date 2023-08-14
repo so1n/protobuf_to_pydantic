@@ -1,10 +1,13 @@
 # protobuf_to_pydantic
-Generate the `pydantic.Base Model` class (and the corresponding source code) with parameter verification function through the Protobuf file
+Generate the `pydantic.BaseModel` class (and the corresponding source code) with parameter verification function through the Protobuf file
 
 > NOTE:
 >  - Only supports proto3
 
 [中文文档](https://github.com/so1n/protobuf_to_pydantic/blob/master/README_ZH.md)
+
+> Current version 0.2.0 is under development, available version is [v0.1.7.4](https://github.com/so1n/protobuf_to_pydantic/tree/v0.1.7.4)
+
 # 1.Installation
 ```bash
 pip install protobuf_to_pydantic
@@ -34,6 +37,7 @@ In this way, the `protobuf-to-pydantic` plugin will write its own generated cont
 ### 2.1.2.Plugin configuration
 `protobuf-to-pydantic` supports configuration functions by reading a `Python` file.
 Developers first need to create a configuration file in the current path of the running command, the file name is `plugin_config.py`, and write the following code:
+
 ```Python
 import logging
 from typing import List, Type
@@ -42,7 +46,7 @@ from google.protobuf.any_pb2 import Any  # type: ignore
 from pydantic import confloat, conint
 from pydantic.fields import FieldInfo
 
-from protobuf_to_pydantic.gen_model import DescTemplate
+from protobuf_to_pydantic.desc_template import DescTemplate
 
 # Configure the log output format and log level of the plugin, which is very useful when debugging
 logging.basicConfig(format="[%(asctime)s %(levelname)s] %(message)s", datefmt="%y-%m-%d %H:%M:%S", level=logging.DEBUG)
