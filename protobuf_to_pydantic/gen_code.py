@@ -279,7 +279,6 @@ class BaseP2C(object):
             else:
                 type_module = inspect.getmodule(type_)
                 if type_module and type_module.__name__ == "builtins" or inspect.isfunction(type_module):
-                    print(type_)
                     type_name = type_.__name__
                 else:
                     type_name = repr(type_)
@@ -560,7 +559,7 @@ class BaseP2C(object):
                     for metadata_key in getattr(metadata, "__annotations__", []):
                         if metadata_key not in field_info.metadata_lookup:
                             continue
-                        metadata_value = metadata.__dict__[metadata_key]
+                        metadata_value = getattr(metadata, metadata_key)
                         # Field's metadata will hold duplicate values, but Field only needs the first value
                         if metadata_key in field_param_dict:
                             continue
@@ -578,6 +577,9 @@ class BaseP2C(object):
             field_param_code_list.append(f"{k}={self._get_value_code(v)}")
             self._parse_type_to_import_code(v)
 
+        # For different versions of pydantic, their fields are the same, but the position of the parameters is different
+        # need to ensure that the generated code is consistent across different versions of pydantic
+        # field_param_code_list.sort()
         if field_info.__class__.__name__ == "FieldInfo":
             self._add_import_code("pydantic", "Field")
             field_info_str: str = f"Field({', '.join(field_param_code_list)})"
@@ -635,7 +637,11 @@ class BaseP2C(object):
                     validator_class.wrapped.__func__  # type: ignore[attr-defined]
                 )
 
-                decorator_info_dict = validator_class.decorator_info.__dict__  # type: ignore[attr-defined]
+                decorator_info_dict = {
+                    k: getattr(validator_class.decorator_info, k)  # type: ignore[attr-defined]
+                    for k in validator_class.decorator_info.__dataclass_fields__.keys()  # type: ignore[attr-defined]
+                    if k not in ("decorator_repr",)
+                }
 
                 if "fields" in decorator_info_dict:
                     validator_func_name = "field_validator"
@@ -643,7 +649,6 @@ class BaseP2C(object):
                 else:
                     validator_func_name = "model_validator"
                     validator_field_param_str = ""
-                    name = f"_{validator_wrapper_func_name}"
 
                 validator_param_str = validator_field_param_str + ",".join(
                     [f"{k}={self._get_value_code(v)}" for k, v in decorator_info_dict.items() if k != "fields"]

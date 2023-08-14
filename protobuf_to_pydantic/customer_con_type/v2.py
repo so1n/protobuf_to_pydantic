@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from typing import Callable, Dict, List, Optional, Sequence, Tuple, Type, TypeVar, Union
 
 from annotated_types import Ge, Gt, Le, Lt, MaxLen, MinLen, MultipleOf, Predicate
-from pydantic import BeforeValidator
+from pydantic import AfterValidator
 from pydantic._internal._fields import PydanticGeneralMetadata
 from pydantic.types import AllowInfNan, AnyItemType, PydanticUserError, Strict
 from typing_extensions import Annotated
@@ -239,8 +239,7 @@ def const(const_v: T) -> Predicate:
     def _const(v: T) -> bool:
         # return v is const_v
         # Throwing an exception makes the error output easier to understand
-        if not v.__eq__(const_v):
-            raise ValueError(f"value must {const_v} not {v}")
+        rule.timestamp_const_validator(v, "", const_v)
         return True
 
     return Predicate(_const)
@@ -316,7 +315,6 @@ def gt_now(v: TIMESTAMP_ANT_TYPE) -> Predicate:
 
 def lt_now(v: TIMESTAMP_ANT_TYPE) -> Predicate:
     def _lt_now(_v: TIMESTAMP_ANT_TYPE) -> bool:
-        print(v, _v)
         rule.timestamp_lt_now_validator(_v, "", v)
         return True
 
@@ -333,11 +331,63 @@ def within(v: timedelta) -> Predicate:
     return return_value
 
 
-def ignore_tz_validator() -> BeforeValidator:
+def ignore_tz_validator() -> AfterValidator:
     def _ignore_tz(_v: datetime) -> datetime:
         return _v.replace(tzinfo=None)
 
-    return BeforeValidator(_ignore_tz)
+    return AfterValidator(_ignore_tz)
+
+
+def t_ge(v: TIMESTAMP_ANT_TYPE) -> Predicate:
+    def _t_ge(_v: TIMESTAMP_ANT_TYPE) -> bool:
+        rule.timestamp_ge_validator(_v, "", v)
+        return True
+
+    return_value = Predicate(_t_ge)
+    return return_value
+
+
+def t_gt(v: TIMESTAMP_ANT_TYPE) -> Predicate:
+    def _t_gt(_v: TIMESTAMP_ANT_TYPE) -> bool:
+        rule.timestamp_gt_validator(_v, "", v)
+        return True
+
+    return_value = Predicate(_t_gt)
+    return return_value
+
+
+def t_le(v: TIMESTAMP_ANT_TYPE) -> Predicate:
+    def _t_le(_v: TIMESTAMP_ANT_TYPE) -> bool:
+        rule.timestamp_le_validator(_v, "", v)
+        return True
+
+    return_value = Predicate(_t_le)
+    return return_value
+
+
+def t_lt(v: TIMESTAMP_ANT_TYPE) -> Predicate:
+    def _t_lt(_v: TIMESTAMP_ANT_TYPE) -> bool:
+        rule.timestamp_lt_validator(_v, "", v)
+        return True
+
+    return_value = Predicate(_t_lt)
+    return return_value
+
+
+def t_in(in_v: Sequence[TIMESTAMP_ANT_TYPE]) -> Predicate:
+    def _t_in(v: T) -> bool:
+        rule.timestamp_in_validator(v, "", in_v)
+        return True
+
+    return Predicate(_t_in)
+
+
+def t_not_in(not_in_v: Sequence[TIMESTAMP_ANT_TYPE]) -> Predicate:
+    def _t_not_in(v: T) -> bool:
+        rule.timestamp_not_in_validator(v, "", not_in_v)
+        return True
+
+    return Predicate(_t_not_in)
 
 
 def contimestamp(
@@ -355,28 +405,28 @@ def contimestamp(
     ignore_tz: bool = False,
 ) -> Type[datetime]:
     type_param = [DatetimeType]
+    if ignore_tz:
+        type_param.append(ignore_tz_validator())
     if timestamp_const is not None:
         type_param.append(const(timestamp_const))
     if timestamp_ge is not None:
-        type_param.append(Ge(timestamp_ge))
+        type_param.append(t_ge(timestamp_ge))
     if timestamp_gt is not None:
-        type_param.append(Gt(timestamp_gt))
+        type_param.append(t_gt(timestamp_gt))
     if timestamp_gt_now is not None:
         type_param.append(gt_now(timestamp_gt_now))
     if timestamp_le is not None:
-        type_param.append(Le(timestamp_le))
+        type_param.append(t_le(timestamp_le))
     if timestamp_lt is not None:
-        type_param.append(Lt(timestamp_lt))
+        type_param.append(t_lt(timestamp_lt))
     if timestamp_lt_now:
         type_param.append(lt_now(timestamp_lt_now))
     if timestamp_in is not None:
-        type_param.append(in_(timestamp_in))
+        type_param.append(t_in(timestamp_in))
     if timestamp_not_in:
-        type_param.append(not_in(timestamp_not_in))
+        type_param.append(t_not_in(timestamp_not_in))
     if timestamp_within:
         type_param.append(within(timestamp_within))
-    if ignore_tz:
-        type_param.append(ignore_tz_validator())
     if len(type_param) > 1:
         return Annotated.__class_getitem__(tuple(type_param))  # type: ignore[return-value]
     return datetime

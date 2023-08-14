@@ -5,6 +5,24 @@ from protobuf_to_pydantic.grpc_types import AnyMessage
 from protobuf_to_pydantic.types import OneOfTypedDict
 
 
+def to_datetime(value: Any) -> Any:
+    if not isinstance(value, datetime):
+        if isinstance(value, (list, tuple)):
+            value = [to_datetime(i) for i in value]
+        else:
+            value = datetime.fromtimestamp(value)
+    return value
+
+
+def to_timestamp(value: Any) -> Any:
+    if isinstance(value, datetime):
+        if isinstance(value, (list, tuple)):
+            value = [to_timestamp(i) for i in value]
+        else:
+            value = value.timestamp()
+    return value
+
+
 #################
 # pre validator #
 #################
@@ -139,8 +157,10 @@ def set_now_default_factory(now_default_factory: Callable[[], datetime]) -> None
 
 
 def timestamp_lt_validator(v: Any, field_name: str, field_value: Any) -> Any:
-    if field_value is not None and not (v < field_value):
-        raise ValueError(f"{field_name} must < {field_value}, not {v}")
+    _v = to_timestamp(v)
+    field_value = to_timestamp(field_value)
+    if field_value is not None and not (_v < field_value):
+        raise ValueError(f"{field_name} must < {field_value}, not {_v}")
     return v
 
 
@@ -150,20 +170,26 @@ def timestamp_lt_now_validator(v: Any, field_name: str, field_value: Any) -> Any
             now_time: datetime = field_value()
         else:
             now_time = _now_default_factory()
-        if not v < now_time:
-            raise ValueError(f"{field_name} must < {now_time}, not {v}")
+        _v = to_timestamp(v)
+        now_time = to_timestamp(now_time)
+        if not _v < now_time:
+            raise ValueError(f"{field_name} must < {now_time}, not {_v}")
     return v
 
 
 def timestamp_le_validator(v: Any, field_name: str, field_value: Any) -> Any:
-    if field_value is not None and not (v <= field_value):
-        raise ValueError(f"{field_name} must <= {field_value}, not {v}")
+    _v = to_timestamp(v)
+    field_value = to_timestamp(field_value)
+    if field_value is not None and not (_v <= field_value):
+        raise ValueError(f"{field_name} must <= {field_value}, not {_v}")
     return v
 
 
 def timestamp_gt_validator(v: Any, field_name: str, field_value: Any) -> Any:
-    if field_value is not None and not (v > field_value):
-        raise ValueError(f"{field_name} must > {field_value}, not {v}")
+    _v = to_timestamp(v)
+    field_value = to_timestamp(field_value)
+    if field_value is not None and not (_v > field_value):
+        raise ValueError(f"{field_name} must > {field_value}, not {_v}")
     return v
 
 
@@ -173,8 +199,10 @@ def timestamp_gt_now_validator(v: Any, field_name: str, field_value: Any) -> Any
             now_time: datetime = field_value()
         else:
             now_time = _now_default_factory()
-        if not v > now_time:
-            raise ValueError(f"{field_name} must > {now_time}, not {v}")
+        _v = to_timestamp(v)
+        now_time = to_timestamp(now_time)
+        if not _v > now_time:
+            raise ValueError(f"{field_name} must > {now_time}, not {_v}")
     return v
 
 
@@ -184,31 +212,45 @@ def timestamp_within_validator(v: Any, field_name: str, field_value: Any) -> Any
             now_time: datetime = field_value()
         else:
             now_time = _now_default_factory()
-        if not ((now_time - field_value) <= v <= (now_time + field_value)):
-            raise ValueError(f"{field_name} must between {now_time -field_value} and {now_time + field_value}, not {v}")
+        _v = to_timestamp(v)
+        after_value = to_timestamp(now_time - field_value)
+        before_value = to_timestamp(now_time + field_value)
+        if not (after_value <= _v <= before_value):
+            raise ValueError(
+                f"{field_name} must between {now_time - field_value}[{after_value}]"
+                f" and {now_time - field_value}[{before_value}], not {_v}"
+            )
     return v
 
 
 def timestamp_ge_validator(v: Any, field_name: str, field_value: Any) -> Any:
-    if field_value is not None and not (v >= field_value):
-        raise ValueError(f"{field_name} must >= {field_value}, not {v}")
+    _v = to_timestamp(v)
+    field_value = to_timestamp(field_value)
+    if field_value is not None and not (_v >= field_value):
+        raise ValueError(f"{field_name} must >= {field_value}, not {_v}")
     return v
 
 
 def timestamp_const_validator(v: Any, field_name: str, field_value: Any) -> Any:
-    if field_value is not None and v != field_value:
-        raise ValueError(f"{field_name} must {field_value}, not {v}")
+    _v = to_timestamp(v)
+    field_value = to_timestamp(field_value)
+    if field_value is not None and _v != field_value:
+        raise ValueError(f"{field_name} must {field_value}, not {_v}")
     return v
 
 
 def timestamp_in_validator(v: Any, field_name: str, field_value: Any) -> Any:
-    if field_value is not None and v not in field_value:
+    _v = to_timestamp(v)
+    field_value = to_timestamp(field_value)
+    if field_value is not None and _v not in field_value:
         raise ValueError(f"{field_name} not in {field_value}")
     return v
 
 
 def timestamp_not_in_validator(v: Any, field_name: str, field_value: Any) -> Any:
-    if field_value is not None and v in field_value:
+    _v = to_timestamp(v)
+    field_value = to_timestamp(field_value)
+    if field_value is not None and _v in field_value:
         raise ValueError(f"{field_name} in {field_value}")
     return v
 

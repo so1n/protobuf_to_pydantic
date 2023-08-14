@@ -7,24 +7,17 @@ from protobuf_to_pydantic.types import OneOfTypedDict
 
 from . import rule
 
-
 ################
 # requirements #
 ################
-def _get_name_value_from_kwargs(
-    key: str, field: ModelField, enable_timestamp_to_datetime: bool = False
-) -> Tuple[str, Any]:
+
+
+def _get_name_value_from_kwargs(key: str, field: ModelField) -> Tuple[str, Any]:
     field_name: str = field.name
     if field.field_info.extra:
         field_value: Any = field.field_info.extra.get(key, None)
     else:
         field_value = getattr(field.type_, key, None)
-    if enable_timestamp_to_datetime and not isinstance(field_value, datetime):
-        if isinstance(field_value, (list, tuple)):
-            field_value = [datetime.fromtimestamp(i) for i in field_value]
-        else:
-            field_value = datetime.fromtimestamp(field_value)
-
     return field_name, field_value
 
 
@@ -140,9 +133,7 @@ def set_now_default_factory(now_default_factory: Callable[[], datetime]) -> None
 
 
 def timestamp_lt_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
-    field_name, field_value = _get_name_value_from_kwargs(
-        "timestamp_lt", kwargs["field"], enable_timestamp_to_datetime=isinstance(v, datetime)
-    )
+    field_name, field_value = _get_name_value_from_kwargs("timestamp_lt", kwargs["field"])
     return rule.timestamp_lt_validator(v, field_name, field_value)
 
 
@@ -152,15 +143,14 @@ def timestamp_lt_now_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
 
 
 def timestamp_le_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
-    field_name, field_value = _get_name_value_from_kwargs(
-        "timestamp_le", kwargs["field"], enable_timestamp_to_datetime=isinstance(v, datetime)
-    )
+    field_name, field_value = _get_name_value_from_kwargs("timestamp_le", kwargs["field"])
     return rule.timestamp_le_validator(v, field_name, field_value)
 
 
 def timestamp_gt_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
     field_name, field_value = _get_name_value_from_kwargs(
-        "timestamp_gt", kwargs["field"], enable_timestamp_to_datetime=isinstance(v, datetime)
+        "timestamp_gt",
+        kwargs["field"],
     )
     return rule.timestamp_gt_validator(v, field_name, field_value)
 
@@ -177,28 +167,32 @@ def timestamp_within_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
 
 def timestamp_ge_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
     field_name, field_value = _get_name_value_from_kwargs(
-        "timestamp_ge", kwargs["field"], enable_timestamp_to_datetime=isinstance(v, datetime)
+        "timestamp_ge",
+        kwargs["field"],
     )
     return rule.timestamp_ge_validator(v, field_name, field_value)
 
 
 def timestamp_const_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
     field_name, field_value = _get_name_value_from_kwargs(
-        "timestamp_const", kwargs["field"], enable_timestamp_to_datetime=isinstance(v, datetime)
+        "timestamp_const",
+        kwargs["field"],
     )
     return rule.timestamp_const_validator(v, field_name, field_value)
 
 
 def timestamp_in_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
     field_name, field_value = _get_name_value_from_kwargs(
-        "timestamp_in", kwargs["field"], enable_timestamp_to_datetime=isinstance(v, datetime)
+        "timestamp_in",
+        kwargs["field"],
     )
     return rule.timestamp_in_validator(v, field_name, field_value)
 
 
 def timestamp_not_in_validator(cls: Any, v: Any, **kwargs: Any) -> Any:
     field_name, field_value = _get_name_value_from_kwargs(
-        "timestamp_not_in", kwargs["field"], enable_timestamp_to_datetime=isinstance(v, datetime)
+        "timestamp_not_in",
+        kwargs["field"],
     )
     return rule.timestamp_not_in_validator(v, field_name, field_value)
 

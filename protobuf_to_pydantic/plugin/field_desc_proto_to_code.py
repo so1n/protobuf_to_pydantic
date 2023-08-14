@@ -383,13 +383,13 @@ class FileDescriptorProtoToCode(BaseP2C):
                 if _pydantic_adapter.is_v1:
                     class_head_content += (
                         f"{' ' * (indent + self.code_indent)}"
-                        f"_check_one_of = root_validator(pre=True, allow_reuse=True)(check_one_of)\n"
+                        f"one_of_validator = root_validator(pre=True, allow_reuse=True)(check_one_of)\n"
                     )
                     self._add_import_code("pydantic", "root_validator")
                 else:
                     class_head_content += (
                         f"{' ' * (indent + self.code_indent)}"
-                        f'_check_one_of = model_validator(mode="before")(check_one_of)\n'
+                        f'one_of_validator = model_validator(mode="before")(check_one_of)\n'
                     )
                     self._add_import_code("pydantic", "model_validator")
 
