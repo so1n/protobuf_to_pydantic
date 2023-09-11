@@ -331,3 +331,25 @@ class EmptyMessage(google.protobuf.message.Message):
     ) -> None: ...
 
 global___EmptyMessage = EmptyMessage
+
+class OptionalMessage(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    NAME_FIELD_NUMBER: builtins.int
+    AGE_FIELD_NUMBER: builtins.int
+    name: builtins.str
+    age: builtins.int
+    def __init__(
+        self,
+        *,
+        name: builtins.str | None = ...,
+        age: builtins.int | None = ...,
+    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_age", b"_age", "_name", b"_name", "age", b"age", "name", b"name"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_age", b"_age", "_name", b"_name", "age", b"age", "name", b"name"]) -> None: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_age", b"_age"]) -> typing_extensions.Literal["age"] | None: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_name", b"_name"]) -> typing_extensions.Literal["name"] | None: ...
+
+global___OptionalMessage = OptionalMessage

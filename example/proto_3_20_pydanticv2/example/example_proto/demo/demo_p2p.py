@@ -73,3 +73,8 @@ class InvoiceItem(BaseModel):
 
 class EmptyMessage(BaseModel):
     pass
+
+
+class OptionalMessage(BaseModel):
+    name: typing.Optional[str] = Field(default="", json_schema_extra={})
+    age: typing.Optional[int] = Field(default=0, json_schema_extra={})

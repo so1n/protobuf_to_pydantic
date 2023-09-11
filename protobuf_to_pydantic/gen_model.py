@@ -340,19 +340,32 @@ class M2P(object):
                 return None
         return None
 
-    def _one_of_handle(self, descriptor: Descriptor) -> Dict[str, "OneOfTypedDict"]:
+    def _one_of_handle(self, descriptor: Descriptor) -> Tuple[Dict[str, "OneOfTypedDict"], Dict[str, Any]]:
         desc_dict: "DescFromOptionTypedDict" = self._field_doc_dict.get(descriptor.name, {})  # type: ignore
         one_of_dict: Dict[str, "OneOfTypedDict"] = {}
+        optional_dict: Dict[str, Any] = {}
         for one_of in descriptor.oneofs:
-            column_name: str = one_of.full_name
-            if column_name not in one_of_dict:
-                one_of_dict[column_name] = {"required": False, "fields": set()}
-            if desc_dict and column_name in desc_dict["one_of"]:
-                # only PGV or P2P support
-                one_of_dict[column_name]["required"] = desc_dict["one_of"][column_name].get("required", False)
-            for _field in one_of.fields:
-                one_of_dict[column_name]["fields"].add(_field.name)
-        return one_of_dict
+            if one_of == descriptor.fields[one_of.index].containing_oneof:
+                # support optional field
+                # e.g.:
+                #   message OptionalMessage{
+                #     optional string name = 1;
+                #     optional int32 age= 2;
+                #   };
+
+                # one_of name is `_name`, `_age`
+                # but need name is `name`, `age`
+                optional_dict[descriptor.fields[one_of.index].full_name] = {"is_proto3_optional": True}
+            else:
+                column_name: str = one_of.full_name
+                if column_name not in one_of_dict:
+                    one_of_dict[column_name] = {"required": False, "fields": set()}
+                if desc_dict and column_name in desc_dict["one_of"]:
+                    # only PGV or P2P support
+                    one_of_dict[column_name]["required"] = desc_dict["one_of"][column_name].get("required", False)
+                for _field in one_of.fields:
+                    one_of_dict[column_name]["fields"].add(_field.name)
+        return one_of_dict, optional_dict
 
     def _get_pydantic_base(self, config_dict: Dict[str, Any]) -> Type[BaseModel]:
         if config_dict:
@@ -567,11 +580,7 @@ class M2P(object):
         validators: Dict[str, classmethod] = {}
         pydantic_model_config_dict: Dict[str, Any] = {}
         nested_message_dict = self.get_nested_message_dict_by_message(descriptor)
-        one_of_dict: Dict[str, "OneOfTypedDict"] = self._one_of_handle(descriptor)
-        if one_of_dict:
-            validators["one_of_validator"] = _pydantic_adapter.model_validator(mode="before", allow_reuse=True)(
-                check_one_of
-            )
+        one_of_dict, optional_dict = self._one_of_handle(descriptor)
 
         # parse field
         for protobuf_field in descriptor.fields:
@@ -599,6 +608,8 @@ class M2P(object):
             field_info = self._gen_field_info(field_dataclass)
             if not field_info:
                 continue
+            if optional_dict.get(protobuf_field.full_name, {}).get("is_proto3_optional", False):
+                field_dataclass.field_type = Optional[field_dataclass.field_type]
             annotation_dict[field_dataclass.field_name] = (field_dataclass.field_type, field_info)
 
             if field_dataclass.field_type in (AnyMessage,) and not _pydantic_adapter.get_model_config_value(
@@ -606,6 +617,10 @@ class M2P(object):
             ):
                 pydantic_model_config_dict["arbitrary_types_allowed"] = True
 
+        if one_of_dict:
+            validators["one_of_validator"] = _pydantic_adapter.model_validator(mode="before", allow_reuse=True)(
+                check_one_of
+            )
         pydantic_model: Type[BaseModel] = create_pydantic_model(
             annotation_dict,
             class_name=class_name or descriptor.name,

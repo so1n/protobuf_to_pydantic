@@ -241,3 +241,12 @@ class InvoiceItem(BaseModel):
     items: typing.List["InvoiceItem"] = Field(default_factory=list)
             """
         ) in self._model_output(demo_pb2.InvoiceItem)
+
+    def test_field_optional(self) -> None:
+        assert format_content(
+            """
+class OptionalMessage(BaseModel):
+    name: typing.Optional[str] = Field(default="")
+    age: typing.Optional[int] = Field(default=0)
+            """
+        ) in self._model_output(demo_pb2.OptionalMessage)

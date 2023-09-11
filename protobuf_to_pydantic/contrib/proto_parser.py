@@ -5,6 +5,8 @@
 # Original project url: https://github.com/khadgarmage/protoparser
 # Original project author: khadgarmage
 #
+# feat: support optional fields
+#   https://github.com/khadgarmage/protoparser/pull/6/commits/973c0456ae360379ff4b4955c7e5ca8dcfdd1905
 import json
 from dataclasses import asdict, dataclass
 from typing import Any, Dict, List, Optional, Tuple, Union
@@ -12,6 +14,7 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from lark import Lark, Token, Transformer, Tree
 from lark.tree import ParseTree  # type: ignore
 
+# BNF doc url:https://protobuf.dev/reference/protobuf/proto3-spec/
 BNF = r"""
 OCTALDIGIT: "0..7"
 IDENT: ( "_" )* LETTER ( LETTER | DECIMALDIGIT | "_" )*
@@ -55,6 +58,7 @@ field: [ comments ] TYPE FIELDNAME "=" FIELDNUMBER [ "[" fieldoptions "]" ] TAIL
 fieldoptions: fieldoption ( ","  fieldoption )*
 fieldoption: OPTIONNAME "=" CONSTANT
 repeatedfield: [ comments ] "repeated" field
+optionalfield: [ comments ] "optional" field
 oneof: "oneof" ONEOFNAME "{" ( oneoffield | EMPTYSTATEMENT )* "}"
 oneoffield: TYPE FIELDNAME "=" FIELDNUMBER [ "[" fieldoptions "]" ] ";"
 mapfield: [ comments ] "map" "<" KEYTYPE "," TYPE ">" MAPNAME "=" FIELDNUMBER [ "[" fieldoptions "]" ] TAIL
@@ -69,7 +73,8 @@ enumbody: "{" ( enumfield | EMPTYSTATEMENT )* "}"
 enumfield: [ COMMENTS ] IDENT "=" INTLIT [ "[" enumvalueoption ( ","  enumvalueoption )* "]" ] TAIL
 enumvalueoption: OPTIONNAME "=" CONSTANT
 message: [ comments ] "message" MESSAGENAME messagebody
-messagebody: "{" ( repeatedfield | field | enum | message | option | oneof | mapfield | reserved | EMPTYSTATEMENT )* "}"
+messagebody: "{" ( repeatedfield | optionalfield | field | enum | message | option | oneof | mapfield | reserved
+    | EMPTYSTATEMENT )* "}"
 googleoption: "option" "(google.api.http)"  "=" "{" [ "post:" CONSTANT [ "body:" CONSTANT ] ] "}" ";"
 service: [ comments ] "service" SERVICENAME "{" ( option | rpc | EMPTYSTATEMENT )* "}"
 rpc: [ comments ] "rpc" RPCNAME "(" [ "stream" ] MESSAGETYPE ")" "returns" "(" [ "stream" ] MESSAGETYPE ")" \
@@ -221,6 +226,16 @@ class ProtoTransformer(Transformer):
         else:
             comment, field = tuple(tokens)
         return Field(comment, "repeated", field.type, field.type, field.name, field.number)
+
+    @staticmethod
+    def optionalfield(tokens: list) -> Field:
+        """Returns a Field namedtuple"""
+        comment = Comment("", {})
+        if len(tokens) < 2:
+            field = tokens[0]
+        else:
+            comment, field = tuple(tokens)
+        return Field(comment, "optional", field.type, field.type, field.name, field.number)
 
     @staticmethod
     def mapfield(tokens: list) -> Field:

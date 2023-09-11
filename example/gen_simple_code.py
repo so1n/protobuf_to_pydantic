@@ -34,4 +34,5 @@ def gen_code() -> None:
 
 
 if __name__ == "__main__":
+    print(target_p)
     gen_code()

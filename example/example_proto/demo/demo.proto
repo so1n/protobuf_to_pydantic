@@ -81,3 +81,8 @@ message InvoiceItem {
 }
 
 message EmptyMessage {};
+
+message OptionalMessage{
+  optional string name = 1;
+  optional int32 age= 2;
+};

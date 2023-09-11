@@ -88,3 +88,8 @@ class NestedMessage(BaseModel):
     not_enable_user_pay: UserPayMessage = Field()
     empty: typing.Any = Field()
     after_refer: AfterReferMessage = Field()
+
+
+class OptionalMessage(BaseModel):
+    name: typing.Optional[str] = Field(default="")
+    age: typing.Optional[int] = Field(default=0)

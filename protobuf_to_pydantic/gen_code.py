@@ -1,6 +1,7 @@
 import inspect
 import pathlib
 import sys
+import typing
 from collections import deque
 from dataclasses import is_dataclass
 from datetime import datetime
@@ -168,7 +169,19 @@ class BaseP2C(object):
             return "typing_extensions.Annotated" + args_str
         else:
             type_name = type_._name
-            sub_type_str = self._get_value_code(list(get_args(type_)))
+            arg_list = list(get_args(type_))
+            # py version < 3.10
+            # typing.Optional[int] output is: typing.Union[int, None]
+            # py version == ^3.9  Optional[int]._name is None
+            if (
+                get_origin(type_) in (typing.Optional, typing.Union)
+                and len(arg_list) == 2
+                and arg_list[1] is type(None)
+            ):
+                type_name = "Optional"
+                sub_type_str = f"[{self._get_value_code(arg_list[0])}]"
+            else:
+                sub_type_str = self._get_value_code(arg_list)
             if not type_name:
                 # Support like typing_extensions.Literal[True]
                 if auto_import_type_code:
@@ -178,7 +191,7 @@ class BaseP2C(object):
                 # Support other typing
                 if auto_import_type_code:
                     self._import_set.add("import typing")
-                return f"typing.{type_._name}{sub_type_str}"
+                return f"typing.{type_name}{sub_type_str}"
 
     # TODO remove flake8: noqa: C901
     # flake8: noqa: C901
@@ -245,6 +258,8 @@ class BaseP2C(object):
                 # pydantic con class support
                 return self._get_pydantic_con_type_code(type_)
             else:
+                if type_ is type(None):
+                    return "None"
                 if auto_import_type_code:
                     self._parse_type_to_import_code(type_)
                 return getattr(type_, "__name__")
@@ -336,13 +351,15 @@ class BaseP2C(object):
     def _model_field_handle(self, model: Type[BaseModel], indent: int = 0) -> str:
         field_str: str = ""
         for key, value in _pydantic_adapter.model_fields(model).items():
-            if _pydantic_adapter.is_v1:
-                value_outer_type = value.outer_type_  # type: ignore
-                value_type = value.type_  # type: ignore
-            else:
+            if hasattr(value, "annotation"):
                 value_outer_type = value.annotation  # type: ignore
                 value_type = value.annotation  # type: ignore
-
+            else:
+                if _pydantic_adapter.is_v1:
+                    value_outer_type = value.annotation  # type: ignore
+                    value_type = value.annotation  # type: ignore
+                else:
+                    raise RuntimeError("can not load value type")
             # Type Hint handler
             if value_outer_type.__module__ != "builtins":
                 if inspect.isclass(value_type) and issubclass(value_type, IntEnum):

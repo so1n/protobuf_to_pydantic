@@ -91,3 +91,8 @@ class NestedMessage(BaseModel):
     include_enum: IncludeEnum = Field(default=0)
     empty: typing.Any = Field()
     after_refer: AfterReferMessage = Field()
+
+
+class OptionalMessage(BaseModel):
+    name: typing.Optional[str] = Field(default="")
+    age: typing.Optional[int] = Field(default=0)

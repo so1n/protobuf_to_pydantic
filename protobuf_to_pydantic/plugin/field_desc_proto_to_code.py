@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Dict, Iterable, Optional, Set, Tuple
 
-from mypy_protobuf.main import PYTHON_RESERVED, Descriptors, SourceCodeLocation
+from mypy_protobuf.main import PYTHON_RESERVED, Descriptors, SourceCodeLocation, is_scalar
 from pydantic import BaseModel
 from pydantic.fields import FieldInfo
 
@@ -142,6 +142,7 @@ class FileDescriptorProtoToCode(BaseP2C):
         field: FieldDescriptorProto,
         indent: int,
         nested_message_config_dict: dict,
+        optional_dict: dict,
         skip_validate_rule: bool = False,
     ) -> Optional[Tuple[str, str]]:
         """generate message's field to Pydantic.FieldInfo code"""
@@ -284,6 +285,8 @@ class FileDescriptorProtoToCode(BaseP2C):
                 value_type_str = self._get_protobuf_type_model(message.field[1]).py_type_str
             type_str = f"typing.Dict[{key_type_str}, {value_type_str}]"
 
+        if optional_dict.get(field.name, {}).get("is_proto3_optional", False):
+            type_str = f"typing.Optional[{type_str}]"
         # custom field support
         field_class: Optional[FieldInfo] = field_info_dict.pop("field", None)
         if field_class:
@@ -316,10 +319,15 @@ class FileDescriptorProtoToCode(BaseP2C):
         return class_head_content, class_field_content
 
     @staticmethod
-    def _gen_one_of_dict(desc: DescriptorProto) -> Dict:
+    def _gen_one_of_dict(desc: DescriptorProto) -> Tuple[Dict, Dict]:
         one_of_dict = {}
+        optional_dict = {}
         index_field_name_dict: Dict[int, Set[str]] = {}
         for field in desc.field:
+            if not (
+                is_scalar(field) and field.label != FieldDescriptorProto.LABEL_REPEATED and not field.proto3_optional
+            ):
+                optional_dict[field.name] = {"is_proto3_optional": True}
             if not field.HasField("oneof_index"):
                 continue
             if field.oneof_index not in index_field_name_dict:
@@ -327,6 +335,8 @@ class FileDescriptorProtoToCode(BaseP2C):
             index_field_name_dict[field.oneof_index].add(field.name)
 
         for index, one_of_item in enumerate(desc.oneof_decl):
+            if one_of_item.name == "_" + desc.field[index].name:
+                continue
             option_dict = {}
             for option_descriptor, option_value in one_of_item.options.ListFields():
                 pkg, rule_name = option_descriptor.full_name.split(".")
@@ -339,7 +349,7 @@ class FileDescriptorProtoToCode(BaseP2C):
             if option_dict:
                 # Only when the rules are used, will the number of fields of one_of be checked to see if they match
                 one_of_dict[desc.name + "." + one_of_item.name] = option_dict
-        return one_of_dict
+        return one_of_dict, optional_dict
 
     def _message(
         self, desc: DescriptorProto, scl_prefix: SourceCodeLocation, indent: int = 0, skip_validate_rule: bool = False
@@ -353,7 +363,11 @@ class FileDescriptorProtoToCode(BaseP2C):
         class_field_content = ""
 
         use_custom_type: bool = False
-        nested_message_config_dict: dict = {}
+        one_of_dict, optional_dict, nested_message_config_dict = {}, {}, {}  # type: dict, dict, dict
+
+        if desc.oneof_decl:
+            one_of_dict, optional_dict = self._gen_one_of_dict(desc)
+
         for idx, field in enumerate(desc.field):
             if field.name in PYTHON_RESERVED:
                 continue
@@ -361,7 +375,7 @@ class FileDescriptorProtoToCode(BaseP2C):
                 use_custom_type = True
 
             _content_tuple: Optional[Tuple[str, str]] = self._message_field_handle(
-                desc, field, indent, nested_message_config_dict, skip_validate_rule=skip_validate_rule
+                desc, field, indent, nested_message_config_dict, optional_dict, skip_validate_rule=skip_validate_rule
             )
             if _content_tuple:
                 class_head_content += _content_tuple[0]
@@ -373,7 +387,7 @@ class FileDescriptorProtoToCode(BaseP2C):
             class_head_content += self._enum(desc.enum_type, scl_prefix, indent + self.code_indent)
 
         if desc.oneof_decl:
-            one_of_dict: dict = self._gen_one_of_dict(desc)
+            one_of_dict, optional_dict = self._gen_one_of_dict(desc)
             if one_of_dict:
                 class_head_content += (
                     f"{' ' * (indent + self.code_indent)}_one_of_dict = {self._get_value_code(one_of_dict)}\n"
