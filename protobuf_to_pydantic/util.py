@@ -5,7 +5,7 @@ import os
 import sys
 from dataclasses import MISSING
 from datetime import timedelta
-from typing import TYPE_CHECKING, Any, Callable, Dict, Generator, List, Optional, Sequence, Tuple, Type, Union
+from typing import TYPE_CHECKING, Any, Callable, Dict, Generator, List, Optional, Tuple, Type, Union
 
 from pydantic import BaseConfig, BaseModel, create_model
 
@@ -136,7 +136,7 @@ def format_content(content_str: str, pyproject_file_path: str = "") -> str:
 
         except KeyError:
             pass
-        if p2p_format_dict.get("autoflake", False):
+        if p2p_format_dict.get("autoflake", True):
             if autoflake_dict:
                 content_str = autoflake.fix_code(content_str, **autoflake_dict)
             else:
@@ -160,25 +160,12 @@ def format_content(content_str: str, pyproject_file_path: str = "") -> str:
             black_config_dict = {k: v for k, v in black_config_dict.items() if k in black.Mode.__annotations__}
         except KeyError:
             pass
-        if p2p_format_dict.get("black", False):
+        if p2p_format_dict.get("black", True):
             if black_config_dict:
                 content_str = black.format_str(content_str, mode=black.Mode(**black_config_dict))
             else:
                 content_str = black.format_str(content_str, mode=black.Mode())
     return content_str
-
-
-class SourceCodeModel(object):
-    def __init__(self, source_obj: Any, _callable: Callable, param: Sequence) -> None:
-        self.source_obj = source_obj
-        self._callable = _callable
-        self.param = param
-
-        setattr(source_obj, "__source_code", self)
-
-    @classmethod
-    def from_obj(cls, obj: Any) -> Optional["SourceCodeModel"]:
-        return getattr(obj, "__source_code", None)
 
 
 def check_dict_one_of(desc_dict: dict, key_list: List[str]) -> bool:
