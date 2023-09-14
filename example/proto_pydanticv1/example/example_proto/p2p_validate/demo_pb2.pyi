@@ -48,6 +48,7 @@ class FloatTest(google.protobuf.message.Message):
     IN_TEST_FIELD_NUMBER: builtins.int
     NOT_IN_TEST_FIELD_NUMBER: builtins.int
     DEFAULT_TEST_FIELD_NUMBER: builtins.int
+    DEFAULT_TEMPLATE_TEST_FIELD_NUMBER: builtins.int
     NOT_ENABLE_TEST_FIELD_NUMBER: builtins.int
     DEFAULT_FACTORY_TEST_FIELD_NUMBER: builtins.int
     MISS_DEFAULT_TEST_FIELD_NUMBER: builtins.int
@@ -67,6 +68,7 @@ class FloatTest(google.protobuf.message.Message):
     in_test: builtins.float
     not_in_test: builtins.float
     default_test: builtins.float
+    default_template_test: builtins.float
     not_enable_test: builtins.float
     default_factory_test: builtins.float
     miss_default_test: builtins.float
@@ -89,6 +91,7 @@ class FloatTest(google.protobuf.message.Message):
         in_test: builtins.float = ...,
         not_in_test: builtins.float = ...,
         default_test: builtins.float = ...,
+        default_template_test: builtins.float = ...,
         not_enable_test: builtins.float = ...,
         default_factory_test: builtins.float = ...,
         miss_default_test: builtins.float = ...,
@@ -103,7 +106,7 @@ class FloatTest(google.protobuf.message.Message):
         title_test: builtins.float = ...,
         extra_test: builtins.float = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["alias_test", b"alias_test", "const_test", b"const_test", "default_factory_test", b"default_factory_test", "default_test", b"default_test", "desc_test", b"desc_test", "example_factory", b"example_factory", "example_test", b"example_test", "extra_test", b"extra_test", "field_test", b"field_test", "in_test", b"in_test", "miss_default_test", b"miss_default_test", "multiple_of_test", b"multiple_of_test", "not_enable_test", b"not_enable_test", "not_in_test", b"not_in_test", "range_e_test", b"range_e_test", "range_test", b"range_test", "required_test", b"required_test", "title_test", b"title_test", "type_test", b"type_test"]) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["alias_test", b"alias_test", "const_test", b"const_test", "default_factory_test", b"default_factory_test", "default_template_test", b"default_template_test", "default_test", b"default_test", "desc_test", b"desc_test", "example_factory", b"example_factory", "example_test", b"example_test", "extra_test", b"extra_test", "field_test", b"field_test", "in_test", b"in_test", "miss_default_test", b"miss_default_test", "multiple_of_test", b"multiple_of_test", "not_enable_test", b"not_enable_test", "not_in_test", b"not_in_test", "range_e_test", b"range_e_test", "range_test", b"range_test", "required_test", b"required_test", "title_test", b"title_test", "type_test", b"type_test"]) -> None: ...
 
 global___FloatTest = FloatTest
 
@@ -116,6 +119,7 @@ class DoubleTest(google.protobuf.message.Message):
     IN_TEST_FIELD_NUMBER: builtins.int
     NOT_IN_TEST_FIELD_NUMBER: builtins.int
     DEFAULT_TEST_FIELD_NUMBER: builtins.int
+    DEFAULT_TEMPLATE_TEST_FIELD_NUMBER: builtins.int
     NOT_ENABLE_TEST_FIELD_NUMBER: builtins.int
     DEFAULT_FACTORY_TEST_FIELD_NUMBER: builtins.int
     MISS_DEFAULT_TEST_FIELD_NUMBER: builtins.int
@@ -135,6 +139,7 @@ class DoubleTest(google.protobuf.message.Message):
     in_test: builtins.float
     not_in_test: builtins.float
     default_test: builtins.float
+    default_template_test: builtins.float
     not_enable_test: builtins.float
     default_factory_test: builtins.float
     miss_default_test: builtins.float
@@ -157,6 +162,7 @@ class DoubleTest(google.protobuf.message.Message):
         in_test: builtins.float = ...,
         not_in_test: builtins.float = ...,
         default_test: builtins.float = ...,
+        default_template_test: builtins.float = ...,
         not_enable_test: builtins.float = ...,
         default_factory_test: builtins.float = ...,
         miss_default_test: builtins.float = ...,
@@ -171,7 +177,7 @@ class DoubleTest(google.protobuf.message.Message):
         title_test: builtins.float = ...,
         extra_test: builtins.float = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["alias_test", b"alias_test", "const_test", b"const_test", "default_factory_test", b"default_factory_test", "default_test", b"default_test", "desc_test", b"desc_test", "example_factory", b"example_factory", "example_test", b"example_test", "extra_test", b"extra_test", "field_test", b"field_test", "in_test", b"in_test", "miss_default_test", b"miss_default_test", "multiple_of_test", b"multiple_of_test", "not_enable_test", b"not_enable_test", "not_in_test", b"not_in_test", "range_e_test", b"range_e_test", "range_test", b"range_test", "required_test", b"required_test", "title_test", b"title_test", "type_test", b"type_test"]) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["alias_test", b"alias_test", "const_test", b"const_test", "default_factory_test", b"default_factory_test", "default_template_test", b"default_template_test", "default_test", b"default_test", "desc_test", b"desc_test", "example_factory", b"example_factory", "example_test", b"example_test", "extra_test", b"extra_test", "field_test", b"field_test", "in_test", b"in_test", "miss_default_test", b"miss_default_test", "multiple_of_test", b"multiple_of_test", "not_enable_test", b"not_enable_test", "not_in_test", b"not_in_test", "range_e_test", b"range_e_test", "range_test", b"range_test", "required_test", b"required_test", "title_test", b"title_test", "type_test", b"type_test"]) -> None: ...
 
 global___DoubleTest = DoubleTest
 
@@ -184,6 +190,7 @@ class Int32Test(google.protobuf.message.Message):
     IN_TEST_FIELD_NUMBER: builtins.int
     NOT_IN_TEST_FIELD_NUMBER: builtins.int
     DEFAULT_TEST_FIELD_NUMBER: builtins.int
+    DEFAULT_TEMPLATE_TEST_FIELD_NUMBER: builtins.int
     NOT_ENABLE_TEST_FIELD_NUMBER: builtins.int
     DEFAULT_FACTORY_TEST_FIELD_NUMBER: builtins.int
     MISS_DEFAULT_TEST_FIELD_NUMBER: builtins.int
@@ -203,6 +210,7 @@ class Int32Test(google.protobuf.message.Message):
     in_test: builtins.int
     not_in_test: builtins.int
     default_test: builtins.int
+    default_template_test: builtins.int
     not_enable_test: builtins.int
     default_factory_test: builtins.int
     miss_default_test: builtins.int
@@ -225,6 +233,7 @@ class Int32Test(google.protobuf.message.Message):
         in_test: builtins.int = ...,
         not_in_test: builtins.int = ...,
         default_test: builtins.int = ...,
+        default_template_test: builtins.int = ...,
         not_enable_test: builtins.int = ...,
         default_factory_test: builtins.int = ...,
         miss_default_test: builtins.int = ...,
@@ -239,7 +248,7 @@ class Int32Test(google.protobuf.message.Message):
         title_test: builtins.int = ...,
         extra_test: builtins.int = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["alias_test", b"alias_test", "const_test", b"const_test", "default_factory_test", b"default_factory_test", "default_test", b"default_test", "desc_test", b"desc_test", "example_factory", b"example_factory", "example_test", b"example_test", "extra_test", b"extra_test", "field_test", b"field_test", "in_test", b"in_test", "miss_default_test", b"miss_default_test", "multiple_of_test", b"multiple_of_test", "not_enable_test", b"not_enable_test", "not_in_test", b"not_in_test", "range_e_test", b"range_e_test", "range_test", b"range_test", "required_test", b"required_test", "title_test", b"title_test", "type_test", b"type_test"]) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["alias_test", b"alias_test", "const_test", b"const_test", "default_factory_test", b"default_factory_test", "default_template_test", b"default_template_test", "default_test", b"default_test", "desc_test", b"desc_test", "example_factory", b"example_factory", "example_test", b"example_test", "extra_test", b"extra_test", "field_test", b"field_test", "in_test", b"in_test", "miss_default_test", b"miss_default_test", "multiple_of_test", b"multiple_of_test", "not_enable_test", b"not_enable_test", "not_in_test", b"not_in_test", "range_e_test", b"range_e_test", "range_test", b"range_test", "required_test", b"required_test", "title_test", b"title_test", "type_test", b"type_test"]) -> None: ...
 
 global___Int32Test = Int32Test
 
@@ -252,6 +261,7 @@ class Int64Test(google.protobuf.message.Message):
     IN_TEST_FIELD_NUMBER: builtins.int
     NOT_IN_TEST_FIELD_NUMBER: builtins.int
     DEFAULT_TEST_FIELD_NUMBER: builtins.int
+    DEFAULT_TEMPLATE_TEST_FIELD_NUMBER: builtins.int
     NOT_ENABLE_TEST_FIELD_NUMBER: builtins.int
     DEFAULT_FACTORY_TEST_FIELD_NUMBER: builtins.int
     MISS_DEFAULT_TEST_FIELD_NUMBER: builtins.int
@@ -271,6 +281,7 @@ class Int64Test(google.protobuf.message.Message):
     in_test: builtins.int
     not_in_test: builtins.int
     default_test: builtins.int
+    default_template_test: builtins.int
     not_enable_test: builtins.int
     default_factory_test: builtins.int
     miss_default_test: builtins.int
@@ -293,6 +304,7 @@ class Int64Test(google.protobuf.message.Message):
         in_test: builtins.int = ...,
         not_in_test: builtins.int = ...,
         default_test: builtins.int = ...,
+        default_template_test: builtins.int = ...,
         not_enable_test: builtins.int = ...,
         default_factory_test: builtins.int = ...,
         miss_default_test: builtins.int = ...,
@@ -307,7 +319,7 @@ class Int64Test(google.protobuf.message.Message):
         title_test: builtins.int = ...,
         extra_test: builtins.int = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["alias_test", b"alias_test", "const_test", b"const_test", "default_factory_test", b"default_factory_test", "default_test", b"default_test", "desc_test", b"desc_test", "example_factory", b"example_factory", "example_test", b"example_test", "extra_test", b"extra_test", "field_test", b"field_test", "in_test", b"in_test", "miss_default_test", b"miss_default_test", "multiple_of_test", b"multiple_of_test", "not_enable_test", b"not_enable_test", "not_in_test", b"not_in_test", "range_e_test", b"range_e_test", "range_test", b"range_test", "required_test", b"required_test", "title_test", b"title_test", "type_test", b"type_test"]) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["alias_test", b"alias_test", "const_test", b"const_test", "default_factory_test", b"default_factory_test", "default_template_test", b"default_template_test", "default_test", b"default_test", "desc_test", b"desc_test", "example_factory", b"example_factory", "example_test", b"example_test", "extra_test", b"extra_test", "field_test", b"field_test", "in_test", b"in_test", "miss_default_test", b"miss_default_test", "multiple_of_test", b"multiple_of_test", "not_enable_test", b"not_enable_test", "not_in_test", b"not_in_test", "range_e_test", b"range_e_test", "range_test", b"range_test", "required_test", b"required_test", "title_test", b"title_test", "type_test", b"type_test"]) -> None: ...
 
 global___Int64Test = Int64Test
 
@@ -320,6 +332,7 @@ class Uint32Test(google.protobuf.message.Message):
     IN_TEST_FIELD_NUMBER: builtins.int
     NOT_IN_TEST_FIELD_NUMBER: builtins.int
     DEFAULT_TEST_FIELD_NUMBER: builtins.int
+    DEFAULT_TEMPLATE_TEST_FIELD_NUMBER: builtins.int
     NOT_ENABLE_TEST_FIELD_NUMBER: builtins.int
     DEFAULT_FACTORY_TEST_FIELD_NUMBER: builtins.int
     MISS_DEFAULT_TEST_FIELD_NUMBER: builtins.int
@@ -339,6 +352,7 @@ class Uint32Test(google.protobuf.message.Message):
     in_test: builtins.int
     not_in_test: builtins.int
     default_test: builtins.int
+    default_template_test: builtins.int
     not_enable_test: builtins.int
     default_factory_test: builtins.int
     miss_default_test: builtins.int
@@ -361,6 +375,7 @@ class Uint32Test(google.protobuf.message.Message):
         in_test: builtins.int = ...,
         not_in_test: builtins.int = ...,
         default_test: builtins.int = ...,
+        default_template_test: builtins.int = ...,
         not_enable_test: builtins.int = ...,
         default_factory_test: builtins.int = ...,
         miss_default_test: builtins.int = ...,
@@ -375,7 +390,7 @@ class Uint32Test(google.protobuf.message.Message):
         title_test: builtins.int = ...,
         extra_test: builtins.int = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["alias_test", b"alias_test", "const_test", b"const_test", "default_factory_test", b"default_factory_test", "default_test", b"default_test", "desc_test", b"desc_test", "example_factory", b"example_factory", "example_test", b"example_test", "extra_test", b"extra_test", "field_test", b"field_test", "in_test", b"in_test", "miss_default_test", b"miss_default_test", "multiple_of_test", b"multiple_of_test", "not_enable_test", b"not_enable_test", "not_in_test", b"not_in_test", "range_e_test", b"range_e_test", "range_test", b"range_test", "required_test", b"required_test", "title_test", b"title_test", "type_test", b"type_test"]) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["alias_test", b"alias_test", "const_test", b"const_test", "default_factory_test", b"default_factory_test", "default_template_test", b"default_template_test", "default_test", b"default_test", "desc_test", b"desc_test", "example_factory", b"example_factory", "example_test", b"example_test", "extra_test", b"extra_test", "field_test", b"field_test", "in_test", b"in_test", "miss_default_test", b"miss_default_test", "multiple_of_test", b"multiple_of_test", "not_enable_test", b"not_enable_test", "not_in_test", b"not_in_test", "range_e_test", b"range_e_test", "range_test", b"range_test", "required_test", b"required_test", "title_test", b"title_test", "type_test", b"type_test"]) -> None: ...
 
 global___Uint32Test = Uint32Test
 
@@ -388,6 +403,7 @@ class Sint32Test(google.protobuf.message.Message):
     IN_TEST_FIELD_NUMBER: builtins.int
     NOT_IN_TEST_FIELD_NUMBER: builtins.int
     DEFAULT_TEST_FIELD_NUMBER: builtins.int
+    DEFAULT_TEMPLATE_TEST_FIELD_NUMBER: builtins.int
     NOT_ENABLE_TEST_FIELD_NUMBER: builtins.int
     DEFAULT_FACTORY_TEST_FIELD_NUMBER: builtins.int
     MISS_DEFAULT_TEST_FIELD_NUMBER: builtins.int
@@ -407,6 +423,7 @@ class Sint32Test(google.protobuf.message.Message):
     in_test: builtins.int
     not_in_test: builtins.int
     default_test: builtins.int
+    default_template_test: builtins.int
     not_enable_test: builtins.int
     default_factory_test: builtins.int
     miss_default_test: builtins.int
@@ -429,6 +446,7 @@ class Sint32Test(google.protobuf.message.Message):
         in_test: builtins.int = ...,
         not_in_test: builtins.int = ...,
         default_test: builtins.int = ...,
+        default_template_test: builtins.int = ...,
         not_enable_test: builtins.int = ...,
         default_factory_test: builtins.int = ...,
         miss_default_test: builtins.int = ...,
@@ -443,7 +461,7 @@ class Sint32Test(google.protobuf.message.Message):
         title_test: builtins.int = ...,
         extra_test: builtins.int = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["alias_test", b"alias_test", "const_test", b"const_test", "default_factory_test", b"default_factory_test", "default_test", b"default_test", "desc_test", b"desc_test", "example_factory", b"example_factory", "example_test", b"example_test", "extra_test", b"extra_test", "field_test", b"field_test", "in_test", b"in_test", "miss_default_test", b"miss_default_test", "multiple_of_test", b"multiple_of_test", "not_enable_test", b"not_enable_test", "not_in_test", b"not_in_test", "range_e_test", b"range_e_test", "range_test", b"range_test", "required_test", b"required_test", "title_test", b"title_test", "type_test", b"type_test"]) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["alias_test", b"alias_test", "const_test", b"const_test", "default_factory_test", b"default_factory_test", "default_template_test", b"default_template_test", "default_test", b"default_test", "desc_test", b"desc_test", "example_factory", b"example_factory", "example_test", b"example_test", "extra_test", b"extra_test", "field_test", b"field_test", "in_test", b"in_test", "miss_default_test", b"miss_default_test", "multiple_of_test", b"multiple_of_test", "not_enable_test", b"not_enable_test", "not_in_test", b"not_in_test", "range_e_test", b"range_e_test", "range_test", b"range_test", "required_test", b"required_test", "title_test", b"title_test", "type_test", b"type_test"]) -> None: ...
 
 global___Sint32Test = Sint32Test
 
@@ -456,6 +474,7 @@ class Uint64Test(google.protobuf.message.Message):
     IN_TEST_FIELD_NUMBER: builtins.int
     NOT_IN_TEST_FIELD_NUMBER: builtins.int
     DEFAULT_TEST_FIELD_NUMBER: builtins.int
+    DEFAULT_TEMPLATE_TEST_FIELD_NUMBER: builtins.int
     NOT_ENABLE_TEST_FIELD_NUMBER: builtins.int
     DEFAULT_FACTORY_TEST_FIELD_NUMBER: builtins.int
     MISS_DEFAULT_TEST_FIELD_NUMBER: builtins.int
@@ -475,6 +494,7 @@ class Uint64Test(google.protobuf.message.Message):
     in_test: builtins.int
     not_in_test: builtins.int
     default_test: builtins.int
+    default_template_test: builtins.int
     not_enable_test: builtins.int
     default_factory_test: builtins.int
     miss_default_test: builtins.int
@@ -497,6 +517,7 @@ class Uint64Test(google.protobuf.message.Message):
         in_test: builtins.int = ...,
         not_in_test: builtins.int = ...,
         default_test: builtins.int = ...,
+        default_template_test: builtins.int = ...,
         not_enable_test: builtins.int = ...,
         default_factory_test: builtins.int = ...,
         miss_default_test: builtins.int = ...,
@@ -511,7 +532,7 @@ class Uint64Test(google.protobuf.message.Message):
         title_test: builtins.int = ...,
         extra_test: builtins.int = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["alias_test", b"alias_test", "const_test", b"const_test", "default_factory_test", b"default_factory_test", "default_test", b"default_test", "desc_test", b"desc_test", "example_factory", b"example_factory", "example_test", b"example_test", "extra_test", b"extra_test", "field_test", b"field_test", "in_test", b"in_test", "miss_default_test", b"miss_default_test", "multiple_of_test", b"multiple_of_test", "not_enable_test", b"not_enable_test", "not_in_test", b"not_in_test", "range_e_test", b"range_e_test", "range_test", b"range_test", "required_test", b"required_test", "title_test", b"title_test", "type_test", b"type_test"]) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["alias_test", b"alias_test", "const_test", b"const_test", "default_factory_test", b"default_factory_test", "default_template_test", b"default_template_test", "default_test", b"default_test", "desc_test", b"desc_test", "example_factory", b"example_factory", "example_test", b"example_test", "extra_test", b"extra_test", "field_test", b"field_test", "in_test", b"in_test", "miss_default_test", b"miss_default_test", "multiple_of_test", b"multiple_of_test", "not_enable_test", b"not_enable_test", "not_in_test", b"not_in_test", "range_e_test", b"range_e_test", "range_test", b"range_test", "required_test", b"required_test", "title_test", b"title_test", "type_test", b"type_test"]) -> None: ...
 
 global___Uint64Test = Uint64Test
 
@@ -524,6 +545,7 @@ class Sint64Test(google.protobuf.message.Message):
     IN_TEST_FIELD_NUMBER: builtins.int
     NOT_IN_TEST_FIELD_NUMBER: builtins.int
     DEFAULT_TEST_FIELD_NUMBER: builtins.int
+    DEFAULT_TEMPLATE_TEST_FIELD_NUMBER: builtins.int
     NOT_ENABLE_TEST_FIELD_NUMBER: builtins.int
     DEFAULT_FACTORY_TEST_FIELD_NUMBER: builtins.int
     MISS_DEFAULT_TEST_FIELD_NUMBER: builtins.int
@@ -543,6 +565,7 @@ class Sint64Test(google.protobuf.message.Message):
     in_test: builtins.int
     not_in_test: builtins.int
     default_test: builtins.int
+    default_template_test: builtins.int
     not_enable_test: builtins.int
     default_factory_test: builtins.int
     miss_default_test: builtins.int
@@ -565,6 +588,7 @@ class Sint64Test(google.protobuf.message.Message):
         in_test: builtins.int = ...,
         not_in_test: builtins.int = ...,
         default_test: builtins.int = ...,
+        default_template_test: builtins.int = ...,
         not_enable_test: builtins.int = ...,
         default_factory_test: builtins.int = ...,
         miss_default_test: builtins.int = ...,
@@ -579,7 +603,7 @@ class Sint64Test(google.protobuf.message.Message):
         title_test: builtins.int = ...,
         extra_test: builtins.int = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["alias_test", b"alias_test", "const_test", b"const_test", "default_factory_test", b"default_factory_test", "default_test", b"default_test", "desc_test", b"desc_test", "example_factory", b"example_factory", "example_test", b"example_test", "extra_test", b"extra_test", "field_test", b"field_test", "in_test", b"in_test", "miss_default_test", b"miss_default_test", "multiple_of_test", b"multiple_of_test", "not_enable_test", b"not_enable_test", "not_in_test", b"not_in_test", "range_e_test", b"range_e_test", "range_test", b"range_test", "required_test", b"required_test", "title_test", b"title_test", "type_test", b"type_test"]) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["alias_test", b"alias_test", "const_test", b"const_test", "default_factory_test", b"default_factory_test", "default_template_test", b"default_template_test", "default_test", b"default_test", "desc_test", b"desc_test", "example_factory", b"example_factory", "example_test", b"example_test", "extra_test", b"extra_test", "field_test", b"field_test", "in_test", b"in_test", "miss_default_test", b"miss_default_test", "multiple_of_test", b"multiple_of_test", "not_enable_test", b"not_enable_test", "not_in_test", b"not_in_test", "range_e_test", b"range_e_test", "range_test", b"range_test", "required_test", b"required_test", "title_test", b"title_test", "type_test", b"type_test"]) -> None: ...
 
 global___Sint64Test = Sint64Test
 
@@ -592,6 +616,7 @@ class Fixed32Test(google.protobuf.message.Message):
     IN_TEST_FIELD_NUMBER: builtins.int
     NOT_IN_TEST_FIELD_NUMBER: builtins.int
     DEFAULT_TEST_FIELD_NUMBER: builtins.int
+    DEFAULT_TEMPLATE_TEST_FIELD_NUMBER: builtins.int
     NOT_ENABLE_TEST_FIELD_NUMBER: builtins.int
     DEFAULT_FACTORY_TEST_FIELD_NUMBER: builtins.int
     MISS_DEFAULT_TEST_FIELD_NUMBER: builtins.int
@@ -611,6 +636,7 @@ class Fixed32Test(google.protobuf.message.Message):
     in_test: builtins.int
     not_in_test: builtins.int
     default_test: builtins.int
+    default_template_test: builtins.int
     not_enable_test: builtins.int
     default_factory_test: builtins.int
     miss_default_test: builtins.int
@@ -633,6 +659,7 @@ class Fixed32Test(google.protobuf.message.Message):
         in_test: builtins.int = ...,
         not_in_test: builtins.int = ...,
         default_test: builtins.int = ...,
+        default_template_test: builtins.int = ...,
         not_enable_test: builtins.int = ...,
         default_factory_test: builtins.int = ...,
         miss_default_test: builtins.int = ...,
@@ -647,7 +674,7 @@ class Fixed32Test(google.protobuf.message.Message):
         title_test: builtins.int = ...,
         extra_test: builtins.int = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["alias_test", b"alias_test", "const_test", b"const_test", "default_factory_test", b"default_factory_test", "default_test", b"default_test", "desc_test", b"desc_test", "example_factory", b"example_factory", "example_test", b"example_test", "extra_test", b"extra_test", "field_test", b"field_test", "in_test", b"in_test", "miss_default_test", b"miss_default_test", "multiple_of_test", b"multiple_of_test", "not_enable_test", b"not_enable_test", "not_in_test", b"not_in_test", "range_e_test", b"range_e_test", "range_test", b"range_test", "required_test", b"required_test", "title_test", b"title_test", "type_test", b"type_test"]) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["alias_test", b"alias_test", "const_test", b"const_test", "default_factory_test", b"default_factory_test", "default_template_test", b"default_template_test", "default_test", b"default_test", "desc_test", b"desc_test", "example_factory", b"example_factory", "example_test", b"example_test", "extra_test", b"extra_test", "field_test", b"field_test", "in_test", b"in_test", "miss_default_test", b"miss_default_test", "multiple_of_test", b"multiple_of_test", "not_enable_test", b"not_enable_test", "not_in_test", b"not_in_test", "range_e_test", b"range_e_test", "range_test", b"range_test", "required_test", b"required_test", "title_test", b"title_test", "type_test", b"type_test"]) -> None: ...
 
 global___Fixed32Test = Fixed32Test
 
@@ -660,6 +687,7 @@ class Fixed64Test(google.protobuf.message.Message):
     IN_TEST_FIELD_NUMBER: builtins.int
     NOT_IN_TEST_FIELD_NUMBER: builtins.int
     DEFAULT_TEST_FIELD_NUMBER: builtins.int
+    DEFAULT_TEMPLATE_TEST_FIELD_NUMBER: builtins.int
     NOT_ENABLE_TEST_FIELD_NUMBER: builtins.int
     DEFAULT_FACTORY_TEST_FIELD_NUMBER: builtins.int
     MISS_DEFAULT_TEST_FIELD_NUMBER: builtins.int
@@ -679,6 +707,7 @@ class Fixed64Test(google.protobuf.message.Message):
     in_test: builtins.int
     not_in_test: builtins.int
     default_test: builtins.int
+    default_template_test: builtins.int
     not_enable_test: builtins.int
     default_factory_test: builtins.int
     miss_default_test: builtins.int
@@ -701,6 +730,7 @@ class Fixed64Test(google.protobuf.message.Message):
         in_test: builtins.int = ...,
         not_in_test: builtins.int = ...,
         default_test: builtins.int = ...,
+        default_template_test: builtins.int = ...,
         not_enable_test: builtins.int = ...,
         default_factory_test: builtins.int = ...,
         miss_default_test: builtins.int = ...,
@@ -715,7 +745,7 @@ class Fixed64Test(google.protobuf.message.Message):
         title_test: builtins.int = ...,
         extra_test: builtins.int = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["alias_test", b"alias_test", "const_test", b"const_test", "default_factory_test", b"default_factory_test", "default_test", b"default_test", "desc_test", b"desc_test", "example_factory", b"example_factory", "example_test", b"example_test", "extra_test", b"extra_test", "field_test", b"field_test", "in_test", b"in_test", "miss_default_test", b"miss_default_test", "multiple_of_test", b"multiple_of_test", "not_enable_test", b"not_enable_test", "not_in_test", b"not_in_test", "range_e_test", b"range_e_test", "range_test", b"range_test", "required_test", b"required_test", "title_test", b"title_test", "type_test", b"type_test"]) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["alias_test", b"alias_test", "const_test", b"const_test", "default_factory_test", b"default_factory_test", "default_template_test", b"default_template_test", "default_test", b"default_test", "desc_test", b"desc_test", "example_factory", b"example_factory", "example_test", b"example_test", "extra_test", b"extra_test", "field_test", b"field_test", "in_test", b"in_test", "miss_default_test", b"miss_default_test", "multiple_of_test", b"multiple_of_test", "not_enable_test", b"not_enable_test", "not_in_test", b"not_in_test", "range_e_test", b"range_e_test", "range_test", b"range_test", "required_test", b"required_test", "title_test", b"title_test", "type_test", b"type_test"]) -> None: ...
 
 global___Fixed64Test = Fixed64Test
 
@@ -728,6 +758,7 @@ class Sfixed32Test(google.protobuf.message.Message):
     IN_TEST_FIELD_NUMBER: builtins.int
     NOT_IN_TEST_FIELD_NUMBER: builtins.int
     DEFAULT_TEST_FIELD_NUMBER: builtins.int
+    DEFAULT_TEMPLATE_TEST_FIELD_NUMBER: builtins.int
     NOT_ENABLE_TEST_FIELD_NUMBER: builtins.int
     DEFAULT_FACTORY_TEST_FIELD_NUMBER: builtins.int
     MISS_DEFAULT_TEST_FIELD_NUMBER: builtins.int
@@ -747,6 +778,7 @@ class Sfixed32Test(google.protobuf.message.Message):
     in_test: builtins.int
     not_in_test: builtins.int
     default_test: builtins.int
+    default_template_test: builtins.int
     not_enable_test: builtins.int
     default_factory_test: builtins.int
     miss_default_test: builtins.int
@@ -769,6 +801,7 @@ class Sfixed32Test(google.protobuf.message.Message):
         in_test: builtins.int = ...,
         not_in_test: builtins.int = ...,
         default_test: builtins.int = ...,
+        default_template_test: builtins.int = ...,
         not_enable_test: builtins.int = ...,
         default_factory_test: builtins.int = ...,
         miss_default_test: builtins.int = ...,
@@ -783,7 +816,7 @@ class Sfixed32Test(google.protobuf.message.Message):
         title_test: builtins.int = ...,
         extra_test: builtins.int = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["alias_test", b"alias_test", "const_test", b"const_test", "default_factory_test", b"default_factory_test", "default_test", b"default_test", "desc_test", b"desc_test", "example_factory", b"example_factory", "example_test", b"example_test", "extra_test", b"extra_test", "field_test", b"field_test", "in_test", b"in_test", "miss_default_test", b"miss_default_test", "multiple_of_test", b"multiple_of_test", "not_enable_test", b"not_enable_test", "not_in_test", b"not_in_test", "range_e_test", b"range_e_test", "range_test", b"range_test", "required_test", b"required_test", "title_test", b"title_test", "type_test", b"type_test"]) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["alias_test", b"alias_test", "const_test", b"const_test", "default_factory_test", b"default_factory_test", "default_template_test", b"default_template_test", "default_test", b"default_test", "desc_test", b"desc_test", "example_factory", b"example_factory", "example_test", b"example_test", "extra_test", b"extra_test", "field_test", b"field_test", "in_test", b"in_test", "miss_default_test", b"miss_default_test", "multiple_of_test", b"multiple_of_test", "not_enable_test", b"not_enable_test", "not_in_test", b"not_in_test", "range_e_test", b"range_e_test", "range_test", b"range_test", "required_test", b"required_test", "title_test", b"title_test", "type_test", b"type_test"]) -> None: ...
 
 global___Sfixed32Test = Sfixed32Test
 
@@ -796,6 +829,7 @@ class Sfixed64Test(google.protobuf.message.Message):
     IN_TEST_FIELD_NUMBER: builtins.int
     NOT_IN_TEST_FIELD_NUMBER: builtins.int
     DEFAULT_TEST_FIELD_NUMBER: builtins.int
+    DEFAULT_TEMPLATE_TEST_FIELD_NUMBER: builtins.int
     NOT_ENABLE_TEST_FIELD_NUMBER: builtins.int
     DEFAULT_FACTORY_TEST_FIELD_NUMBER: builtins.int
     MISS_DEFAULT_TEST_FIELD_NUMBER: builtins.int
@@ -815,6 +849,7 @@ class Sfixed64Test(google.protobuf.message.Message):
     in_test: builtins.int
     not_in_test: builtins.int
     default_test: builtins.int
+    default_template_test: builtins.int
     not_enable_test: builtins.int
     default_factory_test: builtins.int
     miss_default_test: builtins.int
@@ -837,6 +872,7 @@ class Sfixed64Test(google.protobuf.message.Message):
         in_test: builtins.int = ...,
         not_in_test: builtins.int = ...,
         default_test: builtins.int = ...,
+        default_template_test: builtins.int = ...,
         not_enable_test: builtins.int = ...,
         default_factory_test: builtins.int = ...,
         miss_default_test: builtins.int = ...,
@@ -851,7 +887,7 @@ class Sfixed64Test(google.protobuf.message.Message):
         title_test: builtins.int = ...,
         extra_test: builtins.int = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["alias_test", b"alias_test", "const_test", b"const_test", "default_factory_test", b"default_factory_test", "default_test", b"default_test", "desc_test", b"desc_test", "example_factory", b"example_factory", "example_test", b"example_test", "extra_test", b"extra_test", "field_test", b"field_test", "in_test", b"in_test", "miss_default_test", b"miss_default_test", "multiple_of_test", b"multiple_of_test", "not_enable_test", b"not_enable_test", "not_in_test", b"not_in_test", "range_e_test", b"range_e_test", "range_test", b"range_test", "required_test", b"required_test", "title_test", b"title_test", "type_test", b"type_test"]) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["alias_test", b"alias_test", "const_test", b"const_test", "default_factory_test", b"default_factory_test", "default_template_test", b"default_template_test", "default_test", b"default_test", "desc_test", b"desc_test", "example_factory", b"example_factory", "example_test", b"example_test", "extra_test", b"extra_test", "field_test", b"field_test", "in_test", b"in_test", "miss_default_test", b"miss_default_test", "multiple_of_test", b"multiple_of_test", "not_enable_test", b"not_enable_test", "not_in_test", b"not_in_test", "range_e_test", b"range_e_test", "range_test", b"range_test", "required_test", b"required_test", "title_test", b"title_test", "type_test", b"type_test"]) -> None: ...
 
 global___Sfixed64Test = Sfixed64Test
 

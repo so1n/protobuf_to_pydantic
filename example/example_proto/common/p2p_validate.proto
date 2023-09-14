@@ -105,6 +105,8 @@ message FloatRules {
         bool miss_default = 11;
         // Set field required
         bool required = 21;
+        // Similar meaning to `default`, but using template variables, such as `p2p@import|uuid|uuid4`
+        string default_template = 22;
     }
     // Set the alias of the field in the pydantic.Base Model
     optional string alias = 12;
@@ -173,6 +175,8 @@ message DoubleRules {
         bool miss_default = 11;
         // Set field required
         bool required = 21;
+        // Similar meaning to `default`, but using template variables, such as `p2p@import|uuid|uuid4`
+        string default_template = 22;
     }
     // Set the alias of the field in the pydantic.Base Model
     optional string alias = 12;
@@ -241,6 +245,8 @@ message Int32Rules {
         bool miss_default = 11;
         // Set field required
         bool required = 21;
+        // Similar meaning to `default`, but using template variables, such as `p2p@import|uuid|uuid4`
+        string default_template = 22;
     }
     // Set the alias of the field in the pydantic.Base Model
     optional string alias = 12;
@@ -309,6 +315,8 @@ message Int64Rules {
         bool miss_default = 11;
         // Set field required
         bool required = 21;
+        // Similar meaning to `default`, but using template variables, such as `p2p@import|uuid|uuid4`
+        string default_template = 22;
     }
     // Set the alias of the field in the pydantic.Base Model
     optional string alias = 12;
@@ -377,6 +385,8 @@ message UInt32Rules {
         bool miss_default = 11;
         // Set field required
         bool required = 21;
+        // Similar meaning to `default`, but using template variables, such as `p2p@import|uuid|uuid4`
+        string default_template = 22;
     }
     // Set the alias of the field in the pydantic.Base Model
     optional string alias = 12;
@@ -445,6 +455,8 @@ message UInt64Rules {
         bool miss_default = 11;
         // Set field required
         bool required = 21;
+        // Similar meaning to `default`, but using template variables, such as `p2p@import|uuid|uuid4`
+        string default_template = 22;
     }
     // Set the alias of the field in the pydantic.Base Model
     optional string alias = 12;
@@ -513,6 +525,8 @@ message SInt32Rules {
         bool miss_default = 11;
         // Set field required
         bool required = 21;
+        // Similar meaning to `default`, but using template variables, such as `p2p@import|uuid|uuid4`
+        string default_template = 22;
     }
     // Set the alias of the field in the pydantic.Base Model
     optional string alias = 12;
@@ -581,6 +595,8 @@ message SInt64Rules {
         bool miss_default = 11;
         // Set field required
         bool required = 21;
+        // Similar meaning to `default`, but using template variables, such as `p2p@import|uuid|uuid4`
+        string default_template = 22;
     }
     // Set the alias of the field in the pydantic.Base Model
     optional string alias = 12;
@@ -649,6 +665,8 @@ message Fixed32Rules {
         bool miss_default = 11;
         // Set field required
         bool required = 21;
+        // Similar meaning to `default`, but using template variables, such as `p2p@import|uuid|uuid4`
+        string default_template = 22;
     }
     // Set the alias of the field in the pydantic.Base Model
     optional string alias = 12;
@@ -717,6 +735,8 @@ message Fixed64Rules {
         bool miss_default = 11;
         // Set field required
         bool required = 21;
+        // Similar meaning to `default`, but using template variables, such as `p2p@import|uuid|uuid4`
+        string default_template = 22;
     }
     // Set the alias of the field in the pydantic.Base Model
     optional string alias = 12;
@@ -785,6 +805,8 @@ message SFixed32Rules {
         bool miss_default = 11;
         // Set field required
         bool required = 21;
+        // Similar meaning to `default`, but using template variables, such as `p2p@import|uuid|uuid4`
+        string default_template = 22;
     }
     // Set the alias of the field in the pydantic.Base Model
     optional string alias = 12;
@@ -853,6 +875,8 @@ message SFixed64Rules {
         bool miss_default = 11;
         // Set field required
         bool required = 21;
+        // Similar meaning to `default`, but using template variables, such as `p2p@import|uuid|uuid4`
+        string default_template = 22;
     }
     // Set the alias of the field in the pydantic.Base Model
     optional string alias = 12;
@@ -891,6 +915,8 @@ message BoolRules {
         bool miss_default = 11;
         // Set field required
         bool required = 21;
+        // Similar meaning to `default`, but using template variables, such as `p2p@import|uuid|uuid4`
+        string default_template = 22;
     }
     // Set the alias of the field in the pydantic.Base Model
     optional string alias = 5;
@@ -1016,6 +1042,8 @@ message StringRules {
         bool miss_default = 26;
         // Set field required
         bool required = 35;
+        // Similar meaning to `default`, but using template variables, such as `p2p@import|uuid|uuid4`
+        string default_template = 36;
     }
     // Set the alias of the field in the pydantic.Base Model
     optional string alias = 27;
@@ -1085,6 +1113,8 @@ message BytesRules {
         bool miss_default = 13;
         // Set field required
         bool required = 26;
+        // Similar meaning to `default`, but using template variables, such as `p2p@import|uuid|uuid4`
+        string default_template = 36;
     }
     // Set the alias of the field in the pydantic.Base Model
     optional string alias = 14;
@@ -1150,6 +1180,8 @@ message EnumRules {
         bool miss_default = 11;
         // Set field required
         bool required = 21;
+        // Similar meaning to `default`, but using template variables, such as `p2p@import|uuid|uuid4`
+        string default_template = 22;
     }
     // Set the alias of the field in the pydantic.Base Model
     optional string alias = 12;
@@ -1191,6 +1223,8 @@ message MessageRules {
         bool miss_default = 11;
         // Set field required
         bool required = 2;
+        // Similar meaning to `default`, but using template variables, such as `p2p@import|uuid|uuid4`
+        string default_template = 22;
     }
     // Set the alias of the field in the pydantic.Base Model
     optional string alias = 12;
@@ -1243,6 +1277,8 @@ message RepeatedRules {
         bool miss_default = 11;
         // Set field required
         bool required = 21;
+        // Similar meaning to `default`, but using template variables, such as `p2p@import|uuid|uuid4`
+        string default_template = 22;
     }
     // Set the alias of the field in the pydantic.Base Model
     optional string alias = 12;
@@ -1291,6 +1327,8 @@ message MapRules {
         bool miss_default = 11;
         // Set field required
         bool required = 21;
+        // Similar meaning to `default`, but using template variables, such as `p2p@import|uuid|uuid4`
+        string default_template = 22;
     }
     // Set the alias of the field in the pydantic.Base Model
     optional string alias = 12;
@@ -1334,6 +1372,8 @@ message AnyRules {
         bool miss_default = 11;
         // Set field required
         bool required = 1;
+        // Similar meaning to `default`, but using template variables, such as `p2p@import|uuid|uuid4`
+        string default_template = 22;
     }
     // Set the alias of the field in the pydantic.Base Model
     optional string alias = 12;
@@ -1396,6 +1436,8 @@ message DurationRules {
         bool miss_default = 11;
         // Set field required
         bool required = 1;
+        // Similar meaning to `default`, but using template variables, such as `p2p@import|uuid|uuid4`
+        string default_template = 22;
     }
     // Set the alias of the field in the pydantic.Base Model
     optional string alias = 12;
@@ -1466,6 +1508,8 @@ message TimestampRules {
         bool miss_default = 13;
         // Set field required
         bool required = 1;
+        // Similar meaning to `default`, but using template variables, such as `p2p@import|uuid|uuid4`
+        string default_template = 22;
     }
     // Set the alias of the field in the pydantic.Base Model
     optional string alias = 14;

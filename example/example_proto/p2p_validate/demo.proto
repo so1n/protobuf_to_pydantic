@@ -16,6 +16,7 @@ message FloatTest {
   float in_test = 4[(p2p_validate.rules).float = {in: [1,2,3]}];
   float not_in_test = 5[(p2p_validate.rules).float = {not_in: [1,2,3]}];
   float default_test = 6[(p2p_validate.rules).float.default = 1.0];
+  float default_template_test = 20[(p2p_validate.rules).float.default_template = "p2p@timestamp|10"];
   float not_enable_test = 7[(p2p_validate.rules).float.enable = false];
   float default_factory_test = 8[(p2p_validate.rules).float.default_factory = "p2p@builtin|float"];
   float miss_default_test = 9[(p2p_validate.rules).float.miss_default = true];
@@ -38,6 +39,7 @@ message DoubleTest {
   double in_test = 4[(p2p_validate.rules).double = {in: [1,2,3]}];
   double not_in_test = 5[(p2p_validate.rules).double = {not_in: [1,2,3]}];
   double default_test = 6[(p2p_validate.rules).double.default = 1.0];
+  double default_template_test = 20[(p2p_validate.rules).double.default_template = "p2p@timestamp|10"];
   double not_enable_test = 7[(p2p_validate.rules).double.enable = false];
   double default_factory_test = 8[(p2p_validate.rules).double.default_factory = "p2p@builtin|float"];
   double miss_default_test = 9[(p2p_validate.rules).double.miss_default = true];
@@ -60,6 +62,7 @@ message Int32Test {
   int32 in_test = 4[(p2p_validate.rules).int32 = {in: [1,2,3]}];
   int32 not_in_test = 5[(p2p_validate.rules).int32 = {not_in: [1,2,3]}];
   int32 default_test = 6[(p2p_validate.rules).int32.default = 1.0];
+  int32 default_template_test = 20[(p2p_validate.rules).int32.default_template = "p2p@timestamp|10"];
   int32 not_enable_test = 7[(p2p_validate.rules).int32.enable = false];
   int32 default_factory_test = 8[(p2p_validate.rules).int32.default_factory = "p2p@builtin|int"];
   int32 miss_default_test = 9[(p2p_validate.rules).int32.miss_default = true];
@@ -82,6 +85,7 @@ message Int64Test {
   int64 in_test = 4[(p2p_validate.rules).int64 = {in: [1,2,3]}];
   int64 not_in_test = 5[(p2p_validate.rules).int64 = {not_in: [1,2,3]}];
   int64 default_test = 6[(p2p_validate.rules).int64.default = 1.0];
+  int64 default_template_test = 20[(p2p_validate.rules).int64.default_template = "p2p@timestamp|10"];
   int64 not_enable_test = 7[(p2p_validate.rules).int64.enable = false];
   int64 default_factory_test = 8[(p2p_validate.rules).int64.default_factory = "p2p@builtin|int"];
   int64 miss_default_test = 9[(p2p_validate.rules).int64.miss_default = true];
@@ -104,6 +108,7 @@ message Uint32Test {
   uint32 in_test = 4[(p2p_validate.rules).uint32 = {in: [1,2,3]}];
   uint32 not_in_test = 5[(p2p_validate.rules).uint32 = {not_in: [1,2,3]}];
   uint32 default_test = 6[(p2p_validate.rules).uint32.default = 1.0];
+  uint32 default_template_test = 20[(p2p_validate.rules).uint32.default_template = "p2p@timestamp|10"];
   uint32 not_enable_test = 7[(p2p_validate.rules).uint32.enable = false];
   uint32 default_factory_test = 8[(p2p_validate.rules).uint32.default_factory = "p2p@builtin|int"];
   uint32 miss_default_test = 9[(p2p_validate.rules).uint32.miss_default = true];
@@ -126,6 +131,7 @@ message Sint32Test {
   sint32 in_test = 4[(p2p_validate.rules).sint32 = {in: [1,2,3]}];
   sint32 not_in_test = 5[(p2p_validate.rules).sint32 = {not_in: [1,2,3]}];
   sint32 default_test = 6[(p2p_validate.rules).sint32.default = 1.0];
+  sint32 default_template_test = 20[(p2p_validate.rules).sint32.default_template = "p2p@timestamp|10"];
   sint32 not_enable_test = 7[(p2p_validate.rules).sint32.enable = false];
   sint32 default_factory_test = 8[(p2p_validate.rules).sint32.default_factory = "p2p@builtin|int"];
   sint32 miss_default_test = 9[(p2p_validate.rules).sint32.miss_default = true];
@@ -148,6 +154,7 @@ message Uint64Test {
   uint64 in_test = 4[(p2p_validate.rules).uint64 = {in: [1,2,3]}];
   uint64 not_in_test = 5[(p2p_validate.rules).uint64 = {not_in: [1,2,3]}];
   uint64 default_test = 6[(p2p_validate.rules).uint64.default = 1.0];
+  uint64 default_template_test = 20[(p2p_validate.rules).uint64.default_template = "p2p@timestamp|10"];
   uint64 not_enable_test = 7[(p2p_validate.rules).uint64.enable = false];
   uint64 default_factory_test = 8[(p2p_validate.rules).uint64.default_factory = "p2p@builtin|int"];
   uint64 miss_default_test = 9[(p2p_validate.rules).uint64.miss_default = true];
@@ -170,6 +177,7 @@ message Sint64Test {
   sint64 in_test = 4[(p2p_validate.rules).sint64 = {in: [1,2,3]}];
   sint64 not_in_test = 5[(p2p_validate.rules).sint64 = {not_in: [1,2,3]}];
   sint64 default_test = 6[(p2p_validate.rules).sint64.default = 1.0];
+  sint64 default_template_test = 20[(p2p_validate.rules).sint64.default_template = "p2p@timestamp|10"];
   sint64 not_enable_test = 7[(p2p_validate.rules).sint64.enable = false];
   sint64 default_factory_test = 8[(p2p_validate.rules).sint64.default_factory = "p2p@builtin|int"];
   sint64 miss_default_test = 9[(p2p_validate.rules).sint64.miss_default = true];
@@ -192,6 +200,7 @@ message Fixed32Test {
   fixed32 in_test = 4[(p2p_validate.rules).fixed32 = {in: [1,2,3]}];
   fixed32 not_in_test = 5[(p2p_validate.rules).fixed32 = {not_in: [1,2,3]}];
   fixed32 default_test = 6[(p2p_validate.rules).fixed32.default = 1.0];
+  fixed32 default_template_test = 20[(p2p_validate.rules).fixed32.default_template = "p2p@timestamp|10"];
   fixed32 not_enable_test = 7[(p2p_validate.rules).fixed32.enable = false];
   fixed32 default_factory_test = 8[(p2p_validate.rules).fixed32.default_factory = "p2p@builtin|float"];
   fixed32 miss_default_test = 9[(p2p_validate.rules).fixed32.miss_default = true];
@@ -214,6 +223,7 @@ message Fixed64Test {
   fixed64 in_test = 4[(p2p_validate.rules).fixed64 = {in: [1,2,3]}];
   fixed64 not_in_test = 5[(p2p_validate.rules).fixed64 = {not_in: [1,2,3]}];
   fixed64 default_test = 6[(p2p_validate.rules).fixed64.default = 1.0];
+  fixed64 default_template_test = 20[(p2p_validate.rules).fixed64.default_template = "p2p@timestamp|10"];
   fixed64 not_enable_test = 7[(p2p_validate.rules).fixed64.enable = false];
   fixed64 default_factory_test = 8[(p2p_validate.rules).fixed64.default_factory = "p2p@builtin|float"];
   fixed64 miss_default_test = 9[(p2p_validate.rules).fixed64.miss_default = true];
@@ -236,6 +246,7 @@ message Sfixed32Test {
   sfixed32 in_test = 4[(p2p_validate.rules).sfixed32 = {in: [1,2,3]}];
   sfixed32 not_in_test = 5[(p2p_validate.rules).sfixed32 = {not_in: [1,2,3]}];
   sfixed32 default_test = 6[(p2p_validate.rules).sfixed32.default = 1.0];
+  sfixed32 default_template_test = 20[(p2p_validate.rules).sfixed32.default_template = "p2p@timestamp|10"];
   sfixed32 not_enable_test = 7[(p2p_validate.rules).sfixed32.enable = false];
   sfixed32 default_factory_test = 8[(p2p_validate.rules).sfixed32.default_factory = "p2p@builtin|float"];
   sfixed32 miss_default_test = 9[(p2p_validate.rules).sfixed32.miss_default = true];
@@ -258,6 +269,7 @@ message Sfixed64Test {
   sfixed64 in_test = 4[(p2p_validate.rules).sfixed64 = {in: [1,2,3]}];
   sfixed64 not_in_test = 5[(p2p_validate.rules).sfixed64 = {not_in: [1,2,3]}];
   sfixed64 default_test = 6[(p2p_validate.rules).sfixed64.default = 1.0];
+  sfixed64 default_template_test = 20[(p2p_validate.rules).sfixed64.default_template = "p2p@timestamp|10"];
   sfixed64 not_enable_test = 7[(p2p_validate.rules).sfixed64.enable = false];
   sfixed64 default_factory_test = 8[(p2p_validate.rules).sfixed64.default_factory = "p2p@builtin|float"];
   sfixed64 miss_default_test = 9[(p2p_validate.rules).sfixed64.miss_default = true];

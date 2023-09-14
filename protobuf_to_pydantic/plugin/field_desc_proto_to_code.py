@@ -207,7 +207,7 @@ class FileDescriptorProtoToCode(BaseP2C):
 
         if len(field.options.ListFields()) != 0 and rule_type_str and not skip_validate_rule:
             # protobuf option support
-            field_option_info_dict: dict = field_option_handle(rule_type_str, field.type_name, field)  # type: ignore
+            field_option_info_dict: dict = field_option_handle(rule_type_str, field.name, field)  # type: ignore
             raw_validator_dict = field_option_info_dict.get("validator", {})
 
             skip = field_option_info_dict.pop("skip", False)

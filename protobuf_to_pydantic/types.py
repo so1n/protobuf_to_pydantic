@@ -26,6 +26,7 @@ class FieldInfoTypedDict(TypedDict):
     field: NotRequired[Optional[Type[FieldInfo]]]
     default: NotRequired[Optional[Any]]
     default_factory: NotRequired[Optional[Callable]]
+    default_template: NotRequired[Optional[Callable]]
     example: NotRequired[Optional[Any]]
     example_factory: NotRequired[Optional[Callable]]
     alias: NotRequired[Optional[str]]

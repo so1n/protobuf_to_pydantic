@@ -702,27 +702,24 @@ import "google/protobuf/timestamp.proto";
 import "example_proto/common/p2p_validate.proto";
 
 message TimestampTest{
-  int32 timestamp_10 = 1[(p2p_validate.rules).int32.default = "p2p@timestamp|10"];
-  int32 timestamp_13 = 2[(p2p_validate.rules).int32.default = "p2p@timestamp|13"];
+  int32 timestamp_10 = 1[(p2p_validate.rules).int32.default_template = "p2p@timestamp|10"];
+  int32 timestamp_13 = 2[(p2p_validate.rules).int32.default_template = "p2p@timestamp|13"];
 }
 ```
 在这个文件中使用了自定义的`p2p@timestamp|{x}`的语法，其中`x`只有10和13两个值，接下来就可以根据这个模板行为编写代码了，代码如下:
 ```python
 import time
-from typing import Any, List
 from protobuf_to_pydantic.gen_model import DescTemplate
 
-
 class CustomDescTemplate(DescTemplate):
-    def template_timestamp(self, template_var_list: List[str]) -> Any:
+    def template_timestamp(self, length_str: str) -> int:
         timestamp: float = time.time()
-        length: str = template_var_list[0]
-        if length == "10":
+        if length_str == "10":
             return int(timestamp)
-        elif length == "13":
+        elif length_str == "13":
             return int(timestamp * 100)
         else:
-            raise KeyError(f"timestamp template not support value:{length}")
+            raise KeyError(f"timestamp template not support value:{length_str}")
 
 
 from .demo_pb2 import TimestampTest # fake code
@@ -735,7 +732,7 @@ msg_to_pydantic_model(
 ```
 这段代码先是创建了一个继承于`DescTemplate`的`CustomDescTemplate`的类，
 由于`DescTemplate`会根据模板的命名转发到对应的`template_{template name}`方法，所以这个类定义了`template_timestamp`的方法来实现`p2p@timestamp`模板功能。
-此外，在这个方法中接收的`template_var_list`变量则是`p2p@timestamp|10`中的10或者是`p2p@timestamp|13`中的13。
+此外，在这个方法中接收的`length_str`变量则是`p2p@timestamp|10`中的10或者是`p2p@timestamp|13`中的13。
 
 实现完`CustomDescTemplate`后，在`msg_to_pydantic_model`中通过`desc_template`关键参数来指定模板类为`CustomDescTemplate`，
 这样一来，通过`msg_to_pydantic_model`生成的`Pydantic Model`代码会发生变化，如下(假设在时间戳为1600000000时生成的代码)：

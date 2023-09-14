@@ -7,6 +7,7 @@
 - Feature, support optional field
 - Feature, field add required attr
 - Feature, change format feature optional default value
+- Feature, p2p rule support default template feature
 - Refactor, refactor model's validator code gen(Use Pydantic's validator naming standard)
 ## 0.1.7
 - Fix, fix plugin cli not use param

@@ -86,6 +86,11 @@ def field_param_dict_handle(
         e.g: List[str], List is the first layer, str is the second layer,
     :return:
     """
+    # default_template support
+    if field_param_dict.get("default", None) is None and field_param_dict.get("default_template", None) is not None:
+        field_param_dict["default"] = field_param_dict["default_template"]
+    field_param_dict.pop("default_template", None)
+
     # Handle complex relationships with different defaults
     check_dict_one_of(field_param_dict, ["required", "default", "default_factory"])
     if field_param_dict.get("default_factory", None) is not None:
@@ -175,6 +180,7 @@ class MessagePaitModel(BaseModel):
     required: bool = Field(False)
     default: Optional[Any] = Field(None)
     default_factory: Optional[Callable] = Field(None)
+    default_template: Any = Field(None)
     example: Any = Field(MISSING)
     example_factory: Optional[Callable] = Field(None)
     alias: Optional[str] = Field(None)

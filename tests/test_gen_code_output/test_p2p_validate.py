@@ -17,7 +17,7 @@ else:
     else:
         from example.proto_3_20_pydanticv2.example.example_proto.p2p_validate import demo_pb2  # type: ignore[no-redef]
 
-from example.gen_p2p_code import CustomerField, confloat, conint, customer_any
+from example.gen_p2p_code import CustomDescTemplate, CustomerField, confloat, conint, customer_any
 from protobuf_to_pydantic import msg_to_pydantic_model, pydantic_model_to_py_code
 from protobuf_to_pydantic.util import format_content
 
@@ -35,7 +35,7 @@ class TestP2pValidate:
             "conint": conint,
             "customer_any": customer_any,
         }
-        return pydantic_model_to_py_code(msg_to_pydantic_model(msg, local_dict=local_dict))
+        return pydantic_model_to_py_code(msg_to_pydantic_model(msg, local_dict=local_dict, desc_template=CustomDescTemplate))
 
     @staticmethod
     def assert_contains(content: str, other_content: str) -> None:
@@ -214,6 +214,7 @@ class DoubleTest(BaseModel):
     in_test: float = Field(default=0.0, in_=[1.0, 2.0, 3.0])
     not_in_test: float = Field(default=0.0, not_in=[1.0, 2.0, 3.0])
     default_test: float = Field(default=1.0)
+    default_template_test: float = Field(default=1600000000)
     default_factory_test: float = Field(default_factory=float)
     miss_default_test: float = Field()
     required_test: float = Field()
@@ -239,6 +240,7 @@ class DoubleTest(BaseModel):
     in_test: float = Field(default=0.0, in_=[1.0, 2.0, 3.0])
     not_in_test: float = Field(default=0.0, not_in=[1.0, 2.0, 3.0])
     default_test: float = Field(default=1.0)
+    default_template_test: float = Field(default=1600000000)
     default_factory_test: float = Field(default_factory=float)
     miss_default_test: float = Field()
     required_test: float = Field()
@@ -441,6 +443,7 @@ class Fixed32Test(BaseModel):
     in_test: float = Field(default=0, in_=[1, 2, 3])
     not_in_test: float = Field(default=0, not_in=[1, 2, 3])
     default_test: float = Field(default=1.0)
+    default_template_test: float = Field(default=1600000000)
     default_factory_test: float = Field(default_factory=float)
     miss_default_test: float = Field()
     required_test: float = Field()
@@ -466,6 +469,7 @@ class Fixed32Test(BaseModel):
     in_test: float = Field(default=0, in_=[1, 2, 3])
     not_in_test: float = Field(default=0, not_in=[1, 2, 3])
     default_test: float = Field(default=1.0)
+    default_template_test: float = Field(default=1600000000)
     default_factory_test: float = Field(default_factory=float)
     miss_default_test: float = Field()
     required_test: float = Field()
@@ -493,6 +497,7 @@ class Fixed64Test(BaseModel):
     in_test: float = Field(default=0, in_=[1, 2, 3])
     not_in_test: float = Field(default=0, not_in=[1, 2, 3])
     default_test: float = Field(default=1.0)
+    default_template_test: float = Field(default=1600000000)
     default_factory_test: float = Field(default_factory=float)
     miss_default_test: float = Field()
     required_test: float = Field()
@@ -518,6 +523,7 @@ class Fixed64Test(BaseModel):
     in_test: float = Field(default=0, in_=[1, 2, 3])
     not_in_test: float = Field(default=0, not_in=[1, 2, 3])
     default_test: float = Field(default=1.0)
+    default_template_test: float = Field(default=1600000000)
     default_factory_test: float = Field(default_factory=float)
     miss_default_test: float = Field()
     required_test: float = Field()
@@ -545,6 +551,7 @@ class FloatTest(BaseModel):
     in_test: float = Field(default=0.0, in_=[1.0, 2.0, 3.0])
     not_in_test: float = Field(default=0.0, not_in=[1.0, 2.0, 3.0])
     default_test: float = Field(default=1.0)
+    default_template_test: float = Field(default=1600000000)
     default_factory_test: float = Field(default_factory=float)
     miss_default_test: float = Field()
     required_test: float = Field()
@@ -570,6 +577,7 @@ class FloatTest(BaseModel):
     in_test: float = Field(default=0.0, in_=[1.0, 2.0, 3.0])
     not_in_test: float = Field(default=0.0, not_in=[1.0, 2.0, 3.0])
     default_test: float = Field(default=1.0)
+    default_template_test: float = Field(default=1600000000)
     default_factory_test: float = Field(default_factory=float)
     miss_default_test: float = Field()
     required_test: float = Field()
@@ -597,6 +605,7 @@ class Int32Test(BaseModel):
     in_test: int = Field(default=0, in_=[1, 2, 3])
     not_in_test: int = Field(default=0, not_in=[1, 2, 3])
     default_test: int = Field(default=1.0)
+    default_template_test: int = Field(default=1600000000)
     default_factory_test: int = Field(default_factory=int)
     miss_default_test: int = Field()
     required_test: int = Field()
@@ -623,6 +632,7 @@ class Int32Test(BaseModel):
     in_test: int = Field(default=0, in_=[1, 2, 3])
     not_in_test: int = Field(default=0, not_in=[1, 2, 3])
     default_test: int = Field(default=1.0)
+    default_template_test: int = Field(default=1600000000)
     default_factory_test: int = Field(default_factory=int)
     miss_default_test: int = Field()
     required_test: int = Field()
@@ -650,6 +660,7 @@ class Int64Test(BaseModel):
     in_test: int = Field(default=0, in_=[1, 2, 3])
     not_in_test: int = Field(default=0, not_in=[1, 2, 3])
     default_test: int = Field(default=1.0)
+    default_template_test: int = Field(default=1600000000)
     default_factory_test: int = Field(default_factory=int)
     miss_default_test: int = Field()
     required_test: int = Field()
@@ -675,6 +686,7 @@ class Int64Test(BaseModel):
     in_test: int = Field(default=0, in_=[1, 2, 3])
     not_in_test: int = Field(default=0, not_in=[1, 2, 3])
     default_test: int = Field(default=1.0)
+    default_template_test: int = Field(default=1600000000)
     default_factory_test: int = Field(default_factory=int)
     miss_default_test: int = Field()
     required_test: int = Field()
@@ -1093,6 +1105,7 @@ class Sfixed32Test(BaseModel):
     in_test: float = Field(default=0, in_=[1, 2, 3])
     not_in_test: float = Field(default=0, not_in=[1, 2, 3])
     default_test: float = Field(default=1.0)
+    default_template_test: float = Field(default=1600000000)
     default_factory_test: float = Field(default_factory=float)
     miss_default_test: float = Field()
     required_test: float = Field()
@@ -1118,6 +1131,7 @@ class Sfixed32Test(BaseModel):
     in_test: float = Field(default=0, in_=[1, 2, 3])
     not_in_test: float = Field(default=0, not_in=[1, 2, 3])
     default_test: float = Field(default=1.0)
+    default_template_test: float = Field(default=1600000000)
     default_factory_test: float = Field(default_factory=float)
     miss_default_test: float = Field()
     required_test: float = Field()
@@ -1145,6 +1159,7 @@ class Sfixed64Test(BaseModel):
     in_test: float = Field(default=0, in_=[1, 2, 3])
     not_in_test: float = Field(default=0, not_in=[1, 2, 3])
     default_test: float = Field(default=1.0)
+    default_template_test: float = Field(default=1600000000)
     default_factory_test: float = Field(default_factory=float)
     miss_default_test: float = Field()
     required_test: float = Field()
@@ -1170,6 +1185,7 @@ class Sfixed64Test(BaseModel):
     in_test: float = Field(default=0, in_=[1, 2, 3])
     not_in_test: float = Field(default=0, not_in=[1, 2, 3])
     default_test: float = Field(default=1.0)
+    default_template_test: float = Field(default=1600000000)
     default_factory_test: float = Field(default_factory=float)
     miss_default_test: float = Field()
     required_test: float = Field()
@@ -1197,6 +1213,7 @@ class Sint64Test(BaseModel):
     in_test: int = Field(default=0, in_=[1, 2, 3])
     not_in_test: int = Field(default=0, not_in=[1, 2, 3])
     default_test: int = Field(default=1.0)
+    default_template_test: int = Field(default=1600000000)
     default_factory_test: int = Field(default_factory=int)
     miss_default_test: int = Field()
     required_test: int = Field()
@@ -1222,6 +1239,7 @@ class Sint64Test(BaseModel):
     in_test: int = Field(default=0, in_=[1, 2, 3])
     not_in_test: int = Field(default=0, not_in=[1, 2, 3])
     default_test: int = Field(default=1.0)
+    default_template_test: int = Field(default=1600000000)
     default_factory_test: int = Field(default_factory=int)
     miss_default_test: int = Field()
     required_test: int = Field()
@@ -1444,6 +1462,7 @@ class Uint32Test(BaseModel):
     in_test: int = Field(default=0, in_=[1, 2, 3])
     not_in_test: int = Field(default=0, not_in=[1, 2, 3])
     default_test: int = Field(default=1.0)
+    default_template_test: int = Field(default=1600000000)
     default_factory_test: int = Field(default_factory=int)
     miss_default_test: int = Field()
     required_test: int = Field()
@@ -1469,6 +1488,7 @@ class Uint32Test(BaseModel):
     in_test: int = Field(default=0, in_=[1, 2, 3])
     not_in_test: int = Field(default=0, not_in=[1, 2, 3])
     default_test: int = Field(default=1.0)
+    default_template_test: int = Field(default=1600000000)
     default_factory_test: int = Field(default_factory=int)
     miss_default_test: int = Field()
     required_test: int = Field()
@@ -1496,6 +1516,7 @@ class Uint64Test(BaseModel):
     in_test: int = Field(default=0, in_=[1, 2, 3])
     not_in_test: int = Field(default=0, not_in=[1, 2, 3])
     default_test: int = Field(default=1.0)
+    default_template_test: int = Field(default=1600000000)
     default_factory_test: int = Field(default_factory=int)
     miss_default_test: int = Field()
     required_test: int = Field()
@@ -1521,6 +1542,7 @@ class Uint64Test(BaseModel):
     in_test: int = Field(default=0, in_=[1, 2, 3])
     not_in_test: int = Field(default=0, not_in=[1, 2, 3])
     default_test: int = Field(default=1.0)
+    default_template_test: int = Field(default=1600000000)
     default_factory_test: int = Field(default_factory=int)
     miss_default_test: int = Field()
     required_test: int = Field()

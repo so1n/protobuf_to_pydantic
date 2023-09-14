@@ -18,6 +18,17 @@ def customer_any() -> Any:
     return Any  # type: ignore
 
 
+class CustomDescTemplate(DescTemplate):
+    def template_timestamp(self, length_str: str) -> int:
+        timestamp: float = 1600000000
+        if length_str == "10":
+            return int(timestamp)
+        elif length_str == "13":
+            return int(timestamp * 100)
+        else:
+            raise KeyError(f"timestamp template not support value:{length_str}")
+
+
 local_dict = {
     "CustomerField": CustomerField,
     "confloat": confloat,
@@ -25,5 +36,5 @@ local_dict = {
     "customer_any": customer_any,
 }
 comment_prefix = "p2p"
-desc_template: Type[DescTemplate] = DescTemplate
+desc_template: Type[DescTemplate] = CustomDescTemplate
 ignore_pkg_list: List[str] = ["validate", "p2p_validate"]
