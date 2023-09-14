@@ -296,7 +296,8 @@ class FileDescriptorProtoToCode(BaseP2C):
             self._add_import_code("pydantic", "Field")
 
         if not _pydantic_adapter.is_v1:
-            field_param_dict_migration_v2_handler(field_info_dict)
+            # pgv or p2p rule no warning required
+            field_param_dict_migration_v2_handler(field_info_dict, is_warnings=False)
         # arranging  field info parameters
         for key in FieldInfo.__slots__:
             value: Any = field_info_dict.get(key, None)

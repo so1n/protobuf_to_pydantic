@@ -135,7 +135,16 @@ def option_descriptor_to_desc_dict(
     for column in column_list:
         if column in type_not_support_dict.get(field.type, type_not_support_dict["Any"]):
             # Exclude unsupported fields
-            _logger.warning(f"{__name__} not support `{column}`, please reset {full_name} `{column}` value")
+            rule_name = column
+            if field.type in protobuf_common_type_dict:
+                rule_name = f"{protobuf_common_type_dict[field.type]}.{rule_name}"
+            elif field.type == 1:
+                rule_name = f"Message.{rule_name}"
+
+            msg: str = f"{__name__} not support `{rule_name}` rule."
+            if full_name:
+                msg = msg + f"(field:{full_name})"
+            _logger.warning(msg)
             continue
 
         value = getattr(option_descriptor, column)

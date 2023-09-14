@@ -29,22 +29,24 @@ if TYPE_CHECKING:
     from protobuf_to_pydantic.types import DescFromOptionTypedDict, FieldInfoTypedDict, OneOfTypedDict
 
 
-def field_param_dict_migration_v2_handler(field_param_dict: Dict[str, Any]) -> None:
+def field_param_dict_migration_v2_handler(field_param_dict: Dict[str, Any], is_warnings: bool = True) -> None:
     json_schema_extra = {}
     for k in list(field_param_dict.keys()):
         new_k = constant.pydantic_field_v1_migration_v2_dict.get(k, k)
         if new_k != k:
             if new_k is None:
-                warnings.warn(
-                    f"field param `{k}` is deprecated, "
-                    f"https://docs.pydantic.dev/latest/migration/#changes-to-pydanticfield"
-                )
+                if is_warnings:
+                    warnings.warn(
+                        f"field param `{k}` is deprecated, "
+                        f"https://docs.pydantic.dev/latest/migration/#changes-to-pydanticfield"
+                    )
                 field_param_dict.pop(k)
             else:
-                warnings.warn(
-                    f"field param `{k}` is deprecated, please use `{new_k}` instead,"
-                    f" https://docs.pydantic.dev/latest/migration/#changes-to-pydanticfield"
-                )
+                if is_warnings:
+                    warnings.warn(
+                        f"field param `{k}` is deprecated, please use `{new_k}` instead,"
+                        f" https://docs.pydantic.dev/latest/migration/#changes-to-pydanticfield"
+                    )
                 value = field_param_dict.pop(k)
                 if value:
                     field_param_dict[new_k] = value
