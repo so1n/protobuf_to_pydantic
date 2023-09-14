@@ -101,8 +101,10 @@ message FloatRules {
         // The default value factory function corresponding to the field, supports template variables,
         // such as `p2p@import|uuid|uuid4`
         string  default_factory = 10;
-        // Set field required
+        // Set field required[Will be deprecated after version 1.0.0]
         bool miss_default = 11;
+        // Set field required
+        bool required = 21;
     }
     // Set the alias of the field in the pydantic.Base Model
     optional string alias = 12;
@@ -167,8 +169,10 @@ message DoubleRules {
         // The default value factory function corresponding to the field, supports template variables,
         // such as `p2p@import|uuid|uuid4`
         string  default_factory = 10;
-        // Set field required
+        // Set field required[Will be deprecated after version 1.0.0]
         bool miss_default = 11;
+        // Set field required
+        bool required = 21;
     }
     // Set the alias of the field in the pydantic.Base Model
     optional string alias = 12;
@@ -233,8 +237,10 @@ message Int32Rules {
         // The default value factory function corresponding to the field, supports template variables,
         // such as `p2p@import|uuid|uuid4`
         string  default_factory = 10;
-        // Set field required
+        // Set field required[Will be deprecated after version 1.0.0]
         bool miss_default = 11;
+        // Set field required
+        bool required = 21;
     }
     // Set the alias of the field in the pydantic.Base Model
     optional string alias = 12;
@@ -299,8 +305,10 @@ message Int64Rules {
         // The default value factory function corresponding to the field, supports template variables,
         // such as `p2p@import|uuid|uuid4`
         string  default_factory = 10;
-        // Set field required
+        // Set field required[Will be deprecated after version 1.0.0]
         bool miss_default = 11;
+        // Set field required
+        bool required = 21;
     }
     // Set the alias of the field in the pydantic.Base Model
     optional string alias = 12;
@@ -365,8 +373,10 @@ message UInt32Rules {
         // The default value factory function corresponding to the field, supports template variables,
         // such as `p2p@import|uuid|uuid4`
         string  default_factory = 10;
-        // Set field required
+        // Set field required[Will be deprecated after version 1.0.0]
         bool miss_default = 11;
+        // Set field required
+        bool required = 21;
     }
     // Set the alias of the field in the pydantic.Base Model
     optional string alias = 12;
@@ -431,8 +441,10 @@ message UInt64Rules {
         // The default value factory function corresponding to the field, supports template variables,
         // such as `p2p@import|uuid|uuid4`
         string  default_factory = 10;
-        // Set field required
+        // Set field required[Will be deprecated after version 1.0.0]
         bool miss_default = 11;
+        // Set field required
+        bool required = 21;
     }
     // Set the alias of the field in the pydantic.Base Model
     optional string alias = 12;
@@ -497,8 +509,10 @@ message SInt32Rules {
         // The default value factory function corresponding to the field, supports template variables,
         // such as `p2p@import|uuid|uuid4`
         string  default_factory = 10;
-        // Set field required
+        // Set field required[Will be deprecated after version 1.0.0]
         bool miss_default = 11;
+        // Set field required
+        bool required = 21;
     }
     // Set the alias of the field in the pydantic.Base Model
     optional string alias = 12;
@@ -563,8 +577,10 @@ message SInt64Rules {
         // The default value factory function corresponding to the field, supports template variables,
         // such as `p2p@import|uuid|uuid4`
         string  default_factory = 10;
-        // Set field required
+        // Set field required[Will be deprecated after version 1.0.0]
         bool miss_default = 11;
+        // Set field required
+        bool required = 21;
     }
     // Set the alias of the field in the pydantic.Base Model
     optional string alias = 12;
@@ -629,8 +645,10 @@ message Fixed32Rules {
         // The default value factory function corresponding to the field, supports template variables,
         // such as `p2p@import|uuid|uuid4`
         string  default_factory = 10;
-        // Set field required
+        // Set field required[Will be deprecated after version 1.0.0]
         bool miss_default = 11;
+        // Set field required
+        bool required = 21;
     }
     // Set the alias of the field in the pydantic.Base Model
     optional string alias = 12;
@@ -695,8 +713,10 @@ message Fixed64Rules {
         // The default value factory function corresponding to the field, supports template variables,
         // such as `p2p@import|uuid|uuid4`
         string  default_factory = 10;
-        // Set field required
+        // Set field required[Will be deprecated after version 1.0.0]
         bool miss_default = 11;
+        // Set field required
+        bool required = 21;
     }
     // Set the alias of the field in the pydantic.Base Model
     optional string alias = 12;
@@ -761,8 +781,10 @@ message SFixed32Rules {
         // The default value factory function corresponding to the field, supports template variables,
         // such as `p2p@import|uuid|uuid4`
         string  default_factory = 10;
-        // Set field required
+        // Set field required[Will be deprecated after version 1.0.0]
         bool miss_default = 11;
+        // Set field required
+        bool required = 21;
     }
     // Set the alias of the field in the pydantic.Base Model
     optional string alias = 12;
@@ -827,8 +849,10 @@ message SFixed64Rules {
         // The default value factory function corresponding to the field, supports template variables,
         // such as `p2p@import|uuid|uuid4`
         string  default_factory = 10;
-        // Set field required
+        // Set field required[Will be deprecated after version 1.0.0]
         bool miss_default = 11;
+        // Set field required
+        bool required = 21;
     }
     // Set the alias of the field in the pydantic.Base Model
     optional string alias = 12;
@@ -863,8 +887,10 @@ message BoolRules {
         // The default value corresponding to the field, if not set,
         // the default value is the default value of the corresponding type of the field
         bool default = 3;
+        // Set field required[Will be deprecated after version 1.0.0]
+        bool miss_default = 11;
         // Set field required
-        bool miss_default = 4;
+        bool required = 21;
     }
     // Set the alias of the field in the pydantic.Base Model
     optional string alias = 5;
@@ -986,8 +1012,10 @@ message StringRules {
         // The default value factory function corresponding to the field, supports template variables,
         // such as `p2p@import|uuid|uuid4`
         string  default_factory = 25;
-        // Set field required
+        // Set field required[Will be deprecated after version 1.0.0]
         bool miss_default = 26;
+        // Set field required
+        bool required = 35;
     }
     // Set the alias of the field in the pydantic.Base Model
     optional string alias = 27;
@@ -1053,8 +1081,10 @@ message BytesRules {
         // The default value factory function corresponding to the field, supports template variables,
         // such as `p2p@import|uuid|uuid4`
         string  default_factory = 12;
-        // Set field required
+        // Set field required[Will be deprecated after version 1.0.0]
         bool miss_default = 13;
+        // Set field required
+        bool required = 26;
     }
     // Set the alias of the field in the pydantic.Base Model
     optional string alias = 14;
@@ -1116,8 +1146,10 @@ message EnumRules {
         // The default value factory function corresponding to the field, supports template variables,
         // such as `p2p@import|uuid|uuid4`
         string  default_factory = 10;
-        // Set field required
+        // Set field required[Will be deprecated after version 1.0.0]
         bool miss_default = 11;
+        // Set field required
+        bool required = 21;
     }
     // Set the alias of the field in the pydantic.Base Model
     optional string alias = 12;
@@ -1144,8 +1176,6 @@ message MessageRules {
     // evaluated
     optional bool skip     = 1;
 
-    // Required specifies that this field must be set
-    optional bool required = 2;
 
     // Whether to enable this field, if not, the generated Model will not carry this field
     optional bool enable = 8;
@@ -1157,8 +1187,10 @@ message MessageRules {
         // The default value factory function corresponding to the field, supports template variables,
         // such as `p2p@import|uuid|uuid4`
         string  default_factory = 10;
-        // Set field required
+        // Set field required[Will be deprecated after version 1.0.0]
         bool miss_default = 11;
+        // Set field required
+        bool required = 2;
     }
     // Set the alias of the field in the pydantic.Base Model
     optional string alias = 12;
@@ -1207,8 +1239,10 @@ message RepeatedRules {
         // The default value factory function corresponding to the field, supports template variables,
         // such as `p2p@import|uuid|uuid4`
         string  default_factory = 10;
-        // Set field required
+        // Set field required[Will be deprecated after version 1.0.0]
         bool miss_default = 11;
+        // Set field required
+        bool required = 21;
     }
     // Set the alias of the field in the pydantic.Base Model
     optional string alias = 12;
@@ -1253,8 +1287,10 @@ message MapRules {
         // The default value factory function corresponding to the field, supports template variables,
         // such as `p2p@import|uuid|uuid4`
         string  default_factory = 10;
-        // Set field required
+        // Set field required[Will be deprecated after version 1.0.0]
         bool miss_default = 11;
+        // Set field required
+        bool required = 21;
     }
     // Set the alias of the field in the pydantic.Base Model
     optional string alias = 12;
@@ -1277,8 +1313,6 @@ message MapRules {
 // AnyRules describe constraints applied exclusively to the
 // `google.protobuf.Any` well-known type
 message AnyRules {
-    // Required specifies that this field must be set
-    optional bool required = 1;
 
     // In specifies that this field's `type_url` must be equal to one of the
     // specified values.
@@ -1296,8 +1330,10 @@ message AnyRules {
         // The default value factory function corresponding to the field, supports template variables,
         // such as `p2p@import|uuid|uuid4`
         string  default_factory = 10;
-        // Set field required
+        // Set field required[Will be deprecated after version 1.0.0]
         bool miss_default = 11;
+        // Set field required
+        bool required = 1;
     }
     // Set the alias of the field in the pydantic.Base Model
     optional string alias = 12;
@@ -1356,8 +1392,10 @@ message DurationRules {
         // The default value factory function corresponding to the field, supports template variables,
         // such as `p2p@import|uuid|uuid4`
         string  default_factory = 10;
-        // Set field required
+        // Set field required[Will be deprecated after version 1.0.0]
         bool miss_default = 11;
+        // Set field required
+        bool required = 1;
     }
     // Set the alias of the field in the pydantic.Base Model
     optional string alias = 12;
@@ -1424,8 +1462,10 @@ message TimestampRules {
         // The default value factory function corresponding to the field, supports template variables,
         // such as `p2p@import|uuid|uuid4`
         string  default_factory = 12;
-        // Set field required
+        // Set field required[Will be deprecated after version 1.0.0]
         bool miss_default = 13;
+        // Set field required
+        bool required = 1;
     }
     // Set the alias of the field in the pydantic.Base Model
     optional string alias = 14;

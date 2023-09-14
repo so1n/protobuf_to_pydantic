@@ -81,6 +81,8 @@ def gen_dict_from_desc_str(comment_prefix: str, desc: str) -> FieldInfoTypedDict
             continue
         line = line.replace(f"{comment_prefix}:", "")
         pait_dict.update(json.loads(line))
+    if "miss_default" in pait_dict:
+        pait_dict["required"] = pait_dict.pop("miss_default")
     return pait_dict  # type: ignore
 
 

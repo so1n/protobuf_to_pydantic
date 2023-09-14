@@ -18,7 +18,7 @@ class FieldInfoTypedDict(TypedDict):
     extra: dict
     skip: NotRequired[bool]
     enable: NotRequired[bool]
-    miss_default: NotRequired[bool]
+    required: NotRequired[bool]
     validator: NotRequired[Dict[str, classmethod]]
     type: NotRequired[Any]
     map_type: NotRequired[Dict[str, Type]]

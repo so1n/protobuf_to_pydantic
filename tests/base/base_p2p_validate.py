@@ -34,18 +34,18 @@ class BaseTestP2pModelValidator:
 
         for model_class in self.number_model_class_list:
             for i in [1, 2, 3]:
-                self.replace_message_fn(model_class, local_dict=local_dict)(in_test=i, miss_default_test=1.0)
+                self.replace_message_fn(model_class, local_dict=local_dict)(in_test=i, miss_default_test=1.0, required_test=1.0)
             for i in [0, 4]:
                 with pytest.raises(ValidationError):
-                    self.replace_message_fn(model_class, local_dict=local_dict)(in_test=i, miss_default_test=1.0)
+                    self.replace_message_fn(model_class, local_dict=local_dict)(in_test=i, miss_default_test=1.0, required_test=1.0)
 
     def test_number_model_not_in_validator(self) -> None:
         for model_class in self.number_model_class_list:
             for i in [1, 2, 3]:
                 with pytest.raises(ValidationError):
-                    self.replace_message_fn(model_class, local_dict=local_dict)(not_in_test=i, miss_default_test=1.0)
+                    self.replace_message_fn(model_class, local_dict=local_dict)(not_in_test=i, miss_default_test=1.0, required_test=1.0)
             for i in [0, 4]:
-                self.replace_message_fn(model_class, local_dict=local_dict)(not_in_test=i, miss_default_test=1.0)
+                self.replace_message_fn(model_class, local_dict=local_dict)(not_in_test=i, miss_default_test=1.0, required_test=1.0)
 
     def test_number_model_miss_default_validator(self) -> None:
         for model_class in self.number_model_class_list:
@@ -54,15 +54,15 @@ class BaseTestP2pModelValidator:
 
     def test_number_model_miss_multiple_of_validator(self) -> None:
         for model_class in self.number_model_class_list:
-            self.replace_message_fn(model_class, local_dict=local_dict)(miss_default_test=1.0, multiple_of_test=6.0)
+            self.replace_message_fn(model_class, local_dict=local_dict)(miss_default_test=1.0, multiple_of_test=6.0, required_test=1.0)
             with pytest.raises(ValidationError):
-                self.replace_message_fn(model_class, local_dict=local_dict)(miss_default_test=1.0, multiple_of_test=7.0)
+                self.replace_message_fn(model_class, local_dict=local_dict)(miss_default_test=1.0, multiple_of_test=7.0, required_test=1.0)
 
     def _test_bool(self, model_class: Type) -> None:
-        model_class(bool_1_test=True, bool_2_test=False, miss_default_test=True)
+        model_class(bool_1_test=True, bool_2_test=False, miss_default_test=True, required_test=True)
         with pytest.raises(ValidationError):
-            model_class(bool_1_test=False, bool_2_test=False, miss_default_test=True)
-            model_class(bool_1_test=True, bool_2_test=True, miss_default_test=True)
+            model_class(bool_1_test=False, bool_2_test=False, miss_default_test=True, required_test=True)
+            model_class(bool_1_test=True, bool_2_test=True, miss_default_test=True, required_test=True)
 
     def _test_string(self, model_class: Type) -> None:
         normal_dict: dict = {
@@ -87,6 +87,7 @@ class BaseTestP2pModelValidator:
             "uuid_test": str(uuid4()),
             "pydantic_type_test": str(uuid1()),
             "miss_default_test": "aa",
+            "required_test": "aa",
         }
         model_class(**normal_dict)
         for column in [
@@ -110,7 +111,8 @@ class BaseTestP2pModelValidator:
             "contains_test": b"aaa_contains_test",
             "in_test": b"a",
             "not_in_test": b"d",
-            "miss_default_test": b"d"
+            "miss_default_test": b"d",
+            "required_test": b"d",
         }
 
         model_class(**normal_dict)
@@ -129,7 +131,8 @@ class BaseTestP2pModelValidator:
             "const_test": 2,
             "in_test": 0,
             "not_in_test": 1,
-            "miss_default_test": 1
+            "miss_default_test": 1,
+            "required_test": 1,
         }
         error_map_dict: dict = {
             "const_test": 4,
@@ -145,7 +148,8 @@ class BaseTestP2pModelValidator:
             "keys_test": {"a": 1},
             "values_test": {"a": 5},
             "keys_values_test": {"a": datetime.now() + timedelta(days=1)},
-            "miss_default_test": {"a": 1}
+            "miss_default_test": {"a": 1},
+            "required_test": {"a": 1},
         }
         error_map_dict: dict = {
             "pair_test": {"a": 1, "b": 2, "c": 3, "d": 4, "e": 5, "f": 6},
@@ -169,7 +173,8 @@ class BaseTestP2pModelValidator:
             "items_timestamp_test": [datetime.fromtimestamp(1600000001) if is_v1 else 1600000001],
             "items_duration_test": [timedelta(seconds=10)],
             "items_bytes_test": [b"a", b"b"],
-            "miss_default_test": ["a", "b"]
+            "miss_default_test": ["a", "b"],
+            "required_test": ["a", "b"],
         }
         error_map_dict: dict = {
             "range_test": ["a", "b", "c", "d", "e", "f"],
@@ -266,6 +271,7 @@ class BaseTestP2pModelValidator:
                     "uuid_test": str(uuid4()),
                     "pydantic_type_test": str(uuid1()),
                     "miss_default_test": "aa",
+                    "required_test": "aa",
                 }
             },
             "map_in_map_test": {
@@ -275,7 +281,8 @@ class BaseTestP2pModelValidator:
                     "keys_test": {"a": 1},
                     "values_test": {"a": 5},
                     "keys_values_test": {"a": datetime.now() + timedelta(days=1)},
-                    "miss_default_test": {"a": 1}
+                    "miss_default_test": {"a": 1},
+                    "required_test": {"a": 1},
                 }
             },
             "user_pay": {

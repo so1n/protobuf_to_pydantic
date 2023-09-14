@@ -85,7 +85,7 @@ def field_param_dict_handle(
     :return:
     """
     # Handle complex relationships with different defaults
-    check_dict_one_of(field_param_dict, ["miss_default", "default", "default_factory"])
+    check_dict_one_of(field_param_dict, ["required", "default", "default_factory"])
     if field_param_dict.get("default_factory", None) is not None:
         field_param_dict.pop("default", "")
     elif field_param_dict.get("default", None) is None:
@@ -96,10 +96,10 @@ def field_param_dict_handle(
             field_param_dict["default"] = default
             field_param_dict.pop("default_factory", None)
 
-    if field_param_dict.get("miss_default", None) is True:
+    if field_param_dict.get("required", None) is True:
         field_param_dict.pop("default", "")
         field_param_dict.pop("default_factory", "")
-    field_param_dict.pop("miss_default", None)
+    field_param_dict.pop("required", None)
 
     _const = field_param_dict.pop("const", MISSING)
     # PGV&P2P const handler
@@ -170,7 +170,7 @@ def field_param_dict_handle(
 class MessagePaitModel(BaseModel):
     field: Optional[Type[FieldInfo]] = Field(None)
     enable: bool = Field(True)
-    miss_default: bool = Field(False)
+    required: bool = Field(False)
     default: Optional[Any] = Field(None)
     default_factory: Optional[Callable] = Field(None)
     example: Any = Field(MISSING)

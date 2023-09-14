@@ -12,7 +12,7 @@ enum SexType {
 
 // user info
 message UserMessage {
-  // p2p: {"miss_default": true, "example": "10086", "title": "UID", "description": "user union id"}
+  // p2p: {"required": true, "example": "10086", "title": "UID", "description": "user union id"}
   string uid=1;
   // p2p: {"example": 18, "title": "use age", "ge": 0}
   int32 age=2;

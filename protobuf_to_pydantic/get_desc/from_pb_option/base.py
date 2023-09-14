@@ -57,7 +57,7 @@ pgv_column_to_pydantic_dict: Dict[str, str] = {
     "gte": "ge",
     "lte": "le",
     "len_bytes": "len",
-    "required": "miss_default",
+    "miss_default": "required",
 }
 
 
@@ -317,7 +317,7 @@ def field_option_handle(
 ) -> FieldInfoTypedDict:
     """Parse the information for each filed"""
     field_dict: FieldInfoTypedDict = {"extra": {}, "skip": False}
-    miss_default: bool = False
+    required: bool = False
     if isinstance(field, FieldDescriptor):
         field_list = field.GetOptions().ListFields()
     elif isinstance(field, FieldDescriptorProto):
@@ -337,15 +337,15 @@ def field_option_handle(
             if getattr(rule_message, "skip", None):
                 field_dict["skip"] = True
             if getattr(rule_message, "required", None):
-                miss_default = True
+                required = True
         type_value: Optional[Descriptor] = getattr(option_value, type_name, None)
         if not type_value:
             _logger.warning(f"{__name__} Can not found {full_name}'s {type_name} from {option_value}")
             continue
         option_descriptor_to_desc_dict(type_value, field, type_name, full_name, field_dict)
 
-    if miss_default:
-        field_dict["miss_default"] = miss_default
+    if required:
+        field_dict["required"] = required
     return field_dict
 
 

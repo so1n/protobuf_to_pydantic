@@ -50,7 +50,7 @@ class UserMessage(google.protobuf.message.Message):
     USER_NAME_FIELD_NUMBER: builtins.int
     DEMO_MESSAGE_FIELD_NUMBER: builtins.int
     uid: builtins.str
-    """p2p: {"miss_default": true, "example": "10086", "title": "UID", "description": "user union id"}"""
+    """p2p: {"required": true, "example": "10086", "title": "UID", "description": "user union id"}"""
     age: builtins.int
     """p2p: {"example": 18, "title": "use age", "ge": 0}"""
     height: builtins.float
