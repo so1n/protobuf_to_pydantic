@@ -20,7 +20,7 @@
 下面是`protobuf_to_pydantic`的功能概览图，图中`p2p`代表的是`protobuf_to_pydantic`，`Protoc`代表`Protobuf`生成代码的命令，而`plugin`代表`Protoc`的插件:
 ![protobuf-to-pydantic](https://github.com/so1n/protobuf_to_pydantic/blob/master/images/protobuf-to-pydantic_index.png?raw=true)
 
-# 1.安装
+# 安装
 默认情况下，通过下面的命令可以直接安装`protobuf_to_pydantic`并使用:
 ```bash
 pip install protobuf_to_pydantic
@@ -31,13 +31,14 @@ pip install protobuf_to_pydantic[all]
 ```
 
 
-# 2.生成代码
+# 使用
+## 1.代码生成
 `protobuf_to_pydantic`目前拥有两种方法基于Protobuf文件生成`Pydantic Model`对象：
 - 1: 以`Protoc`插件的方式通过Protobuf文件生成对应的`Python`代码文件。
 - 2: 在`Python`运行时根据`Message`对象生成对应的`Pydantic Model`对象。
 
-## 2.1.通过插件直接生成`pydantic.BaseModel`代码文件
-## 2.1.0.安装依赖
+### 1.1.通过插件直接生成`pydantic.BaseModel`代码文件
+#### 1.1.0.安装依赖
 `protobuf_to_pydantic`插件依赖`mypy-protobuf`，需要先通过如下命令安装`mypy-protobuf`:
 ```bash
 python -m pip install protobuf-to-pydantic[mypy-protobuf]
@@ -46,7 +47,7 @@ or
 ```bash
 poetry add protobuf-to-pydantic -E mypy-protobuf
 ```
-### 2.1.1.使用插件
+#### 1.1.1.使用插件
 `protobuf_to_pydantic`插件是`protobuf_to_pydantic`推荐的`Pydantic Model`源码生成的方式，它支持的功能是最全的，同时使用起来也非常简单，假设平时是通过如下命令生成Protobuf文件对应的代码:
 ```bash
 python -m grpc_tools.protoc -I. example.proto
@@ -60,7 +61,7 @@ python -m grpc_tools.protoc -I. --protobuf-to-pydantic_out=. example.proto
 
 在运行命令后`protobuf_to_pydantic`插件会在对应的文件中写入自己生成的内容。默认情况下，生成的文件名后缀为`p2p.py`，如`protobuf_to_pydantic`为`example.proto`生成的代码文件名为`example_p2p.py`
 
-### 2.1.2.插件的配置
+#### 1.1.2.插件的配置
 `protobuf_to_pydantic`插件支持通过读取一个`Python`文件来加载配置。
 
 > 为了保证能够正常的引入配置文件的变量，配置文件必须存放在运行命令的当前路径下。
@@ -130,7 +131,7 @@ python -m grpc_tools.protoc -I. --protobuf-to-pydantic_out=config_path=plugin_co
 |file_descriptor_proto_to_code|代码生成(只限插件)|`Type[FileDescriptorProtoToCode]`|定义使用的FileDescriptorProtoToCode|
 
 
-## 2.2.在Python运行时生成`Pydantic Model`对象
+### 1.2.在Python运行时生成`Pydantic Model`对象
 `protobuf_to_pydantic`可以在运行时根据`Message`对象生成对应的 `Pydantic Model`对象。
 
 例如下面一个名为`demo.proto`的Protobuf文件中的`UserMessage`：
@@ -216,7 +217,7 @@ pydantic_model_to_py_file(
 ```
 代码运行的时候，会先把`demo_pb2.NestedMessage`转换为`Pydantic Model`对象，接着传入到`pydantic_model_to_py_file`方法中，由`pydantic_model_to_py_file`生成对应的源码内容再写入到`demo_gen_code.py`文件中。
 
-## 3.参数校验
+## 2.参数校验
 在上一节中，Protobuf文件生成的`Pydantic Model`对象非常简单，这是因为Protobuf文件没有足够的参数验证相关信息。
 为了使生成的`Pydantic Model`对象中的每个字段都拥有参数校验功能，需要在Protobuf文件中完善字段对应的参数校验规则。
 目前`protobuf_to_pydantic`支持通过多种方式来获取Message的其他信息，使得生成的`pydantic.BaseModel`对象具有参数校验的功能。
@@ -225,7 +226,7 @@ pydantic_model_to_py_file(
 >  - 1.文本注释功能不是后续功能开发重点，推荐使用P2P校验规则。
 >  - 2.插件生成代码只支持PGV和P2P校验规则。
 
-### 3.1.文本注释
+### 2.1.文本注释
 在Protobuf文件中可以为每个字段编写符合`protobuf_to_pydantic`要求的注释，以便`protobuf_to_pydantic`在解析Protobuf文件时能够获得到参数的校验信息，比如下面这个例子
 ```protobuf
 syntax = "proto3";
@@ -355,7 +356,7 @@ print(
 # }
 ```
 可以看到，这份代码的唯一区别就是`parse_msg_desc_method`的值不同，但是通过输出结果可以看出字段携带的信息与通过模块获取的结果一样。
-### 3.2.PGV(protoc-gen-validate)
+### 2.2.PGV(protoc-gen-validate)
 目前Protobuf生态中常用的参数校验项目是[protoc-gen-validate](https://github.com/envoyproxy/protoc-gen-validate)，
 它由于支持多种语言且只要编写一次`PGV`规则就能使生成的`Message`对象虽然编程语言不同的，但都支持相同的校验规则，已然成为Protobuf中的通用标准。
 
@@ -397,7 +398,7 @@ print(
 >  - 2.使用前请通过`pip install protoc_gen_validate`安装`PGV`或者把[validate.proto](https://github.com/so1n/protobuf_to_pydantic/blob/master/example/example_proto/common/validate.proto)下载到项目的Protobuf目录中，才能在Protobuf文件中编写pgv规则。
 
 
-### 3.3.P2P
+### 2.3.P2P
 `PGV`校验规则是编写在`Message`每个字段的Option属性中，拥有较好的代码规范，所以使用`PGV`校验规则的Protobuf的可读性会比使用注释的Protobuf高，
 同时在编写`PGV`规则时，还可以体验到IDE的自动补全带来的便利性以及通过Protobuf文件生成对应语言对象时进行校验的安全性，
 不过它只支持校验相关的逻辑，功能丰富度不如文件注释模式。
@@ -484,7 +485,7 @@ print(
 
 
 
-### 3.4.其它参数支持
+### 2.4.其它参数支持
 `protobuf_to_pydantic`的文件注释校验规则和`P2P`校验规则除了支持`FieldInfo`的参数外，还支持下面几种参数:
 - required: 默认情况下，生成的`Pydantic Model`对象中每个字段的默认值与它对应类型的零值是一致的，不过当`required`为`true`时会取消默认值的设置。
 - enable: 默认情况下， `protobuf_to_pydantic`会把Message中的每个字段都进行转换，如果有些字段不想被转换，可以设置`enable`为`false`
@@ -519,13 +520,13 @@ print(
 >
 >   - https://docs.pydantic.dev/latest/usage/fields/
 
-### 3.5.模板
+### 2.5.模板
 在使用定义字段时，会发现有些字段填写的值是`Python`中某个库的方法或者函数(比如`type`参数和`default_factory`参数的值)，这是无法通过Json语法来实现。
 这时可以使用模板参数来解决对应的问题，目前`protobuf_to_pydantic`支持多种模板功能。
 
 > Note:模板开头的`p2p`字符串可以通过comment_prefix变量来定义
 
-#### 3.5.1.`p2p@import`模板
+#### 2.5.1.`p2p@import`模板
 `p2p@import`模板用于表示该值是其它模块下的变量，需要先引入再使用，具体的使用方法如下:
 - 注释规则的示例：
   ```protobuf
@@ -573,7 +574,7 @@ class UserPayMessage(BaseModel):
     bank_number: PaymentCardNumber = FieldInfo(default="", extra={})
 ```
 
-#### 3.5.2.`p2p@import_instance`模板
+#### 2.5.2.`p2p@import_instance`模板
 `p2p@import_instance`模板是先引入某个库的类，再结合指定的参数进行实例化后才被对应的规则使用，该模板的使用方法如下:
 ```protobuf
 syntax = "proto3";
@@ -600,7 +601,7 @@ class AnyTest(BaseModel):
     )
 ```
 
-#### 3.5.3.`p2p@local`模板
+#### 2.5.3.`p2p@local`模板
 该模板用于引入用户自定义的变量，这里使用的是`{模板的方法}|{要使用的本地变量}`格式的语法，如下：
 
 - 注释规则的示例:
@@ -657,7 +658,7 @@ class UserPayMessage(BaseModel):
 
 > Note: 具体调用和生成方法见示例代码。
 
-#### 3.5.4.`p2p@builtin`模板
+#### 2.5.4.`p2p@builtin`模板
 当需要使用的变量来自于`Python`内建函数时，可以直接使用该模板（可以认为是`p2p@local`模板的简化版本），语法使用如下：
 - 注释规则的示例:
   ```protobuf
@@ -690,7 +691,7 @@ from pydantic.fields import FieldInfo
 class UserPayMessage(BaseModel):
     exp: float = FieldInfo()
 ```
-#### 3.5.5.自定义模板
+#### 2.5.5.自定义模板
 目前`protobuf_to_pydantic`只支持几种简单模板，如果有更多的模板需求，可以通过继承`DescTemplate`类来对模板进行拓展。
 
 比如有一个奇葩的需求，要求字段的默认值为Message对象生成`Pydantic Model`对象时的时间戳，不过使用的时间戳有长度为10位和13位两个版本, 于是需要编写如下Protobuf文件来支持定义时间戳的长度：
@@ -746,7 +747,7 @@ class TimestampTest(BaseModel):
     timestamp_10: int = FieldInfo(default=1600000000)
     timestamp_13: int = FieldInfo(default=1600000000000)
 ```
-## 4.代码格式化
+## 3.代码格式化
 通过`protobuf_to_pydantic`直接生成的代码不是完美的，但是可以通过不同的格式化工具来间接的生成符合`Python`规范的代码。
 目前支持的格式化工具有`autoflake`, `black`和`isort`，如果在当前的`Python`环境中安装了对应的格式化工具，那么`protobuf_to_pydantic`在生成代码后会调用工具对生成的代码进行格式化再输出到文件中。
 
@@ -780,16 +781,16 @@ remove-all-unused-imports = true
 remove-unused-variables = true
 ```
 
-## 5.example
+## 4.example
 `protobuf_to_pydantic`提供了一些简单的示例代码，以下是示例代码和protobuf文件的路径，仅供参考。
 
-### 5.1.直接生成
+### 4.1.直接生成使用示例
 protobuf文件: [demo/demo.proto](https://github.com/so1n/protobuf_to_pydantic/blob/master/example/example_proto/demo/demo.proto)
 
 生成的`Pydantic Model`(Pydantic V1): [proto_pydanticv1/demo_gen_code.py](https://github.com/so1n/protobuf_to_pydantic/blob/master/example/proto_pydanticv1/demo_gen_code.py)
 
 生成的`Pydantic Model`(Pydantic V2): [proto_pydanticv2/demo_gen_code.py](https://github.com/so1n/protobuf_to_pydantic/blob/master/example/proto_pydanticv2/demo_gen_code.py)
-### 5.2.使用注释规则
+### 4.2.注释规则使用示例
 protobuf文件: [demo/demo.proto](https://github.com/so1n/protobuf_to_pydantic/blob/master/example/example_proto/demo/demo.proto)
 
 基于`pyi`文件生成的`Pydantic Model`(Pydantic V1): [proto_pydanticv1/demo_gen_code_by_text_comment_pyi.py](https://github.com/so1n/protobuf_to_pydantic/blob/master/example/proto_pydanticv1/demo_gen_code_by_text_comment_pyi.py)
@@ -799,13 +800,13 @@ protobuf文件: [demo/demo.proto](https://github.com/so1n/protobuf_to_pydantic/b
 基于Protobuf文件生成的`Pydantic Model`(Pydantic V1): [proto_pydanticv1/demo_gen_code_by_text_comment_protobuf_field.py](https://github.com/so1n/protobuf_to_pydantic/blob/master/example/proto_pydanticv1/demo_gen_code_by_text_comment_protobuf_field.py)
 
 基于Protobuf文件生成的`Pydantic Model`(Pydantic V2): [proto_pydanticv2/demo_gen_code_by_text_comment_protobuf_field.py](https://github.com/so1n/protobuf_to_pydantic/blob/master/example/proto_pydanticv2/demo_gen_code_by_text_comment_protobuf_field.py)
-### 5.3.使用PGV规则
+### 4.3.PGV规则使用示例
 protobuf文件: [validate/demo.proto](https://github.com/so1n/protobuf_to_pydantic/blob/master/example/example_proto/validate/demo.proto)
 
 生成的`Pydantic Model`(Pydantic V1): [proto_pydanticv1/demo_gen_code_by_pgv.py](https://github.com/so1n/protobuf_to_pydantic/blob/master/example/proto_pydanticv1/demo_gen_code_by_pgv.py)
 
 生成的`Pydantic Model`(Pydantic V2): [proto_pydanticv2/demo_gen_code_by_pgv.py](https://github.com/so1n/protobuf_to_pydantic/blob/master/example/proto_pydanticv2/demo_gen_code_by_pgv.py)
-### 5.4.使用P2P规则
+### 4.4.P2P规则使用示例
 protobuf文件: [p2p_validate/demo.proto](https://github.com/so1n/protobuf_to_pydantic/blob/master/example/example_proto/p2p_validate/demo.proto)
 
 生成的`Pydantic Model`(Pydantic V1): [proto_pydanticv1/demo_gen_code_by_p2p.py](https://github.com/so1n/protobuf_to_pydantic/blob/master/example/proto_pydanticv1/demo_gen_code_by_p2p.py)
