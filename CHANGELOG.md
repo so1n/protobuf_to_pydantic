@@ -1,8 +1,14 @@
-## 0.2.0[Future]
+## 0.2.1[Future]
+- Feature, support protovalidate(proto-gen-validate version >= 1.0.0) rule
+
+## 0.2.0[now]
 - Feature, support Pydantic Version 2.0.0+
 - Feature, datetime compared by timestamp
+- Feature, support optional field
+- Feature, field add required attr
+- Feature, change format feature optional default value
 - Refactor, refactor model's validator code gen(Use Pydantic's validator naming standard)
-## 0.1.7[now]
+## 0.1.7
 - Fix, fix plugin cli not use param
 - Feature, Plugin CodeGen support customer config and support Field config
 - Feature, Plugin CodeGen support customer head&tail content
