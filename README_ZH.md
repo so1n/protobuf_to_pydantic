@@ -1,6 +1,5 @@
 # protobuf_to_pydantic
-基于Protobuf文件生成带有参数校验功能的`Pydantic Model`或者是源码。
-
+基于Protobuf文件(Proto3)生成带有参数校验功能的`Pydantic Model`或者是源码。
 
 # Feature
 
@@ -13,8 +12,6 @@
 - [x] 通过模板支持自定义功能。
 - [ ] 支持`protovalidate`规则（也就是`proto-gen-validate`1.0）
 
-> NOTE:
->  - 当前只支持proto3版本的protobuf
 
 
 下面是`protobuf_to_pydantic`的功能概览图，图中`p2p`代表的是`protobuf_to_pydantic`，`Protoc`代表`Protobuf`生成代码的命令，而`plugin`代表`Protoc`的插件:
@@ -128,7 +125,7 @@ python -m grpc_tools.protoc -I. --protobuf-to-pydantic_out=config_path=plugin_co
 |ignore_pkg_list|代码生成(只限插件)|`list[str]`|定义忽略指定package文件的解析|
 |base_model_class|Model生成，代码生成|`Type[BaseModel]`|定义生成的Model的父类|
 |file_name_suffix|代码生成|str|定义生成的文件后缀，默认为`_p2p.py`|
-|file_descriptor_proto_to_code|代码生成(只限插件)|`Type[FileDescriptorProtoToCode]`|定义使用的FileDescriptorProtoToCode|
+|file_descriptor_proto_to_code|代码生成(只限Protoc插件)|`Type[FileDescriptorProtoToCode]`|定义使用的FileDescriptorProtoToCode|
 
 
 ### 1.2.在Python运行时生成`Pydantic Model`对象
@@ -220,7 +217,14 @@ pydantic_model_to_py_file(
 ## 2.参数校验
 在上一节中，Protobuf文件生成的`Pydantic Model`对象非常简单，这是因为Protobuf文件没有足够的参数验证相关信息。
 为了使生成的`Pydantic Model`对象中的每个字段都拥有参数校验功能，需要在Protobuf文件中完善字段对应的参数校验规则。
-目前`protobuf_to_pydantic`支持通过多种方式来获取Message的其他信息，使得生成的`pydantic.BaseModel`对象具有参数校验的功能。
+
+目前`protobuf-to-pydantic`支持的校验规则有三种：
+- 1.文本注释
+- 2.PGV(protoc-geb-validate)
+- 3.P2P
+
+通过这些规则，`protobuf-to-pydantic`生成的`Pydantic Model`对象将拥有参数校验功能。
+其中文本注释和P2P的规则是一致的，它们都支持`Pydantic Field`中的大多数参数，部分有变化和新增的参数见[2.4.`P2P`与文本注释的其它参数支持](#24p2p与文本注释的其它参数支持)
 
 > NOTE:
 >  - 1.文本注释功能不是后续功能开发重点，推荐使用P2P校验规则。
@@ -485,40 +489,50 @@ print(
 
 
 
-### 2.4.其它参数支持
-`protobuf_to_pydantic`的文件注释校验规则和`P2P`校验规则除了支持`FieldInfo`的参数外，还支持下面几种参数:
-- required: 默认情况下，生成的`Pydantic Model`对象中每个字段的默认值与它对应类型的零值是一致的，不过当`required`为`true`时会取消默认值的设置。
-- enable: 默认情况下， `protobuf_to_pydantic`会把Message中的每个字段都进行转换，如果有些字段不想被转换，可以设置`enable`为`false`
-- const: 用于指定字段的常量值，不过不同的`Pydantic`版本的表现是不一样的。
-  - `Pydantic V1`： `Field`中`default`的值会被设定为`const`指定的值，`Field`中的`const`被设置为True。注: `Pydantic Model`的const只支持bool变量，当`const`为`True`时，接受的值只能是`default`设定的值，而protobuf生成的Message携带的默认值为对应类型的空值与`Pydantic Model`不匹配，所以`protobuf_to_pydantic`对这个值的输入进行了一些变动。
-  - `Pydnatic V2`: `Field`中`default`的值不变，但类型注解会变为`typing_extensions.Literal[xxx]`
-- type: 拓展目前的类型，比如想通过`pydantic.types.PaymentCardNumber`类型来增加对银行卡号码的校验，那么可以通过如下方法来指定字段的类型为`PaymentCardNumber`:
-  - 本文注释规则：
-    ```protobuf
-    syntax = "proto3";
-    package common_validate_test;
+### 2.4.`P2P`与文本注释的其它参数支持
+`protobuf_to_pydantic`的文件注释规则和`P2P`规则支持`FieldInfo`中的大部分参数，具体见[Pydantic Field文档](https://docs.pydantic.dev/latest/usage/fields/)。
 
-    // common example
-    message UserPayMessage {
-      string bank_number=1; // p2p: {"type": "p2p@import|pydantic.types|PaymentCardNumber"}
-    }
-    ```
-  - P2P规则：
-    ```protobuf
-    syntax = "proto3";
-    package p2p_validate_test;
+> `Pydantic V2`新增的参数将会在2.1版本中支持，目前`P2P`的规则命名仍是基于`Pydantic V1`编写的，但是支持自动映射为`Pydantic V2`的命名。
 
-    import "example_proto/common/p2p_validate.proto";
-    // p2p example
-    message UserPayMessage {
-      string bank_number=1[(p2p_validate.rules).string.type = "p2p@import|pydantic.types|PaymentCardNumber"];
-    }
-    ```
+其它部分含义有变动和新增的参数说明如下:
 
-> Note:
->   如果不了解`pydantic`，可以通过下面的URL了解Field的用途:
->
->   - https://docs.pydantic.dev/latest/usage/fields/
+| 参数               | 默认值   | 说明                                                                                                                                                                                                                                                                                                                                                                                 |
+|------------------|-------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| required         | False | 默认情况下，生成的`Pydantic Model`对象中每个字段的默认值与它对应类型的零值是一致的，不过当`required`为`True`时会取消默认值的设置。                                                                                                                                                                                                                                                                                                  |
+| enable           | True  | 默认情况下，`protobuf-to-pydantic`会为`Message`生成所有字段，如果不想生成的`Message`拥有此字段，可以设置`enable`为`False`。                                                                                                                                                                                                                                                                                          |
+| const            | None  | 用于指定字段的常量值，不过不同的`Pydantic`版本的表现是不一样的<br/> 对于 `Pydantic V1`，`Field`中`default`的值会被设定为`const`指定的值，`Field`中的`const`被设置为True。注: `Pydantic Model`的const只支持bool变量，当`const`为`True`时，接受的值只能是`default`设定的值，而protobuf生成的Message携带的默认值为对应类型的空值与`Pydantic Model`不匹配，所以`protobuf_to_pydantic`对这个值的输入进行了一些变动。<br/> 对于`Pydantic V2`，`Field`中`default`的值不变，但类型注解会变为`typing_extensions.Literal[xxx]` |
+| type             | None  | 默认情况下，字段的默认类型与Protobuf的类型是一致的，但是可以在`type`字段使用[2.5.模板](#25模板)功能修改字段的类型                                                                                                                                                                                                                                                                                                              |
+| extra            | None  | `Pydantic`接受的`extra`参数的类型为`Python Dict`，Protobuf不支持该类型，在Protobuf文件中需要使用[2.5.模板](#25模板)或者是对应的Json结构`protobuf-to-pydantic`才可以正常解析。                                                                                                                                                                                                                                                   |
+| field            | None  | 默认情况下，参数的`Field`为`Pydantic FieldInfo`，不过可以使用[2.5.模板](#25模板)功能进行定制                                                                                                                                                                                                                                                                                                                  |
+| default_template | None  | 与`default`作用类似，在非字符串类型的字段可以使用[2.5.模板](#25模板)功能进行定制默认值                                                                                                                                                                                                                                                                                                                              |
+
+
+此外，针对字符串类型还支持`Pydantic type`类型的快速导入，比如想通过`pydantic.types.PaymentCardNumber`类型来增加对银行卡号码的校验，那么可以通过指定`pydantic_type`参数字段的类型为`PaymentCardNumber`，它与在`type`规则使用模板引入的功能是类似的，如下:
+- 文本注释规则：
+  ```protobuf
+  syntax = "proto3";
+  package common_validate_test;
+
+  // common example
+  message UserPayMessage {
+    string bank_number=1; // p2p: {"pydantic_type": "PaymentCardNumber"}
+    string other_bank_number=2; // p2p: {"type": "p2p@import|pydantic.types|PaymentCardNumber"}
+  }
+  ```
+- P2P规则：
+  ```protobuf
+  syntax = "proto3";
+  package p2p_validate_test;
+
+  import "example_proto/common/p2p_validate.proto";
+  // p2p example
+  message UserPayMessage {
+    string bank_number=1[(p2p_validate.rules).string.pydantic_type = "PaymentCardNumber"];
+    string other_bank_number=2[(p2p_validate.rules).string.type = "p2p@import|pydantic.types|PaymentCardNumber"];
+  }
+  ```
+
+> 支持的`Pydantic Type`见[Extra Types Overview](https://docs.pydantic.dev/latest/usage/types/extra_types/extra_types/)
 
 ### 2.5.模板
 在使用定义字段时，会发现有些字段填写的值是`Python`中某个库的方法或者函数(比如`type`参数和`default_factory`参数的值)，这是无法通过Json语法来实现。
