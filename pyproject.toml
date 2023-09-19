@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "protobuf_to_pydantic"
-version = "v0.1.7.4"
+version = "0.0.0"
 description = "Generate the `pydantic.BaseModel` class (and the corresponding source code) with parameter verification function through the Protobuf file"
 authors = ["So1n <so1n897046026@gmail.com>"]
 license = "Apache Software License"
@@ -127,7 +127,7 @@ exclude_lines = [
 
 
 [tool.poetry-dynamic-versioning]
-enable = false
+enable = true
 metadata=false
 vcs = "git"
 format = "v{base}"
