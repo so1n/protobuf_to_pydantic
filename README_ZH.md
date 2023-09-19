@@ -10,7 +10,7 @@
 - [x] 生成的源码自动格式化。
 - [x] 支持多种校验规则，兼容`proto-gen-validate`(后续版本将支持`proto-gen-validate`1.0的规则)。
 - [x] 通过模板支持自定义功能。
-- [ ] 支持`protovalidate`规则（也就是`proto-gen-validate`1.0）
+- [ ] 支持`protovalidate`校验规则（也就是`proto-gen-validate`1.0）
 
 
 
@@ -22,7 +22,7 @@
 ```bash
 pip install protobuf_to_pydantic
 ```
-不过为了能够使用`protobuf-to-pydantic`的完整功能，可以使用如下命令安装`protobuf-to-pydantic`:
+如果想要使用`protobuf-to-pydantic`的完整功能，可以使用如下命令安装`protobuf-to-pydantic`:
 ```bash
 pip install protobuf_to_pydantic[all]
 ```
@@ -49,14 +49,15 @@ poetry add protobuf-to-pydantic -E mypy-protobuf
 ```bash
 python -m grpc_tools.protoc -I. example.proto
 ```
-那么在安装`protobuf-to-pydantic`后可以通过`--protobuf-to-pydantic_out`选项使用`protobuf-to-pydantic`的插件，命令如下：
+那么,在安装`protobuf-to-pydantic`后可以通过`--protobuf-to-pydantic_out`选项使用`protobuf-to-pydantic`的插件，命令如下：
 ```bash
 python -m grpc_tools.protoc -I. --protobuf-to-pydantic_out=. example.proto
 ```
 在这个命令中`--protobuf-to-pydantic_out=.`表示使用`prorobuf_to_pydantic`插件，
 且声明了`protobuf-to-pydantic`插件的输出位置为`.`(`.`表示采用`grpc_tools.proto`使用的输出路径)。
 
-在运行命令后`protobuf-to-pydantic`插件会在对应的文件中写入自己生成的内容。默认情况下，生成的文件名后缀为`p2p.py`，如`protobuf-to-pydantic`为`example.proto`生成的代码文件名为`example_p2p.py`
+
+在运行命令后`protobuf-to-pydantic`插件会把生成源码文本写入到一个文件名后缀为`p2p.py`的文件中，如`protobuf-to-pydantic`为`example.proto`生成的代码文件名为`example_p2p.py`.
 
 #### 1.1.2.插件的配置
 `protobuf-to-pydantic`插件支持通过读取一个`Python`文件来加载配置。
@@ -262,12 +263,12 @@ message UserMessage {
 如果熟悉`pydantic`的用法，可以发现Json字符串包含的都是对应`pydantic.Field`的校验信息，
 比如`UserMessage`中的`uid`字段总共附带的4个信息如下：
 
-| 字段           | 含义                             |
-|--------------|--------------------------------|
-| miss_default | 表示生成的字段不带有默认值                  |
-| example      | 表示生成的字段的示例值为10086              |
-| title        | 表示字段的schema名称为UID              |
- | description  | 表示字段的schema文档描述为 `user union id` |
+| 字段          | 含义                             |
+|-------------|--------------------------------|
+| required    | 表示生成的字段不带有默认值                  |
+| example     | 表示生成的字段的示例值为10086              |
+| title       | 表示字段的schema名称为UID              |
+ | description | 表示字段的schema文档描述为 `user union id` |
 
 > Note:
 >   - 1.目前只支持单行注释且注释必须是一个完整的Json数据(不能换行)。
