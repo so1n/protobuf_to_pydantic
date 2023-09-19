@@ -155,7 +155,7 @@ message UserMessage {
 ```
 通过`grpc_tools.protoc`可以生成`Protobuf`文件对应的`Python`代码文件(文件名为`demo_pb2.py`)，代码文件中存在`UserMessage`的相关代码。
 
-在`Python`运行时可以调用`protobuf-to-pydantic`的`msg_to_pydantic_model`方法读取`demo_pb2`模块中的`UserMessage`对象，并生成生成对应的`Pydantic Model`对象，如下:
+在`Python`运行时可以调用`protobuf-to-pydantic`的`msg_to_pydantic_model`函数读取`demo_pb2`模块中的`UserMessage`对象，并生成生成对应的`Pydantic Model`对象，如下:
 ```Python
 # pydantic version V1
 from typing import Type
@@ -185,7 +185,7 @@ print(
 ```
 通过输出结果可以看到生成的`Pydantic Model`对象与Protobuf文件中的`UserMessage`一样包含了`uid`,`age`,`height`,`sex`,`is_adult`和`user_name`字段，且`default`属性的值与Protobuf对应类型的零值是一致的。
 
-`msg_to_pydantic_model`方法与插件一样支持可定制，对应的拓展参数如下:
+`msg_to_pydantic_model`函数与插件一样支持可定制，对应的拓展参数如下:
 
 |字段| 含义                              |
 |---|---------------------------------|
@@ -202,7 +202,7 @@ print(
 
 
 除了在运行时生成对应的`Pydantic Model`对象外，`protobuf-to-pydantic`还支持在运行时将`Pydantic Model`对象转为对应的`Python`代码文本（仅兼容`protobuf-to-pydantic`生成的`Pydantic Model`对象)。
-其中，`pydantic_model_to_py_code`用于生成代码源码，`pydantic_model_to_py_file`用于生成代码文件，`pydantic_model_to_py_file`方法示例代码如下：
+其中，`pydantic_model_to_py_code`用于生成代码源码，`pydantic_model_to_py_file`用于生成代码文件，`pydantic_model_to_py_file`函数的示例代码如下：
 ```Python
 from protobuf_to_pydantic import msg_to_pydantic_model, pydantic_model_to_py_file
 
@@ -214,7 +214,7 @@ pydantic_model_to_py_file(
     msg_to_pydantic_model(demo_pb2.NestedMessage),
 )
 ```
-代码运行的时候，会先把`demo_pb2.NestedMessage`转换为`Pydantic Model`对象，接着传入到`pydantic_model_to_py_file`方法中，由`pydantic_model_to_py_file`生成对应的源码内容再写入到`demo_gen_code.py`文件中。
+代码运行的时候，会先把`demo_pb2.NestedMessage`转换为`Pydantic Model`对象，接着传入到`pydantic_model_to_py_file`函数中，由`pydantic_model_to_py_file`生成对应的源码内容再写入到`demo_gen_code.py`文件中。
 
 ## 2.参数校验
 在上一节中，Protobuf文件生成的`Pydantic Model`对象非常简单，这是因为Protobuf文件没有足够的参数验证相关信息。
@@ -643,7 +643,7 @@ class AnyTest(BaseModel):
   }
   ```
 
-不过，在调用`msg_to_pydantic_model`方法时需要通过参数`local_dict`注册对应的值，伪代码如下：
+不过，在调用`msg_to_pydantic_model`函数时需要通过参数`local_dict`注册对应的值，伪代码如下：
 ```Python
 # a.py
 import time
