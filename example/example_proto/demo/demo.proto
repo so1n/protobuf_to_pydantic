@@ -85,4 +85,5 @@ message EmptyMessage {};
 message OptionalMessage{
   optional string name = 1;
   optional int32 age= 2;
+  optional InvoiceItem item = 3;
 };
