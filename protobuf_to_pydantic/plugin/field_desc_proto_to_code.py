@@ -285,8 +285,6 @@ class FileDescriptorProtoToCode(BaseP2C):
                 value_type_str = self._get_protobuf_type_model(message.field[1]).py_type_str
             type_str = f"typing.Dict[{key_type_str}, {value_type_str}]"
 
-        if optional_dict.get(field.name, {}).get("is_proto3_optional", False):
-            type_str = f"typing.Optional[{type_str}]"
         # custom field support
         field_class: Optional[FieldInfo] = field_info_dict.pop("field", None)
         if field_class:
@@ -298,6 +296,15 @@ class FileDescriptorProtoToCode(BaseP2C):
         if not _pydantic_adapter.is_v1:
             # pgv or p2p rule no warning required
             field_param_dict_migration_v2_handler(field_info_dict, is_warnings=False)
+
+        if optional_dict.get(field.name, {}).get("is_proto3_optional", False):
+            type_str = f"typing.Optional[{type_str}]"
+            if (
+                field_info_dict.get("default", _pydantic_adapter.PydanticUndefined)
+                is _pydantic_adapter.PydanticUndefined
+            ):
+                field_info_dict["default"] = None
+
         # arranging  field info parameters
         for key in FieldInfo.__slots__:
             value: Any = field_info_dict.get(key, None)

@@ -618,6 +618,9 @@ class M2P(object):
                 continue
             if optional_dict.get(protobuf_field.full_name, {}).get("is_proto3_optional", False):
                 field_dataclass.field_type = Optional[field_dataclass.field_type]
+                if field_dataclass.field_default is _pydantic_adapter.PydanticUndefined:
+                    field_dataclass.field_default = None
+
             annotation_dict[field_dataclass.field_name] = (field_dataclass.field_type, field_info)
 
             if field_dataclass.field_type in (AnyMessage,) and not _pydantic_adapter.get_model_config_value(
