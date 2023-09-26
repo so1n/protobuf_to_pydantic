@@ -78,3 +78,4 @@ class EmptyMessage(BaseModel):
 class OptionalMessage(BaseModel):
     name: typing.Optional[str] = Field(default="", json_schema_extra={})
     age: typing.Optional[int] = Field(default=0, json_schema_extra={})
+    item: typing.Optional[InvoiceItem] = Field(json_schema_extra={}, default=None)

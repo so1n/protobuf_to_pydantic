@@ -96,3 +96,4 @@ class NestedMessage(BaseModel):
 class OptionalMessage(BaseModel):
     name: typing.Optional[str] = Field(default="")
     age: typing.Optional[int] = Field(default=0)
+    item: typing.Optional[InvoiceItem] = Field()
