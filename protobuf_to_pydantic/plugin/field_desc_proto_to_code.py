@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Dict, Iterable, Optional, Set, Tuple
 
-from mypy_protobuf.main import PYTHON_RESERVED, Descriptors, SourceCodeLocation, is_scalar
+from mypy_protobuf.main import PYTHON_RESERVED, Descriptors, SourceCodeLocation
 from pydantic import BaseModel
 from pydantic.fields import FieldInfo
 
@@ -332,9 +332,7 @@ class FileDescriptorProtoToCode(BaseP2C):
         optional_dict = {}
         index_field_name_dict: Dict[int, Set[str]] = {}
         for field in desc.field:
-            if not (
-                is_scalar(field) and field.label != FieldDescriptorProto.LABEL_REPEATED and not field.proto3_optional
-            ):
+            if field.proto3_optional:
                 optional_dict[field.name] = {"is_proto3_optional": True}
             if not field.HasField("oneof_index"):
                 continue

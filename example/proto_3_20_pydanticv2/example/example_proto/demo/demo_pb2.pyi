@@ -335,22 +335,45 @@ global___EmptyMessage = EmptyMessage
 class OptionalMessage(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
+    class IntMapEntry(google.protobuf.message.Message):
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+        KEY_FIELD_NUMBER: builtins.int
+        VALUE_FIELD_NUMBER: builtins.int
+        key: builtins.str
+        value: builtins.int
+        def __init__(
+            self,
+            *,
+            key: builtins.str = ...,
+            value: builtins.int = ...,
+        ) -> None: ...
+        def ClearField(self, field_name: typing_extensions.Literal["key", b"key", "value", b"value"]) -> None: ...
+
     NAME_FIELD_NUMBER: builtins.int
     AGE_FIELD_NUMBER: builtins.int
     ITEM_FIELD_NUMBER: builtins.int
+    STR_LIST_FIELD_NUMBER: builtins.int
+    INT_MAP_FIELD_NUMBER: builtins.int
     name: builtins.str
     age: builtins.int
     @property
     def item(self) -> global___InvoiceItem: ...
+    @property
+    def str_list(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[builtins.str]: ...
+    @property
+    def int_map(self) -> google.protobuf.internal.containers.ScalarMap[builtins.str, builtins.int]: ...
     def __init__(
         self,
         *,
         name: builtins.str | None = ...,
         age: builtins.int | None = ...,
         item: global___InvoiceItem | None = ...,
+        str_list: collections.abc.Iterable[builtins.str] | None = ...,
+        int_map: collections.abc.Mapping[builtins.str, builtins.int] | None = ...,
     ) -> None: ...
     def HasField(self, field_name: typing_extensions.Literal["_age", b"_age", "_item", b"_item", "_name", b"_name", "age", b"age", "item", b"item", "name", b"name"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["_age", b"_age", "_item", b"_item", "_name", b"_name", "age", b"age", "item", b"item", "name", b"name"]) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_age", b"_age", "_item", b"_item", "_name", b"_name", "age", b"age", "int_map", b"int_map", "item", b"item", "name", b"name", "str_list", b"str_list"]) -> None: ...
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_age", b"_age"]) -> typing_extensions.Literal["age"] | None: ...
     @typing.overload

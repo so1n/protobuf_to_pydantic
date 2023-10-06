@@ -1,5 +1,5 @@
 # This is an automatically generated file, please do not change
-# gen by protobuf_to_pydantic[v0.2.0.0](https://github.com/so1n/protobuf_to_pydantic)
+# gen by protobuf_to_pydantic[v0.2.0.1](https://github.com/so1n/protobuf_to_pydantic)
 # Protobuf Version: 4.24.0
 # Pydantic Version: 2.0.3
 import typing
@@ -79,3 +79,5 @@ class OptionalMessage(BaseModel):
     name: typing.Optional[str] = Field(default="", json_schema_extra={})
     age: typing.Optional[int] = Field(default=0, json_schema_extra={})
     item: typing.Optional[InvoiceItem] = Field(json_schema_extra={}, default=None)
+    str_list: typing.List[str] = Field(default_factory=list, json_schema_extra={})
+    int_map: typing.Dict[str, int] = Field(default_factory=dict, json_schema_extra={})

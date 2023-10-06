@@ -86,4 +86,6 @@ message OptionalMessage{
   optional string name = 1;
   optional int32 age= 2;
   optional InvoiceItem item = 3;
+  repeated string str_list =4;
+  map<string, int32> int_map = 5;
 };
