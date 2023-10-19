@@ -22,7 +22,6 @@ _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'example.example_proto.demo.demo_pb2', _globals)
 if _descriptor._USE_C_DESCRIPTORS == False:
-
   DESCRIPTOR._options = None
   _MAPMESSAGE_USERMAPENTRY._options = None
   _MAPMESSAGE_USERMAPENTRY._serialized_options = b'8\001'

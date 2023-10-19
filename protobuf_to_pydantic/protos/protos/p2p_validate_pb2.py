@@ -22,10 +22,6 @@ _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'protos.p2p_validate_pb2', _globals)
 if _descriptor._USE_C_DESCRIPTORS == False:
-  google_dot_protobuf_dot_descriptor__pb2.MessageOptions.RegisterExtension(ignored)
-  google_dot_protobuf_dot_descriptor__pb2.OneofOptions.RegisterExtension(required)
-  google_dot_protobuf_dot_descriptor__pb2.FieldOptions.RegisterExtension(rules)
-
   DESCRIPTOR._options = None
   _globals['_FIELDRULES']._serialized_start=143
   _globals['_FIELDRULES']._serialized_end=1168

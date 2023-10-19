@@ -299,10 +299,9 @@ class FileDescriptorProtoToCode(BaseP2C):
 
         if optional_dict.get(field.name, {}).get("is_proto3_optional", False):
             type_str = f"typing.Optional[{type_str}]"
-            if (
-                field_info_dict.get("default", _pydantic_adapter.PydanticUndefined)
-                is _pydantic_adapter.PydanticUndefined
-            ):
+            if field_info_dict.get(
+                "default", _pydantic_adapter.PydanticUndefined
+            ) is _pydantic_adapter.PydanticUndefined and not field_info_dict.get("default_factory", None):
                 field_info_dict["default"] = None
 
         # arranging  field info parameters
@@ -392,26 +391,24 @@ class FileDescriptorProtoToCode(BaseP2C):
         if desc.enum_type:
             class_head_content += self._enum(desc.enum_type, scl_prefix, indent + self.code_indent)
 
-        if desc.oneof_decl:
-            one_of_dict, optional_dict = self._gen_one_of_dict(desc)
-            if one_of_dict:
-                class_head_content += (
-                    f"{' ' * (indent + self.code_indent)}_one_of_dict = {self._get_value_code(one_of_dict)}\n"
-                )
+        if one_of_dict:
+            class_head_content += (
+                f"{' ' * (indent + self.code_indent)}_one_of_dict = {self._get_value_code(one_of_dict)}\n"
+            )
 
-                self._add_import_code("protobuf_to_pydantic.customer_validator", "check_one_of")
-                if _pydantic_adapter.is_v1:
-                    class_head_content += (
-                        f"{' ' * (indent + self.code_indent)}"
-                        f"one_of_validator = root_validator(pre=True, allow_reuse=True)(check_one_of)\n"
-                    )
-                    self._add_import_code("pydantic", "root_validator")
-                else:
-                    class_head_content += (
-                        f"{' ' * (indent + self.code_indent)}"
-                        f'one_of_validator = model_validator(mode="before")(check_one_of)\n'
-                    )
-                    self._add_import_code("pydantic", "model_validator")
+            self._add_import_code("protobuf_to_pydantic.customer_validator", "check_one_of")
+            if _pydantic_adapter.is_v1:
+                class_head_content += (
+                    f"{' ' * (indent + self.code_indent)}"
+                    f"one_of_validator = root_validator(pre=True, allow_reuse=True)(check_one_of)\n"
+                )
+                self._add_import_code("pydantic", "root_validator")
+            else:
+                class_head_content += (
+                    f"{' ' * (indent + self.code_indent)}"
+                    f'one_of_validator = model_validator(mode="before")(check_one_of)\n'
+                )
+                self._add_import_code("pydantic", "model_validator")
 
         if use_custom_type:
             if _pydantic_adapter.is_v1:

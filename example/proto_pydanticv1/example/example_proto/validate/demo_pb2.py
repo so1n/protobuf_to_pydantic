@@ -24,7 +24,6 @@ _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'example.example_proto.validate.demo_pb2', _globals)
 if _descriptor._USE_C_DESCRIPTORS == False:
-
   DESCRIPTOR._options = None
   _FLOATTEST.fields_by_name['const_test']._options = None
   _FLOATTEST.fields_by_name['const_test']._serialized_options = b'\372B\007\n\005\r\000\000\200?'

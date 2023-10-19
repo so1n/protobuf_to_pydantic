@@ -22,11 +22,6 @@ _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'protos.validate_pb2', _globals)
 if _descriptor._USE_C_DESCRIPTORS == False:
-  google_dot_protobuf_dot_descriptor__pb2.MessageOptions.RegisterExtension(disabled)
-  google_dot_protobuf_dot_descriptor__pb2.MessageOptions.RegisterExtension(ignored)
-  google_dot_protobuf_dot_descriptor__pb2.OneofOptions.RegisterExtension(required)
-  google_dot_protobuf_dot_descriptor__pb2.FieldOptions.RegisterExtension(rules)
-
   DESCRIPTOR._options = None
   DESCRIPTOR._serialized_options = b'\n\032io.envoyproxy.pgv.validateZ2github.com/envoyproxy/protoc-gen-validate/validate'
   _globals['_KNOWNREGEX']._serialized_start=4539
