@@ -3,6 +3,7 @@ import json
 import logging
 import os
 import sys
+from contextlib import contextmanager
 from dataclasses import MISSING
 from datetime import timedelta
 from typing import TYPE_CHECKING, Any, Callable, Dict, Generator, List, Optional, Tuple, Type, Union
@@ -184,3 +185,15 @@ def check_dict_one_of(desc_dict: dict, key_list: List[str]) -> bool:
     ):
         raise RuntimeError(f"Field:{key_list} cannot have both values: {desc_dict}")
     return True
+
+
+@contextmanager
+def use_worker_dir_in_ctx(worker_dir: str) -> Generator:
+    parent_path_exist = worker_dir in sys.path
+    if not parent_path_exist:
+        sys.path.append(worker_dir)
+    try:
+        yield
+    finally:
+        if not parent_path_exist:
+            sys.path.remove(worker_dir)
