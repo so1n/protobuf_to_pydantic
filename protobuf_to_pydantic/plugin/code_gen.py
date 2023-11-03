@@ -8,6 +8,7 @@ from google.protobuf.compiler.plugin_pb2 import CodeGeneratorRequest, CodeGenera
 from mypy_protobuf.main import Descriptors, code_generation
 
 from protobuf_to_pydantic.plugin.config import ConfigT, get_config_by_module
+from protobuf_to_pydantic.util import use_worker_dir_in_ctx
 
 # If want to parse option, need to import the corresponding file
 #   see details:https://stackoverflow.com/a/59301849
@@ -53,24 +54,27 @@ class CodeGen(Generic[ConfigT]):
         print(f"Load config: {config_path}", file=sys.stderr)
 
         try_import_module_path_list: list = [f"{path_obj.name}", f"{path_obj.parent.name}.{path_obj.name}"]
-        for sys_path in sys.path:
-            if not config_path.startswith(sys_path):
-                continue
-            try_import_module_path_list.append(config_path[len(sys_path) + 1 :])
+        parent_path = str(path_obj.parent.absolute())
 
-        error_path_dict: dict = {}
-        for module_path in try_import_module_path_list:
-            module_path = module_path.replace("/", ".").replace("\\", ".").replace(".py", "")
-            try:
-                self.config = get_config_by_module(
-                    importlib.import_module(module_path),
-                    self.config_class,
-                )
-                break
-            except ModuleNotFoundError as e:
-                error_path_dict[module_path] = e
+        with use_worker_dir_in_ctx(parent_path):
+            for sys_path in sys.path:
+                if not config_path.startswith(sys_path):
+                    continue
+                try_import_module_path_list.append(config_path[len(sys_path) + 1 :])
+
+            error_path_dict: dict = {}
+            for module_path in try_import_module_path_list:
+                module_path = module_path.replace("/", ".").replace("\\", ".").replace(".py", "")
+                try:
+                    self.config = get_config_by_module(
+                        importlib.import_module(module_path),
+                        self.config_class,
+                    )
+                    break
+                except ModuleNotFoundError as e:
+                    error_path_dict[module_path] = e
         if self.config == default_config:
-            print(f"load config error. try use path and error:{error_path_dict}")
+            print(f"load config error. try use path and error:{error_path_dict}", file=sys.stderr)
 
     def generate_pydantic_model(self, descriptors: Descriptors, response: CodeGeneratorResponse) -> None:
         for name, fd in descriptors.to_generate.items():
