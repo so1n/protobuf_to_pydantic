@@ -1,13 +1,16 @@
+import os
 import sys
+
 from protobuf_to_pydantic.__version__ import __version__
+
 
 def p2p_cli() -> None:
     if not len(sys.argv) > 1:
         return
-    if sys.argv[1] in ("-V", "--version"):
+    if "-V" in sys.argv or "--version" in sys.argv:
         # Overwrite the version information of mypy-protobuf
         print("protobuf-to-pydantic " + __version__)
-    elif sys.argv[1] in ("-I", "--info"):
+    if "-I" in sys.argv or "--info" in sys.argv:
         try:
             from pydantic import VERSION as pydantic_version
         except ImportError:
@@ -25,7 +28,7 @@ def p2p_cli() -> None:
         except ImportError:
             lark_version = "Not Install"
         try:
-            from toml import __version__ as toml_version
+            from toml import __version__ as toml_version  # type: ignore
         except ImportError:
             toml_version = "Not Install"
 
@@ -44,7 +47,10 @@ def p2p_cli() -> None:
 
         print()
         print()
-        print("protobuf-to-pydantic:" + __version__)
+        print("current working directory: " + os.getcwd())
+        print("sys path: " + "\n    -".join([""] + sys.path))
+        print("executable: " + str(sys.executable))
+        print("python version: " + str(sys.version_info))
         print()
         print("############# dependencies ############## ")
         print("    grpc:            " + grpc_version)
@@ -60,4 +66,14 @@ def p2p_cli() -> None:
         print("    black:           " + black_version)
         print("    isort:           " + isort_version)
         print()
+    if "--toml-info" in sys.argv:
+        print("######### pyproject.toml Content ######### ")
+        try:
+            from protobuf_to_pydantic.util import get_pyproject_content
+
+            print(get_pyproject_content(""))
+        except Exception:
+            print("    Not Load pyproject.toml")
+        print()
+
     sys.exit(0)

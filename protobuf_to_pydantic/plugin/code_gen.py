@@ -59,7 +59,7 @@ class CodeGen(Generic[ConfigT]):
             worker_dir_path = None
 
         config_path: str = str(path_obj)
-        msg: str =f"Load config: {config_path}"
+        msg: str = f"Load config: {config_path}"
         if worker_dir_path:
             msg += f" worker dir: {worker_dir_path}"
         print(msg, file=sys.stderr)

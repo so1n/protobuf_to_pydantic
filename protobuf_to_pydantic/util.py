@@ -87,8 +87,7 @@ def gen_dict_from_desc_str(comment_prefix: str, desc: str) -> FieldInfoTypedDict
     return pait_dict  # type: ignore
 
 
-# flake8: noqa: C901
-def format_content(content_str: str, pyproject_file_path: str = "") -> str:
+def get_pyproject_content(pyproject_file_path: str) -> str:
     if not pyproject_file_path:
         for path in sys.path:
             pyproject_file_path = os.path.join(path, "pyproject.toml")
@@ -96,6 +95,14 @@ def format_content(content_str: str, pyproject_file_path: str = "") -> str:
                 break
             pyproject_file_path = ""
 
+    if pyproject_file_path:
+        with open(pyproject_file_path, "r") as f:
+            return "".join(f.readlines())
+    return ""
+
+
+# flake8: noqa: C901
+def format_content(content_str: str, pyproject_file_path: str = "") -> str:
     pyproject_dict: dict = {}
     try:
         import toml  # type: ignore
@@ -105,9 +112,9 @@ def format_content(content_str: str, pyproject_file_path: str = "") -> str:
             " pyproject.toml"
         )
     else:
-        if pyproject_file_path:
-            with open(pyproject_file_path, "r") as f:
-                pyproject_dict = toml.loads("\n".join(f.readlines()))
+        pyproject_content = get_pyproject_content(pyproject_file_path)
+        if pyproject_content:
+            pyproject_dict = toml.loads(pyproject_content)
     try:
         p2p_format_dict: dict = pyproject_dict["tool"]["protobuf-to-pydantic"]["format"]
     except KeyError:
