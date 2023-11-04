@@ -188,12 +188,15 @@ def check_dict_one_of(desc_dict: dict, key_list: List[str]) -> bool:
 
 
 @contextmanager
-def use_worker_dir_in_ctx(worker_dir: str) -> Generator:
-    parent_path_exist = worker_dir in sys.path
-    if not parent_path_exist:
-        sys.path.append(worker_dir)
-    try:
-        yield
-    finally:
+def use_worker_dir_in_ctx(worker_dir: Optional[str] = None) -> Generator:
+    if worker_dir:
+        parent_path_exist = worker_dir in sys.path
         if not parent_path_exist:
-            sys.path.remove(worker_dir)
+            sys.path.append(worker_dir)
+        try:
+            yield
+        finally:
+            if not parent_path_exist:
+                sys.path.remove(worker_dir)
+    else:
+        yield

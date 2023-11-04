@@ -50,13 +50,23 @@ class CodeGen(Generic[ConfigT]):
         path_obj: pathlib.Path = pathlib.Path(self.param_dict["config_path"]).absolute()
         if not path_obj.exists():
             raise SystemError(f"Can not  find config file at {path_obj}")
+        if "config_worker_dir_path" in self.param_dict:
+            worker_dir_path_obj: pathlib.Path = pathlib.Path(self.param_dict["config_worker_dir_path"]).absolute()
+            if not worker_dir_path_obj.exists():
+                raise SystemError(f"Can not  find worker dir at {worker_dir_path_obj}")
+            worker_dir_path = str(worker_dir_path_obj)
+        else:
+            worker_dir_path = None
+
         config_path: str = str(path_obj)
-        print(f"Load config: {config_path}", file=sys.stderr)
+        msg: str =f"Load config: {config_path}"
+        if worker_dir_path:
+            msg += f" worker dir: {worker_dir_path}"
+        print(msg, file=sys.stderr)
 
         try_import_module_path_list: list = [f"{path_obj.name}", f"{path_obj.parent.name}.{path_obj.name}"]
-        parent_path = str(path_obj.parent.absolute())
 
-        with use_worker_dir_in_ctx(parent_path):
+        with use_worker_dir_in_ctx(worker_dir_path):
             for sys_path in sys.path:
                 if not config_path.startswith(sys_path):
                     continue

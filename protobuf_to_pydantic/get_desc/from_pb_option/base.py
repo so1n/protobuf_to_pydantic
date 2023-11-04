@@ -336,7 +336,7 @@ def field_option_handle(
     for option_descriptor, option_value in field_list:
         # filter unwanted Option
         if protobuf_pkg:
-            if option_descriptor.full_name != f"{protobuf_pkg}.rules":
+            if not option_descriptor.full_name.endswith(f"{protobuf_pkg}.rules"):
                 continue
         elif not option_descriptor.full_name.endswith("validate.rules"):
             continue

@@ -344,7 +344,8 @@ class FileDescriptorProtoToCode(BaseP2C):
                 continue
             option_dict = {}
             for option_descriptor, option_value in one_of_item.options.ListFields():
-                pkg, rule_name = option_descriptor.full_name.split(".")
+                full_name_list = option_descriptor.full_name.split(".")
+                pkg, rule_name = full_name_list[-2], full_name_list[-1]
                 if not pkg.endswith("validate"):
                     continue
                 if rule_name in ("required",):
