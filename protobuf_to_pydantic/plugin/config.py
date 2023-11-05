@@ -58,7 +58,7 @@ class ConfigModel(BaseModel):
 
 def get_config_by_module(module: Any, config_class: Type[ConfigT]) -> ConfigT:
     param_dict: dict = {}
-    for key in config_class.__fields__.keys():
+    for key in _pydantic_adapter.model_fields(config_class).keys():
         if not hasattr(module, key):
             continue
         param_dict[key] = getattr(module, key)

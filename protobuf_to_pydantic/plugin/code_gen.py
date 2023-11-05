@@ -1,8 +1,9 @@
+import base64
 import importlib
 import logging
 import pathlib
 import sys
-from typing import Generic, Type
+from typing import Callable, Dict, Generic, Type
 
 from google.protobuf.compiler.plugin_pb2 import CodeGeneratorRequest, CodeGeneratorResponse
 from mypy_protobuf.main import Descriptors, code_generation
@@ -41,13 +42,9 @@ class CodeGen(Generic[ConfigT]):
             print(f"parse command-line error:{e}", file=sys.stderr)
         print(f"Parse command-line arguments:{self.param_dict}", file=sys.stderr)
 
-    def gen_config(self) -> None:
-        default_config = self.config_class()
-        self.config = default_config
-        if "config_path" not in self.param_dict:
-            return
-
-        path_obj: pathlib.Path = pathlib.Path(self.param_dict["config_path"]).absolute()
+    def _get_config_by_path(self, key: str) -> None:
+        default_config = self.config
+        path_obj: pathlib.Path = pathlib.Path(self.param_dict[key]).absolute()
         if not path_obj.exists():
             raise SystemError(f"Can not  find config file at {path_obj}")
         if "config_worker_dir_path" in self.param_dict:
@@ -84,7 +81,33 @@ class CodeGen(Generic[ConfigT]):
                 except ModuleNotFoundError as e:
                     error_path_dict[module_path] = e
         if self.config == default_config:
-            print(f"load config error. try use path and error:{error_path_dict}", file=sys.stderr)
+            raise SystemError(f"Load config error. try use path and error:{error_path_dict}")
+
+    def _get_config_by_py_code(self, key: str) -> None:
+        try:
+            module_global_dict: dict = {}
+            plugin_config_py_code_base64 = self.param_dict[key]
+            equal_sign_len = len(plugin_config_py_code_base64) % 4
+            if equal_sign_len:
+                plugin_config_py_code_base64 += "=" * (4 - equal_sign_len)
+
+            exec(base64.b64decode(plugin_config_py_code_base64).decode(), module_global_dict)
+            for key in ["local_dict", "base_model_class"]:
+                if key in module_global_dict:
+                    raise SystemError(f"Not support config column--`{key}`")
+            self.config = self.config_class(**module_global_dict)
+        except Exception as e:
+            raise SystemError(f"Load config error:{e}. try check code")
+
+    def gen_config(self) -> None:
+        self.config = self.config_class()
+        param_dict: Dict[str, Callable[[str], None]] = {
+            "config_path": self._get_config_by_path,
+            "plugin_config_py_code_base64": self._get_config_by_py_code,
+        }
+        for param_name, param_func in param_dict.items():
+            if param_name in self.param_dict:
+                param_func(param_name)
 
     def generate_pydantic_model(self, descriptors: Descriptors, response: CodeGeneratorResponse) -> None:
         for name, fd in descriptors.to_generate.items():

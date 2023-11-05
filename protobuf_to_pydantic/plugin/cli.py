@@ -24,10 +24,6 @@ def p2p_cli() -> None:
         except ImportError:
             mypy_protobuf_version = "Not Install"
         try:
-            from lark import __version__ as lark_version
-        except ImportError:
-            lark_version = "Not Install"
-        try:
             from toml import __version__ as toml_version  # type: ignore
         except ImportError:
             toml_version = "Not Install"
@@ -58,7 +54,6 @@ def p2p_cli() -> None:
         print()
         print("########## Expand dependencies ########## ")
         print("    mypy-protobuf:   " + mypy_protobuf_version)
-        print("    lark:            " + lark_version)
         print("    toml:            " + toml_version)
         print()
         print("########## Format dependencies ########## ")
