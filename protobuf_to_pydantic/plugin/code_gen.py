@@ -4,7 +4,7 @@ import logging
 import pathlib
 import sys
 import types
-from typing import Callable, Dict, Generic, Type, Optional
+from typing import Callable, Dict, Generic, Optional, Type
 
 from google.protobuf.compiler.plugin_pb2 import CodeGeneratorRequest, CodeGeneratorResponse
 from mypy_protobuf.main import Descriptors, code_generation
@@ -87,6 +87,7 @@ class CodeGen(Generic[ConfigT]):
     def _get_config_by_py_code(self, key: str) -> None:
         try:
             plugin_config_module_name = self.param_dict.get("plugin_config_module_name", "")
+            plugin_config_module: Optional[types.ModuleType] = None
             if plugin_config_module_name:
                 error_str_list = [".py", "/", "\\"]
                 for error_str in error_str_list:
@@ -94,12 +95,11 @@ class CodeGen(Generic[ConfigT]):
                         raise SystemError(
                             f"Plugin_config_module_name error, Please check if it contains characters:{error_str_list}"
                         )
-                plugin_config_module: Optional[types.ModuleType]  = types.ModuleType(plugin_config_module_name)
+                plugin_config_module = types.ModuleType(plugin_config_module_name)
                 sys.modules[plugin_config_module_name] = plugin_config_module
                 module_global_dict: dict = plugin_config_module.__dict__
             else:
                 module_global_dict = {}
-                plugin_config_module = None
 
             plugin_config_py_code_base64 = self.param_dict[key]
             equal_sign_len = len(plugin_config_py_code_base64) % 4

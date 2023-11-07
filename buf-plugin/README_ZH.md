@@ -9,7 +9,7 @@
 ## 1.Usage
 > Note: 在开始之前，请确保你已经阅读了 [Try the Buf CLI](https://buf.build/docs/tutorials/getting-started-with-buf-cli)
 
-### 1.1.初始化项目 
+### 1.1.初始化项目
 `buf-plugin`的使用方法与`protoc`相同，假设现在有一个项目，它的项目结构如下:
 ```bash
 ├── my-proto-demo
@@ -59,7 +59,7 @@ message ValidateDemo{
 ### 1.2.添加buf依赖
 进入到`my-proto-demo`目录中执行以下命令:
 ```bash
-buf mod init 
+buf mod init
 ```
 该命令会在当前目录下创建一个`buf.yaml`文件，它的内容如下:
 ```yaml
@@ -126,7 +126,7 @@ plugins:
           - config_worker_dir_path=/
         out: proto_out
     ```
-  
+
 无论使用那种方式生成`Pydantic`代码，最终项目结构将变为如下:
 ```bash
 ├── my-proto-demo
@@ -158,7 +158,7 @@ plugins:
     > Note:
     >  - 1:如果使用到了`local_dict`和`BaseModel`参数，本地的`plugin_config.py`文件不可以删除。
     >  - 2:生成的base64编码末尾的`=`必须移除，否则会导致插件加载失败。
-  
+
   - plugin_config_module_name: 指定动态生成的插件配置文件的模块名。
 
     > Note: 如果文件名为`plugin_config.py`，那么模块名为`plugin_confg`。如果文件名为`example/plugin_config.py`，那么模块名为`example.plugin_config`。
@@ -199,13 +199,13 @@ plugins:
     ```
     为了验证镜像是否构建成功，可以通过`docker run`命令运行容器，如下:
     ```bash
-    docker run buf.example.com/{you org name}/protobuf-to-pydantic:{protobuf-to-pydantic version} --info          
+    docker run buf.example.com/{you org name}/protobuf-to-pydantic:{protobuf-to-pydantic version} --info
     ```
     如果构建成功，那么可以看到如下输出:
 
     ```bash
     current working directory: /
-    sys path: 
+    sys path:
         -/app/bin
         -/usr/local/lib/python311.zip
         -/usr/local/lib/python3.11
@@ -214,26 +214,26 @@ plugins:
     executable: /app/bin/python
     python version: sys.version_info(major=3, minor=11, micro=2, releaselevel='final', serial=0)
 
-    ############# dependencies ############## 
+    ############# dependencies ##############
         grpc:            1.59.2
         pydantic:        2.4.2
 
-    ########## Expand dependencies ########## 
+    ########## Expand dependencies ##########
         mypy-protobuf:   3.3.0
         toml:            0.10.2
 
-    ########## Format dependencies ########## 
+    ########## Format dependencies ##########
         autoflake:       1.4
         black:           23.1.0
         isort:           5.9.3
     ```
     此外，还可以通过`--toml-info`选项查看插件的`pyproject.toml`文件内容，如下:
     ```bash
-    docker run buf.example.com/{you org name}/protobuf-to-pydantic:{protobuf-to-pydantic version} --toml-info          
+    docker run buf.example.com/{you org name}/protobuf-to-pydantic:{protobuf-to-pydantic version} --toml-info
     ```
     在执行命令后，可以看到如下输出:
     ```toml
-    ######### pyproject.toml Content ######### 
+    ######### pyproject.toml Content #########
     [tool.protobuf-to-pydantic.format]
     black = true
     isort = true
@@ -258,12 +258,12 @@ plugins:
     remove-all-unused-imports = true
     remove-unused-variables = true
     ```
-    
+
 - 5.准备`buf.plugin.yaml`文件，并填入以下内容：
     ```yaml
     version: v1
     name: buf.build/{you org name}/protobuf-to-pydantic-pydantic
-    plugin_version: {protobuf-to-pydantic version} 
+    plugin_version: {protobuf-to-pydantic version}
     ```
 - 6.通过如下命令把插件推送到BSR：
     ```bash
@@ -281,10 +281,9 @@ plugins:
     version: v1
     plugins:
       - plugin: buf.build/{you org name}/{protobuf-to-pydantic version}
-        out: xxx 
+        out: xxx
         opt:
           - config_path=/plugin_config.py
           - config_worker_dir_path=/
     ```
     其中，`config_path`是插件的配置文件路径，`config_worker_dir_path`是加载配置文件的工作目录路径，通过这两个参数配置`protobuf-to-pydantic`在运行时会加载镜像中的`plugin_config.py`文件，再执行插件。
-    

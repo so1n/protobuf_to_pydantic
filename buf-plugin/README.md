@@ -58,7 +58,7 @@ It shows the use of `validate` and `p2p_validate`. Since the current system lack
 ### 1.2.Add buf dependency
 Enter the `my-proto-demo` directory and execute the following command:
 ```bash
-buf mod init 
+buf mod init
 ```
 This command will create a `buf.yaml` file in the current directory with the following contents:
 ```yaml
@@ -70,7 +70,7 @@ lint:
   use:
     - DEFAULT
 ```
-Next, add the Protobuf file dependency of `protobuf-to-pydantic` in the `buf.yaml` file. 
+Next, add the Protobuf file dependency of `protobuf-to-pydantic` in the `buf.yaml` file.
 The final content is as follows:
 ```yaml
 version: v1
@@ -101,12 +101,12 @@ plugins:
       - config_worker_dir_path=/
     out: proto_out
 ```
-This configuration file will tell `buf cli` that the `protobuf-to-pydantic` plug-in is currently used 
-and specify that the configuration file referenced by the plug-in is `plugin_config.py`; 
+This configuration file will tell `buf cli` that the `protobuf-to-pydantic` plug-in is currently used
+and specify that the configuration file referenced by the plug-in is `plugin_config.py`;
 the directory of the configuration file is the current directory and output file is `proto_out `.
 
-Now everything is ready. After installing the corresponding `Python` version and `protobuf-to-pydantic`, 
-can use the plugin to generate the `Pydantic` model code. 
+Now everything is ready. After installing the corresponding `Python` version and `protobuf-to-pydantic`,
+can use the plugin to generate the `Pydantic` model code.
 According to different environment configurations, the way to generate `Pydantic` code is different. different.
 
 - 1.When using `poetry` to manage projects, can generate `Pydantic` code through the following command:
@@ -130,7 +130,7 @@ For example, if the current `Python` virtual environment is `.venv`, then can ad
           - config_worker_dir_path=/
         out: proto_out
     ```
-  
+
 Regardless of which method is used to generate `Pydantic` code, the final project structure will become as follows:
 ```bash
 ├── my-proto-demo
@@ -164,7 +164,7 @@ Among them, `plugin` fills in the remote plugin name of `protobuf-to-pydantic`, 
     > Note:
     >  - 1:If the `localdict` and `BaseModel` parameters are used, the local file(`plugin_config.py` ) cannot be deleted.
     >  - 2:The `=` at the end of the generated base64 encoding text must be removed, otherwise the plugin will fail to load.
-  
+
   - plugin_config_module_name: Specifies the module name of the dynamically generated plugin configuration file.
 
     > Note: If the file name is `plugin_config.py`, then the module name is `plugin_confg`. If the file name is `example/plugin_config.py`, then the module name is `example.plugin_config`.
@@ -204,12 +204,12 @@ The standard `buf-plugin` of `protobuf-to-pydantic` can satisfy most functions. 
     ```
     In order to verify whether the image is built successfully, you can run the container through the `docker run` command, as follows:
     ```bash
-    docker run buf.example.com/{you org name}/protobuf-to-pydantic:{protobuf-to-pydantic version} --info          
+    docker run buf.example.com/{you org name}/protobuf-to-pydantic:{protobuf-to-pydantic version} --info
     ```
     If the build is successful, you will see the following output:
     ```bash
     current working directory: /
-    sys path: 
+    sys path:
         -/app/bin
         -/usr/local/lib/python311.zip
         -/usr/local/lib/python3.11
@@ -218,26 +218,26 @@ The standard `buf-plugin` of `protobuf-to-pydantic` can satisfy most functions. 
     executable: /app/bin/python
     python version: sys.version_info(major=3, minor=11, micro=2, releaselevel='final', serial=0)
 
-    ############# dependencies ############## 
+    ############# dependencies ##############
         grpc:            1.59.2
         pydantic:        2.4.2
 
-    ########## Expand dependencies ########## 
+    ########## Expand dependencies ##########
         mypy-protobuf:   3.3.0
         toml:            0.10.2
 
-    ########## Format dependencies ########## 
+    ########## Format dependencies ##########
         autoflake:       1.4
         black:           23.1.0
         isort:           5.9.3
     ```
     In addition, you can also view the contents of the plugin's pyproject.toml file through the `--toml-info` option, as follows:
     ```bash
-    docker run buf.example.com/{you org name}/protobuf-to-pydantic:{protobuf-to-pydantic version} --info          
+    docker run buf.example.com/{you org name}/protobuf-to-pydantic:{protobuf-to-pydantic version} --info
     ```
     After executing the command, you can see the following output:
     ```toml
-    ######### pyproject.toml Content ######### 
+    ######### pyproject.toml Content #########
     [tool.protobuf-to-pydantic.format]
     black = true
     isort = true
@@ -262,12 +262,12 @@ The standard `buf-plugin` of `protobuf-to-pydantic` can satisfy most functions. 
     remove-all-unused-imports = true
     remove-unused-variables = true
     ```
-    
+
 - 5.Prepare the `buf.plugin.yaml` file and fill in the following content:
     ```yaml
     version: v1
     name: buf.build/{you org name}/protobuf-to-pydantic-pydantic
-    plugin_version: {protobuf-to-pydantic version} 
+    plugin_version: {protobuf-to-pydantic version}
     ```
 - 6.Push the plugin to BSR through the following command：
     ```bash
@@ -285,11 +285,10 @@ The standard `buf-plugin` of `protobuf-to-pydantic` can satisfy most functions. 
     version: v1
     plugins:
       - plugin: buf.build/{you org name}/{protobuf-to-pydantic version}
-        out: xxx 
+        out: xxx
         opt:
           - config_path=/plugin_config.py
           - config_worker_dir_path=/
     ```
     Among them, `config_path` is the configuration file path of the plugin, and `config_worker_dir_path` is the working directory path for loading the configuration file.
     Through configuration, `protobuf-to-pydantic` will load the `plugin_config.py` file in the image at runtime, and then execute the plug-in.
-    

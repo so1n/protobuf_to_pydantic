@@ -2,6 +2,7 @@ import importlib
 import inspect
 import pathlib
 import time
+import warnings
 from uuid import uuid4
 
 from google.protobuf import __version__
@@ -9,7 +10,6 @@ from google.protobuf.message import Message
 
 from protobuf_to_pydantic import _pydantic_adapter, msg_to_pydantic_model, pydantic_model_to_py_file
 
-import warnings
 # use pydantic v1 method, pydantic will print warning, ignore!~
 warnings.filterwarnings("ignore")
 
