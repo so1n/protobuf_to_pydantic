@@ -20,8 +20,6 @@ do
   poetry run python -m grpc_tools.protoc \
     --protobuf-to-pydantic_out=config_path=example/plugin_config.py:./$target_p/ \
     --python_out=./$target_p \
-    --grpc_python_out=./$target_p \
-    --mypy_grpc_out=./$target_p \
     --mypy_out=./$target_p \
     -I. \
     $source_p/"$service"/*.proto

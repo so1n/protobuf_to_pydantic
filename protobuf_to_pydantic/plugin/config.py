@@ -24,7 +24,9 @@ class ConfigModel(BaseModel):
         description="pyproject file path, In general, pyproject.toml of the project can be found automatically",
     )
     code_indent: int = Field(default=4, description="Code indent")
-    ignore_pkg_list: List[str] = Field(default_factory=list, description="Ignore package list")
+    ignore_pkg_list: List[str] = Field(
+        default_factory=lambda: ["validate", "p2p_validate"], description="Ignore the specified pkg file"
+    )
     base_model_class: Type[BaseModel] = Field(default=BaseModel)
     file_name_suffix: str = Field(
         default="_p2p",
@@ -56,7 +58,7 @@ class ConfigModel(BaseModel):
 
 def get_config_by_module(module: Any, config_class: Type[ConfigT]) -> ConfigT:
     param_dict: dict = {}
-    for key in config_class.__fields__.keys():
+    for key in _pydantic_adapter.model_fields(config_class).keys():
         if not hasattr(module, key):
             continue
         param_dict[key] = getattr(module, key)

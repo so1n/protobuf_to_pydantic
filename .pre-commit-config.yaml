@@ -3,28 +3,30 @@ repos:
     rev: v1.0.0
     hooks:
       - id: mypy
-        exclude: "^example/example_proto|^example/proto|^protobuf_to_pydantic/protos|test_p2p_validate.py$|test_pgv_validate.py$|protobuf_to_pydantic/contrib/proto_parser.py|example/validate_example/demo_gen_code_by_pgv.py|example/p2p_validate_example/demo_gen_code_by_p2p.py|protobuf_to_pydantic/_pydantic_adapter.py|protobuf_to_pydantic/customer_validator/__init__.py|protobuf_to_pydantic/customer_validator/v1.py|protobuf_to_pydantic/customer_validator/v2.py|protobuf_to_pydantic/customer_con_type/__init__.py|protobuf_to_pydantic/customer_con_type/v1.py|protobuf_to_pydantic/customer_con_type/v2.py"
+        exclude: "^example/example_proto|^example/proto|^protobuf_to_pydantic/protos|test_p2p_validate.py$|test_pgv_validate.py$|protobuf_to_pydantic/contrib/proto_parser.py|example/validate_example/demo_gen_code_by_pgv.py|example/p2p_validate_example/demo_gen_code_by_p2p.py|protobuf_to_pydantic/_pydantic_adapter.py|protobuf_to_pydantic/customer_validator/__init__.py|protobuf_to_pydantic/customer_validator/v1.py|protobuf_to_pydantic/customer_validator/v2.py|protobuf_to_pydantic/customer_con_type/__init__.py|protobuf_to_pydantic/customer_con_type/v1.py|protobuf_to_pydantic/customer_con_type/v2.py|protobuf_to_pydantic/grpc_types.py"
+        additional_dependencies:
+          ["types-toml"]
   - repo: https://github.com/PyCQA/isort
     rev: 5.9.3
     hooks:
       - id: isort
-        exclude: "^example/example_proto|^example/proto|^protobuf_to_pydantic/protos|protobuf_to_pydantic/_pydantic_adapter.py"
+        exclude: "^example/example_proto|^example/proto|^protobuf_to_pydantic/protos|protobuf_to_pydantic/_pydantic_adapter.py|protobuf_to_pydantic/grpc_types.py"
   - repo: https://github.com/psf/black
     rev: 23.1.0
     hooks:
       - id: black
-        exclude: "^example/example_proto|^example/proto|^tests|^protobuf_to_pydantic/protos"
+        exclude: "^example/example_proto|^example/proto|^tests|^protobuf_to_pydantic/protos|protobuf_to_pydantic/grpc_types.py"
   - repo: https://github.com/PyCQA/flake8
     rev: 3.9.2
     hooks:
       - id: flake8
-        exclude: "^example/example_proto|^example/proto|^tests|^protobuf_to_pydantic/protos"
+        exclude: "^example/example_proto|^example/proto|^tests|^protobuf_to_pydantic/protos|protobuf_to_pydantic/grpc_types.py"
   - repo: https://github.com/myint/autoflake
     rev: v1.4
     hooks:
       - id: autoflake
         args: ['--in-place', '--remove-all-unused-imports', '--remove-unused-variable', '--ignore-init-module-imports']
-        exclude: "^example/example_proto|^example/proto|^tests|^protobuf_to_pydantic/protos"
+        exclude: "^example/example_proto|^example/proto|^tests|^protobuf_to_pydantic/protos|protobuf_to_pydantic/grpc_types.py"
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v3.2.0
     hooks:

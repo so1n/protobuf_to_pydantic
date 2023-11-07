@@ -130,6 +130,17 @@ python -m grpc_tools.protoc -I. --protobuf-to-pydantic_out=config_path=plugin_co
 |file_descriptor_proto_to_code|代码生成(只限Protoc插件)|`Type[FileDescriptorProtoToCode]`|定义使用的FileDescriptorProtoToCode|
 
 
+#### 1.1.3.buf-cli
+`buf-cli`是xxx。
+
+> Note:
+>  在使用`buf-cli`之前请确保当前操作系统已经安装了`protoc`和`buf-cli`。
+>
+>  - `buf-cli`安装教程见[官网](https://buf.build/docs/installation)
+>  - `protoc`安装方法取决于你所使用的操作系统，比如debian系统的安装命令为`apt-get install protobuf-compiler`
+
+
+
 ### 1.2.在Python运行时生成`Pydantic Model`对象
 `protobuf-to-pydantic`可以在运行时根据`Message`对象生成对应的 `Pydantic Model`对象。
 

@@ -1,0 +1,3 @@
+version: v1
+name: buf.build/python-pai/protobuf-to-pydantic-pydantic-v1
+plugin_version: v0.2.1

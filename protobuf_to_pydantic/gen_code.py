@@ -1,4 +1,5 @@
 import inspect
+import logging
 import pathlib
 import sys
 import typing
@@ -104,12 +105,12 @@ class BaseP2C(object):
 
         if self._content_deque:
             _content_set: Set[str] = set()
-            content_str += "\n\n"
+            content_str += "\n"
             for content in self._content_deque:
                 if content in _content_set:
                     continue
                 _content_set.add(content)
-                content_str += f"\n\n{content}"
+                content_str += f"\n{content}"
         return self.format_content(self.head_content + content_str + self.tail_content)
 
     def _add_import_code(self, module_name: str, class_name: str = "", extra_str: str = "") -> None:
@@ -238,8 +239,11 @@ class BaseP2C(object):
         elif is_dataclass(type_):
             # dataclass support
             field_param_code_list = []
-            for field in type_.__dataclass_fields__.keys():
-                field_param_code_list.append(f"{field}={self._get_value_code(getattr(type_, field))}")
+            for field_key in type_.__dataclass_fields__.keys():
+                field_value = getattr(type_, field_key)
+                if field_value == type_.__dataclass_fields__[field_key].default:
+                    continue
+                field_param_code_list.append(f"{field_key}={self._get_value_code(field_value)}")
             if auto_import_type_code:
                 self._parse_type_to_import_code(type_)
             return f"{type_.__class__.__name__}({', '.join(field_param_code_list)})"
@@ -440,7 +444,7 @@ class BaseP2C(object):
             base_class = BaseModel
             for mro_model in model.__mro__[1:]:
                 # pydantic v2 first mro model is "abc.BaseModel"
-                if mro_model.__module__ is "abc":
+                if mro_model.__module__ == "abc":
                     continue
                 base_class = mro_model
                 break
@@ -577,6 +581,10 @@ class BaseP2C(object):
                         if metadata_key not in field_info.metadata_lookup:
                             continue
                         metadata_value = getattr(metadata, metadata_key)
+                        if metadata.__dataclass_fields__[metadata_key].default == metadata_value:
+                            # If the value obtained is the same as the default value,
+                            # it will not be added to the field param dict
+                            continue
                         # Field's metadata will hold duplicate values, but Field only needs the first value
                         if metadata_key in field_param_dict:
                             continue

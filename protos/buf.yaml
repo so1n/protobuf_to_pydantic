@@ -1,0 +1,8 @@
+version: v1
+name: buf.build/so1n/protobuf-to-pydantic
+breaking:
+  use:
+    - FILE
+lint:
+  use:
+    - DEFAULT

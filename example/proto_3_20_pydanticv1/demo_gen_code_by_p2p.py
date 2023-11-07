@@ -1,5 +1,5 @@
 # This is an automatically generated file, please do not change
-# gen by protobuf_to_pydantic[v0.2.0.2](https://github.com/so1n/protobuf_to_pydantic)
+# gen by protobuf_to_pydantic[v0.2.1.0-alpha.2](https://github.com/so1n/protobuf_to_pydantic)
 # Protobuf Version: 3.20.3
 # Pydantic Version: 1.10.7
 import typing
@@ -11,11 +11,6 @@ from uuid import UUID, uuid4
 from google.protobuf.any_pb2 import Any  # type: ignore
 from google.protobuf.duration_pb2 import Duration  # type: ignore
 from google.protobuf.timestamp_pb2 import Timestamp  # type: ignore
-from pydantic import BaseModel, Field, root_validator, validator
-from pydantic.networks import AnyUrl, EmailStr, IPvAnyAddress
-from pydantic.types import conbytes, confloat, conint, conlist, constr
-
-from example.gen_p2p_code import CustomerField, customer_any
 from protobuf_to_pydantic.customer_con_type.v1 import contimedelta, contimestamp
 from protobuf_to_pydantic.customer_validator.v1 import (
     any_in_validator,
@@ -48,6 +43,11 @@ from protobuf_to_pydantic.customer_validator.v1 import (
 )
 from protobuf_to_pydantic.get_desc.from_pb_option.types import HostNameStr, UriRefStr
 from protobuf_to_pydantic.util import Timedelta
+from pydantic import BaseModel, Field, root_validator, validator
+from pydantic.networks import AnyUrl, EmailStr, IPvAnyAddress
+from pydantic.types import conbytes, confloat, conint, conlist, constr
+
+from example.gen_p2p_code import CustomerField, customer_any
 
 
 class AfterReferMessage(BaseModel):

@@ -1,6 +1,7 @@
 import importlib
 import inspect
 import pathlib
+import warnings
 
 from google.protobuf import __version__
 from google.protobuf.any_pb2 import Any  # type: ignore
@@ -9,6 +10,9 @@ from pydantic import confloat, conint
 from pydantic.fields import FieldInfo
 
 from protobuf_to_pydantic import _pydantic_adapter, desc_template, msg_to_pydantic_model, pydantic_model_to_py_file
+
+# use pydantic v1 method, pydantic will print warning, ignore!~
+warnings.filterwarnings("ignore")
 
 target_p: str = "proto" if __version__ > "4.0.0" else "proto_3_20"
 if not _pydantic_adapter.is_v1:

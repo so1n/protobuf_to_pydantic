@@ -7,6 +7,9 @@ from google.protobuf.message import Message
 
 from protobuf_to_pydantic import _pydantic_adapter, msg_to_pydantic_model, pydantic_model_to_py_file
 
+import warnings
+# use pydantic v1 method, pydantic will print warning, ignore!~
+warnings.filterwarnings("ignore")
 target_p: str = "proto" if __version__ > "4.0.0" else "proto_3_20"
 if _pydantic_adapter.is_v1:
     target_p += "_pydanticv1"

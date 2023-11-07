@@ -1,7 +1,7 @@
 # This is an automatically generated file, please do not change
-# gen by protobuf_to_pydantic[v0.2.0.2](https://github.com/so1n/protobuf_to_pydantic)
+# gen by protobuf_to_pydantic[v0.2.1.0-alpha.2](https://github.com/so1n/protobuf_to_pydantic)
 # Protobuf Version: 3.20.3
-# Pydantic Version: 2.0.3
+# Pydantic Version: 2.4.2
 import typing
 from datetime import datetime, timedelta
 from enum import IntEnum
@@ -11,11 +11,6 @@ from uuid import UUID
 import typing_extensions
 from annotated_types import Ge, Gt, Le, Lt, MaxLen, MinLen
 from google.protobuf.any_pb2 import Any  # type: ignore
-from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
-from pydantic.functional_validators import BeforeValidator
-from pydantic.networks import EmailStr, IPvAnyAddress
-from pydantic_core._pydantic_core import Url
-
 from protobuf_to_pydantic.customer_con_type.v2 import DatetimeType, TimedeltaType, gt_now, t_gt, t_lt
 from protobuf_to_pydantic.customer_validator.v2 import (
     any_in_validator,
@@ -48,6 +43,10 @@ from protobuf_to_pydantic.customer_validator.v2 import (
 )
 from protobuf_to_pydantic.get_desc.from_pb_option.types import HostNameStr, UriRefStr
 from protobuf_to_pydantic.util import Timedelta
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
+from pydantic.functional_validators import BeforeValidator
+from pydantic.networks import EmailStr, IPvAnyAddress
+from pydantic_core._pydantic_core import Url
 
 
 class AfterReferMessage(BaseModel):
