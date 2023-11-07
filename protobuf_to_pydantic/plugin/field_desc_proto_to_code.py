@@ -1,5 +1,6 @@
 import inspect
 import logging
+import sys
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Dict, Iterable, Optional, Set, Tuple
@@ -235,7 +236,7 @@ class FileDescriptorProtoToCode(BaseP2C):
             )
             field_info_dict = field_option_info_dict
 
-        class_head_content = ""
+        validator_handle_content = ""
         #
         field_info_dict.pop("validator", None)
         if raw_validator_dict:
@@ -261,7 +262,7 @@ class FileDescriptorProtoToCode(BaseP2C):
             #           'shim': None
             #       }
             #   }
-            class_head_content += self._validator_handle(raw_validator_dict, self.code_indent + indent)
+            validator_handle_content += self._validator_handle(raw_validator_dict, self.code_indent + indent)
 
         # type support
         type_: Any = field_info_dict.pop("type_", None)
@@ -310,6 +311,14 @@ class FileDescriptorProtoToCode(BaseP2C):
             if value is getattr(FieldInfo(), key):
                 field_info_dict.pop(key, None)
 
+        if isinstance(field_info_dict.get("json_schema_extra", None), dict):
+            # After Pydantic version 2.1, json_schema_extra type may be callable
+            for k in list(field_info_dict["json_schema_extra"].keys()):
+                if k not in field_info_dict:
+                    field_info_dict[k] = field_info_dict["json_schema_extra"].pop(k)
+            if not field_info_dict.get("json_schema_extra", None):
+                field_info_dict.pop("json_schema_extra")
+
         field_info_str: str = (
             ", ".join(
                 [
@@ -323,7 +332,7 @@ class FileDescriptorProtoToCode(BaseP2C):
         class_field_content: str = (
             " " * (self.code_indent + indent) + f"{field.name}: {type_str} = {field_name}({field_info_str}) \n"
         )
-        return class_head_content, class_field_content
+        return validator_handle_content, class_field_content
 
     @staticmethod
     def _gen_one_of_dict(desc: DescriptorProto) -> Tuple[Dict, Dict]:
@@ -366,6 +375,7 @@ class FileDescriptorProtoToCode(BaseP2C):
             return self._parse_desc_name_dict[class_name]
         class_content = " " * indent + f"class {class_name}(BaseModel):\n"
         class_head_content = ""
+        class_validate_handler_content = ""
         class_field_content = ""
 
         use_custom_type: bool = False
@@ -384,7 +394,7 @@ class FileDescriptorProtoToCode(BaseP2C):
                 desc, field, indent, nested_message_config_dict, optional_dict, skip_validate_rule=skip_validate_rule
             )
             if _content_tuple:
-                class_head_content += _content_tuple[0]
+                class_validate_handler_content += _content_tuple[0]
                 class_field_content += _content_tuple[1]
 
         if desc.nested_type:
@@ -428,7 +438,9 @@ class FileDescriptorProtoToCode(BaseP2C):
 
             class_head_content = config_content + class_head_content
 
-        content = "\n".join([i for i in [class_content, class_head_content, class_field_content] if i])
+        content = "\n".join(
+            [i for i in [class_content, class_head_content, class_field_content, class_validate_handler_content] if i]
+        )
         if not any([class_head_content, class_field_content]):
             content += " " * (indent + self.code_indent) + "pass\n"
         while True:

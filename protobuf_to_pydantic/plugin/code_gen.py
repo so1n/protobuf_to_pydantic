@@ -88,10 +88,12 @@ class CodeGen(Generic[ConfigT]):
         try:
             plugin_config_module_name = self.param_dict.get("plugin_config_module_name", "")
             if plugin_config_module_name:
-                error_str_list = [".", "/", "\\"]
+                error_str_list = [".py", "/", "\\"]
                 for error_str in error_str_list:
                     if error_str in plugin_config_module_name:
-                        raise SystemError("plugin_config_module_name error, please check")
+                        raise SystemError(
+                            f"Plugin_config_module_name error, Please check if it contains characters:{error_str_list}"
+                        )
                 plugin_config_module: Optional[types.ModuleType]  = types.ModuleType(plugin_config_module_name)
                 sys.modules[plugin_config_module_name] = plugin_config_module
                 module_global_dict: dict = plugin_config_module.__dict__
@@ -105,7 +107,7 @@ class CodeGen(Generic[ConfigT]):
                 plugin_config_py_code_base64 += "=" * (4 - equal_sign_len)
 
             exec(base64.b64decode(plugin_config_py_code_base64).decode(), module_global_dict)
-            if plugin_config_module_name:
+            if plugin_config_module:
                 self.config = get_config_by_module(plugin_config_module, self.config_class)
             else:
                 for key in ["local_dict", "base_model_class"]:
