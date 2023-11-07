@@ -130,7 +130,8 @@ exclude_lines = [
 enable = true
 metadata=false
 vcs = "git"
-format = "v{base}-{stage}.{revision}"
+# format = "v{base}-{stage}.{revision}"
+format = "v{base}"
 
 [build-system]
 requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning"]

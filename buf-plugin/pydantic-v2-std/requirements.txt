@@ -1,4 +1,4 @@
-protobuf-to-pydantic==0.2.1.0a2
+protobuf-to-pydantic==0.2.1
 grpcio-tools==1.51.0
 toml==0.10.2
 mypy-protobuf==3.3.0
