@@ -192,7 +192,7 @@ class BytesTest(BaseModel):
     example_factory_test: bytes = Field(default=b"", example=bytes)
     field_test: bytes = CustomerField(default=b"")
     title_test: bytes = Field(default=b"", title="title_test")
-    type_test: str = Field(default=b"", min_length=0, max_length=None)
+    type_test: str = Field(default=b"")
     extra_test: bytes = Field(default=b"", customer_string="c1", customer_int=1)
 
     prefix_test_prefix_validator = field_validator("prefix_test", mode="after", check_fields=None)(prefix_validator)
@@ -250,7 +250,7 @@ class DoubleTest(BaseModel):
     example_test: float = Field(default=0.0, example=1.0)
     example_factory: float = Field(default=0.0, example=float)
     field_test: float = CustomerField(default=0.0)
-    type_test: float = Field(default=0.0, gt=None, ge=None, lt=None, le=None)
+    type_test: float = Field(default=0.0)
     title_test: float = Field(default=0.0, title="title_test")
     extra_test: float = Field(default=0.0, customer_string="c1", customer_int=1)
 
@@ -479,7 +479,7 @@ class Fixed32Test(BaseModel):
     example_test: float = Field(default=0, example=1.0)
     example_factory: float = Field(default=0, example=float)
     field_test: float = CustomerField(default=0)
-    type_test: float = Field(default=0, gt=None, ge=None, lt=None, le=None)
+    type_test: float = Field(default=0)
     title_test: float = Field(default=0, title="title_test")
     extra_test: float = Field(default=0, customer_string="c1", customer_int=1)
 
@@ -533,7 +533,7 @@ class Fixed64Test(BaseModel):
     example_test: float = Field(default=0, example=1.0)
     example_factory: float = Field(default=0, example=float)
     field_test: float = CustomerField(default=0)
-    type_test: float = Field(default=0, gt=None, ge=None, lt=None, le=None)
+    type_test: float = Field(default=0)
     title_test: float = Field(default=0, title="title_test")
     extra_test: float = Field(default=0, customer_string="c1", customer_int=1)
 
@@ -587,7 +587,7 @@ class FloatTest(BaseModel):
     example_test: float = Field(default=0.0, example=1.0)
     example_factory: float = Field(default=0.0, example=float)
     field_test: float = CustomerField(default=0.0)
-    type_test: float = Field(default=0.0, gt=None, ge=None, lt=None, le=None)
+    type_test: float = Field(default=0.0)
     title_test: float = Field(default=0.0, title="title_test")
     extra_test: float = Field(default=0.0, customer_string="c1", customer_int=1)
 
@@ -642,7 +642,7 @@ class Int32Test(BaseModel):
     example_test: int = Field(default=0, example=1.0)
     example_factory: int = Field(default=0, example=int)
     field_test: int = CustomerField(default=0)
-    type_test: float = Field(default=0, gt=None, ge=None, lt=None, le=None)
+    type_test: float = Field(default=0)
     title_test: int = Field(default=0, title="title_test")
     extra_test: int = Field(default=0, customer_string="c1", customer_int=1)
 
@@ -696,7 +696,7 @@ class Int64Test(BaseModel):
     example_test: int = Field(default=0, example=1.0)
     example_factory: int = Field(default=0, example=int)
     field_test: int = CustomerField(default=0)
-    type_test: float = Field(default=0, gt=None, ge=None, lt=None, le=None)
+    type_test: float = Field(default=0)
     title_test: int = Field(default=0, title="title_test")
     extra_test: int = Field(default=0, customer_string="c1", customer_int=1)
 
@@ -903,7 +903,7 @@ class StringTest(BaseModel):
     example_factory_test: str = Field(default="", example=uuid4)
     field_test: str = CustomerField(default="")
     title_test: str = Field(default="", title="title_test")
-    type_test: str = Field(default="", min_length=0, max_length=None)
+    type_test: str = Field(default="")
     extra_test: str = Field(default="", customer_string="c1", customer_int=1)
 
     len_test_len_validator = field_validator("len_test", mode="after", check_fields=None)(len_validator)
@@ -1141,7 +1141,7 @@ class Sfixed32Test(BaseModel):
     example_test: float = Field(default=0, example=1.0)
     example_factory: float = Field(default=0, example=float)
     field_test: float = CustomerField(default=0)
-    type_test: float = Field(default=0, gt=None, ge=None, lt=None, le=None)
+    type_test: float = Field(default=0)
     title_test: float = Field(default=0, title="title_test")
     extra_test: float = Field(default=0, customer_string="c1", customer_int=1)
 
@@ -1195,7 +1195,7 @@ class Sfixed64Test(BaseModel):
     example_test: float = Field(default=0, example=1.0)
     example_factory: float = Field(default=0, example=float)
     field_test: float = CustomerField(default=0)
-    type_test: float = Field(default=0, gt=None, ge=None, lt=None, le=None)
+    type_test: float = Field(default=0)
     title_test: float = Field(default=0, title="title_test")
     extra_test: float = Field(default=0, customer_string="c1", customer_int=1)
 
@@ -1249,7 +1249,7 @@ class Sint64Test(BaseModel):
     example_test: int = Field(default=0, example=1.0)
     example_factory: int = Field(default=0, example=int)
     field_test: int = CustomerField(default=0)
-    type_test: int = Field(default=0, gt=None, ge=None, lt=None, le=None)
+    type_test: int = Field(default=0)
     title_test: int = Field(default=0, title="title_test")
     extra_test: int = Field(default=0, customer_string="c1", customer_int=1)
 
@@ -1335,7 +1335,7 @@ class StringTest(BaseModel):
     example_factory_test: str = Field(default="", example=uuid4)
     field_test: str = CustomerField(default="")
     title_test: str = Field(default="", title="title_test")
-    type_test: str = Field(default="", min_length=0, max_length=None)
+    type_test: str = Field(default="")
     extra_test: str = Field(default="", customer_string="c1", customer_int=1)
 
     len_test_len_validator = field_validator("len_test", mode="after", check_fields=None)(len_validator)
@@ -1498,7 +1498,7 @@ class Uint32Test(BaseModel):
     example_test: int = Field(default=0, example=1.0)
     example_factory: int = Field(default=0, example=int)
     field_test: int = CustomerField(default=0)
-    type_test: int = Field(default=0, gt=None, ge=None, lt=None, le=None)
+    type_test: int = Field(default=0)
     title_test: int = Field(default=0, title="title_test")
     extra_test: int = Field(default=0, customer_string="c1", customer_int=1)
 
@@ -1552,7 +1552,7 @@ class Uint64Test(BaseModel):
     example_test: int = Field(default=0, example=1.0)
     example_factory: int = Field(default=0, example=int)
     field_test: int = CustomerField(default=0)
-    type_test: int = Field(default=0, gt=None, ge=None, lt=None, le=None)
+    type_test: int = Field(default=0)
     title_test: int = Field(default=0, title="title_test")
     extra_test: int = Field(default=0, customer_string="c1", customer_int=1)
 

@@ -1,7 +1,7 @@
 # This is an automatically generated file, please do not change
-# gen by protobuf_to_pydantic[v0.2.1.0-alpha.13](https://github.com/so1n/protobuf_to_pydantic)
+# gen by protobuf_to_pydantic[v0.2.1.0-alpha.2](https://github.com/so1n/protobuf_to_pydantic)
 # Protobuf Version: 3.20.3
-# Pydantic Version: 2.0.3
+# Pydantic Version: 2.4.2
 from enum import IntEnum
 
 from google.protobuf.message import Message  # type: ignore
@@ -15,6 +15,6 @@ class DemoEnum(IntEnum):
 
 
 class DemoMessage(BaseModel):
-    earth: str = Field(default="", json_schema_extra={})
-    mercury: str = Field(default="", json_schema_extra={})
-    mars: str = Field(default="", json_schema_extra={})
+    earth: str = Field(default="")
+    mercury: str = Field(default="")
+    mars: str = Field(default="")

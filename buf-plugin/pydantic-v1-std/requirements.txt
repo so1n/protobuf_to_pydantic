@@ -1,0 +1,8 @@
+protobuf-to-pydantic==0.2.1.0a14
+grpcio-tools==1.51.0
+toml==0.10.2
+mypy-protobuf==3.3.0
+isort==5.9.3
+black==23.1.0
+autoflake==1.4
+pydantic==1.10.7
