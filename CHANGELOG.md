@@ -1,7 +1,15 @@
-## 0.2.1[Future]
+## 0.2.2[Future]
 - Feature, support protovalidate(proto-gen-validate version >= 1.0.0) rule
+## 0.2.1[Now]
+- Feature, support buf-cli
+- Feature, Remove redundant parameters in con_type
+- Feature, plugin support create dynamic plugin config module
+- Build, change requirements and script
 
-## 0.2.0[now]
+## 0.2.0.x(1-4)
+- Fix, fix option field has default and default_factory value
+- Fix, default factory and default generated together
+## 0.2.0
 - Feature, support Pydantic Version 2.0.0+
 - Feature, datetime compared by timestamp
 - Feature, support optional field

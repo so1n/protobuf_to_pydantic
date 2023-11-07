@@ -135,6 +135,11 @@ The specific configuration instructions are as follows：
 | file_name_suffix              | Code generation                        | str                                             | Define the generated file suffix, default `_p2p.py`                                                                                                 |
 | file_descriptor_proto_to_code | Code generation(Limit plug-ins only)   | `Type[FileDescriptorProtoToCode]`               | Define the `FileDescriptorProtoToCode` to use                                                                                                       |
 
+
+#### 1.1.3.buf-cli
+If you are using `buf-cli` to manage Protobuf files,
+then you can also use `protobuf-to-pydantic` in `buf-cli`, See [How to use `protobuf-to-pydantic` in `buf-cli`](https://github.com/so1n/protobuf_to_pydantic/blob/master/buf-plugin/README.md)
+
 ### 1.2.Generate a `Pydantic Model` object in Python runtime
 `protobuf_to_pydantic` can generate the corresponding `PydanticModel` object based on the `Message` object at runtime。
 
