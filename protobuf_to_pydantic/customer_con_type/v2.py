@@ -3,7 +3,10 @@ from typing import Callable, Dict, List, Optional, Sequence, Tuple, Type, TypeVa
 
 from annotated_types import Ge, Gt, Le, Lt, MaxLen, MinLen, MultipleOf, Predicate
 from pydantic import AfterValidator
-from pydantic._internal._fields import PydanticGeneralMetadata
+try:
+    from pydantic._internal._fields import PydanticGeneralMetadata as pydantic_general_metadata
+except ImportError:
+    from pydantic._internal._fields import pydantic_general_metadata
 from pydantic.types import AllowInfNan, AnyItemType, PydanticUserError, Strict
 from typing_extensions import Annotated
 
@@ -217,7 +220,7 @@ def constr(
         type_param.append(MaxLen(max_length))
     if any([strip_whitespace, to_upper, to_lower, pattern]):
         type_param.append(
-            PydanticGeneralMetadata(
+            pydantic_general_metadata(
                 strip_whitespace=strip_whitespace,
                 to_upper=to_upper,
                 to_lower=to_lower,
