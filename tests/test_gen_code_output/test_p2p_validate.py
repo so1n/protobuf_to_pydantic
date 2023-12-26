@@ -1026,6 +1026,40 @@ class OneOfTest(BaseModel):
 """
         self.assert_contains(content, self._model_output(demo_pb2.OneOfTest))
 
+    def test_one_of_optional(self) -> None:
+        content = """
+class OneOfOptionalTest(BaseModel):
+    _one_of_dict = {"p2p_validate_test.OneOfOptionalTest.id": {"fields": {"x", "y", "z"}, "required": True}}
+
+    header: str = Field(default="")
+    x: typing.Optional[str] = Field(default="")
+    y: typing.Optional[int] = Field(default=0)
+    z: bool = Field(default=False)
+    name: typing.Optional[str] = Field(default="")
+    age: typing.Optional[int] = Field(default=0)
+    str_list: typing.List[str] = Field(default_factory=list)
+    int_map: typing.Dict[str, int] = Field(default_factory=dict)
+
+    one_of_validator = root_validator(pre=True, allow_reuse=True)(check_one_of)
+"""
+        if not is_v1:
+            content = """
+class OneOfOptionalTest(BaseModel):
+    _one_of_dict = {"p2p_validate_test.OneOfOptionalTest.id": {"fields": {"x", "y", "z"}, "required": True}}
+
+    header: str = Field(default="")
+    x: typing.Optional[str] = Field(default="")
+    y: typing.Optional[int] = Field(default=0)
+    z: bool = Field(default=False)
+    name: typing.Optional[str] = Field(default="")
+    age: typing.Optional[int] = Field(default=0)
+    str_list: typing.List[str] = Field(default_factory=list)
+    int_map: typing.Dict[str, int] = Field(default_factory=dict)
+
+    one_of_validator = model_validator(mode="before")(check_one_of)
+"""
+        self.assert_contains(content, self._model_output(demo_pb2.OneOfOptionalTest))
+
     def test_repeated(self) -> None:
         content = """
 class RepeatedTest(BaseModel):

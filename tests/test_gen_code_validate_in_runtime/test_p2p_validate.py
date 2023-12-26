@@ -66,3 +66,5 @@ class TestP2pModelValidator(BaseTestP2pModelValidator):
 
     def test_one_of_not(self) -> None:
         self._test_one_of_not(demo_gen_code_by_p2p.OneOfNotTest)
+    def test_one_of_optional(self) -> None:
+        self._test_one_of_optional(demo_gen_code_by_p2p.OneOfOptionalTest)

@@ -15,7 +15,7 @@ from protobuf_to_pydantic.customer_con_type import (
 )
 from protobuf_to_pydantic.customer_validator import validate_validator_dict
 from protobuf_to_pydantic.grpc_types import Descriptor, FieldDescriptor, FieldDescriptorProto, Message
-from protobuf_to_pydantic.types import DescFromOptionTypedDict, FieldInfoTypedDict
+from protobuf_to_pydantic.types import DescFromOptionTypedDict, FieldInfoTypedDict, OneOfTypedDict
 from protobuf_to_pydantic.util import replace_protobuf_type_to_python_type
 
 from .types import column_pydantic_type_dict
@@ -380,7 +380,7 @@ class ParseFromPbOption(object):
         self._msg_desc_dict[descriptor.name] = self.get_desc_from_options(descriptor)
         return self._msg_desc_dict
 
-    def get_desc_from_options(self, descriptor: Descriptor) -> DescFromOptionTypedDict:
+    def get_desc_from_options(self, descriptor: Descriptor) -> DescFromOptionTypedDict:  # noqa:C901
         """Extract the information of each field through the Options of Protobuf Message"""
         if descriptor.name in self._msg_desc_dict:
             return self._msg_desc_dict[descriptor.name]
@@ -394,13 +394,32 @@ class ParseFromPbOption(object):
             ):
                 return message_field_dict
         # Handle one_ofs of Message
+        one_of_dict: Dict[str, OneOfTypedDict] = {}
         for one_of in descriptor.oneofs:
+            required: bool = False
+            optional_fields: Set[str] = set()
             for one_of_descriptor, one_ov_value in one_of.GetOptions().ListFields():
                 if one_of_descriptor.full_name == f"{self.protobuf_pkg}.required":
+                    required = True
                     # if one_of.full_name in self._msg_desc_dict:
                     #     continue
                     # Support one of is required
-                    message_field_dict["one_of"] = {one_of.full_name: {"required": True, "fields": set()}}
+                elif one_of_descriptor.full_name == f"{self.protobuf_pkg}.oneof_extend":
+                    # Support one of is optional
+                    for one_of_extend_field_descriptor, result in one_ov_value.ListFields():
+                        for one_of_optional_name in result:
+                            optional_fields.add(one_of_optional_name)
+
+            if required or optional_fields:
+                one_of_dict[one_of.full_name] = {
+                    "required": required,
+                    "optional_fields": optional_fields,
+                    # optional cannot get the value of the current one of,
+                    # so it needs to be processed in subsequent processing
+                    "fields": set(),
+                }
+        if one_of_dict:
+            message_field_dict["one_of"] = one_of_dict
         # Process all fields of Message
         for field in descriptor.fields:
             type_name: str = ""

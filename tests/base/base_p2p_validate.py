@@ -321,3 +321,14 @@ class BaseTestP2pModelValidator:
 
     def _test_one_of_not(self, model_class: Any) -> None:
         self.replace_message_fn(model_class, local_dict=local_dict)()
+
+    def _test_one_of_optional(self, model_class: Any) -> None:
+        # check one of optional
+        self.replace_message_fn(model_class, local_dict=local_dict)(x=None)
+        self.replace_message_fn(model_class, local_dict=local_dict)(y=None)
+
+        with pytest.raises(ValidationError):
+            self.replace_message_fn(model_class, local_dict=local_dict)(z=None)
+
+        # check other column optional
+        self.replace_message_fn(model_class, local_dict=local_dict)(x=None, name=None, age=None)

@@ -1,5 +1,5 @@
 # This is an automatically generated file, please do not change
-# gen by protobuf_to_pydantic[v0.2.1](https://github.com/so1n/protobuf_to_pydantic)
+# gen by protobuf_to_pydantic[v0.2.2](https://github.com/so1n/protobuf_to_pydantic)
 # Protobuf Version: 4.24.4
 # Pydantic Version: 2.4.2
 import typing
@@ -499,6 +499,21 @@ class OneOfNotTest(BaseModel):
     header: str = Field(default="")
     x: str = Field(default="")
     y: int = Field(default=0)
+
+    one_of_validator = model_validator(mode="before")(check_one_of)
+
+
+class OneOfOptionalTest(BaseModel):
+    _one_of_dict = {"p2p_validate_test.OneOfOptionalTest.id": {"fields": {"x", "y", "z"}, "required": True}}
+
+    header: str = Field(default="")
+    x: typing.Optional[str] = Field(default="")
+    y: typing.Optional[int] = Field(default=0)
+    z: bool = Field(default=False)
+    name: typing.Optional[str] = Field(default="")
+    age: typing.Optional[int] = Field(default=0)
+    str_list: typing.List[str] = Field(default_factory=list)
+    int_map: typing.Dict[str, int] = Field(default_factory=dict)
 
     one_of_validator = model_validator(mode="before")(check_one_of)
 
