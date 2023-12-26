@@ -152,6 +152,12 @@ class BaseP2C(object):
         :param auto_import_type_code: if true, add import type module code
         :return: if type_ is typing type, return python code, else return None
         """
+        if type_ is Any:
+            # support py311 get_origin(Any) result is None
+            return "typing.Any"
+        elif isinstance(type_, ForwardRef):
+            return type_.__forward_arg__
+
         origin_type: Optional[_GenericAlias] = get_origin(type_)
         if origin_type is None:
             if isinstance(type_, TypeVar):
@@ -203,6 +209,11 @@ class BaseP2C(object):
         :param sort: If True, will sort item (Ensure that the order of code generated multiple times is consistent)
         :return:
         """
+        # If module name is typing, it's prioritized
+        value_code = self._get_typing_value_code(type_, auto_import_type_code=auto_import_type_code)
+        if value_code:
+            return value_code
+
         type_ = replace_protobuf_type_to_python_type(type_)
 
         customer_con_type_origin_code = get_origin_code(type_)
@@ -233,8 +244,6 @@ class BaseP2C(object):
                 if len(sort_list) == 1:
                     return "(" + type_name + ", )"
                 return "(" + type_name + ")"
-        elif isinstance(type_, ForwardRef):
-            return type_.__forward_arg__
         elif is_dataclass(type_):
             # dataclass support
             field_param_code_list = []
@@ -260,12 +269,11 @@ class BaseP2C(object):
             if type_.__mro__[1] in pydantic_con_dict:
                 # pydantic con class support
                 return self._get_pydantic_con_type_code(type_)
-            else:
-                if type_ is type(None):
-                    return "None"
-                if auto_import_type_code:
-                    self._parse_type_to_import_code(type_)
-                return getattr(type_, "__name__")
+            if type_ is type(None):
+                return "None"
+            if auto_import_type_code:
+                self._parse_type_to_import_code(type_)
+            return getattr(type_, "__name__")
         elif getattr(type_, "DESCRIPTOR", None):
             # protobuf message support
             message_name: str = type_.__class__.__name__
@@ -274,9 +282,6 @@ class BaseP2C(object):
                 self._parse_type_to_import_code(type_)
             return f"{message_name}({attr_str})"
         else:
-            typing_code = self._get_typing_value_code(type_, auto_import_type_code=auto_import_type_code)
-            if typing_code:
-                return typing_code
             if auto_import_type_code:
                 self._parse_type_to_import_code(type_)
 
@@ -386,8 +391,7 @@ class BaseP2C(object):
                     # only support like repeated[string]
                     value_type_name = self._get_pydantic_con_type_code(value_outer_type)
                 else:
-                    value_type_name = getattr(value_outer_type, "__name__", "None")
-                    self._parse_type_to_import_code(value_outer_type)
+                    value_type_name = self._get_value_code(value_outer_type)
             else:
                 value_type_name = getattr(value_outer_type, "__name__", "None")
 
