@@ -44,7 +44,7 @@ def check_one_of(cls: Type[BaseModel], values: tuple) -> tuple:
         if have_value_name >= 2:
             raise ValueError(f"OneOf:{one_of_name} has {have_value_name} value")
         if one_of_dict.get("required", False) and have_value_name == 0:
-            raise ValueError(f"OneOf:{one_of_name} must set value")
+            raise ValueError(f"OneOf:{one_of_name} must set value (Choose one of :{one_of_dict['fields']})")
     return values
 
 

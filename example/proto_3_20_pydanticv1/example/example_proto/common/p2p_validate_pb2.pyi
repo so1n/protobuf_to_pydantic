@@ -21,6 +21,22 @@ else:
 
 DESCRIPTOR: google.protobuf.descriptor.FileDescriptor
 
+class OneofRules(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    OPTIONAL_FIELD_NUMBER: builtins.int
+    @property
+    def optional(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[builtins.str]:
+        """Define whether the field of oneof is optional"""
+    def __init__(
+        self,
+        *,
+        optional: collections.abc.Iterable[builtins.str] | None = ...,
+    ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["optional", b"optional"]) -> None: ...
+
+global___OneofRules = OneofRules
+
 class FieldRules(google.protobuf.message.Message):
     """FieldRules encapsulates the rules for each type of field. Depending on the
     field, the correct set should be used to ensure proper validations.
@@ -3225,6 +3241,7 @@ global___TimestampRules = TimestampRules
 
 IGNORED_FIELD_NUMBER: builtins.int
 REQUIRED_FIELD_NUMBER: builtins.int
+ONEOF_EXTEND_FIELD_NUMBER: builtins.int
 RULES_FIELD_NUMBER: builtins.int
 ignored: google.protobuf.internal.extension_dict._ExtensionFieldDescriptor[google.protobuf.descriptor_pb2.MessageOptions, builtins.bool]
 """Ignore skips generation of validation methods for this message."""
@@ -3232,6 +3249,7 @@ required: google.protobuf.internal.extension_dict._ExtensionFieldDescriptor[goog
 """Required ensures that exactly one the field options in a oneof is set;
 validation fails if no fields in the oneof are set.
 """
+oneof_extend: google.protobuf.internal.extension_dict._ExtensionFieldDescriptor[google.protobuf.descriptor_pb2.OneofOptions, global___OneofRules]
 rules: google.protobuf.internal.extension_dict._ExtensionFieldDescriptor[google.protobuf.descriptor_pb2.FieldOptions, global___FieldRules]
 """Rules specify the validations to be performed on this field. By default,
 no validation is performed against a field.

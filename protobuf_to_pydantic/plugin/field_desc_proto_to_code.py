@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING, Any, Dict, Iterable, Optional, Set, Tuple
 from mypy_protobuf.main import PYTHON_RESERVED, Descriptors, SourceCodeLocation
 from pydantic import BaseModel
 from pydantic.fields import FieldInfo
+from typing_extensions import NotRequired, TypedDict
 
 from protobuf_to_pydantic import _pydantic_adapter
 from protobuf_to_pydantic.constant import protobuf_desc_python_type_dict, python_type_default_value_dict
@@ -35,6 +36,15 @@ else:
     pydantic_con_dict = {}
 
 logger: logging.Logger = logging.getLogger(__name__)
+
+
+class OptionTypedDict(TypedDict):
+    is_proto3_optional: bool
+
+
+class OneOfInfoTypedDict(TypedDict):
+    fields: Set[str]
+    required: NotRequired[bool]
 
 
 class FileDescriptorProtoToCode(BaseP2C):
@@ -334,23 +344,79 @@ class FileDescriptorProtoToCode(BaseP2C):
         return validator_handle_content, class_field_content
 
     @staticmethod
-    def _gen_one_of_dict(desc: DescriptorProto) -> Tuple[Dict, Dict]:
-        one_of_dict = {}
-        optional_dict = {}
+    def _gen_one_of_dict(desc: DescriptorProto) -> Tuple[Dict[str, OneOfInfoTypedDict], Dict[str, OptionTypedDict]]:
+        """
+        protobuf content:
+            message OneOfOptionalTest {
+              string header = 1;
+              oneof id {
+                option (p2p_validate.required) = true;
+                option (p2p_validate.oneof_extend) = {optional: ["x", "y"]};
+                string x = 2;
+                int32  y = 3;
+              }
+              optional string name = 4;
+              optional int32 age= 5;
+              repeated string str_list =6;
+              map<string, int32> int_map = 7;
+            }
+        desc.field:
+            [
+                (name: "header" number: 1 label: LABEL_OPTIONAL type: TYPE_STRING json_name: "header" ),
+                (name: "x" number: 2 label: LABEL_OPTIONAL type: TYPE_STRING oneof_index: 0 json_name: "x" ),
+                (name: "y" number: 3 label: LABEL_OPTIONAL type: TYPE_INT32 oneof_index: 0 json_name: "y" ),
+                (
+                    name: "name" number: 4 label: LABEL_OPTIONAL type: TYPE_STRING oneof_index: 1 json_name: "name"
+                    proto3_optional: true
+                ),
+                (
+                    name: "age" number: 5 label: LABEL_OPTIONAL type: TYPE_INT32 oneof_index: 2 json_name: "age"
+                    proto3_optional: true
+                ),
+                (name: "str_list" number: 6 label: LABEL_REPEATED type: TYPE_STRING json_name: "strList" ),
+                (
+                    name: "int_map" number: 7 label: LABEL_REPEATED type: TYPE_MESSAGE
+                    type_name: ".p2p_validate_test.OneOfOptionalTest.IntMapEntry" json_name: "intMap"
+                )
+            ]
+
+        desc.oneof_decl:
+            [
+                name: "id"
+                options {
+                    [p2p_validate.required]: true
+                    [p2p_validate.oneof_extend] {
+                        optional: "x"
+                        optional: "y"
+                    }
+                },
+                name: "_name",
+                name: "_age"
+            ]
+        return:
+            - one_of_dict:
+                {'OneOfOptionalTest.id': {'required': True, 'optional': ['x', 'y'], 'fields': {'y', 'x'}}}
+            - optional_dict:
+                {'name': {'is_proto3_optional': True}, 'age': {'is_proto3_optional': True}}
+
+        """
+        one_of_dict: Dict[str, OneOfInfoTypedDict] = {}
+        optional_dict: Dict[str, OptionTypedDict] = {}
         index_field_name_dict: Dict[int, Set[str]] = {}
+
         for field in desc.field:
             if field.proto3_optional:
                 optional_dict[field.name] = {"is_proto3_optional": True}
-            if not field.HasField("oneof_index"):
-                continue
-            if field.oneof_index not in index_field_name_dict:
-                index_field_name_dict[field.oneof_index] = set()
-            index_field_name_dict[field.oneof_index].add(field.name)
+            if field.HasField("oneof_index"):
+                if field.oneof_index not in index_field_name_dict:
+                    index_field_name_dict[field.oneof_index] = set()
+                index_field_name_dict[field.oneof_index].add(field.name)
 
         for index, one_of_item in enumerate(desc.oneof_decl):
-            if one_of_item.name == "_" + desc.field[index].name:
+            # if field is proto3_optional, ignore
+            if one_of_item.name.startswith("_") and one_of_item.name[1:] in optional_dict:
                 continue
-            option_dict = {}
+            option_dict: OneOfInfoTypedDict = {}  # type: ignore[typeddict-item]
             for option_descriptor, option_value in one_of_item.options.ListFields():
                 full_name_list = option_descriptor.full_name.split(".")
                 pkg, rule_name = full_name_list[-2], full_name_list[-1]
@@ -358,7 +424,13 @@ class FileDescriptorProtoToCode(BaseP2C):
                     continue
                 if rule_name in ("required",):
                     # Now only support `required`
-                    option_dict[rule_name] = option_value
+                    option_dict["required"] = option_value
+                elif rule_name in ("oneof_extend",):
+                    # Now only support `oneof_extend`
+                    for one_of_extend_field_descriptor, result in option_value.ListFields():
+                        if one_of_extend_field_descriptor.name == "optional":
+                            for one_of_optional_name in result:
+                                optional_dict[one_of_optional_name] = {"is_proto3_optional": True}
             option_dict["fields"] = index_field_name_dict[index]
             if option_dict:
                 # Only when the rules are used, will the number of fields of one_of be checked to see if they match

@@ -71,6 +71,7 @@ class HostNameStr(str):
         ) -> str:
             return cls.validate(__input_value)
 
+        # Why another change? The API of pydantic v2 is so fucked
         return _pydantic_adapter.core_schema.general_plain_validator_function(  # type: ignore[attr-defined]
             _validate, serialization=_pydantic_adapter.core_schema.to_string_ser_schema()  # type: ignore[attr-defined]
         )

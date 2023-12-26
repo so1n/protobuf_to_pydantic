@@ -561,6 +561,20 @@ message OneOfNotTest {
     int32  y = 3;
   }
 }
+message OneOfOptionalTest {
+  string header = 1;
+  oneof id {
+    option (p2p_validate.required) = true;
+    option (p2p_validate.oneof_extend) = {optional: ["x", "y"]};
+    string x = 2;
+    int32  y = 3;
+    bool z = 4;
+  }
+  optional string name = 5;
+  optional int32 age= 6;
+  repeated string str_list = 7;
+  map<string, int32> int_map = 8;
+}
 
 // test nested message
 message NestedMessage{

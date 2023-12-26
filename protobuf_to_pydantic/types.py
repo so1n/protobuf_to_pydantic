@@ -9,9 +9,15 @@ from protobuf_to_pydantic._pydantic_adapter import is_v1
 Number = Union[int, float]
 
 
+class UseOneOfTypedDict(TypedDict):
+    required: bool
+    fields: Set[str]
+
+
 class OneOfTypedDict(TypedDict):
     required: bool
     fields: Set[str]
+    optional_fields: Optional[Set[str]]
 
 
 class FieldInfoTypedDict(TypedDict):

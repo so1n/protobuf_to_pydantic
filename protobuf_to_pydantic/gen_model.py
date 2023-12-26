@@ -26,7 +26,7 @@ from protobuf_to_pydantic.types import JsonAndDict
 from protobuf_to_pydantic.util import check_dict_one_of, create_pydantic_model
 
 if TYPE_CHECKING:
-    from protobuf_to_pydantic.types import DescFromOptionTypedDict, FieldInfoTypedDict, OneOfTypedDict
+    from protobuf_to_pydantic.types import DescFromOptionTypedDict, FieldInfoTypedDict, UseOneOfTypedDict
 
 
 def field_param_dict_migration_v2_handler(field_param_dict: Dict[str, Any], is_warnings: bool = True) -> None:
@@ -208,7 +208,7 @@ class MessagePaitModel(BaseModel):
 class CodeRefModel(object):
     def __init__(
         self,
-        one_of_dict: Dict[str, "OneOfTypedDict"],
+        one_of_dict: Dict[str, "UseOneOfTypedDict"],
         base_model: Type["BaseModel"],
         nested_message_dict: Dict[str, Type[Union[BaseModel, IntEnum]]],
         validators: Dict[str, classmethod],
@@ -230,7 +230,7 @@ class CodeRefModel(object):
         cls,
         model: Type[BaseModel],
         *,
-        one_of_dict: Dict[str, "OneOfTypedDict"],
+        one_of_dict: Dict[str, "UseOneOfTypedDict"],
         base_model: Type["BaseModel"],
         nested_message_dict: Dict[str, Type[Union[BaseModel, IntEnum]]],
         validators: Dict[str, classmethod],
@@ -348,12 +348,16 @@ class M2P(object):
                 return None
         return None
 
-    def _one_of_handle(self, descriptor: Descriptor) -> Tuple[Dict[str, "OneOfTypedDict"], Dict[str, Any]]:
+    def _one_of_handle(self, descriptor: Descriptor) -> Tuple[Dict[str, "UseOneOfTypedDict"], Dict[str, Any]]:
         desc_dict: "DescFromOptionTypedDict" = self._field_doc_dict.get(descriptor.name, {})  # type: ignore
-        one_of_dict: Dict[str, "OneOfTypedDict"] = {}
+        one_of_dict: Dict[str, "UseOneOfTypedDict"] = {}
         optional_dict: Dict[str, Any] = {}
-        for one_of in descriptor.oneofs:
-            if one_of == descriptor.fields[one_of.index].containing_oneof:
+        optional_id_set: Set[str] = set()
+        for field in descriptor.fields:
+            if not field.containing_oneof:
+                continue
+            if "_" + field.name == field.containing_oneof.name:
+                optional_id_set.add(field.containing_oneof.full_name)
                 # support optional field
                 # e.g.:
                 #   message OptionalMessage{
@@ -363,16 +367,24 @@ class M2P(object):
 
                 # one_of name is `_name`, `_age`
                 # but need name is `name`, `age`
-                optional_dict[descriptor.fields[one_of.index].full_name] = {"is_proto3_optional": True}
-            else:
-                column_name: str = one_of.full_name
-                if column_name not in one_of_dict:
-                    one_of_dict[column_name] = {"required": False, "fields": set()}
-                if desc_dict and column_name in desc_dict["one_of"]:
-                    # only PGV or P2P support
-                    one_of_dict[column_name]["required"] = desc_dict["one_of"][column_name].get("required", False)
-                for _field in one_of.fields:
-                    one_of_dict[column_name]["fields"].add(_field.name)
+                optional_dict[field.full_name] = {"is_proto3_optional": True}
+
+        for one_of in descriptor.oneofs:
+            column_name: str = one_of.full_name
+            if column_name in optional_id_set:
+                continue
+            if column_name not in one_of_dict:
+                one_of_dict[column_name] = {"required": False, "fields": set()}
+            if desc_dict and column_name in desc_dict["one_of"]:
+                # only PGV or P2P support
+                one_of_dict[column_name]["required"] = desc_dict["one_of"][column_name].get("required", False)
+                optional_fields = desc_dict["one_of"][column_name].get("optional_fields", set())
+                if optional_fields:
+                    for field_name in optional_fields:
+                        optional_dict[descriptor.full_name + "." + field_name] = {"is_proto3_optional": True}
+
+            for _field in one_of.fields:
+                one_of_dict[column_name]["fields"].add(_field.name)
         return one_of_dict, optional_dict
 
     def _get_pydantic_base(self, config_dict: Dict[str, Any]) -> Type[BaseModel]:

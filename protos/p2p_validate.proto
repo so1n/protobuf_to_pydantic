@@ -17,6 +17,7 @@ extend google.protobuf.OneofOptions {
     // Required ensures that exactly one the field options in a oneof is set;
     // validation fails if no fields in the oneof are set.
     optional bool required = 1073;
+    optional OneofRules oneof_extend = 1074;
 }
 
 // Validation rules applied at the field level
@@ -24,6 +25,11 @@ extend google.protobuf.FieldOptions {
     // Rules specify the validations to be performed on this field. By default,
     // no validation is performed against a field.
     optional FieldRules rules = 1073;
+}
+
+message OneofRules {
+    // Define whether the field of oneof is optional
+    repeated string optional = 1;
 }
 
 // FieldRules encapsulates the rules for each type of field. Depending on the
