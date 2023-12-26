@@ -1,7 +1,7 @@
 # This is an automatically generated file, please do not change
-# gen by protobuf_to_pydantic[v0.2.2](https://github.com/so1n/protobuf_to_pydantic)
+# gen by protobuf_to_pydantic[v0.2.3](https://github.com/so1n/protobuf_to_pydantic)
 # Protobuf Version: 4.24.4
-# Pydantic Version: 2.4.2
+# Pydantic Version: 2.5.3
 import typing
 from datetime import datetime
 from enum import IntEnum
