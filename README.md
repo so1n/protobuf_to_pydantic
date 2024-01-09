@@ -56,7 +56,7 @@ After installing `protobuf-to-pydantic`,can use the `protobuf-to-pydantic` plugi
 python -m grpc_tools.protoc -I. --protobuf-to-pydantic_out=. example.proto
 ```
 
-In this command, `--protobuf-to-pydantic_out=.` means using the `prorobuf_to_pydantic` plug-in,
+In this command, `--protobuf-to-pydantic_out=.` means using the `prorobuf-to-pydantic` plug-in,
 And it is declared that the output location of the `protobuf-to-pydantic` plug-in is `.`
 
 > `.` indicates the output path used by `grpc_tools.proto`.
