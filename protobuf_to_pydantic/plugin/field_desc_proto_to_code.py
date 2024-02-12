@@ -293,6 +293,7 @@ class FileDescriptorProtoToCode(BaseP2C):
                 value_type_str = self._get_value_code(map_type_dict["values"])
             else:
                 value_type_str = self._get_protobuf_type_model(message.field[1]).py_type_str
+            self._add_import_code("typing")
             type_str = f"typing.Dict[{key_type_str}, {value_type_str}]"
 
         # custom field support
@@ -308,6 +309,7 @@ class FileDescriptorProtoToCode(BaseP2C):
             field_param_dict_migration_v2_handler(field_info_dict, is_warnings=False)
 
         if optional_dict.get(field.name, {}).get("is_proto3_optional", False):
+            self._add_import_code("typing")
             type_str = f"typing.Optional[{type_str}]"
             if field_info_dict.get(
                 "default", _pydantic_adapter.PydanticUndefined
