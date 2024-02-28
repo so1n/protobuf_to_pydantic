@@ -446,7 +446,7 @@ class FileDescriptorProtoToCode(BaseP2C):
         class_name = desc.name if desc.name not in PYTHON_RESERVED else "_r_" + desc.name
         if class_name in self._parse_desc_name_dict:
             return self._parse_desc_name_dict[class_name]
-        class_content = " " * indent + f"class {class_name}(BaseModel):\n"
+        class_content = " " * indent + f"class {class_name}({self.config.base_model_class.__name__}):\n"
         class_head_content = ""
         class_validate_handler_content = ""
         class_field_content = ""
