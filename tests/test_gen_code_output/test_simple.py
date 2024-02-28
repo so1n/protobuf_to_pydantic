@@ -66,6 +66,12 @@ class UserMessage(BaseModel):
     demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field()
 """) in self._model_output(demo_pb2.UserMessage)
 
+    def test_struct_message(self) -> None:
+        assert format_content("""
+class StructMessage(BaseModel):
+    metadata: typing.Dict[str, typing.Any] = Field(default_factory=dict)
+""") in self._model_output(demo_pb2.StructMessage)
+
     def test_map_message(self) -> None:
         assert format_content("""
 class SexType(IntEnum):

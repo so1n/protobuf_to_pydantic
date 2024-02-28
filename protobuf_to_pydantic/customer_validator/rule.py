@@ -2,7 +2,8 @@ from datetime import datetime
 from typing import Any, Callable, Dict
 
 from protobuf_to_pydantic.grpc_types import AnyMessage
-from protobuf_to_pydantic.types import OneOfTypedDict
+
+from protobuf_to_pydantic.types import OneOfTypedDict  # isort:skip
 
 
 def to_datetime(value: Any) -> Any:

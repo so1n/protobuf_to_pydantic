@@ -7,7 +7,7 @@ repos:
         additional_dependencies:
           ["types-toml"]
   - repo: https://github.com/PyCQA/isort
-    rev: 5.9.3
+    rev: 5.11.5  # see: https://github.com/PyCQA/isort/issues/2083#issuecomment-1408300628
     hooks:
       - id: isort
         exclude: "^example/example_proto|^example/proto|^protobuf_to_pydantic/protos|protobuf_to_pydantic/_pydantic_adapter.py|protobuf_to_pydantic/grpc_types.py"
@@ -17,7 +17,7 @@ repos:
       - id: black
         exclude: "^example/example_proto|^example/proto|^tests|^protobuf_to_pydantic/protos|protobuf_to_pydantic/grpc_types.py"
   - repo: https://github.com/PyCQA/flake8
-    rev: 3.9.2
+    rev: 5.0.4
     hooks:
       - id: flake8
         exclude: "^example/example_proto|^example/proto|^tests|^protobuf_to_pydantic/protos|protobuf_to_pydantic/grpc_types.py"

@@ -3,9 +3,10 @@ from typing import Any, Callable, Dict, Tuple
 
 from pydantic.fields import ModelField
 
-from protobuf_to_pydantic.types import OneOfTypedDict
-
 from . import rule
+
+from protobuf_to_pydantic.types import OneOfTypedDict  # isort:skip
+
 
 ################
 # requirements #

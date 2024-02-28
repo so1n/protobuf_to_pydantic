@@ -1,5 +1,5 @@
 # This is an automatically generated file, please do not change
-# gen by protobuf_to_pydantic[v0.2.3](https://github.com/so1n/protobuf_to_pydantic)
+# gen by protobuf_to_pydantic[0.0.0](https://github.com/so1n/protobuf_to_pydantic)
 # Protobuf Version: 3.20.3
 # Pydantic Version: 1.10.7
 import typing
@@ -99,3 +99,7 @@ class OptionalMessage(BaseModel):
     item: typing.Optional[InvoiceItem] = Field()
     str_list: typing.List[str] = Field(default_factory=list)
     int_map: typing.Dict[str, int] = Field(default_factory=dict)
+
+
+class StructMessage(BaseModel):
+    metadata: typing.Dict[str, typing.Any] = Field(default_factory=dict)
