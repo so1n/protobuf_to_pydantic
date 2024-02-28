@@ -565,8 +565,8 @@ class FileDescriptorProtoToCode(BaseP2C):
                 rule_type_str = "any"
                 type_factory = AnyMessage
                 self._add_import_code("google.protobuf.any_pb2", "Any")
-            elif field.type_name.split(".")[-2] == "Struct":
-                py_type_str = "Dict"
+            elif _type_str == "Struct":
+                py_type_str = "typing.Dict"
                 rule_type_str = "struct"
                 type_factory = dict
             else:
