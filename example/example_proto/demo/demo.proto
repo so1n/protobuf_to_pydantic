@@ -2,6 +2,7 @@ syntax = "proto3";
 package user;
 import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
+import "google/protobuf/struct.proto";
 import "example/example_proto/common/single.proto";
 
 enum SexType {
@@ -26,6 +27,11 @@ message UserMessage {
   string user_name=8;
   single.DemoMessage demo_message=9; // p2p: {"extra": {"customer_string": "c1", "customer_int": 1}}
 }
+
+message StructMessage {
+  google.protobuf.Struct metadata=1;
+}
+
 
 
 // test map message and bad message

@@ -10,6 +10,7 @@ import google.protobuf.empty_pb2
 import google.protobuf.internal.containers
 import google.protobuf.internal.enum_type_wrapper
 import google.protobuf.message
+import google.protobuf.struct_pb2
 import google.protobuf.timestamp_pb2
 import sys
 import typing
@@ -81,6 +82,22 @@ class UserMessage(google.protobuf.message.Message):
     def ClearField(self, field_name: typing_extensions.Literal["age", b"age", "demo", b"demo", "demo_message", b"demo_message", "height", b"height", "is_adult", b"is_adult", "sex", b"sex", "uid", b"uid", "user_name", b"user_name"]) -> None: ...
 
 global___UserMessage = UserMessage
+
+class StructMessage(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    METADATA_FIELD_NUMBER: builtins.int
+    @property
+    def metadata(self) -> google.protobuf.struct_pb2.Struct: ...
+    def __init__(
+        self,
+        *,
+        metadata: google.protobuf.struct_pb2.Struct | None = ...,
+    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["metadata", b"metadata"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["metadata", b"metadata"]) -> None: ...
+
+global___StructMessage = StructMessage
 
 class MapMessage(google.protobuf.message.Message):
     """test map message and bad message"""

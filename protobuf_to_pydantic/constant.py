@@ -9,7 +9,7 @@ from protobuf_to_pydantic.util import Timedelta
 
 message_name_default_factory_dict: Dict[str, Any] = {
     "Timestamp": datetime.datetime.now,
-    "Struct": Dict[str, Any],
+    "Struct": dict,
     "Duration": Timedelta,
     "Any": AnyMessage,
 }

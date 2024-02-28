@@ -5,9 +5,10 @@ from pydantic import BaseModel, FieldValidationInfo
 from pydantic.fields import ModelPrivateAttr
 
 from protobuf_to_pydantic.grpc_types import AnyMessage
-from protobuf_to_pydantic.types import OneOfTypedDict
 
 from . import rule
+
+from protobuf_to_pydantic.types import OneOfTypedDict  # isort:skip
 
 
 ################

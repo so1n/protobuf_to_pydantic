@@ -426,7 +426,7 @@ class ParseFromPbOption(object):
             if field.type == FieldDescriptor.TYPE_MESSAGE:
                 # Convert some types of Protobuf
                 message_type_name: str = field.message_type.name
-                if message_type_name in ("Duration", "Any", "Timestamp"):
+                if message_type_name in ("Duration", "Any", "Timestamp", "Struct"):
                     type_name = message_type_name.lower()
                 elif message_type_name.endswith("Entry"):
                     type_name = "map"
