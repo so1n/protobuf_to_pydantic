@@ -1,3 +1,4 @@
+import importlib
 import inspect
 import logging
 from datetime import datetime, timedelta
@@ -27,6 +28,7 @@ from protobuf_to_pydantic.grpc_types import (
     FileDescriptorProto,
 )
 from protobuf_to_pydantic.plugin.my_types import ProtobufTypeModel
+from protobuf_to_pydantic.util import camel_to_snake
 
 if TYPE_CHECKING:
     from protobuf_to_pydantic.plugin.config import ConfigModel
@@ -460,7 +462,7 @@ class FileDescriptorProtoToCode(BaseP2C):
         for idx, field in enumerate(desc.field):
             if field.name in PYTHON_RESERVED:
                 continue
-            if field.type == 11 and self._get_protobuf_type_model(field).type_factory is AnyMessage:
+            if field.type == 11 and self._get_protobuf_type_model(field).use_custom_type:
                 use_custom_type = True
 
             _content_tuple: Optional[Tuple[str, str]] = self._message_field_handle(
@@ -526,6 +528,7 @@ class FileDescriptorProtoToCode(BaseP2C):
 
     def _get_protobuf_type_model(self, field: FieldDescriptorProto) -> ProtobufTypeModel:
         type_factory: Optional[Any] = None
+        use_custom_type = False
         # TODO use gen_model.py _message_default_factory_dict_by_type_name
         if field.type in protobuf_desc_python_type_dict:
             type_factory = protobuf_desc_python_type_dict[field.type]
@@ -564,21 +567,32 @@ class FileDescriptorProtoToCode(BaseP2C):
                 py_type_str = "Any"
                 rule_type_str = "any"
                 type_factory = AnyMessage
+                use_custom_type = True
                 self._add_import_code("google.protobuf.any_pb2", "Any")
             elif _type_str == "Struct":
                 py_type_str = "typing.Dict"
                 rule_type_str = "struct"
                 type_factory = dict
+            elif field.type_name.startswith(".google.protobuf"):
+                py_type_str = _type_str
+                rule_type_str = "any"
+                use_custom_type = True
+
+                type_module_name = "google.protobuf." + camel_to_snake(_type_str) + "_pb2"
+                type_factory = getattr(importlib.import_module(type_module_name), _type_str)
+                self._add_import_code(type_module_name, _type_str)
             else:
                 logger.error(f"Not support type {field.type_name}")
                 py_type_str = "Any"
                 rule_type_str = "any"
+                use_custom_type = True
                 type_factory = AnyMessage
                 self._add_import_code("google.protobuf.any_pb2", "Any")
             return ProtobufTypeModel(
                 type_factory=type_factory,
                 rule_type_str=rule_type_str,
                 py_type_str=py_type_str,
+                use_custom_type=use_custom_type,
             )
         else:
             return ProtobufTypeModel(

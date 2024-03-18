@@ -6,6 +6,7 @@ import typing
 from datetime import datetime
 from enum import IntEnum
 
+from google.protobuf.field_mask_pb2 import FieldMask  # type: ignore
 from google.protobuf.message import Message  # type: ignore
 from pydantic import BaseModel, Field
 
@@ -30,6 +31,10 @@ class UserMessage(BaseModel):
 
 class StructMessage(BaseModel):
     metadata: typing.Dict = Field(default_factory=dict)
+
+
+class FieldMaskMessage(BaseModel):
+    field_mask: typing.Optional[FieldMask] = Field(default_factory=FieldMask)
 
 
 class MapMessage(BaseModel):

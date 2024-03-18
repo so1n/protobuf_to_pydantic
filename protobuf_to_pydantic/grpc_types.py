@@ -7,6 +7,7 @@ from google.protobuf.descriptor_pb2 import (  # type: ignore
     FileDescriptorProto,
 )
 from google.protobuf.duration_pb2 import Duration  # type: ignore
+from google.protobuf.field_mask_pb2 import FieldMask  # type: ignore
 from google.protobuf.json_format import MessageToDict  # type: ignore
 from google.protobuf.message import Message  # type: ignore
 

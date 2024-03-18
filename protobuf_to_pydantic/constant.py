@@ -3,6 +3,7 @@ from typing import Any, Dict, Type
 
 from google.protobuf.any_pb2 import Any as AnyMessage
 from google.protobuf.descriptor import FieldDescriptor
+from google.protobuf.field_mask_pb2 import FieldMask
 
 from protobuf_to_pydantic import _pydantic_adapter
 from protobuf_to_pydantic.util import Timedelta
@@ -12,6 +13,7 @@ message_name_default_factory_dict: Dict[str, Any] = {
     "Struct": dict,
     "Duration": Timedelta,
     "Any": AnyMessage,
+    "FieldMask": FieldMask,
 }
 pydantic_field_v1_migration_v2_dict = {
     "min_items": "min_length",
@@ -27,6 +29,7 @@ message_name_type_dict: Dict[str, Any] = {
     "Empty": Any,
     "Duration": Timedelta,
     "Any": AnyMessage,
+    "FieldMask": FieldMask,
 }
 
 if not _pydantic_adapter.is_v1:

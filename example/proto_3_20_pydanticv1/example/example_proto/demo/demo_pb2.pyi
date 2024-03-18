@@ -7,6 +7,7 @@ import collections.abc
 import example.example_proto.common.single_pb2
 import google.protobuf.descriptor
 import google.protobuf.empty_pb2
+import google.protobuf.field_mask_pb2
 import google.protobuf.internal.containers
 import google.protobuf.internal.enum_type_wrapper
 import google.protobuf.message
@@ -98,6 +99,23 @@ class StructMessage(google.protobuf.message.Message):
     def ClearField(self, field_name: typing_extensions.Literal["metadata", b"metadata"]) -> None: ...
 
 global___StructMessage = StructMessage
+
+class FieldMaskMessage(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    FIELD_MASK_FIELD_NUMBER: builtins.int
+    @property
+    def field_mask(self) -> google.protobuf.field_mask_pb2.FieldMask: ...
+    def __init__(
+        self,
+        *,
+        field_mask: google.protobuf.field_mask_pb2.FieldMask | None = ...,
+    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_field_mask", b"_field_mask", "field_mask", b"field_mask"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_field_mask", b"_field_mask", "field_mask", b"field_mask"]) -> None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_field_mask", b"_field_mask"]) -> typing_extensions.Literal["field_mask"] | None: ...
+
+global___FieldMaskMessage = FieldMaskMessage
 
 class MapMessage(google.protobuf.message.Message):
     """test map message and bad message"""

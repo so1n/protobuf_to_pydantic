@@ -7,7 +7,8 @@ from datetime import datetime
 from enum import IntEnum
 from uuid import uuid4
 
-from pydantic import BaseModel, Field
+from google.protobuf.field_mask_pb2 import FieldMask  # type: ignore
+from pydantic import BaseModel, ConfigDict, Field
 from pydantic.types import PaymentCardNumber
 
 from example.gen_text_comment_code import exp_time
@@ -20,6 +21,12 @@ class AfterReferMessage(BaseModel):
 
 class EmptyMessage(BaseModel):
     pass
+
+
+class FieldMaskMessage(BaseModel):
+    model_config = ConfigDict(arbitrary_types_allowed=True)
+
+    field_mask: typing.Optional[FieldMask] = Field(default_factory=FieldMask)
 
 
 class InvoiceItem(BaseModel):
