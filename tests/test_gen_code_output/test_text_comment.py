@@ -116,6 +116,14 @@ class StructMessage(BaseModel):
     metadata: typing.Dict[str, typing.Any] = Field(default_factory=dict)
 """) in self._model_output(demo_pb2.StructMessage)
 
+    def test_field_mask_message(self) -> None:
+        assert format_content("""
+ class FieldMaskMessage(BaseModel):
+    model_config = ConfigDict(arbitrary_types_allowed=True)
+
+    field_mask: typing.Optional[FieldMask] = Field(default_factory=FieldMask)
+""") in self._model_output(demo_pb2.FieldMaskMessage)
+
     def test_map_message(self) -> None:
         content = """
 class SexType(IntEnum):

@@ -1,11 +1,12 @@
 # This is an automatically generated file, please do not change
-# gen by protobuf_to_pydantic[0.0.0](https://github.com/so1n/protobuf_to_pydantic)
+# gen by protobuf_to_pydantic[v0.2.5](https://github.com/so1n/protobuf_to_pydantic)
 # Protobuf Version: 4.24.4
 # Pydantic Version: 1.10.7
 import typing
 from datetime import datetime
 from enum import IntEnum
 
+from google.protobuf.any_pb2 import Any  # type: ignore
 from google.protobuf.message import Message  # type: ignore
 from pydantic import BaseModel, Field
 
@@ -30,6 +31,13 @@ class UserMessage(BaseModel):
 
 class StructMessage(BaseModel):
     metadata: typing.Dict = Field(default_factory=dict)
+
+
+class FieldMaskMessage(BaseModel):
+    class Config:
+        arbitrary_types_allowed = True
+
+    field_mask: typing.Optional[Any] = Field(default_factory=Any)
 
 
 class MapMessage(BaseModel):

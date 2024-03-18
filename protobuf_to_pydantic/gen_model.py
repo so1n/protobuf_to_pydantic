@@ -644,13 +644,27 @@ class M2P(object):
             validators["one_of_validator"] = _pydantic_adapter.model_validator(mode="before", allow_reuse=True)(
                 check_one_of
             )
-        pydantic_model: Type[BaseModel] = create_pydantic_model(
-            annotation_dict,
-            class_name=class_name or descriptor.name,
-            pydantic_validators=validators or None,
-            pydantic_module=self._pydantic_module,
-            pydantic_base=self._get_pydantic_base(pydantic_model_config_dict),
-        )
+        try:
+            pydantic_model: Type[BaseModel] = create_pydantic_model(
+                annotation_dict,
+                class_name=class_name or descriptor.name,
+                pydantic_validators=validators or None,
+                pydantic_module=self._pydantic_module,
+                pydantic_base=self._get_pydantic_base(pydantic_model_config_dict),
+            )
+        except Exception as e:
+            if "arbitrary_types_allowed" in str(e):
+                pydantic_model_config_dict["arbitrary_types_allowed"] = True
+                pydantic_model = create_pydantic_model(
+                    annotation_dict,
+                    class_name=class_name or descriptor.name,
+                    pydantic_validators=validators or None,
+                    pydantic_module=self._pydantic_module,
+                    pydantic_base=self._get_pydantic_base(pydantic_model_config_dict),
+                )
+            else:
+                raise e
+
         CodeRefModel.set_to_model(
             pydantic_model,
             one_of_dict=one_of_dict,

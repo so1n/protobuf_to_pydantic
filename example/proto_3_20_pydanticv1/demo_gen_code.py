@@ -18,6 +18,17 @@ class EmptyMessage(BaseModel):
     pass
 
 
+class GoogleProtobufFieldMaskFieldMask(BaseModel):
+    """Note: The current class does not belong to the package
+    GoogleProtobufFieldMaskFieldMask protobuf path:google/protobuf/field_mask.proto"""
+
+    paths: typing.List[str] = Field(default_factory=list)
+
+
+class FieldMaskMessage(BaseModel):
+    field_mask: typing.Optional[GoogleProtobufFieldMaskFieldMask] = Field()
+
+
 class InvoiceItem(BaseModel):
     name: str = Field(default="")
     amount: int = Field(default=0)

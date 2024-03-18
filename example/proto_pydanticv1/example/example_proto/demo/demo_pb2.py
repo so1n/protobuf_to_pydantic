@@ -15,10 +15,11 @@ _sym_db = _symbol_database.Default()
 from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 from google.protobuf import struct_pb2 as google_dot_protobuf_dot_struct__pb2
+from google.protobuf import field_mask_pb2 as google_dot_protobuf_dot_field__mask__pb2
 from example.proto_pydanticv1.example.example_proto.common import single_pb2 as example_dot_example__proto_dot_common_dot_single__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n%example/example_proto/demo/demo.proto\x12\x04user\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a)example/example_proto/common/single.proto\"\xc3\x01\n\x0bUserMessage\x12\x0b\n\x03uid\x18\x01 \x01(\t\x12\x0b\n\x03\x61ge\x18\x02 \x01(\x05\x12\x0e\n\x06height\x18\x03 \x01(\x02\x12\x1a\n\x03sex\x18\x04 \x01(\x0e\x32\r.user.SexType\x12\x1e\n\x04\x64\x65mo\x18\x06 \x01(\x0e\x32\x10.single.DemoEnum\x12\x10\n\x08is_adult\x18\x07 \x01(\x08\x12\x11\n\tuser_name\x18\x08 \x01(\t\x12)\n\x0c\x64\x65mo_message\x18\t \x01(\x0b\x32\x13.single.DemoMessage\":\n\rStructMessage\x12)\n\x08metadata\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\"\xe4\x01\n\nMapMessage\x12/\n\x08user_map\x18\x01 \x03(\x0b\x32\x1d.user.MapMessage.UserMapEntry\x12\x31\n\tuser_flag\x18\x02 \x03(\x0b\x32\x1e.user.MapMessage.UserFlagEntry\x1a\x41\n\x0cUserMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12 \n\x05value\x18\x02 \x01(\x0b\x32\x11.user.UserMessage:\x02\x38\x01\x1a/\n\rUserFlagEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x08:\x02\x38\x01\"[\n\x0fRepeatedMessage\x12\x10\n\x08str_list\x18\x01 \x03(\t\x12\x10\n\x08int_list\x18\x02 \x03(\x05\x12$\n\tuser_list\x18\x03 \x03(\x0b\x32\x11.user.UserMessage\"\x99\x05\n\rNestedMessage\x12;\n\ruser_list_map\x18\x01 \x03(\x0b\x32$.user.NestedMessage.UserListMapEntry\x12\x32\n\x08user_map\x18\x02 \x03(\x0b\x32 .user.NestedMessage.UserMapEntry\x12\x34\n\x08user_pay\x18\x03 \x01(\x0b\x32\".user.NestedMessage.UserPayMessage\x12\x35\n\x0cinclude_enum\x18\x04 \x01(\x0e\x32\x1f.user.NestedMessage.IncludeEnum\x12?\n\x13not_enable_user_pay\x18\x05 \x01(\x0b\x32\".user.NestedMessage.UserPayMessage\x12%\n\x05\x65mpty\x18\x06 \x01(\x0b\x32\x16.google.protobuf.Empty\x12,\n\x0b\x61\x66ter_refer\x18\x07 \x01(\x0b\x32\x17.user.AfterReferMessage\x1a\\\n\x0eUserPayMessage\x12\x13\n\x0b\x62\x61nk_number\x18\x01 \x01(\t\x12\'\n\x03\x65xp\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x0c\n\x04uuid\x18\x03 \x01(\t\x1aI\n\x10UserListMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12$\n\x05value\x18\x02 \x01(\x0b\x32\x15.user.RepeatedMessage:\x02\x38\x01\x1a@\n\x0cUserMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x1f\n\x05value\x18\x02 \x01(\x0b\x32\x10.user.MapMessage:\x02\x38\x01\")\n\x0bIncludeEnum\x12\x08\n\x04zero\x10\x00\x12\x07\n\x03one\x10\x01\x12\x07\n\x03two\x10\x02\"-\n\x11\x41\x66terReferMessage\x12\x0b\n\x03uid\x18\x01 \x01(\t\x12\x0b\n\x03\x61ge\x18\x02 \x01(\x05\"_\n\x0bInvoiceItem\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0e\n\x06\x61mount\x18\x02 \x01(\x05\x12\x10\n\x08quantity\x18\x03 \x01(\x05\x12 \n\x05items\x18\x04 \x03(\x0b\x32\x11.user.InvoiceItem\"\x0e\n\x0c\x45mptyMessage\"\xeb\x01\n\x0fOptionalMessage\x12\x11\n\x04name\x18\x01 \x01(\tH\x00\x88\x01\x01\x12\x10\n\x03\x61ge\x18\x02 \x01(\x05H\x01\x88\x01\x01\x12$\n\x04item\x18\x03 \x01(\x0b\x32\x11.user.InvoiceItemH\x02\x88\x01\x01\x12\x10\n\x08str_list\x18\x04 \x03(\t\x12\x32\n\x07int_map\x18\x05 \x03(\x0b\x32!.user.OptionalMessage.IntMapEntry\x1a-\n\x0bIntMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\x42\x07\n\x05_nameB\x06\n\x04_ageB\x07\n\x05_item*\x1d\n\x07SexType\x12\x07\n\x03man\x10\x00\x12\t\n\x05women\x10\x01\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n%example/example_proto/demo/demo.proto\x12\x04user\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a google/protobuf/field_mask.proto\x1a)example/example_proto/common/single.proto\"\xc3\x01\n\x0bUserMessage\x12\x0b\n\x03uid\x18\x01 \x01(\t\x12\x0b\n\x03\x61ge\x18\x02 \x01(\x05\x12\x0e\n\x06height\x18\x03 \x01(\x02\x12\x1a\n\x03sex\x18\x04 \x01(\x0e\x32\r.user.SexType\x12\x1e\n\x04\x64\x65mo\x18\x06 \x01(\x0e\x32\x10.single.DemoEnum\x12\x10\n\x08is_adult\x18\x07 \x01(\x08\x12\x11\n\tuser_name\x18\x08 \x01(\t\x12)\n\x0c\x64\x65mo_message\x18\t \x01(\x0b\x32\x13.single.DemoMessage\":\n\rStructMessage\x12)\n\x08metadata\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\"V\n\x10\x46ieldMaskMessage\x12\x33\n\nfield_mask\x18\x64 \x01(\x0b\x32\x1a.google.protobuf.FieldMaskH\x00\x88\x01\x01\x42\r\n\x0b_field_mask\"\xe4\x01\n\nMapMessage\x12/\n\x08user_map\x18\x01 \x03(\x0b\x32\x1d.user.MapMessage.UserMapEntry\x12\x31\n\tuser_flag\x18\x02 \x03(\x0b\x32\x1e.user.MapMessage.UserFlagEntry\x1a\x41\n\x0cUserMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12 \n\x05value\x18\x02 \x01(\x0b\x32\x11.user.UserMessage:\x02\x38\x01\x1a/\n\rUserFlagEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x08:\x02\x38\x01\"[\n\x0fRepeatedMessage\x12\x10\n\x08str_list\x18\x01 \x03(\t\x12\x10\n\x08int_list\x18\x02 \x03(\x05\x12$\n\tuser_list\x18\x03 \x03(\x0b\x32\x11.user.UserMessage\"\x99\x05\n\rNestedMessage\x12;\n\ruser_list_map\x18\x01 \x03(\x0b\x32$.user.NestedMessage.UserListMapEntry\x12\x32\n\x08user_map\x18\x02 \x03(\x0b\x32 .user.NestedMessage.UserMapEntry\x12\x34\n\x08user_pay\x18\x03 \x01(\x0b\x32\".user.NestedMessage.UserPayMessage\x12\x35\n\x0cinclude_enum\x18\x04 \x01(\x0e\x32\x1f.user.NestedMessage.IncludeEnum\x12?\n\x13not_enable_user_pay\x18\x05 \x01(\x0b\x32\".user.NestedMessage.UserPayMessage\x12%\n\x05\x65mpty\x18\x06 \x01(\x0b\x32\x16.google.protobuf.Empty\x12,\n\x0b\x61\x66ter_refer\x18\x07 \x01(\x0b\x32\x17.user.AfterReferMessage\x1a\\\n\x0eUserPayMessage\x12\x13\n\x0b\x62\x61nk_number\x18\x01 \x01(\t\x12\'\n\x03\x65xp\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x0c\n\x04uuid\x18\x03 \x01(\t\x1aI\n\x10UserListMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12$\n\x05value\x18\x02 \x01(\x0b\x32\x15.user.RepeatedMessage:\x02\x38\x01\x1a@\n\x0cUserMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x1f\n\x05value\x18\x02 \x01(\x0b\x32\x10.user.MapMessage:\x02\x38\x01\")\n\x0bIncludeEnum\x12\x08\n\x04zero\x10\x00\x12\x07\n\x03one\x10\x01\x12\x07\n\x03two\x10\x02\"-\n\x11\x41\x66terReferMessage\x12\x0b\n\x03uid\x18\x01 \x01(\t\x12\x0b\n\x03\x61ge\x18\x02 \x01(\x05\"_\n\x0bInvoiceItem\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0e\n\x06\x61mount\x18\x02 \x01(\x05\x12\x10\n\x08quantity\x18\x03 \x01(\x05\x12 \n\x05items\x18\x04 \x03(\x0b\x32\x11.user.InvoiceItem\"\x0e\n\x0c\x45mptyMessage\"\xeb\x01\n\x0fOptionalMessage\x12\x11\n\x04name\x18\x01 \x01(\tH\x00\x88\x01\x01\x12\x10\n\x03\x61ge\x18\x02 \x01(\x05H\x01\x88\x01\x01\x12$\n\x04item\x18\x03 \x01(\x0b\x32\x11.user.InvoiceItemH\x02\x88\x01\x01\x12\x10\n\x08str_list\x18\x04 \x03(\t\x12\x32\n\x07int_map\x18\x05 \x03(\x0b\x32!.user.OptionalMessage.IntMapEntry\x1a-\n\x0bIntMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\x42\x07\n\x05_nameB\x06\n\x04_ageB\x07\n\x05_item*\x1d\n\x07SexType\x12\x07\n\x03man\x10\x00\x12\t\n\x05women\x10\x01\x62\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -35,38 +36,40 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _globals['_NESTEDMESSAGE_USERMAPENTRY']._serialized_options = b'8\001'
   _globals['_OPTIONALMESSAGE_INTMAPENTRY']._options = None
   _globals['_OPTIONALMESSAGE_INTMAPENTRY']._serialized_options = b'8\001'
-  _globals['_SEXTYPE']._serialized_start=1830
-  _globals['_SEXTYPE']._serialized_end=1859
-  _globals['_USERMESSAGE']._serialized_start=183
-  _globals['_USERMESSAGE']._serialized_end=378
-  _globals['_STRUCTMESSAGE']._serialized_start=380
-  _globals['_STRUCTMESSAGE']._serialized_end=438
-  _globals['_MAPMESSAGE']._serialized_start=441
-  _globals['_MAPMESSAGE']._serialized_end=669
-  _globals['_MAPMESSAGE_USERMAPENTRY']._serialized_start=555
-  _globals['_MAPMESSAGE_USERMAPENTRY']._serialized_end=620
-  _globals['_MAPMESSAGE_USERFLAGENTRY']._serialized_start=622
-  _globals['_MAPMESSAGE_USERFLAGENTRY']._serialized_end=669
-  _globals['_REPEATEDMESSAGE']._serialized_start=671
-  _globals['_REPEATEDMESSAGE']._serialized_end=762
-  _globals['_NESTEDMESSAGE']._serialized_start=765
-  _globals['_NESTEDMESSAGE']._serialized_end=1430
-  _globals['_NESTEDMESSAGE_USERPAYMESSAGE']._serialized_start=1154
-  _globals['_NESTEDMESSAGE_USERPAYMESSAGE']._serialized_end=1246
-  _globals['_NESTEDMESSAGE_USERLISTMAPENTRY']._serialized_start=1248
-  _globals['_NESTEDMESSAGE_USERLISTMAPENTRY']._serialized_end=1321
-  _globals['_NESTEDMESSAGE_USERMAPENTRY']._serialized_start=1323
-  _globals['_NESTEDMESSAGE_USERMAPENTRY']._serialized_end=1387
-  _globals['_NESTEDMESSAGE_INCLUDEENUM']._serialized_start=1389
-  _globals['_NESTEDMESSAGE_INCLUDEENUM']._serialized_end=1430
-  _globals['_AFTERREFERMESSAGE']._serialized_start=1432
-  _globals['_AFTERREFERMESSAGE']._serialized_end=1477
-  _globals['_INVOICEITEM']._serialized_start=1479
-  _globals['_INVOICEITEM']._serialized_end=1574
-  _globals['_EMPTYMESSAGE']._serialized_start=1576
-  _globals['_EMPTYMESSAGE']._serialized_end=1590
-  _globals['_OPTIONALMESSAGE']._serialized_start=1593
-  _globals['_OPTIONALMESSAGE']._serialized_end=1828
-  _globals['_OPTIONALMESSAGE_INTMAPENTRY']._serialized_start=1757
-  _globals['_OPTIONALMESSAGE_INTMAPENTRY']._serialized_end=1802
+  _globals['_SEXTYPE']._serialized_start=1952
+  _globals['_SEXTYPE']._serialized_end=1981
+  _globals['_USERMESSAGE']._serialized_start=217
+  _globals['_USERMESSAGE']._serialized_end=412
+  _globals['_STRUCTMESSAGE']._serialized_start=414
+  _globals['_STRUCTMESSAGE']._serialized_end=472
+  _globals['_FIELDMASKMESSAGE']._serialized_start=474
+  _globals['_FIELDMASKMESSAGE']._serialized_end=560
+  _globals['_MAPMESSAGE']._serialized_start=563
+  _globals['_MAPMESSAGE']._serialized_end=791
+  _globals['_MAPMESSAGE_USERMAPENTRY']._serialized_start=677
+  _globals['_MAPMESSAGE_USERMAPENTRY']._serialized_end=742
+  _globals['_MAPMESSAGE_USERFLAGENTRY']._serialized_start=744
+  _globals['_MAPMESSAGE_USERFLAGENTRY']._serialized_end=791
+  _globals['_REPEATEDMESSAGE']._serialized_start=793
+  _globals['_REPEATEDMESSAGE']._serialized_end=884
+  _globals['_NESTEDMESSAGE']._serialized_start=887
+  _globals['_NESTEDMESSAGE']._serialized_end=1552
+  _globals['_NESTEDMESSAGE_USERPAYMESSAGE']._serialized_start=1276
+  _globals['_NESTEDMESSAGE_USERPAYMESSAGE']._serialized_end=1368
+  _globals['_NESTEDMESSAGE_USERLISTMAPENTRY']._serialized_start=1370
+  _globals['_NESTEDMESSAGE_USERLISTMAPENTRY']._serialized_end=1443
+  _globals['_NESTEDMESSAGE_USERMAPENTRY']._serialized_start=1445
+  _globals['_NESTEDMESSAGE_USERMAPENTRY']._serialized_end=1509
+  _globals['_NESTEDMESSAGE_INCLUDEENUM']._serialized_start=1511
+  _globals['_NESTEDMESSAGE_INCLUDEENUM']._serialized_end=1552
+  _globals['_AFTERREFERMESSAGE']._serialized_start=1554
+  _globals['_AFTERREFERMESSAGE']._serialized_end=1599
+  _globals['_INVOICEITEM']._serialized_start=1601
+  _globals['_INVOICEITEM']._serialized_end=1696
+  _globals['_EMPTYMESSAGE']._serialized_start=1698
+  _globals['_EMPTYMESSAGE']._serialized_end=1712
+  _globals['_OPTIONALMESSAGE']._serialized_start=1715
+  _globals['_OPTIONALMESSAGE']._serialized_end=1950
+  _globals['_OPTIONALMESSAGE_INTMAPENTRY']._serialized_start=1879
+  _globals['_OPTIONALMESSAGE_INTMAPENTRY']._serialized_end=1924
 # @@protoc_insertion_point(module_scope)

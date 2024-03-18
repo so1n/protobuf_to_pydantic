@@ -2,6 +2,7 @@ import inspect
 import json
 import logging
 import os
+import re
 import sys
 from contextlib import contextmanager
 from dataclasses import MISSING
@@ -34,6 +35,11 @@ class Timedelta(timedelta):
                 v = v[:-1]
             v = float(v)
         return timedelta(seconds=v)
+
+
+def camel_to_snake(name: str) -> str:
+    s1 = re.sub("(.)([A-Z][a-z]+)", r"\1_\2", name)
+    return re.sub("([a-z0-9])([A-Z])", r"\1_\2", s1).lower()
 
 
 def create_pydantic_model(
