@@ -687,7 +687,7 @@ class NestedMessage(BaseModel):
 
     string_in_map_test: typing.Dict[str, StringTest] = Field(default_factory=dict)
     map_in_map_test: typing.Dict[str, MapTest] = Field(default_factory=dict)
-    user_pay: UserPayMessage = Field()
-    not_enable_user_pay: NotEnableUserPayMessage = Field()
+    user_pay: "NestedMessage.UserPayMessage" = Field()
+    not_enable_user_pay: "NestedMessage.NotEnableUserPayMessage" = Field()
     empty: None = Field()
     after_refer: AfterReferMessage = Field()

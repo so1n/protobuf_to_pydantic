@@ -1,5 +1,5 @@
 # This is an automatically generated file, please do not change
-# gen by protobuf_to_pydantic[0.0.0](https://github.com/so1n/protobuf_to_pydantic)
+# gen by protobuf_to_pydantic[v0.2.5](https://github.com/so1n/protobuf_to_pydantic)
 # Protobuf Version: 3.20.3
 # Pydantic Version: 2.5.3
 import typing
@@ -753,7 +753,7 @@ class NestedMessage(BaseModel):
 
     string_in_map_test: typing.Dict[str, StringTest] = Field(default_factory=dict)
     map_in_map_test: typing.Dict[str, MapTest] = Field(default_factory=dict)
-    user_pay: UserPayMessage = Field()
-    not_enable_user_pay: NotEnableUserPayMessage = Field()
+    user_pay: "NestedMessage.UserPayMessage" = Field()
+    not_enable_user_pay: "NestedMessage.NotEnableUserPayMessage" = Field()
     empty: None = Field()
     after_refer: AfterReferMessage = Field()
