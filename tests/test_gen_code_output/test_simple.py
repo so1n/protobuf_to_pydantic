@@ -73,12 +73,22 @@ class StructMessage(BaseModel):
 """) in self._model_output(demo_pb2.StructMessage)
 
     def test_field_mask_message(self) -> None:
-        assert format_content("""
- class FieldMaskMessage(BaseModel):
+        if is_v1:
+            content = """
+class FieldMaskMessage(BaseModel):
+    class Config:
+        arbitrary_types_allowed = True
+
+    field_mask: typing.Optional[FieldMask] = Field(default_factory=FieldMask)
+"""
+        else:
+            content = """
+class FieldMaskMessage(BaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
     field_mask: typing.Optional[FieldMask] = Field(default_factory=FieldMask)
-""") in self._model_output(demo_pb2.FieldMaskMessage)
+"""
+        assert format_content(content) in self._model_output(demo_pb2.FieldMaskMessage)
 
     def test_map_message(self) -> None:
         assert format_content("""

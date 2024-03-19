@@ -6,7 +6,7 @@ import typing
 from datetime import datetime
 from enum import IntEnum
 
-from google.protobuf.any_pb2 import Any  # type: ignore
+from google.protobuf.field_mask_pb2 import FieldMask  # type: ignore
 from google.protobuf.message import Message  # type: ignore
 from pydantic import BaseModel, Field
 
@@ -37,7 +37,7 @@ class FieldMaskMessage(BaseModel):
     class Config:
         arbitrary_types_allowed = True
 
-    field_mask: typing.Optional[Any] = Field(default_factory=Any)
+    field_mask: typing.Optional[FieldMask] = Field(default_factory=FieldMask)
 
 
 class MapMessage(BaseModel):
@@ -69,9 +69,9 @@ class NestedMessage(BaseModel):
 
     user_list_map: typing.Dict[str, RepeatedMessage] = Field(default_factory=dict)
     user_map: typing.Dict[str, MapMessage] = Field(default_factory=dict)
-    user_pay: UserPayMessage = Field()
-    include_enum: IncludeEnum = Field(default=0)
-    not_enable_user_pay: UserPayMessage = Field()
+    user_pay: "NestedMessage.UserPayMessage" = Field()
+    include_enum: "NestedMessage.IncludeEnum" = Field(default=0)
+    not_enable_user_pay: "NestedMessage.UserPayMessage" = Field()
     empty: None = Field()
     after_refer: AfterReferMessage = Field()
 

@@ -143,7 +143,7 @@ class FileDescriptorProtoToCode(BaseP2C):
                 continue
             skip_validate_rule = nested_message_config_dict.get(nested_message.name, {}).get("skip", False)
             content += self._message(
-                nested_message, scl_prefix, indent + self.code_indent, skip_validate_rule=skip_validate_rule
+                nested_message, desc, scl_prefix, indent + self.code_indent, skip_validate_rule=skip_validate_rule
             )
         return content
 
@@ -151,6 +151,7 @@ class FileDescriptorProtoToCode(BaseP2C):
     def _message_field_handle(
         self,
         desc: DescriptorProto,
+        root_desc: DescriptorProto,
         field: FieldDescriptorProto,
         indent: int,
         nested_message_config_dict: dict,
@@ -187,17 +188,27 @@ class FileDescriptorProtoToCode(BaseP2C):
 
                 message_fd: FileDescriptorProto = self._descriptors.message_to_fd[field.type_name]
                 self._add_other_module_pkg(message_fd, type_str)
+                root_desc_nested_type_name = {i.name for i in root_desc.nested_type}
                 if message == desc:
                     # if self-referencing, need use Python type hints postponed annotations
                     type_str = f'"{type_str}"'
-                elif message_fd.name == self._fd.name and message.name not in {i.name for i in desc.nested_type}:
+                elif message_fd.name == self._fd.name and message.name not in root_desc_nested_type_name:
                     # If the referenced Message is generated later, it needs to be generated in advance
-                    self._content_deque.append(self._message(message, [FileDescriptorProto.ENUM_TYPE_FIELD_NUMBER]))
+                    self._content_deque.append(
+                        self._message(message, root_desc, [FileDescriptorProto.ENUM_TYPE_FIELD_NUMBER])
+                    )
+                elif type_str in root_desc_nested_type_name:
+                    # I don't want to maintain complex dependencies, so I'll just use strings type hints here
+                    type_str = f'"{root_desc.name}.{type_str}"'
         elif field.type == 14:
             # enum handle
             type_str = field.type_name.split(".")[-1]
             field_info_dict["default"] = 0
             rule_type_str = "enum"
+            root_desc_enum_name = {i.name for i in root_desc.enum_type}
+            if type_str in root_desc_enum_name:
+                # I don't want to maintain complex dependencies, so I'll just use strings type hints here
+                type_str = f'"{root_desc.name}.{type_str}"'
             message_fd = self._descriptors.message_to_fd[field.type_name]
             self._add_other_module_pkg(message_fd, type_str)
         elif field.type not in protobuf_desc_python_type_dict:
@@ -442,7 +453,12 @@ class FileDescriptorProtoToCode(BaseP2C):
         return one_of_dict, optional_dict
 
     def _message(
-        self, desc: DescriptorProto, scl_prefix: SourceCodeLocation, indent: int = 0, skip_validate_rule: bool = False
+        self,
+        desc: DescriptorProto,
+        root_desc: DescriptorProto,
+        scl_prefix: SourceCodeLocation,
+        indent: int = 0,
+        skip_validate_rule: bool = False,
     ) -> str:
         self._add_import_code("google.protobuf.message", "Message")
         class_name = desc.name if desc.name not in PYTHON_RESERVED else "_r_" + desc.name
@@ -466,7 +482,13 @@ class FileDescriptorProtoToCode(BaseP2C):
                 use_custom_type = True
 
             _content_tuple: Optional[Tuple[str, str]] = self._message_field_handle(
-                desc, field, indent, nested_message_config_dict, optional_dict, skip_validate_rule=skip_validate_rule
+                desc,
+                root_desc,
+                field,
+                indent,
+                nested_message_config_dict,
+                optional_dict,
+                skip_validate_rule=skip_validate_rule,
             )
             if _content_tuple:
                 class_validate_handler_content += _content_tuple[0]
@@ -606,4 +628,4 @@ class FileDescriptorProtoToCode(BaseP2C):
     def _parse_field_descriptor(self) -> None:
         self._content_deque.append(self._enum(self._fd.enum_type, [FileDescriptorProto.ENUM_TYPE_FIELD_NUMBER]))
         for desc in self._fd.message_type:
-            self._content_deque.append(self._message(desc, [FileDescriptorProto.ENUM_TYPE_FIELD_NUMBER]))
+            self._content_deque.append(self._message(desc, desc, [FileDescriptorProto.ENUM_TYPE_FIELD_NUMBER]))

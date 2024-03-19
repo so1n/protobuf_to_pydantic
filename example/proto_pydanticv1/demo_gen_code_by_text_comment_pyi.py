@@ -7,6 +7,7 @@ from datetime import datetime
 from enum import IntEnum
 from uuid import uuid4
 
+from google.protobuf.field_mask_pb2 import FieldMask  # type: ignore
 from pydantic import BaseModel, Field
 from pydantic.types import PaymentCardNumber
 
@@ -22,15 +23,11 @@ class EmptyMessage(BaseModel):
     pass
 
 
-class GoogleProtobufFieldMaskFieldMask(BaseModel):
-    """Note: The current class does not belong to the package
-    GoogleProtobufFieldMaskFieldMask protobuf path:google/protobuf/field_mask.proto"""
-
-    paths: typing.List[str] = Field(default_factory=list)
-
-
 class FieldMaskMessage(BaseModel):
-    field_mask: typing.Optional[GoogleProtobufFieldMaskFieldMask] = Field()
+    class Config:
+        arbitrary_types_allowed = True
+
+    field_mask: typing.Optional[FieldMask] = Field(default_factory=FieldMask)
 
 
 class InvoiceItem(BaseModel):
