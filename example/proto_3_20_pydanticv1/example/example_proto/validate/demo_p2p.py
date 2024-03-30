@@ -1,5 +1,5 @@
 # This is an automatically generated file, please do not change
-# gen by protobuf_to_pydantic[v0.2.5](https://github.com/so1n/protobuf_to_pydantic)
+# gen by protobuf_to_pydantic[v0.2.6](https://github.com/so1n/protobuf_to_pydantic)
 # Protobuf Version: 3.20.3
 # Pydantic Version: 1.10.7
 import typing
@@ -397,7 +397,6 @@ class MessageIgnoredTest(BaseModel):
 class OneOfTest(BaseModel):
     _one_of_dict = {"OneOfTest.id": {"fields": {"x", "y"}, "required": True}}
     one_of_validator = root_validator(pre=True, allow_reuse=True)(check_one_of)
-
     header: str = Field(default="")
     x: str = Field(default="")
     y: int = Field(default=0)
@@ -406,7 +405,6 @@ class OneOfTest(BaseModel):
 class OneOfNotTest(BaseModel):
     _one_of_dict = {"OneOfNotTest.id": {"fields": {"x", "y"}}}
     one_of_validator = root_validator(pre=True, allow_reuse=True)(check_one_of)
-
     header: str = Field(default="")
     x: str = Field(default="")
     y: int = Field(default=0)

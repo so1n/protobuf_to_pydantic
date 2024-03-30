@@ -1,5 +1,5 @@
 # This is an automatically generated file, please do not change
-# gen by protobuf_to_pydantic[v0.2.5](https://github.com/so1n/protobuf_to_pydantic)
+# gen by protobuf_to_pydantic[v0.2.6](https://github.com/so1n/protobuf_to_pydantic)
 # Protobuf Version: 4.24.4
 # Pydantic Version: 2.5.3
 import typing
@@ -35,7 +35,6 @@ class StructMessage(BaseModel):
 
 class FieldMaskMessage(BaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True)
-
     field_mask: typing.Optional[FieldMask] = Field(default_factory=FieldMask)
 
 

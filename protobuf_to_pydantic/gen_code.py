@@ -362,12 +362,11 @@ class BaseP2C(object):
             if hasattr(value, "annotation"):
                 value_outer_type = value.annotation  # type: ignore
                 value_type = value.annotation  # type: ignore
+            elif _pydantic_adapter.is_v1:
+                value_outer_type = value.annotation  # type: ignore
+                value_type = value.annotation  # type: ignore
             else:
-                if _pydantic_adapter.is_v1:
-                    value_outer_type = value.annotation  # type: ignore
-                    value_type = value.annotation  # type: ignore
-                else:
-                    raise RuntimeError("can not load value type")
+                raise RuntimeError("can not load value type")
             # Type Hint handler
             if value_outer_type.__module__ != "builtins":
                 if inspect.isclass(value_type) and issubclass(value_type, IntEnum):
@@ -461,13 +460,13 @@ class BaseP2C(object):
         if model.__doc__:
             class_str += " " * (indent + self.code_indent) + '"""' + model.__doc__ + '"""\n'
 
-        config_class: str = self._model_config_handle(model, indent=indent + self.code_indent)
-        if config_class:
-            class_str += config_class + "\n"
-
         nested_class_str: str = self._model_nested_handle(model, indent=indent + self.code_indent)
         if nested_class_str:
             class_str += nested_class_str + "\n"
+
+        config_class: str = self._model_config_handle(model, indent=indent + self.code_indent)
+        if config_class:
+            class_str += config_class + "\n"
 
         attribute_str: str = self._model_attribute_handle(model, indent=indent + self.code_indent)
         if attribute_str:
@@ -493,6 +492,7 @@ class BaseP2C(object):
             return None
         pydantic_model_code: str = self._gen_pydantic_model_py_code(model, indent=indent)
         if pydantic_model_code:
+            pydantic_model_code += "\n"
             self._content_deque.append(pydantic_model_code)
         self._create_set.add(model)
 
@@ -568,7 +568,6 @@ class BaseP2C(object):
             field_info = field_info.field_info  # type: ignore[attr-defined]
 
         field_param_dict: Dict[str, Any] = {}
-        field_param_code_list: List[str] = []
         for k, v in field_info.__repr_args__():
             if k not in field_param_set:
                 continue
@@ -592,7 +591,7 @@ class BaseP2C(object):
                         if metadata_key in field_param_dict:
                             continue
                         field_param_dict[metadata_key] = metadata_value
-            elif k == "extra" or k == "json_schema_extra":
+            elif k in ("extra", "json_schema_extra"):
                 if not v:
                     # Ignore cases where the value of extra is empty
                     continue
@@ -601,6 +600,7 @@ class BaseP2C(object):
             else:
                 field_param_dict[k] = v
 
+        field_param_code_list: List[str] = []
         for k, v in field_param_dict.items():
             field_param_code_list.append(f"{k}={self._get_value_code(v)}")
             self._parse_type_to_import_code(v)
@@ -644,7 +644,7 @@ class BaseP2C(object):
                     validator_instance = validator_class.__root_validator_config__
                     func = validator_instance.func
 
-                    if not validator_instance.func.__module__.startswith(customer_validator.__name__):
+                    if not func.__module__.startswith(customer_validator.__name__):
                         continue
                     self._add_import_code("pydantic", "root_validator")
                     self._add_import_code(func.__module__, func.__name__)
