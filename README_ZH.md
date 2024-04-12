@@ -48,10 +48,14 @@ poetry add protobuf-to-pydantic -E mypy-protobuf
 `protobuf-to-pydantic`插件是`protobuf-to-pydantic`推荐的`Pydantic Model`源码生成的方式，它支持的功能是最全的，同时使用起来也非常简单，假设平时是通过如下命令生成Protobuf文件对应的代码:
 ```bash
 python -m grpc_tools.protoc -I. example.proto
+# or
+protoc -I. --python_out=. example.proto
 ```
 那么,在安装`protobuf-to-pydantic`后可以通过`--protobuf-to-pydantic_out`选项使用`protobuf-to-pydantic`的插件，命令如下：
 ```bash
 python -m grpc_tools.protoc -I. --protobuf-to-pydantic_out=. example.proto
+# or
+protoc -I. --protobuf-to-pydantic_out=. example.proto
 ```
 在这个命令中`--protobuf-to-pydantic_out=.`表示使用`prorobuf_to_pydantic`插件，
 且声明了`protobuf-to-pydantic`插件的输出位置为`.`(`.`表示采用`grpc_tools.proto`使用的输出路径)。
@@ -108,6 +112,8 @@ file_name_suffix = "_p2p"
 最终完整的命令如下：
 ```bash
 python -m grpc_tools.protoc -I. --protobuf-to-pydantic_out=config_path=plugin_config.py:. example.proto
+# or
+protoc -I. --protobuf-to-pydantic_out=config_path=plugin_config.py:. example.proto
 ```
 通过这个命令就可以加载对应的配置再运行`protobuf-to-pydantic`插件。
 
@@ -157,7 +163,7 @@ message UserMessage {
   string user_name=6;
 }
 ```
-通过`grpc_tools.protoc`可以生成`Protobuf`文件对应的`Python`代码文件(文件名为`demo_pb2.py`)，代码文件中存在`UserMessage`的相关代码。
+通过`protoc`可以生成`Protobuf`文件对应的`Python`代码文件(文件名为`demo_pb2.py`)，代码文件中存在`UserMessage`的相关代码。
 
 在`Python`运行时可以调用`protobuf-to-pydantic`的`msg_to_pydantic_model`函数读取`demo_pb2`模块中的`UserMessage`对象，并生成生成对应的`Pydantic Model`对象，如下:
 ```Python
@@ -331,6 +337,11 @@ print(
 cd example
 
 python -m grpc_tools.protoc
+  --python_out=./python_example_proto_code \
+  --grpc_python_out=./python_example_proto_code \
+  -I. \
+# or
+protoc
   --python_out=./python_example_proto_code \
   --grpc_python_out=./python_example_proto_code \
   -I. \

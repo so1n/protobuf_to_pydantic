@@ -50,10 +50,14 @@ It supports the most complete functions and is also very simple to use.
 Assume that it is usually generated through the following command Code corresponding to Protobuf file:
 ```bash
 python -m grpc_tools.protoc -I. example.proto
+# or
+protoc -I. --python_out=. example.proto
 ```
 After installing `protobuf-to-pydantic`,can use the `protobuf-to-pydantic` plugin with the `--protobuf-to-pydantic_out` option with the following command:
 ```bash
 python -m grpc_tools.protoc -I. --protobuf-to-pydantic_out=. example.proto
+# or
+protoc -I. --protobuf-to-pydantic_out=. example.proto
 ```
 
 In this command, `--protobuf-to-pydantic_out=.` means using the `prorobuf-to-pydantic` plug-in,
@@ -113,6 +117,8 @@ where the left side of `:` indicates that the configuration file path to be read
 The final complete command is as follows：
 ```bash
 python -m grpc_tools.protoc -I. --protobuf-to-pydantic_out=config_path=plugin_config.py:. example.proto
+# or
+protoc -I. --protobuf-to-pydantic_out=config_path=plugin_config.py:. example.proto
 ```
 Through this command, can load the corresponding configuration and run the `protobuf-to-pydantic` plug-in。
 
@@ -163,7 +169,7 @@ message UserMessage {
   string user_name=6;
 }
 ```
-`grpc_tools.protoc` can be used to generate the Python code file corresponding to the `Protobuf` file (the file name is `demo_pb2.py`), and the code related to the `UserMessage` is stored in the code file.
+`protoc` can be used to generate the Python code file corresponding to the `Protobuf` file (the file name is `demo_pb2.py`), and the code related to the `UserMessage` is stored in the code file.
 
 At `Python` runtime, The func `msg_to_pydantic_model` can be called to read the `UserMessage` object from the `demo_pb2` module and generate the corresponding `Pydantic Model` object as follows:
 ```Python
@@ -344,6 +350,11 @@ The Protobuf file is stored in the `example/example_proto` folder, and then run 
 cd example
 
 python -m grpc_tools.protoc
+  --python_out=./python_example_proto_code \
+  --grpc_python_out=./python_example_proto_code \
+  -I. \
+# or
+protoc
   --python_out=./python_example_proto_code \
   --grpc_python_out=./python_example_proto_code \
   -I. \
