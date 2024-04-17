@@ -110,29 +110,27 @@ class UserMessage(BaseModel):
 """
         assert format_content(content) in self._model_output(demo_pb2.UserMessage)
 
-    def test_struct_message(self) -> None:
-        assert format_content("""
-class StructMessage(BaseModel):
-    metadata: typing.Dict[str, typing.Any] = Field(default_factory=dict)
-""") in self._model_output(demo_pb2.StructMessage)
-
-    def test_field_mask_message(self) -> None:
+    def test_other_message(self) -> None:
         if is_v1:
             content = """
-        class FieldMaskMessage(BaseModel):
+        class OtherMessage(BaseModel):
             class Config:
                 arbitrary_types_allowed = True
 
+            metadata: typing.Dict[str, typing.Any] = Field(default_factory=dict)
+            double_value: DoubleValue = Field(default_factory=DoubleValue)
             field_mask: typing.Optional[FieldMask] = Field(default_factory=FieldMask)
         """
         else:
             content = """
-class FieldMaskMessage(BaseModel):
+class OtherMessage(BaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
+    metadata: typing.Dict[str, typing.Any] = Field(default_factory=dict)
+    double_value: DoubleValue = Field(default_factory=DoubleValue)
     field_mask: typing.Optional[FieldMask] = Field(default_factory=FieldMask)
 """
-        assert format_content(content) in self._model_output(demo_pb2.FieldMaskMessage)
+        assert format_content(content) in self._model_output(demo_pb2.OtherMessage)
 
     def test_map_message(self) -> None:
         content = """

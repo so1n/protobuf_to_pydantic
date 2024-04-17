@@ -7,6 +7,7 @@ from datetime import datetime
 from enum import IntEnum
 
 from google.protobuf.field_mask_pb2 import FieldMask  # type: ignore
+from google.protobuf.wrappers_pb2 import DoubleValue  # type: ignore
 from pydantic import BaseModel, ConfigDict, Field
 
 
@@ -17,12 +18,6 @@ class AfterReferMessage(BaseModel):
 
 class EmptyMessage(BaseModel):
     pass
-
-
-class FieldMaskMessage(BaseModel):
-    model_config = ConfigDict(arbitrary_types_allowed=True)
-
-    field_mask: typing.Optional[FieldMask] = Field(default_factory=FieldMask)
 
 
 class InvoiceItem(BaseModel):
@@ -105,5 +100,9 @@ class OptionalMessage(BaseModel):
     int_map: typing.Dict[str, int] = Field(default_factory=dict)
 
 
-class StructMessage(BaseModel):
+class OtherMessage(BaseModel):
+    model_config = ConfigDict(arbitrary_types_allowed=True)
+
     metadata: typing.Dict[str, typing.Any] = Field(default_factory=dict)
+    double_value: DoubleValue = Field(default_factory=DoubleValue)
+    field_mask: typing.Optional[FieldMask] = Field(default_factory=FieldMask)

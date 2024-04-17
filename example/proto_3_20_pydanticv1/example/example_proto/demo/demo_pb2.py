@@ -16,6 +16,7 @@ from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 from google.protobuf import struct_pb2 as google_dot_protobuf_dot_struct__pb2
 from google.protobuf import field_mask_pb2 as google_dot_protobuf_dot_field__mask__pb2
+from google.protobuf import wrappers_pb2 as google_dot_protobuf_dot_wrappers__pb2
 from example.proto_3_20_pydanticv1.example.example_proto.common import single_pb2 as example_dot_example__proto_dot_common_dot_single__pb2
 
 
@@ -25,9 +26,9 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n%example/example_proto/demo/demo.proto\x12\x04user\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a google/protobuf/field_mask.proto\x1a)example/example_proto/common/single.proto\"\xc3\x01\n\x0bUserMessage\x12\x0b\n\x03uid\x18\x01 \x01(\t\x12\x0b\n\x03\x61ge\x18\x02 \x01(\x05\x12\x0e\n\x06height\x18\x03 \x01(\x02\x12\x1a\n\x03sex\x18\x04 \x01(\x0e\x32\r.user.SexType\x12\x1e\n\x04\x64\x65mo\x18\x06 \x01(\x0e\x32\x10.single.DemoEnum\x12\x10\n\x08is_adult\x18\x07 \x01(\x08\x12\x11\n\tuser_name\x18\x08 \x01(\t\x12)\n\x0c\x64\x65mo_message\x18\t \x01(\x0b\x32\x13.single.DemoMessage\":\n\rStructMessage\x12)\n\x08metadata\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\"V\n\x10\x46ieldMaskMessage\x12\x33\n\nfield_mask\x18\x64 \x01(\x0b\x32\x1a.google.protobuf.FieldMaskH\x00\x88\x01\x01\x42\r\n\x0b_field_mask\"\xe4\x01\n\nMapMessage\x12/\n\x08user_map\x18\x01 \x03(\x0b\x32\x1d.user.MapMessage.UserMapEntry\x12\x31\n\tuser_flag\x18\x02 \x03(\x0b\x32\x1e.user.MapMessage.UserFlagEntry\x1a\x41\n\x0cUserMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12 \n\x05value\x18\x02 \x01(\x0b\x32\x11.user.UserMessage:\x02\x38\x01\x1a/\n\rUserFlagEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x08:\x02\x38\x01\"[\n\x0fRepeatedMessage\x12\x10\n\x08str_list\x18\x01 \x03(\t\x12\x10\n\x08int_list\x18\x02 \x03(\x05\x12$\n\tuser_list\x18\x03 \x03(\x0b\x32\x11.user.UserMessage\"\x99\x05\n\rNestedMessage\x12;\n\ruser_list_map\x18\x01 \x03(\x0b\x32$.user.NestedMessage.UserListMapEntry\x12\x32\n\x08user_map\x18\x02 \x03(\x0b\x32 .user.NestedMessage.UserMapEntry\x12\x34\n\x08user_pay\x18\x03 \x01(\x0b\x32\".user.NestedMessage.UserPayMessage\x12\x35\n\x0cinclude_enum\x18\x04 \x01(\x0e\x32\x1f.user.NestedMessage.IncludeEnum\x12?\n\x13not_enable_user_pay\x18\x05 \x01(\x0b\x32\".user.NestedMessage.UserPayMessage\x12%\n\x05\x65mpty\x18\x06 \x01(\x0b\x32\x16.google.protobuf.Empty\x12,\n\x0b\x61\x66ter_refer\x18\x07 \x01(\x0b\x32\x17.user.AfterReferMessage\x1a\\\n\x0eUserPayMessage\x12\x13\n\x0b\x62\x61nk_number\x18\x01 \x01(\t\x12\'\n\x03\x65xp\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x0c\n\x04uuid\x18\x03 \x01(\t\x1aI\n\x10UserListMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12$\n\x05value\x18\x02 \x01(\x0b\x32\x15.user.RepeatedMessage:\x02\x38\x01\x1a@\n\x0cUserMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x1f\n\x05value\x18\x02 \x01(\x0b\x32\x10.user.MapMessage:\x02\x38\x01\")\n\x0bIncludeEnum\x12\x08\n\x04zero\x10\x00\x12\x07\n\x03one\x10\x01\x12\x07\n\x03two\x10\x02\"-\n\x11\x41\x66terReferMessage\x12\x0b\n\x03uid\x18\x01 \x01(\t\x12\x0b\n\x03\x61ge\x18\x02 \x01(\x05\"_\n\x0bInvoiceItem\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0e\n\x06\x61mount\x18\x02 \x01(\x05\x12\x10\n\x08quantity\x18\x03 \x01(\x05\x12 \n\x05items\x18\x04 \x03(\x0b\x32\x11.user.InvoiceItem\"\x0e\n\x0c\x45mptyMessage\"\xeb\x01\n\x0fOptionalMessage\x12\x11\n\x04name\x18\x01 \x01(\tH\x00\x88\x01\x01\x12\x10\n\x03\x61ge\x18\x02 \x01(\x05H\x01\x88\x01\x01\x12$\n\x04item\x18\x03 \x01(\x0b\x32\x11.user.InvoiceItemH\x02\x88\x01\x01\x12\x10\n\x08str_list\x18\x04 \x03(\t\x12\x32\n\x07int_map\x18\x05 \x03(\x0b\x32!.user.OptionalMessage.IntMapEntry\x1a-\n\x0bIntMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\x42\x07\n\x05_nameB\x06\n\x04_ageB\x07\n\x05_item*\x1d\n\x07SexType\x12\x07\n\x03man\x10\x00\x12\t\n\x05women\x10\x01\x62\x06proto3'
+  serialized_pb=b'\n%example/example_proto/demo/demo.proto\x12\x04user\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a google/protobuf/field_mask.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a)example/example_proto/common/single.proto\"\xc3\x01\n\x0bUserMessage\x12\x0b\n\x03uid\x18\x01 \x01(\t\x12\x0b\n\x03\x61ge\x18\x02 \x01(\x05\x12\x0e\n\x06height\x18\x03 \x01(\x02\x12\x1a\n\x03sex\x18\x04 \x01(\x0e\x32\r.user.SexType\x12\x1e\n\x04\x64\x65mo\x18\x06 \x01(\x0e\x32\x10.single.DemoEnum\x12\x10\n\x08is_adult\x18\x07 \x01(\x08\x12\x11\n\tuser_name\x18\x08 \x01(\t\x12)\n\x0c\x64\x65mo_message\x18\t \x01(\x0b\x32\x13.single.DemoMessage\"\xb1\x01\n\x0cOtherMessage\x12)\n\x08metadata\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\x12\x32\n\x0c\x64ouble_value\x18\x02 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12\x33\n\nfield_mask\x18\x64 \x01(\x0b\x32\x1a.google.protobuf.FieldMaskH\x00\x88\x01\x01\x42\r\n\x0b_field_mask\"\xe4\x01\n\nMapMessage\x12/\n\x08user_map\x18\x01 \x03(\x0b\x32\x1d.user.MapMessage.UserMapEntry\x12\x31\n\tuser_flag\x18\x02 \x03(\x0b\x32\x1e.user.MapMessage.UserFlagEntry\x1a\x41\n\x0cUserMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12 \n\x05value\x18\x02 \x01(\x0b\x32\x11.user.UserMessage:\x02\x38\x01\x1a/\n\rUserFlagEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x08:\x02\x38\x01\"[\n\x0fRepeatedMessage\x12\x10\n\x08str_list\x18\x01 \x03(\t\x12\x10\n\x08int_list\x18\x02 \x03(\x05\x12$\n\tuser_list\x18\x03 \x03(\x0b\x32\x11.user.UserMessage\"\x99\x05\n\rNestedMessage\x12;\n\ruser_list_map\x18\x01 \x03(\x0b\x32$.user.NestedMessage.UserListMapEntry\x12\x32\n\x08user_map\x18\x02 \x03(\x0b\x32 .user.NestedMessage.UserMapEntry\x12\x34\n\x08user_pay\x18\x03 \x01(\x0b\x32\".user.NestedMessage.UserPayMessage\x12\x35\n\x0cinclude_enum\x18\x04 \x01(\x0e\x32\x1f.user.NestedMessage.IncludeEnum\x12?\n\x13not_enable_user_pay\x18\x05 \x01(\x0b\x32\".user.NestedMessage.UserPayMessage\x12%\n\x05\x65mpty\x18\x06 \x01(\x0b\x32\x16.google.protobuf.Empty\x12,\n\x0b\x61\x66ter_refer\x18\x07 \x01(\x0b\x32\x17.user.AfterReferMessage\x1a\\\n\x0eUserPayMessage\x12\x13\n\x0b\x62\x61nk_number\x18\x01 \x01(\t\x12\'\n\x03\x65xp\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x0c\n\x04uuid\x18\x03 \x01(\t\x1aI\n\x10UserListMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12$\n\x05value\x18\x02 \x01(\x0b\x32\x15.user.RepeatedMessage:\x02\x38\x01\x1a@\n\x0cUserMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x1f\n\x05value\x18\x02 \x01(\x0b\x32\x10.user.MapMessage:\x02\x38\x01\")\n\x0bIncludeEnum\x12\x08\n\x04zero\x10\x00\x12\x07\n\x03one\x10\x01\x12\x07\n\x03two\x10\x02\"-\n\x11\x41\x66terReferMessage\x12\x0b\n\x03uid\x18\x01 \x01(\t\x12\x0b\n\x03\x61ge\x18\x02 \x01(\x05\"_\n\x0bInvoiceItem\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0e\n\x06\x61mount\x18\x02 \x01(\x05\x12\x10\n\x08quantity\x18\x03 \x01(\x05\x12 \n\x05items\x18\x04 \x03(\x0b\x32\x11.user.InvoiceItem\"\x0e\n\x0c\x45mptyMessage\"\xeb\x01\n\x0fOptionalMessage\x12\x11\n\x04name\x18\x01 \x01(\tH\x00\x88\x01\x01\x12\x10\n\x03\x61ge\x18\x02 \x01(\x05H\x01\x88\x01\x01\x12$\n\x04item\x18\x03 \x01(\x0b\x32\x11.user.InvoiceItemH\x02\x88\x01\x01\x12\x10\n\x08str_list\x18\x04 \x03(\t\x12\x32\n\x07int_map\x18\x05 \x03(\x0b\x32!.user.OptionalMessage.IntMapEntry\x1a-\n\x0bIntMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\x42\x07\n\x05_nameB\x06\n\x04_ageB\x07\n\x05_item*\x1d\n\x07SexType\x12\x07\n\x03man\x10\x00\x12\t\n\x05women\x10\x01\x62\x06proto3'
   ,
-  dependencies=[google_dot_protobuf_dot_empty__pb2.DESCRIPTOR,google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,google_dot_protobuf_dot_struct__pb2.DESCRIPTOR,google_dot_protobuf_dot_field__mask__pb2.DESCRIPTOR,example_dot_example__proto_dot_common_dot_single__pb2.DESCRIPTOR,])
+  dependencies=[google_dot_protobuf_dot_empty__pb2.DESCRIPTOR,google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,google_dot_protobuf_dot_struct__pb2.DESCRIPTOR,google_dot_protobuf_dot_field__mask__pb2.DESCRIPTOR,google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,example_dot_example__proto_dot_common_dot_single__pb2.DESCRIPTOR,])
 
 _SEXTYPE = _descriptor.EnumDescriptor(
   name='SexType',
@@ -49,8 +50,8 @@ _SEXTYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1952,
-  serialized_end=1981,
+  serialized_start=2016,
+  serialized_end=2045,
 )
 _sym_db.RegisterEnumDescriptor(_SEXTYPE)
 
@@ -84,8 +85,8 @@ _NESTEDMESSAGE_INCLUDEENUM = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1511,
-  serialized_end=1552,
+  serialized_start=1575,
+  serialized_end=1616,
 )
 _sym_db.RegisterEnumDescriptor(_NESTEDMESSAGE_INCLUDEENUM)
 
@@ -166,53 +167,35 @@ _USERMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=217,
-  serialized_end=412,
+  serialized_start=249,
+  serialized_end=444,
 )
 
 
-_STRUCTMESSAGE = _descriptor.Descriptor(
-  name='StructMessage',
-  full_name='user.StructMessage',
+_OTHERMESSAGE = _descriptor.Descriptor(
+  name='OtherMessage',
+  full_name='user.OtherMessage',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='metadata', full_name='user.StructMessage.metadata', index=0,
+      name='metadata', full_name='user.OtherMessage.metadata', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=414,
-  serialized_end=472,
-)
-
-
-_FIELDMASKMESSAGE = _descriptor.Descriptor(
-  name='FieldMaskMessage',
-  full_name='user.FieldMaskMessage',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
     _descriptor.FieldDescriptor(
-      name='field_mask', full_name='user.FieldMaskMessage.field_mask', index=0,
+      name='double_value', full_name='user.OtherMessage.double_value', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='field_mask', full_name='user.OtherMessage.field_mask', index=2,
       number=100, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -230,13 +213,13 @@ _FIELDMASKMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
     _descriptor.OneofDescriptor(
-      name='_field_mask', full_name='user.FieldMaskMessage._field_mask',
+      name='_field_mask', full_name='user.OtherMessage._field_mask',
       index=0, containing_type=None,
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=474,
-  serialized_end=560,
+  serialized_start=447,
+  serialized_end=624,
 )
 
 
@@ -274,8 +257,8 @@ _MAPMESSAGE_USERMAPENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=677,
-  serialized_end=742,
+  serialized_start=741,
+  serialized_end=806,
 )
 
 _MAPMESSAGE_USERFLAGENTRY = _descriptor.Descriptor(
@@ -312,8 +295,8 @@ _MAPMESSAGE_USERFLAGENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=744,
-  serialized_end=791,
+  serialized_start=808,
+  serialized_end=855,
 )
 
 _MAPMESSAGE = _descriptor.Descriptor(
@@ -350,8 +333,8 @@ _MAPMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=563,
-  serialized_end=791,
+  serialized_start=627,
+  serialized_end=855,
 )
 
 
@@ -396,8 +379,8 @@ _REPEATEDMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=793,
-  serialized_end=884,
+  serialized_start=857,
+  serialized_end=948,
 )
 
 
@@ -442,8 +425,8 @@ _NESTEDMESSAGE_USERPAYMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1276,
-  serialized_end=1368,
+  serialized_start=1340,
+  serialized_end=1432,
 )
 
 _NESTEDMESSAGE_USERLISTMAPENTRY = _descriptor.Descriptor(
@@ -480,8 +463,8 @@ _NESTEDMESSAGE_USERLISTMAPENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1370,
-  serialized_end=1443,
+  serialized_start=1434,
+  serialized_end=1507,
 )
 
 _NESTEDMESSAGE_USERMAPENTRY = _descriptor.Descriptor(
@@ -518,8 +501,8 @@ _NESTEDMESSAGE_USERMAPENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1445,
-  serialized_end=1509,
+  serialized_start=1509,
+  serialized_end=1573,
 )
 
 _NESTEDMESSAGE = _descriptor.Descriptor(
@@ -592,8 +575,8 @@ _NESTEDMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=887,
-  serialized_end=1552,
+  serialized_start=951,
+  serialized_end=1616,
 )
 
 
@@ -631,8 +614,8 @@ _AFTERREFERMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1554,
-  serialized_end=1599,
+  serialized_start=1618,
+  serialized_end=1663,
 )
 
 
@@ -684,8 +667,8 @@ _INVOICEITEM = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1601,
-  serialized_end=1696,
+  serialized_start=1665,
+  serialized_end=1760,
 )
 
 
@@ -709,8 +692,8 @@ _EMPTYMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1698,
-  serialized_end=1712,
+  serialized_start=1762,
+  serialized_end=1776,
 )
 
 
@@ -748,8 +731,8 @@ _OPTIONALMESSAGE_INTMAPENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1879,
-  serialized_end=1924,
+  serialized_start=1943,
+  serialized_end=1988,
 )
 
 _OPTIONALMESSAGE = _descriptor.Descriptor(
@@ -822,18 +805,19 @@ _OPTIONALMESSAGE = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=1715,
-  serialized_end=1950,
+  serialized_start=1779,
+  serialized_end=2014,
 )
 
 _USERMESSAGE.fields_by_name['sex'].enum_type = _SEXTYPE
 _USERMESSAGE.fields_by_name['demo'].enum_type = example_dot_example__proto_dot_common_dot_single__pb2._DEMOENUM
 _USERMESSAGE.fields_by_name['demo_message'].message_type = example_dot_example__proto_dot_common_dot_single__pb2._DEMOMESSAGE
-_STRUCTMESSAGE.fields_by_name['metadata'].message_type = google_dot_protobuf_dot_struct__pb2._STRUCT
-_FIELDMASKMESSAGE.fields_by_name['field_mask'].message_type = google_dot_protobuf_dot_field__mask__pb2._FIELDMASK
-_FIELDMASKMESSAGE.oneofs_by_name['_field_mask'].fields.append(
-  _FIELDMASKMESSAGE.fields_by_name['field_mask'])
-_FIELDMASKMESSAGE.fields_by_name['field_mask'].containing_oneof = _FIELDMASKMESSAGE.oneofs_by_name['_field_mask']
+_OTHERMESSAGE.fields_by_name['metadata'].message_type = google_dot_protobuf_dot_struct__pb2._STRUCT
+_OTHERMESSAGE.fields_by_name['double_value'].message_type = google_dot_protobuf_dot_wrappers__pb2._DOUBLEVALUE
+_OTHERMESSAGE.fields_by_name['field_mask'].message_type = google_dot_protobuf_dot_field__mask__pb2._FIELDMASK
+_OTHERMESSAGE.oneofs_by_name['_field_mask'].fields.append(
+  _OTHERMESSAGE.fields_by_name['field_mask'])
+_OTHERMESSAGE.fields_by_name['field_mask'].containing_oneof = _OTHERMESSAGE.oneofs_by_name['_field_mask']
 _MAPMESSAGE_USERMAPENTRY.fields_by_name['value'].message_type = _USERMESSAGE
 _MAPMESSAGE_USERMAPENTRY.containing_type = _MAPMESSAGE
 _MAPMESSAGE_USERFLAGENTRY.containing_type = _MAPMESSAGE
@@ -868,8 +852,7 @@ _OPTIONALMESSAGE.oneofs_by_name['_item'].fields.append(
   _OPTIONALMESSAGE.fields_by_name['item'])
 _OPTIONALMESSAGE.fields_by_name['item'].containing_oneof = _OPTIONALMESSAGE.oneofs_by_name['_item']
 DESCRIPTOR.message_types_by_name['UserMessage'] = _USERMESSAGE
-DESCRIPTOR.message_types_by_name['StructMessage'] = _STRUCTMESSAGE
-DESCRIPTOR.message_types_by_name['FieldMaskMessage'] = _FIELDMASKMESSAGE
+DESCRIPTOR.message_types_by_name['OtherMessage'] = _OTHERMESSAGE
 DESCRIPTOR.message_types_by_name['MapMessage'] = _MAPMESSAGE
 DESCRIPTOR.message_types_by_name['RepeatedMessage'] = _REPEATEDMESSAGE
 DESCRIPTOR.message_types_by_name['NestedMessage'] = _NESTEDMESSAGE
@@ -887,19 +870,12 @@ UserMessage = _reflection.GeneratedProtocolMessageType('UserMessage', (_message.
   })
 _sym_db.RegisterMessage(UserMessage)
 
-StructMessage = _reflection.GeneratedProtocolMessageType('StructMessage', (_message.Message,), {
-  'DESCRIPTOR' : _STRUCTMESSAGE,
+OtherMessage = _reflection.GeneratedProtocolMessageType('OtherMessage', (_message.Message,), {
+  'DESCRIPTOR' : _OTHERMESSAGE,
   '__module__' : 'example.example_proto.demo.demo_pb2'
-  # @@protoc_insertion_point(class_scope:user.StructMessage)
+  # @@protoc_insertion_point(class_scope:user.OtherMessage)
   })
-_sym_db.RegisterMessage(StructMessage)
-
-FieldMaskMessage = _reflection.GeneratedProtocolMessageType('FieldMaskMessage', (_message.Message,), {
-  'DESCRIPTOR' : _FIELDMASKMESSAGE,
-  '__module__' : 'example.example_proto.demo.demo_pb2'
-  # @@protoc_insertion_point(class_scope:user.FieldMaskMessage)
-  })
-_sym_db.RegisterMessage(FieldMaskMessage)
+_sym_db.RegisterMessage(OtherMessage)
 
 MapMessage = _reflection.GeneratedProtocolMessageType('MapMessage', (_message.Message,), {
 
