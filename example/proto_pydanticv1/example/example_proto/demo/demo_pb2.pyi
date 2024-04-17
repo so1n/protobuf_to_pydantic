@@ -13,6 +13,7 @@ import google.protobuf.internal.enum_type_wrapper
 import google.protobuf.message
 import google.protobuf.struct_pb2
 import google.protobuf.timestamp_pb2
+import google.protobuf.wrappers_pb2
 import sys
 import typing
 
@@ -84,38 +85,30 @@ class UserMessage(google.protobuf.message.Message):
 
 global___UserMessage = UserMessage
 
-class StructMessage(google.protobuf.message.Message):
+class OtherMessage(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
     METADATA_FIELD_NUMBER: builtins.int
+    DOUBLE_VALUE_FIELD_NUMBER: builtins.int
+    FIELD_MASK_FIELD_NUMBER: builtins.int
     @property
     def metadata(self) -> google.protobuf.struct_pb2.Struct: ...
-    def __init__(
-        self,
-        *,
-        metadata: google.protobuf.struct_pb2.Struct | None = ...,
-    ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["metadata", b"metadata"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["metadata", b"metadata"]) -> None: ...
-
-global___StructMessage = StructMessage
-
-class FieldMaskMessage(google.protobuf.message.Message):
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor
-
-    FIELD_MASK_FIELD_NUMBER: builtins.int
+    @property
+    def double_value(self) -> google.protobuf.wrappers_pb2.DoubleValue: ...
     @property
     def field_mask(self) -> google.protobuf.field_mask_pb2.FieldMask: ...
     def __init__(
         self,
         *,
+        metadata: google.protobuf.struct_pb2.Struct | None = ...,
+        double_value: google.protobuf.wrappers_pb2.DoubleValue | None = ...,
         field_mask: google.protobuf.field_mask_pb2.FieldMask | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["_field_mask", b"_field_mask", "field_mask", b"field_mask"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["_field_mask", b"_field_mask", "field_mask", b"field_mask"]) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_field_mask", b"_field_mask", "double_value", b"double_value", "field_mask", b"field_mask", "metadata", b"metadata"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_field_mask", b"_field_mask", "double_value", b"double_value", "field_mask", b"field_mask", "metadata", b"metadata"]) -> None: ...
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_field_mask", b"_field_mask"]) -> typing_extensions.Literal["field_mask"] | None: ...
 
-global___FieldMaskMessage = FieldMaskMessage
+global___OtherMessage = OtherMessage
 
 class MapMessage(google.protobuf.message.Message):
     """test map message and bad message"""

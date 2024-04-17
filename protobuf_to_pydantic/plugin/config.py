@@ -1,5 +1,5 @@
 from collections import deque
-from typing import Any, Deque, List, Set, Type, TypeVar
+from typing import Any, Deque, Dict, List, Set, Type, TypeVar
 
 from pydantic import BaseModel, Field
 
@@ -8,6 +8,15 @@ from protobuf_to_pydantic.desc_template import DescTemplate
 from protobuf_to_pydantic.plugin.field_desc_proto_to_code import FileDescriptorProtoToCode
 
 ConfigT = TypeVar("ConfigT", bound="ConfigModel")
+
+
+class ProtobufTypeConfigModel(BaseModel):
+    module_name: str = Field(description="Python module name")
+    message_name: str = Field(description="Python message name")
+    is_custom: bool = Field(
+        default=False,
+        description="Whether it is a custom message, if true, model config arbitrary_types_allowed = True",
+    )
 
 
 class ConfigModel(BaseModel):
@@ -36,7 +45,36 @@ class ConfigModel(BaseModel):
         ),
     )
     file_descriptor_proto_to_code: Type[FileDescriptorProtoToCode] = Field(default=FileDescriptorProtoToCode)
+    protobuf_type_config: Dict[str, ProtobufTypeConfigModel] = Field(
+        default_factory=dict,
+        description="""
+        Fixed the issue that some protobuf message names are inconsistent with Python module names
 
+        use template: {"{protobuf message name}": ("{python module name}", "{python message name}")}
+
+        The configuration of the protobuf type, for example protobuf:
+        ```protobuf
+        syntax = "proto3";
+
+        import "google/protobuf/wrappers.proto";
+
+        message CalculatedValue {
+            google.protobuf.DoubleValue myValue = 1;
+        }
+        ```
+        In order for `protobuf_to_pydantic` to find google.protobuf.DoubleValue module - google/protobuf/wrappers.proto,
+        need to enter the configuration information:
+        ```Python
+        {
+            "google.protobuf.DoubleValue": ProtobufTypeConfigModel(
+                module_name="builtins",
+                message_name="float",
+                is_custom=False
+            ),
+        }
+        ```
+        """,
+    )
     desc_template_instance: DescTemplate = Field(
         default_factory=lambda: DescTemplate({}, ""),
         description="This variable does not support configuration and will be overwritten even if configured",

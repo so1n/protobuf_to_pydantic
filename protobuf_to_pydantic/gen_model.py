@@ -1,5 +1,6 @@
 import dataclasses
 import datetime
+import importlib
 import inspect
 import warnings
 from dataclasses import MISSING
@@ -334,7 +335,11 @@ class M2P(object):
     # util method #
     ###############
     def _get_field_info_dict_by_full_name(self, full_name: str) -> Optional["FieldInfoTypedDict"]:
-        message_name, *key_list = full_name.split(".")[1:]  # ignore package name
+        split_full_name = full_name.split(".")
+        if len(split_full_name) == 2:
+            message_name, *key_list = split_full_name
+        else:
+            message_name, *key_list = split_full_name[1:]  # ignore package name
         if message_name not in self._field_doc_dict:
             return None
         desc_dict: "DescFromOptionTypedDict" = self._field_doc_dict[message_name]
@@ -453,6 +458,12 @@ class M2P(object):
 
             field_dataclass.field_type = Dict[tuple(dict_type_param_list)]  # type: ignore
             field_dataclass.field_default_factory = dict
+        elif protobuf_field.message_type.file.name.startswith("google/protobuf/"):
+            module_name = protobuf_field.message_type.file.name.split(".")[0].replace("/", ".") + "_pb2"
+            message_name = protobuf_field.message_type.name
+            type_factory = getattr(importlib.import_module(module_name), message_name)
+            field_dataclass.field_type = type_factory
+            field_dataclass.field_default_factory = type_factory
         else:
             # support google.protobuf.Message
             if protobuf_field.message_type.full_name in field_dataclass.nested_message_dict:

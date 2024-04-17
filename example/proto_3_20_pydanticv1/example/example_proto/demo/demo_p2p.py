@@ -8,6 +8,7 @@ from enum import IntEnum
 
 from google.protobuf.field_mask_pb2 import FieldMask  # type: ignore
 from google.protobuf.message import Message  # type: ignore
+from google.protobuf.wrappers_pb2 import DoubleValue  # type: ignore
 from pydantic import BaseModel, Field
 
 from ..common.single_p2p import DemoEnum, DemoMessage
@@ -29,14 +30,12 @@ class UserMessage(BaseModel):
     demo_message: DemoMessage = Field()
 
 
-class StructMessage(BaseModel):
-    metadata: typing.Dict = Field(default_factory=dict)
-
-
-class FieldMaskMessage(BaseModel):
+class OtherMessage(BaseModel):
     class Config:
         arbitrary_types_allowed = True
 
+    metadata: typing.Dict = Field(default_factory=dict)
+    double_value: DoubleValue = Field(default_factory=DoubleValue)
     field_mask: typing.Optional[FieldMask] = Field(default_factory=FieldMask)
 
 

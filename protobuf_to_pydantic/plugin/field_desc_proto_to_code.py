@@ -556,6 +556,17 @@ class FileDescriptorProtoToCode(BaseP2C):
         return content
 
     def _get_protobuf_type_model(self, field: FieldDescriptorProto) -> ProtobufTypeModel:
+        def _get_type_factory(module_name: str, message_name: str) -> Any:
+            try:
+                return getattr(importlib.import_module(module_name), message_name)
+            except ModuleNotFoundError:
+                details = {"field name": field.name, "field type name": field.type_name[1:], "field type": field.type}
+                raise ModuleNotFoundError(
+                    "Can't find protobuf type module, "
+                    "please check that config.protobuf_type_config is configured correctly!"
+                    f"  details info: {details}"
+                )
+
         type_factory: Optional[Any] = None
         use_custom_type = False
         # TODO use gen_model.py _message_default_factory_dict_by_type_name
@@ -568,7 +579,17 @@ class FileDescriptorProtoToCode(BaseP2C):
             )
         elif field.type_name.startswith(".google.protobuf"):
             _type_str = field.type_name.split(".")[-1]
-            if _type_str == "Empty":
+            protobuf_type_config_key = field.type_name[1:]
+            if protobuf_type_config_key in self.config.protobuf_type_config:
+                # Through configuration, users can define the type of Protobuf they want
+                rule_type_str = "any"
+                use_custom_type = self.config.protobuf_type_config[protobuf_type_config_key].is_custom
+                type_module_name = self.config.protobuf_type_config[protobuf_type_config_key].module_name
+                _type_str = self.config.protobuf_type_config[protobuf_type_config_key].message_name
+                py_type_str = _type_str  # rewrite py_type_str
+                type_factory = _get_type_factory(type_module_name, _type_str)
+                self._add_import_code(type_module_name, _type_str)
+            elif _type_str == "Empty":
                 py_type_str = "None"
                 rule_type_str = ""
             elif _type_str == "Timestamp":
@@ -607,8 +628,14 @@ class FileDescriptorProtoToCode(BaseP2C):
                 rule_type_str = "any"
                 use_custom_type = True
 
-                type_module_name = "google.protobuf." + camel_to_snake(_type_str) + "_pb2"
-                type_factory = getattr(importlib.import_module(type_module_name), _type_str)
+                if field.type_name in self._descriptors.message_to_fd:
+                    message_fd = self._descriptors.message_to_fd[field.type_name]
+                    # google/protobuf/wrappers.proto -> google.protobuf.wrappers_pb2
+                    type_module_name = message_fd.name.split(".")[0].replace("/", ".") + "_pb2"
+                else:
+                    type_module_name = "google.protobuf." + camel_to_snake(_type_str) + "_pb2"
+
+                type_factory = _get_type_factory(type_module_name, _type_str)
                 self._add_import_code(type_module_name, _type_str)
             else:
                 logger.error(f"Not support type {field.type_name}")
