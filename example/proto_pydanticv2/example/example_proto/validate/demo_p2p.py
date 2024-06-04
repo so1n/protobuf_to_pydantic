@@ -464,6 +464,10 @@ class AfterReferMessage(BaseModel):
 
 
 class NestedMessage(BaseModel):
+    """
+    test nested message
+    """
+
     class UserPayMessage(BaseModel):
         bank_number: str = Field(default="", min_length=13, max_length=19)
         exp: datetime = Field(default_factory=datetime.now, timestamp_gt_now=True)

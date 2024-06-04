@@ -82,14 +82,19 @@ def replace_protobuf_type_to_python_type(value: Any) -> Any:
 
 def gen_dict_from_desc_str(comment_prefix: str, desc: str) -> FieldInfoTypedDict:
     pait_dict: dict = {}
-    for line in desc.split("\n"):
-        line = line.strip()
-        if not line.startswith(f"{comment_prefix}:"):
-            continue
-        line = line.replace(f"{comment_prefix}:", "")
-        pait_dict.update(json.loads(line))
-    if "miss_default" in pait_dict:
-        pait_dict["required"] = pait_dict.pop("miss_default")
+    try:
+        for line in desc.split("\n"):
+            if line.startswith("#"):
+                line = line[1:]
+            line = line.strip()
+            if not line.startswith(f"{comment_prefix}:"):
+                continue
+            line = line.replace(f"{comment_prefix}:", "")
+            pait_dict.update(json.loads(line))
+        if "miss_default" in pait_dict:
+            pait_dict["required"] = pait_dict.pop("miss_default")
+    except Exception as e:
+        logging.warning(f"Can not gen dict by desc:{desc}, error: {e}")
     return pait_dict  # type: ignore
 
 

@@ -1,5 +1,7 @@
 import logging
+import time
 from typing import List, Type
+from uuid import uuid4
 
 from google.protobuf.any_pb2 import Any  # type: ignore
 from pydantic import confloat, conint
@@ -29,11 +31,17 @@ class CustomDescTemplate(DescTemplate):
             raise KeyError(f"timestamp template not support value:{length_str}")
 
 
+def exp_time() -> float:
+    return time.time()
+
+
 local_dict = {
     "CustomerField": CustomerField,
     "confloat": confloat,
     "conint": conint,
     "customer_any": customer_any,
+    "exp_time": exp_time,
+    "uuid4": uuid4,
 }
 comment_prefix = "p2p"
 desc_template: Type[DescTemplate] = CustomDescTemplate

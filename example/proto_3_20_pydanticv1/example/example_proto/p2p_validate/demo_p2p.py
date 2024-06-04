@@ -57,8 +57,8 @@ class State(IntEnum):
 
 class FloatTest(BaseModel):
     const_test: float = Field(default=1.0, const=True)
-    range_e_test: float = Field(default=0.0, ge=1, le=10)
-    range_test: float = Field(default=0.0, gt=1, lt=10)
+    range_e_test: float = Field(default=0.0, ge=1.0, le=10.0)
+    range_test: float = Field(default=0.0, gt=1.0, lt=10.0)
     in_test: float = Field(default=0.0, in_=[1.0, 2.0, 3.0])
     not_in_test: float = Field(default=0.0, not_in=[1.0, 2.0, 3.0])
     default_test: float = Field(default=1.0)
@@ -82,8 +82,8 @@ class FloatTest(BaseModel):
 
 class DoubleTest(BaseModel):
     const_test: float = Field(default=1.0, const=True)
-    range_e_test: float = Field(default=0.0, ge=1, le=10)
-    range_test: float = Field(default=0.0, gt=1, lt=10)
+    range_e_test: float = Field(default=0.0, ge=1.0, le=10.0)
+    range_test: float = Field(default=0.0, gt=1.0, lt=10.0)
     in_test: float = Field(default=0.0, in_=[1.0, 2.0, 3.0])
     not_in_test: float = Field(default=0.0, not_in=[1.0, 2.0, 3.0])
     default_test: float = Field(default=1.0)
@@ -107,8 +107,8 @@ class DoubleTest(BaseModel):
 
 class Int32Test(BaseModel):
     const_test: int = Field(default=1, const=True)
-    range_e_test: int = Field(default=0, ge=1, le=10)
-    range_test: int = Field(default=0, gt=1, lt=10)
+    range_e_test: int = Field(default=0, ge=1.0, le=10.0)
+    range_test: int = Field(default=0, gt=1.0, lt=10.0)
     in_test: int = Field(default=0, in_=[1, 2, 3])
     not_in_test: int = Field(default=0, not_in=[1, 2, 3])
     default_test: int = Field(default=1.0)
@@ -132,8 +132,8 @@ class Int32Test(BaseModel):
 
 class Int64Test(BaseModel):
     const_test: int = Field(default=1, const=True)
-    range_e_test: int = Field(default=0, ge=1, le=10)
-    range_test: int = Field(default=0, gt=1, lt=10)
+    range_e_test: int = Field(default=0, ge=1.0, le=10.0)
+    range_test: int = Field(default=0, gt=1.0, lt=10.0)
     in_test: int = Field(default=0, in_=[1, 2, 3])
     not_in_test: int = Field(default=0, not_in=[1, 2, 3])
     default_test: int = Field(default=1.0)
@@ -157,8 +157,8 @@ class Int64Test(BaseModel):
 
 class Uint32Test(BaseModel):
     const_test: int = Field(default=1, const=True)
-    range_e_test: int = Field(default=0, ge=1, le=10)
-    range_test: int = Field(default=0, gt=1, lt=10)
+    range_e_test: int = Field(default=0, ge=1.0, le=10.0)
+    range_test: int = Field(default=0, gt=1.0, lt=10.0)
     in_test: int = Field(default=0, in_=[1, 2, 3])
     not_in_test: int = Field(default=0, not_in=[1, 2, 3])
     default_test: int = Field(default=1.0)
@@ -182,8 +182,8 @@ class Uint32Test(BaseModel):
 
 class Sint32Test(BaseModel):
     const_test: int = Field(default=1, const=True)
-    range_e_test: int = Field(default=0, ge=1, le=10)
-    range_test: int = Field(default=0, gt=1, lt=10)
+    range_e_test: int = Field(default=0, ge=1.0, le=10.0)
+    range_test: int = Field(default=0, gt=1.0, lt=10.0)
     in_test: int = Field(default=0, in_=[1, 2, 3])
     not_in_test: int = Field(default=0, not_in=[1, 2, 3])
     default_test: int = Field(default=1.0)
@@ -207,8 +207,8 @@ class Sint32Test(BaseModel):
 
 class Uint64Test(BaseModel):
     const_test: int = Field(default=1, const=True)
-    range_e_test: int = Field(default=0, ge=1, le=10)
-    range_test: int = Field(default=0, gt=1, lt=10)
+    range_e_test: int = Field(default=0, ge=1.0, le=10.0)
+    range_test: int = Field(default=0, gt=1.0, lt=10.0)
     in_test: int = Field(default=0, in_=[1, 2, 3])
     not_in_test: int = Field(default=0, not_in=[1, 2, 3])
     default_test: int = Field(default=1.0)
@@ -232,8 +232,8 @@ class Uint64Test(BaseModel):
 
 class Sint64Test(BaseModel):
     const_test: int = Field(default=1, const=True)
-    range_e_test: int = Field(default=0, ge=1, le=10)
-    range_test: int = Field(default=0, gt=1, lt=10)
+    range_e_test: int = Field(default=0, ge=1.0, le=10.0)
+    range_test: int = Field(default=0, gt=1.0, lt=10.0)
     in_test: int = Field(default=0, in_=[1, 2, 3])
     not_in_test: int = Field(default=0, not_in=[1, 2, 3])
     default_test: int = Field(default=1.0)
@@ -257,8 +257,8 @@ class Sint64Test(BaseModel):
 
 class Fixed32Test(BaseModel):
     const_test: float = Field(default=1, const=True)
-    range_e_test: float = Field(default=0.0, ge=1, le=10)
-    range_test: float = Field(default=0.0, gt=1, lt=10)
+    range_e_test: float = Field(default=0.0, ge=1.0, le=10.0)
+    range_test: float = Field(default=0.0, gt=1.0, lt=10.0)
     in_test: float = Field(default=0.0, in_=[1, 2, 3])
     not_in_test: float = Field(default=0.0, not_in=[1, 2, 3])
     default_test: float = Field(default=1.0)
@@ -282,8 +282,8 @@ class Fixed32Test(BaseModel):
 
 class Fixed64Test(BaseModel):
     const_test: float = Field(default=0.0)
-    range_e_test: float = Field(default=0.0, ge=1, le=10)
-    range_test: float = Field(default=0.0, gt=1, lt=10)
+    range_e_test: float = Field(default=0.0, ge=1.0, le=10.0)
+    range_test: float = Field(default=0.0, gt=1.0, lt=10.0)
     in_test: float = Field(default=0.0, in_=[1, 2, 3])
     not_in_test: float = Field(default=0.0, not_in=[1, 2, 3])
     default_test: float = Field(default=1.0)
@@ -307,8 +307,8 @@ class Fixed64Test(BaseModel):
 
 class Sfixed32Test(BaseModel):
     const_test: float = Field(default=0.0)
-    range_e_test: float = Field(default=0.0, ge=1, le=10)
-    range_test: float = Field(default=0.0, gt=1, lt=10)
+    range_e_test: float = Field(default=0.0, ge=1.0, le=10.0)
+    range_test: float = Field(default=0.0, gt=1.0, lt=10.0)
     in_test: float = Field(default=0.0, in_=[1, 2, 3])
     not_in_test: float = Field(default=0.0, not_in=[1, 2, 3])
     default_test: float = Field(default=1.0)
@@ -332,8 +332,8 @@ class Sfixed32Test(BaseModel):
 
 class Sfixed64Test(BaseModel):
     const_test: float = Field(default=0.0)
-    range_e_test: float = Field(default=0.0, ge=1, le=10)
-    range_test: float = Field(default=0.0, gt=1, lt=10)
+    range_e_test: float = Field(default=0.0, ge=1.0, le=10.0)
+    range_test: float = Field(default=0.0, gt=1.0, lt=10.0)
     in_test: float = Field(default=0.0, in_=[1, 2, 3])
     not_in_test: float = Field(default=0.0, not_in=[1, 2, 3])
     default_test: float = Field(default=1.0)
@@ -492,8 +492,10 @@ class RepeatedTest(BaseModel):
     items_string_test: conlist(item_type=constr(min_length=1, max_length=5), min_items=1, max_items=5) = Field(
         default_factory=list
     )
-    items_double_test: conlist(item_type=confloat(gt=1, lt=5), min_items=1, max_items=5) = Field(default_factory=list)
-    items_int32_test: conlist(item_type=conint(gt=1, lt=5), min_items=1, max_items=5) = Field(default_factory=list)
+    items_double_test: conlist(item_type=confloat(gt=1.0, lt=5.0), min_items=1, max_items=5) = Field(
+        default_factory=list
+    )
+    items_int32_test: conlist(item_type=conint(gt=1.0, lt=5.0), min_items=1, max_items=5) = Field(default_factory=list)
     items_timestamp_test: conlist(
         item_type=contimestamp(timestamp_gt=1600000000.0, timestamp_lt=1600000010.0), min_items=1, max_items=5
     ) = Field(default_factory=list)
@@ -666,10 +668,14 @@ class OneOfOptionalTest(BaseModel):
 
 class AfterReferMessage(BaseModel):
     uid: str = Field(example="10086", title="UID", description="user union id")
-    age: int = Field(default=0, example=18.0, title="use age", ge=0)
+    age: int = Field(default=0, example=18.0, title="use age", ge=0.0)
 
 
 class NestedMessage(BaseModel):
+    """
+    test nested message
+    """
+
     class UserPayMessage(BaseModel):
         bank_number: str = Field(default="", min_length=13, max_length=19)
         exp: datetime = Field(default_factory=datetime.now, timestamp_gt_now=True)

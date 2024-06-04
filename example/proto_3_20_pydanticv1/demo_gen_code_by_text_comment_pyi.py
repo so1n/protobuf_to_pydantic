@@ -17,7 +17,7 @@ from example.gen_text_comment_code import exp_time
 
 class AfterReferMessage(BaseModel):
     uid: str = Field(title="UID", description="user union id", example="10086")
-    age: int = Field(default=0, title="use age", ge=0, example=18)
+    age: int = Field(default=0, title="use age", ge=0.0, example=18)
 
 
 class EmptyMessage(BaseModel):
@@ -56,8 +56,8 @@ class ExampleExampleProtoCommonSingleDemoMessage(BaseModel):
 
 class UserMessage(BaseModel):
     uid: str = Field(title="UID", description="user union id", example="10086")
-    age: int = Field(default=0, title="use age", ge=0, example=18)
-    height: float = Field(default=0.0, ge=0, le=2)
+    age: int = Field(default=0, title="use age", ge=0.0, example=18)
+    height: float = Field(default=0.0, ge=0.0, le=2.5)
     sex: SexType = Field(default=0)
     demo: ExampleExampleProtoCommonSingleDemoEnum = Field(default=0)
     is_adult: bool = Field(default=False)
