@@ -16,7 +16,6 @@ if TYPE_CHECKING:
     from pydantic.typing import AnyClassMethod
 
 from protobuf_to_pydantic.grpc_types import Duration, ProtobufRepeatedType, Timestamp
-from protobuf_to_pydantic.types import FieldInfoTypedDict
 
 
 class Timedelta(timedelta):
@@ -80,7 +79,7 @@ def replace_protobuf_type_to_python_type(value: Any) -> Any:
         return value
 
 
-def gen_dict_from_desc_str(comment_prefix: str, desc: str) -> FieldInfoTypedDict:
+def gen_dict_from_desc_str(comment_prefix: str, desc: str) -> dict:
     pait_dict: dict = {}
     try:
         for line in desc.split("\n"):
@@ -90,7 +89,7 @@ def gen_dict_from_desc_str(comment_prefix: str, desc: str) -> FieldInfoTypedDict
             if not line.startswith(f"{comment_prefix}:"):
                 continue
             line = line.replace(f"{comment_prefix}:", "")
-            pait_dict.update(json.loads(line))
+            pait_dict.update(json.loads(line.replace("\\\\", "\\")))
         if "miss_default" in pait_dict:
             pait_dict["required"] = pait_dict.pop("miss_default")
     except Exception as e:

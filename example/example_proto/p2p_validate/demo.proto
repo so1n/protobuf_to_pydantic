@@ -217,7 +217,7 @@ message Fixed32Test {
 }
 
 message Fixed64Test {
-  fixed64 const_test = 1 [(p2p_validate.rules).fixed32.const = 1];
+  fixed64 const_test = 1 [(p2p_validate.rules).fixed64.const = 1];
   fixed64 range_e_test = 2 [(p2p_validate.rules).fixed64 = {ge: 1, le: 10}];
   fixed64 range_test = 3[(p2p_validate.rules).fixed64 = {gt: 1, lt: 10}];
   fixed64 in_test = 4[(p2p_validate.rules).fixed64 = {in: [1,2,3]}];
@@ -240,7 +240,7 @@ message Fixed64Test {
 }
 
 message Sfixed32Test {
-  sfixed32 const_test = 1 [(p2p_validate.rules).fixed32.const = 1];
+  sfixed32 const_test = 1 [(p2p_validate.rules).sfixed32.const = 1];
   sfixed32 range_e_test = 2 [(p2p_validate.rules).sfixed32 = {ge: 1, le: 10}];
   sfixed32 range_test = 3[(p2p_validate.rules).sfixed32 = {gt: 1, lt: 10}];
   sfixed32 in_test = 4[(p2p_validate.rules).sfixed32 = {in: [1,2,3]}];
@@ -263,7 +263,7 @@ message Sfixed32Test {
 }
 
 message Sfixed64Test {
-  sfixed64 const_test = 1 [(p2p_validate.rules).fixed32.const = 1];
+  sfixed64 const_test = 1 [(p2p_validate.rules).sfixed64.const = 1];
   sfixed64 range_e_test = 2 [(p2p_validate.rules).sfixed64 = {ge: 1, le: 10}];
   sfixed64 range_test = 3[(p2p_validate.rules).sfixed64 = {gt: 1, lt: 10}];
   sfixed64 in_test = 4[(p2p_validate.rules).sfixed64 = {in: [1,2,3]}];
@@ -539,9 +539,9 @@ message TimestampTest {
 
 message MessageIgnoredTest {
   option (p2p_validate.ignored) = true;
-  sint32 const_test = 1 [(p2p_validate.rules).float.const = 1];
-  sint32 range_e_test = 2 [(p2p_validate.rules).float = {ge: 1, le: 10}];
-  sint32 range_test = 3[(p2p_validate.rules).float = {gt: 1, lt: 10}];
+  sint32 const_test = 1 [(p2p_validate.rules).sint32.const = 1];
+  sint32 range_e_test = 2 [(p2p_validate.rules).sint32 = {ge: 1, le: 10}];
+  sint32 range_test = 3[(p2p_validate.rules).sint32 = {gt: 1, lt: 10}];
 }
 
 

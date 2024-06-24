@@ -10,10 +10,11 @@ from uuid import uuid4
 from google.protobuf.field_mask_pb2 import FieldMask  # type: ignore
 from google.protobuf.message import Message  # type: ignore
 from google.protobuf.wrappers_pb2 import DoubleValue  # type: ignore
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 from pydantic.types import PaymentCardNumber
 
 from example.plugin_config import exp_time
+from protobuf_to_pydantic.customer_validator import check_one_of
 
 from ..common.single_p2p import DemoEnum, DemoMessage
 
@@ -30,7 +31,7 @@ class UserMessage(BaseModel):
 
     uid: str = Field(title="UID", description="user union id", example="10086")
     age: int = Field(default=0, title="use age", ge=0, example=18)
-    height: float = Field(default=0.0, ge=0, le=2.5)
+    height: float = Field(default=0.0, ge=0.0, le=2.5)
     sex: SexType = Field(default=0)
     demo: DemoEnum = Field(default=0)
     is_adult: bool = Field(default=False)
@@ -109,8 +110,13 @@ class EmptyMessage(BaseModel):
 
 
 class OptionalMessage(BaseModel):
+    _one_of_dict = {"OptionalMessage.a": {"fields": {"x", "y"}, "required": True}}
+    one_of_validator = model_validator(mode="before")(check_one_of)
+    x: str = Field(default="")
+    y: int = Field(default=0, title="use age", ge=0, example=18)
     name: typing.Optional[str] = Field(default="")
     age: typing.Optional[int] = Field(default=0)
     item: typing.Optional[InvoiceItem] = Field(default=None)
     str_list: typing.List[str] = Field(default_factory=list)
     int_map: typing.Dict[str, int] = Field(default_factory=dict)
+    default_template_test: float = Field(default=1600000000.0)

@@ -245,7 +245,7 @@ class Fixed32Test(BaseModel):
 
 
 class Fixed64Test(BaseModel):
-    const_test: float = Field(default=0)
+    const_test: float = Field(default=1, const=True)
     range_e_test: float = Field(default=0, ge=1.0, le=10.0)
     range_test: float = Field(default=0, gt=1.0, lt=10.0)
     in_test: float = Field(default=0, in_=[1, 2, 3])
@@ -375,7 +375,7 @@ class MessageIgnoredTest(BaseModel):
 class MessageTest(BaseModel):
     skip_test: str = Field(default="")
     required_test: str = Field()
-    extra_test: str = Field(default="")
+    extra_test: str = Field(default="", customer_string="c1", customer_int=1)
 
 
 class StringTest(BaseModel):
@@ -511,7 +511,7 @@ class RepeatedTest(BaseModel):
 
 
 class Sfixed32Test(BaseModel):
-    const_test: float = Field(default=0)
+    const_test: float = Field(default=1, const=True)
     range_e_test: float = Field(default=0, ge=1.0, le=10.0)
     range_test: float = Field(default=0, gt=1.0, lt=10.0)
     in_test: float = Field(default=0, in_=[1, 2, 3])
@@ -536,7 +536,7 @@ class Sfixed32Test(BaseModel):
 
 
 class Sfixed64Test(BaseModel):
-    const_test: float = Field(default=0)
+    const_test: float = Field(default=1, const=True)
     range_e_test: float = Field(default=0, ge=1.0, le=10.0)
     range_test: float = Field(default=0, gt=1.0, lt=10.0)
     in_test: float = Field(default=0, in_=[1, 2, 3])

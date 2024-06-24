@@ -26,6 +26,7 @@ class CodeGen(Generic[ConfigT]):
     def __init__(self, config_class: Type[ConfigT]) -> None:
         self.config_class: Type[ConfigT] = config_class
         self.param_dict: dict = {}
+
         with code_generation() as (request, response):
             self.parse_param(request)
             self.gen_config()

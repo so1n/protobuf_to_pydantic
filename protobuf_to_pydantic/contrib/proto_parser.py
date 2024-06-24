@@ -59,8 +59,8 @@ fieldoptions: fieldoption ( ","  fieldoption )*
 fieldoption: OPTIONNAME "=" CONSTANT
 repeatedfield: [ comments ] "repeated" field
 optionalfield: [ comments ] "optional" field
-oneof: "oneof" ONEOFNAME "{" ( oneoffield | EMPTYSTATEMENT )* "}"
-oneoffield: TYPE FIELDNAME "=" FIELDNUMBER [ "[" fieldoptions "]" ] ";"
+oneof: [ comments ] "oneof" ONEOFNAME "{" ( oneoffield | EMPTYSTATEMENT )* "}"
+oneoffield:  [ comments ] TYPE FIELDNAME "=" FIELDNUMBER [ "[" fieldoptions "]" ] ";"
 mapfield: [ comments ] "map" "<" KEYTYPE "," TYPE ">" MAPNAME "=" FIELDNUMBER [ "[" fieldoptions "]" ] TAIL
 KEYTYPE: "int32" | "int64" | "uint32" | "uint64" | "sint32" | "sint64" | "fixed32" | "fixed64" | "sfixed32"
     | "sfixed64" | "bool" | "string"
@@ -111,6 +111,16 @@ class Field(object):
 
 
 @dataclass
+class OneOfField(object):
+    comment: Comment
+    type: str
+    key_type: str
+    val_type: str
+    name: str
+    number: int
+
+
+@dataclass
 class Enum(object):
     comment: Comment
     name: str
@@ -121,6 +131,7 @@ class Enum(object):
 class Message(object):
     comment: Comment
     name: str
+    oneofs: List[OneOfField]
     fields: List[Field]
     messages: Dict[str, "Message"]
     enums: Dict[str, Enum]
@@ -166,10 +177,11 @@ class ProtoTransformer(Transformer):
     @staticmethod
     def messagebody(
         items: List[Union[Message, Enum, Field]]
-    ) -> Tuple[List[Field], Dict[str, Message], Dict[str, Enum]]:
+    ) -> Tuple[List[OneOfField], List[Field], Dict[str, Message], Dict[str, Enum]]:
         """Returns a tuple of message body namedtuples"""
         messages: Dict[str, Message] = {}
         enums: Dict[str, Enum] = {}
+        oneofs: List[OneOfField] = []
         fields: List[Field] = []
         for item in items:
             if isinstance(item, Message):
@@ -178,7 +190,10 @@ class ProtoTransformer(Transformer):
                 enums[item.name] = item
             elif isinstance(item, Field):
                 fields.append(item)
-        return fields, messages, enums
+            elif isinstance(item, Token) and item.data.value == "oneof":
+                for oneof_item in item.children:
+                    oneofs.append(oneof_item)
+        return oneofs, fields, messages, enums
 
     @staticmethod
     def field(tokens: list) -> Field:
@@ -236,6 +251,14 @@ class ProtoTransformer(Transformer):
         else:
             comment, field = tuple(tokens)
         return Field(comment, "optional", field.type, field.type, field.name, field.number)
+
+    def oneoffield(self, tokens: list) -> OneOfField:
+        """Returns a Field namedtuple"""
+        return OneOfField(**asdict(self.field(tokens)))
+
+    def oneof(self, tokens: list) -> Token:
+        """Returns a Token namedtuple"""
+        return tokens[0]
 
     @staticmethod
     def mapfield(tokens: list) -> Field:

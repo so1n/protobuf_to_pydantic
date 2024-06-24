@@ -100,13 +100,12 @@ class ExampleExampleProtoCommonSingleDemoMessage(BaseModel):
 class UserMessage(BaseModel):
     uid: str = Field(title="UID", description="user union id", example="10086")
     age: int = Field(default=0, title="use age", example=18, ge=0)
-    height: float = Field(default=0.0, ge=0, le=2.5)
+    height: float = Field(default=0.0, ge=0.0, le=2.5)
     sex: SexType = Field(default=0)
     demo: ExampleExampleProtoCommonSingleDemoEnum = Field(default=0)
     is_adult: bool = Field(default=False)
     user_name: str = Field(default="", description="user name", example="so1n", min_length=1, max_length=10)
     demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field(customer_string="c1", customer_int=1)
-
 """
         assert format_content(content) in self._model_output(demo_pb2.UserMessage)
 
@@ -200,7 +199,7 @@ class ExampleExampleProtoCommonSingleDemoMessage(BaseModel):
 class UserMessage(BaseModel):
     uid: str = Field(title="UID", description="user union id", example="10086")
     age: int = Field(default=0, title="use age", example=18, ge=0)
-    height: float = Field(default=0.0, ge=0, le=2.5)
+    height: float = Field(default=0.0, ge=0.0, le=2.5)
     sex: SexType = Field(default=0)
     demo: ExampleExampleProtoCommonSingleDemoEnum = Field(default=0)
     is_adult: bool = Field(default=False)
@@ -283,7 +282,7 @@ class ExampleExampleProtoCommonSingleDemoMessage(BaseModel):
 class UserMessage(BaseModel):
     uid: str = Field(title="UID", description="user union id", example="10086")
     age: int = Field(default=0, title="use age", example=18, ge=0)
-    height: float = Field(default=0.0, ge=0, le=2.5)
+    height: float = Field(default=0.0, ge=0.0, le=2.5)
     sex: SexType = Field(default=0)
     demo: ExampleExampleProtoCommonSingleDemoEnum = Field(default=0)
     is_adult: bool = Field(default=False)
@@ -397,7 +396,7 @@ class ExampleExampleProtoCommonSingleDemoMessage(BaseModel):
 class UserMessage(BaseModel):
     uid: str = Field(title="UID", description="user union id", example="10086")
     age: int = Field(default=0, title="use age", example=18, ge=0)
-    height: float = Field(default=0.0, ge=0, le=2.5)
+    height: float = Field(default=0.0, ge=0.0, le=2.5)
     sex: SexType = Field(default=0)
     demo: ExampleExampleProtoCommonSingleDemoEnum = Field(default=0)
     is_adult: bool = Field(default=False)

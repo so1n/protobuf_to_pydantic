@@ -157,14 +157,14 @@ class BaseP2C(object):
             return "typing.Any"
         elif isinstance(type_, ForwardRef):
             return type_.__forward_arg__
+        elif isinstance(type_, TypeVar):
+            # Support TypeVar
+            if auto_import_type_code:
+                self._add_import_code(type_.__module__, type_.__name__)
+            return type_.__name__
 
         origin_type: Optional[_GenericAlias] = get_origin(type_)
         if origin_type is None:
-            if isinstance(type_, TypeVar):
-                # Support TypeVar
-                if auto_import_type_code:
-                    self._add_import_code(type_.__module__, type_.__name__)
-                return type_.__name__
             return None
         if origin_type is Annotated:
             # Support Annotated
@@ -359,10 +359,7 @@ class BaseP2C(object):
     def _model_field_handle(self, model: Type[BaseModel], indent: int = 0) -> str:
         field_str: str = ""
         for key, value in _pydantic_adapter.model_fields(model).items():
-            if hasattr(value, "annotation"):
-                value_outer_type = value.annotation  # type: ignore
-                value_type = value.annotation  # type: ignore
-            elif _pydantic_adapter.is_v1:
+            if hasattr(value, "annotation") or _pydantic_adapter.is_v1:
                 value_outer_type = value.annotation  # type: ignore
                 value_type = value.annotation  # type: ignore
             else:

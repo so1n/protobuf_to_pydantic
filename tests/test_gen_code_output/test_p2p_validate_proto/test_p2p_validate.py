@@ -517,7 +517,7 @@ class Fixed64Test(BaseModel):
         if not is_v1:
             content = """
 class Fixed64Test(BaseModel):
-    const_test: float = Field(default=0)
+    const_test: typing.Literal[1] = Field(default=0)
     range_e_test: float = Field(default=0, ge=1, le=10)
     range_test: float = Field(default=0, gt=1, lt=10)
     in_test: float = Field(default=0, in_=[1, 2, 3])
@@ -1158,7 +1158,7 @@ class Sfixed32Test(BaseModel):
         if not is_v1:
             content = """
 class Sfixed32Test(BaseModel):
-    const_test: float = Field(default=0)
+    const_test: typing.Literal[1] = Field(default=0)
     range_e_test: float = Field(default=0, ge=1, le=10)
     range_test: float = Field(default=0, gt=1, lt=10)
     in_test: float = Field(default=0, in_=[1, 2, 3])
@@ -1212,7 +1212,7 @@ class Sfixed64Test(BaseModel):
         if not is_v1:
             content = """
 class Sfixed64Test(BaseModel):
-    const_test: float = Field(default=0)
+    const_test: typing.Literal[1] = Field(default=0)
     range_e_test: float = Field(default=0, ge=1, le=10)
     range_test: float = Field(default=0, gt=1, lt=10)
     in_test: float = Field(default=0, in_=[1, 2, 3])

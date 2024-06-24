@@ -14,12 +14,18 @@ def get_desc_from_pyi_file(filename: str, comment_prefix: str) -> Dict[str, "Des
     For a Protobuf message as follows:
         ```protobuf
         message UserMessage {
-            string uid=1;
-            int32 age=2;
-            float height=3;
-            SexType sex=4;
-            bool is_adult=5;
-            string user_name=6;
+          // p2p: {"required": true, "example": "10086", "title": "UID", "description": "user union id"}
+          string uid=1;
+          // p2p: {"example": 18, "title": "use age", "ge": 0}
+          int32 age=2;
+          // p2p: {"ge": 0, "le": 2.5}
+          float height=3;
+          SexType sex=4;
+          single.DemoEnum demo =6;
+          bool is_adult=7;
+          // p2p: {"description": "user name"}
+          // p2p: {"default": "", "min_length": 1, "max_length": "10", "example": "so1n"}
+          string user_name=8;
         }
         ```
     mypy-protobuf will generate the following Python code:
@@ -52,12 +58,15 @@ def get_desc_from_pyi_file(filename: str, comment_prefix: str) -> Dict[str, "Des
     {
         "path/demo.pyi": {
             "UserMessage": {
-                "uid": {}        # field info like `protobuf_to_pydantic.gen_model.MessagePaitModel`,
-                "age": {}        # field info like `protobuf_to_pydantic.gen_model.MessagePaitModel`,
-                "height": {}     # field info like `protobuf_to_pydantic.gen_model.MessagePaitModel`,
-                "sex": {}        # field info like `protobuf_to_pydantic.gen_model.MessagePaitModel`,
-                "is_adult": {}   # field info like `protobuf_to_pydantic.gen_model.MessagePaitModel`,
-                "user_name": {}  # field info like `protobuf_to_pydantic.gen_model.MessagePaitModel`,
+                # field info like `protobuf_to_pydantic.gen_model.FieldParamModel`,
+                "uid": {"miss_default": True, "example": "10086", "title": "UID", "description": "user union id"},
+                "age": {"example": 18, "title": "use age", "ge": 0},
+                "height": {"ge": 0, "le": 2.5},
+                "sex": {},
+                "is_adult": {},
+                "user_name": {
+                    "description": "user name", "default": "", "min_length": 1, "max_length": "10", "example": "so1n"
+                },
             }
         }
     }
@@ -70,7 +79,7 @@ def get_desc_from_pyi_file(filename: str, comment_prefix: str) -> Dict[str, "Des
         pyi_content: str = f.read()
     line_list = pyi_content.split("\n")
 
-    _comment_model: bool = False  # Whether to enable parsing comment mode
+    _comment_mode: bool = False  # Whether to enable parsing comment mode
     _doc: str = ""
     _field_name: str = ""
     message_str_stack: List[Tuple[str, int, DescFromOptionTypedDict]] = []
@@ -111,21 +120,23 @@ def get_desc_from_pyi_file(filename: str, comment_prefix: str) -> Dict[str, "Des
         if message_str_stack:
             message_str, indent, desc_dict = message_str_stack[-1]
             line = line.strip()
-            if _comment_model:
+            if _comment_mode:
                 _doc += "\n" + line
 
-            if not _comment_model and line.startswith('"""') and not line_list[index - 1].startswith("class"):
+            if not _comment_mode and line.startswith('"""') and not line_list[index - 1].startswith("class"):
                 # start add doc
                 if "def" in line_list[index - 1]:
                     _field_name = line_list[index - 1].split("(")[0].replace("def", "").strip()
                 else:
                     _field_name = line_list[index - 1].split(":")[0].strip()
-                _comment_model = True
+                _comment_mode = True
                 _doc = line
-            if (line.endswith('"""') or line == '"""') and _comment_model:
+            if (line.endswith('"""') or line == '"""') and _comment_mode:
                 # end add doc
-                _comment_model = False
-                desc_dict["message"][_field_name] = gen_dict_from_desc_str(comment_prefix, _doc.replace('"""', ""))
+                _comment_mode = False
+                desc_dict["message"][_field_name] = gen_dict_from_desc_str(  # type: ignore[assignment]
+                    comment_prefix, _doc.replace('"""', "")
+                )
 
     _filename_desc_dict[filename] = global_message_field_dict
     return global_message_field_dict

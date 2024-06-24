@@ -34,7 +34,7 @@ class UserMessage(BaseModel):
 
     uid: str = Field(title="UID", description="user union id", example="10086")
     age: int = Field(default=0, title="use age", ge=0, example=18)
-    height: float = Field(default=0.0, ge=0, le=2.5)
+    height: float = Field(default=0.0, ge=0.0, le=2.5)
     sex: SexType = Field(default=0)
     demo: DemoEnum = Field(default=0)
     is_adult: bool = Field(default=False)
@@ -161,10 +161,15 @@ class InvoiceItem(BaseModel):
     def test_field_optional(self) -> None:
         content = """
 class OptionalMessage(BaseModel):
+    _one_of_dict = {"OptionalMessage.a": {"fields": {"x", "y"}, "required": True}}
+    one_of_validator = model_validator(mode="before")(check_one_of)
+    x: str = Field(default="")
+    y: int = Field(default=0, title="use age", ge=0, example=18)
     name: typing.Optional[str] = Field(default="")
     age: typing.Optional[int] = Field(default=0)
     item: typing.Optional[InvoiceItem] = Field(default=None)
     str_list: typing.List[str] = Field(default_factory=list)
     int_map: typing.Dict[str, int] = Field(default_factory=dict)
+    default_template_test: float = Field(default=1600000000.0)
 """
         assert content.strip("\n") in getsource(demo_p2p.OptionalMessage).strip("\n")

@@ -9,6 +9,19 @@ from google.protobuf import __version__
 from google.protobuf.message import Message
 
 from protobuf_to_pydantic import _pydantic_adapter, msg_to_pydantic_model, pydantic_model_to_py_file
+from protobuf_to_pydantic.desc_template import DescTemplate
+
+
+class CustomDescTemplate(DescTemplate):
+    def template_timestamp(self, length_str: str) -> int:
+        timestamp: float = 1600000000
+        if length_str == "10":
+            return int(timestamp)
+        elif length_str == "13":
+            return int(timestamp * 100)
+        else:
+            raise KeyError(f"timestamp template not support value:{length_str}")
+
 
 # use pydantic v1 method, pydantic will print warning, ignore!~
 warnings.filterwarnings("ignore")
@@ -42,7 +55,12 @@ def gen_code() -> None:
     pydantic_model_to_py_file(
         str(now_path.parent.joinpath(target_p, "demo_gen_code_by_text_comment_pyi.py")),
         *[
-            msg_to_pydantic_model(model, parse_msg_desc_method=module, local_dict=local_dict)
+            msg_to_pydantic_model(
+                model,
+                parse_msg_desc_method=module,
+                local_dict=local_dict,
+                desc_template=CustomDescTemplate,
+            )
             for model in message_class_list
         ],
         module_path=str(now_path.parent),
@@ -54,6 +72,7 @@ def gen_code() -> None:
                 model,
                 parse_msg_desc_method=str(now_path.parent.parent),
                 local_dict=local_dict,
+                desc_template=CustomDescTemplate,
             )
             for model in message_class_list
         ],
@@ -62,7 +81,12 @@ def gen_code() -> None:
     pydantic_model_to_py_file(
         str(now_path.parent.joinpath(target_p, "demo_gen_code_by_text_comment_pyi.py")),
         *[
-            msg_to_pydantic_model(model, parse_msg_desc_method=module, local_dict=local_dict)
+            msg_to_pydantic_model(
+                model,
+                parse_msg_desc_method=module,
+                local_dict=local_dict,
+                desc_template=CustomDescTemplate,
+            )
             for model in message_class_list
         ],
     )
@@ -73,6 +97,7 @@ def gen_code() -> None:
                 model,
                 parse_msg_desc_method=str(now_path.parent.parent),
                 local_dict=local_dict,
+                desc_template=CustomDescTemplate,
             )
             for model in message_class_list
         ],
