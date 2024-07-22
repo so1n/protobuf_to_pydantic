@@ -285,7 +285,7 @@ class Fixed32Test(BaseModel):
 
 
 class Fixed64Test(BaseModel):
-    const_test: float = Field(default=0.0)
+    const_test: typing_extensions.Literal[1] = Field(default=0.0)
     range_e_test: float = Field(default=0.0, ge=1, le=10)
     range_test: float = Field(default=0.0, gt=1, lt=10)
     in_test: float = Field(default=0.0, in_=[1, 2, 3])
@@ -310,7 +310,7 @@ class Fixed64Test(BaseModel):
 
 
 class Sfixed32Test(BaseModel):
-    const_test: float = Field(default=0.0)
+    const_test: typing_extensions.Literal[1] = Field(default=0.0)
     range_e_test: float = Field(default=0.0, ge=1, le=10)
     range_test: float = Field(default=0.0, gt=1, lt=10)
     in_test: float = Field(default=0.0, in_=[1, 2, 3])
@@ -335,7 +335,7 @@ class Sfixed32Test(BaseModel):
 
 
 class Sfixed64Test(BaseModel):
-    const_test: float = Field(default=0.0)
+    const_test: typing_extensions.Literal[1] = Field(default=0.0)
     range_e_test: float = Field(default=0.0, ge=1, le=10)
     range_test: float = Field(default=0.0, gt=1, lt=10)
     in_test: float = Field(default=0.0, in_=[1, 2, 3])
@@ -500,7 +500,7 @@ class MapTest(BaseModel):
 class MessageTest(BaseModel):
     skip_test: str = Field(default="")
     required_test: str = Field()
-    extra_test: str = Field(default="")
+    extra_test: str = Field(default="", customer_string="c1", customer_int=1)
 
 
 class RepeatedTest(BaseModel):
@@ -733,6 +733,10 @@ class AfterReferMessage(BaseModel):
 
 
 class NestedMessage(BaseModel):
+    """
+    test nested message
+    """
+
     class UserPayMessage(BaseModel):
         bank_number: str = Field(default="", min_length=13, max_length=19)
         exp: datetime = Field(default_factory=datetime.now, timestamp_gt_now=True)

@@ -25,6 +25,10 @@ class ConfigModel(BaseModel):
         default=DescTemplate, description="Support more templates by customizing 'Desc Template'"
     )
     comment_prefix: str = Field(default="p2p", description="Comment prefix")
+    parse_comment: bool = Field(
+        default=True,
+        description="If true, the annotation is parsed and the validation rule data is extracted from the annotation",
+    )
     customer_import_set: Set[str] = Field(default_factory=set, description="customer import code set")
     customer_deque: Deque = Field(default_factory=deque)
     module_path: str = Field(default="")

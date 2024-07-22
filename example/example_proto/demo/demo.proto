@@ -93,9 +93,17 @@ message InvoiceItem {
 message EmptyMessage {};
 
 message OptionalMessage{
-  optional string name = 1;
-  optional int32 age= 2;
-  optional InvoiceItem item = 3;
-  repeated string str_list =4;
-  map<string, int32> int_map = 5;
+  // p2p: {"required": true}
+  oneof a {
+    string x = 1;
+    // p2p: {"example": 18, "title": "use age", "ge": 0}
+    int32 y = 2;
+  }
+  optional string name = 3;
+  optional int32 age= 4;
+  optional InvoiceItem item = 5;
+  repeated string str_list =6;
+  map<string, int32> int_map = 7;
+  // p2p: {"default_template": "p2p@timestamp|10"}
+  float default_template_test = 8;
 };

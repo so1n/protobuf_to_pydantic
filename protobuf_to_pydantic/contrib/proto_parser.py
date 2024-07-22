@@ -59,8 +59,8 @@ fieldoptions: fieldoption ( ","  fieldoption )*
 fieldoption: OPTIONNAME "=" CONSTANT
 repeatedfield: [ comments ] "repeated" field
 optionalfield: [ comments ] "optional" field
-oneof: "oneof" ONEOFNAME "{" ( oneoffield | EMPTYSTATEMENT )* "}"
-oneoffield: TYPE FIELDNAME "=" FIELDNUMBER [ "[" fieldoptions "]" ] ";"
+oneof: [ comments ] "oneof" ONEOFNAME "{" ( oneoffield | EMPTYSTATEMENT )* "}"
+oneoffield:  [ comments ] TYPE FIELDNAME "=" FIELDNUMBER [ "[" fieldoptions "]" ] ";"
 mapfield: [ comments ] "map" "<" KEYTYPE "," TYPE ">" MAPNAME "=" FIELDNUMBER [ "[" fieldoptions "]" ] TAIL
 KEYTYPE: "int32" | "int64" | "uint32" | "uint64" | "sint32" | "sint64" | "fixed32" | "fixed64" | "sfixed32"
     | "sfixed64" | "bool" | "string"
@@ -111,6 +111,16 @@ class Field(object):
 
 
 @dataclass
+class OneOfField(object):
+    comment: Comment
+    type: str
+    key_type: str
+    val_type: str
+    name: str
+    number: int
+
+
+@dataclass
 class Enum(object):
     comment: Comment
     name: str
@@ -121,6 +131,7 @@ class Enum(object):
 class Message(object):
     comment: Comment
     name: str
+    oneofs: List[OneOfField]
     fields: List[Field]
     messages: Dict[str, "Message"]
     enums: Dict[str, Enum]
@@ -166,10 +177,11 @@ class ProtoTransformer(Transformer):
     @staticmethod
     def messagebody(
         items: List[Union[Message, Enum, Field]]
-    ) -> Tuple[List[Field], Dict[str, Message], Dict[str, Enum]]:
+    ) -> Tuple[List[OneOfField], List[Field], Dict[str, Message], Dict[str, Enum]]:
         """Returns a tuple of message body namedtuples"""
         messages: Dict[str, Message] = {}
         enums: Dict[str, Enum] = {}
+        oneofs: List[OneOfField] = []
         fields: List[Field] = []
         for item in items:
             if isinstance(item, Message):
@@ -178,7 +190,10 @@ class ProtoTransformer(Transformer):
                 enums[item.name] = item
             elif isinstance(item, Field):
                 fields.append(item)
-        return fields, messages, enums
+            elif isinstance(item, Token) and item.data.value == "oneof":
+                for oneof_item in item.children:
+                    oneofs.append(oneof_item)
+        return oneofs, fields, messages, enums
 
     @staticmethod
     def field(tokens: list) -> Field:
@@ -220,12 +235,14 @@ class ProtoTransformer(Transformer):
     @staticmethod
     def repeatedfield(tokens: list) -> Field:
         """Returns a Field namedtuple"""
-        comment: Comment = Comment("", {})
+        tokens = [token for token in tokens if token]
         if len(tokens) < 2:
             field: Field = tokens[0]
+            return field
         else:
             comment, field = tuple(tokens)
-        return Field(comment, "repeated", field.type, field.type, field.name, field.number)
+            field.comment.content = comment.content + field.comment.content
+            return field
 
     @staticmethod
     def optionalfield(tokens: list) -> Field:
@@ -236,6 +253,14 @@ class ProtoTransformer(Transformer):
         else:
             comment, field = tuple(tokens)
         return Field(comment, "optional", field.type, field.type, field.name, field.number)
+
+    def oneoffield(self, tokens: list) -> OneOfField:
+        """Returns a Field namedtuple"""
+        return OneOfField(**asdict(self.field(tokens)))
+
+    def oneof(self, tokens: list) -> Token:
+        """Returns a Token namedtuple"""
+        return tokens[0]
 
     @staticmethod
     def mapfield(tokens: list) -> Field:
@@ -258,7 +283,16 @@ class ProtoTransformer(Transformer):
                 elif token.type == "FIELDNUMBER":
                     fieldnumber = token
                 elif token.type == "COMMENT":
-                    comment = Comment(token.value, {})
+                    if not comment:
+                        comment = Comment(token.value, {})
+                    else:
+                        comment.content += token.value
+                elif token.type == "TAIL" and "//" in token.value:
+                    value = token.value.strip(";").strip()
+                    if not comment:
+                        comment = Comment(value, {})
+                    else:
+                        comment.content += value
         return Field(comment, "map", key_type.value, val_type.value, fieldname.value, int(fieldnumber.value))
 
     @staticmethod
@@ -313,8 +347,17 @@ class ProtoTransformer(Transformer):
                         name = token
                     elif token.type == "INTLIT":
                         value = token
-                    elif token.type == "COMMENTS":
-                        comment = Comment(token.value, {})
+                    elif token.type == "COMMENT":
+                        if not comment:
+                            comment = Comment(token.value, {})
+                        else:
+                            comment.content += token.value
+                    elif token.type == "TAIL" and "//" in token.value:
+                        value = token.value.strip(";").strip()
+                        if not comment:
+                            comment = Comment(value, {})
+                        else:
+                            comment.content += value
             enumitems.append(Field(comment, "enum", "enum", "enum", name.value, value.value))
         return enumitems
 

@@ -7,7 +7,7 @@ target_p="example/$proto_target"
 # project proto path
 source_p="example/example_proto"
 # service
-service_list=("demo" "validate" "p2p_validate" "common")
+service_list=("demo" "validate" "p2p_validate" "common" "p2p_validate_by_comment")
 
 
 rm -r "${target_p:?}/${source_p:?}"*

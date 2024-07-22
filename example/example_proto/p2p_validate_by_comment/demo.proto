@@ -1,0 +1,671 @@
+syntax = "proto3";
+package p2p_validate_comment_test;
+
+
+import "google/protobuf/any.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+
+
+message FloatTest {
+  // p2p: {"const": 1}
+  float const_test = 1 ;
+  // p2p: {"ge": 1, "le": 10}
+  float range_e_test = 2 ;
+  // p2p: {"gt": 1, "lt": 10}
+  float range_test = 3;
+  // p2p: {"in": [1,2,3]}
+  float in_test = 4;
+  // p2p: {"not_in": [1,2,3]}
+  float not_in_test = 5;
+  // p2p: {"default": 1.0}
+  float default_test = 6;
+  // p2p: {"default_template": "p2p@timestamp|10"}
+  float default_template_test = 20;
+  // p2p: {"enable": false}
+  float not_enable_test = 7;
+  // p2p: {"default_factory": "p2p@builtin|float"}
+  float default_factory_test = 8;
+  // p2p: {"miss_default": true}
+  float miss_default_test = 9;
+  // p2p: {"required": true}
+  float required_test = 19;
+  // p2p: {"alias": "alias"}
+  float alias_test = 10 ;
+  // p2p: {"description": "test desc"}
+  float desc_test = 11 ;
+  // p2p: {"multiple_of": 3.0}
+  float multiple_of_test = 12 ;
+  // p2p: {"example": 1.0}
+  float example_test = 13 ;
+  // p2p: {"example_factory": "p2p@builtin|float"}
+  float example_factory = 14;
+  // p2p: {"field": "p2p@local|CustomerField"}
+  float field_test = 15;
+  // p2p: {"type": "p2p@local|confloat"}
+  float type_test = 16;
+  // p2p: {"title": "title_test"}
+  float title_test = 17 ;
+  // p2p: {"extra": {"customer_string": "c1", "customer_int": 1}}
+  float extra_test = 18 ;
+}
+
+message DoubleTest {
+  // p2p: {"const": 1}
+  double const_test = 1;
+  // p2p: {"ge": 1, "le": 10}
+  double range_e_test = 2;
+  // p2p: {"gt": 1, "lt": 10}
+  double range_test = 3;
+  // p2p: {"in": [1,2,3]}
+  double in_test = 4;
+  // p2p: {"not_in": [1,2,3]}
+  double not_in_test = 5;
+  // p2p: {"default": 1.0}
+  double default_test = 6;
+  // p2p: {"default_template": "p2p@timestamp|10"}
+  double default_template_test = 20;
+  // p2p: {"enable": false}
+  double not_enable_test = 7;
+  // p2p: {"default_factory": "p2p@builtin|float"}
+  double default_factory_test = 8;
+  // p2p: {"miss_default": true}
+  double miss_default_test = 9;
+  // p2p: {"required": true}
+  double required_test = 19;
+  // p2p: {"alias": "alias"}
+  double alias_test = 10 ;
+  // p2p: {"description": "test desc"}
+  double desc_test = 11 ;
+  // p2p: {"multiple_of": 3.0}
+  double multiple_of_test = 12 ;
+  // p2p: {"example": 1.0}
+  double example_test = 13 ;
+  // p2p: {"example_factory": "p2p@builtin|float"}
+  double example_factory = 14;
+  // p2p: {"field": "p2p@local|CustomerField"}
+  double field_test = 15;
+  // p2p: {"type": "p2p@local|confloat"}
+  double type_test = 16;
+  // p2p: {"title": "title_test"}
+  double title_test = 17 ;
+  // p2p: {"extra": {"customer_string": "c1", "customer_int": 1}}
+  double extra_test = 18 ;
+}
+
+message Int32Test {
+  // p2p: {"const": 1}
+  int32 const_test = 1 ;
+  // p2p: {"ge": 1, "le": 10}
+  int32 range_e_test = 2 ;
+  // p2p: {"gt": 1, "lt": 10}
+  int32 range_test = 3;
+  // p2p: {"in": [1,2,3]}
+  int32 in_test = 4;
+  // p2p: {"not_in": [1,2,3]}
+  int32 not_in_test = 5;
+  // p2p: {"default": 1.0}
+  int32 default_test = 6;
+  // p2p: {"default_template": "p2p@timestamp|10"}
+  int32 default_template_test = 20;
+  // p2p: {"enable": false}
+  int32 not_enable_test = 7;
+  // p2p: {"default_factory": "p2p@builtin|int"}
+  int32 default_factory_test = 8;
+  // p2p: {"miss_default": true}
+  int32 miss_default_test = 9;
+  // p2p: {"required": true}
+  int32 required_test = 19;
+  // p2p: {"alias": "alias"}
+  int32 alias_test = 10 ;
+  // p2p: {"description": "test desc"}
+  int32 desc_test = 11 ;
+  // p2p: {"multiple_of": 3.0}
+  int32 multiple_of_test = 12 ;
+  // p2p: {"example": 1.0}
+  int32 example_test = 13 ;
+  // p2p: {"example_factory": "p2p@builtin|int"}
+  int32 example_factory = 14;
+  // p2p: {"field": "p2p@local|CustomerField"}
+  int32 field_test = 15;
+  // p2p: {"type": "p2p@local|confloat"}
+  int32 type_test = 16;
+  // p2p: {"title": "title_test"}
+  int32 title_test = 17 ;
+  // p2p: {"extra": {"customer_string": "c1", "customer_int": 1}}
+  int32 extra_test = 18 ;
+}
+
+message Int64Test {
+  // p2p: {"const": 1}
+  int64 const_test = 1;
+  // p2p: {"ge": 1, "le": 10}
+  int64 range_e_test = 2;
+  // p2p: {"gt": 1, "lt": 10}
+  int64 range_test = 3;
+  // p2p: {"in": [1,2,3]}
+  int64 in_test = 4;
+  // p2p: {"not_in": [1,2,3]}
+  int64 not_in_test = 5;
+  // p2p: {"default": 1.0}
+  int64 default_test = 6;
+  // p2p: {"default_template": "p2p@timestamp|10"}
+  int64 default_template_test = 20;
+  // p2p: {"enable": false}
+  int64 not_enable_test = 7;
+  // p2p: {"default_factory": "p2p@builtin|int"}
+  int64 default_factory_test = 8;
+  // p2p: {"miss_default": true}
+  int64 miss_default_test = 9;
+  // p2p: {"required": true}
+  int64 required_test = 19;
+  // p2p: {"alias": "alias"}
+  int64 alias_test = 10 ;
+  // p2p: {"description": "test desc"}
+  int64 desc_test = 11 ;
+  // p2p: {"multiple_of": 3.0}
+  int64 multiple_of_test = 12 ;
+  // p2p: {"example": 1.0}
+  int64 example_test = 13 ;
+  // p2p: {"example_factory": "p2p@builtin|int"}
+  int64 example_factory = 14;
+  // p2p: {"field": "p2p@local|CustomerField"}
+  int64 field_test = 15;
+  // p2p: {"type": "p2p@local|confloat"}
+  int64 type_test = 16;
+  // p2p: {"title": "title_test"}
+  int64 title_test = 17 ;
+  // p2p: {"extra": {"customer_string": "c1", "customer_int": 1}}
+  int64 extra_test = 18 ;
+}
+
+message Uint32Test {
+  // p2p: {"const": 1}
+  uint32 const_test = 1;
+  // p2p: {"ge": 1, "le": 10}
+  uint32 range_e_test = 2;
+  // p2p: {"gt": 1, "lt": 10}
+  uint32 range_test = 3;
+  // p2p: {"in": [1,2,3]}
+  uint32 in_test = 4;
+  // p2p: {"not_in": [1,2,3]}
+  uint32 not_in_test = 5;
+  // p2p: {"default": 1.0}
+  uint32 default_test = 6;
+  // p2p: {"default_template": "p2p@timestamp|10"}
+  uint32 default_template_test = 20;
+  // p2p: {"enable": false}
+  uint32 not_enable_test = 7;
+  // p2p: {"default_factory": "p2p@builtin|int"}
+  uint32 default_factory_test = 8;
+  // p2p: {"miss_default": true}
+  uint32 miss_default_test = 9;
+  // p2p: {"required": true}
+  uint32 required_test = 19;
+  // p2p: {"alias": "alias"}
+  uint32 alias_test = 10 ;
+  // p2p: {"description": "test desc"}
+  uint32 desc_test = 11 ;
+  // p2p: {"multiple_of": 3.0}
+  uint32 multiple_of_test = 12 ;
+  // p2p: {"example": 1.0}
+  uint32 example_test = 13 ;
+  // p2p: {"example_factory": "p2p@builtin|int"}
+  uint32 example_factory = 14;
+  // p2p: {"field": "p2p@local|CustomerField"}
+  uint32 field_test = 15;
+  // p2p: {"type": "p2p@local|conint"}
+  uint32 type_test = 16;
+  // p2p: {"title": "title_test"}
+  uint32 title_test = 17 ;
+  // p2p: {"extra": {"customer_string": "c1", "customer_int": 1}}
+  uint32 extra_test = 18 ;
+}
+
+message Sint32Test {
+  sint32 const_test = 1; // p2p: {"const": 1}
+  sint32 range_e_test = 2; // p2p: {"ge": 1, "le": 10}
+  sint32 range_test = 3; // p2p: {"gt": 1, "lt": 10}
+  sint32 in_test = 4; // p2p: {"in": [1,2,3]}
+  sint32 not_in_test = 5; // p2p: {"not_in": [1,2,3]}
+  sint32 default_test = 6; // p2p: {"default": 1.0}
+  sint32 default_template_test = 20; // p2p: {"default_template": "p2p@timestamp|10"}
+  sint32 not_enable_test = 7; // p2p: {"enable": false}
+  sint32 default_factory_test = 8; // p2p: {"default_factory": "p2p@builtin|int"}
+  sint32 miss_default_test = 9; // p2p: {"miss_default": true}
+  sint32 required_test = 19; // p2p: {"required": true}
+  sint32 alias_test = 10 ; // p2p: {"alias": "alias"}
+  sint32 desc_test = 11 ; // p2p: {"description": "test desc"}
+  sint32 multiple_of_test = 12 ; // p2p: {"multiple_of": 3.0}
+  sint32 example_test = 13 ; // p2p: {"example": 1.0}
+  sint32 example_factory = 14; // p2p: {"example_factory": "p2p@builtin|int"}
+  sint32 field_test = 15; // p2p: {"field": "p2p@local|CustomerField"}
+  sint32 type_test = 16; // p2p: {"type": "p2p@local|conint"}
+  sint32 title_test = 17 ; // p2p: {"title": "title_test"}
+  sint32 extra_test = 18 ; // p2p: {"extra": {"customer_string": "c1", "customer_int": 1}}
+}
+
+message Uint64Test {
+  uint64 const_test = 1; // p2p: {"const": 1}
+  uint64 range_e_test = 2; // p2p: {"ge": 1, "le": 10}
+  uint64 range_test = 3; // p2p: {"gt": 1, "lt": 10}
+  uint64 in_test = 4; // p2p: {"in": [1,2,3]}
+  uint64 not_in_test = 5; // p2p: {"not_in": [1,2,3]}
+  uint64 default_test = 6; // p2p: {"default": 1.0}
+  uint64 default_template_test = 20; // p2p: {"default_template": "p2p@timestamp|10"}
+  uint64 not_enable_test = 7; // p2p: {"enable": false}
+  uint64 default_factory_test = 8; // p2p: {"default_factory": "p2p@builtin|int"}
+  uint64 miss_default_test = 9; // p2p: {"miss_default": true}
+  uint64 required_test = 19; // p2p: {"required": true}
+  uint64 alias_test = 10 ; // p2p: {"alias": "alias"}
+  uint64 desc_test = 11 ; // p2p: {"description": "test desc"}
+  uint64 multiple_of_test = 12 ; // p2p: {"multiple_of": 3.0}
+  uint64 example_test = 13 ; // p2p: {"example": 1.0}
+  uint64 example_factory = 14; // p2p: {"example_factory": "p2p@builtin|int"}
+  uint64 field_test = 15; // p2p: {"field": "p2p@local|CustomerField"}
+  uint64 type_test = 16; // p2p: {"type": "p2p@local|conint"}
+  uint64 title_test = 17 ; // p2p: {"title": "title_test"}
+  uint64 extra_test = 18 ; // p2p: {"extra": {"customer_string": "c1", "customer_int": 1}}
+}
+
+message Sint64Test {
+  sint64 const_test = 1; // p2p: {"const": 1}
+  sint64 range_e_test = 2; // p2p: {"ge": 1, "le": 10}
+  sint64 range_test = 3; // p2p: {"gt": 1, "lt": 10}
+  sint64 in_test = 4; // p2p: {"in": [1,2,3]}
+  sint64 not_in_test = 5; // p2p: {"not_in": [1,2,3]}
+  sint64 default_test = 6; // p2p: {"default": 1.0}
+  sint64 default_template_test = 20; // p2p: {"default_template": "p2p@timestamp|10"}
+  sint64 not_enable_test = 7; // p2p: {"enable": false}
+  sint64 default_factory_test = 8; // p2p: {"default_factory": "p2p@builtin|int"}
+  sint64 miss_default_test = 9; // p2p: {"miss_default": true}
+  sint64 required_test = 19; // p2p: {"required": true}
+  sint64 alias_test = 10 ; // p2p: {"alias": "alias"}
+  sint64 desc_test = 11 ; // p2p: {"description": "test desc"}
+  sint64 multiple_of_test = 12 ; // p2p: {"multiple_of": 3.0}
+  sint64 example_test = 13 ; // p2p: {"example": 1.0}
+  sint64 example_factory = 14; // p2p: {"example_factory": "p2p@builtin|int"}
+  sint64 field_test = 15; // p2p: {"field": "p2p@local|CustomerField"}
+  sint64 type_test = 16; // p2p: {"type": "p2p@local|conint"}
+  sint64 title_test = 17 ; // p2p: {"title": "title_test"}
+  sint64 extra_test = 18 ; // p2p: {"extra": {"customer_string": "c1", "customer_int": 1}}
+}
+
+message Fixed32Test {
+  fixed32 const_test = 1; // p2p: {"const": 1}
+  fixed32 range_e_test = 2; // p2p: {"ge": 1, "le": 10}
+  fixed32 range_test = 3; // p2p: {"gt": 1, "lt": 10}
+  fixed32 in_test = 4; // p2p: {"in": [1,2,3]}
+  fixed32 not_in_test = 5; // p2p: {"not_in": [1,2,3]}
+  fixed32 default_test = 6; // p2p: {"default": 1.0}
+  fixed32 default_template_test = 20; // p2p: {"default_template": "p2p@timestamp|10"}
+  fixed32 not_enable_test = 7; // p2p: {"enable": false}
+  fixed32 default_factory_test = 8; // p2p: {"default_factory": "p2p@builtin|float"}
+  fixed32 miss_default_test = 9; // p2p: {"miss_default": true}
+  fixed32 required_test = 19; // p2p: {"required": true}
+  fixed32 alias_test = 10 ; // p2p: {"alias": "alias"}
+  fixed32 desc_test = 11 ; // p2p: {"description": "test desc"}
+  fixed32 multiple_of_test = 12 ; // p2p: {"multiple_of": 3.0}
+  fixed32 example_test = 13 ; // p2p: {"example": 1.0}
+  fixed32 example_factory = 14; // p2p: {"example_factory": "p2p@builtin|float"}
+  fixed32 field_test = 15; // p2p: {"field": "p2p@local|CustomerField"}
+  fixed32 type_test = 16; // p2p: {"type": "p2p@local|confloat"}
+  fixed32 title_test = 17 ; // p2p: {"title": "title_test"}
+  fixed32 extra_test = 18 ; // p2p: {"extra": {"customer_string": "c1", "customer_int": 1}}
+}
+
+
+message Fixed64Test {
+  fixed64 const_test = 1; // p2p: {"const": 1}
+  fixed64 range_e_test = 2; // p2p: {"ge": 1, "le": 10}
+  fixed64 range_test = 3; // p2p: {"gt": 1, "lt": 10}
+  fixed64 in_test = 4; // p2p: {"in": [1,2,3]}
+  fixed64 not_in_test = 5; // p2p: {"not_in": [1,2,3]}
+  fixed64 default_test = 6; // p2p: {"default": 1.0}
+  fixed64 default_template_test = 20; // p2p: {"default_template": "p2p@timestamp|10"}
+  fixed64 not_enable_test = 7; // p2p: {"enable": false}
+  fixed64 default_factory_test = 8; // p2p: {"default_factory": "p2p@builtin|float"}
+  fixed64 miss_default_test = 9; // p2p: {"miss_default": true}
+  fixed64 required_test = 19; // p2p: {"required": true}
+  fixed64 alias_test = 10 ; // p2p: {"alias": "alias"}
+  fixed64 desc_test = 11 ; // p2p: {"description": "test desc"}
+  fixed64 multiple_of_test = 12 ; // p2p: {"multiple_of": 3.0}
+  fixed64 example_test = 13 ; // p2p: {"example": 1.0}
+  fixed64 example_factory = 14; // p2p: {"example_factory": "p2p@builtin|float"}
+  fixed64 field_test = 15; // p2p: {"field": "p2p@local|CustomerField"}
+  fixed64 type_test = 16; // p2p: {"type": "p2p@local|confloat"}
+  fixed64 title_test = 17 ; // p2p: {"title": "title_test"}
+  fixed64 extra_test = 18 ; // p2p: {"extra": {"customer_string": "c1", "customer_int": 1}}
+}
+
+
+message Sfixed32Test {
+  sfixed32 const_test = 1; // p2p: {"const": 1}
+  sfixed32 range_e_test = 2; // p2p: {"ge": 1, "le": 10}
+  sfixed32 range_test = 3; // p2p: {"gt": 1, "lt": 10}
+  sfixed32 in_test = 4; // p2p: {"in": [1,2,3]}
+  sfixed32 not_in_test = 5; // p2p: {"not_in": [1,2,3]}
+  sfixed32 default_test = 6; // p2p: {"default": 1.0}
+  sfixed32 default_template_test = 20; // p2p: {"default_template": "p2p@timestamp|10"}
+  sfixed32 not_enable_test = 7; // p2p: {"enable": false}
+  sfixed32 default_factory_test = 8; // p2p: {"default_factory": "p2p@builtin|float"}
+  sfixed32 miss_default_test = 9; // p2p: {"miss_default": true}
+  sfixed32 required_test = 19; // p2p: {"required": true}
+  sfixed32 alias_test = 10 ; // p2p: {"alias": "alias"}
+  sfixed32 desc_test = 11 ; // p2p: {"description": "test desc"}
+  sfixed32 multiple_of_test = 12 ; // p2p: {"multiple_of": 3.0}
+  sfixed32 example_test = 13 ; // p2p: {"example": 1.0}
+  sfixed32 example_factory = 14; // p2p: {"example_factory": "p2p@builtin|float"}
+  sfixed32 field_test = 15; // p2p: {"field": "p2p@local|CustomerField"}
+  sfixed32 type_test = 16; // p2p: {"type": "p2p@local|confloat"}
+  sfixed32 title_test = 17 ; // p2p: {"title": "title_test"}
+  sfixed32 extra_test = 18 ; // p2p: {"extra": {"customer_string": "c1", "customer_int": 1}}
+}
+
+message Sfixed64Test {
+  sfixed64 const_test = 1; // p2p: {"const": 1}
+  sfixed64 range_e_test = 2; // p2p: {"ge": 1, "le": 10}
+  sfixed64 range_test = 3; // p2p: {"gt": 1, "lt": 10}
+  sfixed64 in_test = 4; // p2p: {"in": [1,2,3]}
+  sfixed64 not_in_test = 5; // p2p: {"not_in": [1,2,3]}
+  sfixed64 default_test = 6; // p2p: {"default": 1.0}
+  sfixed64 default_template_test = 20; // p2p: {"default_template": "p2p@timestamp|10"}
+  sfixed64 not_enable_test = 7; // p2p: {"enable": false}
+  sfixed64 default_factory_test = 8; // p2p: {"default_factory": "p2p@builtin|float"}
+  sfixed64 miss_default_test = 9; // p2p: {"miss_default": true}
+  sfixed64 required_test = 19; // p2p: {"required": true}
+  sfixed64 alias_test = 10 ; // p2p: {"alias": "alias"}
+  sfixed64 desc_test = 11 ; // p2p: {"description": "test desc"}
+  sfixed64 multiple_of_test = 12 ; // p2p: {"multiple_of": 3.0}
+  sfixed64 example_test = 13 ; // p2p: {"example": 1.0}
+  sfixed64 example_factory = 14; // p2p: {"example_factory": "p2p@builtin|float"}
+  sfixed64 field_test = 15; // p2p: {"field": "p2p@local|CustomerField"}
+  sfixed64 type_test = 16; // p2p: {"type": "p2p@local|confloat"}
+  sfixed64 title_test = 17 ; // p2p: {"title": "title_test"}
+  sfixed64 extra_test = 18 ; // p2p: {"extra": {"customer_string": "c1", "customer_int": 1}}
+}
+
+
+message BoolTest {
+  bool bool_1_test = 1; // p2p: {"const": true}
+  bool bool_2_test = 2; // p2p: {"const": false}
+  bool enable_test = 3; // p2p: {"enable": false}
+  bool default_test = 4; // p2p: {"default": true}
+  bool miss_default_test = 5; // p2p: {"miss_default": true}
+  bool required_test = 19; // p2p: {"required": true}
+  bool alias_test = 10 ; // p2p: {"alias": "alias"}
+  bool desc_test = 11 ; // p2p: {"description": "test desc"}
+  bool example_test = 13 ; // p2p: {"example": true}
+  bool field_test = 15; // p2p: {"field": "p2p@local|CustomerField"}
+  bool title_test = 17 ; // p2p: {"title": "title_test"}
+  bool extra_test = 18 ; // p2p: {"extra": {"customer_string": "c1", "customer_int": 1}}
+}
+
+message StringTest {
+  string const_test = 1; // p2p: {"const": "aaa"}
+  string len_test = 2; // p2p: {"len": 3}
+  string s_range_len_test =3; // p2p: {"min_length": 1, "max_length": 3}
+  string pattern_test = 5; // p2p: {"pattern": "^test"}
+  string prefix_test = 6; // p2p: {"prefix": "prefix"}
+  string suffix_test = 7; // p2p: {"suffix": "suffix"}
+  string contains_test = 8; // p2p: {"contains": "contains"}
+  string not_contains_test = 9; // p2p: {"not_contains": "not_contains"}
+  string in_test = 10; // p2p: {"in": ["a", "b", "c"]}
+  string not_in_test = 11; // p2p: {"not_in": ["a", "b", "c"]}
+  string email_test = 12; // p2p: {"email": true}
+  string hostname_test = 13; // p2p: {"hostname": true}
+  string ip_test = 14; // p2p: {"ip": true}
+  string ipv4_test = 15; // p2p: {"ipv4": true}
+  string ipv6_test = 16; // p2p: {"ipv6": true}
+  string uri_test = 17; // p2p: {"uri": true}
+  string uri_ref_test = 18; // p2p: {"uri_ref": true}
+  string address_test = 19; // p2p: {"address": true}
+  string uuid_test = 20; // p2p: {"uuid": true}
+  string pydantic_type_test = 21; // p2p: {"pydantic_type": "UUID1"}
+  string enable_test = 22; // p2p: {"enable": false}
+  string default_test = 23; // p2p: {"default": "default"}
+  string default_factory_test = 24; // p2p: {"default_factory": "p2p@import|uuid|uuid4"}
+  string miss_default_test=25; // p2p: {"miss_default": true}
+  string required_test = 34; // p2p: {"required": true}
+  string alias_test = 26 ; // p2p: {"alias": "alias"}
+  string desc_test = 27 ; // p2p: {"description": "test desc"}
+  string example_test = 28 ; // p2p: {"example": "example"}
+  string example_factory_test = 29; // p2p: {"example_factory": "p2p@import|uuid|uuid4"}
+  string field_test = 30; // p2p: {"field": "p2p@local|CustomerField"}
+  string title_test = 31 ; // p2p: {"title": "title_test"}
+  string type_test = 32 ; // p2p: {"type": "p2p@import|pydantic|constr"}
+  string extra_test = 33 ; // p2p: {"extra": {"customer_string": "c1", "customer_int": 1}}
+}
+
+message BytesTest {
+  bytes const_test = 1; // p2p: {"const": "demo"}
+  bytes range_len_test = 3; // p2p: {"min_length": 1, "max_length": 4}
+  bytes prefix_test = 5; // p2p: {"prefix": "prefix"}
+  bytes suffix_test = 6; // p2p: {"suffix": "suffix"}
+  bytes contains_test = 7; // p2p: {"contains": "contains"}
+  bytes in_test = 8; // p2p: {"in": ["a", "b", "c"]}
+  bytes not_in_test = 9; // p2p: {"not_in": ["a", "b", "c"]}
+  bytes enable_test = 22; // p2p: {"enable": false}
+  bytes default_test = 23; // p2p: {"default": "default"}
+  bytes default_factory_test = 24; // p2p: {"default_factory": "p2p@builtin|bytes"}
+  bytes miss_default_test=25; // p2p: {"miss_default": true}
+  bytes required_test = 34; // p2p: {"required": true}
+  bytes alias_test = 26 ; // p2p: {"alias": "alias"}
+  bytes desc_test = 27 ; // p2p: {"description": "test desc"}
+  bytes example_test = 28 ; // p2p: {"example": "example"}
+  bytes example_factory_test = 29; // p2p: {"example_factory": "p2p@builtin|bytes"}
+  bytes field_test = 30; // p2p: {"field": "p2p@local|CustomerField"}
+  bytes title_test = 31 ; // p2p: {"title": "title_test"}
+  bytes type_test = 32 ; // p2p: {"type": "p2p@import|pydantic|constr"}
+  bytes extra_test = 33 ; // p2p: {"extra": {"customer_string": "c1", "customer_int": 1}}
+}
+
+enum State {
+  INACTIVE = 0;
+  PENDING  = 1;
+  ACTIVE   = 2;
+}
+
+message EnumTest {
+  State const_test = 1; // p2p: {"const": 2}
+  State in_test = 3; // p2p: {"in": [0, 2]}
+  State not_in_test = 4; // p2p: {"not_in": [0, 2]}
+  State enable_test = 22; // p2p: {"enable": false}
+  State default_test = 23; // p2p: {"default": 1}
+  State miss_default_test=25; // p2p: {"miss_default": true}
+  State required_test=34; // p2p: {"required": true}
+  State alias_test = 26 ; // p2p: {"alias": "alias"}
+  State desc_test = 27 ; // p2p: {"description": "test desc"}
+  State example_test = 28 ; // p2p: {"example": 2}
+  State field_test = 30; // p2p: {"field": "p2p@local|CustomerField"}
+  State title_test = 31 ; // p2p: {"title": "title_test"}
+  State extra_test = 33 ; // p2p: {"extra": {"customer_string": "c1", "customer_int": 1}}
+}
+
+message MapTest {
+  map<string, int32> pair_test = 1; // p2p: {"min_pairs": 1, "max_pairs": 5}
+  map<string, int32> keys_test = 3; // p2p: {"keys": {"string": {"min_length": 1, "max_length": 5}}}
+  map<string, int32> values_test = 4; // p2p: {"values": {"int32": {"ge": 5, "le": 5}}}
+   // p2p: {"keys": {"string": {"min_length": 1, "max_length": 5}}, "values": {"timestamp": {"gt_now": true}}}
+  map<string, google.protobuf.Timestamp> keys_values_test = 5;
+  map<string, int32> enable_test = 6; // p2p: {"enable": false}
+  map<string, int32> default_factory_test = 24; // p2p: {"default_factory": "p2p@builtin|dict"}
+  map<string, int32> miss_default_test=25; // p2p: {"miss_default": true}
+  map<string, int32> required_test=34; // p2p: {"required": true}
+  map<string, int32> alias_test = 26 ; // p2p: {"alias": "alias"}
+  map<string, int32> desc_test = 27 ; // p2p: {"description": "test desc"}
+  map<string, int32> example_factory_test = 29; // p2p: {"example_factory": "p2p@builtin|dict"}
+  map<string, int32> field_test = 30; // p2p: {"field": "p2p@local|CustomerField"}
+  map<string, int32> title_test = 31 ; // p2p: {"title": "title_test"}
+  map<string, int32> type_test = 32 ; // p2p: {"type": "p2p@builtin|dict"}
+  map<string, int32> extra_test = 33 ; // p2p: {"extra": {"customer_string": "c1", "customer_int": 1}}
+}
+
+message MessageTest {
+  string skip_test = 1; // p2p: {"skip": true}
+  string required_test = 2; // p2p: {"required": true}
+  string extra_test = 33; // p2p: {"extra": {"customer_string": "c1", "customer_int": 1}}
+}
+
+
+message RepeatedTest {
+  repeated string range_test = 1; // p2p: {"min_items": 1, "max_items": 5}
+  repeated string unique_test = 2; // p2p: {"unique": true}
+  // p2p: {"min_items": 1, "max_items": 5, "items": {"string": {"min_length": 1, "max_length": 5}}}
+  repeated string items_string_test = 3;
+  repeated double items_double_test = 4; // p2p: {"min_items": 1, "max_items": 5, "items": {"double": {"gt": 1, "lt": 5}}}
+  repeated int32  items_int32_test = 5; // p2p: {"min_items": 1, "max_items": 5, "items": {"int32": {"gt": 1, "lt": 5}}}
+  // p2p: {"min_items": 1, "max_items": 5, "items": {"timestamp": {"gt": {"seconds": 1600000000}, "lt": {"seconds": 1600000010}}}}
+  repeated google.protobuf.Timestamp items_timestamp_test = 6;
+  // p2p: {"min_items": 1, "max_items": 5, "items": {"duration": {"ge": {"seconds": 10}, "le": {"seconds":10}}}}
+  repeated google.protobuf.Duration items_duration_test = 7;
+  repeated bytes items_bytes_test = 8; // p2p: {"min_items": 1, "max_items": 5, "items": {"bytes": {"min_length": 1, "max_length": 5}}}
+  repeated string enable_test = 9; // p2p: {"enable": false}
+  repeated string default_factory_test = 24; // p2p: {"default_factory": "p2p@builtin|list"}
+  repeated string miss_default_test=25; // p2p: {"miss_default": true}
+  repeated string required_test=34; // p2p: {"required": true}
+  repeated string alias_test = 26 ; // p2p: {"alias": "alias"}
+  repeated string desc_test = 27 ; // p2p: {"description": "test desc"}
+  repeated string example_factory_test = 29; // p2p: {"example_factory": "p2p@builtin|list"}
+  repeated string field_test = 30; // p2p: {"field": "p2p@local|CustomerField"}
+  repeated string title_test = 31 ; // p2p: {"title": "title_test"}
+  repeated string type_test = 32 ; // p2p: {"type": "p2p@builtin|list"}
+  repeated string extra_test = 33 ; // p2p: {"extra": {"customer_string": "c1", "customer_int": 1}}
+}
+
+message AnyTest {
+  google.protobuf.Any required_test = 1; // p2p: {"required": true}
+  google.protobuf.Any not_in_test = 2; // p2p: {"not_in": ["type.googleapis.com/google.protobuf.Duration", "type.googleapis.com/google.protobuf.Timestamp"]}
+  google.protobuf.Any in_test = 3; // p2p: {"in": ["p2p@import_instance|google.protobuf.any_pb2|Any|{\"type_url\": \"type.googleapis.com/google.protobuf.Duration\"}", "type.googleapis.com/google.protobuf.Timestamp"]}
+  google.protobuf.Any enable_test = 4; // p2p: {"enable": false}
+  // p2p: {"default": "p2p@import_instance|google.protobuf.any_pb2|Any|{\"type_url\": \"type.googleapis.com/google.protobuf.Duration\"}"}
+  google.protobuf.Any default_test = 23;
+  google.protobuf.Any default_factory_test = 24; // p2p: {"default_factory": "p2p@local|customer_any"}
+  google.protobuf.Any miss_default_test=25; // p2p: {"miss_default": true}
+  google.protobuf.Any alias_test = 26 ; // p2p: {"alias": "alias"}
+  google.protobuf.Any desc_test = 27 ; // p2p: {"description": "test desc"}
+  google.protobuf.Any example_test = 28 ; // p2p: {"example": "type.googleapis.com/google.protobuf.Duration"}
+  google.protobuf.Any example_factory_test = 29; // p2p: {"example_factory": "p2p@local|customer_any"}
+  google.protobuf.Any field_test = 30; // p2p: {"field": "p2p@local|CustomerField"}
+  google.protobuf.Any title_test = 31 ; // p2p: {"title": "title_test"}
+  google.protobuf.Any extra_test = 33 ; // p2p: {"extra": {"customer_string": "c1", "customer_int": 1}}
+}
+
+message DurationTest {
+  google.protobuf.Duration const_test =2; // p2p: {"const": {"seconds": 1, "nanos": 500000000}}
+  google.protobuf.Duration range_test = 3; // p2p: {"lt": {"seconds": 10, "nanos": 500000000}, "gt": {"seconds": 5, "nanos": 500000000}}
+  google.protobuf.Duration range_e_test = 4; // p2p: {"le": {"seconds": 10, "nanos": 500000000}, "ge": {"seconds": 5, "nanos": 500000000}}
+  google.protobuf.Duration in_test = 5; // p2p: {"in": [{"seconds": 1, "nanos": 500000000}, {"seconds":3, "nanos": 500000000}]}
+  google.protobuf.Duration not_in_test = 6; // p2p: {"not_in": [{"seconds": 1, "nanos": 500000000}, {"seconds":3, "nanos": 500000000}]}
+  google.protobuf.Duration enable_test = 22; // p2p: {"enable": false}
+  google.protobuf.Duration default_test = 23; // p2p: {"default": {"seconds": 1, "nanos":500000000}}
+  google.protobuf.Duration default_factory_test = 24; // p2p: {"default_factory": "p2p@import|datetime|timedelta"}
+  google.protobuf.Duration miss_default_test=25; // p2p: {"miss_default": true}
+  google.protobuf.Duration required_test=34; // p2p: {"required": true}
+  google.protobuf.Duration alias_test = 26 ; // p2p: {"alias": "alias"}
+  google.protobuf.Duration desc_test = 27 ; // p2p: {"description": "test desc"}
+  google.protobuf.Duration example_test = 28 ; // p2p: {"example": {"seconds": 1, "nanos":500000000}}
+  google.protobuf.Duration example_factory_test = 29; // p2p: {"example_factory": "p2p@import|datetime|timedelta"}
+  google.protobuf.Duration field_test = 30; // p2p: {"field": "p2p@local|CustomerField"}
+  google.protobuf.Duration title_test=31; // p2p: {"title": "title_test"}
+  google.protobuf.Duration type_test = 32; // p2p: {"type": "p2p@import|datetime|timedelta"}
+  google.protobuf.Duration extra_test = 33; // p2p: {"extra": {"customer_string": "c1", "customer_int": 1}}
+}
+
+message TimestampTest {
+  google.protobuf.Timestamp const_test = 2; // p2p: {"const": {"seconds": 1600000000}}
+  google.protobuf.Timestamp range_test = 3; // p2p: {"gt": {"seconds": 1600000000}, "lt": {"seconds": 1600000010}}
+  google.protobuf.Timestamp range_e_test = 4; // p2p: {"ge": {"seconds": 1600000000}, "le": {"seconds": 1600000010}}
+  google.protobuf.Timestamp lt_now_test = 5; // p2p: {"lt_now": true}
+  google.protobuf.Timestamp gt_now_test = 6; // p2p: {"gt_now": true}
+  google.protobuf.Timestamp within_test = 7; // p2p: {"within": {"seconds": 1}}
+  google.protobuf.Timestamp within_and_gt_now_test = 8; // p2p: {"gt_now": true, "within": {"seconds": 3600}}
+  google.protobuf.Timestamp enable_test = 22; // p2p: {"enable": false}
+  google.protobuf.Timestamp default_test = 23; // p2p: {"default": {"seconds": 1, "nanos":500000000}}
+  google.protobuf.Timestamp default_factory_test = 24; // p2p: {"default_factory": "p2p@import|datetime|datetime.now"}
+  google.protobuf.Timestamp miss_default_test=25; // p2p: {"miss_default": true}
+  google.protobuf.Timestamp required_test=34; // p2p: {"required": true}
+  google.protobuf.Timestamp alias_test = 26 ; // p2p: {"alias": "alias"}
+  google.protobuf.Timestamp desc_test = 27 ; // p2p: {"description": "test desc"}
+  google.protobuf.Timestamp example_test = 28 ; // p2p: {"example": {"seconds": 1, "nanos":500000000}}
+  google.protobuf.Timestamp example_factory_test = 29; // p2p: {"example_factory": "p2p@import|datetime|datetime.now"}
+  google.protobuf.Timestamp field_test = 30; // p2p: {"field": "p2p@local|CustomerField"}
+  google.protobuf.Timestamp title_test = 31 ; // p2p: {"title": "title_test"}
+  google.protobuf.Timestamp type_test = 32 ; // p2p: {"type": "p2p@import|datetime|datetime"}
+  google.protobuf.Timestamp extra_test = 33 ; // p2p: {"extra": {"customer_string": "c1", "customer_int": 1}}
+}
+
+
+// p2p: {"ignored": true}
+message MessageIgnoredTest {
+  int32 const_test = 1 ; // p2p: {"const": 1}
+  int32 range_e_test = 2 ; // p2p: {"ge": 1, "le": 10}
+  int32 range_test = 3 ; // p2p: {"gt": 1, "lt": 10}
+}
+
+
+// p2p: {"oneof:id": {"required": true}}
+message OneOfTest {
+  string header = 1;
+
+  // p2p: {"required": true}
+  oneof id {
+    string x = 2;
+    int32  y = 3;
+  }
+}
+
+message OneOfNotTest {
+  string header = 1;
+  oneof id {
+    string x = 2;
+    int32  y = 3;
+  }
+}
+
+// Annotations are used in runtime mode
+// p2p: {"oneof:id": {"required": true}}
+// p2p: {"oneof:id": {"oneof_extend": {"optional": ["x", "y"]}}}
+message OneOfOptionalTest {
+  string header = 1;
+
+  // Annotations are used in plugin mode
+  // p2p: {"required": true}
+  // p2p: {"oneof_extend": {"optional": ["x", "y"]}}
+  oneof id {
+    string x = 2;
+    int32  y = 3;
+    bool z = 4;
+  }
+  optional string name = 5;
+  optional int32 age= 6;
+  repeated string str_list = 7;
+  map<string, int32> int_map = 8;
+}
+
+// test nested message
+message NestedMessage{
+  message UserPayMessage {
+    string bank_number=1 ; // p2p: {"min_length": 13, "max_length": 19}
+    google.protobuf.Timestamp exp=2; // p2p: {"gt_now": true}
+    string uuid=3; // p2p: {"uuid": true}
+  }
+  message NotEnableUserPayMessage {
+    string bank_number=1 ; // p2p: {"min_length": 13, "max_length": 19}
+    google.protobuf.Timestamp exp=2; // p2p: {"gt_now": true}
+    string uuid=3; // p2p: {"uuid": true}
+  }
+  map<string, StringTest> string_in_map_test=1;
+  map<string, MapTest> map_in_map_test=2;
+  UserPayMessage user_pay=3;
+  NotEnableUserPayMessage not_enable_user_pay=4; // p2p: {"skip": true}
+  google.protobuf.Empty empty=5;
+  AfterReferMessage after_refer=7;
+}
+message AfterReferMessage {
+  // p2p: {"example": "10086", "title": "UID", "description": "user union id", "miss_default": true}
+  string uid=1 ;
+  // p2p: {"example": 18, "title": "use age", "ge": 0}
+  int32 age=2;
+}

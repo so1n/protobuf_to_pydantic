@@ -16,7 +16,6 @@ if TYPE_CHECKING:
     from pydantic.typing import AnyClassMethod
 
 from protobuf_to_pydantic.grpc_types import Duration, ProtobufRepeatedType, Timestamp
-from protobuf_to_pydantic.types import FieldInfoTypedDict
 
 
 class Timedelta(timedelta):
@@ -80,16 +79,32 @@ def replace_protobuf_type_to_python_type(value: Any) -> Any:
         return value
 
 
-def gen_dict_from_desc_str(comment_prefix: str, desc: str) -> FieldInfoTypedDict:
+def gen_dict_from_desc_str(comment_prefix: str, desc: str) -> dict:
     pait_dict: dict = {}
-    for line in desc.split("\n"):
-        line = line.strip()
-        if not line.startswith(f"{comment_prefix}:"):
-            continue
-        line = line.replace(f"{comment_prefix}:", "")
-        pait_dict.update(json.loads(line))
-    if "miss_default" in pait_dict:
-        pait_dict["required"] = pait_dict.pop("miss_default")
+    try:
+        for line in desc.split("\n"):
+            if line.startswith("#"):
+                line = line[1:]
+            line = line.strip()
+            if not line.startswith(f"{comment_prefix}:"):
+                continue
+            line = line.replace(f"{comment_prefix}:", "")
+            for key, value in json.loads(line.replace("\\\\", "\\")).items():
+                if not pait_dict.get(key):
+                    pait_dict[key] = value
+                else:
+                    if not isinstance(value, type(pait_dict[key])):
+                        raise TypeError(f"Two different types of values were detected for Key:{key}")
+                    elif isinstance(value, list):
+                        pait_dict[key].extend(value)
+                    elif isinstance(value, dict):
+                        pait_dict[key].update(value)
+                    else:
+                        raise TypeError(f"A key:{key} that does not support merging has been detected")
+        if "miss_default" in pait_dict:
+            pait_dict["required"] = pait_dict.pop("miss_default")
+    except Exception as e:
+        logging.warning(f"Can not gen dict by desc:{desc}, error: {e}")
     return pait_dict  # type: ignore
 
 
@@ -206,10 +221,11 @@ def use_worker_dir_in_ctx(worker_dir: Optional[str] = None) -> Generator:
         parent_path_exist = worker_dir in sys.path
         if not parent_path_exist:
             sys.path.append(worker_dir)
-        try:
-            yield
-        finally:
-            if not parent_path_exist:
+            try:
+                yield
+            finally:
                 sys.path.remove(worker_dir)
+        else:
+            yield
     else:
         yield

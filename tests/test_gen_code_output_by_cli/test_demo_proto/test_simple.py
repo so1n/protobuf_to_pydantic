@@ -16,12 +16,15 @@ else:
         from example.proto_3_20_pydanticv2.example.example_proto.demo import demo_pb2  # type: ignore[no-redef]
 
 from protobuf_to_pydantic import msg_to_pydantic_model, pydantic_model_to_py_code
+from protobuf_to_pydantic.gen_model import clear_create_model_cache
 from protobuf_to_pydantic.util import format_content
 
 
 class TestSimpleTest:
     @staticmethod
     def _model_output(msg: Any) -> str:
+        # Make sure that the cache pool is clean before each build
+        clear_create_model_cache()
         return pydantic_model_to_py_code(msg_to_pydantic_model(msg, parse_msg_desc_method="ignore"))
 
     def test_empty_message(self) -> None:
@@ -265,11 +268,50 @@ class InvoiceItem(BaseModel):
         ) in self._model_output(demo_pb2.InvoiceItem)
 
     def test_field_optional(self) -> None:
-        assert format_content(
-            """
+        if is_v1:
+            content = """
+class InvoiceItem(BaseModel):
+    name: str = Field(default="")
+    amount: int = Field(default=0)
+    quantity: int = Field(default=0)
+    items: typing.List["InvoiceItem"] = Field(default_factory=list)
+
+
 class OptionalMessage(BaseModel):
+    _one_of_dict = {"user.OptionalMessage.a": {"fields": {"x", "y"}, "required": False}}
+
+    x: str = Field(default="")
+    y: int = Field(default=0)
     name: typing.Optional[str] = Field(default="")
     age: typing.Optional[int] = Field(default=0)
     item: typing.Optional[InvoiceItem] = Field()
-            """
-        ) in self._model_output(demo_pb2.OptionalMessage)
+    str_list: typing.List[str] = Field(default_factory=list)
+    int_map: typing.Dict[str, int] = Field(default_factory=dict)
+    default_template_test: float = Field(default=0.0)
+
+    one_of_validator = root_validator(pre=True, allow_reuse=True)(check_one_of)
+"""
+        else:
+            content = """
+class InvoiceItem(BaseModel):
+    name: str = Field(default="")
+    amount: int = Field(default=0)
+    quantity: int = Field(default=0)
+    items: typing.List["InvoiceItem"] = Field(default_factory=list)
+
+
+class OptionalMessage(BaseModel):
+    _one_of_dict = {"user.OptionalMessage.a": {"fields": {"x", "y"}, "required": False}}
+
+    x: str = Field(default="")
+    y: int = Field(default=0)
+    name: typing.Optional[str] = Field(default="")
+    age: typing.Optional[int] = Field(default=0)
+    item: typing.Optional[InvoiceItem] = Field()
+    str_list: typing.List[str] = Field(default_factory=list)
+    int_map: typing.Dict[str, int] = Field(default_factory=dict)
+    default_template_test: float = Field(default=0.0)
+
+    one_of_validator = model_validator(mode="before")(check_one_of)
+"""
+        assert format_content(content) in self._model_output(demo_pb2.OptionalMessage)
