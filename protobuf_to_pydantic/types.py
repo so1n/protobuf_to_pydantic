@@ -56,6 +56,7 @@ class DescFromOptionTypedDict(TypedDict):
     message: Dict[str, FieldInfoTypedDict]
     one_of: Dict[str, OneOfTypedDict]
     nested: Dict[str, "DescFromOptionTypedDict"]
+    metadata: Dict[str, Any]
 
 
 def json_to_dict(v: Union[str, dict]) -> dict:

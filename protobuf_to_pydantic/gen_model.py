@@ -96,7 +96,11 @@ class FieldDataClass(object):
     validators: Dict[str, classmethod]
 
 
-_create_model_cache: Dict[str, Type[BaseModel]] = {}
+_create_model_cache: Dict[Union[str, tuple], Type[BaseModel]] = {}
+
+
+def clear_create_model_cache() -> None:
+    _create_model_cache.clear()
 
 
 class M2P(object):
@@ -112,7 +116,7 @@ class M2P(object):
         desc_template: Optional[Type[DescTemplate]] = None,
         message_type_dict_by_type_name: Optional[Dict[str, Any]] = None,
         message_default_factory_dict_by_type_name: Optional[Dict[str, Any]] = None,
-        create_model_cache: Optional[Dict[str, Type[BaseModel]]] = None,
+        create_model_cache: Optional[Dict[Union[str, tuple], Type[BaseModel]]] = None,
     ):
         proto_file_name = msg.DESCRIPTOR.file.name  # type: ignore
         message_field_dict: Dict[str, "DescFromOptionTypedDict"] = {}
@@ -149,7 +153,7 @@ class M2P(object):
         self._field_doc_dict: Dict[str, DescFromOptionTypedDict] = message_field_dict
         self._default_field = default_field
         self._comment_prefix = comment_prefix
-        self._creat_cache: Dict[str, Type[BaseModel]] = create_model_cache or _create_model_cache
+        self._creat_cache: Dict[Union[str, tuple], Type[BaseModel]] = create_model_cache or _create_model_cache
         self._pydantic_base: Type["BaseModel"] = pydantic_base or BaseModel
         self._pydantic_module: str = pydantic_module or __name__
         self._desc_template: DescTemplate = (desc_template or DescTemplate)(local_dict or {}, self._comment_prefix)
@@ -189,18 +193,27 @@ class M2P(object):
         if message_name not in self._field_doc_dict:
             return None
         desc_dict: "DescFromOptionTypedDict" = self._field_doc_dict[message_name]
+        if desc_dict["metadata"].get("ignore", False):
+            return None
 
         for key in key_list:
             if key in desc_dict["message"]:
                 return desc_dict["message"][key]
             elif key in desc_dict["nested"]:
                 desc_dict = desc_dict["nested"][key]
+                if desc_dict["metadata"].get("ignored", False):
+                    return None
             else:
                 return None
         return None
 
     def _one_of_handle(self, descriptor: Descriptor) -> Tuple[Dict[str, "UseOneOfTypedDict"], Dict[str, Any]]:
         desc_dict: "DescFromOptionTypedDict" = self._field_doc_dict.get(descriptor.name, {})  # type: ignore
+        ignore_parse_rule = desc_dict.get("metadata", {}).get("ignored", False)
+        one_of_desc_dict = {}
+        if not ignore_parse_rule:
+            one_of_desc_dict = desc_dict.get("one_of", {})
+
         one_of_dict: Dict[str, "UseOneOfTypedDict"] = {}
         optional_dict: Dict[str, Any] = {}
         optional_id_set: Set[str] = set()
@@ -225,12 +238,16 @@ class M2P(object):
             column_name: str = one_of.full_name
             if column_name in optional_id_set:
                 continue
+
             if column_name not in one_of_dict:
                 one_of_dict[column_name] = {"required": False, "fields": set()}
-            if desc_dict and column_name in desc_dict["one_of"]:
+            # pyi file not include pkg info
+            for found_column_name in [column_name, ".".join(column_name.split(".")[1:])]:
+                if found_column_name not in one_of_desc_dict:
+                    continue
                 # only PGV or P2P support
-                one_of_dict[column_name]["required"] = desc_dict["one_of"][column_name].get("required", False)
-                optional_fields = desc_dict["one_of"][column_name].get("optional_fields", set())
+                one_of_dict[column_name]["required"] = one_of_desc_dict[found_column_name].get("required", False)
+                optional_fields = one_of_desc_dict[found_column_name].get("optional_fields", set())
                 if optional_fields:
                     for field_name in optional_fields:
                         optional_dict[descriptor.full_name + "." + field_name] = {"is_proto3_optional": True}
@@ -267,6 +284,8 @@ class M2P(object):
             nested_message_dict[message.full_name] = nested_type
             # Facilitate the analysis of `gen code`
             setattr(nested_type, "_is_nested", True)
+            # It is used to determine whether the field is used for these messages
+            setattr(nested_type, "_is_use", False)
         # enum support
         for enum_type in descriptor.enum_types:
             class_dict: dict = {v.name: v.number for v in enum_type.values}
@@ -275,6 +294,8 @@ class M2P(object):
             nested_message_dict[enum_type.full_name] = nested_type
             # Facilitate the analysis of `gen code`
             setattr(nested_type, "_is_nested", True)
+            # It is used to determine whether the field is used for these messages
+            setattr(nested_type, "_is_use", False)
         return nested_message_dict
 
     ####################
@@ -294,6 +315,7 @@ class M2P(object):
         elif protobuf_field.message_type.name.endswith("Entry"):
             # support google.protobuf.MapEntry
             # key, value = column.message_type.fields
+            field_dataclass.field_type_name = "map"
             dict_type_param_list = []
             for k_v_field in protobuf_field.message_type.fields:
                 if not k_v_field.message_type:
@@ -314,8 +336,26 @@ class M2P(object):
             field_dataclass.field_default_factory = type_factory
         else:
             # support google.protobuf.Message
+            field_doc_dict: Union[FieldInfoTypedDict, dict] = (
+                self._get_field_info_dict_by_full_name(field_dataclass.protobuf_field.full_name) or {}
+            )
+            skip_validate_rule = field_doc_dict.get("skip", False)
+            full_name = protobuf_field.message_type.full_name
             if protobuf_field.message_type.full_name in field_dataclass.nested_message_dict:
-                field_dataclass.field_type = field_dataclass.nested_message_dict[protobuf_field.message_type.full_name]
+                if skip_validate_rule:
+                    # found and gen new message, finally, register to nested_message_dict
+                    nested_message = [i for i in field_dataclass.descriptor.nested_types if i.full_name == full_name][0]
+                    nested_type: Any = self._parse_msg_to_pydantic_model(
+                        descriptor=nested_message,
+                        class_name=protobuf_field.message_type.name + "OnlyUseSkipRule",
+                        skip_validate_rule=skip_validate_rule,
+                    )
+                    field_dataclass.nested_message_dict[full_name + "OnlyUseSkipRule"] = nested_type
+                    setattr(nested_type, "_is_nested", True)
+                    field_dataclass.field_type = nested_type
+                else:
+                    field_dataclass.field_type = field_dataclass.nested_message_dict[full_name]
+                setattr(field_dataclass.field_type, "_is_use", True)
             else:
                 # Python Protobuf does not solve the namespace problem of modules,
                 # so there is no uniform cross-module reference
@@ -325,7 +365,9 @@ class M2P(object):
                 if not is_same_pkg:
                     _class_name = replace_file_name_to_class_name(protobuf_field.message_type.file.name) + _class_name
                     field_dataclass.field_type = self._parse_msg_to_pydantic_model(
-                        descriptor=protobuf_field.message_type, class_name=_class_name
+                        descriptor=protobuf_field.message_type,
+                        class_name=_class_name,
+                        skip_validate_rule=skip_validate_rule,
                     )
                     _class_doc: str = (
                         "Note: The current class does not belong to the package\n"
@@ -333,13 +375,18 @@ class M2P(object):
                     )
                     setattr(field_dataclass.field_type, "__doc__", _class_doc)
                 else:
-                    if protobuf_field.message_type.full_name == field_dataclass.descriptor.full_name:
+                    if (
+                        skip_validate_rule
+                        or protobuf_field.message_type.full_name != field_dataclass.descriptor.full_name
+                    ):
+                        field_dataclass.field_type = self._parse_msg_to_pydantic_model(
+                            descriptor=protobuf_field.message_type,
+                            class_name=_class_name if not skip_validate_rule else _class_name + "OnlyUseSkipRule",
+                            skip_validate_rule=skip_validate_rule,
+                        )
+                    else:
                         # if self-referencing, need use Python type hints postponed annotations
                         field_dataclass.field_type = f'"{_class_name}"'
-                    else:
-                        field_dataclass.field_type = self._parse_msg_to_pydantic_model(
-                            descriptor=protobuf_field.message_type, class_name=_class_name
-                        )
 
     def _protobuf_field_type_is_type_enum_handler(self, field_dataclass: FieldDataClass) -> None:
         # support google.protobuf.Enum
@@ -348,6 +395,7 @@ class M2P(object):
         field_dataclass.field_type_name = "enum"
         if protobuf_field.enum_type.full_name in field_dataclass.nested_message_dict:
             field_dataclass.field_type = field_dataclass.nested_message_dict[protobuf_field.enum_type.full_name]
+            setattr(field_dataclass.field_type, "_is_use", True)
         else:
             enum_class_dict = {v.name: v.number for v in protobuf_field.enum_type.values}
             _class_name = protobuf_field.enum_type.name
@@ -373,11 +421,11 @@ class M2P(object):
             if field_dataclass.field_default is not _pydantic_adapter.PydanticUndefined:
                 field_dataclass.field_default = _pydantic_adapter.PydanticUndefined
 
-    def _gen_field_info(self, field_dataclass: FieldDataClass) -> Optional[FieldInfo]:
+    def _gen_field_info(self, field_dataclass: FieldDataClass, skip_validate_rule: bool) -> Optional[FieldInfo]:
         field = self._default_field
         field_doc_dict = self._get_field_info_dict_by_full_name(field_dataclass.protobuf_field.full_name)
 
-        if field_doc_dict is not None:
+        if field_doc_dict is not None and not skip_validate_rule:
             if self._parse_msg_desc_method != "PGV":
                 # pgv method not support template var
                 field_doc_dict = self._desc_template.handle_template_var(field_doc_dict)
@@ -461,9 +509,14 @@ class M2P(object):
             field_param_dict_migration_v2_handler(field_param_dict)
         return field(**field_param_dict)  # type: ignore
 
-    def _parse_msg_to_pydantic_model(self, *, descriptor: Descriptor, class_name: str = "") -> Type[BaseModel]:
-        if descriptor in self._creat_cache:
-            return self._creat_cache[descriptor.full_name]
+    def _parse_msg_to_pydantic_model(
+        self, *, descriptor: Descriptor, class_name: str = "", skip_validate_rule: bool = False
+    ) -> Type[BaseModel]:
+        message_key = descriptor.full_name
+        if class_name or skip_validate_rule:
+            message_key = (descriptor.full_name, class_name, skip_validate_rule)
+        if message_key in self._creat_cache:
+            return self._creat_cache[message_key]
 
         annotation_dict: Dict[str, Tuple[Type, Any]] = {}
         validators: Dict[str, classmethod] = {}
@@ -494,8 +547,7 @@ class M2P(object):
             # At this time, the field type may be modified by the above logic, so it needs to be handled separately
             if protobuf_field.label == FieldDescriptor.LABEL_REPEATED:
                 self._protobuf_field_lable_is_label_repeated_handler(field_dataclass)
-
-            field_info = self._gen_field_info(field_dataclass)
+            field_info = self._gen_field_info(field_dataclass, skip_validate_rule)
             if not field_info:
                 continue
             if optional_dict.get(protobuf_field.full_name, {}).get("is_proto3_optional", False):
@@ -541,11 +593,11 @@ class M2P(object):
             one_of_dict=one_of_dict,
             base_model=self._pydantic_base,
             # Facilitate the analysis of `gen code`
-            nested_message_dict=nested_message_dict,
+            nested_message_dict={k: v for k, v in nested_message_dict.items() if getattr(v, "_is_use", False)},
             validators=validators,
         )
         setattr(pydantic_model, "_one_of_dict", one_of_dict)
-        self._creat_cache[descriptor.full_name] = pydantic_model
+        self._creat_cache[message_key] = pydantic_model
         return pydantic_model
 
 
@@ -560,7 +612,7 @@ def msg_to_pydantic_model(
     desc_template: Optional[Type[DescTemplate]] = None,
     message_type_dict_by_type_name: Optional[Dict[str, Any]] = None,
     message_default_factory_dict_by_type_name: Optional[Dict[str, Any]] = None,
-    create_model_cache: Optional[Dict[str, Type[BaseModel]]] = None,
+    create_model_cache: Optional[Dict[Union[str, tuple], Type[BaseModel]]] = None,
 ) -> Type[BaseModel]:
     """
     Parse a message to a pydantic model

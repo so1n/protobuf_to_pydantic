@@ -2,6 +2,8 @@ from typing import TYPE_CHECKING, Dict, Optional
 
 from protobuf_to_pydantic.util import gen_dict_from_desc_str
 
+from .utils import one_of_message_dict_handler
+
 if TYPE_CHECKING:
     from protobuf_to_pydantic.contrib.proto_parser import Message, ProtoFile
     from protobuf_to_pydantic.types import DescFromOptionTypedDict
@@ -16,7 +18,28 @@ def _parse_message_result_dict(
     comment_prefix: str,
 ) -> None:
     message_name: str = protobuf_msg.name
-    container[message_name] = {"message": {}, "one_of": {}, "nested": {}}  # type: ignore
+    container[message_name] = {"message": {}, "one_of": {}, "nested": {}, "metadata": {}}
+
+    if protobuf_msg.comment:
+        message_dict = gen_dict_from_desc_str(  # type: ignore[assignment]
+            comment_prefix, protobuf_msg.comment.content.replace("//", "")
+        )
+        one_of_message_dict_handler(message_dict, container[message_name], f"{parse_result.package}.{message_name}")
+        # for key, value in message_dict.items():
+        #     if key == "ignore":
+        #         container[message_name]["metadata"]["ignore"] = value
+        #     elif key.startswith("oneof"):
+        #         # Special support for OneOf
+        #         field_full_name = f"{parse_result.package}.{message_name}.{key.split(':')[1]}"
+        #         if field_full_name not in container[message_name]["one_of"]:
+        #             container[message_name]["one_of"][field_full_name] = {}
+        #         if "required" in value:
+        #             container[message_name]["one_of"][field_full_name]["required"] = value["required"]
+        #         if "optional" in value.get("oneof_extend", {}):
+        #             container[message_name]["one_of"][field_full_name]["optional_fields"] = (
+        #                 set(value["oneof_extend"].pop("optional", []))
+        #             )
+
     for field in protobuf_msg.fields:
         container[message_name]["message"][field.name] = gen_dict_from_desc_str(  # type: ignore[assignment]
             comment_prefix, field.comment.content.replace("//", "") if field.comment else ""

@@ -3,6 +3,8 @@ from typing import TYPE_CHECKING, Dict, List, Tuple
 
 from protobuf_to_pydantic.util import gen_dict_from_desc_str
 
+from .utils import one_of_message_dict_handler
+
 if TYPE_CHECKING:
     from protobuf_to_pydantic.types import DescFromOptionTypedDict, FieldInfoTypedDict
 
@@ -105,6 +107,7 @@ def get_desc_from_pyi_file(filename: str, comment_prefix: str) -> Dict[str, "Des
                 "message": message_field_dict,
                 "one_of": {},
                 "nested": {},  # type: ignore
+                "metadata": {},
             }
             if message_str_stack:
                 parent_message_field_dict = message_str_stack[-1][2]
@@ -123,20 +126,39 @@ def get_desc_from_pyi_file(filename: str, comment_prefix: str) -> Dict[str, "Des
             if _comment_mode:
                 _doc += "\n" + line
 
-            if not _comment_mode and line.startswith('"""') and not line_list[index - 1].startswith("class"):
+            if not _comment_mode and line.startswith('"""'):
                 # start add doc
-                if "def" in line_list[index - 1]:
-                    _field_name = line_list[index - 1].split("(")[0].replace("def", "").strip()
+                if "def " in line_list[index - 1]:
+                    _field_name = line_list[index - 1].split("(")[0].replace("def ", "").strip()
                 else:
                     _field_name = line_list[index - 1].split(":")[0].strip()
+                if line_list[index - 1].startswith("class"):
+                    _field_name = ""
+
                 _comment_mode = True
                 _doc = line
             if (line.endswith('"""') or line == '"""') and _comment_mode:
                 # end add doc
                 _comment_mode = False
-                desc_dict["message"][_field_name] = gen_dict_from_desc_str(  # type: ignore[assignment]
-                    comment_prefix, _doc.replace('"""', "")
-                )
+                gen_desc_dict = gen_dict_from_desc_str(comment_prefix, _doc.replace('"""', ""))
+                if _field_name:
+                    desc_dict["message"][_field_name] = gen_desc_dict  # type: ignore[assignment]
+                else:
+                    one_of_message_dict_handler(gen_desc_dict, desc_dict, f"{message_str}")
+                    # for key, value in gen_desc_dict.items():
+                    #     if key == "ignore":
+                    #         desc_dict["metadata"]["ignore"] = value
+                    #     elif key.startswith("oneof"):
+                    #         # Special support for OneOf
+                    #         field_full_name = f"{message_str}.{key.split(':')[1]}"
+                    #         if field_full_name not in desc_dict["one_of"]:
+                    #             desc_dict["one_of"][field_full_name] = {}
+                    #         if "required" in value:
+                    #             desc_dict["one_of"][field_full_name]["required"] = value["required"]
+                    #         if "optional" in value.get("oneof_extend", {}):
+                    #             desc_dict["one_of"][field_full_name]["optional_fields"] = (
+                    #                 set(value["oneof_extend"].pop("optional", []))
+                    #             )
 
     _filename_desc_dict[filename] = global_message_field_dict
     return global_message_field_dict

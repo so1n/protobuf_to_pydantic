@@ -1,5 +1,5 @@
 # This is an automatically generated file, please do not change
-# gen by protobuf_to_pydantic[v0.2.6.2](https://github.com/so1n/protobuf_to_pydantic)
+# gen by protobuf_to_pydantic[v0.2.6](https://github.com/so1n/protobuf_to_pydantic)
 # Protobuf Version: 3.20.3
 # Pydantic Version: 1.10.7
 import typing
@@ -100,7 +100,7 @@ class OptionalMessage(BaseModel):
     _one_of_dict = {"user.OptionalMessage.a": {"fields": {"x", "y"}, "required": False}}
 
     x: str = Field(default="")
-    y: int = Field(default=0)
+    y: int = Field(default=0, title="use age", ge=0.0, example=18)
     name: typing.Optional[str] = Field(default="")
     age: typing.Optional[int] = Field(default=0)
     item: typing.Optional[InvoiceItem] = Field()

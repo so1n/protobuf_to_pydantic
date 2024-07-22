@@ -1,5 +1,5 @@
 # This is an automatically generated file, please do not change
-# gen by protobuf_to_pydantic[v0.2.6.2](https://github.com/so1n/protobuf_to_pydantic)
+# gen by protobuf_to_pydantic[v0.2.6](https://github.com/so1n/protobuf_to_pydantic)
 # Protobuf Version: 3.20.3
 # Pydantic Version: 1.10.7
 import typing
@@ -632,13 +632,9 @@ class TimestampTest(BaseModel):
 
 
 class MessageIgnoredTest(BaseModel):
-    """
-    p2p: {"ignore": true}
-    """
-
-    const_test: int = Field(default=1, const=True)
-    range_e_test: int = Field(default=0, ge=1.0, le=10.0)
-    range_test: int = Field(default=0, gt=1.0, lt=10.0)
+    const_test: int = Field(default=0)
+    range_e_test: int = Field(default=0)
+    range_test: int = Field(default=0)
 
 
 class OneOfTest(BaseModel):
@@ -658,6 +654,10 @@ class OneOfNotTest(BaseModel):
 
 
 class OneOfOptionalTest(BaseModel):
+    """
+    Annotations are used in runtime mode
+    """
+
     _one_of_dict = {"OneOfOptionalTest.id": {"fields": {"x", "y", "z"}, "required": True}}
     one_of_validator = root_validator(pre=True, allow_reuse=True)(check_one_of)
     header: str = Field(default="")

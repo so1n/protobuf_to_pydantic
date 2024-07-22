@@ -172,4 +172,18 @@ class OptionalMessage(BaseModel):
     int_map: typing.Dict[str, int] = Field(default_factory=dict)
     default_template_test: float = Field(default=1600000000.0)
 """
+        if is_v1:
+            content = """
+class OptionalMessage(BaseModel):
+    _one_of_dict = {"OptionalMessage.a": {"fields": {"x", "y"}, "required": True}}
+    one_of_validator = root_validator(pre=True, allow_reuse=True)(check_one_of)
+    x: str = Field(default="")
+    y: int = Field(default=0, example=18, title="use age", ge=0.0)
+    name: typing.Optional[str] = Field(default="")
+    age: typing.Optional[int] = Field(default=0)
+    item: typing.Optional[InvoiceItem] = Field(default=None)
+    str_list: typing.List[str] = Field(default_factory=list)
+    int_map: typing.Dict[str, int] = Field(default_factory=dict)
+    default_template_test: float = Field(default=1600000000.0)
+"""
         assert content.strip("\n") in getsource(demo_p2p.OptionalMessage).strip("\n")

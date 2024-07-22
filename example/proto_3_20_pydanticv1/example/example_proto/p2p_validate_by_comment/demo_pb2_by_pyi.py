@@ -1,5 +1,5 @@
 # This is an automatically generated file, please do not change
-# gen by protobuf_to_pydantic[v0.2.6.2](https://github.com/so1n/protobuf_to_pydantic)
+# gen by protobuf_to_pydantic[v0.2.6](https://github.com/so1n/protobuf_to_pydantic)
 # Protobuf Version: 3.20.3
 # Pydantic Version: 1.10.7
 import typing
@@ -25,6 +25,8 @@ from protobuf_to_pydantic.customer_validator.v1 import (
     duration_not_in_validator,
     in_validator,
     len_validator,
+    map_max_pairs_validator,
+    map_min_pairs_validator,
     not_contains_validator,
     not_in_validator,
     prefix_validator,
@@ -68,9 +70,9 @@ class AnyTest(BaseModel):
             "type.googleapis.com/google.protobuf.Timestamp",
         ],
     )
-    default_test: Any = Field(default_factory=Any)
-    default_factory_test: Any = Field(default_factory=Any)
-    miss_default_test: Any = Field(default_factory=Any)
+    default_test: Any = Field(default=Any(type_url="type.googleapis.com/google.protobuf.Duration"))
+    default_factory_test: Any = Field(default_factory=customer_any)
+    miss_default_test: Any = Field()
     alias_test: Any = Field(default_factory=Any, alias="alias")
     desc_test: Any = Field(default_factory=Any, description="test desc")
     example_test: Any = Field(default_factory=Any, example="type.googleapis.com/google.protobuf.Duration")
@@ -86,8 +88,8 @@ class AnyTest(BaseModel):
 class BoolTest(BaseModel):
     bool_1_test: bool = Field(default=True, const=True)
     bool_2_test: bool = Field(default=False, const=True)
-    default_test: bool = Field(default=False)
-    miss_default_test: bool = Field(default=False)
+    default_test: bool = Field(default=True)
+    miss_default_test: bool = Field()
     required_test: bool = Field()
     alias_test: bool = Field(default=False, alias="alias")
     desc_test: bool = Field(default=False, description="test desc")
@@ -105,9 +107,9 @@ class BytesTest(BaseModel):
     contains_test: bytes = Field(default=b"", contains=b"contains")
     in_test: bytes = Field(default=b"", in_=[b"a", b"b", b"c"])
     not_in_test: bytes = Field(default=b"", not_in=[b"a", b"b", b"c"])
-    default_test: bytes = Field(default=b"")
-    default_factory_test: bytes = Field(default=b"")
-    miss_default_test: bytes = Field(default=b"")
+    default_test: bytes = Field(default=b"default")
+    default_factory_test: bytes = Field(default_factory=bytes)
+    miss_default_test: bytes = Field()
     required_test: bytes = Field()
     alias_test: bytes = Field(default=b"", alias="alias")
     desc_test: bytes = Field(default=b"", description="test desc")
@@ -131,10 +133,10 @@ class DoubleTest(BaseModel):
     range_test: float = Field(default=0.0, gt=1.0, lt=10.0)
     in_test: float = Field(default=0.0, in_=[1.0, 2.0, 3.0])
     not_in_test: float = Field(default=0.0, not_in=[1.0, 2.0, 3.0])
-    default_test: float = Field(default=0.0)
-    default_template_test: float = Field(default=0.0)
-    default_factory_test: float = Field(default=0.0)
-    miss_default_test: float = Field(default=0.0)
+    default_test: float = Field(default=1.0)
+    default_template_test: float = Field(default=1600000000.0)
+    default_factory_test: float = Field(default_factory=float)
+    miss_default_test: float = Field()
     required_test: float = Field()
     alias_test: float = Field(default=0.0, alias="alias")
     desc_test: float = Field(default=0.0, description="test desc")
@@ -170,9 +172,9 @@ class DurationTest(BaseModel):
         default_factory=Timedelta,
         duration_not_in=[timedelta(seconds=1, microseconds=500000), timedelta(seconds=3, microseconds=500000)],
     )
-    default_test: Timedelta = Field(default_factory=Timedelta)
-    default_factory_test: Timedelta = Field(default_factory=Timedelta)
-    miss_default_test: Timedelta = Field(default_factory=Timedelta)
+    default_test: Timedelta = Field(default=timedelta(seconds=1, microseconds=500000))
+    default_factory_test: Timedelta = Field(default_factory=timedelta)
+    miss_default_test: Timedelta = Field()
     required_test: Timedelta = Field()
     alias_test: Timedelta = Field(default_factory=Timedelta, alias="alias")
     desc_test: Timedelta = Field(default_factory=Timedelta, description="test desc")
@@ -202,8 +204,8 @@ class EnumTest(BaseModel):
     const_test: State = Field(default=2, const=True)
     in_test: State = Field(default=0, in_=[0, 2])
     not_in_test: State = Field(default=0, not_in=[0, 2])
-    default_test: State = Field(default=0)
-    miss_default_test: State = Field(default=0)
+    default_test: State = Field(default=1)
+    miss_default_test: State = Field()
     required_test: State = Field()
     alias_test: State = Field(default=0, alias="alias")
     desc_test: State = Field(default=0, description="test desc")
@@ -222,10 +224,10 @@ class Fixed32Test(BaseModel):
     range_test: float = Field(default=0, gt=1.0, lt=10.0)
     in_test: float = Field(default=0, in_=[1, 2, 3])
     not_in_test: float = Field(default=0, not_in=[1, 2, 3])
-    default_test: float = Field(default=0)
-    default_template_test: float = Field(default=0)
-    default_factory_test: float = Field(default=0)
-    miss_default_test: float = Field(default=0)
+    default_test: float = Field(default=1.0)
+    default_template_test: float = Field(default=1600000000)
+    default_factory_test: float = Field(default_factory=float)
+    miss_default_test: float = Field()
     required_test: float = Field()
     alias_test: float = Field(default=0, alias="alias")
     desc_test: float = Field(default=0, description="test desc")
@@ -247,10 +249,10 @@ class Fixed64Test(BaseModel):
     range_test: float = Field(default=0, gt=1.0, lt=10.0)
     in_test: float = Field(default=0, in_=[1, 2, 3])
     not_in_test: float = Field(default=0, not_in=[1, 2, 3])
-    default_test: float = Field(default=0)
-    default_template_test: float = Field(default=0)
-    default_factory_test: float = Field(default=0)
-    miss_default_test: float = Field(default=0)
+    default_test: float = Field(default=1.0)
+    default_template_test: float = Field(default=1600000000)
+    default_factory_test: float = Field(default_factory=float)
+    miss_default_test: float = Field()
     required_test: float = Field()
     alias_test: float = Field(default=0, alias="alias")
     desc_test: float = Field(default=0, description="test desc")
@@ -272,10 +274,10 @@ class FloatTest(BaseModel):
     range_test: float = Field(default=0.0, gt=1.0, lt=10.0)
     in_test: float = Field(default=0.0, in_=[1.0, 2.0, 3.0])
     not_in_test: float = Field(default=0.0, not_in=[1.0, 2.0, 3.0])
-    default_test: float = Field(default=0.0)
-    default_template_test: float = Field(default=0.0)
-    default_factory_test: float = Field(default=0.0)
-    miss_default_test: float = Field(default=0.0)
+    default_test: float = Field(default=1.0)
+    default_template_test: float = Field(default=1600000000.0)
+    default_factory_test: float = Field(default_factory=float)
+    miss_default_test: float = Field()
     required_test: float = Field()
     alias_test: float = Field(default=0.0, alias="alias")
     desc_test: float = Field(default=0.0, description="test desc")
@@ -297,10 +299,10 @@ class Int32Test(BaseModel):
     range_test: int = Field(default=0, gt=1.0, lt=10.0)
     in_test: int = Field(default=0, in_=[1, 2, 3])
     not_in_test: int = Field(default=0, not_in=[1, 2, 3])
-    default_test: int = Field(default=0)
-    default_template_test: int = Field(default=0)
-    default_factory_test: int = Field(default=0)
-    miss_default_test: int = Field(default=0)
+    default_test: int = Field(default=1.0)
+    default_template_test: int = Field(default=1600000000)
+    default_factory_test: int = Field(default_factory=int)
+    miss_default_test: int = Field()
     required_test: int = Field()
     alias_test: int = Field(default=0, alias="alias")
     desc_test: int = Field(default=0, description="test desc")
@@ -322,10 +324,10 @@ class Int64Test(BaseModel):
     range_test: int = Field(default=0, gt=1.0, lt=10.0)
     in_test: int = Field(default=0, in_=[1, 2, 3])
     not_in_test: int = Field(default=0, not_in=[1, 2, 3])
-    default_test: int = Field(default=0)
-    default_template_test: int = Field(default=0)
-    default_factory_test: int = Field(default=0)
-    miss_default_test: int = Field(default=0)
+    default_test: int = Field(default=1.0)
+    default_template_test: int = Field(default=1600000000)
+    default_factory_test: int = Field(default_factory=int)
+    miss_default_test: int = Field()
     required_test: int = Field()
     alias_test: int = Field(default=0, alias="alias")
     desc_test: int = Field(default=0, description="test desc")
@@ -342,14 +344,14 @@ class Int64Test(BaseModel):
 
 
 class MapTest(BaseModel):
-    pair_test: typing.Dict[str, int] = Field(default_factory=dict)
+    pair_test: typing.Dict[str, int] = Field(default_factory=dict, map_min_pairs=1, map_max_pairs=5)
     keys_test: typing.Dict[constr(min_length=1, max_length=5), int] = Field(default_factory=dict)
     values_test: typing.Dict[str, conint(ge=5, le=5)] = Field(default_factory=dict)
     keys_values_test: typing.Dict[constr(min_length=1, max_length=5), contimestamp(timestamp_gt_now=True)] = Field(
         default_factory=dict
     )
     default_factory_test: typing.Dict[str, int] = Field(default_factory=dict)
-    miss_default_test: typing.Dict[str, int] = Field(default_factory=dict)
+    miss_default_test: typing.Dict[str, int] = Field()
     required_test: typing.Dict[str, int] = Field()
     alias_test: typing.Dict[str, int] = Field(default_factory=dict, alias="alias")
     desc_test: typing.Dict[str, int] = Field(default_factory=dict, description="test desc")
@@ -358,6 +360,9 @@ class MapTest(BaseModel):
     title_test: typing.Dict[str, int] = Field(default_factory=dict, title="title_test")
     type_test: dict = Field(default_factory=dict)
     extra_test: typing.Dict[str, int] = Field(default_factory=dict, customer_string="c1", customer_int=1)
+
+    pair_test_map_min_pairs_validator = validator("pair_test", allow_reuse=True)(map_min_pairs_validator)
+    pair_test_map_max_pairs_validator = validator("pair_test", allow_reuse=True)(map_max_pairs_validator)
 
 
 class MessageIgnoredTest(BaseModel):
@@ -393,9 +398,9 @@ class StringTest(BaseModel):
     address_test: IPvAnyAddress = Field(default="")
     uuid_test: UUID = Field(default="")
     pydantic_type_test: str = Field(default="")
-    default_test: str = Field(default="")
-    default_factory_test: str = Field(default="")
-    miss_default_test: str = Field(default="")
+    default_test: str = Field(default="default")
+    default_factory_test: str = Field(default_factory=uuid4)
+    miss_default_test: str = Field()
     required_test: str = Field()
     alias_test: str = Field(default="", alias="alias")
     desc_test: str = Field(default="", description="test desc")
@@ -423,17 +428,15 @@ class NestedMessage(BaseModel):
 
         exp_timestamp_gt_now_validator = validator("exp", allow_reuse=True)(timestamp_gt_now_validator)
 
-    class NotEnableUserPayMessage(BaseModel):
-        bank_number: str = Field(default="", min_length=13, max_length=19)
-        exp: datetime = Field(default_factory=datetime.now, timestamp_gt_now=True)
-        uuid: UUID = Field(default="")
-
-        exp_timestamp_gt_now_validator = validator("exp", allow_reuse=True)(timestamp_gt_now_validator)
+    class NotEnableUserPayMessageOnlyUseSkipRule(BaseModel):
+        bank_number: str = Field(default="")
+        exp: datetime = Field(default_factory=datetime.now)
+        uuid: str = Field(default="")
 
     string_in_map_test: typing.Dict[str, StringTest] = Field(default_factory=dict)
     map_in_map_test: typing.Dict[str, MapTest] = Field(default_factory=dict)
     user_pay: UserPayMessage = Field()
-    not_enable_user_pay: NotEnableUserPayMessage = Field()
+    not_enable_user_pay: NotEnableUserPayMessageOnlyUseSkipRule = Field()
     empty: typing.Any = Field()
     after_refer: AfterReferMessage = Field()
 
@@ -449,11 +452,11 @@ class OneOfNotTest(BaseModel):
 
 
 class OneOfOptionalTest(BaseModel):
-    _one_of_dict = {"p2p_validate_comment_test.OneOfOptionalTest.id": {"fields": {"x", "y", "z"}, "required": False}}
+    _one_of_dict = {"p2p_validate_comment_test.OneOfOptionalTest.id": {"fields": {"x", "y", "z"}, "required": True}}
 
     header: str = Field(default="")
-    x: str = Field(default="")
-    y: int = Field(default=0)
+    x: typing.Optional[str] = Field(default="")
+    y: typing.Optional[int] = Field(default=0)
     z: bool = Field(default=False)
     name: typing.Optional[str] = Field(default="")
     age: typing.Optional[int] = Field(default=0)
@@ -464,7 +467,7 @@ class OneOfOptionalTest(BaseModel):
 
 
 class OneOfTest(BaseModel):
-    _one_of_dict = {"p2p_validate_comment_test.OneOfTest.id": {"fields": {"x", "y"}, "required": False}}
+    _one_of_dict = {"p2p_validate_comment_test.OneOfTest.id": {"fields": {"x", "y"}, "required": True}}
 
     header: str = Field(default="")
     x: str = Field(default="")
@@ -495,7 +498,7 @@ class RepeatedTest(BaseModel):
         default_factory=list
     )
     default_factory_test: typing.List[str] = Field(default_factory=list)
-    miss_default_test: typing.List[str] = Field(default_factory=list)
+    miss_default_test: typing.List[str] = Field()
     required_test: typing.List[str] = Field()
     alias_test: typing.List[str] = Field(default_factory=list, alias="alias")
     desc_test: typing.List[str] = Field(default_factory=list, description="test desc")
@@ -512,10 +515,10 @@ class Sfixed32Test(BaseModel):
     range_test: float = Field(default=0, gt=1.0, lt=10.0)
     in_test: float = Field(default=0, in_=[1, 2, 3])
     not_in_test: float = Field(default=0, not_in=[1, 2, 3])
-    default_test: float = Field(default=0)
-    default_template_test: float = Field(default=0)
-    default_factory_test: float = Field(default=0)
-    miss_default_test: float = Field(default=0)
+    default_test: float = Field(default=1.0)
+    default_template_test: float = Field(default=1600000000)
+    default_factory_test: float = Field(default_factory=float)
+    miss_default_test: float = Field()
     required_test: float = Field()
     alias_test: float = Field(default=0, alias="alias")
     desc_test: float = Field(default=0, description="test desc")
@@ -537,10 +540,10 @@ class Sfixed64Test(BaseModel):
     range_test: float = Field(default=0, gt=1.0, lt=10.0)
     in_test: float = Field(default=0, in_=[1, 2, 3])
     not_in_test: float = Field(default=0, not_in=[1, 2, 3])
-    default_test: float = Field(default=0)
-    default_template_test: float = Field(default=0)
-    default_factory_test: float = Field(default=0)
-    miss_default_test: float = Field(default=0)
+    default_test: float = Field(default=1.0)
+    default_template_test: float = Field(default=1600000000)
+    default_factory_test: float = Field(default_factory=float)
+    miss_default_test: float = Field()
     required_test: float = Field()
     alias_test: float = Field(default=0, alias="alias")
     desc_test: float = Field(default=0, description="test desc")
@@ -562,10 +565,10 @@ class Sint32Test(BaseModel):
     range_test: int = Field(default=0, gt=1.0, lt=10.0)
     in_test: int = Field(default=0, in_=[1, 2, 3])
     not_in_test: int = Field(default=0, not_in=[1, 2, 3])
-    default_test: int = Field(default=0)
-    default_template_test: int = Field(default=0)
-    default_factory_test: int = Field(default=0)
-    miss_default_test: int = Field(default=0)
+    default_test: int = Field(default=1.0)
+    default_template_test: int = Field(default=1600000000)
+    default_factory_test: int = Field(default_factory=int)
+    miss_default_test: int = Field()
     required_test: int = Field()
     alias_test: int = Field(default=0, alias="alias")
     desc_test: int = Field(default=0, description="test desc")
@@ -587,10 +590,10 @@ class Sint64Test(BaseModel):
     range_test: int = Field(default=0, gt=1.0, lt=10.0)
     in_test: int = Field(default=0, in_=[1, 2, 3])
     not_in_test: int = Field(default=0, not_in=[1, 2, 3])
-    default_test: int = Field(default=0)
-    default_template_test: int = Field(default=0)
-    default_factory_test: int = Field(default=0)
-    miss_default_test: int = Field(default=0)
+    default_test: int = Field(default=1.0)
+    default_template_test: int = Field(default=1600000000)
+    default_factory_test: int = Field(default_factory=int)
+    miss_default_test: int = Field()
     required_test: int = Field()
     alias_test: int = Field(default=0, alias="alias")
     desc_test: int = Field(default=0, description="test desc")
@@ -616,9 +619,9 @@ class TimestampTest(BaseModel):
     within_and_gt_now_test: datetime = Field(
         default_factory=datetime.now, timestamp_gt_now=True, timestamp_within=timedelta(seconds=3600)
     )
-    default_test: datetime = Field(default_factory=datetime.now)
+    default_test: datetime = Field(default=1.5)
     default_factory_test: datetime = Field(default_factory=datetime.now)
-    miss_default_test: datetime = Field(default_factory=datetime.now)
+    miss_default_test: datetime = Field()
     required_test: datetime = Field()
     alias_test: datetime = Field(default_factory=datetime.now, alias="alias")
     desc_test: datetime = Field(default_factory=datetime.now, description="test desc")
@@ -651,10 +654,10 @@ class Uint32Test(BaseModel):
     range_test: int = Field(default=0, gt=1.0, lt=10.0)
     in_test: int = Field(default=0, in_=[1, 2, 3])
     not_in_test: int = Field(default=0, not_in=[1, 2, 3])
-    default_test: int = Field(default=0)
-    default_template_test: int = Field(default=0)
-    default_factory_test: int = Field(default=0)
-    miss_default_test: int = Field(default=0)
+    default_test: int = Field(default=1.0)
+    default_template_test: int = Field(default=1600000000)
+    default_factory_test: int = Field(default_factory=int)
+    miss_default_test: int = Field()
     required_test: int = Field()
     alias_test: int = Field(default=0, alias="alias")
     desc_test: int = Field(default=0, description="test desc")
@@ -676,10 +679,10 @@ class Uint64Test(BaseModel):
     range_test: int = Field(default=0, gt=1.0, lt=10.0)
     in_test: int = Field(default=0, in_=[1, 2, 3])
     not_in_test: int = Field(default=0, not_in=[1, 2, 3])
-    default_test: int = Field(default=0)
-    default_template_test: int = Field(default=0)
-    default_factory_test: int = Field(default=0)
-    miss_default_test: int = Field(default=0)
+    default_test: int = Field(default=1.0)
+    default_template_test: int = Field(default=1600000000)
+    default_factory_test: int = Field(default_factory=int)
+    miss_default_test: int = Field()
     required_test: int = Field()
     alias_test: int = Field(default=0, alias="alias")
     desc_test: int = Field(default=0, description="test desc")

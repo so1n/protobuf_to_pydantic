@@ -117,20 +117,44 @@ class FileDescriptorProtoToCode(BaseP2C):
             module_name = "." * (len(message_path_list) - (index + 1)) + module_name
         self._add_import_code(module_name, type_str)
 
-    def add_class_desc(self, scl_prefix: SourceCodeLocation, indent: int = 0) -> Tuple[str, str]:
+    def _comment_handler(self, leading_comments: str, trailing_comments: str) -> Tuple[dict, str, str]:
+        comment_info_dict: dict = {}
+        if self.config.parse_comment:
+            leading_comments_list: List[str] = []
+            trailing_comments_list: List[str] = []
+            for container, comments in (
+                (leading_comments_list, leading_comments),
+                (trailing_comments_list, trailing_comments),
+            ):
+                for line in comments.split("\n"):
+                    field_dict = gen_dict_from_desc_str(self.config.comment_prefix, line)
+                    if not field_dict:
+                        container.append(line)
+                    else:
+                        comment_info_dict.update(field_dict)
+            leading_comments = "\n".join(leading_comments_list)
+            trailing_comments = "\n".join(trailing_comments_list)
+        return comment_info_dict, leading_comments, trailing_comments
+
+    def add_class_desc(self, scl_prefix: SourceCodeLocation, indent: int = 0) -> Tuple[dict, str, str]:
         desc_content = ""
         comment_content = ""
+        comment_info_dict: dict = {}
         if tuple(scl_prefix) not in self.source_code_info_by_scl:
-            return desc_content, comment_content
+            return comment_info_dict, desc_content, comment_content
 
         scl = self.source_code_info_by_scl[tuple(scl_prefix)]
-        if scl and scl.leading_comments:
-            desc_content += " " * (indent + self.code_indent) + '"""\n'
-            desc_content += " " * (indent + self.code_indent) + scl.leading_comments
-            desc_content += " " * (indent + self.code_indent) + '"""\n'
-        if scl and scl.trailing_comments:
-            comment_content = "# " + remove_comment_last_n(scl.trailing_comments)
-        return desc_content, comment_content
+        if scl:
+            comment_info_dict, leading_comments, trailing_comments = self._comment_handler(
+                scl.leading_comments, scl.trailing_comments
+            )
+            if leading_comments:
+                desc_content += " " * (indent + self.code_indent) + '"""\n'
+                desc_content += " " * (indent + self.code_indent) + leading_comments
+                desc_content += " " * (indent + self.code_indent) + '"""\n'
+            if trailing_comments:
+                comment_content = "# " + remove_comment_last_n(trailing_comments)
+        return comment_info_dict, desc_content, comment_content
 
     def _enum(self, enums: Iterable[EnumDescriptorProto], scl_prefix: SourceCodeLocation, indent: int = 0) -> List[str]:
         """
@@ -158,7 +182,7 @@ class FileDescriptorProtoToCode(BaseP2C):
         for i, enum in enumerate(enums):
             class_name = enum.name if enum.name not in PYTHON_RESERVED else "_r_" + enum.name
             content = " " * indent + f"class {class_name}(IntEnum):"
-            desc_content, comment_content = self.add_class_desc(scl_prefix + [i], indent)
+            _, desc_content, comment_content = self.add_class_desc(scl_prefix + [i], indent)
             if comment_content:
                 content += comment_content
             content += "\n" + desc_content
@@ -168,7 +192,12 @@ class FileDescriptorProtoToCode(BaseP2C):
         return content_list
 
     def _message_nested_type_handle(
-        self, desc: DescriptorProto, scl_prefix: SourceCodeLocation, indent: int, nested_message_config_dict: dict
+        self,
+        desc: DescriptorProto,
+        scl_prefix: SourceCodeLocation,
+        indent: int,
+        nested_message_config_dict: dict,
+        skip_validate_rule: bool,
     ) -> List[str]:
         """Parse the nested information of Message"""
         content_list: List[str] = []
@@ -176,7 +205,9 @@ class FileDescriptorProtoToCode(BaseP2C):
             if nested_message.options.map_entry:
                 # Some data of Map Entry in nested type array
                 continue
-            skip_validate_rule = nested_message_config_dict.get(nested_message.name, {}).get("skip", False)
+            skip_validate_rule = skip_validate_rule or nested_message_config_dict.get(nested_message.name, {}).get(
+                "skip", False
+            )
             content_list.append(
                 self._message(
                     nested_message,
@@ -200,7 +231,22 @@ class FileDescriptorProtoToCode(BaseP2C):
         scl_prefix: SourceCodeLocation,
         skip_validate_rule: bool = False,
     ) -> Optional[Tuple[str, str]]:
-        """generate message's field to Pydantic.FieldInfo code"""
+        """generate message's field to Pydantic.FieldInfo code
+
+        :param desc: The message to which the field belongs is used to determine whether it is self-referencing
+        :param root_desc: field's message or parent message
+        :param field:
+        :param indent: Indentation configuration of the generated code
+        :param nested_message_config_dict:
+            message config dict
+            e.g: {"{message name}": {"skip": True}}
+        :param optional_dict:
+            field optional dict
+            e.g: {"{field name}": {"is_proto3_optional": True}}
+        :param skip_validate_rule: If the value is True, the validation information for the field will not be generated
+
+        :return: validator_handle_content, class_field_content
+        """
         field_info_dict: dict = {}
         nested_message_name: Optional[str] = None
         raw_validator_dict = {}
@@ -284,29 +330,32 @@ class FileDescriptorProtoToCode(BaseP2C):
             rule_type_str = "repeated"
 
         field_option_info_dict: dict = {}
-
-        comment_field_info_dict: dict = {}
-        if self.config.parse_comment:
-            leading_comments_list: List[str] = []
-            trailing_comments_list: List[str] = []
-            for container, comments in (
-                (leading_comments_list, leading_comments),
-                (trailing_comments_list, trailing_comments),
-            ):
-                for line in comments.split("\n"):
-                    field_dict = gen_dict_from_desc_str(self.config.comment_prefix, line)
-                    if not field_dict:
-                        container.append(line)
-                    else:
-                        comment_field_info_dict.update(field_dict)
-            leading_comments = "\n".join(leading_comments_list)
-            trailing_comments = "\n".join(trailing_comments_list)
+        comment_field_info_dict, leading_comments, trailing_comments = self._comment_handler(
+            leading_comments,
+            trailing_comments,
+        )
+        #
+        # comment_field_info_dict: dict = {}
+        # if self.config.parse_comment:
+        #     leading_comments_list: List[str] = []
+        #     trailing_comments_list: List[str] = []
+        #     for container, comments in (
+        #         (leading_comments_list, leading_comments),
+        #         (trailing_comments_list, trailing_comments),
+        #     ):
+        #         for line in comments.split("\n"):
+        #             field_dict = gen_dict_from_desc_str(self.config.comment_prefix, line)
+        #             if not field_dict:
+        #                 container.append(line)
+        #             else:
+        #                 comment_field_info_dict.update(field_dict)
+        #     leading_comments = "\n".join(leading_comments_list)
+        #     trailing_comments = "\n".join(trailing_comments_list)
 
         if not skip_validate_rule:
             field_option_info_dict.update(comment_field_info_dict)
             # TODO support message option
             # if list(desc.options.ListFields()):
-            #     print([column[0].name for column in desc.options.ListFields()], file=sys.stderr)
             if len(field.options.ListFields()) != 0 and rule_type_str:
                 # protobuf option support
                 field_option_info_dict.update(field_option_handle(rule_type_str, field.name, field))  # type: ignore
@@ -450,9 +499,7 @@ class FileDescriptorProtoToCode(BaseP2C):
         return validator_handle_content, class_field_content
 
     def _gen_one_of_dict(
-        self,
-        desc: DescriptorProto,
-        scl_prefix: SourceCodeLocation,
+        self, desc: DescriptorProto, scl_prefix: SourceCodeLocation, skip_validate_rule: bool
     ) -> Tuple[Dict[str, OneOfInfoTypedDict], Dict[str, OptionTypedDict]]:
         """
         protobuf content:
@@ -521,6 +568,9 @@ class FileDescriptorProtoToCode(BaseP2C):
                     index_field_name_dict[field.oneof_index] = set()
                 index_field_name_dict[field.oneof_index].add(field.name)
 
+        if skip_validate_rule:
+            return one_of_dict, optional_dict
+
         for index, one_of_item in enumerate(desc.oneof_decl):
             # if field is proto3_optional, ignore
             if one_of_item.name.startswith("_") and one_of_item.name[1:] in optional_dict:
@@ -577,7 +627,7 @@ class FileDescriptorProtoToCode(BaseP2C):
         if class_name in self._parse_desc_name_dict:
             return self._parse_desc_name_dict[class_name]
 
-        desc_content, comment_content = self.add_class_desc(scl_prefix, indent)
+        comment_info_dict, desc_content, comment_content = self.add_class_desc(scl_prefix, indent)
         class_name_content = " " * indent + f"class {class_name}({self.config.base_model_class.__name__}):"
         if comment_content:
             class_name_content += comment_content
@@ -590,11 +640,25 @@ class FileDescriptorProtoToCode(BaseP2C):
         use_custom_type: bool = False
         one_of_dict, optional_dict, nested_message_config_dict = {}, {}, {}  # type: dict, dict, dict
 
+        if comment_info_dict.get("ignored", False):
+            skip_validate_rule = True
+        for option_descriptor, option_value in desc.options.ListFields():
+            if option_descriptor.full_name.endswith("validate.ignored"):
+                skip_validate_rule = option_value
+
         if desc.oneof_decl:
             one_of_dict, optional_dict = self._gen_one_of_dict(
-                desc, scl_prefix + [DescriptorProto.ONEOF_DECL_FIELD_NUMBER]
+                desc,
+                scl_prefix + [DescriptorProto.ONEOF_DECL_FIELD_NUMBER],
+                skip_validate_rule=skip_validate_rule,
             )
-
+        # for option_descriptor, option_value in field_list:
+        #     # filter unwanted Option
+        #     if protobuf_pkg:
+        #         if not option_descriptor.full_name.endswith(f"{protobuf_pkg}.rules"):
+        #             continue
+        #     elif not option_descriptor.full_name.endswith("validate.rules"):
+        #         continue
         for idx, field in enumerate(desc.field):
             if field.name in PYTHON_RESERVED:
                 continue
@@ -617,7 +681,11 @@ class FileDescriptorProtoToCode(BaseP2C):
         if desc.nested_type:
             class_sub_c_str_list.extend(
                 self._message_nested_type_handle(
-                    desc, scl_prefix + [DescriptorProto.NESTED_TYPE_FIELD_NUMBER], indent, nested_message_config_dict
+                    desc,
+                    scl_prefix + [DescriptorProto.NESTED_TYPE_FIELD_NUMBER],
+                    indent,
+                    nested_message_config_dict,
+                    skip_validate_rule,
                 )
             )
         if desc.enum_type:

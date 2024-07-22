@@ -33,6 +33,15 @@ class CodeGen(Generic[ConfigT]):
             self.generate_pydantic_model(Descriptors(request), response)
 
     def parse_param(self, request: CodeGeneratorRequest) -> None:
+        """
+        Parse the parameter information passed by the user and store it in the 'param_dict'.
+
+        For example
+            Input:
+                protoc -I. --protobuf-to-pydantic_out=bar1=foo1,bar2=foo2:. example.proto
+            param_dict result:
+                {"bar1": "foo1", "bar2": "foo2"}
+        """
         if not request.parameter:
             return
         try:
@@ -45,14 +54,20 @@ class CodeGen(Generic[ConfigT]):
         print(f"Parse command-line arguments:{self.param_dict}", file=sys.stderr)
 
     def _get_config_by_path(self, key: str) -> None:
+        """
+        Get config from path.
+
+        If not specify the directory where the configuration file is located by 'config_worker_dir_path',
+        the current directory will be used by default
+        """
         default_config = self.config
         path_obj: pathlib.Path = pathlib.Path(self.param_dict[key]).absolute()
         if not path_obj.exists():
-            raise SystemError(f"Can not  find config file at {path_obj}")
+            raise SystemError(f"Can not find config file at {path_obj}")
         if "config_worker_dir_path" in self.param_dict:
             worker_dir_path_obj: pathlib.Path = pathlib.Path(self.param_dict["config_worker_dir_path"]).absolute()
             if not worker_dir_path_obj.exists():
-                raise SystemError(f"Can not  find worker dir at {worker_dir_path_obj}")
+                raise SystemError(f"Can not find worker dir at {worker_dir_path_obj}")
             worker_dir_path = str(worker_dir_path_obj)
         else:
             worker_dir_path = None
@@ -75,10 +90,7 @@ class CodeGen(Generic[ConfigT]):
             for module_path in try_import_module_path_list:
                 module_path = module_path.replace("/", ".").replace("\\", ".").replace(".py", "")
                 try:
-                    self.config = get_config_by_module(
-                        importlib.import_module(module_path),
-                        self.config_class,
-                    )
+                    self.config = get_config_by_module(importlib.import_module(module_path), self.config_class)
                     break
                 except ModuleNotFoundError as e:
                     error_path_dict[module_path] = e
@@ -86,6 +98,11 @@ class CodeGen(Generic[ConfigT]):
             raise SystemError(f"Load config error. try use path and error:{error_path_dict}")
 
     def _get_config_by_py_code(self, key: str) -> None:
+        """
+        Pass the py code from the command line and convert it to config
+
+            Except in special cases such as buf, it is not recommended to use this form to get config
+        """
         try:
             plugin_config_module_name = self.param_dict.get("plugin_config_module_name", "")
             plugin_config_module: Optional[types.ModuleType] = None

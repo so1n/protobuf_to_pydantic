@@ -2226,7 +2226,7 @@ class TimestampTest(google.protobuf.message.Message):
 global___TimestampTest = TimestampTest
 
 class MessageIgnoredTest(google.protobuf.message.Message):
-    """p2p: {"ignore": true}"""
+    """p2p: {"ignored": true}"""
 
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -2251,6 +2251,8 @@ class MessageIgnoredTest(google.protobuf.message.Message):
 global___MessageIgnoredTest = MessageIgnoredTest
 
 class OneOfTest(google.protobuf.message.Message):
+    """p2p: {"oneof:id": {"required": true}}"""
+
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
     HEADER_FIELD_NUMBER: builtins.int
@@ -2295,6 +2297,11 @@ class OneOfNotTest(google.protobuf.message.Message):
 global___OneOfNotTest = OneOfNotTest
 
 class OneOfOptionalTest(google.protobuf.message.Message):
+    """Annotations are used in runtime mode
+    p2p: {"oneof:id": {"required": true}}
+    p2p: {"oneof:id": {"oneof_extend": {"optional": ["x", "y"]}}}
+    """
+
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
     class IntMapEntry(google.protobuf.message.Message):

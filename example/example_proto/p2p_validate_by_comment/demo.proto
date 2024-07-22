@@ -6,7 +6,6 @@ import "google/protobuf/any.proto";
 import "google/protobuf/empty.proto";
 import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
-import "example/example_proto/common/p2p_validate.proto";
 
 
 message FloatTest {
@@ -598,7 +597,7 @@ message TimestampTest {
 }
 
 
-// p2p: {"ignore": true}
+// p2p: {"ignored": true}
 message MessageIgnoredTest {
   int32 const_test = 1 ; // p2p: {"const": 1}
   int32 range_e_test = 2 ; // p2p: {"ge": 1, "le": 10}
@@ -606,11 +605,12 @@ message MessageIgnoredTest {
 }
 
 
+// p2p: {"oneof:id": {"required": true}}
 message OneOfTest {
   string header = 1;
+
   // p2p: {"required": true}
   oneof id {
-
     string x = 2;
     int32  y = 3;
   }
@@ -624,9 +624,13 @@ message OneOfNotTest {
   }
 }
 
+// Annotations are used in runtime mode
+// p2p: {"oneof:id": {"required": true}}
+// p2p: {"oneof:id": {"oneof_extend": {"optional": ["x", "y"]}}}
 message OneOfOptionalTest {
   string header = 1;
 
+  // Annotations are used in plugin mode
   // p2p: {"required": true}
   // p2p: {"oneof_extend": {"optional": ["x", "y"]}}
   oneof id {

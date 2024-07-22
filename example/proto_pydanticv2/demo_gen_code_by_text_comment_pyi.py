@@ -1,5 +1,5 @@
 # This is an automatically generated file, please do not change
-# gen by protobuf_to_pydantic[v0.2.6.2](https://github.com/so1n/protobuf_to_pydantic)
+# gen by protobuf_to_pydantic[v0.2.6](https://github.com/so1n/protobuf_to_pydantic)
 # Protobuf Version: 4.24.4
 # Pydantic Version: 2.5.3
 import typing
@@ -106,7 +106,7 @@ class OptionalMessage(BaseModel):
     item: typing.Optional[InvoiceItem] = Field()
     str_list: typing.List[str] = Field(default_factory=list)
     int_map: typing.Dict[str, int] = Field(default_factory=dict)
-    default_template_test: float = Field(default=0.0)
+    default_template_test: float = Field(default=1600000000.0)
 
     one_of_validator = model_validator(mode="before")(check_one_of)
 

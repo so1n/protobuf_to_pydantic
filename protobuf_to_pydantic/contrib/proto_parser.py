@@ -235,12 +235,14 @@ class ProtoTransformer(Transformer):
     @staticmethod
     def repeatedfield(tokens: list) -> Field:
         """Returns a Field namedtuple"""
-        comment: Comment = Comment("", {})
+        tokens = [token for token in tokens if token]
         if len(tokens) < 2:
             field: Field = tokens[0]
+            return field
         else:
             comment, field = tuple(tokens)
-        return Field(comment, "repeated", field.type, field.type, field.name, field.number)
+            field.comment.content = comment.content + field.comment.content
+            return field
 
     @staticmethod
     def optionalfield(tokens: list) -> Field:
@@ -281,7 +283,16 @@ class ProtoTransformer(Transformer):
                 elif token.type == "FIELDNUMBER":
                     fieldnumber = token
                 elif token.type == "COMMENT":
-                    comment = Comment(token.value, {})
+                    if not comment:
+                        comment = Comment(token.value, {})
+                    else:
+                        comment.content += token.value
+                elif token.type == "TAIL" and "//" in token.value:
+                    value = token.value.strip(";").strip()
+                    if not comment:
+                        comment = Comment(value, {})
+                    else:
+                        comment.content += value
         return Field(comment, "map", key_type.value, val_type.value, fieldname.value, int(fieldnumber.value))
 
     @staticmethod
@@ -336,8 +347,17 @@ class ProtoTransformer(Transformer):
                         name = token
                     elif token.type == "INTLIT":
                         value = token
-                    elif token.type == "COMMENTS":
-                        comment = Comment(token.value, {})
+                    elif token.type == "COMMENT":
+                        if not comment:
+                            comment = Comment(token.value, {})
+                        else:
+                            comment.content += token.value
+                    elif token.type == "TAIL" and "//" in token.value:
+                        value = token.value.strip(";").strip()
+                        if not comment:
+                            comment = Comment(value, {})
+                        else:
+                            comment.content += value
             enumitems.append(Field(comment, "enum", "enum", "enum", name.value, value.value))
         return enumitems
 

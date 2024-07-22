@@ -543,7 +543,7 @@ class ParseFromPbOption(object):
         """Extract the information of each field through the Options of Protobuf Message"""
         if descriptor.name in self._msg_desc_dict:
             return self._msg_desc_dict[descriptor.name]
-        message_field_dict: DescFromOptionTypedDict = {"message": {}, "one_of": {}, "nested": {}}
+        message_field_dict: DescFromOptionTypedDict = {"message": {}, "one_of": {}, "nested": {}, "metadata": {}}
 
         # Options for processing Messages
         for option_descriptor, option_value in descriptor.GetOptions().ListFields():

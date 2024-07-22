@@ -40,9 +40,9 @@ class TestP2pValidate:
     @staticmethod
     def assert_contains(content: str, other_content: str) -> None:
         content = format_content(content)
-        if sys.version_info >= (3, 10):
-            content = content.replace("typing_extensions.Literal", "typing.Literal")
-        assert content in other_content or content.replace(", alias_priority=2", "") in other_content
+        content = content.replace("typing_extensions.Literal", "typing.Literal")
+        other_content = other_content.replace("typing_extensions.Literal", "typing.Literal")
+        assert content in other_content or content.replace(", alias_priority=2", "") in other_content.replace(", alias_priority=2", "")
 
     def test_any(self) -> None:
         content = """
@@ -491,7 +491,7 @@ class Fixed32Test(BaseModel):
     def test_fixed64(self) -> None:
         content = """
 class Fixed64Test(BaseModel):
-    const_test: float = Field(default=0)
+    const_test: float = Field(default=1, const=True)
     range_e_test: float = Field(default=0, ge=1.0, le=10.0)
     range_test: float = Field(default=0, gt=1.0, lt=10.0)
     in_test: float = Field(default=0, in_=[1, 2, 3])
@@ -774,7 +774,7 @@ class MessageIgnoredTest(BaseModel):
 class MessageTest(BaseModel):
     skip_test: str = Field(default="")
     required_test: str = Field()
-    extra_test: str = Field(default="")
+    extra_test: str = Field(default="", customer_string="c1", customer_int=1)
 """) in self._model_output(demo_pb2.MessageTest)
 
     def test_nested(self) -> None:
@@ -1132,7 +1132,7 @@ class RepeatedTest(BaseModel):
     def test_sfixed32(self) -> None:
         content = """
 class Sfixed32Test(BaseModel):
-    const_test: float = Field(default=0)
+    const_test: float = Field(default=1, const=True)
     range_e_test: float = Field(default=0, ge=1.0, le=10.0)
     range_test: float = Field(default=0, gt=1.0, lt=10.0)
     in_test: float = Field(default=0, in_=[1, 2, 3])
@@ -1186,7 +1186,7 @@ class Sfixed32Test(BaseModel):
     def test_sfixed64(self) -> None:
         content = """
 class Sfixed64Test(BaseModel):
-    const_test: float = Field(default=0)
+    const_test: float = Field(default=1, const=True)
     range_e_test: float = Field(default=0, ge=1.0, le=10.0)
     range_test: float = Field(default=0, gt=1.0, lt=10.0)
     in_test: float = Field(default=0, in_=[1, 2, 3])

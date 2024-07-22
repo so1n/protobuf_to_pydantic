@@ -1,5 +1,5 @@
 # This is an automatically generated file, please do not change
-# gen by protobuf_to_pydantic[v0.2.6.2](https://github.com/so1n/protobuf_to_pydantic)
+# gen by protobuf_to_pydantic[v0.2.6](https://github.com/so1n/protobuf_to_pydantic)
 # Protobuf Version: 3.20.3
 # Pydantic Version: 2.5.3
 import typing
@@ -9,7 +9,7 @@ from ipaddress import IPv4Address, IPv6Address
 from uuid import UUID, uuid4
 
 import typing_extensions
-from annotated_types import Ge, Le, MaxLen, MinLen
+from annotated_types import Ge, Gt, Le, Lt, MaxLen, MinLen
 from google.protobuf.any_pb2 import Any  # type: ignore
 from google.protobuf.timestamp_pb2 import Timestamp  # type: ignore
 from protobuf_to_pydantic.customer_con_type.v2 import DatetimeType, TimedeltaType, gt_now, t_gt, t_lt
@@ -27,6 +27,8 @@ from protobuf_to_pydantic.customer_validator.v2 import (
     duration_not_in_validator,
     in_validator,
     len_validator,
+    map_max_pairs_validator,
+    map_min_pairs_validator,
     not_contains_validator,
     not_in_validator,
     prefix_validator,
@@ -380,24 +382,32 @@ class Int64Test(BaseModel):
 
 
 class MapTest(BaseModel):
-    pair_test: typing.Dict[str, int] = Field(default_factory=dict)
-    keys_test: typing.Dict[str, int] = Field(default_factory=dict)
-    values_test: typing.Dict[str, int] = Field(default_factory=dict)
+    pair_test: typing.Dict[str, int] = Field(default_factory=dict, map_min_pairs=1, map_max_pairs=5)
+    keys_test: typing.Dict[typing_extensions.Annotated[str, MinLen(min_length=1), MaxLen(max_length=5)], int] = Field(
+        default_factory=dict
+    )
+    values_test: typing.Dict[str, typing_extensions.Annotated[int, Ge(ge=5), Le(le=5)]] = Field(default_factory=dict)
     keys_values_test: typing.Dict[
         typing_extensions.Annotated[str, MinLen(min_length=1), MaxLen(max_length=5)],
         typing_extensions.Annotated[DatetimeType, gt_now(True)],
     ] = Field(default_factory=dict)
-    enable_test: typing.Dict[str, int] = Field(default_factory=dict)
     default_factory_test: typing.Dict[str, int] = Field(default_factory=dict)
-    miss_default_test: typing.Dict[str, int] = Field(default_factory=dict)
-    required_test: typing.Dict[str, int] = Field(default_factory=dict)
-    alias_test: typing.Dict[str, int] = Field(default_factory=dict)
-    desc_test: typing.Dict[str, int] = Field(default_factory=dict)
-    example_factory_test: typing.Dict[str, int] = Field(default_factory=dict)
-    field_test: typing.Dict[str, int] = Field(default_factory=dict)
-    title_test: typing.Dict[str, int] = Field(default_factory=dict)
-    type_test: typing.Dict[str, int] = Field(default_factory=dict)
-    extra_test: typing.Dict[str, int] = Field(default_factory=dict)
+    miss_default_test: typing.Dict[str, int] = Field()
+    required_test: typing.Dict[str, int] = Field()
+    alias_test: typing.Dict[str, int] = Field(default_factory=dict, alias="alias", alias_priority=2)
+    desc_test: typing.Dict[str, int] = Field(default_factory=dict, description="test desc")
+    example_factory_test: typing.Dict[str, int] = Field(default_factory=dict, example=dict)
+    field_test: typing.Dict[str, int] = CustomerField(default_factory=dict)
+    title_test: typing.Dict[str, int] = Field(default_factory=dict, title="title_test")
+    type_test: dict = Field(default_factory=dict)
+    extra_test: typing.Dict[str, int] = Field(default_factory=dict, customer_string="c1", customer_int=1)
+
+    pair_test_map_min_pairs_validator = field_validator("pair_test", mode="after", check_fields=None)(
+        map_min_pairs_validator
+    )
+    pair_test_map_max_pairs_validator = field_validator("pair_test", mode="after", check_fields=None)(
+        map_max_pairs_validator
+    )
 
 
 class MessageIgnoredTest(BaseModel):
@@ -469,19 +479,15 @@ class NestedMessage(BaseModel):
             timestamp_gt_now_validator
         )
 
-    class NotEnableUserPayMessage(BaseModel):
-        bank_number: str = Field(default="", min_length=13, max_length=19)
-        exp: datetime = Field(default_factory=datetime.now, timestamp_gt_now=True)
-        uuid: UUID = Field(default="")
-
-        exp_timestamp_gt_now_validator = field_validator("exp", mode="after", check_fields=None)(
-            timestamp_gt_now_validator
-        )
+    class NotEnableUserPayMessageOnlyUseSkipRule(BaseModel):
+        bank_number: str = Field(default="")
+        exp: datetime = Field(default_factory=datetime.now)
+        uuid: str = Field(default="")
 
     string_in_map_test: typing.Dict[str, StringTest] = Field(default_factory=dict)
     map_in_map_test: typing.Dict[str, MapTest] = Field(default_factory=dict)
     user_pay: UserPayMessage = Field()
-    not_enable_user_pay: NotEnableUserPayMessage = Field()
+    not_enable_user_pay: NotEnableUserPayMessageOnlyUseSkipRule = Field()
     empty: typing.Any = Field()
     after_refer: AfterReferMessage = Field()
 
@@ -497,11 +503,11 @@ class OneOfNotTest(BaseModel):
 
 
 class OneOfOptionalTest(BaseModel):
-    _one_of_dict = {"p2p_validate_comment_test.OneOfOptionalTest.id": {"fields": {"x", "y", "z"}, "required": False}}
+    _one_of_dict = {"p2p_validate_comment_test.OneOfOptionalTest.id": {"fields": {"x", "y", "z"}, "required": True}}
 
     header: str = Field(default="")
-    x: str = Field(default="")
-    y: int = Field(default=0)
+    x: typing.Optional[str] = Field(default="")
+    y: typing.Optional[int] = Field(default=0)
     z: bool = Field(default=False)
     name: typing.Optional[str] = Field(default="")
     age: typing.Optional[int] = Field(default=0)
@@ -512,7 +518,7 @@ class OneOfOptionalTest(BaseModel):
 
 
 class OneOfTest(BaseModel):
-    _one_of_dict = {"p2p_validate_comment_test.OneOfTest.id": {"fields": {"x", "y"}, "required": False}}
+    _one_of_dict = {"p2p_validate_comment_test.OneOfTest.id": {"fields": {"x", "y"}, "required": True}}
 
     header: str = Field(default="")
     x: str = Field(default="")
@@ -522,31 +528,36 @@ class OneOfTest(BaseModel):
 
 
 class RepeatedTest(BaseModel):
-    range_test: typing.List[str] = Field(default_factory=list)
-    unique_test: typing.List[str] = Field(default_factory=list)
+    range_test: typing.List[str] = Field(default_factory=list, min_length=1, max_length=5)
+    unique_test: typing.Set[str] = Field(default_factory=set)
     items_string_test: typing.List[
         typing_extensions.Annotated[str, MinLen(min_length=1), MaxLen(max_length=5)]
     ] = Field(default_factory=list, min_length=1, max_length=5)
-    items_double_test: typing.List[float] = Field(default_factory=list)
-    items_int32_test: typing.List[int] = Field(default_factory=list)
+    items_double_test: typing.List[typing_extensions.Annotated[float, Gt(gt=1), Lt(lt=5)]] = Field(
+        default_factory=list, min_length=1, max_length=5
+    )
+    items_int32_test: typing.List[typing_extensions.Annotated[int, Gt(gt=1), Lt(lt=5)]] = Field(
+        default_factory=list, min_length=1, max_length=5
+    )
     items_timestamp_test: typing.List[
         typing_extensions.Annotated[DatetimeType, t_gt(1600000000.0), t_lt(1600000010.0)]
     ] = Field(default_factory=list, min_length=1, max_length=5)
     items_duration_test: typing.List[
         typing_extensions.Annotated[TimedeltaType, Ge(ge=timedelta(seconds=10)), Le(le=timedelta(seconds=10))]
     ] = Field(default_factory=list, min_length=1, max_length=5)
-    items_bytes_test: typing.List[bytes] = Field(default_factory=list)
-    enable_test: typing.List[str] = Field(default_factory=list)
+    items_bytes_test: typing.List[
+        typing_extensions.Annotated[bytes, MinLen(min_length=1), MaxLen(max_length=5)]
+    ] = Field(default_factory=list, min_length=1, max_length=5)
     default_factory_test: typing.List[str] = Field(default_factory=list)
-    miss_default_test: typing.List[str] = Field(default_factory=list)
-    required_test: typing.List[str] = Field(default_factory=list)
-    alias_test: typing.List[str] = Field(default_factory=list)
-    desc_test: typing.List[str] = Field(default_factory=list)
-    example_factory_test: typing.List[str] = Field(default_factory=list)
-    field_test: typing.List[str] = Field(default_factory=list)
-    title_test: typing.List[str] = Field(default_factory=list)
-    type_test: typing.List[str] = Field(default_factory=list)
-    extra_test: typing.List[str] = Field(default_factory=list)
+    miss_default_test: typing.List[str] = Field()
+    required_test: typing.List[str] = Field()
+    alias_test: typing.List[str] = Field(default_factory=list, alias="alias", alias_priority=2)
+    desc_test: typing.List[str] = Field(default_factory=list, description="test desc")
+    example_factory_test: typing.List[str] = Field(default_factory=list, example=list)
+    field_test: typing.List[str] = CustomerField(default_factory=list)
+    title_test: typing.List[str] = Field(default_factory=list, title="title_test")
+    type_test: list = Field(default_factory=list)
+    extra_test: typing.List[str] = Field(default_factory=list, customer_string="c1", customer_int=1)
 
 
 class Sfixed32Test(BaseModel):
