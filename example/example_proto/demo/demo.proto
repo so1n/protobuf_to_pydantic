@@ -107,3 +107,21 @@ message OptionalMessage{
   // p2p: {"default_template": "p2p@timestamp|10"}
   float default_template_test = 8;
 };
+
+
+// Test Circular references
+// from: https://github.com/so1n/protobuf_to_pydantic/issues/57
+message InvoiceItem2 {
+  string name = 1;
+  int32 amount = 2;
+  int32 quantity = 3;
+  repeated InvoiceItem2 items = 4;
+  Invoice3 invoice = 5;
+}
+
+message Invoice3 {
+  string name = 1;
+  int32 amount = 2;
+  int32 quantity = 3;
+  repeated InvoiceItem2 items = 4;
+}

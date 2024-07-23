@@ -14,6 +14,7 @@ from typing_extensions import Annotated, get_origin
 from protobuf_to_pydantic import _pydantic_adapter, constant
 from protobuf_to_pydantic.customer_validator import check_one_of
 from protobuf_to_pydantic.desc_template import DescTemplate
+from protobuf_to_pydantic.exceptions import WaitingToCompleteException
 from protobuf_to_pydantic.field_param import (
     FieldParamModel,
     field_param_dict_handle,
@@ -96,7 +97,8 @@ class FieldDataClass(object):
     validators: Dict[str, classmethod]
 
 
-_create_model_cache: Dict[Union[str, tuple], Type[BaseModel]] = {}
+CREATE_MODEL_CACHE_T = Dict[Union[str, tuple], Optional[Type[BaseModel]]]
+_create_model_cache: CREATE_MODEL_CACHE_T = {}
 
 
 def clear_create_model_cache() -> None:
@@ -116,7 +118,7 @@ class M2P(object):
         desc_template: Optional[Type[DescTemplate]] = None,
         message_type_dict_by_type_name: Optional[Dict[str, Any]] = None,
         message_default_factory_dict_by_type_name: Optional[Dict[str, Any]] = None,
-        create_model_cache: Optional[Dict[Union[str, tuple], Type[BaseModel]]] = None,
+        create_model_cache: Optional[CREATE_MODEL_CACHE_T] = None,
     ):
         proto_file_name = msg.DESCRIPTOR.file.name  # type: ignore
         message_field_dict: Dict[str, "DescFromOptionTypedDict"] = {}
@@ -153,7 +155,7 @@ class M2P(object):
         self._field_doc_dict: Dict[str, DescFromOptionTypedDict] = message_field_dict
         self._default_field = default_field
         self._comment_prefix = comment_prefix
-        self._creat_cache: Dict[Union[str, tuple], Type[BaseModel]] = create_model_cache or _create_model_cache
+        self._creat_cache: CREATE_MODEL_CACHE_T = create_model_cache or _create_model_cache
         self._pydantic_base: Type["BaseModel"] = pydantic_base or BaseModel
         self._pydantic_module: str = pydantic_module or __name__
         self._desc_template: DescTemplate = (desc_template or DescTemplate)(local_dict or {}, self._comment_prefix)
@@ -176,9 +178,10 @@ class M2P(object):
         return self._gen_model
 
     def get_model(self, full_name: str) -> Type[BaseModel]:
-        if full_name in self._creat_cache:
-            return self._creat_cache[full_name]
-        raise ValueError(f"Can not found {full_name} model")
+        model = self._creat_cache.get(full_name, None)
+        if model is None:
+            raise ValueError(f"Can not found {full_name} model")
+        return model
 
     ###############
     # util method #
@@ -375,18 +378,21 @@ class M2P(object):
                     )
                     setattr(field_dataclass.field_type, "__doc__", _class_doc)
                 else:
+                    # if self-referencing, need use Python type hints postponed annotations
+                    field_dataclass.field_type = f'"{_class_name}"'
+                    use_class_name = _class_name if not skip_validate_rule else _class_name + "OnlyUseSkipRule"
                     if (
                         skip_validate_rule
                         or protobuf_field.message_type.full_name != field_dataclass.descriptor.full_name
                     ):
-                        field_dataclass.field_type = self._parse_msg_to_pydantic_model(
-                            descriptor=protobuf_field.message_type,
-                            class_name=_class_name if not skip_validate_rule else _class_name + "OnlyUseSkipRule",
-                            skip_validate_rule=skip_validate_rule,
-                        )
-                    else:
-                        # if self-referencing, need use Python type hints postponed annotations
-                        field_dataclass.field_type = f'"{_class_name}"'
+                        try:
+                            field_dataclass.field_type = self._parse_msg_to_pydantic_model(
+                                descriptor=protobuf_field.message_type,
+                                class_name=use_class_name,
+                                skip_validate_rule=skip_validate_rule,
+                            )
+                        except WaitingToCompleteException:
+                            pass
 
     def _protobuf_field_type_is_type_enum_handler(self, field_dataclass: FieldDataClass) -> None:
         # support google.protobuf.Enum
@@ -512,11 +518,14 @@ class M2P(object):
     def _parse_msg_to_pydantic_model(
         self, *, descriptor: Descriptor, class_name: str = "", skip_validate_rule: bool = False
     ) -> Type[BaseModel]:
-        message_key = descriptor.full_name
-        if class_name or skip_validate_rule:
-            message_key = (descriptor.full_name, class_name, skip_validate_rule)
+        class_name = class_name or descriptor.name
+        message_key = (descriptor.full_name, class_name, skip_validate_rule)
         if message_key in self._creat_cache:
-            return self._creat_cache[message_key]
+            if self._creat_cache[message_key] is None:
+                raise WaitingToCompleteException(f"The model:{message_key} is being generated")
+            return self._creat_cache[message_key]  # type: ignore[return-value]
+        else:
+            self._creat_cache[message_key] = None
 
         annotation_dict: Dict[str, Tuple[Type, Any]] = {}
         validators: Dict[str, classmethod] = {}
@@ -569,7 +578,7 @@ class M2P(object):
         try:
             pydantic_model: Type[BaseModel] = create_pydantic_model(
                 annotation_dict,
-                class_name=class_name or descriptor.name,
+                class_name=class_name,
                 pydantic_validators=validators or None,
                 pydantic_module=self._pydantic_module,
                 pydantic_base=self._get_pydantic_base(pydantic_model_config_dict),
@@ -580,7 +589,7 @@ class M2P(object):
                 pydantic_model_config_dict["arbitrary_types_allowed"] = True
                 pydantic_model = create_pydantic_model(
                     annotation_dict,
-                    class_name=class_name or descriptor.name,
+                    class_name=class_name,
                     pydantic_validators=validators or None,
                     pydantic_module=self._pydantic_module,
                     pydantic_base=self._get_pydantic_base(pydantic_model_config_dict),
@@ -612,7 +621,7 @@ def msg_to_pydantic_model(
     desc_template: Optional[Type[DescTemplate]] = None,
     message_type_dict_by_type_name: Optional[Dict[str, Any]] = None,
     message_default_factory_dict_by_type_name: Optional[Dict[str, Any]] = None,
-    create_model_cache: Optional[Dict[Union[str, tuple], Type[BaseModel]]] = None,
+    create_model_cache: Optional[CREATE_MODEL_CACHE_T] = None,
 ) -> Type[BaseModel]:
     """
     Parse a message to a pydantic model

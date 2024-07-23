@@ -13,6 +13,7 @@ from typing_extensions import NotRequired, TypedDict
 from protobuf_to_pydantic import _pydantic_adapter
 from protobuf_to_pydantic.constant import protobuf_desc_python_type_dict, python_type_default_value_dict
 from protobuf_to_pydantic.desc_template import DescTemplate
+from protobuf_to_pydantic.exceptions import WaitingToCompleteException
 from protobuf_to_pydantic.field_param import (
     FieldParamModel,
     field_param_dict_handle,
@@ -296,8 +297,10 @@ class FileDescriptorProtoToCode(BaseP2C):
                     for index, desc in enumerate(self._fd.message_type):
                         if desc is message:
                             scl_prefix = [FileDescriptorProto.MESSAGE_TYPE_FIELD_NUMBER, index]
-
-                    self._content_deque.append(self._message(message, root_desc, scl_prefix))
+                    try:
+                        self._content_deque.append(self._message(message, root_desc, scl_prefix))
+                    except WaitingToCompleteException:
+                        type_str = f'"{type_str}"'
                 elif type_str in root_desc_nested_type_name:
                     # I don't want to maintain complex dependencies, so I'll just use strings type hints here
                     type_str = f'"{root_desc.name}.{type_str}"'
@@ -625,7 +628,11 @@ class FileDescriptorProtoToCode(BaseP2C):
         self._add_import_code("google.protobuf.message", "Message")
         class_name = desc.name if desc.name not in PYTHON_RESERVED else "_r_" + desc.name
         if class_name in self._parse_desc_name_dict:
+            if not self._parse_desc_name_dict[class_name]:
+                raise WaitingToCompleteException(f"The model:{class_name} is being generated")
             return self._parse_desc_name_dict[class_name]
+        else:
+            self._parse_desc_name_dict[class_name] = ""
 
         comment_info_dict, desc_content, comment_content = self.add_class_desc(scl_prefix, indent)
         class_name_content = " " * indent + f"class {class_name}({self.config.base_model_class.__name__}):"

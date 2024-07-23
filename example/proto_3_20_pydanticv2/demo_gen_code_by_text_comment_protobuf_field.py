@@ -7,13 +7,12 @@ from datetime import datetime
 from enum import IntEnum
 from uuid import uuid4
 
+from example.gen_text_comment_code import exp_time
 from google.protobuf.field_mask_pb2 import FieldMask  # type: ignore
 from google.protobuf.wrappers_pb2 import DoubleValue  # type: ignore
 from protobuf_to_pydantic.customer_validator.v2 import check_one_of
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 from pydantic.types import PaymentCardNumber
-
-from example.gen_text_comment_code import exp_time
 
 
 class AfterReferMessage(BaseModel):
@@ -23,6 +22,21 @@ class AfterReferMessage(BaseModel):
 
 class EmptyMessage(BaseModel):
     pass
+
+
+class InvoiceItem2(BaseModel):
+    name: str = Field(default="")
+    amount: int = Field(default=0)
+    quantity: int = Field(default=0)
+    items: typing.List["InvoiceItem2"] = Field(default_factory=list)
+    invoice: "Invoice3" = Field()
+
+
+class Invoice3(BaseModel):
+    name: str = Field(default="")
+    amount: int = Field(default=0)
+    quantity: int = Field(default=0)
+    items: typing.List[InvoiceItem2] = Field(default_factory=list)
 
 
 class InvoiceItem(BaseModel):

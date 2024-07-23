@@ -120,3 +120,23 @@ class OptionalMessage(BaseModel):
     str_list: typing.List[str] = Field(default_factory=list)
     int_map: typing.Dict[str, int] = Field(default_factory=dict)
     default_template_test: float = Field(default=1600000000.0)
+
+
+class Invoice3(BaseModel):
+    name: str = Field(default="")
+    amount: int = Field(default=0)
+    quantity: int = Field(default=0)
+    items: typing.List["InvoiceItem2"] = Field(default_factory=list)
+
+
+class InvoiceItem2(BaseModel):
+    """
+        Test Circular references
+    from: https://github.com/so1n/protobuf_to_pydantic/issues/57
+    """
+
+    name: str = Field(default="")
+    amount: int = Field(default=0)
+    quantity: int = Field(default=0)
+    items: typing.List["InvoiceItem2"] = Field(default_factory=list)
+    invoice: Invoice3 = Field()

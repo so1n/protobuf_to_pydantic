@@ -16,32 +16,23 @@ def _parse_message_result_dict(
     parse_result: "ProtoFile",
     container: Dict[str, "DescFromOptionTypedDict"],
     comment_prefix: str,
+    msg_cache: Dict[str, "DescFromOptionTypedDict"],
 ) -> None:
     message_name: str = protobuf_msg.name
-    container[message_name] = {"message": {}, "one_of": {}, "nested": {}, "metadata": {}}
+    if message_name in msg_cache:
+        return
+    new_container: "DescFromOptionTypedDict" = {"message": {}, "one_of": {}, "nested": {}, "metadata": {}}
+    container[message_name] = new_container
+    msg_cache[message_name] = new_container
 
     if protobuf_msg.comment:
         message_dict = gen_dict_from_desc_str(  # type: ignore[assignment]
             comment_prefix, protobuf_msg.comment.content.replace("//", "")
         )
-        one_of_message_dict_handler(message_dict, container[message_name], f"{parse_result.package}.{message_name}")
-        # for key, value in message_dict.items():
-        #     if key == "ignore":
-        #         container[message_name]["metadata"]["ignore"] = value
-        #     elif key.startswith("oneof"):
-        #         # Special support for OneOf
-        #         field_full_name = f"{parse_result.package}.{message_name}.{key.split(':')[1]}"
-        #         if field_full_name not in container[message_name]["one_of"]:
-        #             container[message_name]["one_of"][field_full_name] = {}
-        #         if "required" in value:
-        #             container[message_name]["one_of"][field_full_name]["required"] = value["required"]
-        #         if "optional" in value.get("oneof_extend", {}):
-        #             container[message_name]["one_of"][field_full_name]["optional_fields"] = (
-        #                 set(value["oneof_extend"].pop("optional", []))
-        #             )
+        one_of_message_dict_handler(message_dict, new_container, f"{parse_result.package}.{message_name}")
 
     for field in protobuf_msg.fields:
-        container[message_name]["message"][field.name] = gen_dict_from_desc_str(  # type: ignore[assignment]
+        new_container["message"][field.name] = gen_dict_from_desc_str(  # type: ignore[assignment]
             comment_prefix, field.comment.content.replace("//", "") if field.comment else ""
         )
         # parse nested message by map
@@ -54,7 +45,7 @@ def _parse_message_result_dict(
                 continue
             if sub_message is protobuf_msg:
                 continue
-            _parse_message_result_dict(sub_message, parse_result, container[message_name]["nested"], comment_prefix)
+            _parse_message_result_dict(sub_message, parse_result, new_container["nested"], comment_prefix, msg_cache)
 
 
 def get_desc_from_proto_file(filename: str, comment_prefix: str) -> Dict[str, "DescFromOptionTypedDict"]:
@@ -110,7 +101,8 @@ def get_desc_from_proto_file(filename: str, comment_prefix: str) -> Dict[str, "D
         # Currently only used protobuf file message
         # proto_file: ProtoFile = _proto_file
         for _, protobuf_msg in _proto_file.messages.items():
-            _parse_message_result_dict(protobuf_msg, _proto_file, message_field_dict, comment_prefix)
+            msg_cache: Dict[str, "DescFromOptionTypedDict"] = {}
+            _parse_message_result_dict(protobuf_msg, _proto_file, message_field_dict, comment_prefix, msg_cache)
     # cache data and return
     _filename_desc_dict[filename] = message_field_dict
     return message_field_dict

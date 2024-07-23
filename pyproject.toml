@@ -44,6 +44,7 @@ email-validator = "2.0.0"
 # fix flake8 run bug: https://stackoverflow.com/questions/73929564/entrypoints-object-has-no-attribute-get-digital-ocean
 importlib-metadata = "4.11.4"
 grpcio-tools = ">=1.40.0"
+mypy-protobuf = "3.2.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "6.2.5"

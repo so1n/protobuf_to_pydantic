@@ -387,7 +387,10 @@ class BaseP2C(object):
                     # only support like repeated[string]
                     value_type_name = self._get_pydantic_con_type_code(value_outer_type)
                 else:
-                    value_type_name = self._get_value_code(value_outer_type)
+                    if isinstance(value_outer_type, str):
+                        value_type_name = value_outer_type
+                    else:
+                        value_type_name = self._get_value_code(value_outer_type)
             else:
                 value_type_name = getattr(value_outer_type, "__name__", "None")
 
