@@ -10,6 +10,7 @@ from uuid import UUID, uuid4
 
 import typing_extensions
 from annotated_types import Ge, Gt, Le, Lt, MaxLen, MinLen
+from example.p2p_validate_by_comment_gen_code import CustomerField, customer_any
 from google.protobuf.any_pb2 import Any  # type: ignore
 from google.protobuf.timestamp_pb2 import Timestamp  # type: ignore
 from protobuf_to_pydantic.customer_con_type.v2 import DatetimeType, TimedeltaType, gt_now, t_gt, t_lt
@@ -48,8 +49,6 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator, model_valida
 from pydantic.functional_validators import BeforeValidator
 from pydantic.networks import EmailStr, IPvAnyAddress
 from pydantic_core._pydantic_core import Url
-
-from example.p2p_validate_by_comment_gen_code import CustomerField, customer_any
 
 
 class AfterReferMessage(BaseModel):

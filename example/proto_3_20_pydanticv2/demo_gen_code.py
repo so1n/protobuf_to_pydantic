@@ -21,6 +21,21 @@ class EmptyMessage(BaseModel):
     pass
 
 
+class InvoiceItem2(BaseModel):
+    name: str = Field(default="")
+    amount: int = Field(default=0)
+    quantity: int = Field(default=0)
+    items: typing.List["InvoiceItem2"] = Field(default_factory=list)
+    invoice: "Invoice3" = Field()
+
+
+class Invoice3(BaseModel):
+    name: str = Field(default="")
+    amount: int = Field(default=0)
+    quantity: int = Field(default=0)
+    items: typing.List[InvoiceItem2] = Field(default_factory=list)
+
+
 class InvoiceItem(BaseModel):
     name: str = Field(default="")
     amount: int = Field(default=0)

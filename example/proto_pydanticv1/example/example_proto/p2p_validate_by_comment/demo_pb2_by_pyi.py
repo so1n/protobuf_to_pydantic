@@ -8,6 +8,7 @@ from enum import IntEnum
 from ipaddress import IPv4Address, IPv6Address
 from uuid import UUID, uuid4
 
+from example.p2p_validate_by_comment_gen_code import CustomerField, customer_any
 from google.protobuf.any_pb2 import Any  # type: ignore
 from google.protobuf.timestamp_pb2 import Timestamp  # type: ignore
 from protobuf_to_pydantic.customer_con_type.v1 import contimedelta, contimestamp
@@ -45,8 +46,6 @@ from protobuf_to_pydantic.util import Timedelta
 from pydantic import BaseModel, Field, root_validator, validator
 from pydantic.networks import AnyUrl, EmailStr, IPvAnyAddress
 from pydantic.types import conbytes, confloat, conint, conlist, constr
-
-from example.p2p_validate_by_comment_gen_code import CustomerField, customer_any
 
 
 class AfterReferMessage(BaseModel):
