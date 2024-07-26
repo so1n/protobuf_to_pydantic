@@ -12,7 +12,6 @@ from typing_extensions import NotRequired, TypedDict
 
 from protobuf_to_pydantic import _pydantic_adapter
 from protobuf_to_pydantic.constant import protobuf_desc_python_type_dict, python_type_default_value_dict
-from protobuf_to_pydantic.desc_template import DescTemplate
 from protobuf_to_pydantic.exceptions import WaitingToCompleteException
 from protobuf_to_pydantic.field_param import (
     FieldParamModel,
@@ -33,6 +32,7 @@ from protobuf_to_pydantic.grpc_types import (
     FileDescriptorProto,
 )
 from protobuf_to_pydantic.plugin.my_types import ProtobufTypeModel
+from protobuf_to_pydantic.template import CommentTemplate
 from protobuf_to_pydantic.util import camel_to_snake, gen_dict_from_desc_str
 
 if TYPE_CHECKING:
@@ -79,7 +79,7 @@ class FileDescriptorProtoToCode(BaseP2C):
         self.config = config
         self._fd: FileDescriptorProto = fd
         self._descriptors: Descriptors = descriptors
-        self._desc_template: DescTemplate = config.desc_template_instance
+        self._desc_template: CommentTemplate = config.desc_template_instance
         self.source_code_info_by_scl = {tuple(location.path): location for location in fd.source_code_info.location}
 
         if config.base_model_class is BaseModel:

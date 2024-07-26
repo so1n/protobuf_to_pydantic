@@ -1,14 +1,20 @@
 import json
 from importlib import import_module
-from typing import Any, Callable, List, Optional
+from typing import Any, Callable, Dict, List, Optional
 
 from protobuf_to_pydantic.grpc_types import RepeatedCompositeContainer, RepeatedScalarContainer
 
 
-class DescTemplate(object):
-    def __init__(self, local_dict: dict, comment_prefix: str) -> None:
-        self._local_dict: dict = local_dict
+class CommentTemplate(object):
+    def __init__(self, local_dict: Dict[str, Any], comment_prefix: str, **kwargs: Any) -> None:
+        """
+        :param local_dict: local template var
+        :param comment_prefix: comment prefix, The comment prefix that needs to be resolved
+        :param kwargs: Extended parameters for custom templates
+        """
+        self._local_dict = local_dict
         self._comment_prefix: str = comment_prefix
+        self._kwargs: Dict[str, Any] = kwargs
         self._support_template_list: List[str] = [i for i in dir(self) if i.startswith("template")]
 
     def template_import_instance(self, module_str: str, var_str: str, json_param: str) -> Any:

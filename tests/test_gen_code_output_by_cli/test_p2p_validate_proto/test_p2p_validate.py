@@ -17,7 +17,7 @@ else:
     else:
         from example.proto_3_20_pydanticv2.example.example_proto.p2p_validate import demo_pb2  # type: ignore[no-redef]
 
-from example.gen_p2p_code import CustomDescTemplate, CustomerField, confloat, conint, customer_any
+from example.gen_p2p_code import CustomCommentTemplate, CustomerField, confloat, conint, customer_any
 from protobuf_to_pydantic import msg_to_pydantic_model, pydantic_model_to_py_code
 from protobuf_to_pydantic.util import format_content
 
@@ -35,7 +35,7 @@ class TestP2pValidate:
             "conint": conint,
             "customer_any": customer_any,
         }
-        return pydantic_model_to_py_code(msg_to_pydantic_model(msg, local_dict=local_dict, desc_template=CustomDescTemplate))
+        return pydantic_model_to_py_code(msg_to_pydantic_model(msg, local_dict=local_dict, desc_template=CustomCommentTemplate))
 
     @staticmethod
     def assert_contains(content: str, other_content: str) -> None:

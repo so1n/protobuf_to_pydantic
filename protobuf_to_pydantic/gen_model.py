@@ -13,7 +13,6 @@ from typing_extensions import Annotated, get_origin
 
 from protobuf_to_pydantic import _pydantic_adapter, constant
 from protobuf_to_pydantic.customer_validator import check_one_of
-from protobuf_to_pydantic.desc_template import DescTemplate
 from protobuf_to_pydantic.exceptions import WaitingToCompleteException
 from protobuf_to_pydantic.field_param import (
     FieldParamModel,
@@ -28,6 +27,7 @@ from protobuf_to_pydantic.get_desc import (
 )
 from protobuf_to_pydantic.get_desc.from_pb_option.base import field_comment_handler, protobuf_common_type_dict
 from protobuf_to_pydantic.grpc_types import AnyMessage, Descriptor, FieldDescriptor, Message
+from protobuf_to_pydantic.template import CommentTemplate
 from protobuf_to_pydantic.util import create_pydantic_model
 
 if TYPE_CHECKING:
@@ -115,7 +115,7 @@ class M2P(object):
         pydantic_base: Optional[Type["BaseModel"]] = None,
         pydantic_module: Optional[str] = None,
         local_dict: Optional[Dict[str, Any]] = None,
-        desc_template: Optional[Type[DescTemplate]] = None,
+        desc_template: Optional[Type[CommentTemplate]] = None,
         message_type_dict_by_type_name: Optional[Dict[str, Any]] = None,
         message_default_factory_dict_by_type_name: Optional[Dict[str, Any]] = None,
         create_model_cache: Optional[CREATE_MODEL_CACHE_T] = None,
@@ -158,7 +158,9 @@ class M2P(object):
         self._creat_cache: CREATE_MODEL_CACHE_T = create_model_cache or _create_model_cache
         self._pydantic_base: Type["BaseModel"] = pydantic_base or BaseModel
         self._pydantic_module: str = pydantic_module or __name__
-        self._desc_template: DescTemplate = (desc_template or DescTemplate)(local_dict or {}, self._comment_prefix)
+        self._desc_template: CommentTemplate = (desc_template or CommentTemplate)(
+            local_dict or {}, self._comment_prefix
+        )
         self._message_type_dict_by_type_name: Dict[str, Any] = (
             message_type_dict_by_type_name or constant.message_name_type_dict
         )
@@ -618,7 +620,7 @@ def msg_to_pydantic_model(
     local_dict: Optional[Dict[str, Any]] = None,
     pydantic_base: Optional[Type["BaseModel"]] = None,
     pydantic_module: Optional[str] = None,
-    desc_template: Optional[Type[DescTemplate]] = None,
+    desc_template: Optional[Type[CommentTemplate]] = None,
     message_type_dict_by_type_name: Optional[Dict[str, Any]] = None,
     message_default_factory_dict_by_type_name: Optional[Dict[str, Any]] = None,
     create_model_cache: Optional[CREATE_MODEL_CACHE_T] = None,
