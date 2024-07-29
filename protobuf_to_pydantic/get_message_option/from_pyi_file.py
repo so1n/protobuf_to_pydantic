@@ -1,17 +1,17 @@
 import re
 from typing import TYPE_CHECKING, Dict, List, Tuple
 
-from protobuf_to_pydantic.util import gen_dict_from_desc_str
+from protobuf_to_pydantic.util import get_dict_from_comment
 
-from .utils import one_of_message_dict_handler
+from .utils import rule_dict_handler
 
 if TYPE_CHECKING:
-    from protobuf_to_pydantic.types import DescFromOptionTypedDict, FieldInfoTypedDict
+    from protobuf_to_pydantic.types import FieldInfoTypedDict, MessageOptionTypedDict
 
-_filename_desc_dict: Dict[str, Dict[str, "DescFromOptionTypedDict"]] = {}
+_filename_message_option_dict: Dict[str, Dict[str, "MessageOptionTypedDict"]] = {}
 
 
-def get_desc_from_pyi_file(filename: str, comment_prefix: str) -> Dict[str, "DescFromOptionTypedDict"]:
+def get_message_option_dict_from_pyi_file(filename: str, comment_prefix: str) -> Dict[str, "MessageOptionTypedDict"]:
     """
     For a Protobuf message as follows:
         ```protobuf
@@ -73,9 +73,9 @@ def get_desc_from_pyi_file(filename: str, comment_prefix: str) -> Dict[str, "Des
         }
     }
     """
-    if filename in _filename_desc_dict:
+    if filename in _filename_message_option_dict:
         # get protobuf message info by cache
-        return _filename_desc_dict[filename]
+        return _filename_message_option_dict[filename]
 
     with open(filename, "r") as f:
         pyi_content: str = f.read()
@@ -84,44 +84,44 @@ def get_desc_from_pyi_file(filename: str, comment_prefix: str) -> Dict[str, "Des
     _comment_mode: bool = False  # Whether to enable parsing comment mode
     _doc: str = ""
     _field_name: str = ""
-    message_str_stack: List[Tuple[str, int, DescFromOptionTypedDict]] = []
+    message_str_stack: List[Tuple[str, int, MessageOptionTypedDict]] = []
     indent: int = 0
 
-    global_message_field_dict: Dict[str, "DescFromOptionTypedDict"] = {}
+    global_message_option_dict: Dict[str, "MessageOptionTypedDict"] = {}
 
     for index, line in enumerate(line_list):
         if "class" in line:
             if not line.endswith("google.protobuf.message.Message):"):
                 continue
-            match_list = re.findall(r"class (.+)\(google.protobuf.message.Message", line)
-            if not match_list:
+            message_name_match_list = re.findall(r"class (.+)\(google.protobuf.message.Message", line)
+            if not message_name_match_list:
                 continue
-            message_str: str = match_list[0]
+            message_name_str: str = message_name_match_list[0]
             new_indent: int = line.index("class")
-            if message_str_stack and message_str != message_str_stack[-1][0] and new_indent <= indent:
+            if message_str_stack and message_name_str != message_str_stack[-1][0] and new_indent <= indent:
                 # When you encounter the same indentation of different classes,
                 # need to pop off the previous one and insert the current one
                 message_str_stack.pop()
-            message_field_dict: Dict[str, FieldInfoTypedDict] = {}
-            global_message_field_dict[message_str] = {
-                "message": message_field_dict,
+            message_field_option_dict: Dict[str, FieldInfoTypedDict] = {}
+            global_message_option_dict[message_name_str] = {
+                "message": message_field_option_dict,
                 "one_of": {},
                 "nested": {},  # type: ignore
                 "metadata": {},
             }
             if message_str_stack:
                 parent_message_field_dict = message_str_stack[-1][2]
-                parent_message_field_dict["nested"][message_str] = global_message_field_dict[message_str]
+                parent_message_field_dict["nested"][message_name_str] = global_message_option_dict[message_name_str]
 
             indent = new_indent
-            message_str_stack.append((message_str, indent, global_message_field_dict[message_str]))
+            message_str_stack.append((message_name_str, indent, global_message_option_dict[message_name_str]))
         elif indent:
             if line and message_str_stack and line[indent] != " ":
                 # The current class has been scanned, go back to the previous class
                 message_str_stack.pop()
 
         if message_str_stack:
-            message_str, indent, desc_dict = message_str_stack[-1]
+            message_name_str, indent, message_option_dict = message_str_stack[-1]
             line = line.strip()
             if _comment_mode:
                 _doc += "\n" + line
@@ -140,25 +140,11 @@ def get_desc_from_pyi_file(filename: str, comment_prefix: str) -> Dict[str, "Des
             if (line.endswith('"""') or line == '"""') and _comment_mode:
                 # end add doc
                 _comment_mode = False
-                gen_desc_dict = gen_dict_from_desc_str(comment_prefix, _doc.replace('"""', ""))
+                field_rule_dict = get_dict_from_comment(comment_prefix, _doc.replace('"""', ""))
                 if _field_name:
-                    desc_dict["message"][_field_name] = gen_desc_dict  # type: ignore[assignment]
+                    message_option_dict["message"][_field_name] = field_rule_dict  # type: ignore[assignment]
                 else:
-                    one_of_message_dict_handler(gen_desc_dict, desc_dict, f"{message_str}")
-                    # for key, value in gen_desc_dict.items():
-                    #     if key == "ignore":
-                    #         desc_dict["metadata"]["ignore"] = value
-                    #     elif key.startswith("oneof"):
-                    #         # Special support for OneOf
-                    #         field_full_name = f"{message_str}.{key.split(':')[1]}"
-                    #         if field_full_name not in desc_dict["one_of"]:
-                    #             desc_dict["one_of"][field_full_name] = {}
-                    #         if "required" in value:
-                    #             desc_dict["one_of"][field_full_name]["required"] = value["required"]
-                    #         if "optional" in value.get("oneof_extend", {}):
-                    #             desc_dict["one_of"][field_full_name]["optional_fields"] = (
-                    #                 set(value["oneof_extend"].pop("optional", []))
-                    #             )
+                    rule_dict_handler(field_rule_dict, message_option_dict, f"{message_name_str}")
 
-    _filename_desc_dict[filename] = global_message_field_dict
-    return global_message_field_dict
+    _filename_message_option_dict[filename] = global_message_option_dict
+    return global_message_option_dict

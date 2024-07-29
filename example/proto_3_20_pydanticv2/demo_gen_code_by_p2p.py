@@ -44,7 +44,7 @@ from protobuf_to_pydantic.customer_validator.v2 import (
     timestamp_lt_validator,
     timestamp_within_validator,
 )
-from protobuf_to_pydantic.get_desc.from_pb_option.types import HostNameStr, UriRefStr
+from protobuf_to_pydantic.parse_rule.protobuf_option_to_field_info.types import HostNameStr, UriRefStr
 from protobuf_to_pydantic.util import Timedelta
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 from pydantic.functional_validators import BeforeValidator

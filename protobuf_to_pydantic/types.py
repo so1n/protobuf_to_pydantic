@@ -52,10 +52,10 @@ class FieldInfoTypedDict(TypedDict):
     regex: NotRequired[Optional[str]]
 
 
-class DescFromOptionTypedDict(TypedDict):
+class MessageOptionTypedDict(TypedDict):
     message: Dict[str, FieldInfoTypedDict]
     one_of: Dict[str, OneOfTypedDict]
-    nested: Dict[str, "DescFromOptionTypedDict"]
+    nested: Dict[str, "MessageOptionTypedDict"]
     metadata: Dict[str, Any]
 
 

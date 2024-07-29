@@ -12,6 +12,7 @@ from pydantic.fields import FieldInfo
 from typing_extensions import Annotated, get_origin
 
 from protobuf_to_pydantic import _pydantic_adapter, constant
+from protobuf_to_pydantic.constant import protobuf_common_type_dict
 from protobuf_to_pydantic.customer_validator import check_one_of
 from protobuf_to_pydantic.exceptions import WaitingToCompleteException
 from protobuf_to_pydantic.field_param import (
@@ -19,19 +20,21 @@ from protobuf_to_pydantic.field_param import (
     field_param_dict_handle,
     field_param_dict_migration_v2_handler,
 )
-from protobuf_to_pydantic.get_desc import (
-    get_desc_from_p2p,
-    get_desc_from_pgv,
-    get_desc_from_proto_file,
-    get_desc_from_pyi_file,
+from protobuf_to_pydantic.get_message_option import (
+    get_message_option_dict_from_message_with_p2p,
+    get_message_option_dict_from_message_with_pgv,
+    get_message_option_dict_from_proto_file,
+    get_message_option_dict_from_pyi_file,
 )
-from protobuf_to_pydantic.get_desc.from_pb_option.base import field_comment_handler, protobuf_common_type_dict
 from protobuf_to_pydantic.grpc_types import AnyMessage, Descriptor, FieldDescriptor, Message
+from protobuf_to_pydantic.parse_rule.protobuf_option_to_field_info.comment import (
+    gen_field_rule_info_dict_from_field_comment_dict,
+)
 from protobuf_to_pydantic.template import CommentTemplate
 from protobuf_to_pydantic.util import create_pydantic_model
 
 if TYPE_CHECKING:
-    from protobuf_to_pydantic.types import DescFromOptionTypedDict, FieldInfoTypedDict, UseOneOfTypedDict
+    from protobuf_to_pydantic.types import FieldInfoTypedDict, MessageOptionTypedDict, UseOneOfTypedDict
 
 
 def replace_file_name_to_class_name(filename: str) -> str:
@@ -121,7 +124,7 @@ class M2P(object):
         create_model_cache: Optional[CREATE_MODEL_CACHE_T] = None,
     ):
         proto_file_name = msg.DESCRIPTOR.file.name  # type: ignore
-        message_field_dict: Dict[str, "DescFromOptionTypedDict"] = {}
+        message_field_dict: Dict[str, "MessageOptionTypedDict"] = {}
 
         if proto_file_name.endswith("empty.proto") or parse_msg_desc_method == "ignore":
             pass
@@ -130,7 +133,7 @@ class M2P(object):
             file_str: str = parse_msg_desc_method
             if not file_str.endswith("/"):
                 file_str += "/"
-            message_field_dict = get_desc_from_proto_file(file_str + proto_file_name, comment_prefix)
+            message_field_dict = get_message_option_dict_from_proto_file(file_str + proto_file_name, comment_prefix)
         elif inspect.ismodule(parse_msg_desc_method):
             # get field dict from pyi file
             if getattr(parse_msg_desc_method, msg.__name__, None) is not msg:  # type: ignore
@@ -138,10 +141,10 @@ class M2P(object):
             pyi_file_name = parse_msg_desc_method.__file__ + "i"  # type: ignore
             if not Path(pyi_file_name).exists():
                 raise RuntimeError(f"Can not found {msg} pyi file")
-            message_field_dict = get_desc_from_pyi_file(pyi_file_name, comment_prefix)
+            message_field_dict = get_message_option_dict_from_pyi_file(pyi_file_name, comment_prefix)
         elif parse_msg_desc_method == "PGV":
             # get field dict from pgv
-            message_field_dict = get_desc_from_pgv(message=msg)  # type: ignore
+            message_field_dict = get_message_option_dict_from_message_with_pgv(message=msg)  # type: ignore
         elif parse_msg_desc_method is not None:
             raise ValueError(
                 f"parse_msg_desc_method param must be exist path, `ignore` or `PGV`,"
@@ -149,10 +152,10 @@ class M2P(object):
             )
         else:
             # get field dict from p2p
-            message_field_dict = get_desc_from_p2p(message=msg)  # type: ignore
+            message_field_dict = get_message_option_dict_from_message_with_p2p(message=msg)  # type: ignore
 
         self._parse_msg_desc_method: Optional[str] = parse_msg_desc_method
-        self._field_doc_dict: Dict[str, DescFromOptionTypedDict] = message_field_dict
+        self._field_doc_dict: Dict[str, MessageOptionTypedDict] = message_field_dict
         self._default_field = default_field
         self._comment_prefix = comment_prefix
         self._creat_cache: CREATE_MODEL_CACHE_T = create_model_cache or _create_model_cache
@@ -197,7 +200,7 @@ class M2P(object):
             message_name, *key_list = split_full_name[1:]  # ignore package name
         if message_name not in self._field_doc_dict:
             return None
-        desc_dict: "DescFromOptionTypedDict" = self._field_doc_dict[message_name]
+        desc_dict: "MessageOptionTypedDict" = self._field_doc_dict[message_name]
         if desc_dict["metadata"].get("ignore", False):
             return None
 
@@ -213,7 +216,7 @@ class M2P(object):
         return None
 
     def _one_of_handle(self, descriptor: Descriptor) -> Tuple[Dict[str, "UseOneOfTypedDict"], Dict[str, Any]]:
-        desc_dict: "DescFromOptionTypedDict" = self._field_doc_dict.get(descriptor.name, {})  # type: ignore
+        desc_dict: "MessageOptionTypedDict" = self._field_doc_dict.get(descriptor.name, {})  # type: ignore
         ignore_parse_rule = desc_dict.get("metadata", {}).get("ignored", False)
         one_of_desc_dict = {}
         if not ignore_parse_rule:
@@ -269,7 +272,7 @@ class M2P(object):
             else:
                 from pydantic import ConfigDict
 
-                _config_dict = {"model_config": ConfigDict(**config_dict)}  # type: ignore[misc]
+                _config_dict = {"model_config": ConfigDict(**config_dict)}  # type: ignore[typeddict-item]
 
             # Changing the configuration of Config by inheritance
             pydantic_base: Type[BaseModel] = type(  # type: ignore
@@ -439,7 +442,7 @@ class M2P(object):
                 field_doc_dict = self._desc_template.handle_template_var(field_doc_dict)
             if not (self._parse_msg_desc_method is None or self._parse_msg_desc_method == "PGV"):
                 # comment rule need handler
-                field_doc_dict = field_comment_handler(
+                field_doc_dict = gen_field_rule_info_dict_from_field_comment_dict(
                     field_doc_dict,  # type:ignore[arg-type]
                     field=field_dataclass.protobuf_field,
                     type_name=field_dataclass.field_type_name,

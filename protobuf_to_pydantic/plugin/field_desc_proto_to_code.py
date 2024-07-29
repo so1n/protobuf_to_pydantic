@@ -11,7 +11,11 @@ from pydantic.fields import FieldInfo
 from typing_extensions import NotRequired, TypedDict
 
 from protobuf_to_pydantic import _pydantic_adapter
-from protobuf_to_pydantic.constant import protobuf_desc_python_type_dict, python_type_default_value_dict
+from protobuf_to_pydantic.constant import (
+    protobuf_common_type_dict,
+    protobuf_desc_python_type_dict,
+    python_type_default_value_dict,
+)
 from protobuf_to_pydantic.exceptions import WaitingToCompleteException
 from protobuf_to_pydantic.field_param import (
     FieldParamModel,
@@ -19,11 +23,6 @@ from protobuf_to_pydantic.field_param import (
     field_param_dict_migration_v2_handler,
 )
 from protobuf_to_pydantic.gen_code import BaseP2C
-from protobuf_to_pydantic.get_desc.from_pb_option.base import (
-    field_comment_handler,
-    field_option_handle,
-    protobuf_common_type_dict,
-)
 from protobuf_to_pydantic.grpc_types import (
     AnyMessage,
     DescriptorProto,
@@ -31,9 +30,13 @@ from protobuf_to_pydantic.grpc_types import (
     FieldDescriptorProto,
     FileDescriptorProto,
 )
+from protobuf_to_pydantic.parse_rule.protobuf_option_to_field_info.comment import (
+    gen_field_rule_info_dict_from_field_comment_dict,
+)
+from protobuf_to_pydantic.parse_rule.protobuf_option_to_field_info.desc import gen_field_info_dict_from_field_desc
 from protobuf_to_pydantic.plugin.my_types import ProtobufTypeModel
 from protobuf_to_pydantic.template import CommentTemplate
-from protobuf_to_pydantic.util import camel_to_snake, gen_dict_from_desc_str
+from protobuf_to_pydantic.util import camel_to_snake, get_dict_from_comment
 
 if TYPE_CHECKING:
     from protobuf_to_pydantic.plugin.config import ConfigModel
@@ -128,7 +131,7 @@ class FileDescriptorProtoToCode(BaseP2C):
                 (trailing_comments_list, trailing_comments),
             ):
                 for line in comments.split("\n"):
-                    field_dict = gen_dict_from_desc_str(self.config.comment_prefix, line)
+                    field_dict = get_dict_from_comment(self.config.comment_prefix, line)
                     if not field_dict:
                         container.append(line)
                     else:
@@ -361,11 +364,11 @@ class FileDescriptorProtoToCode(BaseP2C):
             # if list(desc.options.ListFields()):
             if len(field.options.ListFields()) != 0 and rule_type_str:
                 # protobuf option support
-                field_option_info_dict.update(field_option_handle(rule_type_str, field.name, field))  # type: ignore
+                field_option_info_dict.update(gen_field_info_dict_from_field_desc(rule_type_str, field.name, field))  # type: ignore
                 field_option_info_dict = self._desc_template.handle_template_var(field_option_info_dict)
             elif field_option_info_dict:
                 field_option_info_dict = self._desc_template.handle_template_var(field_option_info_dict)
-                field_option_info_dict = field_comment_handler(  # type: ignore
+                field_option_info_dict = gen_field_rule_info_dict_from_field_comment_dict(  # type: ignore
                     field_option_info_dict, field, rule_type_str, field.name
                 )
 
@@ -598,7 +601,7 @@ class FileDescriptorProtoToCode(BaseP2C):
             comment = self.source_code_info_by_scl.get(tuple(scl_prefix + [index]))
             if self.config.parse_comment and comment:
                 for line in comment.leading_comments.split("\n"):
-                    one_of_comment_dict = gen_dict_from_desc_str(self.config.comment_prefix, line)
+                    one_of_comment_dict = get_dict_from_comment(self.config.comment_prefix, line)
                     if not one_of_comment_dict:
                         continue
                     for one_of_comment_rule_name, one_of_comment_option_value in one_of_comment_dict.items():

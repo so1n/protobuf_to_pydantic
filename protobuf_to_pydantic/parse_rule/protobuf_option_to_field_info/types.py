@@ -122,7 +122,7 @@ class UriRefStr(str):
         )
 
 
-column_pydantic_type_dict: Dict[str, Any] = {
+rule_name_pydantic_type_dict: Dict[str, Any] = {
     "email": EmailStr,
     "hostname": HostNameStr,
     "ip": IPvAnyAddress,

@@ -1,3 +1,0 @@
-from .from_pb_option import get_desc_from_p2p, get_desc_from_pgv
-from .from_proto_file import get_desc_from_proto_file
-from .from_pyi_file import get_desc_from_pyi_file
