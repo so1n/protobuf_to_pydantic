@@ -5,8 +5,8 @@ from google.protobuf.descriptor import Descriptor, FieldDescriptor
 from google.protobuf.descriptor_pb2 import FieldDescriptorProto
 from google.protobuf.message import Message
 
-from protobuf_to_pydantic.parse_rule.protobuf_option_to_field_info.base import BaseProtobufOptionToFieldInfo
-from protobuf_to_pydantic.types import FieldInfoTypedDict
+from protobuf_to_pydantic.field_info_rule.protobuf_option_to_field_info.base import BaseProtobufOptionToFieldInfo
+from protobuf_to_pydantic.field_info_rule.types import FieldInfoTypedDict
 from protobuf_to_pydantic.util import replace_protobuf_type_to_python_type
 
 logger: logging.Logger = logging.getLogger(__name__)

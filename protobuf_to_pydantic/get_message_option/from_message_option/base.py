@@ -2,9 +2,9 @@ import logging
 from typing import Dict, Set, Type
 
 from protobuf_to_pydantic.constant import protobuf_common_type_dict
+from protobuf_to_pydantic.field_info_rule.protobuf_option_to_field_info.desc import gen_field_info_dict_from_field_desc
+from protobuf_to_pydantic.field_info_rule.types import MessageOptionTypedDict, OneOfTypedDict
 from protobuf_to_pydantic.grpc_types import Descriptor, FieldDescriptor, Message
-from protobuf_to_pydantic.parse_rule.protobuf_option_to_field_info.desc import gen_field_info_dict_from_field_desc
-from protobuf_to_pydantic.types import MessageOptionTypedDict, OneOfTypedDict
 
 _logger: logging.Logger = logging.getLogger(__name__)
 

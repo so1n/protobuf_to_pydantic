@@ -1,12 +1,12 @@
 from datetime import timedelta
 from typing import Any, Dict, Optional, Tuple, Union
 
-from protobuf_to_pydantic.grpc_types import FieldDescriptor, FieldDescriptorProto, Timestamp
-from protobuf_to_pydantic.parse_rule.protobuf_option_to_field_info.base import (
+from protobuf_to_pydantic.field_info_rule.protobuf_option_to_field_info.base import (
     BaseProtobufOptionToFieldInfo,
     special_type_rule_name_set,
 )
-from protobuf_to_pydantic.types import FieldInfoTypedDict
+from protobuf_to_pydantic.field_info_rule.types import FieldInfoTypedDict
+from protobuf_to_pydantic.grpc_types import FieldDescriptor, FieldDescriptorProto, Timestamp
 
 
 class ProtobufOptionToFieldInfoWithCommentDict(BaseProtobufOptionToFieldInfo):

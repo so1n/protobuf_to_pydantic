@@ -15,10 +15,13 @@ from protobuf_to_pydantic import _pydantic_adapter, constant
 from protobuf_to_pydantic.constant import protobuf_common_type_dict
 from protobuf_to_pydantic.customer_validator import check_one_of
 from protobuf_to_pydantic.exceptions import WaitingToCompleteException
-from protobuf_to_pydantic.field_param import (
-    FieldParamModel,
-    field_param_dict_handle,
-    field_param_dict_migration_v2_handler,
+from protobuf_to_pydantic.field_info_rule.field_info_param import (
+    FieldInfoParamModel,
+    field_info_param_dict_handle,
+    field_info_param_dict_migration_v2_handler,
+)
+from protobuf_to_pydantic.field_info_rule.protobuf_option_to_field_info.comment import (
+    gen_field_rule_info_dict_from_field_comment_dict,
 )
 from protobuf_to_pydantic.get_message_option import (
     get_message_option_dict_from_message_with_p2p,
@@ -27,14 +30,11 @@ from protobuf_to_pydantic.get_message_option import (
     get_message_option_dict_from_pyi_file,
 )
 from protobuf_to_pydantic.grpc_types import AnyMessage, Descriptor, FieldDescriptor, Message
-from protobuf_to_pydantic.parse_rule.protobuf_option_to_field_info.comment import (
-    gen_field_rule_info_dict_from_field_comment_dict,
-)
 from protobuf_to_pydantic.template import CommentTemplate
 from protobuf_to_pydantic.util import create_pydantic_model
 
 if TYPE_CHECKING:
-    from protobuf_to_pydantic.types import FieldInfoTypedDict, MessageOptionTypedDict, UseOneOfTypedDict
+    from protobuf_to_pydantic.field_info_rule.types import FieldInfoTypedDict, MessageOptionTypedDict, UseOneOfTypedDict
 
 
 def replace_file_name_to_class_name(filename: str) -> str:
@@ -448,7 +448,7 @@ class M2P(object):
                     type_name=field_dataclass.field_type_name,
                     full_name=field_dataclass.protobuf_field.full_name,
                 )
-            field_param_dict: dict = FieldParamModel(**field_doc_dict).dict()  # type: ignore
+            field_param_dict: dict = FieldInfoParamModel(**field_doc_dict).dict()  # type: ignore
             # Nested types do not include the `enable`, `field` and `validator`  attributes
             if not field_param_dict.pop("enable"):
                 return None
@@ -484,7 +484,7 @@ class M2P(object):
                     field_dataclass.validators.update(field_doc_dict["validator"])  # type: ignore[index]
 
             # Unified field parameter handling
-            field_param_dict_handle(
+            field_info_param_dict_handle(
                 field_param_dict,
                 field_dataclass.field_default,
                 field_dataclass.field_default_factory,
@@ -517,7 +517,7 @@ class M2P(object):
                 "default_factory": field_dataclass.field_default_factory,
             }
         if not _pydantic_adapter.is_v1:
-            field_param_dict_migration_v2_handler(field_param_dict)
+            field_info_param_dict_migration_v2_handler(field_param_dict)
         return field(**field_param_dict)  # type: ignore
 
     def _parse_msg_to_pydantic_model(

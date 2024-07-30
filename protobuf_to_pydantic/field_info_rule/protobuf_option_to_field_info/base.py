@@ -16,8 +16,8 @@ from protobuf_to_pydantic.customer_con_type import (
     contimestamp,
 )
 from protobuf_to_pydantic.customer_validator import validate_validator_dict
-from protobuf_to_pydantic.parse_rule.protobuf_option_to_field_info.types import rule_name_pydantic_type_dict
-from protobuf_to_pydantic.types import FieldInfoTypedDict
+from protobuf_to_pydantic.field_info_rule.protobuf_option_to_field_info.types import rule_name_pydantic_type_dict
+from protobuf_to_pydantic.field_info_rule.types import FieldInfoTypedDict
 
 logger: logging.Logger = logging.getLogger(__name__)
 

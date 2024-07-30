@@ -2,7 +2,7 @@ from typing import TYPE_CHECKING, Any, Dict
 from warnings import warn
 
 if TYPE_CHECKING:
-    from protobuf_to_pydantic.types import MessageOptionTypedDict
+    from protobuf_to_pydantic.field_info_rule.types import MessageOptionTypedDict
 
 
 def rule_dict_handler(

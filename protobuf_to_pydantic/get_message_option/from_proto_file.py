@@ -6,7 +6,7 @@ from .utils import rule_dict_handler
 
 if TYPE_CHECKING:
     from protobuf_to_pydantic.contrib.proto_parser import Message, ProtoFile
-    from protobuf_to_pydantic.types import MessageOptionTypedDict
+    from protobuf_to_pydantic.field_info_rule.types import MessageOptionTypedDict
 
 _filename_desc_dict: Dict[str, Dict[str, "MessageOptionTypedDict"]] = {}
 

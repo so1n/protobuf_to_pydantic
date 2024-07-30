@@ -17,11 +17,15 @@ from protobuf_to_pydantic.constant import (
     python_type_default_value_dict,
 )
 from protobuf_to_pydantic.exceptions import WaitingToCompleteException
-from protobuf_to_pydantic.field_param import (
-    FieldParamModel,
-    field_param_dict_handle,
-    field_param_dict_migration_v2_handler,
+from protobuf_to_pydantic.field_info_rule.field_info_param import (
+    FieldInfoParamModel,
+    field_info_param_dict_handle,
+    field_info_param_dict_migration_v2_handler,
 )
+from protobuf_to_pydantic.field_info_rule.protobuf_option_to_field_info.comment import (
+    gen_field_rule_info_dict_from_field_comment_dict,
+)
+from protobuf_to_pydantic.field_info_rule.protobuf_option_to_field_info.desc import gen_field_info_dict_from_field_desc
 from protobuf_to_pydantic.gen_code import BaseP2C
 from protobuf_to_pydantic.grpc_types import (
     AnyMessage,
@@ -30,10 +34,6 @@ from protobuf_to_pydantic.grpc_types import (
     FieldDescriptorProto,
     FileDescriptorProto,
 )
-from protobuf_to_pydantic.parse_rule.protobuf_option_to_field_info.comment import (
-    gen_field_rule_info_dict_from_field_comment_dict,
-)
-from protobuf_to_pydantic.parse_rule.protobuf_option_to_field_info.desc import gen_field_info_dict_from_field_desc
 from protobuf_to_pydantic.plugin.my_types import ProtobufTypeModel
 from protobuf_to_pydantic.template import CommentTemplate
 from protobuf_to_pydantic.util import camel_to_snake, get_dict_from_comment
@@ -380,7 +380,7 @@ class FileDescriptorProtoToCode(BaseP2C):
                 if nested_message_name not in nested_message_config_dict:
                     nested_message_config_dict[nested_message_name] = {}
                 nested_message_config_dict[nested_message_name]["skip"] = skip
-            field_option_info_dict = FieldParamModel(**field_option_info_dict).dict()
+            field_option_info_dict = FieldInfoParamModel(**field_option_info_dict).dict()
             if not field_option_info_dict.pop("enable", False):
                 return None
             try:
@@ -389,7 +389,7 @@ class FileDescriptorProtoToCode(BaseP2C):
                 field_type = eval(type_str)
             except NameError:
                 field_type = None
-            field_param_dict_handle(
+            field_info_param_dict_handle(
                 field_option_info_dict,
                 field_info_dict.get("default", _pydantic_adapter.PydanticUndefined),
                 field_info_dict.get("default_factory", None),
@@ -457,7 +457,7 @@ class FileDescriptorProtoToCode(BaseP2C):
 
         if not _pydantic_adapter.is_v1:
             # pgv or p2p rule no warning required
-            field_param_dict_migration_v2_handler(field_info_dict, is_warnings=False)
+            field_info_param_dict_migration_v2_handler(field_info_dict, is_warnings=False)
 
         if optional_dict.get(field.name, {}).get("is_proto3_optional", False):
             self._add_import_code("typing")

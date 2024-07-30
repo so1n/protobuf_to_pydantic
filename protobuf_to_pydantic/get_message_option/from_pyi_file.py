@@ -6,7 +6,7 @@ from protobuf_to_pydantic.util import get_dict_from_comment
 from .utils import rule_dict_handler
 
 if TYPE_CHECKING:
-    from protobuf_to_pydantic.types import FieldInfoTypedDict, MessageOptionTypedDict
+    from protobuf_to_pydantic.field_info_rule.types import FieldInfoTypedDict, MessageOptionTypedDict
 
 _filename_message_option_dict: Dict[str, Dict[str, "MessageOptionTypedDict"]] = {}
 
