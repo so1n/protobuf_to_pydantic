@@ -25,14 +25,14 @@ class CodeGen(Generic[ConfigT]):
 
     def __init__(self, config_class: Type[ConfigT]) -> None:
         self.config_class: Type[ConfigT] = config_class
-        self.param_dict: dict = {}
 
         with code_generation() as (request, response):
-            self.parse_param(request)
+            self.param_dict = self.gen_param_from_request(request)
             self.gen_config()
             self.generate_pydantic_model(Descriptors(request), response)
 
-    def parse_param(self, request: CodeGeneratorRequest) -> None:
+    @staticmethod
+    def gen_param_from_request(request: CodeGeneratorRequest) -> dict:
         """
         Parse the parameter information passed by the user and store it in the 'param_dict'.
 
@@ -42,16 +42,17 @@ class CodeGen(Generic[ConfigT]):
             param_dict result:
                 {"bar1": "foo1", "bar2": "foo2"}
         """
-        if not request.parameter:
-            return
-        try:
-            for one_param_str in request.parameter.split(","):
-                k, v = one_param_str.split("=")
-                self.param_dict[k] = v
-        except Exception as e:
-            logger.exception(e)
-            print(f"parse command-line error:{e}", file=sys.stderr)
-        print(f"Parse command-line arguments:{self.param_dict}", file=sys.stderr)
+        param_dict: dict = {}
+        if request.parameter:
+            try:
+                for one_param_str in request.parameter.split(","):
+                    k, v = one_param_str.split("=")
+                    param_dict[k] = v
+            except Exception as e:
+                logger.exception(e)
+                print(f"parse command-line error:{e}", file=sys.stderr)
+            print(f"Parse command-line arguments:{param_dict}", file=sys.stderr)
+        return param_dict
 
     def _get_config_by_path(self, key: str) -> None:
         """

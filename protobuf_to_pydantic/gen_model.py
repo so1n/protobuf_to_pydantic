@@ -358,8 +358,9 @@ class M2P(object):
                         skip_validate_rule=skip_validate_rule,
                     )
                     field_dataclass.nested_message_dict[_cache_full_name] = nested_type
-
-                field_dataclass.field_type = field_dataclass.nested_message_dict[full_name]
+                    field_dataclass.field_type = field_dataclass.nested_message_dict[_cache_full_name]
+                else:
+                    field_dataclass.field_type = field_dataclass.nested_message_dict[full_name]
                 # Facilitate the analysis of `gen code`
                 setattr(field_dataclass.field_type, "_is_nested", True)
             else:
@@ -451,6 +452,7 @@ class M2P(object):
 
             raw_validator_dict = field_info_dict.get("validator", {})
             field_info_dict: FieldInfoTypedDict = FieldInfoParamModel(**field_info_dict).dict()  # type: ignore
+            field_info_dict.pop("skip")
             # Nested types do not include the `enable`, `field` and `validator`  attributes
             if not field_info_dict.pop("enable"):
                 return None
@@ -484,7 +486,7 @@ class M2P(object):
 
             # Unified field parameter handling
             field_info_param_dict_handle(
-                field_info_dict,
+                field_info_dict,  # type: ignore[arg-type]
                 field_dataclass.field_default,
                 field_dataclass.field_default_factory,
                 field_dataclass.field_type,
@@ -511,12 +513,6 @@ class M2P(object):
                     ):
                         new_args_list[index] = new_k_v_type
                 field_dataclass.field_type = Dict[tuple(new_args_list)]  # type: ignore
-            if is_proto3_optional:
-                field_dataclass.field_type = Optional[field_dataclass.field_type]
-                if field_dataclass.field_default is _pydantic_adapter.PydanticUndefined and not field_info_dict.get(
-                    "required", False
-                ):
-                    field_dataclass.field_default = None
         else:
             field_info_dict = {
                 "default": field_dataclass.field_default,
@@ -524,7 +520,7 @@ class M2P(object):
                 "extra": {},
             }
         if not _pydantic_adapter.is_v1:
-            field_info_param_dict_migration_v2_handler(field_info_dict)
+            field_info_param_dict_migration_v2_handler(field_info_dict)  # type: ignore[arg-type]
         return field_class(**field_info_dict)  # type: ignore
 
     def _parse_msg_to_pydantic_model(
@@ -575,6 +571,10 @@ class M2P(object):
             if not field_info:
                 continue
 
+            if is_proto3_optional:
+                field_dataclass.field_type = Optional[field_dataclass.field_type]
+                if field_info.default is _pydantic_adapter.PydanticUndefined:
+                    field_info.default = None
             annotation_dict[field_dataclass.field_name] = (field_dataclass.field_type, field_info)
 
             if field_dataclass.field_type in ALLOW_ARBITRARY_TYPE and not _pydantic_adapter.get_model_config_value(

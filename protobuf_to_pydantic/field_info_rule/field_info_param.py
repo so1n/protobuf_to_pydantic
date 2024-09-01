@@ -9,7 +9,7 @@ from pydantic.fields import FieldInfo
 from typing_extensions import Literal, get_args, get_origin
 
 from protobuf_to_pydantic import _pydantic_adapter, constant
-from protobuf_to_pydantic.field_info_rule.types import JsonAndDict
+from protobuf_to_pydantic.field_info_rule.types import FieldInfoTypedDict, JsonAndDict
 from protobuf_to_pydantic.util import check_dict_one_of
 
 # You can decide whether to generate the 'Field' parameter by modifying the 'field_param_set'
@@ -192,7 +192,12 @@ class FieldInfoParamModel(BaseModel):
     multiple_of: Optional[int] = Field(None)
     regex: Optional[str] = Field(None)
     extra: JsonAndDict = Field(default_factory=dict)
+    json_schema_extra: JsonAndDict = Field(default_factory=dict)
+    skip: bool = Field(False)
     type_: Any = Field(None, alias="type")
     validator: Optional[Dict[str, Any]] = Field(None)
     sub: Optional["FieldInfoParamModel"] = Field(None)
     map_type: Optional[dict] = Field(None)
+
+    def to_dict(self) -> FieldInfoTypedDict:
+        return self.dict()  # type: ignore

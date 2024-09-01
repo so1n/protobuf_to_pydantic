@@ -1,8 +1,10 @@
 import json
 from importlib import import_module
-from typing import Any, Callable, Dict, List, Optional
+from typing import Any, Callable, Dict, List, Optional, TypeVar
 
 from protobuf_to_pydantic.grpc_types import RepeatedCompositeContainer, RepeatedScalarContainer
+
+_T = TypeVar("_T")
 
 
 class CommentTemplate(object):
@@ -50,9 +52,9 @@ class CommentTemplate(object):
         except Exception as e:
             raise ValueError(f"parse {template_str} error: {e}") from e
 
-    def handle_template_var(self, container: Any) -> Any:
+    def handle_template_var(self, container: _T) -> _T:
         if isinstance(container, (list, RepeatedCompositeContainer, RepeatedScalarContainer)):
-            return [self.handle_template_var(i) for i in container]
+            return [self.handle_template_var(i) for i in container]  # type: ignore[return-value]
         elif isinstance(container, dict):
             return {k: self.handle_template_var(v) for k, v in container.items()}
         elif isinstance(container, str) and container.startswith(f"{self._comment_prefix}@"):
