@@ -29,7 +29,7 @@ from protobuf_to_pydantic.get_message_option import (
     get_message_option_dict_from_proto_file,
     get_message_option_dict_from_pyi_file,
 )
-from protobuf_to_pydantic.grpc_types import AnyMessage, Descriptor, FieldDescriptor, Message
+from protobuf_to_pydantic.grpc_types import AnyMessage, Descriptor, FieldDescriptor, FieldMask, Message
 from protobuf_to_pydantic.template import CommentTemplate
 from protobuf_to_pydantic.util import create_pydantic_model
 
@@ -37,7 +37,7 @@ if TYPE_CHECKING:
     from protobuf_to_pydantic.field_info_rule.types import FieldInfoTypedDict, MessageOptionTypedDict, UseOneOfTypedDict
 
 SKIP_RULE_MESSAGE_SUFFIX = "WithSkipRule"
-ALLOW_ARBITRARY_TYPE = (AnyMessage,)
+ALLOW_ARBITRARY_TYPE = (AnyMessage, FieldMask)
 
 
 def replace_file_name_to_class_name(filename: str) -> str:
@@ -431,9 +431,7 @@ class M2P(object):
             if field_dataclass.field_default is not _pydantic_adapter.PydanticUndefined:
                 field_dataclass.field_default = _pydantic_adapter.PydanticUndefined
 
-    def _gen_field_info(
-        self, field_dataclass: FieldDataClass, skip_validate_rule: bool, is_proto3_optional: bool = False
-    ) -> Optional[FieldInfo]:
+    def _gen_field_info(self, field_dataclass: FieldDataClass, skip_validate_rule: bool) -> Optional[FieldInfo]:
         field_class = self._default_field
         field_info_dict = self._get_field_info_dict_by_full_name(field_dataclass.protobuf_field.full_name)
 
@@ -521,6 +519,11 @@ class M2P(object):
             }
         if not _pydantic_adapter.is_v1:
             field_info_param_dict_migration_v2_handler(field_info_dict)  # type: ignore[arg-type]
+
+        for remove_key in ("extra", "json_schema_extra"):
+            if not field_info_dict.get(remove_key, True):  # type: ignore[misc]
+                field_info_dict.pop(remove_key)  # type: ignore[misc]
+
         return field_class(**field_info_dict)  # type: ignore
 
     def _parse_msg_to_pydantic_model(
@@ -564,16 +567,14 @@ class M2P(object):
             # At this time, the field type may be modified by the above logic, so it needs to be handled separately
             if protobuf_field.label == FieldDescriptor.LABEL_REPEATED:
                 self._protobuf_field_lable_is_label_repeated_handler(field_dataclass)
-            is_proto3_optional = optional_dict.get(protobuf_field.full_name, {}).get("is_proto3_optional", False)
-            field_info = self._gen_field_info(
-                field_dataclass, skip_validate_rule, is_proto3_optional=is_proto3_optional
-            )
+            field_info = self._gen_field_info(field_dataclass, skip_validate_rule)
             if not field_info:
                 continue
 
+            is_proto3_optional = optional_dict.get(protobuf_field.full_name, {}).get("is_proto3_optional", False)
             if is_proto3_optional:
                 field_dataclass.field_type = Optional[field_dataclass.field_type]
-                if field_info.default is _pydantic_adapter.PydanticUndefined:
+                if field_info.default is _pydantic_adapter.PydanticUndefined and field_info.default_factory is None:
                     field_info.default = None
             annotation_dict[field_dataclass.field_name] = (field_dataclass.field_type, field_info)
 

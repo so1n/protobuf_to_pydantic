@@ -144,8 +144,9 @@ class BaseProtobufOptionToFieldInfo(object):
                 # Compatible with PGV attributes that are not supported by pydantic
                 if "validator" not in field_info_type_dict:
                     field_info_type_dict["validator"] = {}
+                validator_name = f"{field_name}_{rule_name}_validator"
+                # dict key not use python keyword
                 _rule_name = rule_name + "_" if rule_name in ("in",) else rule_name
-                validator_name = f"{field_name}_{_rule_name}_validator"
                 field_info_type_dict["extra"][_rule_name] = self.rule_value_to_field_value_handler(
                     type_name, rule_name, rule_value
                 )

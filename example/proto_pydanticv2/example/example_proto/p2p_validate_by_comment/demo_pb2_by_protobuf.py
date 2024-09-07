@@ -128,7 +128,7 @@ class BytesTest(BaseModel):
     contains_test_contains_validator = field_validator("contains_test", mode="after", check_fields=None)(
         contains_validator
     )
-    in_test_in__validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
+    in_test_in_validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
     not_in_test_not_in_validator = field_validator("not_in_test", mode="after", check_fields=None)(not_in_validator)
 
 
@@ -153,7 +153,7 @@ class DoubleTest(BaseModel):
     title_test: float = Field(default=0.0, title="title_test")
     extra_test: float = Field(default=0.0, customer_string="c1", customer_int=1)
 
-    in_test_in__validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
+    in_test_in_validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
     not_in_test_not_in_validator = field_validator("not_in_test", mode="after", check_fields=None)(not_in_validator)
 
 
@@ -251,7 +251,7 @@ class EnumTest(BaseModel):
     title_test: State = Field(default=0, title="title_test")
     extra_test: State = Field(default=0, customer_string="c1", customer_int=1)
 
-    in_test_in__validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
+    in_test_in_validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
     not_in_test_not_in_validator = field_validator("not_in_test", mode="after", check_fields=None)(not_in_validator)
 
 
@@ -276,7 +276,7 @@ class Fixed32Test(BaseModel):
     title_test: float = Field(default=0, title="title_test")
     extra_test: float = Field(default=0, customer_string="c1", customer_int=1)
 
-    in_test_in__validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
+    in_test_in_validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
     not_in_test_not_in_validator = field_validator("not_in_test", mode="after", check_fields=None)(not_in_validator)
 
 
@@ -301,7 +301,7 @@ class Fixed64Test(BaseModel):
     title_test: float = Field(default=0, title="title_test")
     extra_test: float = Field(default=0, customer_string="c1", customer_int=1)
 
-    in_test_in__validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
+    in_test_in_validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
     not_in_test_not_in_validator = field_validator("not_in_test", mode="after", check_fields=None)(not_in_validator)
 
 
@@ -326,7 +326,7 @@ class FloatTest(BaseModel):
     title_test: float = Field(default=0.0, title="title_test")
     extra_test: float = Field(default=0.0, customer_string="c1", customer_int=1)
 
-    in_test_in__validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
+    in_test_in_validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
     not_in_test_not_in_validator = field_validator("not_in_test", mode="after", check_fields=None)(not_in_validator)
 
 
@@ -351,7 +351,7 @@ class Int32Test(BaseModel):
     title_test: int = Field(default=0, title="title_test")
     extra_test: int = Field(default=0, customer_string="c1", customer_int=1)
 
-    in_test_in__validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
+    in_test_in_validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
     not_in_test_not_in_validator = field_validator("not_in_test", mode="after", check_fields=None)(not_in_validator)
 
 
@@ -376,7 +376,7 @@ class Int64Test(BaseModel):
     title_test: int = Field(default=0, title="title_test")
     extra_test: int = Field(default=0, customer_string="c1", customer_int=1)
 
-    in_test_in__validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
+    in_test_in_validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
     not_in_test_not_in_validator = field_validator("not_in_test", mode="after", check_fields=None)(not_in_validator)
 
 
@@ -464,7 +464,7 @@ class StringTest(BaseModel):
     not_contains_test_not_contains_validator = field_validator("not_contains_test", mode="after", check_fields=None)(
         not_contains_validator
     )
-    in_test_in__validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
+    in_test_in_validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
     not_in_test_not_in_validator = field_validator("not_in_test", mode="after", check_fields=None)(not_in_validator)
 
 
@@ -580,7 +580,7 @@ class Sfixed32Test(BaseModel):
     title_test: float = Field(default=0, title="title_test")
     extra_test: float = Field(default=0, customer_string="c1", customer_int=1)
 
-    in_test_in__validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
+    in_test_in_validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
     not_in_test_not_in_validator = field_validator("not_in_test", mode="after", check_fields=None)(not_in_validator)
 
 
@@ -605,7 +605,7 @@ class Sfixed64Test(BaseModel):
     title_test: float = Field(default=0, title="title_test")
     extra_test: float = Field(default=0, customer_string="c1", customer_int=1)
 
-    in_test_in__validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
+    in_test_in_validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
     not_in_test_not_in_validator = field_validator("not_in_test", mode="after", check_fields=None)(not_in_validator)
 
 
@@ -630,7 +630,7 @@ class Sint32Test(BaseModel):
     title_test: int = Field(default=0, title="title_test")
     extra_test: int = Field(default=0, customer_string="c1", customer_int=1)
 
-    in_test_in__validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
+    in_test_in_validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
     not_in_test_not_in_validator = field_validator("not_in_test", mode="after", check_fields=None)(not_in_validator)
 
 
@@ -655,7 +655,7 @@ class Sint64Test(BaseModel):
     title_test: int = Field(default=0, title="title_test")
     extra_test: int = Field(default=0, customer_string="c1", customer_int=1)
 
-    in_test_in__validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
+    in_test_in_validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
     not_in_test_not_in_validator = field_validator("not_in_test", mode="after", check_fields=None)(not_in_validator)
 
 
@@ -735,7 +735,7 @@ class Uint32Test(BaseModel):
     title_test: int = Field(default=0, title="title_test")
     extra_test: int = Field(default=0, customer_string="c1", customer_int=1)
 
-    in_test_in__validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
+    in_test_in_validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
     not_in_test_not_in_validator = field_validator("not_in_test", mode="after", check_fields=None)(not_in_validator)
 
 
@@ -760,5 +760,5 @@ class Uint64Test(BaseModel):
     title_test: int = Field(default=0, title="title_test")
     extra_test: int = Field(default=0, customer_string="c1", customer_int=1)
 
-    in_test_in__validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
+    in_test_in_validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
     not_in_test_not_in_validator = field_validator("not_in_test", mode="after", check_fields=None)(not_in_validator)

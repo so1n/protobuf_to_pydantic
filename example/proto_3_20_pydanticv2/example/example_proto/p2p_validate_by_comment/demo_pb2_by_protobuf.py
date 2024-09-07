@@ -1,5 +1,5 @@
 # This is an automatically generated file, please do not change
-# gen by protobuf_to_pydantic[v0.2.6](https://github.com/so1n/protobuf_to_pydantic)
+# gen by protobuf_to_pydantic[v0.2.7](https://github.com/so1n/protobuf_to_pydantic)
 # Protobuf Version: 3.20.3
 # Pydantic Version: 2.5.3
 import typing
@@ -478,7 +478,7 @@ class NestedMessage(BaseModel):
             timestamp_gt_now_validator
         )
 
-    class NotEnableUserPayMessageOnlyUseSkipRule(BaseModel):
+    class NotEnableUserPayMessageWithSkipRule(BaseModel):
         bank_number: str = Field(default="")
         exp: datetime = Field(default_factory=datetime.now)
         uuid: str = Field(default="")
@@ -486,7 +486,7 @@ class NestedMessage(BaseModel):
     string_in_map_test: typing.Dict[str, StringTest] = Field(default_factory=dict)
     map_in_map_test: typing.Dict[str, MapTest] = Field(default_factory=dict)
     user_pay: UserPayMessage = Field()
-    not_enable_user_pay: NotEnableUserPayMessageOnlyUseSkipRule = Field()
+    not_enable_user_pay: NotEnableUserPayMessageWithSkipRule = Field()
     empty: typing.Any = Field()
     after_refer: AfterReferMessage = Field()
 
@@ -532,7 +532,7 @@ class RepeatedTest(BaseModel):
     items_string_test: typing.List[
         typing_extensions.Annotated[str, MinLen(min_length=1), MaxLen(max_length=5)]
     ] = Field(default_factory=list, min_length=1, max_length=5)
-    items_double_test: typing.List[typing_extensions.Annotated[float, Gt(gt=1), Lt(lt=5)]] = Field(
+    items_double_test: typing.List[typing_extensions.Annotated[float, Gt(gt=1.0), Lt(lt=5.0)]] = Field(
         default_factory=list, min_length=1, max_length=5
     )
     items_int32_test: typing.List[typing_extensions.Annotated[int, Gt(gt=1), Lt(lt=5)]] = Field(

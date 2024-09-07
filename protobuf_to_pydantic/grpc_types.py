@@ -174,6 +174,7 @@ __all__ = [
     "FieldDescriptor",
     "FieldDescriptorProto",
     "FileDescriptorProto",
+    "FieldMask",
     "Message",
     "Timestamp",
     "MessageToDict",

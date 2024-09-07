@@ -95,7 +95,7 @@ class BytesTest(BaseModel):
     contains_test_contains_validator = field_validator("contains_test", mode="after", check_fields=None)(
         contains_validator
     )
-    in_test_in__validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
+    in_test_in_validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
     not_in_test_not_in_validator = field_validator("not_in_test", mode="after", check_fields=None)(not_in_validator)
 
 
@@ -107,7 +107,7 @@ class DoubleTest(BaseModel):
     not_in_test: float = Field(default=0.0, not_in=[1.0, 2.0, 3.0])
     ignore_test: float = Field(default=0.0)
 
-    in_test_in__validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
+    in_test_in_validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
     not_in_test_not_in_validator = field_validator("not_in_test", mode="after", check_fields=None)(not_in_validator)
 
 
@@ -168,7 +168,7 @@ class EnumTest(BaseModel):
     in_test: State = Field(default=0, in_=[0, 2])
     not_in_test: State = Field(default=0, not_in=[0, 2])
 
-    in_test_in__validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
+    in_test_in_validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
     not_in_test_not_in_validator = field_validator("not_in_test", mode="after", check_fields=None)(not_in_validator)
 
 
@@ -180,7 +180,7 @@ class Fixed32Test(BaseModel):
     not_in_test: float = Field(default=0, not_in=[1, 2, 3])
     ignore_test: float = Field(default=0)
 
-    in_test_in__validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
+    in_test_in_validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
     not_in_test_not_in_validator = field_validator("not_in_test", mode="after", check_fields=None)(not_in_validator)
 
 
@@ -192,7 +192,7 @@ class Fixed64Test(BaseModel):
     not_in_test: float = Field(default=0, not_in=[1, 2, 3])
     ignore_test: float = Field(default=0)
 
-    in_test_in__validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
+    in_test_in_validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
     not_in_test_not_in_validator = field_validator("not_in_test", mode="after", check_fields=None)(not_in_validator)
 
 
@@ -204,7 +204,7 @@ class FloatTest(BaseModel):
     not_in_test: float = Field(default=0.0, not_in=[1.0, 2.0, 3.0])
     ignore_test: float = Field(default=0.0)
 
-    in_test_in__validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
+    in_test_in_validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
     not_in_test_not_in_validator = field_validator("not_in_test", mode="after", check_fields=None)(not_in_validator)
 
 
@@ -216,7 +216,7 @@ class Int32Test(BaseModel):
     not_in_test: int = Field(default=0, not_in=[1, 2, 3])
     ignore_test: int = Field(default=0)
 
-    in_test_in__validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
+    in_test_in_validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
     not_in_test_not_in_validator = field_validator("not_in_test", mode="after", check_fields=None)(not_in_validator)
 
 
@@ -228,7 +228,7 @@ class Int64Test(BaseModel):
     not_in_test: int = Field(default=0, not_in=[1, 2, 3])
     ignore_test: int = Field(default=0)
 
-    in_test_in__validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
+    in_test_in_validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
     not_in_test_not_in_validator = field_validator("not_in_test", mode="after", check_fields=None)(not_in_validator)
 
 
@@ -302,7 +302,7 @@ class StringTest(BaseModel):
     not_contains_test_not_contains_validator = field_validator("not_contains_test", mode="after", check_fields=None)(
         not_contains_validator
     )
-    in_test_in__validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
+    in_test_in_validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
     not_in_test_not_in_validator = field_validator("not_in_test", mode="after", check_fields=None)(not_in_validator)
 
 
@@ -381,7 +381,7 @@ class Sfixed32Test(BaseModel):
     not_in_test: float = Field(default=0, not_in=[1, 2, 3])
     ignore_test: float = Field(default=0)
 
-    in_test_in__validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
+    in_test_in_validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
     not_in_test_not_in_validator = field_validator("not_in_test", mode="after", check_fields=None)(not_in_validator)
 
 
@@ -393,7 +393,7 @@ class Sfixed64Test(BaseModel):
     not_in_test: float = Field(default=0, not_in=[1, 2, 3])
     ignore_test: float = Field(default=0)
 
-    in_test_in__validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
+    in_test_in_validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
     not_in_test_not_in_validator = field_validator("not_in_test", mode="after", check_fields=None)(not_in_validator)
 
 
@@ -405,7 +405,7 @@ class Sint32Test(BaseModel):
     not_in_test: int = Field(default=0, not_in=[1, 2, 3])
     ignore_test: int = Field(default=0)
 
-    in_test_in__validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
+    in_test_in_validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
     not_in_test_not_in_validator = field_validator("not_in_test", mode="after", check_fields=None)(not_in_validator)
 
 
@@ -417,7 +417,7 @@ class Sint64Test(BaseModel):
     not_in_test: int = Field(default=0, not_in=[1, 2, 3])
     ignore_test: int = Field(default=0)
 
-    in_test_in__validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
+    in_test_in_validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
     not_in_test_not_in_validator = field_validator("not_in_test", mode="after", check_fields=None)(not_in_validator)
 
 
@@ -473,7 +473,7 @@ class Uint32Test(BaseModel):
     not_in_test: int = Field(default=0, not_in=[1, 2, 3])
     ignore_test: int = Field(default=0)
 
-    in_test_in__validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
+    in_test_in_validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
     not_in_test_not_in_validator = field_validator("not_in_test", mode="after", check_fields=None)(not_in_validator)
 
 
@@ -485,5 +485,5 @@ class Uint64Test(BaseModel):
     not_in_test: int = Field(default=0, not_in=[1, 2, 3])
     ignore_test: int = Field(default=0)
 
-    in_test_in__validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
+    in_test_in_validator = field_validator("in_test", mode="after", check_fields=None)(in_validator)
     not_in_test_not_in_validator = field_validator("not_in_test", mode="after", check_fields=None)(not_in_validator)

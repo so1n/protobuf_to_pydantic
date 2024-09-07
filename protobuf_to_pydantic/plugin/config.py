@@ -91,7 +91,7 @@ class ConfigModel(BaseModel):
     def after_init(cls, values: Any) -> Any:
         if _pydantic_adapter.is_v1:
             # values: Dict[str, Any]
-            values["desc_template_instance"] = values["template"](values["local_dict"], values["comment_prefix"])
+            values["desc_template_instance"] = values["desc_template"](values["local_dict"], values["comment_prefix"])
             return values
         else:
             # values: "ConfigModel"

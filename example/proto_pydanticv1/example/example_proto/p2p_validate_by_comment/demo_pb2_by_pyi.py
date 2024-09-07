@@ -1,5 +1,5 @@
 # This is an automatically generated file, please do not change
-# gen by protobuf_to_pydantic[v0.2.6](https://github.com/so1n/protobuf_to_pydantic)
+# gen by protobuf_to_pydantic[v0.2.7](https://github.com/so1n/protobuf_to_pydantic)
 # Protobuf Version: 4.24.4
 # Pydantic Version: 1.10.7
 import typing
@@ -427,7 +427,7 @@ class NestedMessage(BaseModel):
 
         exp_timestamp_gt_now_validator = validator("exp", allow_reuse=True)(timestamp_gt_now_validator)
 
-    class NotEnableUserPayMessageOnlyUseSkipRule(BaseModel):
+    class NotEnableUserPayMessageWithSkipRule(BaseModel):
         bank_number: str = Field(default="")
         exp: datetime = Field(default_factory=datetime.now)
         uuid: str = Field(default="")
@@ -435,7 +435,7 @@ class NestedMessage(BaseModel):
     string_in_map_test: typing.Dict[str, StringTest] = Field(default_factory=dict)
     map_in_map_test: typing.Dict[str, MapTest] = Field(default_factory=dict)
     user_pay: UserPayMessage = Field()
-    not_enable_user_pay: NotEnableUserPayMessageOnlyUseSkipRule = Field()
+    not_enable_user_pay: NotEnableUserPayMessageWithSkipRule = Field()
     empty: typing.Any = Field()
     after_refer: AfterReferMessage = Field()
 
