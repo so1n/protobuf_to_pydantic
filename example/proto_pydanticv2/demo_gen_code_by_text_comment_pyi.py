@@ -20,6 +20,14 @@ class AfterReferMessage(BaseModel):
     age: int = Field(default=0, title="use age", example=18, ge=0)
 
 
+class AnOtherMessage(BaseModel):
+    class SubMessage(BaseModel):
+        text: str = Field(default="")
+
+    field1: str = Field(default="")
+    field2: SubMessage = Field()
+
+
 class EmptyMessage(BaseModel):
     pass
 
@@ -131,3 +139,8 @@ class OtherMessage(BaseModel):
     metadata: typing.Dict[str, typing.Any] = Field(default_factory=dict)
     double_value: DoubleValue = Field(default_factory=DoubleValue)
     field_mask: typing.Optional[FieldMask] = Field(default_factory=FieldMask)
+
+
+class RootMessage(BaseModel):
+    field1: str = Field(default="")
+    field2: AnOtherMessage = Field()

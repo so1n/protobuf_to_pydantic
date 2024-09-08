@@ -288,10 +288,15 @@ class FileDescriptorProtoToCode(BaseP2C):
                 message_fd: FileDescriptorProto = self._descriptors.message_to_fd[field.type_name]
                 self._add_other_module_pkg(message_fd, type_str)
                 root_desc_nested_type_name = {i.name for i in root_desc.nested_type}
+                desc_nested_type_name = {i.name for i in desc.nested_type}
                 if message == desc:
                     # if self-referencing, need use Python type hints postponed annotations
                     type_str = f'"{type_str}"'
-                elif message_fd.name == self._fd.name and message.name not in root_desc_nested_type_name:
+                elif (
+                    message_fd.name == self._fd.name
+                    and message.name not in root_desc_nested_type_name
+                    and message.name not in desc_nested_type_name
+                ):
                     # If the referenced Message is generated later, it needs to be generated in advance
                     scl_prefix = [FileDescriptorProto.MESSAGE_TYPE_FIELD_NUMBER]
                     for index, desc in enumerate(self._fd.message_type):
