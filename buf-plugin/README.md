@@ -145,6 +145,8 @@ Regardless of which method is used to generate `Pydantic` code, the final projec
 └── pyproject.toml
 ```
 ### 1.4.Generating Pydantic Code with Remote Plugins
+> Note: Since the BUF plugin created by the developer cannot be used publicly, the remote plug-in cannot be used normally(See: [issue](https://github.com/bufbuild/plugins/issues/589#issuecomment-1799085322))。If necessary, please refer to the custom plugins in the next section to create your own plugins。
+
 In addition to executing local plugin to generate `Pydantic` code, can also use remote plugin.
 
 First, need to change the `buf.gen.yaml` file to the following content:
