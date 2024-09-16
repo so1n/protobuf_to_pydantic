@@ -1,0 +1,17 @@
+syntax = "proto3";
+package single_config;
+
+
+// user info
+message UserMessage {
+  // aha: {"required": true, "example": "10086", "title": "UID", "description": "user union id"}
+  string uid=1;
+  // aha: {"example": 18, "title": "use age", "ge": 0}
+  int32 age=2;
+  // aha: {"ge": 0, "le": 2.5}
+  float height=3;
+  bool is_adult=7;
+  // aha: {"description": "user name"}
+  // aha: {"default": "", "min_length": 1, "max_length": "10", "example": "so1n"}
+  string user_name=8;
+}

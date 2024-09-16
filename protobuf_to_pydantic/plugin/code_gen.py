@@ -147,11 +147,9 @@ class CodeGen(Generic[ConfigT]):
 
     def generate_pydantic_model(self, descriptors: Descriptors, response: CodeGeneratorResponse) -> None:
         for name, fd in descriptors.to_generate.items():
-            if fd.package in self.config.ignore_pkg_list:
+            config = self.config.pkg_config.get(fd.package, self.config)
+            if fd.package in config.ignore_pkg_list:
                 continue
             file = response.file.add()
-            file.name = fd.name[:-6].replace("-", "_").replace(".", "/") + f"{self.config.file_name_suffix}.py"
-            file.content = self.config.file_descriptor_proto_to_code(
-                fd=fd, descriptors=descriptors, config=self.config
-            ).content
-            print(f"Writing protobuf-to-pydantic code to {file.name}", file=sys.stderr)
+            file.name = fd.name[:-6].replace("-", "_").replace(".", "/") + f"{config.file_name_suffix}.py"
+            file.content = config.file_descriptor_proto_to_code(fd=fd, descriptors=descriptors, config=config).content
