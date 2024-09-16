@@ -74,6 +74,7 @@ The `protobuf-to-pydantic` plugin supports loading configuration by reading a `P
 > In order to ensure that the variables of the configuration file can be introduced normally, the configuration file must be stored in the current path of the running command.。
 
 An example configuration that can be read by `protobuf-to-pydantic` is as follows:
+
 ```Python
 import logging
 from typing import List, Type
@@ -82,31 +83,31 @@ from google.protobuf.any_pb2 import Any  # type: ignore
 from pydantic import confloat, conint
 from pydantic.fields import FieldInfo
 
-from protobuf_to_pydantic.desc_template import DescTemplate
+from protobuf_to_pydantic.template import CommentTemplate
 
 # Configure the log output format and log level of the plugin, which is very useful when debugging
 logging.basicConfig(format="[%(asctime)s %(levelname)s] %(message)s", datefmt="%y-%m-%d %H:%M:%S", level=logging.DEBUG)
 
 
 class CustomerField(FieldInfo):
-    pass
+  pass
 
 
 def customer_any() -> Any:
-    return Any  # type: ignore
+  return Any  # type: ignore
 
 
 # For the configuration of the local template, see the use of the local template for details
 local_dict = {
-    "CustomerField": CustomerField,
-    "confloat": confloat,
-    "conint": conint,
-    "customer_any": customer_any,
+  "CustomerField": CustomerField,
+  "confloat": confloat,
+  "conint": conint,
+  "customer_any": customer_any,
 }
 # Specifies the start of key comments
 comment_prefix = "p2p"
 # Specify the class of the template, can extend the template by inheriting this class, see the chapter on custom templates for details
-desc_template: Type[DescTemplate] = DescTemplate
+desc_template: Type[CommentTemplate] = CommentTemplate
 # Specify the protobuf files of which packages to ignore, and the messages of the ignored packages will not be parsed
 ignore_pkg_list: List[str] = ["validate", "p2p_validate"]
 # Specifies the generated file name suffix (without .py)
@@ -751,11 +752,13 @@ message TimestampTest{
 }
 ```
 As you can see, the Protobuf file customizes the syntax of `p2p@timestamp|{x}`, where `x` has only two values, 10 and 13. The next step is to write code based on this template behavior, which looks like this.
+
 ```python
 import time
-from protobuf_to_pydantic.gen_model import DescTemplate
+from protobuf_to_pydantic.gen_model import CommentTemplate
 
-class CustomDescTemplate(DescTemplate):
+
+class CustomDescTemplate(CommentTemplate):
     def template_timestamp(self, length_str: str) -> int:
         timestamp: float = time.time()
         if length_str == "10":
@@ -766,12 +769,12 @@ class CustomDescTemplate(DescTemplate):
             raise KeyError(f"timestamp template not support value:{length_str}")
 
 
-from .demo_pb2 import TimestampTest # fake code
+from .demo_pb2 import TimestampTest  # fake code
 from protobuf_to_pydantic import msg_to_pydantic_model
 
 msg_to_pydantic_model(
     TimestampTest,
-    desc_template=CustomDescTemplate   # <-- Use a custom template class
+    desc_template=CustomDescTemplate  # <-- Use a custom template class
 )
 ```
 This code first creates a class `CustomDescTemplate` that inherits from `DescTemplate`.

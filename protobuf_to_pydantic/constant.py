@@ -58,3 +58,21 @@ protobuf_desc_python_type_dict: Dict[int, Type] = {
     FieldDescriptor.TYPE_SINT32: int,
     FieldDescriptor.TYPE_SINT64: int,
 }
+protobuf_common_type_dict: Dict[Any, str] = {
+    FieldDescriptor.TYPE_DOUBLE: "double",
+    FieldDescriptor.TYPE_FLOAT: "float",
+    FieldDescriptor.TYPE_INT64: "int64",
+    FieldDescriptor.TYPE_UINT64: "uint64",
+    FieldDescriptor.TYPE_INT32: "int32",
+    FieldDescriptor.TYPE_FIXED64: "fixed64",
+    FieldDescriptor.TYPE_FIXED32: "fixed32",
+    FieldDescriptor.TYPE_BOOL: "bool",
+    FieldDescriptor.TYPE_STRING: "string",
+    FieldDescriptor.TYPE_BYTES: "bytes",
+    FieldDescriptor.TYPE_UINT32: "uint32",
+    FieldDescriptor.TYPE_ENUM: "enum",
+    FieldDescriptor.TYPE_SFIXED32: "sfixed32",
+    FieldDescriptor.TYPE_SFIXED64: "sfixed64",
+    FieldDescriptor.TYPE_SINT32: "sint32",
+    FieldDescriptor.TYPE_SINT64: "sint64",
+}

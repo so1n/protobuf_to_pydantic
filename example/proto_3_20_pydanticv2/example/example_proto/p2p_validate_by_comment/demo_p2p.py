@@ -49,7 +49,7 @@ from protobuf_to_pydantic.customer_validator.v2 import (
     timestamp_lt_validator,
     timestamp_within_validator,
 )
-from protobuf_to_pydantic.get_desc.from_pb_option.types import HostNameStr, UriRefStr
+from protobuf_to_pydantic.field_info_rule.protobuf_option_to_field_info.types import HostNameStr, UriRefStr
 from protobuf_to_pydantic.util import Timedelta
 
 
@@ -509,7 +509,7 @@ class RepeatedTest(BaseModel):
     items_string_test: typing.List[
         typing_extensions.Annotated[str, MinLen(min_length=1), MaxLen(max_length=5)]
     ] = Field(default_factory=list, min_length=1, max_length=5)
-    items_double_test: typing.List[typing_extensions.Annotated[float, Gt(gt=1), Lt(lt=5)]] = Field(
+    items_double_test: typing.List[typing_extensions.Annotated[float, Gt(gt=1.0), Lt(lt=5.0)]] = Field(
         default_factory=list, min_length=1, max_length=5
     )
     items_int32_test: typing.List[typing_extensions.Annotated[int, Gt(gt=1), Lt(lt=5)]] = Field(

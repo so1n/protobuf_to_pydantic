@@ -4,8 +4,8 @@ from typing import Any, Deque, Dict, List, Set, Type, TypeVar
 from pydantic import BaseModel, Field
 
 from protobuf_to_pydantic import _pydantic_adapter
-from protobuf_to_pydantic.desc_template import DescTemplate
 from protobuf_to_pydantic.plugin.field_desc_proto_to_code import FileDescriptorProtoToCode
+from protobuf_to_pydantic.template import CommentTemplate
 
 ConfigT = TypeVar("ConfigT", bound="ConfigModel")
 
@@ -25,8 +25,8 @@ class SubConfigModel(BaseModel):
 
 class ConfigModel(BaseModel):
     local_dict: dict = Field(default_factory=dict, description="Dict for local variables")
-    desc_template: Type[DescTemplate] = Field(
-        default=DescTemplate, description="Support more templates by customizing 'Desc Template'"
+    desc_template: Type[CommentTemplate] = Field(
+        default=CommentTemplate, description="Support more templates by customizing 'Desc Template'"
     )
     comment_prefix: str = Field(default="p2p", description="Comment prefix")
     parse_comment: bool = Field(
@@ -83,8 +83,8 @@ class ConfigModel(BaseModel):
         ```
         """,
     )
-    desc_template_instance: DescTemplate = Field(
-        default_factory=lambda: DescTemplate({}, ""),
+    desc_template_instance: CommentTemplate = Field(
+        default_factory=lambda: CommentTemplate({}, ""),
         description="This variable does not support configuration and will be overwritten even if configured",
     )
     pkg_config: Dict[str, "ConfigModel"] = Field(

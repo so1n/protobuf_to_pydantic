@@ -7,10 +7,10 @@ from google.protobuf.any_pb2 import Any  # type: ignore
 from pydantic import confloat, conint
 from pydantic.fields import FieldInfo
 
-from protobuf_to_pydantic.desc_template import DescTemplate
 from protobuf_to_pydantic.plugin.config import SubConfigModel
 
 from . import single_config_pkg_plugin_config
+from protobuf_to_pydantic.template import CommentTemplate
 
 logging.basicConfig(format="[%(asctime)s %(levelname)s] %(message)s", datefmt="%y-%m-%d %H:%M:%S", level=logging.INFO)
 
@@ -23,7 +23,7 @@ def customer_any() -> Any:
     return Any  # type: ignore
 
 
-class CustomDescTemplate(DescTemplate):
+class CustomCommentTemplate(CommentTemplate):
     def template_timestamp(self, length_str: str) -> int:
         timestamp: float = 1600000000
         if length_str == "10":
@@ -47,6 +47,6 @@ local_dict = {
     "uuid4": uuid4,
 }
 comment_prefix = "p2p"
-desc_template: Type[DescTemplate] = CustomDescTemplate
+desc_template: Type[CommentTemplate] = CustomCommentTemplate
 ignore_pkg_list: List[str] = ["validate", "p2p_validate"]
 pkg_config: Dict[str, SubConfigModel] = {"single_config": SubConfigModel(module=single_config_pkg_plugin_config)}

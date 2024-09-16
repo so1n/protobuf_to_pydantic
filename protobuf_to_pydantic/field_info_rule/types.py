@@ -22,6 +22,7 @@ class OneOfTypedDict(TypedDict):
 
 class FieldInfoTypedDict(TypedDict):
     extra: dict
+    json_schema_extra: NotRequired[dict]
     skip: NotRequired[bool]
     enable: NotRequired[bool]
     required: NotRequired[bool]
@@ -50,12 +51,13 @@ class FieldInfoTypedDict(TypedDict):
     unique_items: NotRequired[Optional[bool]]
     multiple_of: NotRequired[Optional[int]]
     regex: NotRequired[Optional[str]]
+    type_: NotRequired[Any]
 
 
-class DescFromOptionTypedDict(TypedDict):
+class MessageOptionTypedDict(TypedDict):
     message: Dict[str, FieldInfoTypedDict]
     one_of: Dict[str, OneOfTypedDict]
-    nested: Dict[str, "DescFromOptionTypedDict"]
+    nested: Dict[str, "MessageOptionTypedDict"]
     metadata: Dict[str, Any]
 
 

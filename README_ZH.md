@@ -69,6 +69,7 @@ protoc -I. --protobuf-to-pydantic_out=. example.proto
 > 为了保证能够正常的引入配置文件的变量，配置文件必须存放在运行命令的当前路径下。
 
 一个可以被`protobuf-to-pydantic`读取的示例配置内容如下:
+
 ```Python
 import logging
 from typing import List, Type
@@ -77,31 +78,31 @@ from google.protobuf.any_pb2 import Any  # type: ignore
 from pydantic import confloat, conint
 from pydantic.fields import FieldInfo
 
-from protobuf_to_pydantic.desc_template import DescTemplate
+from protobuf_to_pydantic.template import CommentTemplate
 
 # 配置插件的日志输出格式，和日志等级，在DEBUG的时候非常有用
 logging.basicConfig(format="[%(asctime)s %(levelname)s] %(message)s", datefmt="%y-%m-%d %H:%M:%S", level=logging.DEBUG)
 
 
 class CustomerField(FieldInfo):
-    pass
+  pass
 
 
 def customer_any() -> Any:
-    return Any  # type: ignore
+  return Any  # type: ignore
 
 
 # local模板的配置，详见local模板的使用
 local_dict = {
-    "CustomerField": CustomerField,
-    "confloat": confloat,
-    "conint": conint,
-    "customer_any": customer_any,
+  "CustomerField": CustomerField,
+  "confloat": confloat,
+  "conint": conint,
+  "customer_any": customer_any,
 }
 # 指定关键注释的开头
 comment_prefix = "p2p"
 # 指定模板的类，可以通过继承该类拓展模板，详见自定义模板章节
-desc_template: Type[DescTemplate] = DescTemplate
+desc_template: Type[CommentTemplate] = CommentTemplate
 # 指定要忽略的哪些package的protobuf文件，被忽略的package的message不会被解析
 ignore_pkg_list: List[str] = ["validate", "p2p_validate"]
 # 指定生成的文件名后缀(不包含.py)
@@ -739,27 +740,29 @@ message TimestampTest{
 }
 ```
 在这个文件中使用了自定义的`p2p@timestamp|{x}`的语法，其中`x`只有10和13两个值，接下来就可以根据这个模板行为编写代码了，代码如下:
+
 ```python
 import time
-from protobuf_to_pydantic.gen_model import DescTemplate
-
-class CustomDescTemplate(DescTemplate):
-    def template_timestamp(self, length_str: str) -> int:
-        timestamp: float = time.time()
-        if length_str == "10":
-            return int(timestamp)
-        elif length_str == "13":
-            return int(timestamp * 100)
-        else:
-            raise KeyError(f"timestamp template not support value:{length_str}")
+from protobuf_to_pydantic.gen_model import CommentTemplate
 
 
-from .demo_pb2 import TimestampTest # fake code
+class CustomDescTemplate(CommentTemplate):
+  def template_timestamp(self, length_str: str) -> int:
+    timestamp: float = time.time()
+    if length_str == "10":
+      return int(timestamp)
+    elif length_str == "13":
+      return int(timestamp * 100)
+    else:
+      raise KeyError(f"timestamp template not support value:{length_str}")
+
+
+from .demo_pb2 import TimestampTest  # fake code
 from protobuf_to_pydantic import msg_to_pydantic_model
 
 msg_to_pydantic_model(
-    TimestampTest,
-    desc_template=CustomDescTemplate   # <-- 使用自定义的模板类
+  TimestampTest,
+  desc_template=CustomDescTemplate  # <-- 使用自定义的模板类
 )
 ```
 这段代码先是创建了一个继承于`DescTemplate`的`CustomDescTemplate`的类，

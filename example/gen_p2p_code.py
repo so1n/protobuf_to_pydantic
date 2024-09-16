@@ -9,7 +9,7 @@ from google.protobuf.message import Message
 from pydantic import confloat, conint
 from pydantic.fields import FieldInfo
 
-from protobuf_to_pydantic import _pydantic_adapter, desc_template, msg_to_pydantic_model, pydantic_model_to_py_file
+from protobuf_to_pydantic import _pydantic_adapter, msg_to_pydantic_model, pydantic_model_to_py_file, template
 
 # use pydantic v1 method, pydantic will print warning, ignore!~
 warnings.filterwarnings("ignore")
@@ -42,7 +42,7 @@ def customer_any() -> Any:
 now_path: pathlib.Path = pathlib.Path(__file__).absolute()
 
 
-class CustomDescTemplate(desc_template.DescTemplate):
+class CustomCommentTemplate(template.CommentTemplate):
     def template_timestamp(self, length_str: str) -> int:
         timestamp: float = 1600000000
         if length_str == "10":
@@ -65,7 +65,7 @@ def gen_code() -> None:
                     "conint": conint,
                     "customer_any": customer_any,
                 },
-                desc_template=CustomDescTemplate,
+                desc_template=CustomCommentTemplate,
             )
             for model in message_class_list
         ],

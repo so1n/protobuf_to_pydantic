@@ -3,28 +3,31 @@ import inspect
 import logging
 from datetime import datetime, timedelta
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Dict, Iterable, List, Optional, Set, Tuple
+from typing import TYPE_CHECKING, Any, Dict, Iterable, List, Optional, Set, Tuple, Type
 
 from mypy_protobuf.main import PYTHON_RESERVED, Descriptors, SourceCodeLocation
 from pydantic import BaseModel
 from pydantic.fields import FieldInfo
-from typing_extensions import NotRequired, TypedDict
+from typing_extensions import TypedDict
 
 from protobuf_to_pydantic import _pydantic_adapter
-from protobuf_to_pydantic.constant import protobuf_desc_python_type_dict, python_type_default_value_dict
-from protobuf_to_pydantic.desc_template import DescTemplate
-from protobuf_to_pydantic.exceptions import WaitingToCompleteException
-from protobuf_to_pydantic.field_param import (
-    FieldParamModel,
-    field_param_dict_handle,
-    field_param_dict_migration_v2_handler,
-)
-from protobuf_to_pydantic.gen_code import BaseP2C
-from protobuf_to_pydantic.get_desc.from_pb_option.base import (
-    field_comment_handler,
-    field_option_handle,
+from protobuf_to_pydantic.constant import (
     protobuf_common_type_dict,
+    protobuf_desc_python_type_dict,
+    python_type_default_value_dict,
 )
+from protobuf_to_pydantic.exceptions import WaitingToCompleteException
+from protobuf_to_pydantic.field_info_rule.field_info_param import (
+    FieldInfoParamModel,
+    field_info_param_dict_handle,
+    field_info_param_dict_migration_v2_handler,
+)
+from protobuf_to_pydantic.field_info_rule.protobuf_option_to_field_info.comment import (
+    gen_field_rule_info_dict_from_field_comment_dict,
+)
+from protobuf_to_pydantic.field_info_rule.protobuf_option_to_field_info.desc import gen_field_info_dict_from_field_desc
+from protobuf_to_pydantic.field_info_rule.types import FieldInfoTypedDict, OneOfTypedDict
+from protobuf_to_pydantic.gen_code import BaseP2C
 from protobuf_to_pydantic.grpc_types import (
     AnyMessage,
     DescriptorProto,
@@ -33,7 +36,7 @@ from protobuf_to_pydantic.grpc_types import (
     FileDescriptorProto,
 )
 from protobuf_to_pydantic.plugin.my_types import ProtobufTypeModel
-from protobuf_to_pydantic.util import camel_to_snake, gen_dict_from_desc_str
+from protobuf_to_pydantic.util import camel_to_snake, get_dict_from_comment
 
 if TYPE_CHECKING:
     from protobuf_to_pydantic.plugin.config import ConfigModel
@@ -47,11 +50,6 @@ logger: logging.Logger = logging.getLogger(__name__)
 
 class OptionTypedDict(TypedDict):
     is_proto3_optional: bool
-
-
-class OneOfInfoTypedDict(TypedDict):
-    fields: Set[str]
-    required: NotRequired[bool]
 
 
 def remove_comment_last_n(content: str) -> str:
@@ -77,16 +75,16 @@ class FileDescriptorProtoToCode(BaseP2C):
             pyproject_file_path=config.pyproject_file_path,
         )
         self.config = config
-        self._fd: FileDescriptorProto = fd
-        self._descriptors: Descriptors = descriptors
-        self._desc_template: DescTemplate = config.desc_template_instance
+        self._fd = fd
+        self._descriptors = descriptors
+        self._desc_template = config.desc_template_instance
         self.source_code_info_by_scl = {tuple(location.path): location for location in fd.source_code_info.location}
 
         if config.base_model_class is BaseModel:
             self._import_set.add("from pydantic import BaseModel")
         else:
             self._add_import_code(config.base_model_class.__module__, config.base_model_class.__name__)
-        self._parse_desc_name_dict: Dict[str, str] = {}
+        self._model_cache: Dict[str, str] = {}
         self._parse_field_descriptor()
 
     def _add_other_module_pkg(self, other_fd: FileDescriptorProto, type_str: str) -> None:
@@ -128,7 +126,7 @@ class FileDescriptorProtoToCode(BaseP2C):
                 (trailing_comments_list, trailing_comments),
             ):
                 for line in comments.split("\n"):
-                    field_dict = gen_dict_from_desc_str(self.config.comment_prefix, line)
+                    field_dict = get_dict_from_comment(self.config.comment_prefix, line)
                     if not field_dict:
                         container.append(line)
                     else:
@@ -231,7 +229,7 @@ class FileDescriptorProtoToCode(BaseP2C):
         optional_dict: dict,
         scl_prefix: SourceCodeLocation,
         skip_validate_rule: bool = False,
-    ) -> Optional[Tuple[str, str]]:
+    ) -> Optional[Tuple[str, str, bool]]:
         """generate message's field to Pydantic.FieldInfo code
 
         :param desc: The message to which the field belongs is used to determine whether it is self-referencing
@@ -246,10 +244,13 @@ class FileDescriptorProtoToCode(BaseP2C):
             e.g: {"{field name}": {"is_proto3_optional": True}}
         :param skip_validate_rule: If the value is True, the validation information for the field will not be generated
 
-        :return: validator_handle_content, class_field_content
+        :return: validator_handle_content, class_field_content, use_custom_type
         """
-        field_info_dict: dict = {}
+        field_info_default_value = _pydantic_adapter.PydanticUndefined
+        field_info_default_factory_value: Any = None
+        field_type = None
         nested_message_name: Optional[str] = None
+        use_custom_type = False
         raw_validator_dict = {}
         leading_comments = ""
         trailing_comments = ""
@@ -272,26 +273,33 @@ class FileDescriptorProtoToCode(BaseP2C):
                     f"typing.Dict[{self._get_protobuf_type_model(key_msg).py_type_str},"
                     f" {self._get_protobuf_type_model(value_msg).py_type_str}]"
                 )
-                field_info_dict["default_factory"] = dict
+                field_info_default_factory_value = dict
                 rule_type_str = "map"
             elif field.type_name.startswith(".google.protobuf"):
                 protobuf_type_model = self._get_protobuf_type_model(field)
                 type_str = protobuf_type_model.py_type_str
                 rule_type_str = protobuf_type_model.rule_type_str
-                field_info_dict["default_factory"] = protobuf_type_model.type_factory
+                field_info_default_factory_value = protobuf_type_model.type_factory
+                use_custom_type = protobuf_type_model.use_custom_type
             else:
                 protobuf_type_model = self._get_protobuf_type_model(field)
                 type_str = protobuf_type_model.py_type_str
                 rule_type_str = protobuf_type_model.rule_type_str
                 nested_message_name = type_str
+                use_custom_type = protobuf_type_model.use_custom_type
 
                 message_fd: FileDescriptorProto = self._descriptors.message_to_fd[field.type_name]
                 self._add_other_module_pkg(message_fd, type_str)
                 root_desc_nested_type_name = {i.name for i in root_desc.nested_type}
+                desc_nested_type_name = {i.name for i in desc.nested_type}
                 if message == desc:
                     # if self-referencing, need use Python type hints postponed annotations
                     type_str = f'"{type_str}"'
-                elif message_fd.name == self._fd.name and message.name not in root_desc_nested_type_name:
+                elif (
+                    message_fd.name == self._fd.name
+                    and message.name not in root_desc_nested_type_name
+                    and message.name not in desc_nested_type_name
+                ):
                     # If the referenced Message is generated later, it needs to be generated in advance
                     scl_prefix = [FileDescriptorProto.MESSAGE_TYPE_FIELD_NUMBER]
                     for index, desc in enumerate(self._fd.message_type):
@@ -307,7 +315,7 @@ class FileDescriptorProtoToCode(BaseP2C):
         elif field.type == 14:
             # enum handle
             type_str = field.type_name.split(".")[-1]
-            field_info_dict["default"] = 0
+            field_info_default_value = 0
             rule_type_str = "enum"
             root_desc_enum_name = {i.name for i in root_desc.enum_type}
             if type_str in root_desc_enum_name:
@@ -319,8 +327,9 @@ class FileDescriptorProtoToCode(BaseP2C):
             logger.error(f"Not found {field.type} in type_dict")
             return None
         else:
-            field_info_dict["default"] = python_type_default_value_dict[protobuf_desc_python_type_dict[field.type]]
+            field_info_default_value = python_type_default_value_dict[protobuf_desc_python_type_dict[field.type]]
             protobuf_type_model = self._get_protobuf_type_model(field)
+            use_custom_type = protobuf_type_model.use_custom_type
             type_str = protobuf_type_model.py_type_str
             rule_type_str = protobuf_type_model.rule_type_str
 
@@ -328,71 +337,59 @@ class FileDescriptorProtoToCode(BaseP2C):
             # repeated support
             self._add_import_code("typing")
             type_str = f"typing.List[{type_str}]"
-            field_info_dict.pop("default", "")
-            field_info_dict["default_factory"] = list
+            field_info_default_value = None
+            field_info_default_factory_value = list
             rule_type_str = "repeated"
 
-        field_option_info_dict: dict = {}
+        field_info_dict: FieldInfoTypedDict = {}  # type: ignore[typeddict-item]
         comment_field_info_dict, leading_comments, trailing_comments = self._comment_handler(
             leading_comments,
             trailing_comments,
         )
-        #
-        # comment_field_info_dict: dict = {}
-        # if self.config.parse_comment:
-        #     leading_comments_list: List[str] = []
-        #     trailing_comments_list: List[str] = []
-        #     for container, comments in (
-        #         (leading_comments_list, leading_comments),
-        #         (trailing_comments_list, trailing_comments),
-        #     ):
-        #         for line in comments.split("\n"):
-        #             field_dict = gen_dict_from_desc_str(self.config.comment_prefix, line)
-        #             if not field_dict:
-        #                 container.append(line)
-        #             else:
-        #                 comment_field_info_dict.update(field_dict)
-        #     leading_comments = "\n".join(leading_comments_list)
-        #     trailing_comments = "\n".join(trailing_comments_list)
-
         if not skip_validate_rule:
-            field_option_info_dict.update(comment_field_info_dict)
-            # TODO support message option
-            # if list(desc.options.ListFields()):
+            field_info_dict.update(comment_field_info_dict)  # type: ignore[typeddict-item]
             if len(field.options.ListFields()) != 0 and rule_type_str:
                 # protobuf option support
-                field_option_info_dict.update(field_option_handle(rule_type_str, field.name, field))  # type: ignore
-                field_option_info_dict = self._desc_template.handle_template_var(field_option_info_dict)
-            elif field_option_info_dict:
-                field_option_info_dict = self._desc_template.handle_template_var(field_option_info_dict)
-                field_option_info_dict = field_comment_handler(  # type: ignore
-                    field_option_info_dict, field, rule_type_str, field.name
+                field_info_dict.update(gen_field_info_dict_from_field_desc(rule_type_str, field.name, field))
+                field_info_dict = self._desc_template.handle_template_var(field_info_dict)
+            elif field_info_dict:
+                field_info_dict = self._desc_template.handle_template_var(field_info_dict)
+                field_info_dict = gen_field_rule_info_dict_from_field_comment_dict(
+                    field_info_dict, field, rule_type_str, field.name  # type: ignore[arg-type]
                 )
 
-        if field_option_info_dict:
-            raw_validator_dict = field_option_info_dict.get("validator", {})
+        if field_info_dict:
+            raw_validator_dict = field_info_dict.get("validator", {})
 
-            skip = field_option_info_dict.pop("skip", False)
+            field_info_dict = FieldInfoParamModel(**field_info_dict).to_dict()  # type: ignore
+
+            skip = field_info_dict.pop("skip", False)
             if nested_message_name:
                 if nested_message_name not in nested_message_config_dict:
                     nested_message_config_dict[nested_message_name] = {}
                 nested_message_config_dict[nested_message_name]["skip"] = skip
-            field_option_info_dict = FieldParamModel(**field_option_info_dict).dict()
-            if not field_option_info_dict.pop("enable", False):
+
+            if not field_info_dict.pop("enable", False):
                 return None
             try:
                 if type_str.startswith("typing"):
                     import typing  # isort:skip
                 field_type = eval(type_str)
             except NameError:
-                field_type = None
-            field_param_dict_handle(
-                field_option_info_dict,
-                field_info_dict.get("default", _pydantic_adapter.PydanticUndefined),
-                field_info_dict.get("default_factory", None),
+                pass
+
+        if (
+            field_info_dict
+            or field_info_default_value is not _pydantic_adapter.PydanticUndefined
+            or field_info_default_factory_value is not None
+            or field_type is not None
+        ):
+            field_info_param_dict_handle(
+                field_info_dict,  # type: ignore[arg-type]
+                field_info_default_value,
+                field_info_default_factory_value,
                 field_type=field_type,
             )
-            field_info_dict = field_option_info_dict
 
         validator_handle_content = ""
         field_info_dict.pop("validator", None)
@@ -445,7 +442,7 @@ class FileDescriptorProtoToCode(BaseP2C):
             type_str = f"typing.Dict[{key_type_str}, {value_type_str}]"
 
         # custom field support
-        field_class: Optional[FieldInfo] = field_info_dict.pop("field", None)
+        field_class: Optional[Type[FieldInfo]] = field_info_dict.pop("field", None)
         if field_class:
             field_name: str = self._get_value_code(field_class)
         else:
@@ -454,7 +451,7 @@ class FileDescriptorProtoToCode(BaseP2C):
 
         if not _pydantic_adapter.is_v1:
             # pgv or p2p rule no warning required
-            field_param_dict_migration_v2_handler(field_info_dict, is_warnings=False)
+            field_info_param_dict_migration_v2_handler(field_info_dict, is_warnings=False)  # type: ignore[arg-type]
 
         if optional_dict.get(field.name, {}).get("is_proto3_optional", False):
             self._add_import_code("typing")
@@ -468,13 +465,13 @@ class FileDescriptorProtoToCode(BaseP2C):
         for key in FieldInfo.__slots__:
             value: Any = field_info_dict.get(key, None)
             if value is getattr(FieldInfo(), key):
-                field_info_dict.pop(key, None)
+                field_info_dict.pop(key, None)  # type: ignore[misc]
 
         if isinstance(field_info_dict.get("json_schema_extra", None), dict):
             # After Pydantic version 2.1, json_schema_extra type may be callable
             for k in list(field_info_dict["json_schema_extra"].keys()):
                 if k not in field_info_dict:
-                    field_info_dict[k] = field_info_dict["json_schema_extra"].pop(k)
+                    field_info_dict[k] = field_info_dict["json_schema_extra"].pop(k)  # type: ignore[literal-required]
             if not field_info_dict.get("json_schema_extra", None):
                 field_info_dict.pop("json_schema_extra")
 
@@ -496,14 +493,13 @@ class FileDescriptorProtoToCode(BaseP2C):
         if self.config.parse_comment and leading_comments:
             class_field_content = leading_comments + "\n" + class_field_content
         if self.config.parse_comment and trailing_comments:
-            class_field_content = class_field_content + trailing_comments + "\n"
-        else:
-            class_field_content = class_field_content + "\n"
-        return validator_handle_content, class_field_content
+            class_field_content = class_field_content + trailing_comments
+        class_field_content = class_field_content + "\n"
+        return validator_handle_content, class_field_content, use_custom_type
 
     def _gen_one_of_dict(
         self, desc: DescriptorProto, scl_prefix: SourceCodeLocation, skip_validate_rule: bool
-    ) -> Tuple[Dict[str, OneOfInfoTypedDict], Dict[str, OptionTypedDict]]:
+    ) -> Tuple[Dict[str, OneOfTypedDict], Dict[str, OptionTypedDict]]:
         """
         protobuf content:
             message OneOfOptionalTest {
@@ -559,7 +555,7 @@ class FileDescriptorProtoToCode(BaseP2C):
                 {'name': {'is_proto3_optional': True}, 'age': {'is_proto3_optional': True}}
 
         """
-        one_of_dict: Dict[str, OneOfInfoTypedDict] = {}
+        one_of_dict: Dict[str, OneOfTypedDict] = {}
         optional_dict: Dict[str, OptionTypedDict] = {}
         index_field_name_dict: Dict[int, Set[str]] = {}
 
@@ -579,7 +575,7 @@ class FileDescriptorProtoToCode(BaseP2C):
             if one_of_item.name.startswith("_") and one_of_item.name[1:] in optional_dict:
                 continue
 
-            option_dict: OneOfInfoTypedDict = {}  # type: ignore[typeddict-item]
+            option_dict: OneOfTypedDict = {}  # type: ignore[typeddict-item]
             for option_descriptor, option_value in one_of_item.options.ListFields():
                 full_name_list = option_descriptor.full_name.split(".")
                 pkg, rule_name = full_name_list[-2], full_name_list[-1]
@@ -598,7 +594,7 @@ class FileDescriptorProtoToCode(BaseP2C):
             comment = self.source_code_info_by_scl.get(tuple(scl_prefix + [index]))
             if self.config.parse_comment and comment:
                 for line in comment.leading_comments.split("\n"):
-                    one_of_comment_dict = gen_dict_from_desc_str(self.config.comment_prefix, line)
+                    one_of_comment_dict = get_dict_from_comment(self.config.comment_prefix, line)
                     if not one_of_comment_dict:
                         continue
                     for one_of_comment_rule_name, one_of_comment_option_value in one_of_comment_dict.items():
@@ -625,15 +621,15 @@ class FileDescriptorProtoToCode(BaseP2C):
         indent: int = 0,
         skip_validate_rule: bool = False,
     ) -> str:
-        self._add_import_code("google.protobuf.message", "Message")
         class_name = desc.name if desc.name not in PYTHON_RESERVED else "_r_" + desc.name
-        if class_name in self._parse_desc_name_dict:
-            if not self._parse_desc_name_dict[class_name]:
+        if class_name in self._model_cache:
+            if not self._model_cache[class_name]:
                 raise WaitingToCompleteException(f"The model:{class_name} is being generated")
-            return self._parse_desc_name_dict[class_name]
+            return self._model_cache[class_name]
         else:
-            self._parse_desc_name_dict[class_name] = ""
+            self._model_cache[class_name] = ""
 
+        self._add_import_code("google.protobuf.message", "Message")
         comment_info_dict, desc_content, comment_content = self.add_class_desc(scl_prefix, indent)
         class_name_content = " " * indent + f"class {class_name}({self.config.base_model_class.__name__}):"
         if comment_content:
@@ -659,20 +655,12 @@ class FileDescriptorProtoToCode(BaseP2C):
                 scl_prefix + [DescriptorProto.ONEOF_DECL_FIELD_NUMBER],
                 skip_validate_rule=skip_validate_rule,
             )
-        # for option_descriptor, option_value in field_list:
-        #     # filter unwanted Option
-        #     if protobuf_pkg:
-        #         if not option_descriptor.full_name.endswith(f"{protobuf_pkg}.rules"):
-        #             continue
-        #     elif not option_descriptor.full_name.endswith("validate.rules"):
-        #         continue
+
         for idx, field in enumerate(desc.field):
             if field.name in PYTHON_RESERVED:
                 continue
-            if field.type == 11 and self._get_protobuf_type_model(field).use_custom_type:
-                use_custom_type = True
 
-            _content_tuple: Optional[Tuple[str, str]] = self._message_field_handle(
+            _content_tuple = self._message_field_handle(
                 desc,
                 root_desc,
                 field,
@@ -685,6 +673,8 @@ class FileDescriptorProtoToCode(BaseP2C):
             if _content_tuple:
                 class_validate_handler_content += _content_tuple[0]
                 class_field_content += _content_tuple[1]
+                if _content_tuple[2]:
+                    use_custom_type = True
         if desc.nested_type:
             class_sub_c_str_list.extend(
                 self._message_nested_type_handle(
@@ -750,7 +740,7 @@ class FileDescriptorProtoToCode(BaseP2C):
         )
         if not any([class_head_content, class_field_content]):
             content += " " * (indent + self.code_indent) + "pass\n"
-        self._parse_desc_name_dict[class_name] = content
+        self._model_cache[class_name] = content
         return content
 
     def _get_protobuf_type_model(self, field: FieldDescriptorProto) -> ProtobufTypeModel:
@@ -767,7 +757,6 @@ class FileDescriptorProtoToCode(BaseP2C):
 
         type_factory: Optional[Any] = None
         use_custom_type = False
-        # TODO use gen_model.py _message_default_factory_dict_by_type_name
         if field.type in protobuf_desc_python_type_dict:
             type_factory = protobuf_desc_python_type_dict[field.type]
             return ProtobufTypeModel(
@@ -796,16 +785,14 @@ class FileDescriptorProtoToCode(BaseP2C):
                 type_factory = datetime.now
                 self._add_import_code("datetime", "datetime")
             elif _type_str == "Duration":
+                rule_type_str = "duration"
+                type_factory = timedelta
                 if _pydantic_adapter.is_v1:
                     py_type_str = "Timedelta"
-                    rule_type_str = "duration"
-                    type_factory = timedelta
                     self._add_import_code("datetime", "timedelta")
                     self._add_import_code("protobuf_to_pydantic.util", py_type_str)
                 else:
                     py_type_str = "Annotated[timedelta, BeforeValidator(Timedelta.validate)]"
-                    rule_type_str = "duration"
-                    type_factory = timedelta
 
                     self._add_import_code("pydantic", "BeforeValidator")
                     self._add_import_code("typing_extensions", "Annotated")
