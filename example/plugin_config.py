@@ -1,12 +1,15 @@
 import logging
 import time
-from typing import List, Type
+from typing import Dict, List, Type
 from uuid import uuid4
 
 from google.protobuf.any_pb2 import Any  # type: ignore
 from pydantic import confloat, conint
 from pydantic.fields import FieldInfo
 
+from protobuf_to_pydantic.plugin.config import SubConfigModel
+
+from . import single_config_pkg_plugin_config
 from protobuf_to_pydantic.template import CommentTemplate
 
 logging.basicConfig(format="[%(asctime)s %(levelname)s] %(message)s", datefmt="%y-%m-%d %H:%M:%S", level=logging.INFO)
@@ -46,3 +49,4 @@ local_dict = {
 comment_prefix = "p2p"
 desc_template: Type[CommentTemplate] = CustomCommentTemplate
 ignore_pkg_list: List[str] = ["validate", "p2p_validate"]
+pkg_config: Dict[str, SubConfigModel] = {"single_config": SubConfigModel(module=single_config_pkg_plugin_config)}

@@ -19,6 +19,10 @@ class ProtobufTypeConfigModel(BaseModel):
     )
 
 
+class SubConfigModel(BaseModel):
+    module: Any
+
+
 class ConfigModel(BaseModel):
     local_dict: dict = Field(default_factory=dict, description="Dict for local variables")
     desc_template: Type[CommentTemplate] = Field(
@@ -83,6 +87,9 @@ class ConfigModel(BaseModel):
         default_factory=lambda: CommentTemplate({}, ""),
         description="This variable does not support configuration and will be overwritten even if configured",
     )
+    pkg_config: Dict[str, "ConfigModel"] = Field(
+        default_factory=dict, description="Customize the configuration of different pkgs"
+    )
 
     class Config:
         arbitrary_types_allowed = True
@@ -96,6 +103,18 @@ class ConfigModel(BaseModel):
         else:
             # values: "ConfigModel"
             values.desc_template_instance = values.desc_template(values.local_dict, values.comment_prefix)
+        return values
+
+    @_pydantic_adapter.model_validator(mode="before")
+    def before_init(cls, values: Any) -> Any:
+        def _validator(_values: Any) -> dict:
+            if not isinstance(_values, SubConfigModel):
+                raise ValueError("values must be a SubConfigModel")
+            return get_config_by_module(_values.module, ConfigModel).dict()
+
+        if "pkg_config" in values:
+            values["pkg_config"] = {k: _validator(v) for k, v in values.get("pkg_config", {}).items()}
+        return values
 
 
 def get_config_by_module(module: Any, config_class: Type[ConfigT]) -> ConfigT:
