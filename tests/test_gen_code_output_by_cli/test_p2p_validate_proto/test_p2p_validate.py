@@ -35,7 +35,7 @@ class TestP2pValidate:
             "conint": conint,
             "customer_any": customer_any,
         }
-        return pydantic_model_to_py_code(msg_to_pydantic_model(msg, local_dict=local_dict, desc_template=CustomCommentTemplate))
+        return pydantic_model_to_py_code(msg_to_pydantic_model(msg, local_dict=local_dict, template=CustomCommentTemplate))
 
     @staticmethod
     def assert_contains(content: str, other_content: str) -> None:

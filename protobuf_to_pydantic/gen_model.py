@@ -30,7 +30,7 @@ from protobuf_to_pydantic.get_message_option import (
     get_message_option_dict_from_pyi_file,
 )
 from protobuf_to_pydantic.grpc_types import AnyMessage, Descriptor, FieldDescriptor, FieldMask, Message
-from protobuf_to_pydantic.template import CommentTemplate
+from protobuf_to_pydantic.template import Template
 from protobuf_to_pydantic.util import create_pydantic_model
 
 if TYPE_CHECKING:
@@ -121,7 +121,7 @@ class M2P(object):
         pydantic_base: Optional[Type["BaseModel"]] = None,
         pydantic_module: Optional[str] = None,
         local_dict: Optional[Dict[str, Any]] = None,
-        desc_template: Optional[Type[CommentTemplate]] = None,
+        template: Optional[Type[Template]] = None,
         message_type_dict_by_type_name: Optional[Dict[str, Any]] = None,
         message_default_factory_dict_by_type_name: Optional[Dict[str, Any]] = None,
         create_model_cache: Optional[CREATE_MODEL_CACHE_T] = None,
@@ -166,9 +166,7 @@ class M2P(object):
         self._creat_cache: CREATE_MODEL_CACHE_T = create_model_cache or _create_model_cache
         self._pydantic_base: Type["BaseModel"] = pydantic_base or BaseModel
         self._pydantic_module: str = pydantic_module or __name__
-        self._comment_template: CommentTemplate = (desc_template or CommentTemplate)(
-            local_dict or {}, self._comment_prefix
-        )
+        self._comment_template: Template = (template or Template)(local_dict or {}, self._comment_prefix)
         self._message_type_dict_by_type_name: Dict[str, Any] = (
             message_type_dict_by_type_name or constant.message_name_type_dict
         )
@@ -630,7 +628,7 @@ def msg_to_pydantic_model(
     local_dict: Optional[Dict[str, Any]] = None,
     pydantic_base: Optional[Type["BaseModel"]] = None,
     pydantic_module: Optional[str] = None,
-    desc_template: Optional[Type[CommentTemplate]] = None,
+    template: Optional[Type[Template]] = None,
     message_type_dict_by_type_name: Optional[Dict[str, Any]] = None,
     message_default_factory_dict_by_type_name: Optional[Dict[str, Any]] = None,
     create_model_cache: Optional[CREATE_MODEL_CACHE_T] = None,
@@ -654,7 +652,7 @@ def msg_to_pydantic_model(
     :param local_dict: The variables corresponding to the p2p@local template
     :param pydantic_base: custom pydantic.BaseModel
     :param pydantic_module: custom create model's module name
-    :param desc_template: DescTemplate object, which can extend and modify template adaptation rules through inheritance
+    :param template: DescTemplate object, which can extend and modify template adaptation rules through inheritance
     :param message_type_dict_by_type_name: Define the Python type mapping corresponding to each Protobuf Type
     :param message_default_factory_dict_by_type_name: Define the default_factory corresponding to each Protobuf Type
     :param create_model_cache: Cache the generated model
@@ -667,7 +665,7 @@ def msg_to_pydantic_model(
         local_dict=local_dict,
         pydantic_module=pydantic_module,
         pydantic_base=pydantic_base,
-        desc_template=desc_template,
+        template=template,
         message_type_dict_by_type_name=message_type_dict_by_type_name,
         message_default_factory_dict_by_type_name=message_default_factory_dict_by_type_name,
         create_model_cache=create_model_cache,

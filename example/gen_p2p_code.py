@@ -42,7 +42,7 @@ def customer_any() -> Any:
 now_path: pathlib.Path = pathlib.Path(__file__).absolute()
 
 
-class CustomCommentTemplate(template.CommentTemplate):
+class CustomCommentTemplate(template.Template):
     def template_timestamp(self, length_str: str) -> int:
         timestamp: float = 1600000000
         if length_str == "10":
@@ -65,7 +65,7 @@ def gen_code() -> None:
                     "conint": conint,
                     "customer_any": customer_any,
                 },
-                desc_template=CustomCommentTemplate,
+                template=CustomCommentTemplate,
             )
             for model in message_class_list
         ],

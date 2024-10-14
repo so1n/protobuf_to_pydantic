@@ -7,7 +7,7 @@ from protobuf_to_pydantic.grpc_types import RepeatedCompositeContainer, Repeated
 _T = TypeVar("_T")
 
 
-class CommentTemplate(object):
+class Template(object):
     def __init__(self, local_dict: Dict[str, Any], comment_prefix: str, **kwargs: Any) -> None:
         """
         :param local_dict: local template var

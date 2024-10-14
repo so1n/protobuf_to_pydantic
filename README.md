@@ -30,10 +30,10 @@ pip install protobuf_to_pydantic[all]
 # Usage
 ## 1.code generation
 `protobuf-to-pydantic` currently has two methods to generate `Pydantic Model` objects based on Protobuf files.：
-- 1: Use the `Protoc` plug-in to generate the corresponding `Python` code file through the Protobuf file。
-- 2: Generate the corresponding `Pydantic Model` object through the `Message` object in `Python` runtime。
+- 1: Plugin Mode: Use the `Protoc` plug-in to generate the corresponding `Python` code file through the Protobuf file。
+- 2: Runtime Mode: Generate the corresponding `Pydantic Model` object through the `Message` object in `Python` runtime。
 
-### 1.1.Directly generate `Pydantic Model` code files through plug-ins
+### 1.1.Plugin Mode
 #### 1.1.0.Install dependencies
 The `protobuf-to-pydantic` plug-in depends on `mypy-protobuf`, need to install `mypy-protobuf` through the following command first:
 ```bash
@@ -71,9 +71,9 @@ After running the command, the `protobuf-to-pydantic` plugin writes the generate
 #### 1.1.2.Plug-in configuration
 The `protobuf-to-pydantic` plugin supports loading configuration by reading a `Python` file。
 
-> In order to ensure that the variables of the configuration file can be introduced normally, the configuration file must be stored in the current path of the running command.。
+> In order to ensure that the variables of the configuration file can be introduced normally, the configuration file should be stored in the current path where the command is run.
 
-An example configuration that can be read by `protobuf-to-pydantic` is as follows:
+An example configuration that can be read by 'protobuf_to_pydantic' would look like:
 
 ```Python
 import logging
@@ -83,10 +83,14 @@ from google.protobuf.any_pb2 import Any  # type: ignore
 from pydantic import confloat, conint
 from pydantic.fields import FieldInfo
 
-from protobuf_to_pydantic.template import CommentTemplate
+from protobuf_to_pydantic.template import Template
 
 # Configure the log output format and log level of the plugin, which is very useful when debugging
-logging.basicConfig(format="[%(asctime)s %(levelname)s] %(message)s", datefmt="%y-%m-%d %H:%M:%S", level=logging.DEBUG)
+logging.basicConfig(
+  format="[%(asctime)s %(levelname)s] %(message)s",
+  datefmt="%y-%m-%d %H:%M:%S",
+  level=logging.DEBUG
+)
 
 
 class CustomerField(FieldInfo):
@@ -107,7 +111,7 @@ local_dict = {
 # Specifies the start of key comments
 comment_prefix = "p2p"
 # Specify the class of the template, can extend the template by inheriting this class, see the chapter on custom templates for details
-desc_template: Type[CommentTemplate] = CommentTemplate
+template: Type[Template] = Template
 # Specify the protobuf files of which packages to ignore, and the messages of the ignored packages will not be parsed
 ignore_pkg_list: List[str] = ["validate", "p2p_validate"]
 # Specifies the generated file name suffix (without .py)
@@ -127,27 +131,32 @@ In addition to the configuration options in the example configuration file,
 the `protobuf-to-pydantic` plug-in also supports other configuration options.
 The specific configuration instructions are as follows：
 
-| Configuration name            | Functional module                      | Type                                            | Hidden meaning                                                                                                                                      |
-|-------------------------------|----------------------------------------|-------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
-| local_dict                    | Template                               | dict                                            | Holds variables for the `local` template                                                                                                            |
-| desc_template                 | Template                               | protobuf_to_pydantic.desc_template.DescTemplate | Implementation of the template class                                                                                                                |
-| comment_prefix                | Template                               | str                                             | Comment prefix.Only strings with a fixed prefix will be used by the template                                                                        |
-| customer_import_set           | Code generation                        | `Set[str]`                                      | A collection of custom import statements, such as `from typing import Set`or `import typing`, that will write data in order to the source code file |
-| customer_deque                | Code generation                        | `deque[str]`                                    | Custom source file content, used to add custom content                                                                                              |
-| module_path                   | str                                    | str                                             | Used to define the root path of the project or module, which helps `protobuf-to-pydantic`to better automatically generate module import statements   |
-| pyproject_file_path           | Code generation                        | str                                             | Define the pyproject file path, which defaults to the current project path                                                                          |
-| code_indent                   | Code generation                        | int                                             | Defines the number of indentation Spaces in the code; the default is 4                                                                              |
-| ignore_pkg_list               | Code generation(Limit plug-ins only)   | `list[str]`                                     | Definition ignores parsing of the specified package file                                                                                            |
-| base_model_class              | Model Code generation, Code generation | `Type[BaseModel]`                               | Define the parent class of the generated Model                                                                                                      |
-| file_name_suffix              | Code generation                        | str                                             | Define the generated file suffix, default `_p2p.py`                                                                                                 |
-| file_descriptor_proto_to_code | Code generation(Limit plug-ins only)   | `Type[FileDescriptorProtoToCode]`               | Define the `FileDescriptorProtoToCode` to use                                                                                                       |
+| Configuration name            | Functional module                      | Type                                            | Hidden meaning                                                                                                                                                   |
+|-------------------------------|----------------------------------------|-------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| local_dict                    | Template                               | dict                                            | Holds variables for the `local` template                                                                                                                         |
+| template                 | Template                               | protobuf_to_pydantic.template.Template | Implementation of the template class                                                                                                                             |
+| comment_prefix                | Template                               | str                                             | Comment prefix.Only strings with a fixed prefix will be used by the template                                                                                     |
+| parse_comment                 | comment(plugin only)                   | bool                                            | If true, the annotation rule is compatible                                                                                                                       |
+| customer_import_set           | Code generation                        | `Set[str]`                                      | A collection of custom import statements, such as `from typing import Set`or `import typing`, that will write data in order to the source code file              |
+| customer_deque                | Code generation                        | `deque[str]`                                    | Custom source file content, used to add custom content                                                                                                           |
+| module_path                   | str                                    | str                                             | Used to define the root path of the project or module, which helps `protobuf-to-pydantic`to better automatically generate module import statements               |
+| pyproject_file_path           | Code generation                        | str                                             | Define the pyproject file path, which defaults to the current project path                                                                                       |
+| code_indent                   | Code generation                        | int                                             | Defines the number of indentation Spaces in the code; the default is 4                                                                                           |
+| ignore_pkg_list               | Code generation(plugin only)           | `list[str]`                                     | Definition ignores parsing of the specified package file                                                                                                         |
+| base_model_class              | Model Code generation, Code generation | `Type[BaseModel]`                               | Define the parent class of the generated Model                                                                                                                   |
+| file_name_suffix              | Code generation                        | str                                             | Define the generated file suffix, default `_p2p.py`                                                                                                              |
+| file_descriptor_proto_to_code | Code generation(plugin only)           | `Type[FileDescriptorProtoToCode]`               | Define the `FileDescriptorProtoToCode` to use                                                                                                                    |
+| protobuf_type_config          | Code generation(plugin only) | `Dict[str, ProtobufTypeConfigModel]`            | Compatible with non-standard ones Message, See[ConfigModel note](https://github.com/so1n/protobuf_to_pydantic/blob/master/protobuf_to_pydantic/plugin/config.py) |
+| pkg_config                    |Code generation(plugin only)| `Dict[str, "ConfigModel"]`                        | Adapt the corresponding configuration for each PKG                                                                                                               |
 
-
+> Note:
+>   - 1:For more information, see the configuration instructions[/protobuf_to_pydantic/plugin/config.py](https://github.com/so1n/protobuf_to_pydantic/blob/master/protobuf_to_pydantic/plugin/config.py)
+>   - 2:See for directions of use[/example/plugin_config.py](https://github.com/so1n/protobuf_to_pydantic/blob/master/example/plugin_config.py)
 #### 1.1.3.buf-cli
 If you are using `buf-cli` to manage Protobuf files,
 then you can also use `protobuf-to-pydantic` in `buf-cli`, See [How to use `protobuf-to-pydantic` in `buf-cli`](https://github.com/so1n/protobuf_to_pydantic/blob/master/buf-plugin/README.md)
 
-### 1.2.Generate a `Pydantic Model` object in Python runtime
+### 1.2.Runtime Mode
 `protobuf_to_pydantic` can generate the corresponding `PydanticModel` object based on the `Message` object at runtime。
 
 For example, the `UserMessage` in the following Protobuf file named `demo.proto`:
@@ -212,10 +221,88 @@ The `msg_to_pydantic_model` func is customizable just like plugins, with the fol
 | local_dict                                | Variables used by the `local` template                    |
 | pydantic_base                             | Generates the parent class of the `Pydantic Model` object |
 | pydantic_module                           | Generate the `Module` of the `Pydantic Model` object      |
-| desc_template                             | Template class to use                                     |
+| template                             | Template class to use                                     |
 | message_type_dict_by_type_name            | Protobuf type mapping to `Python` type                    |
 | message_default_factory_dict_by_type_name | Protobuf type mapping to the Python type factory          |
 
+Among them, `parse_msg_desc_method` defines the rule information where `protobuf_to_pydantic` obtains the Message object.
+
+### 1.2.1.parse_msg_desc_method
+By default, the value of `parse_msg_desc_method` is empty. In this case, `protobuf_to_pydantic` obtains the parameter validation rules through the Option of the Message object.
+
+If the parameter validation rules are declared through comments, then `protobuf_to_pydantic` can only obtain the parameter validation rules through the other.
+
+- 1:The value of `parse_msg_desc_method` is the `Python` module corresponding to `Message`
+
+  In this case, `protobuf-to-pydantic` can obtain additional information about each field in the Message object through the comments in the `.pyi` file corresponding to the `Python` module during the running process.
+  For example, in the above sample code, the `Python` module corresponding to `demo_pb2.UserMessage` is `demo_pb2`.
+
+  > Note: This feature requires the use of the [mypy-protobuf](https://github.com/nipunn1313/mypy-protobuf) plug-in when generating the corresponding `Python` code from the Protobuf file, and the specified pyi file output path must be the same as the generated `Python` code path to take effect.
+  > Before execution, please install `protobuf-to-pydantic` using the `python -m pip install protobuf-to-pydantic[mypy-protobuf]` command
+
+- 2:The value of `parse_msg_desc_method` is the path to the Protobuf file
+
+  In addition to obtaining comments through `.pyi` files, `protobuf-to-pydantic` also supports obtaining information about each field through comments in the Protobuf file to which the Message object belongs.
+  Using this feat is very simple. Just set the value of `parse_msg_desc_method` to the root directory path specified when the Message object is generated.
+
+  > When using this method, make sure to install `protobuf-to-pydantic` via `python -m pip install protobuf-to-pydantic[lark]` and that the Protobuf files are present in your project.
+
+  For example, the project structure of the `protobuf-to-pydantic` sample code is as follows:
+  ```bash
+  ./protobuf_to_pydantic/
+  ├── example/
+  │ ├── python_example_proto_code/
+  │ └── example_proto/
+  ├── protobuf_to_pydantic/
+  └── /
+  ```
+  The Protobuf file is stored in the `example/example_proto` folder, and then run the following command in the `example` directory to generate the `Python` code file corresponding to Protobuf:
+  ```bash
+  cd example
+
+  python -m grpc_tools.protoc
+    --python_out=./python_example_proto_code \
+    --grpc_python_out=./python_example_proto_code \
+    -I. \
+  # or
+  protoc
+    --python_out=./python_example_proto_code \
+    --grpc_python_out=./python_example_proto_code \
+    -I. \
+  ```
+  Then the path that needs to be filled in for `parse_msg_desc_method` is `./protobuf_to_pydantic/example`.
+  For example, the following sample code:
+  ```python
+  # pydantic Version v1
+  from typing import Type
+  from protobuf_to_pydantic import msg_to_pydantic_model
+  from pydantic import BaseModel
+
+  # import protobuf gen python obj
+  from example.proto_3_20_pydanticv1.example.example_proto.demo import demo_pb2
+
+  UserModel: Type[BaseModel] = msg_to_pydantic_model(
+      demo_pb2.UserMessage, parse_msg_desc_method="./protobuf_to_pydantic/example"
+  )
+  print(
+      {
+          k: v.field_info
+          for k, v in UserModel.__fields__.items()
+      }
+  )
+  # output
+  # {
+  #   'uid': FieldInfo(default=PydanticUndefined, title='UID', description='user union id', extra={'example': '10086'}),
+  #   'age': FieldInfo(default=0, title='use age', ge=0, extra={'example': 18}),
+  #   'height': FieldInfo(default=0.0, ge=0, le=2, extra={}),
+  #   'sex': FieldInfo(default=0, extra={}),
+  #   'is_adult': FieldInfo(default=False, extra={}),
+  #   'user_name': FieldInfo(default='', description='user name', min_length=1, max_length=10, extra={'example': 'so1n'})
+  # }
+  ```
+  As you can see, the only difference in this code is the value of `parse_msg_desc_method`, but the output is the same.
+
+### 1.3.Generate files
 
 In addition to generating the corresponding `Pydantic Model` object at runtime,
 `protobuf-to-pydantic` also supports converting `Pydantic Model` objects to Python code text at runtime (only compatible with `Pydantic Model` objects generated by `protobuf-to-pydantic`).
@@ -250,7 +337,8 @@ Among them, text annotations and P2P rules are consistent, they both support mos
 
 > NOTE:
 >  - 1.Text annotation rules are not the focus of subsequent functional iterative development, and it is recommended to use P2P verification rules.
->  - 2.`Protoc Plug-in` only support `PGV` and `P2P` rule.
+>  - 2.In plugin mode, annotation rules are written slightly differently, See[demo.proto](https://github.com/so1n/protobuf_to_pydantic/blob/master/example/example_proto/p2p_validate_by_comment/demo.proto)
+>  - 3.The plugin mode automatically selects the most suitable parameter verification rule.
 
 
 ### 2.1.Text annotations
@@ -293,7 +381,6 @@ In this example, each annotation that can be used by `protobuf_to_pydantic` star
 
 > Note:
 >   - 1.Currently only single-line comments are supported and comments must be a complete Json data (no line breaks).
->   - 2.multi line comments are not supported。
 
 When these annotations are written, `protobuf_to_pydantic` will bring the corresponding information for each field when converting the Message into the corresponding `Pydantic.BaseModel` object, as follows:
 
@@ -324,73 +411,6 @@ print(
 # }
 ```
 It can be seen that the output fields carry the corresponding information, which is consistent with the comments of the Protobuf file.
-
-In addition, this code differs from the previous section in that the `msg_to_pydantic_model` function has a keyword argument named `parse_msg_desc_method` and its value is the 'demo_pb2' module.
-This parameter enables `protobuf-to-pydantic` to obtain additional information about each field in the Message object through comments in the `.pyi` file of the `demo_pb2` module.
-
-> Note: This function needs to use the [mypy-protobuf](https://github.com/nipunn1313/mypy-protobuf) plugin when generating the corresponding `Python code through the Protobuf file, and the specified pyi file output path is the same as the generated `Python` code path to take effect.
-> And need to install `protobuf-to-pydantic` via the `python -m pip install protobuf-to-pydantic[mypy-protobuf]` command
-
-In addition to getting comments from the `.pyi` file, `protobuf-to-pydantic` also supports getting comment information for each field through comments on the Protobuf file to which the Message object belongs.
-Using this feature is as simple as setting the value of `parse_msg_desc_method` to the root directory path specified when the Message object was generated.
-
-> When using this method, make sure to install `protobuf-to-pydantic` via `python -m pip install protobuf-to-pydantic[lark]`, and also make sure that the Protobuf file exists in the project.
-
-For example, the project structure of the `protobuf-to-pydantic` sample code is as follows:
-```bash
-./protobuf_to_pydantic/
-├── example/
-│ ├── python_example_proto_code/
-│ └── example_proto/
-├── protobuf_to_pydantic/
-└── /
-```
-
-The Protobuf file is stored in the `example/example_proto` folder, and then run the following command in the `example` directory to generate the `Python` code file corresponding to Protobuf:
-```bash
-cd example
-
-python -m grpc_tools.protoc
-  --python_out=./python_example_proto_code \
-  --grpc_python_out=./python_example_proto_code \
-  -I. \
-# or
-protoc
-  --python_out=./python_example_proto_code \
-  --grpc_python_out=./python_example_proto_code \
-  -I. \
-```
-Then the path that needs to be filled in for `parse_msg_desc_method` at this time is `./protobuf_to_pydantic/example`.
-The following sample code:
-```python
-# pydantic Version v1
-from typing import Type
-from protobuf_to_pydantic import msg_to_pydantic_model
-from pydantic import BaseModel
-
-# import protobuf gen python obj
-from example.proto_3_20_pydanticv1.example.example_proto.demo import demo_pb2
-
-UserModel: Type[BaseModel] = msg_to_pydantic_model(
-    demo_pb2.UserMessage, parse_msg_desc_method="./protobuf_to_pydantic/example"
-)
-print(
-    {
-        k: v.field_info
-        for k, v in UserModel.__fields__.items()
-    }
-)
-# output
-# {
-#   `uid`: FieldInfo(default=PydanticUndefined, title=`UID`, description=`user union id`, extra={`example`: `10086`}),
-#   `age`: FieldInfo(default=0, title=`use age`, ge=0, extra={`example`: 18}),
-#   `height`: FieldInfo(default=0.0, ge=0, le=2, extra={}),
-#   `sex`: FieldInfo(default=0, extra={}),
-#   `is_adult`: FieldInfo(default=False, extra={}),
-#   `user_name`: FieldInfo(default=``, description=`user name`, min_length=1, max_length=10, extra={`example`: `so1n`})
-# }
-```
-As you can see, the only difference in this code is the value of the `parse_msg_desc_method`, but through the output result, you can see that the field carries the same information as the result obtained through the module.
 
 ### 2.2.PGV(protoc-gen-validate)
 At present, the commonly used parameter verification project in the Protobuf ecosystem is [protoc-gen-validate](https://github.com/envoyproxy/protoc-gen-validate)，
@@ -432,7 +452,10 @@ print(
 
 > Note:
 >  - 1.For the usage of `PGV`, see: [protoc-gen-validate doc](https://github.com/bufbuild/protoc-gen-validate/blob/v0.10.2-SNAPSHOT.17/README.md)
->  - 2.Need to install `PGV` through `pip install protoc_gen_validate` or download [validate.proto](https://github.com/so1n/protobuf_to_pydantic/blob/master/example/example_proto/common/validate.proto) to the protobuf directory in the project to write pgv rules in the Protobuf file.
+>  - 2.There are three ways to introduce validate
+>    - 2.1.Install `PGV` through  `pip install protoc_gen_validate`
+>    - 2.2.Download [validate.proto](https://github.com/so1n/protobuf_to_pydantic/blob/master/example/example_proto/common/validate.proto)to the protobuf directory in the project。
+>    - 2.3.Install `PGV `through [buf-cli](https://github.com/so1n/protobuf_to_pydantic/blob/master/buf-plugin/README_ZH.md)
 
 
 ### 2.3.P2P
@@ -527,7 +550,7 @@ print(
 ### 2.4.`P2P` and text annotation rule other parameter support
 The `protobuf-to-pydantic` text annotation rules and the `P2P` rules support most of the parameters in `FieldInfo`, as described in the [Pydantic Field doc](https://docs.pydantic.dev/latest/usage/fields/)。
 
-> The new parameters added to `Pydantic V2` will be supported in version 2.1, for now `P2P` rule naming is still written on the basis of `Pydantic V1`, but automatic mapping to `Pydantic V2` naming is supported.
+> The new parameters added to `Pydantic V2` will be supported in next version , for now `P2P` rule naming is still written on the basis of `Pydantic V1`, but automatic mapping to `Pydantic V2` naming is supported.
 
 Other partial changes in meaning and new parameters are described as follows:
 
@@ -737,7 +760,7 @@ class UserPayMessage(BaseModel):
     exp: float = FieldInfo()
 ```
 #### 2.5.5.Customized templates
-Currently `protobuf-to-pydantic` only supports a few simple templates, if have more template needs, can extend the templates by inheriting the `DescTemplate` class.
+Currently `protobuf-to-pydantic` only supports a few simple templates, if have more template needs, can extend the templates by inheriting the `Template` class.
 
 For example, there is an odd feature that requires the default value of a field to be the timestamp of the time when the `Pydantic Model` object was generated, but the timestamps used are available in lengths of 10 and 13, so the following Protobuf file needs to be written to support defining the length of the timestamps:
 ```protobuf
@@ -755,33 +778,33 @@ As you can see, the Protobuf file customizes the syntax of `p2p@timestamp|{x}`, 
 
 ```python
 import time
-from protobuf_to_pydantic.gen_model import CommentTemplate
+from protobuf_to_pydantic.gen_model import Template
 
 
-class CustomDescTemplate(CommentTemplate):
-    def template_timestamp(self, length_str: str) -> int:
-        timestamp: float = time.time()
-        if length_str == "10":
-            return int(timestamp)
-        elif length_str == "13":
-            return int(timestamp * 100)
-        else:
-            raise KeyError(f"timestamp template not support value:{length_str}")
+class CustomTemplate(Template):
+  def template_timestamp(self, length_str: str) -> int:
+    timestamp: float = time.time()
+    if length_str == "10":
+      return int(timestamp)
+    elif length_str == "13":
+      return int(timestamp * 100)
+    else:
+      raise KeyError(f"timestamp template not support value:{length_str}")
 
 
 from .demo_pb2 import TimestampTest  # fake code
 from protobuf_to_pydantic import msg_to_pydantic_model
 
 msg_to_pydantic_model(
-    TimestampTest,
-    desc_template=CustomDescTemplate  # <-- Use a custom template class
+  TimestampTest,
+  template=CustomTemplate  # <-- Use a custom template class
 )
 ```
-This code first creates a class `CustomDescTemplate` that inherits from `DescTemplate`.
-`DescTemplate` will forwards to the corresponding `template_{template name}` method based on the naming of the template, so this class needs to define the `template_timestamp` method to implement the `p2p@timestamp` template functionality.
+This code first creates a class `CustomTemplate` that inherits from `Template`.
+During the execution process, it is found that when the parameter verification rule starts with `p2p@`, the parameter will be sent to the `template_{template name}` method corresponding to the `Template` class, so `CustomTemplate` defines the `template_timestamp` method to implement the `p2p@timestamp` template function.
 In addition, the `length_str` variable received in this method is either 10 in `p2p@timestamp|10` or 13 in `p2p@timestamp|13`.
 
-Then load the `CustomDescTemplate` through the `msg_to_pydantic_model` function, then the following code will be generated (assuming that the code is generated at a timestamp of 1600000000):
+Then load the `CustomTemplate` through the `msg_to_pydantic_model` function, then the following code will be generated (assuming that the code is generated at a timestamp of 1600000000):
 ```python
 from pydantic import BaseModel
 from pydantic.fields import FieldInfo
@@ -790,6 +813,9 @@ class TimestampTest(BaseModel):
     timestamp_10: int = FieldInfo(default=1600000000)
     timestamp_13: int = FieldInfo(default=1600000000000)
 ```
+
+> Note: In plugin mode, you can declare a template class to be loaded through a configuration file.
+
 ## 3.Code format
 The code generated directly through `protobuf-to-pydantic` is not perfect, but it is possible to indirectly generate code that conforms to the `Python` specification through different formatting tools.
 Currently, `protobuf-to-pydantic` supports formatting tools such as `autoflake`, `black` and `isort`. If the corresponding formatting tool is installed in the current `Python` environment, then `protobuf-to-pydantic` will call the tool to format the generated code before outputting it to a file.
@@ -855,9 +881,11 @@ Generate `Pydantic Model`(Pydantic V1): [proto_pydanticv1/demo_gen_code_by_p2p.p
 
 Generate `Pydantic Model`(Pydantic V2): [proto_pydanticv2/demo_gen_code_by_p2p.py](https://github.com/so1n/protobuf_to_pydantic/blob/master/example/proto_pydanticv2/demo_gen_code_by_p2p.py)
 ### 4.5.Protoc Plugin-in
-Protobuf field: [demo/demo.proto](https://github.com/so1n/protobuf_to_pydantic/blob/master/example/example_proto/demo/demo.proto)，[validate/demo.proto](https://github.com/so1n/protobuf_to_pydantic/blob/master/example/example_proto/validate/demo.proto)，[p2p_validate/demo.proto](https://github.com/so1n/protobuf_to_pydantic/blob/master/example/example_proto/p2p_validate/demo.proto)
-
-> Note: The Protoc plugin only supports P2P and PGV rules
+Protobuf field:
+ - [demo/demo.proto](https://github.com/so1n/protobuf_to_pydantic/blob/master/example/example_proto/demo/demo.proto)
+ - [validate/demo.proto](https://github.com/so1n/protobuf_to_pydantic/blob/master/example/example_proto/validate/demo.proto)
+ - [p2p_validate/demo.proto](https://github.com/so1n/protobuf_to_pydantic/blob/master/example/example_proto/p2p_validate/demo.proto)
+ - [p2p_validate_by_comment/demo.proto](https://github.com/so1n/protobuf_to_pydantic/blob/master/example/example_proto/p2p_validate_by_comment/demo.proto)
 
 `Pydantic Model` generated via `demo/demo.proto`(Pydantic V1):[example_proto/demo/demo_p2p.py](https://github.com/so1n/protobuf_to_pydantic/blob/master/example/proto_pydanticv1/example/example_proto/demo/demo_p2p.py)
 
@@ -865,8 +893,12 @@ Protobuf field: [demo/demo.proto](https://github.com/so1n/protobuf_to_pydantic/b
 
 `Pydantic Model` generated via `validate/demo.proto`(Pydantic V1):[example_proto/validate/demo_p2p.py](https://github.com/so1n/protobuf_to_pydantic/blob/master/example/proto_pydanticv1/example/example_proto/validate/demo_p2p.py)
 
-`Pydantic Model` generated via `validate/demo.proto`(Pydantic V1):[example_proto/validate/demo_p2p.py](https://github.com/so1n/protobuf_to_pydantic/blob/master/example/proto_pydanticv2/example/example_proto/validate/demo_p2p.py)
+`Pydantic Model` generated via `validate/demo.proto`(Pydantic V2):[example_proto/validate/demo_p2p.py](https://github.com/so1n/protobuf_to_pydantic/blob/master/example/proto_pydanticv2/example/example_proto/validate/demo_p2p.py)
 
 `Pydantic Model` generated via `p2p_validate/demo.proto`(Pydantic V1):[example_proto/p2p_validate/demo_p2p.py](https://github.com/so1n/protobuf_to_pydantic/blob/master/example/proto_pydanticv1/example/example_proto/p2p_validate/demo_p2p.py)
 
-`Pydantic Model` generated via `p2p_validate/demo.proto`(Pydantic V1):[example_proto/p2p_validate/demo_p2p.py](https://github.com/so1n/protobuf_to_pydantic/blob/master/example/proto_pydanticv2/example/example_proto/p2p_validate/demo_p2p.py)
+`Pydantic Model` generated via `p2p_validate/demo.proto`(Pydantic V2):[example_proto/p2p_validate/demo_p2p.py](https://github.com/so1n/protobuf_to_pydantic/blob/master/example/proto_pydanticv2/example/example_proto/p2p_validate/demo_p2p.py)
+
+`Pydantic Model` generated via `p2p_validate_by_comment/demo.proto`(Pydantic V1):[example/example_proto/p2p_validate_by_comment](https://github.com/so1n/protobuf_to_pydantic/tree/master/example/proto_pydanticv1/example/example_proto/p2p_validate_by_comment)
+
+`Pydantic Model` generated via `p2p_validate_by_comment/demo.proto`(Pydantic V2):[example/example_proto/p2p_validate_by_comment](https://github.com/so1n/protobuf_to_pydantic/tree/master/example/proto_pydanticv2/example/example_proto/p2p_validate_by_comment)

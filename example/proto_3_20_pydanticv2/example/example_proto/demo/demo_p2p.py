@@ -140,3 +140,21 @@ class InvoiceItem2(BaseModel):
     quantity: int = Field(default=0)
     items: typing.List["InvoiceItem2"] = Field(default_factory=list)
     invoice: Invoice3 = Field()
+
+
+class AnOtherMessage(BaseModel):
+    class SubMessage(BaseModel):
+        text: str = Field(default="")
+
+    field1: str = Field(default="")
+    field2: SubMessage = Field()
+
+
+class RootMessage(BaseModel):
+    """
+        Test Message references
+    from: https://github.com/so1n/protobuf_to_pydantic/issues/64
+    """
+
+    field1: str = Field(default="")
+    field2: AnOtherMessage = Field()

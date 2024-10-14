@@ -34,29 +34,29 @@ class BaseTestP2pModelValidator:
 
         for model_class in self.number_model_class_list:
             for i in [1, 2, 3]:
-                self.replace_message_fn(model_class, local_dict=local_dict, desc_template=CustomCommentTemplate)(in_test=i, miss_default_test=1.0, required_test=1.0)
+                self.replace_message_fn(model_class, local_dict=local_dict, template=CustomCommentTemplate)(in_test=i, miss_default_test=1.0, required_test=1.0)
             for i in [0, 4]:
                 with pytest.raises(ValidationError):
-                    self.replace_message_fn(model_class, local_dict=local_dict, desc_template=CustomCommentTemplate)(in_test=i, miss_default_test=1.0, required_test=1.0)
+                    self.replace_message_fn(model_class, local_dict=local_dict, template=CustomCommentTemplate)(in_test=i, miss_default_test=1.0, required_test=1.0)
 
     def test_number_model_not_in_validator(self) -> None:
         for model_class in self.number_model_class_list:
             for i in [1, 2, 3]:
                 with pytest.raises(ValidationError):
-                    self.replace_message_fn(model_class, local_dict=local_dict, desc_template=CustomCommentTemplate)(not_in_test=i, miss_default_test=1.0, required_test=1.0)
+                    self.replace_message_fn(model_class, local_dict=local_dict, template=CustomCommentTemplate)(not_in_test=i, miss_default_test=1.0, required_test=1.0)
             for i in [0, 4]:
-                self.replace_message_fn(model_class, local_dict=local_dict, desc_template=CustomCommentTemplate)(not_in_test=i, miss_default_test=1.0, required_test=1.0)
+                self.replace_message_fn(model_class, local_dict=local_dict, template=CustomCommentTemplate)(not_in_test=i, miss_default_test=1.0, required_test=1.0)
 
     def test_number_model_miss_default_validator(self) -> None:
         for model_class in self.number_model_class_list:
             with pytest.raises(ValidationError):
-                self.replace_message_fn(model_class, local_dict=local_dict, desc_template=CustomCommentTemplate)()
+                self.replace_message_fn(model_class, local_dict=local_dict, template=CustomCommentTemplate)()
 
     def test_number_model_miss_multiple_of_validator(self) -> None:
         for model_class in self.number_model_class_list:
-            self.replace_message_fn(model_class, local_dict=local_dict, desc_template=CustomCommentTemplate)(miss_default_test=1.0, multiple_of_test=6.0, required_test=1.0)
+            self.replace_message_fn(model_class, local_dict=local_dict, template=CustomCommentTemplate)(miss_default_test=1.0, multiple_of_test=6.0, required_test=1.0)
             with pytest.raises(ValidationError):
-                self.replace_message_fn(model_class, local_dict=local_dict, desc_template=CustomCommentTemplate)(miss_default_test=1.0, multiple_of_test=7.0, required_test=1.0)
+                self.replace_message_fn(model_class, local_dict=local_dict, template=CustomCommentTemplate)(miss_default_test=1.0, multiple_of_test=7.0, required_test=1.0)
 
     def _test_bool(self, model_class: Type) -> None:
         model_class(bool_1_test=True, bool_2_test=False, miss_default_test=True, required_test=True)

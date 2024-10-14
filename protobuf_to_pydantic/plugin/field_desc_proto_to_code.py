@@ -77,7 +77,7 @@ class FileDescriptorProtoToCode(BaseP2C):
         self.config = config
         self._fd = fd
         self._descriptors = descriptors
-        self._desc_template = config.desc_template_instance
+        self._desc_template = config.template_instance
         self.source_code_info_by_scl = {tuple(location.path): location for location in fd.source_code_info.location}
 
         if config.base_model_class is BaseModel:
