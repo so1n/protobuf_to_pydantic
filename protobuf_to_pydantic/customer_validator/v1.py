@@ -5,7 +5,7 @@ from pydantic.fields import ModelField
 
 from . import rule
 
-from protobuf_to_pydantic.types import OneOfTypedDict  # isort:skip
+from protobuf_to_pydantic.field_info_rule.types import OneOfTypedDict  # isort:skip
 
 
 ################

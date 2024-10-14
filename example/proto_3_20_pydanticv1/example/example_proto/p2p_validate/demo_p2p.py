@@ -1,5 +1,5 @@
 # This is an automatically generated file, please do not change
-# gen by protobuf_to_pydantic[v0.2.6](https://github.com/so1n/protobuf_to_pydantic)
+# gen by protobuf_to_pydantic[v0.2.7](https://github.com/so1n/protobuf_to_pydantic)
 # Protobuf Version: 3.20.3
 # Pydantic Version: 1.10.7
 import typing
@@ -45,7 +45,7 @@ from protobuf_to_pydantic.customer_validator.v1 import (
     timestamp_lt_validator,
     timestamp_within_validator,
 )
-from protobuf_to_pydantic.get_desc.from_pb_option.types import HostNameStr, UriRefStr
+from protobuf_to_pydantic.field_info_rule.protobuf_option_to_field_info.types import HostNameStr, UriRefStr
 from protobuf_to_pydantic.util import Timedelta
 
 

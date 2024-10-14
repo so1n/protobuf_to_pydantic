@@ -1,5 +1,5 @@
 # This is an automatically generated file, please do not change
-# gen by protobuf_to_pydantic[v0.2.6](https://github.com/so1n/protobuf_to_pydantic)
+# gen by protobuf_to_pydantic[v0.2.7](https://github.com/so1n/protobuf_to_pydantic)
 # Protobuf Version: 4.24.4
 # Pydantic Version: 1.10.7
 import typing
@@ -142,3 +142,21 @@ class InvoiceItem2(BaseModel):
     quantity: int = Field(default=0)
     items: typing.List["InvoiceItem2"] = Field(default_factory=list)
     invoice: Invoice3 = Field()
+
+
+class AnOtherMessage(BaseModel):
+    class SubMessage(BaseModel):
+        text: str = Field(default="")
+
+    field1: str = Field(default="")
+    field2: SubMessage = Field()
+
+
+class RootMessage(BaseModel):
+    """
+        Test Message references
+    from: https://github.com/so1n/protobuf_to_pydantic/issues/64
+    """
+
+    field1: str = Field(default="")
+    field2: AnOtherMessage = Field()

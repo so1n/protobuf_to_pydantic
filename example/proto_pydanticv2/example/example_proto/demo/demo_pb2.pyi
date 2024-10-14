@@ -438,3 +438,48 @@ class Invoice3(google.protobuf.message.Message):
         ) -> None: ...
     def ClearField(self, field_name: typing_extensions.Literal["amount",b"amount","items",b"items","name",b"name","quantity",b"quantity"]) -> None: ...
 global___Invoice3 = Invoice3
+
+class RootMessage(google.protobuf.message.Message):
+    """Test Message references
+    from: https://github.com/so1n/protobuf_to_pydantic/issues/64
+    """
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    FIELD1_FIELD_NUMBER: builtins.int
+    FIELD2_FIELD_NUMBER: builtins.int
+    field1: typing.Text
+    @property
+    def field2(self) -> global___AnOtherMessage: ...
+    def __init__(self,
+        *,
+        field1: typing.Text = ...,
+        field2: typing.Optional[global___AnOtherMessage] = ...,
+        ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["field2",b"field2"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["field1",b"field1","field2",b"field2"]) -> None: ...
+global___RootMessage = RootMessage
+
+class AnOtherMessage(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    class SubMessage(google.protobuf.message.Message):
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+        TEXT_FIELD_NUMBER: builtins.int
+        text: typing.Text
+        def __init__(self,
+            *,
+            text: typing.Text = ...,
+            ) -> None: ...
+        def ClearField(self, field_name: typing_extensions.Literal["text",b"text"]) -> None: ...
+
+    FIELD1_FIELD_NUMBER: builtins.int
+    FIELD2_FIELD_NUMBER: builtins.int
+    field1: typing.Text
+    @property
+    def field2(self) -> global___AnOtherMessage.SubMessage: ...
+    def __init__(self,
+        *,
+        field1: typing.Text = ...,
+        field2: typing.Optional[global___AnOtherMessage.SubMessage] = ...,
+        ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["field2",b"field2"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["field1",b"field1","field2",b"field2"]) -> None: ...
+global___AnOtherMessage = AnOtherMessage

@@ -79,10 +79,10 @@ def replace_protobuf_type_to_python_type(value: Any) -> Any:
         return value
 
 
-def gen_dict_from_desc_str(comment_prefix: str, desc: str) -> dict:
-    pait_dict: dict = {}
+def get_dict_from_comment(comment_prefix: str, comment: str) -> dict:
+    _dict: dict = {}
     try:
-        for line in desc.split("\n"):
+        for line in comment.split("\n"):
             if line.startswith("#"):
                 line = line[1:]
             line = line.strip()
@@ -90,22 +90,22 @@ def gen_dict_from_desc_str(comment_prefix: str, desc: str) -> dict:
                 continue
             line = line.replace(f"{comment_prefix}:", "")
             for key, value in json.loads(line.replace("\\\\", "\\")).items():
-                if not pait_dict.get(key):
-                    pait_dict[key] = value
+                if not _dict.get(key):
+                    _dict[key] = value
                 else:
-                    if not isinstance(value, type(pait_dict[key])):
+                    if not isinstance(value, type(_dict[key])):
                         raise TypeError(f"Two different types of values were detected for Key:{key}")
                     elif isinstance(value, list):
-                        pait_dict[key].extend(value)
+                        _dict[key].extend(value)
                     elif isinstance(value, dict):
-                        pait_dict[key].update(value)
+                        _dict[key].update(value)
                     else:
                         raise TypeError(f"A key:{key} that does not support merging has been detected")
-        if "miss_default" in pait_dict:
-            pait_dict["required"] = pait_dict.pop("miss_default")
+        if "miss_default" in _dict:
+            _dict["required"] = _dict.pop("miss_default")
     except Exception as e:
-        logging.warning(f"Can not gen dict by desc:{desc}, error: {e}")
-    return pait_dict  # type: ignore
+        logging.warning(f"Can not gen dict by desc:{comment}, error: {e}")
+    return _dict  # type: ignore
 
 
 def get_pyproject_content(pyproject_file_path: str) -> str:

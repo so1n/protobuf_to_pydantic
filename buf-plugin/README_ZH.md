@@ -141,6 +141,8 @@ plugins:
 └── pyproject.toml
 ```
 ### 1.4.使用远程插件生成Pydantic代码
+> Note: 由于开发者自己创建的buf插件是无法公开使用的，所以远程插件无法正常使用(具体见：[issue](https://github.com/bufbuild/plugins/issues/589#issuecomment-1799085322))。如有需要，请参考下一节的自定义插件自己创建插件。
+
 除了执行本地插件生成Pydantic代码外，还可以使用远程插件，首先需要更改`buf.gen.yaml`文件为如下内容:
 ```yaml
 version: v1
@@ -166,7 +168,7 @@ plugins:
 
 
 
-## 2.Custom Plugins
+## 2.自定义插件
 > Note: 请确保你已经阅读了 [buf custom plugins dev doc](https://buf.build/docs/bsr/remote-plugins/custom-plugins)
 
 `protobuf-to-pydantic`的标准`buf-plugin`可以满足大多数功能。如果您有自定义需求，您应该创建属于自己的自定义插件。

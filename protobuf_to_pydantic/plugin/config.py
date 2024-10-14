@@ -4,8 +4,8 @@ from typing import Any, Deque, Dict, List, Set, Type, TypeVar
 from pydantic import BaseModel, Field
 
 from protobuf_to_pydantic import _pydantic_adapter
-from protobuf_to_pydantic.desc_template import DescTemplate
 from protobuf_to_pydantic.plugin.field_desc_proto_to_code import FileDescriptorProtoToCode
+from protobuf_to_pydantic.template import Template
 
 ConfigT = TypeVar("ConfigT", bound="ConfigModel")
 
@@ -19,28 +19,20 @@ class ProtobufTypeConfigModel(BaseModel):
     )
 
 
+class SubConfigModel(BaseModel):
+    module: Any
+
+
 class ConfigModel(BaseModel):
-    local_dict: dict = Field(default_factory=dict, description="Dict for local variables")
-    desc_template: Type[DescTemplate] = Field(
-        default=DescTemplate, description="Support more templates by customizing 'Desc Template'"
-    )
-    comment_prefix: str = Field(default="p2p", description="Comment prefix")
-    parse_comment: bool = Field(
-        default=True,
-        description="If true, the annotation is parsed and the validation rule data is extracted from the annotation",
-    )
+    # output code config
     customer_import_set: Set[str] = Field(default_factory=set, description="customer import code set")
-    customer_deque: Deque = Field(default_factory=deque)
-    module_path: str = Field(default="")
+    customer_deque: Deque = Field(default_factory=deque, description="customer file content")
+    code_indent: int = Field(default=4, description="Code indent")
+    module_path: str = Field(default="", description="protobuf project path")
     pyproject_file_path: str = Field(
         default="",
         description="pyproject file path, In general, pyproject.toml of the project can be found automatically",
     )
-    code_indent: int = Field(default=4, description="Code indent")
-    ignore_pkg_list: List[str] = Field(
-        default_factory=lambda: ["validate", "p2p_validate"], description="Ignore the specified pkg file"
-    )
-    base_model_class: Type[BaseModel] = Field(default=BaseModel)
     file_name_suffix: str = Field(
         default="_p2p",
         description=(
@@ -48,7 +40,25 @@ class ConfigModel(BaseModel):
             "For example, if the name of the proto file is `book`, the generated file name is `book_p2p.py`"
         ),
     )
-    file_descriptor_proto_to_code: Type[FileDescriptorProtoToCode] = Field(default=FileDescriptorProtoToCode)
+
+    # gen message config
+    local_dict: dict = Field(default_factory=dict, description="Dict for local variables")
+    template: Type[Template] = Field(default=Template, description="Support more templates by customizing 'Template'")
+    comment_prefix: str = Field(default="p2p", description="Comment prefix")
+    parse_comment: bool = Field(
+        default=True,
+        description="If true, the annotation is parsed and the validation rule data is extracted from the annotation",
+    )
+    ignore_pkg_list: List[str] = Field(
+        default_factory=lambda: ["validate", "p2p_validate"], description="Ignore the specified pkg file"
+    )
+    base_model_class: Type[BaseModel] = Field(default=BaseModel, description="Inherited base pydantic model")
+
+    # other config
+    file_descriptor_proto_to_code: Type[FileDescriptorProtoToCode] = Field(
+        default=FileDescriptorProtoToCode,
+        description="If you have modified the resolution rules, then you can customize FileDescriptorProtoToCode",
+    )
     protobuf_type_config: Dict[str, ProtobufTypeConfigModel] = Field(
         default_factory=dict,
         description="""
@@ -79,8 +89,11 @@ class ConfigModel(BaseModel):
         ```
         """,
     )
-    desc_template_instance: DescTemplate = Field(
-        default_factory=lambda: DescTemplate({}, ""),
+    pkg_config: Dict[str, "ConfigModel"] = Field(
+        default_factory=dict, description="Customize the configuration of different pkgs"
+    )
+    template_instance: Template = Field(
+        default_factory=lambda: Template({}, ""),
         description="This variable does not support configuration and will be overwritten even if configured",
     )
 
@@ -91,11 +104,23 @@ class ConfigModel(BaseModel):
     def after_init(cls, values: Any) -> Any:
         if _pydantic_adapter.is_v1:
             # values: Dict[str, Any]
-            values["desc_template_instance"] = values["desc_template"](values["local_dict"], values["comment_prefix"])
+            values["template_instance"] = values["template"](values["local_dict"], values["comment_prefix"])
             return values
         else:
             # values: "ConfigModel"
-            values.desc_template_instance = values.desc_template(values.local_dict, values.comment_prefix)
+            values.template_instance = values.template(values.local_dict, values.comment_prefix)
+        return values
+
+    @_pydantic_adapter.model_validator(mode="before")
+    def before_init(cls, values: Any) -> Any:
+        def _validator(_values: Any) -> dict:
+            if not isinstance(_values, SubConfigModel):
+                raise ValueError("values must be a SubConfigModel")
+            return get_config_by_module(_values.module, ConfigModel).dict()
+
+        if "pkg_config" in values:
+            values["pkg_config"] = {k: _validator(v) for k, v in values.get("pkg_config", {}).items()}
+        return values
 
 
 def get_config_by_module(module: Any, config_class: Type[ConfigT]) -> ConfigT:

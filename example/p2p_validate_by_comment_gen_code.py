@@ -12,10 +12,10 @@ from pydantic import confloat, conint
 from pydantic.fields import FieldInfo
 
 from protobuf_to_pydantic import _pydantic_adapter, msg_to_pydantic_model, pydantic_model_to_py_file
-from protobuf_to_pydantic.desc_template import DescTemplate
+from protobuf_to_pydantic.template import Template
 
 
-class CustomDescTemplate(DescTemplate):
+class CustomCommentTemplate(Template):
     def template_timestamp(self, length_str: str) -> int:
         timestamp: float = 1600000000
         if length_str == "10":
@@ -77,7 +77,7 @@ def gen_code() -> None:
                 model,
                 parse_msg_desc_method=module,
                 local_dict=local_dict,
-                desc_template=CustomDescTemplate,
+                template=CustomCommentTemplate,
             )
             for model in message_class_list
         ],
@@ -92,7 +92,7 @@ def gen_code() -> None:
                 model,
                 parse_msg_desc_method=str(now_path.parent.parent),
                 local_dict=local_dict,
-                desc_template=CustomDescTemplate,
+                template=CustomCommentTemplate,
             )
             for model in message_class_list
         ],
@@ -105,7 +105,7 @@ def gen_code() -> None:
                 model,
                 parse_msg_desc_method=module,
                 local_dict=local_dict,
-                desc_template=CustomDescTemplate,
+                template=CustomCommentTemplate,
             )
             for model in message_class_list
         ],
@@ -119,7 +119,7 @@ def gen_code() -> None:
                 model,
                 parse_msg_desc_method=str(now_path.parent.parent),
                 local_dict=local_dict,
-                desc_template=CustomDescTemplate,
+                template=CustomCommentTemplate,
             )
             for model in message_class_list
         ],

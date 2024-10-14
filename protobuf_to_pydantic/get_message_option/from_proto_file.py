@@ -1,54 +1,54 @@
 from typing import TYPE_CHECKING, Dict, Optional
 
-from protobuf_to_pydantic.util import gen_dict_from_desc_str
+from protobuf_to_pydantic.util import get_dict_from_comment
 
-from .utils import one_of_message_dict_handler
+from .utils import rule_dict_handler
 
 if TYPE_CHECKING:
     from protobuf_to_pydantic.contrib.proto_parser import Message, ProtoFile
-    from protobuf_to_pydantic.types import DescFromOptionTypedDict
+    from protobuf_to_pydantic.field_info_rule.types import MessageOptionTypedDict
 
-_filename_desc_dict: Dict[str, Dict[str, "DescFromOptionTypedDict"]] = {}
+_filename_desc_dict: Dict[str, Dict[str, "MessageOptionTypedDict"]] = {}
 
 
-def _parse_message_result_dict(
+def _protobuf_msg_handler(
     protobuf_msg: "Message",
-    parse_result: "ProtoFile",
-    container: Dict[str, "DescFromOptionTypedDict"],
+    proto_file: "ProtoFile",
+    container: Dict[str, "MessageOptionTypedDict"],
     comment_prefix: str,
-    msg_cache: Dict[str, "DescFromOptionTypedDict"],
+    msg_cache: Dict[str, "MessageOptionTypedDict"],
 ) -> None:
     message_name: str = protobuf_msg.name
     if message_name in msg_cache:
         return
-    new_container: "DescFromOptionTypedDict" = {"message": {}, "one_of": {}, "nested": {}, "metadata": {}}
+    new_container: "MessageOptionTypedDict" = {"message": {}, "one_of": {}, "nested": {}, "metadata": {}}
     container[message_name] = new_container
     msg_cache[message_name] = new_container
 
     if protobuf_msg.comment:
-        message_dict = gen_dict_from_desc_str(  # type: ignore[assignment]
+        message_dict = get_dict_from_comment(  # type: ignore[assignment]
             comment_prefix, protobuf_msg.comment.content.replace("//", "")
         )
-        one_of_message_dict_handler(message_dict, new_container, f"{parse_result.package}.{message_name}")
+        rule_dict_handler(message_dict, new_container, f"{proto_file.package}.{message_name}")
 
     for field in protobuf_msg.fields:
-        new_container["message"][field.name] = gen_dict_from_desc_str(  # type: ignore[assignment]
+        new_container["message"][field.name] = get_dict_from_comment(  # type: ignore[assignment]
             comment_prefix, field.comment.content.replace("//", "") if field.comment else ""
         )
         # parse nested message by map
         for sub_type_str in [field.type, field.key_type, field.val_type]:
-            if sub_type_str in parse_result.messages:
-                sub_message = parse_result.messages[sub_type_str]
+            if sub_type_str in proto_file.messages:
+                sub_message = proto_file.messages[sub_type_str]
             elif sub_type_str in protobuf_msg.messages:
                 sub_message = protobuf_msg.messages[sub_type_str]
             else:
                 continue
             if sub_message is protobuf_msg:
                 continue
-            _parse_message_result_dict(sub_message, parse_result, new_container["nested"], comment_prefix, msg_cache)
+            _protobuf_msg_handler(sub_message, proto_file, new_container["nested"], comment_prefix, msg_cache)
 
 
-def get_desc_from_proto_file(filename: str, comment_prefix: str) -> Dict[str, "DescFromOptionTypedDict"]:
+def get_message_option_dict_from_proto_file(filename: str, comment_prefix: str) -> Dict[str, "MessageOptionTypedDict"]:
     """Obtain corresponding information through protobuf file
 
     protobuf file name: demo.proto, message e.g:
@@ -95,14 +95,13 @@ def get_desc_from_proto_file(filename: str, comment_prefix: str) -> Dict[str, "D
     except ImportError:
         raise ImportError("Can not parse protobuf file, please install lark")
 
-    message_field_dict: Dict[str, "DescFromOptionTypedDict"] = {}
+    message_field_dict: Dict[str, "MessageOptionTypedDict"] = {}
     _proto_file: Optional[ProtoFile] = parse_from_file(filename)
     if _proto_file:
         # Currently only used protobuf file message
-        # proto_file: ProtoFile = _proto_file
         for _, protobuf_msg in _proto_file.messages.items():
-            msg_cache: Dict[str, "DescFromOptionTypedDict"] = {}
-            _parse_message_result_dict(protobuf_msg, _proto_file, message_field_dict, comment_prefix, msg_cache)
+            msg_cache: Dict[str, "MessageOptionTypedDict"] = {}
+            _protobuf_msg_handler(protobuf_msg, _proto_file, message_field_dict, comment_prefix, msg_cache)
     # cache data and return
     _filename_desc_dict[filename] = message_field_dict
     return message_field_dict

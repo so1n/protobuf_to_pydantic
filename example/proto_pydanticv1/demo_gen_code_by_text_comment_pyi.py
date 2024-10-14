@@ -1,5 +1,5 @@
 # This is an automatically generated file, please do not change
-# gen by protobuf_to_pydantic[v0.2.6](https://github.com/so1n/protobuf_to_pydantic)
+# gen by protobuf_to_pydantic[v0.2.7](https://github.com/so1n/protobuf_to_pydantic)
 # Protobuf Version: 4.24.4
 # Pydantic Version: 1.10.7
 import typing
@@ -18,6 +18,14 @@ from pydantic.types import PaymentCardNumber
 class AfterReferMessage(BaseModel):
     uid: str = Field(title="UID", description="user union id", example="10086")
     age: int = Field(default=0, title="use age", ge=0.0, example=18)
+
+
+class AnOtherMessage(BaseModel):
+    class SubMessage(BaseModel):
+        text: str = Field(default="")
+
+    field1: str = Field(default="")
+    field2: SubMessage = Field()
 
 
 class EmptyMessage(BaseModel):
@@ -132,3 +140,8 @@ class OtherMessage(BaseModel):
     metadata: typing.Dict[str, typing.Any] = Field(default_factory=dict)
     double_value: DoubleValue = Field(default_factory=DoubleValue)
     field_mask: typing.Optional[FieldMask] = Field(default_factory=FieldMask)
+
+
+class RootMessage(BaseModel):
+    field1: str = Field(default="")
+    field2: AnOtherMessage = Field()

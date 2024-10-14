@@ -125,3 +125,19 @@ message Invoice3 {
   int32 quantity = 3;
   repeated InvoiceItem2 items = 4;
 }
+
+// Test Message references
+// from: https://github.com/so1n/protobuf_to_pydantic/issues/64
+message RootMessage {
+  string field1 = 1;
+  AnOtherMessage field2 = 2;
+}
+
+message AnOtherMessage {
+  string field1 = 1;
+  SubMessage field2 = 2;
+
+  message SubMessage {
+    string text = 1;
+  }
+}
