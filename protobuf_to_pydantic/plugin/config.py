@@ -1,5 +1,6 @@
+import copy
 from collections import deque
-from typing import Any, Deque, Dict, List, Set, Type, TypeVar
+from typing import Any, Deque, Dict, List, Optional, Set, Type, TypeVar
 
 from pydantic import BaseModel, Field
 
@@ -21,6 +22,7 @@ class ProtobufTypeConfigModel(BaseModel):
 
 class SubConfigModel(BaseModel):
     module: Any
+    use_root_config: bool = Field(default=False, description="If True, the root configuration will be inherited")
 
 
 class ConfigModel(BaseModel):
@@ -53,6 +55,10 @@ class ConfigModel(BaseModel):
         default_factory=lambda: ["validate", "p2p_validate"], description="Ignore the specified pkg file"
     )
     base_model_class: Type[BaseModel] = Field(default=BaseModel, description="Inherited base pydantic model")
+    all_field_set_optional: bool = Field(
+        default=False,
+        description="If true, all fields become optional, see: https://github.com/so1n/protobuf_to_pydantic/issues/60",
+    )
 
     # other config
     file_descriptor_proto_to_code: Type[FileDescriptorProtoToCode] = Field(
@@ -116,15 +122,22 @@ class ConfigModel(BaseModel):
         def _validator(_values: Any) -> dict:
             if not isinstance(_values, SubConfigModel):
                 raise ValueError("values must be a SubConfigModel")
-            return get_config_by_module(_values.module, ConfigModel).dict()
+            if _values.use_root_config:
+                root_dict = {k: v for k, v in values.items() if k != "pkg_config"}
+            else:
+                root_dict = None
+            return get_config_by_module(_values.module, ConfigModel, root_dict).dict()
 
         if "pkg_config" in values:
             values["pkg_config"] = {k: _validator(v) for k, v in values.get("pkg_config", {}).items()}
         return values
 
 
-def get_config_by_module(module: Any, config_class: Type[ConfigT]) -> ConfigT:
-    param_dict: dict = {}
+def get_config_by_module(module: Any, config_class: Type[ConfigT], root_dict: Optional[dict] = None) -> ConfigT:
+    if root_dict:
+        param_dict: dict = copy.deepcopy(root_dict)
+    else:
+        param_dict = {}
     for key in _pydantic_adapter.model_fields(config_class).keys():
         if not hasattr(module, key):
             continue

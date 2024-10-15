@@ -1,0 +1,143 @@
+syntax = "proto3";
+package all_field_set_optional;
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/struct.proto";
+import "google/protobuf/field_mask.proto";
+import "google/protobuf/wrappers.proto";
+import "example/example_proto/common/single.proto";
+
+enum SexType {
+  man = 0;
+  women = 1;
+}
+
+
+// user info
+message UserMessage {
+  // p2p: {"required": true, "example": "10086", "title": "UID", "description": "user union id"}
+  string uid=1;
+  // p2p: {"example": 18, "title": "use age", "ge": 0}
+  int32 age=2;
+  // p2p: {"ge": 0, "le": 2.5}
+  float height=3;
+  SexType sex=4;
+  single.DemoEnum demo =6;
+  bool is_adult=7;
+  // p2p: {"description": "user name"}
+  // p2p: {"default": "", "min_length": 1, "max_length": "10", "example": "so1n"}
+  string user_name=8;
+  single.DemoMessage demo_message=9; // p2p: {"extra": {"customer_string": "c1", "customer_int": 1}}
+}
+
+message OtherMessage {
+  google.protobuf.Struct metadata=1;
+  google.protobuf.DoubleValue double_value = 2;
+  optional google.protobuf.FieldMask field_mask = 100;
+}
+
+
+
+// test map message and bad message
+message MapMessage{map<string, UserMessage>user_map=1;map<string, bool>user_flag=2;}
+
+
+// test repeated msg
+message RepeatedMessage {
+  // p2p: {"min_items": 3, "max_items": 5}
+  repeated string str_list =1;
+  // p2p: {"min_items": 1, "max_items": 5, "unique_items": true}
+  repeated int32 int_list =2;
+  repeated UserMessage user_list=3;
+}
+
+
+// test nested message
+message NestedMessage{
+  enum IncludeEnum {
+    zero=0;
+    one=1;
+    two=2;
+  }
+  message UserPayMessage {
+    string bank_number=1; // p2p: {"type": "p2p@import|pydantic.types|PaymentCardNumber"}
+    google.protobuf.Timestamp exp=2; // p2p: {"default_factory": "p2p@local|exp_time"}
+    string uuid=3; // p2p: {"default_factory": "p2p@local|uuid4"}
+  }
+  map<string, RepeatedMessage> user_list_map=1;
+  map<string, MapMessage> user_map=2;
+  UserPayMessage user_pay=3;
+  IncludeEnum include_enum=4;
+  // p2p: {"enable": false}
+  UserPayMessage not_enable_user_pay=5;
+  google.protobuf.Empty empty=6;
+  AfterReferMessage after_refer=7;
+}
+
+message AfterReferMessage {
+ // p2p: {"miss_default": true, "example": "10086", "title": "UID", "description": "user union id"}
+  string uid=1;
+  // p2p: {"example": 18, "title": "use age", "ge": 0}
+  int32 age=2;
+}
+
+// Test self-referencing Messages
+// from: https://github.com/so1n/protobuf_to_pydantic/issues/7#issuecomment-1490705932
+message InvoiceItem {
+  string name = 1;
+  int32 amount = 2;
+  int32 quantity = 3;
+  repeated InvoiceItem items = 4;
+}
+
+message EmptyMessage {};
+
+message OptionalMessage{
+  // p2p: {"required": true}
+  oneof a {
+    string x = 1;
+    // p2p: {"example": 18, "title": "use age", "ge": 0}
+    int32 y = 2;
+  }
+  optional string name = 3;
+  optional int32 age= 4;
+  optional InvoiceItem item = 5;
+  repeated string str_list =6;
+  map<string, int32> int_map = 7;
+  // p2p: {"default_template": "p2p@timestamp|10"}
+  float default_template_test = 8;
+};
+
+
+// Test Circular references
+// from: https://github.com/so1n/protobuf_to_pydantic/issues/57
+message InvoiceItem2 {
+  string name = 1;
+  int32 amount = 2;
+  int32 quantity = 3;
+  repeated InvoiceItem2 items = 4;
+  Invoice3 invoice = 5;
+}
+
+message Invoice3 {
+  string name = 1;
+  int32 amount = 2;
+  int32 quantity = 3;
+  repeated InvoiceItem2 items = 4;
+}
+
+// Test Message references
+// from: https://github.com/so1n/protobuf_to_pydantic/issues/64
+message RootMessage {
+  string field1 = 1;
+  AnOtherMessage field2 = 2;
+}
+
+message AnOtherMessage {
+  string field1 = 1;
+  SubMessage field2 = 2;
+
+  message SubMessage {
+    string text = 1;
+  }
+}

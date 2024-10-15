@@ -453,7 +453,7 @@ class FileDescriptorProtoToCode(BaseP2C):
             # pgv or p2p rule no warning required
             field_info_param_dict_migration_v2_handler(field_info_dict, is_warnings=False)  # type: ignore[arg-type]
 
-        if optional_dict.get(field.name, {}).get("is_proto3_optional", False):
+        if optional_dict.get(field.name, {}).get("is_proto3_optional", False) or self.config.all_field_set_optional:
             self._add_import_code("typing")
             type_str = f"typing.Optional[{type_str}]"
             if field_info_dict.get(
