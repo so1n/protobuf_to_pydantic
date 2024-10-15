@@ -124,6 +124,7 @@ class M2P(object):
         template: Optional[Type[Template]] = None,
         message_type_dict_by_type_name: Optional[Dict[str, Any]] = None,
         message_default_factory_dict_by_type_name: Optional[Dict[str, Any]] = None,
+        all_field_set_optional: bool = False,
         create_model_cache: Optional[CREATE_MODEL_CACHE_T] = None,
     ):
         proto_file_name = msg.DESCRIPTOR.file.name  # type: ignore
@@ -159,6 +160,7 @@ class M2P(object):
             # get field dict from p2p
             global_message_option_dict = get_message_option_dict_from_message_with_p2p(message=msg)  # type: ignore
 
+        self._all_field_set_optional: bool = all_field_set_optional
         self._parse_msg_desc_method = parse_msg_desc_method
         self._message_option_dict = global_message_option_dict
         self._default_field = default_field
@@ -570,7 +572,7 @@ class M2P(object):
                 continue
 
             is_proto3_optional = optional_dict.get(protobuf_field.full_name, {}).get("is_proto3_optional", False)
-            if is_proto3_optional:
+            if is_proto3_optional or self._all_field_set_optional:
                 field_dataclass.field_type = Optional[field_dataclass.field_type]
                 if field_info.default is _pydantic_adapter.PydanticUndefined and field_info.default_factory is None:
                     field_info.default = None
@@ -631,6 +633,7 @@ def msg_to_pydantic_model(
     template: Optional[Type[Template]] = None,
     message_type_dict_by_type_name: Optional[Dict[str, Any]] = None,
     message_default_factory_dict_by_type_name: Optional[Dict[str, Any]] = None,
+    all_field_set_optional: bool = False,
     create_model_cache: Optional[CREATE_MODEL_CACHE_T] = None,
 ) -> Type[BaseModel]:
     """
@@ -656,6 +659,8 @@ def msg_to_pydantic_model(
     :param message_type_dict_by_type_name: Define the Python type mapping corresponding to each Protobuf Type
     :param message_default_factory_dict_by_type_name: Define the default_factory corresponding to each Protobuf Type
     :param create_model_cache: Cache the generated model
+    :param all_field_set_optional: If true, all fields become optional,
+        see: https://github.com/so1n/protobuf_to_pydantic/issues/60
     """
     return M2P(
         msg=msg,
@@ -669,4 +674,5 @@ def msg_to_pydantic_model(
         message_type_dict_by_type_name=message_type_dict_by_type_name,
         message_default_factory_dict_by_type_name=message_default_factory_dict_by_type_name,
         create_model_cache=create_model_cache,
+        all_field_set_optional=all_field_set_optional,
     ).model
