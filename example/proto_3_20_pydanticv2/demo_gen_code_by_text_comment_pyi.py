@@ -119,10 +119,10 @@ class NestedMessage(BaseModel):
 
 
 class OptionalMessage(BaseModel):
-    _one_of_dict = {"user.OptionalMessage.a": {"fields": {"x", "y"}, "required": False}}
+    _one_of_dict = {"user.OptionalMessage.a": {"fields": {"x", "yy"}, "required": False}}
 
     x: str = Field(default="")
-    y: int = Field(default=0, title="use age", example=18, ge=0)
+    y: int = Field(default=0, alias="yy", alias_priority=2, title="use age", example=18, ge=0)
     name: typing.Optional[str] = Field(default="")
     age: typing.Optional[int] = Field(default=0)
     item: typing.Optional[InvoiceItem] = Field()

@@ -227,6 +227,7 @@ class FileDescriptorProtoToCode(BaseP2C):
         indent: int,
         nested_message_config_dict: dict,
         optional_dict: dict,
+        one_of_dict: Dict[str, OneOfTypedDict],
         scl_prefix: SourceCodeLocation,
         skip_validate_rule: bool = False,
     ) -> Optional[Tuple[str, str, bool]]:
@@ -242,6 +243,7 @@ class FileDescriptorProtoToCode(BaseP2C):
         :param optional_dict:
             field optional dict
             e.g: {"{field name}": {"is_proto3_optional": True}}
+        :param one_of_dict: one of config dict
         :param skip_validate_rule: If the value is True, the validation information for the field will not be generated
 
         :return: validator_handle_content, class_field_content, use_custom_type
@@ -475,6 +477,12 @@ class FileDescriptorProtoToCode(BaseP2C):
             if not field_info_dict.get("json_schema_extra", None):
                 field_info_dict.pop("json_schema_extra")
 
+        alias = field_info_dict.get("alias", None)
+        if alias and one_of_dict:
+            for one_of_name, sub_one_of_dict in one_of_dict.items():
+                sub_one_of_dict["fields"].remove(field.name)
+                sub_one_of_dict["fields"].add(alias)
+
         field_info_str: str = (
             ", ".join(
                 [
@@ -667,6 +675,7 @@ class FileDescriptorProtoToCode(BaseP2C):
                 indent,
                 nested_message_config_dict,
                 optional_dict,
+                one_of_dict,
                 scl_prefix + [DescriptorProto.FIELD_FIELD_NUMBER, idx],
                 skip_validate_rule=skip_validate_rule,
             )
