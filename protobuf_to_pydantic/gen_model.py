@@ -577,6 +577,10 @@ class M2P(object):
                 if field_info.default is _pydantic_adapter.PydanticUndefined and field_info.default_factory is None:
                     field_info.default = None
             annotation_dict[field_dataclass.field_name] = (field_dataclass.field_type, field_info)
+            if field_info.alias:
+                for one_of_name, sub_one_of_dict in one_of_dict.items():
+                    sub_one_of_dict["fields"].remove(field_dataclass.field_name)
+                    sub_one_of_dict["fields"].add(field_info.alias)
 
             if field_dataclass.field_type in ALLOW_ARBITRARY_TYPE and not _pydantic_adapter.get_model_config_value(
                 self._pydantic_base, "arbitrary_types_allowed"

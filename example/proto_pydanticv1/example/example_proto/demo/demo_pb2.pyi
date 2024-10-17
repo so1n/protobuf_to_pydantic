@@ -353,7 +353,7 @@ class OptionalMessage(google.protobuf.message.Message):
     DEFAULT_TEMPLATE_TEST_FIELD_NUMBER: builtins.int
     x: typing.Text
     y: builtins.int
-    """p2p: {"example": 18, "title": "use age", "ge": 0}"""
+    """p2p: {"example": 18, "title": "use age", "ge": 0, "alias": "yy"}"""
 
     name: typing.Text
     age: builtins.int

@@ -110,10 +110,10 @@ class EmptyMessage(BaseModel):
 
 
 class OptionalMessage(BaseModel):
-    _one_of_dict = {"OptionalMessage.a": {"fields": {"x", "y"}, "required": True}}
+    _one_of_dict = {"OptionalMessage.a": {"fields": {"x", "yy"}, "required": True}}
     one_of_validator = model_validator(mode="before")(check_one_of)
     x: str = Field(default="")
-    y: int = Field(default=0, title="use age", ge=0, example=18)
+    y: int = Field(default=0, alias="yy", title="use age", ge=0, example=18)
     name: typing.Optional[str] = Field(default="")
     age: typing.Optional[int] = Field(default=0)
     item: typing.Optional[InvoiceItem] = Field(default=None)

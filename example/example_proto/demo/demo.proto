@@ -96,7 +96,7 @@ message OptionalMessage{
   // p2p: {"required": true}
   oneof a {
     string x = 1;
-    // p2p: {"example": 18, "title": "use age", "ge": 0}
+    // p2p: {"example": 18, "title": "use age", "ge": 0, "alias": "yy"}
     int32 y = 2;
   }
   optional string name = 3;
