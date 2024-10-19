@@ -1,6 +1,49 @@
-## 0.2.2[Future]
+## 0.4[Future]
 - Feature, support protovalidate(proto-gen-validate version >= 1.0.0) rule
-## 0.2.1[Now]
+## 0.3.1[Future]
+- CommentHandler
+- FormatHandler
+## 0.3[Now]
+- Note: Template is the introduction method that changes
+  - OLD: `from protobuf_to_pydantic.desc_template import DescTemplate`
+  - NEW: `from protobuf_to_pydantic.template import Template`
+
+- Feat, Plugin config support pkg config
+- Feat, Support all field can be set optional
+- Fix, `check_one_of` not support alias field(#67)
+- Fix, Fixed the issue that some message references could not be parsed properly
+- Refactor, Refactored the internal implementation and changed the directory name(Prepare for version 4.0)
+
+## 0.2.7
+- Fix, (#57)
+- Feat, Plugin support comment rule
+- Test, fix ge le gt lt value
+
+## 0.2.6.2
+- Feat, support google.protobuf.xxx message and plugin add protobuf type gen config (#51)
+
+## 0.2.6.1
+- Fix, Remove dependency:grpcio-tools and fix dependencies clash with protobuf-5.26.1 (#48)
+
+## 0.2.6
+- Fix, fix nested message gen code syntax error (#44)
+- Feat, support field mask (#43)
+
+## 0.2.5
+- Feat, support `google.protobuf.Struct` (#41)
+- Fix, Fix use of `base_model_class` parameter value in code generation (#40)
+
+## 0.2.4
+- Fix, fix missing typing import for optional field (#38)
+- Feat, py311 support
+
+## 0.2.3
+- Feat, add oneof optional support
+
+## 0.2.2
+- Feat, add buf-cli support
+
+## 0.2.1
 - Feature, support buf-cli
 - Feature, Remove redundant parameters in con_type
 - Feature, plugin support create dynamic plugin config module
