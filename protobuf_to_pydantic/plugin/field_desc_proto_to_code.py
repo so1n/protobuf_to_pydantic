@@ -36,7 +36,7 @@ from protobuf_to_pydantic.grpc_types import (
     FileDescriptorProto,
 )
 from protobuf_to_pydantic.plugin.my_types import ProtobufTypeModel
-from protobuf_to_pydantic.util import camel_to_snake, get_dict_from_comment
+from protobuf_to_pydantic.util import camel_to_snake, get_dict_from_comment, pydantic_allow_validation_field_handler
 
 if TYPE_CHECKING:
     from protobuf_to_pydantic.plugin.config import ConfigModel
@@ -477,11 +477,12 @@ class FileDescriptorProtoToCode(BaseP2C):
             if not field_info_dict.get("json_schema_extra", None):
                 field_info_dict.pop("json_schema_extra")
 
-        alias = field_info_dict.get("alias", None)
-        if alias and one_of_dict:
+        if one_of_dict:
+            alias = field_info_dict.get("alias", None)
+            model_config_dict = _pydantic_adapter.get_model_config_dict(self.config.base_model_class)
+
             for one_of_name, sub_one_of_dict in one_of_dict.items():
-                sub_one_of_dict["fields"].remove(field.name)
-                sub_one_of_dict["fields"].add(alias)
+                pydantic_allow_validation_field_handler(field.name, alias, sub_one_of_dict["fields"], model_config_dict)
 
         field_info_str: str = (
             ", ".join(

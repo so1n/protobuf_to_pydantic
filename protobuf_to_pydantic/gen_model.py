@@ -31,7 +31,7 @@ from protobuf_to_pydantic.get_message_option import (
 )
 from protobuf_to_pydantic.grpc_types import AnyMessage, Descriptor, FieldDescriptor, FieldMask, Message
 from protobuf_to_pydantic.template import Template
-from protobuf_to_pydantic.util import create_pydantic_model
+from protobuf_to_pydantic.util import create_pydantic_model, pydantic_allow_validation_field_handler
 
 if TYPE_CHECKING:
     from protobuf_to_pydantic.field_info_rule.types import FieldInfoTypedDict, MessageOptionTypedDict, UseOneOfTypedDict
@@ -577,10 +577,14 @@ class M2P(object):
                 if field_info.default is _pydantic_adapter.PydanticUndefined and field_info.default_factory is None:
                     field_info.default = None
             annotation_dict[field_dataclass.field_name] = (field_dataclass.field_type, field_info)
-            if field_info.alias:
+            if one_of_dict:
+                model_config_dict = _pydantic_adapter.get_model_config_dict(
+                    self._get_pydantic_base(pydantic_model_config_dict)
+                )
                 for one_of_name, sub_one_of_dict in one_of_dict.items():
-                    sub_one_of_dict["fields"].remove(field_dataclass.field_name)
-                    sub_one_of_dict["fields"].add(field_info.alias)
+                    pydantic_allow_validation_field_handler(
+                        field_dataclass.field_name, field_info.alias, sub_one_of_dict["fields"], model_config_dict
+                    )
 
             if field_dataclass.field_type in ALLOW_ARBITRARY_TYPE and not _pydantic_adapter.get_model_config_value(
                 self._pydantic_base, "arbitrary_types_allowed"

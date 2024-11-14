@@ -1,5 +1,5 @@
 # This is an automatically generated file, please do not change
-# gen by protobuf_to_pydantic[v0.2.7](https://github.com/so1n/protobuf_to_pydantic)
+# gen by protobuf_to_pydantic[v0.3.0](https://github.com/so1n/protobuf_to_pydantic)
 # Protobuf Version: 4.24.4
 # Pydantic Version: 2.5.3
 import typing
@@ -110,7 +110,7 @@ class EmptyMessage(BaseModel):
 
 
 class OptionalMessage(BaseModel):
-    _one_of_dict = {"OptionalMessage.a": {"fields": {"x", "yy"}, "required": True}}
+    _one_of_dict = {"OptionalMessage.a": {"fields": {"x", "y"}, "required": True}}
     one_of_validator = model_validator(mode="before")(check_one_of)
     x: str = Field(default="")
     y: int = Field(default=0, alias="yy", title="use age", ge=0, example=18)
