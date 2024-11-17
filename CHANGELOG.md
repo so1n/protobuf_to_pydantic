@@ -1,9 +1,12 @@
 ## 0.4[Future]
 - Feature, support protovalidate(proto-gen-validate version >= 1.0.0) rule
-## 0.3.1[Future]
+## 0.3.x[Future]
 - CommentHandler
 - FormatHandler
-## 0.3[Now]
+## 0.3.0.1[Now]
+- Fix, fix pydantic issue 6506
+- Fix, fix issue 74
+## 0.3
 - Note: Template is the introduction method that changes
   - OLD: `from protobuf_to_pydantic.desc_template import DescTemplate`
   - NEW: `from protobuf_to_pydantic.template import Template`
