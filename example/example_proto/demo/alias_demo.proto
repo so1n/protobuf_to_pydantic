@@ -1,0 +1,30 @@
+// fix issue: #74 https://github.com/so1n/protobuf_to_pydantic/issues/74
+syntax = "proto3";
+package alias_demo;
+
+import "google/protobuf/timestamp.proto";
+
+
+
+// Annotations are used in runtime mode
+// p2p: {"oneof:data": {"required": true}}
+// p2p: {"oneof:data": {"oneof_extend": {"optional": ["location_value"]}}}
+message ReportData {
+  // Annotations are used in plugin mode
+  // p2p: {"required": true, "oneof_extend": {"optional": ["location_value"]}}
+  oneof data {
+    GeoLocation location_value = 5;
+    google.protobuf.Timestamp time_value = 6;
+  }
+}
+
+message GeoLocation {
+  float latitude = 1;
+  float longitude = 2;
+  optional double altitude_meters = 3;
+}
+
+message Report {
+  optional string source_id = 2;
+  ReportData data = 3;
+}

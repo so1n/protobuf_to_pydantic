@@ -6,16 +6,19 @@ from protobuf_to_pydantic._pydantic_adapter import is_v1
 
 if __version__ > "4.0.0":
     if is_v1:
-        from example.proto_pydanticv1.example.example_proto.p2p_validate import demo_p2p
+        from example.proto_pydanticv1.example.example_proto.p2p_validate_by_comment import demo_p2p
     else:
-        from example.proto_pydanticv2.example.example_proto.p2p_validate import demo_p2p
+        from example.proto_pydanticv2.example.example_proto.p2p_validate_by_comment import demo_p2p  # type: ignore
 else:
     if is_v1:
-        from example.proto_3_20_pydanticv1.example.example_proto.p2p_validate import demo_p2p
+        from example.proto_3_20_pydanticv1.example.example_proto.p2p_validate_by_comment import demo_p2p  # type: ignore
     else:
-        from example.proto_3_20_pydanticv2.example.example_proto.p2p_validate import demo_p2p
+        from example.proto_3_20_pydanticv2.example.example_proto.p2p_validate_by_comment import demo_p2p # type: ignore
 
-from tests.test_gen_model_validate_in_runtime.test_p2p_validate import BaseTestP2pModelValidator, local_dict
+from tests.test_validate_in_runtime.test_gen_model_validate_in_runtime.test_p2p_validate import (
+    BaseTestP2pModelValidator,
+    local_dict,
+)
 
 
 def stub_func(model_class: Type, **kwargs: Any) -> Type:

@@ -7,9 +7,11 @@ import sys
 from contextlib import contextmanager
 from dataclasses import MISSING
 from datetime import timedelta
-from typing import TYPE_CHECKING, Any, Callable, Dict, Generator, List, Optional, Tuple, Type, Union
+from typing import TYPE_CHECKING, Any, Callable, Dict, Generator, List, Optional, Set, Tuple, Type, Union
 
 from pydantic import BaseConfig, BaseModel, create_model
+
+from protobuf_to_pydantic import _pydantic_adapter
 
 if TYPE_CHECKING:
     from pydantic.main import Model
@@ -229,3 +231,35 @@ def use_worker_dir_in_ctx(worker_dir: Optional[str] = None) -> Generator:
             yield
     else:
         yield
+
+
+def pydantic_allow_validation_field_handler(
+    field_name: str, field_alias_name: Optional[str], allow_field_set: Set[str], model_config_dict: dict
+) -> None:
+    """
+    fix issue: #74 https://github.com/so1n/protobuf_to_pydantic/issues/74
+
+    :param field_name: pydantic field name
+    :param field_alias_name: pydantic field alias name
+    :param allow_field_set: pydantic allow validation set
+    :param model_config_dict: pydantic model config dict
+    """
+    if field_alias_name:
+        allow_field_set.add(field_alias_name)
+        if model_config_dict.get("populate_by_name") is not True:
+            allow_field_set.remove(field_name)
+    if _pydantic_adapter.VERSION < "2.6.0":
+        alias_generator: Optional[Callable[[str], str]] = model_config_dict.get("alias_generator")
+        alias_generator_func: Optional[Callable] = alias_generator
+        if alias_generator:
+            allow_field_set.add(alias_generator(field_name))
+    else:
+        from pydantic import AliasGenerator
+
+        alias_generator_gte_26: Any = model_config_dict.get("alias_generator")
+        if isinstance(alias_generator_gte_26, AliasGenerator):  # type: ignore
+            alias_generator_func = alias_generator_gte_26.validation_alias
+        else:
+            alias_generator_func = alias_generator_gte_26
+    if alias_generator_func:
+        allow_field_set.add(alias_generator_func(field_name))

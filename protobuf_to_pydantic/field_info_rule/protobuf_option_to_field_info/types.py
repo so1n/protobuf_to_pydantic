@@ -63,8 +63,11 @@ class HostNameStr(str):
         return field_schema
 
     @classmethod
-    def __get_pydantic_core_schema__(
-        cls, source: Type[Any]
+    def __get_pydantic_core_schema__(  # type: ignore[no-untyped-def]
+        cls,
+        source: Type[Any],
+        *args,
+        **kwargs,  # fix https://github.com/pydantic/pydantic/issues/6506
     ) -> _pydantic_adapter.CoreSchema:  # type: ignore[name-defined,valid-type]
         def _validate(
             __input_value: Any, _: _pydantic_adapter.core_schema.ValidationInfo  # type: ignore[name-defined]
@@ -108,9 +111,11 @@ class UriRefStr(str):
         return field_schema
 
     @classmethod
-    def __get_pydantic_core_schema__(
+    def __get_pydantic_core_schema__(  # type: ignore[no-untyped-def]
         cls,
         source: Type[Any],
+        *args,
+        **kwargs,  # fix https://github.com/pydantic/pydantic/issues/6506
     ) -> _pydantic_adapter.CoreSchema:  # type: ignore[name-defined,valid-type]
         def _validate(
             __input_value: Any, _: _pydantic_adapter.core_schema.ValidationInfo  # type: ignore[name-defined]

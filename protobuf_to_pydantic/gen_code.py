@@ -669,6 +669,8 @@ class BaseP2C(object):
                     k: getattr(validator_class.decorator_info, k)  # type: ignore[attr-defined]
                     for k in validator_class.decorator_info.__dataclass_fields__.keys()  # type: ignore[attr-defined]
                     if k not in ("decorator_repr",)
+                    and getattr(validator_class.decorator_info, k)  # type: ignore[attr-defined]
+                    is not _pydantic_adapter.PydanticUndefined
                 }
 
                 if "fields" in decorator_info_dict:

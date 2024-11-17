@@ -3,6 +3,7 @@ import importlib
 import logging
 import pathlib
 import sys
+import traceback
 import types
 from typing import Callable, Dict, Generic, Optional, Type
 
@@ -94,7 +95,7 @@ class CodeGen(Generic[ConfigT]):
                     self.config = get_config_by_module(importlib.import_module(module_path), self.config_class)
                     break
                 except ModuleNotFoundError as e:
-                    error_path_dict[module_path] = e
+                    error_path_dict[module_path] = {"error": e, "traceback": traceback.format_exc()}
         if self.config == default_config:
             raise SystemError(f"Load config error. try use path and error:{error_path_dict}")
 
