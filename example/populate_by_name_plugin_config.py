@@ -1,7 +1,14 @@
 from pydantic import BaseModel, ConfigDict
-from pydantic.alias_generators import to_camel
 
 from protobuf_to_pydantic._pydantic_adapter import VERSION
+
+try:
+    from pydantic.alias_generators import to_camel
+except ImportError:
+
+    def to_camel(string: str) -> str:  # type: ignore[misc]
+        return "".join(word.capitalize() for word in string.split("_"))
+
 
 if VERSION < "2.6.0":
 

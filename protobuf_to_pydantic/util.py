@@ -247,7 +247,7 @@ def pydantic_allow_validation_field_handler(
     if field_alias_name:
         allow_field_set.add(field_alias_name)
         if model_config_dict.get("populate_by_name") is not True:
-            allow_field_set.remove(field_alias_name)
+            allow_field_set.remove(field_name)
     if _pydantic_adapter.VERSION < "2.6.0":
         alias_generator: Optional[Callable[[str], str]] = model_config_dict.get("alias_generator")
         alias_generator_func: Optional[Callable] = alias_generator

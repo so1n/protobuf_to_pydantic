@@ -168,7 +168,7 @@ class M2P(object):
         self._creat_cache: CREATE_MODEL_CACHE_T = create_model_cache or _create_model_cache
         self._pydantic_base: Type["BaseModel"] = pydantic_base or BaseModel
         self._pydantic_module: str = pydantic_module or __name__
-        self._comment_template: Template = (template or Template)(local_dict or {}, self._comment_prefix)
+        self._comment_template: Template = (template or Template)(local_dict or {}, comment_prefix)
         self._message_type_dict_by_type_name: Dict[str, Any] = (
             message_type_dict_by_type_name or constant.message_name_type_dict
         )

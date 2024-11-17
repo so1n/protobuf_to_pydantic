@@ -6,7 +6,11 @@ import "google/protobuf/timestamp.proto";
 
 
 
+// Annotations are used in runtime mode
+// p2p: {"oneof:data": {"required": true}}
+// p2p: {"oneof:data": {"oneof_extend": {"optional": ["location_value"]}}}
 message ReportData {
+  // Annotations are used in plugin mode
   // p2p: {"required": true, "oneof_extend": {"optional": ["location_value"]}}
   oneof data {
     GeoLocation location_value = 5;

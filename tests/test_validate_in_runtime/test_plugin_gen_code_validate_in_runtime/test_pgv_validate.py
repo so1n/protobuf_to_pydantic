@@ -16,7 +16,9 @@ else:
     else:
         from example.proto_3_20_pydanticv2.example.example_proto.validate import demo_p2p
 
-from tests.test_gen_model_validate_in_runtime.test_pgv_validate import BaseTestPgvModelValidator
+from tests.test_validate_in_runtime.test_gen_model_validate_in_runtime.test_pgv_validate import (
+    BaseTestPgvModelValidator,
+)
 
 
 def stub_func(model_class: Type[BaseModel], **kwargs: Any) -> Type[BaseModel]:
