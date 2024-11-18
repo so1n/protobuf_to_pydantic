@@ -32,7 +32,7 @@ now_path: pathlib.Path = pathlib.Path(__file__).absolute()
 def gen_code() -> None:
     pydantic_model_to_py_file(
         str(now_path.parent.joinpath(target_p, "demo_gen_code.py")),
-        *[msg_to_pydantic_model(model) for model in message_class_list if model.__name__ == "OptionalMessage"],
+        *[msg_to_pydantic_model(model) for model in message_class_list],
     )
 
 

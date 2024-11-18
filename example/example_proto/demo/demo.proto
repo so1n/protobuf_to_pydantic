@@ -141,3 +141,21 @@ message AnOtherMessage {
     string text = 1;
   }
 }
+
+// Test inline structure of the same name
+// from: https://github.com/so1n/protobuf_to_pydantic/issues/76
+message TestSameName0 {
+    message Body {
+        string input_model = 1;
+        map<string, string> input_info = 3;
+    }
+    Body body = 1;
+}
+
+message TestSameName1 {
+    message Body {
+        string output_model = 1;
+        map<string, string> output_info = 3;
+    }
+    Body body = 1;
+}

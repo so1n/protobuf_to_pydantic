@@ -78,6 +78,7 @@ class FileDescriptorProtoToCode(BaseP2C):
         self._fd = fd
         self._descriptors = descriptors
         self._desc_template = config.template_instance
+        self._fd_root_desc_dict = {m.name: m for m in self._fd.message_type}
         self.source_code_info_by_scl = {tuple(location.path): location for location in fd.source_code_info.location}
 
         if config.base_model_class is BaseModel:
@@ -196,6 +197,7 @@ class FileDescriptorProtoToCode(BaseP2C):
         scl_prefix: SourceCodeLocation,
         indent: int,
         nested_message_config_dict: dict,
+        this_level_model_cache: Dict[str, str],
         skip_validate_rule: bool,
     ) -> List[str]:
         """Parse the nested information of Message"""
@@ -209,10 +211,11 @@ class FileDescriptorProtoToCode(BaseP2C):
             )
             content_list.append(
                 self._message(
-                    nested_message,
-                    desc,
-                    scl_prefix + [index],
-                    indent + self.code_indent,
+                    desc=nested_message,
+                    root_desc=desc,
+                    scl_prefix=scl_prefix + [index],
+                    sub_model_cache=this_level_model_cache,
+                    indent=indent + self.code_indent,
                     skip_validate_rule=skip_validate_rule,
                 )
             )
@@ -221,6 +224,7 @@ class FileDescriptorProtoToCode(BaseP2C):
     # flake8: noqa: C901
     def _message_field_handle(
         self,
+        *,
         desc: DescriptorProto,
         root_desc: DescriptorProto,
         field: FieldDescriptorProto,
@@ -229,6 +233,7 @@ class FileDescriptorProtoToCode(BaseP2C):
         optional_dict: dict,
         one_of_dict: Dict[str, OneOfTypedDict],
         scl_prefix: SourceCodeLocation,
+        this_level_model_cache: Dict[str, str],
         skip_validate_rule: bool = False,
     ) -> Optional[Tuple[str, str, bool]]:
         """generate message's field to Pydantic.FieldInfo code
@@ -308,7 +313,14 @@ class FileDescriptorProtoToCode(BaseP2C):
                         if desc is message:
                             scl_prefix = [FileDescriptorProto.MESSAGE_TYPE_FIELD_NUMBER, index]
                     try:
-                        self._content_deque.append(self._message(message, root_desc, scl_prefix))
+                        self._content_deque.append(
+                            self._message(
+                                desc=message,
+                                root_desc=root_desc,
+                                scl_prefix=scl_prefix,
+                                sub_model_cache=this_level_model_cache,
+                            )
+                        )
                     except WaitingToCompleteException:
                         type_str = f'"{type_str}"'
                 elif type_str in root_desc_nested_type_name:
@@ -624,20 +636,28 @@ class FileDescriptorProtoToCode(BaseP2C):
 
     def _message(
         self,
+        *,
         desc: DescriptorProto,
         root_desc: DescriptorProto,
         scl_prefix: SourceCodeLocation,
+        sub_model_cache: Dict[str, str],
         indent: int = 0,
         skip_validate_rule: bool = False,
     ) -> str:
         class_name = desc.name if desc.name not in PYTHON_RESERVED else "_r_" + desc.name
-        if class_name in self._model_cache:
-            if not self._model_cache[class_name]:
-                raise WaitingToCompleteException(f"The model:{class_name} is being generated")
-            return self._model_cache[class_name]
+        if class_name in self._fd_root_desc_dict:
+            use_model_cache = self._model_cache
         else:
-            self._model_cache[class_name] = ""
+            use_model_cache = sub_model_cache
 
+        if class_name in use_model_cache:
+            if not use_model_cache[class_name]:
+                raise WaitingToCompleteException(f"The model:{class_name} is being generated")
+            return use_model_cache[class_name]
+        else:
+            use_model_cache[class_name] = ""
+
+        this_level_model_cache: Dict[str, str] = {}
         self._add_import_code("google.protobuf.message", "Message")
         comment_info_dict, desc_content, comment_content = self.add_class_desc(scl_prefix, indent)
         class_name_content = " " * indent + f"class {class_name}({self.config.base_model_class.__name__}):"
@@ -670,14 +690,15 @@ class FileDescriptorProtoToCode(BaseP2C):
                 continue
 
             _content_tuple = self._message_field_handle(
-                desc,
-                root_desc,
-                field,
-                indent,
-                nested_message_config_dict,
-                optional_dict,
-                one_of_dict,
-                scl_prefix + [DescriptorProto.FIELD_FIELD_NUMBER, idx],
+                desc=desc,
+                root_desc=root_desc,
+                field=field,
+                indent=indent,
+                nested_message_config_dict=nested_message_config_dict,
+                optional_dict=optional_dict,
+                one_of_dict=one_of_dict,
+                scl_prefix=scl_prefix + [DescriptorProto.FIELD_FIELD_NUMBER, idx],
+                this_level_model_cache=this_level_model_cache,
                 skip_validate_rule=skip_validate_rule,
             )
             if _content_tuple:
@@ -692,6 +713,7 @@ class FileDescriptorProtoToCode(BaseP2C):
                     scl_prefix + [DescriptorProto.NESTED_TYPE_FIELD_NUMBER],
                     indent,
                     nested_message_config_dict,
+                    this_level_model_cache,
                     skip_validate_rule,
                 )
             )
@@ -750,7 +772,7 @@ class FileDescriptorProtoToCode(BaseP2C):
         )
         if not any([class_head_content, class_field_content]):
             content += " " * (indent + self.code_indent) + "pass\n"
-        self._model_cache[class_name] = content
+        use_model_cache[class_name] = content
         return content
 
     def _get_protobuf_type_model(self, field: FieldDescriptorProto) -> ProtobufTypeModel:
@@ -883,5 +905,10 @@ class FileDescriptorProtoToCode(BaseP2C):
         )
         for index, desc in enumerate(self._fd.message_type):
             self._content_deque.append(
-                self._message(desc, desc, [FileDescriptorProto.MESSAGE_TYPE_FIELD_NUMBER, index])
+                self._message(
+                    desc=desc,
+                    root_desc=desc,
+                    scl_prefix=[FileDescriptorProto.MESSAGE_TYPE_FIELD_NUMBER, index],
+                    sub_model_cache=self._model_cache,
+                )
             )

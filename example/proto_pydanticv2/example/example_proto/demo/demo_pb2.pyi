@@ -483,3 +483,86 @@ class AnOtherMessage(google.protobuf.message.Message):
     def HasField(self, field_name: typing_extensions.Literal["field2",b"field2"]) -> builtins.bool: ...
     def ClearField(self, field_name: typing_extensions.Literal["field1",b"field1","field2",b"field2"]) -> None: ...
 global___AnOtherMessage = AnOtherMessage
+
+class TestSameName0(google.protobuf.message.Message):
+    """Test inline structure of the same name
+    from: https://github.com/so1n/protobuf_to_pydantic/issues/76
+    """
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    class Body(google.protobuf.message.Message):
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+        class InputInfoEntry(google.protobuf.message.Message):
+            DESCRIPTOR: google.protobuf.descriptor.Descriptor
+            KEY_FIELD_NUMBER: builtins.int
+            VALUE_FIELD_NUMBER: builtins.int
+            key: typing.Text
+            value: typing.Text
+            def __init__(self,
+                *,
+                key: typing.Text = ...,
+                value: typing.Text = ...,
+                ) -> None: ...
+            def ClearField(self, field_name: typing_extensions.Literal["key",b"key","value",b"value"]) -> None: ...
+
+        INPUT_MODEL_FIELD_NUMBER: builtins.int
+        INPUT_INFO_FIELD_NUMBER: builtins.int
+        input_model: typing.Text
+        @property
+        def input_info(self) -> google.protobuf.internal.containers.ScalarMap[typing.Text, typing.Text]: ...
+        def __init__(self,
+            *,
+            input_model: typing.Text = ...,
+            input_info: typing.Optional[typing.Mapping[typing.Text, typing.Text]] = ...,
+            ) -> None: ...
+        def ClearField(self, field_name: typing_extensions.Literal["input_info",b"input_info","input_model",b"input_model"]) -> None: ...
+
+    BODY_FIELD_NUMBER: builtins.int
+    @property
+    def body(self) -> global___TestSameName0.Body: ...
+    def __init__(self,
+        *,
+        body: typing.Optional[global___TestSameName0.Body] = ...,
+        ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["body",b"body"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["body",b"body"]) -> None: ...
+global___TestSameName0 = TestSameName0
+
+class TestSameName1(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    class Body(google.protobuf.message.Message):
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+        class OutputInfoEntry(google.protobuf.message.Message):
+            DESCRIPTOR: google.protobuf.descriptor.Descriptor
+            KEY_FIELD_NUMBER: builtins.int
+            VALUE_FIELD_NUMBER: builtins.int
+            key: typing.Text
+            value: typing.Text
+            def __init__(self,
+                *,
+                key: typing.Text = ...,
+                value: typing.Text = ...,
+                ) -> None: ...
+            def ClearField(self, field_name: typing_extensions.Literal["key",b"key","value",b"value"]) -> None: ...
+
+        OUTPUT_MODEL_FIELD_NUMBER: builtins.int
+        OUTPUT_INFO_FIELD_NUMBER: builtins.int
+        output_model: typing.Text
+        @property
+        def output_info(self) -> google.protobuf.internal.containers.ScalarMap[typing.Text, typing.Text]: ...
+        def __init__(self,
+            *,
+            output_model: typing.Text = ...,
+            output_info: typing.Optional[typing.Mapping[typing.Text, typing.Text]] = ...,
+            ) -> None: ...
+        def ClearField(self, field_name: typing_extensions.Literal["output_info",b"output_info","output_model",b"output_model"]) -> None: ...
+
+    BODY_FIELD_NUMBER: builtins.int
+    @property
+    def body(self) -> global___TestSameName1.Body: ...
+    def __init__(self,
+        *,
+        body: typing.Optional[global___TestSameName1.Body] = ...,
+        ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["body",b"body"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["body",b"body"]) -> None: ...
+global___TestSameName1 = TestSameName1

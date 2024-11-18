@@ -1,5 +1,5 @@
 # This is an automatically generated file, please do not change
-# gen by protobuf_to_pydantic[v0.3.0](https://github.com/so1n/protobuf_to_pydantic)
+# gen by protobuf_to_pydantic[0.0.0](https://github.com/so1n/protobuf_to_pydantic)
 # Protobuf Version: 3.20.3
 # Pydantic Version: 2.5.3
 import typing
@@ -144,3 +144,19 @@ class OtherMessage(BaseModel):
 class RootMessage(BaseModel):
     field1: str = Field(default="")
     field2: AnOtherMessage = Field()
+
+
+class TestSameName0(BaseModel):
+    class Body(BaseModel):
+        input_model: str = Field(default="")
+        input_info: typing.Dict[str, str] = Field(default_factory=dict)
+
+    body: Body = Field()
+
+
+class TestSameName1(BaseModel):
+    class Body(BaseModel):
+        output_model: str = Field(default="")
+        output_info: typing.Dict[str, str] = Field(default_factory=dict)
+
+    body: Body = Field()
