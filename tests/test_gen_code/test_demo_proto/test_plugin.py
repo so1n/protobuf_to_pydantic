@@ -143,7 +143,7 @@ class NestedMessage(BaseModel):
 """
         assert content.strip("\n") in getsource(demo_p2p.NestedMessage).strip("\n")
 
-    def test_invoice_item(self) -> None:
+    def test_self_referencing(self) -> None:
         content = """
 class InvoiceItem(BaseModel):
     \"\"\"
@@ -187,3 +187,73 @@ class OptionalMessage(BaseModel):
     default_template_test: float = Field(default=1600000000.0)
 """
         assert content.strip("\n") in getsource(demo_p2p.OptionalMessage).strip("\n")
+
+    def test_after_refer_message(self)->None:
+        pass
+
+    def test_circular_references(self) -> None:
+        content = """
+class Invoice3(BaseModel):
+    name: str = Field(default="")
+    amount: int = Field(default=0)
+    quantity: int = Field(default=0)
+    items: typing.List["InvoiceItem2"] = Field(default_factory=list)"""
+        assert content.strip("\n") in getsource(demo_p2p.Invoice3).strip("\n")
+        content = """
+class InvoiceItem2(BaseModel):
+    \"\"\"
+        Test Circular references
+    from: https://github.com/so1n/protobuf_to_pydantic/issues/57
+    \"\"\"
+
+    name: str = Field(default="")
+    amount: int = Field(default=0)
+    quantity: int = Field(default=0)
+    items: typing.List["InvoiceItem2"] = Field(default_factory=list)
+    invoice: Invoice3 = Field()"""
+        assert content.strip("\n") in getsource(demo_p2p.InvoiceItem2).strip("\n")
+
+    def test_message_reference(self) -> None:
+        content = """
+class AnOtherMessage(BaseModel):
+    class SubMessage(BaseModel):
+        text: str = Field(default="")
+
+    field1: str = Field(default="")
+    field2: SubMessage = Field()"""
+        assert content.strip("\n") in getsource(demo_p2p.AnOtherMessage).strip("\n")
+
+        content = """
+class RootMessage(BaseModel):
+    \"\"\"
+        Test Message references
+    from: https://github.com/so1n/protobuf_to_pydantic/issues/64
+    \"\"\"
+
+    field1: str = Field(default="")
+    field2: AnOtherMessage = Field()"""
+        assert content.strip("\n") in getsource(demo_p2p.RootMessage).strip("\n")
+
+
+    def test_same_bane_inline_structure(self) -> None:
+        content = """
+class TestSameName0(BaseModel):
+    \"\"\"
+        Test inline structure of the same name
+    from: https://github.com/so1n/protobuf_to_pydantic/issues/76
+    \"\"\"
+
+    class Body(BaseModel):
+        input_model: str = Field(default="")
+        input_info: typing.Dict[str, str] = Field(default_factory=dict)
+
+    body: "TestSameName0.Body" = Field()"""
+        assert content.strip("\n") in getsource(demo_p2p.TestSameName0).strip("\n")
+        content = """
+class TestSameName1(BaseModel):
+    class Body(BaseModel):
+        output_model: str = Field(default="")
+        output_info: typing.Dict[str, str] = Field(default_factory=dict)
+
+    body: "TestSameName1.Body" = Field()"""
+        assert content.strip("\n") in getsource(demo_p2p.TestSameName1).strip("\n")

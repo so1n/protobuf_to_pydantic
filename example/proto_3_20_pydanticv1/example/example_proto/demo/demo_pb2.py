@@ -26,7 +26,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n%example/example_proto/demo/demo.proto\x12\x04user\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a google/protobuf/field_mask.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a)example/example_proto/common/single.proto\"\xc3\x01\n\x0bUserMessage\x12\x0b\n\x03uid\x18\x01 \x01(\t\x12\x0b\n\x03\x61ge\x18\x02 \x01(\x05\x12\x0e\n\x06height\x18\x03 \x01(\x02\x12\x1a\n\x03sex\x18\x04 \x01(\x0e\x32\r.user.SexType\x12\x1e\n\x04\x64\x65mo\x18\x06 \x01(\x0e\x32\x10.single.DemoEnum\x12\x10\n\x08is_adult\x18\x07 \x01(\x08\x12\x11\n\tuser_name\x18\x08 \x01(\t\x12)\n\x0c\x64\x65mo_message\x18\t \x01(\x0b\x32\x13.single.DemoMessage\"\xb1\x01\n\x0cOtherMessage\x12)\n\x08metadata\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\x12\x32\n\x0c\x64ouble_value\x18\x02 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12\x33\n\nfield_mask\x18\x64 \x01(\x0b\x32\x1a.google.protobuf.FieldMaskH\x00\x88\x01\x01\x42\r\n\x0b_field_mask\"\xe4\x01\n\nMapMessage\x12/\n\x08user_map\x18\x01 \x03(\x0b\x32\x1d.user.MapMessage.UserMapEntry\x12\x31\n\tuser_flag\x18\x02 \x03(\x0b\x32\x1e.user.MapMessage.UserFlagEntry\x1a\x41\n\x0cUserMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12 \n\x05value\x18\x02 \x01(\x0b\x32\x11.user.UserMessage:\x02\x38\x01\x1a/\n\rUserFlagEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x08:\x02\x38\x01\"[\n\x0fRepeatedMessage\x12\x10\n\x08str_list\x18\x01 \x03(\t\x12\x10\n\x08int_list\x18\x02 \x03(\x05\x12$\n\tuser_list\x18\x03 \x03(\x0b\x32\x11.user.UserMessage\"\x99\x05\n\rNestedMessage\x12;\n\ruser_list_map\x18\x01 \x03(\x0b\x32$.user.NestedMessage.UserListMapEntry\x12\x32\n\x08user_map\x18\x02 \x03(\x0b\x32 .user.NestedMessage.UserMapEntry\x12\x34\n\x08user_pay\x18\x03 \x01(\x0b\x32\".user.NestedMessage.UserPayMessage\x12\x35\n\x0cinclude_enum\x18\x04 \x01(\x0e\x32\x1f.user.NestedMessage.IncludeEnum\x12?\n\x13not_enable_user_pay\x18\x05 \x01(\x0b\x32\".user.NestedMessage.UserPayMessage\x12%\n\x05\x65mpty\x18\x06 \x01(\x0b\x32\x16.google.protobuf.Empty\x12,\n\x0b\x61\x66ter_refer\x18\x07 \x01(\x0b\x32\x17.user.AfterReferMessage\x1a\\\n\x0eUserPayMessage\x12\x13\n\x0b\x62\x61nk_number\x18\x01 \x01(\t\x12\'\n\x03\x65xp\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x0c\n\x04uuid\x18\x03 \x01(\t\x1aI\n\x10UserListMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12$\n\x05value\x18\x02 \x01(\x0b\x32\x15.user.RepeatedMessage:\x02\x38\x01\x1a@\n\x0cUserMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x1f\n\x05value\x18\x02 \x01(\x0b\x32\x10.user.MapMessage:\x02\x38\x01\")\n\x0bIncludeEnum\x12\x08\n\x04zero\x10\x00\x12\x07\n\x03one\x10\x01\x12\x07\n\x03two\x10\x02\"-\n\x11\x41\x66terReferMessage\x12\x0b\n\x03uid\x18\x01 \x01(\t\x12\x0b\n\x03\x61ge\x18\x02 \x01(\x05\"_\n\x0bInvoiceItem\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0e\n\x06\x61mount\x18\x02 \x01(\x05\x12\x10\n\x08quantity\x18\x03 \x01(\x05\x12 \n\x05items\x18\x04 \x03(\x0b\x32\x11.user.InvoiceItem\"\x0e\n\x0c\x45mptyMessage\"\xa9\x02\n\x0fOptionalMessage\x12\x0b\n\x01x\x18\x01 \x01(\tH\x00\x12\x0b\n\x01y\x18\x02 \x01(\x05H\x00\x12\x11\n\x04name\x18\x03 \x01(\tH\x01\x88\x01\x01\x12\x10\n\x03\x61ge\x18\x04 \x01(\x05H\x02\x88\x01\x01\x12$\n\x04item\x18\x05 \x01(\x0b\x32\x11.user.InvoiceItemH\x03\x88\x01\x01\x12\x10\n\x08str_list\x18\x06 \x03(\t\x12\x32\n\x07int_map\x18\x07 \x03(\x0b\x32!.user.OptionalMessage.IntMapEntry\x12\x1d\n\x15\x64\x65\x66\x61ult_template_test\x18\x08 \x01(\x02\x1a-\n\x0bIntMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\x42\x03\n\x01\x61\x42\x07\n\x05_nameB\x06\n\x04_ageB\x07\n\x05_item\"\x82\x01\n\x0cInvoiceItem2\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0e\n\x06\x61mount\x18\x02 \x01(\x05\x12\x10\n\x08quantity\x18\x03 \x01(\x05\x12!\n\x05items\x18\x04 \x03(\x0b\x32\x12.user.InvoiceItem2\x12\x1f\n\x07invoice\x18\x05 \x01(\x0b\x32\x0e.user.Invoice3\"]\n\x08Invoice3\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0e\n\x06\x61mount\x18\x02 \x01(\x05\x12\x10\n\x08quantity\x18\x03 \x01(\x05\x12!\n\x05items\x18\x04 \x03(\x0b\x32\x12.user.InvoiceItem2\"C\n\x0bRootMessage\x12\x0e\n\x06\x66ield1\x18\x01 \x01(\t\x12$\n\x06\x66ield2\x18\x02 \x01(\x0b\x32\x14.user.AnOtherMessage\"m\n\x0e\x41nOtherMessage\x12\x0e\n\x06\x66ield1\x18\x01 \x01(\t\x12/\n\x06\x66ield2\x18\x02 \x01(\x0b\x32\x1f.user.AnOtherMessage.SubMessage\x1a\x1a\n\nSubMessage\x12\x0c\n\x04text\x18\x01 \x01(\t*\x1d\n\x07SexType\x12\x07\n\x03man\x10\x00\x12\t\n\x05women\x10\x01\x62\x06proto3'
+  serialized_pb=b'\n%example/example_proto/demo/demo.proto\x12\x04user\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a google/protobuf/field_mask.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a)example/example_proto/common/single.proto\"\xc3\x01\n\x0bUserMessage\x12\x0b\n\x03uid\x18\x01 \x01(\t\x12\x0b\n\x03\x61ge\x18\x02 \x01(\x05\x12\x0e\n\x06height\x18\x03 \x01(\x02\x12\x1a\n\x03sex\x18\x04 \x01(\x0e\x32\r.user.SexType\x12\x1e\n\x04\x64\x65mo\x18\x06 \x01(\x0e\x32\x10.single.DemoEnum\x12\x10\n\x08is_adult\x18\x07 \x01(\x08\x12\x11\n\tuser_name\x18\x08 \x01(\t\x12)\n\x0c\x64\x65mo_message\x18\t \x01(\x0b\x32\x13.single.DemoMessage\"\xb1\x01\n\x0cOtherMessage\x12)\n\x08metadata\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\x12\x32\n\x0c\x64ouble_value\x18\x02 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12\x33\n\nfield_mask\x18\x64 \x01(\x0b\x32\x1a.google.protobuf.FieldMaskH\x00\x88\x01\x01\x42\r\n\x0b_field_mask\"\xe4\x01\n\nMapMessage\x12/\n\x08user_map\x18\x01 \x03(\x0b\x32\x1d.user.MapMessage.UserMapEntry\x12\x31\n\tuser_flag\x18\x02 \x03(\x0b\x32\x1e.user.MapMessage.UserFlagEntry\x1a\x41\n\x0cUserMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12 \n\x05value\x18\x02 \x01(\x0b\x32\x11.user.UserMessage:\x02\x38\x01\x1a/\n\rUserFlagEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x08:\x02\x38\x01\"[\n\x0fRepeatedMessage\x12\x10\n\x08str_list\x18\x01 \x03(\t\x12\x10\n\x08int_list\x18\x02 \x03(\x05\x12$\n\tuser_list\x18\x03 \x03(\x0b\x32\x11.user.UserMessage\"\x99\x05\n\rNestedMessage\x12;\n\ruser_list_map\x18\x01 \x03(\x0b\x32$.user.NestedMessage.UserListMapEntry\x12\x32\n\x08user_map\x18\x02 \x03(\x0b\x32 .user.NestedMessage.UserMapEntry\x12\x34\n\x08user_pay\x18\x03 \x01(\x0b\x32\".user.NestedMessage.UserPayMessage\x12\x35\n\x0cinclude_enum\x18\x04 \x01(\x0e\x32\x1f.user.NestedMessage.IncludeEnum\x12?\n\x13not_enable_user_pay\x18\x05 \x01(\x0b\x32\".user.NestedMessage.UserPayMessage\x12%\n\x05\x65mpty\x18\x06 \x01(\x0b\x32\x16.google.protobuf.Empty\x12,\n\x0b\x61\x66ter_refer\x18\x07 \x01(\x0b\x32\x17.user.AfterReferMessage\x1a\\\n\x0eUserPayMessage\x12\x13\n\x0b\x62\x61nk_number\x18\x01 \x01(\t\x12\'\n\x03\x65xp\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x0c\n\x04uuid\x18\x03 \x01(\t\x1aI\n\x10UserListMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12$\n\x05value\x18\x02 \x01(\x0b\x32\x15.user.RepeatedMessage:\x02\x38\x01\x1a@\n\x0cUserMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x1f\n\x05value\x18\x02 \x01(\x0b\x32\x10.user.MapMessage:\x02\x38\x01\")\n\x0bIncludeEnum\x12\x08\n\x04zero\x10\x00\x12\x07\n\x03one\x10\x01\x12\x07\n\x03two\x10\x02\"-\n\x11\x41\x66terReferMessage\x12\x0b\n\x03uid\x18\x01 \x01(\t\x12\x0b\n\x03\x61ge\x18\x02 \x01(\x05\"_\n\x0bInvoiceItem\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0e\n\x06\x61mount\x18\x02 \x01(\x05\x12\x10\n\x08quantity\x18\x03 \x01(\x05\x12 \n\x05items\x18\x04 \x03(\x0b\x32\x11.user.InvoiceItem\"\x0e\n\x0c\x45mptyMessage\"\xa9\x02\n\x0fOptionalMessage\x12\x0b\n\x01x\x18\x01 \x01(\tH\x00\x12\x0b\n\x01y\x18\x02 \x01(\x05H\x00\x12\x11\n\x04name\x18\x03 \x01(\tH\x01\x88\x01\x01\x12\x10\n\x03\x61ge\x18\x04 \x01(\x05H\x02\x88\x01\x01\x12$\n\x04item\x18\x05 \x01(\x0b\x32\x11.user.InvoiceItemH\x03\x88\x01\x01\x12\x10\n\x08str_list\x18\x06 \x03(\t\x12\x32\n\x07int_map\x18\x07 \x03(\x0b\x32!.user.OptionalMessage.IntMapEntry\x12\x1d\n\x15\x64\x65\x66\x61ult_template_test\x18\x08 \x01(\x02\x1a-\n\x0bIntMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\x42\x03\n\x01\x61\x42\x07\n\x05_nameB\x06\n\x04_ageB\x07\n\x05_item\"\x82\x01\n\x0cInvoiceItem2\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0e\n\x06\x61mount\x18\x02 \x01(\x05\x12\x10\n\x08quantity\x18\x03 \x01(\x05\x12!\n\x05items\x18\x04 \x03(\x0b\x32\x12.user.InvoiceItem2\x12\x1f\n\x07invoice\x18\x05 \x01(\x0b\x32\x0e.user.Invoice3\"]\n\x08Invoice3\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0e\n\x06\x61mount\x18\x02 \x01(\x05\x12\x10\n\x08quantity\x18\x03 \x01(\x05\x12!\n\x05items\x18\x04 \x03(\x0b\x32\x12.user.InvoiceItem2\"C\n\x0bRootMessage\x12\x0e\n\x06\x66ield1\x18\x01 \x01(\t\x12$\n\x06\x66ield2\x18\x02 \x01(\x0b\x32\x14.user.AnOtherMessage\"m\n\x0e\x41nOtherMessage\x12\x0e\n\x06\x66ield1\x18\x01 \x01(\t\x12/\n\x06\x66ield2\x18\x02 \x01(\x0b\x32\x1f.user.AnOtherMessage.SubMessage\x1a\x1a\n\nSubMessage\x12\x0c\n\x04text\x18\x01 \x01(\t\"\xc4\x01\n\rTestSameName0\x12&\n\x04\x62ody\x18\x01 \x01(\x0b\x32\x18.user.TestSameName0.Body\x1a\x8a\x01\n\x04\x42ody\x12\x13\n\x0binput_model\x18\x01 \x01(\t\x12;\n\ninput_info\x18\x03 \x03(\x0b\x32\'.user.TestSameName0.Body.InputInfoEntry\x1a\x30\n\x0eInputInfoEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\xc8\x01\n\rTestSameName1\x12&\n\x04\x62ody\x18\x01 \x01(\x0b\x32\x18.user.TestSameName1.Body\x1a\x8e\x01\n\x04\x42ody\x12\x14\n\x0coutput_model\x18\x01 \x01(\t\x12=\n\x0boutput_info\x18\x03 \x03(\x0b\x32(.user.TestSameName1.Body.OutputInfoEntry\x1a\x31\n\x0fOutputInfoEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01*\x1d\n\x07SexType\x12\x07\n\x03man\x10\x00\x12\t\n\x05women\x10\x01\x62\x06proto3'
   ,
   dependencies=[google_dot_protobuf_dot_empty__pb2.DESCRIPTOR,google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,google_dot_protobuf_dot_struct__pb2.DESCRIPTOR,google_dot_protobuf_dot_field__mask__pb2.DESCRIPTOR,google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,example_dot_example__proto_dot_common_dot_single__pb2.DESCRIPTOR,])
 
@@ -50,8 +50,8 @@ _SEXTYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=2486,
-  serialized_end=2515,
+  serialized_start=2888,
+  serialized_end=2917,
 )
 _sym_db.RegisterEnumDescriptor(_SEXTYPE)
 
@@ -1057,6 +1057,222 @@ _ANOTHERMESSAGE = _descriptor.Descriptor(
   serialized_end=2484,
 )
 
+
+_TESTSAMENAME0_BODY_INPUTINFOENTRY = _descriptor.Descriptor(
+  name='InputInfoEntry',
+  full_name='user.TestSameName0.Body.InputInfoEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='user.TestSameName0.Body.InputInfoEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='user.TestSameName0.Body.InputInfoEntry.value', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=b'8\001',
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2635,
+  serialized_end=2683,
+)
+
+_TESTSAMENAME0_BODY = _descriptor.Descriptor(
+  name='Body',
+  full_name='user.TestSameName0.Body',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='input_model', full_name='user.TestSameName0.Body.input_model', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='input_info', full_name='user.TestSameName0.Body.input_info', index=1,
+      number=3, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[_TESTSAMENAME0_BODY_INPUTINFOENTRY, ],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2545,
+  serialized_end=2683,
+)
+
+_TESTSAMENAME0 = _descriptor.Descriptor(
+  name='TestSameName0',
+  full_name='user.TestSameName0',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='body', full_name='user.TestSameName0.body', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[_TESTSAMENAME0_BODY, ],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2487,
+  serialized_end=2683,
+)
+
+
+_TESTSAMENAME1_BODY_OUTPUTINFOENTRY = _descriptor.Descriptor(
+  name='OutputInfoEntry',
+  full_name='user.TestSameName1.Body.OutputInfoEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='user.TestSameName1.Body.OutputInfoEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='user.TestSameName1.Body.OutputInfoEntry.value', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=b'8\001',
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2837,
+  serialized_end=2886,
+)
+
+_TESTSAMENAME1_BODY = _descriptor.Descriptor(
+  name='Body',
+  full_name='user.TestSameName1.Body',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='output_model', full_name='user.TestSameName1.Body.output_model', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='output_info', full_name='user.TestSameName1.Body.output_info', index=1,
+      number=3, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[_TESTSAMENAME1_BODY_OUTPUTINFOENTRY, ],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2744,
+  serialized_end=2886,
+)
+
+_TESTSAMENAME1 = _descriptor.Descriptor(
+  name='TestSameName1',
+  full_name='user.TestSameName1',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='body', full_name='user.TestSameName1.body', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[_TESTSAMENAME1_BODY, ],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2686,
+  serialized_end=2886,
+)
+
 _USERMESSAGE.fields_by_name['sex'].enum_type = _SEXTYPE
 _USERMESSAGE.fields_by_name['demo'].enum_type = example_dot_example__proto_dot_common_dot_single__pb2._DEMOENUM
 _USERMESSAGE.fields_by_name['demo_message'].message_type = example_dot_example__proto_dot_common_dot_single__pb2._DEMOMESSAGE
@@ -1111,6 +1327,14 @@ _INVOICE3.fields_by_name['items'].message_type = _INVOICEITEM2
 _ROOTMESSAGE.fields_by_name['field2'].message_type = _ANOTHERMESSAGE
 _ANOTHERMESSAGE_SUBMESSAGE.containing_type = _ANOTHERMESSAGE
 _ANOTHERMESSAGE.fields_by_name['field2'].message_type = _ANOTHERMESSAGE_SUBMESSAGE
+_TESTSAMENAME0_BODY_INPUTINFOENTRY.containing_type = _TESTSAMENAME0_BODY
+_TESTSAMENAME0_BODY.fields_by_name['input_info'].message_type = _TESTSAMENAME0_BODY_INPUTINFOENTRY
+_TESTSAMENAME0_BODY.containing_type = _TESTSAMENAME0
+_TESTSAMENAME0.fields_by_name['body'].message_type = _TESTSAMENAME0_BODY
+_TESTSAMENAME1_BODY_OUTPUTINFOENTRY.containing_type = _TESTSAMENAME1_BODY
+_TESTSAMENAME1_BODY.fields_by_name['output_info'].message_type = _TESTSAMENAME1_BODY_OUTPUTINFOENTRY
+_TESTSAMENAME1_BODY.containing_type = _TESTSAMENAME1
+_TESTSAMENAME1.fields_by_name['body'].message_type = _TESTSAMENAME1_BODY
 DESCRIPTOR.message_types_by_name['UserMessage'] = _USERMESSAGE
 DESCRIPTOR.message_types_by_name['OtherMessage'] = _OTHERMESSAGE
 DESCRIPTOR.message_types_by_name['MapMessage'] = _MAPMESSAGE
@@ -1124,6 +1348,8 @@ DESCRIPTOR.message_types_by_name['InvoiceItem2'] = _INVOICEITEM2
 DESCRIPTOR.message_types_by_name['Invoice3'] = _INVOICE3
 DESCRIPTOR.message_types_by_name['RootMessage'] = _ROOTMESSAGE
 DESCRIPTOR.message_types_by_name['AnOtherMessage'] = _ANOTHERMESSAGE
+DESCRIPTOR.message_types_by_name['TestSameName0'] = _TESTSAMENAME0
+DESCRIPTOR.message_types_by_name['TestSameName1'] = _TESTSAMENAME1
 DESCRIPTOR.enum_types_by_name['SexType'] = _SEXTYPE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
@@ -1274,10 +1500,58 @@ AnOtherMessage = _reflection.GeneratedProtocolMessageType('AnOtherMessage', (_me
 _sym_db.RegisterMessage(AnOtherMessage)
 _sym_db.RegisterMessage(AnOtherMessage.SubMessage)
 
+TestSameName0 = _reflection.GeneratedProtocolMessageType('TestSameName0', (_message.Message,), {
+
+  'Body' : _reflection.GeneratedProtocolMessageType('Body', (_message.Message,), {
+
+    'InputInfoEntry' : _reflection.GeneratedProtocolMessageType('InputInfoEntry', (_message.Message,), {
+      'DESCRIPTOR' : _TESTSAMENAME0_BODY_INPUTINFOENTRY,
+      '__module__' : 'example.example_proto.demo.demo_pb2'
+      # @@protoc_insertion_point(class_scope:user.TestSameName0.Body.InputInfoEntry)
+      })
+    ,
+    'DESCRIPTOR' : _TESTSAMENAME0_BODY,
+    '__module__' : 'example.example_proto.demo.demo_pb2'
+    # @@protoc_insertion_point(class_scope:user.TestSameName0.Body)
+    })
+  ,
+  'DESCRIPTOR' : _TESTSAMENAME0,
+  '__module__' : 'example.example_proto.demo.demo_pb2'
+  # @@protoc_insertion_point(class_scope:user.TestSameName0)
+  })
+_sym_db.RegisterMessage(TestSameName0)
+_sym_db.RegisterMessage(TestSameName0.Body)
+_sym_db.RegisterMessage(TestSameName0.Body.InputInfoEntry)
+
+TestSameName1 = _reflection.GeneratedProtocolMessageType('TestSameName1', (_message.Message,), {
+
+  'Body' : _reflection.GeneratedProtocolMessageType('Body', (_message.Message,), {
+
+    'OutputInfoEntry' : _reflection.GeneratedProtocolMessageType('OutputInfoEntry', (_message.Message,), {
+      'DESCRIPTOR' : _TESTSAMENAME1_BODY_OUTPUTINFOENTRY,
+      '__module__' : 'example.example_proto.demo.demo_pb2'
+      # @@protoc_insertion_point(class_scope:user.TestSameName1.Body.OutputInfoEntry)
+      })
+    ,
+    'DESCRIPTOR' : _TESTSAMENAME1_BODY,
+    '__module__' : 'example.example_proto.demo.demo_pb2'
+    # @@protoc_insertion_point(class_scope:user.TestSameName1.Body)
+    })
+  ,
+  'DESCRIPTOR' : _TESTSAMENAME1,
+  '__module__' : 'example.example_proto.demo.demo_pb2'
+  # @@protoc_insertion_point(class_scope:user.TestSameName1)
+  })
+_sym_db.RegisterMessage(TestSameName1)
+_sym_db.RegisterMessage(TestSameName1.Body)
+_sym_db.RegisterMessage(TestSameName1.Body.OutputInfoEntry)
+
 
 _MAPMESSAGE_USERMAPENTRY._options = None
 _MAPMESSAGE_USERFLAGENTRY._options = None
 _NESTEDMESSAGE_USERLISTMAPENTRY._options = None
 _NESTEDMESSAGE_USERMAPENTRY._options = None
 _OPTIONALMESSAGE_INTMAPENTRY._options = None
+_TESTSAMENAME0_BODY_INPUTINFOENTRY._options = None
+_TESTSAMENAME1_BODY_OUTPUTINFOENTRY._options = None
 # @@protoc_insertion_point(module_scope)

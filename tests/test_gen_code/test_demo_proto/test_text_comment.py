@@ -440,7 +440,7 @@ class NestedMessage(BaseModel):
 """
         assert format_content(content) in self._model_output(demo_pb2.NestedMessage)
 
-    def test_invoice_item(self) -> None:
+    def test_self_referencing(self) -> None:
         assert format_content(
             """
 class InvoiceItem(BaseModel):
@@ -451,6 +451,67 @@ class InvoiceItem(BaseModel):
             """
         ) in self._model_output(demo_pb2.InvoiceItem)
 
+    def test_circular_references(self) -> None:
+        assert format_content(
+            """
+class Invoice3(BaseModel):
+    name: str = Field(default="")
+    amount: int = Field(default=0)
+    quantity: int = Field(default=0)
+    items: typing.List["InvoiceItem2"] = Field(default_factory=list)
+
+
+class InvoiceItem2(BaseModel):
+
+    name: str = Field(default="")
+    amount: int = Field(default=0)
+    quantity: int = Field(default=0)
+    items: typing.List["InvoiceItem2"] = Field(default_factory=list)
+    invoice: Invoice3 = Field()
+            """
+        ) in self._model_output(demo_pb2.InvoiceItem2)
+
+    def test_message_reference(self) -> None:
+        assert format_content(
+            """
+class AnOtherMessage(BaseModel):
+    class SubMessage(BaseModel):
+        text: str = Field(default="")
+
+    field1: str = Field(default="")
+    field2: SubMessage = Field()
+
+
+class RootMessage(BaseModel):
+
+    field1: str = Field(default="")
+    field2: AnOtherMessage = Field()
+            """
+        ) in self._model_output(demo_pb2.RootMessage)
+
+    def test_same_bane_inline_structure(self) -> None:
+        assert format_content(
+            """
+class TestSameName0(BaseModel):
+
+    class Body(BaseModel):
+        input_model: str = Field(default="")
+        input_info: typing.Dict[str, str] = Field(default_factory=dict)
+
+    body: Body = Field()
+            """
+        ) in self._model_output(demo_pb2.TestSameName0)
+
+        assert format_content(
+            """
+class TestSameName1(BaseModel):
+    class Body(BaseModel):
+        output_model: str = Field(default="")
+        output_info: typing.Dict[str, str] = Field(default_factory=dict)
+
+    body: Body = Field()
+            """
+        ) in self._model_output(demo_pb2.TestSameName1)
 
 class TestTextCommentByPyi(BaseTestTextComment):
     @staticmethod
