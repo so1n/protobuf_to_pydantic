@@ -105,6 +105,8 @@ class FileDescriptorProtoToCode(BaseP2C):
         for _index in range(min(len(fd_path_list), len(message_path_list))):
             if message_path_list[_index] == fd_path_list[_index]:
                 index = _index
+            else:
+                break
         # common/a/name.proto includes common/b/include.proto
         # The basic name: include_p2p
         module_name: str = message_path_list[-1].replace(".proto", "") + self.config.file_name_suffix
@@ -112,9 +114,8 @@ class FileDescriptorProtoToCode(BaseP2C):
         module_name = ".".join(message_path_list[index + 1 : -1] + (module_name,))
 
         logger.info((self._fd.name, other_fd.name, index))
-        if index != -1:
-            # Add relative parts: ..b.include_p2p
-            module_name = "." * (len(message_path_list) - (index + 1)) + module_name
+        # Add relative parts: ..b.include_p2p
+        module_name = "." * (len(message_path_list) - (index + 1)) + module_name
         self._add_import_code(module_name, type_str)
 
     def _comment_handler(self, leading_comments: str, trailing_comments: str) -> Tuple[dict, str, str]:
