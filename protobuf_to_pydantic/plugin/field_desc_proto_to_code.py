@@ -114,7 +114,7 @@ class FileDescriptorProtoToCode(BaseP2C):
         logger.info((self._fd.name, other_fd.name, index))
         if index != -1:
             # Add relative parts: ..b.include_p2p
-            module_name = "." * (len(message_path_list) - (index + 1)) + module_name
+            module_name = "." * (len(fd_path_list) - (index + 1)) + module_name
         self._add_import_code(module_name, type_str)
 
     def _comment_handler(self, leading_comments: str, trailing_comments: str) -> Tuple[dict, str, str]:
