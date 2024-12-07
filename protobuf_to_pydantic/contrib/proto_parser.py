@@ -74,7 +74,7 @@ enumfield: [ COMMENTS ] IDENT "=" INTLIT [ "[" enumvalueoption ( ","  enumvalueo
 enumvalueoption: OPTIONNAME "=" CONSTANT
 message: [ comments ] "message" MESSAGENAME messagebody
 messagebody: "{" ( repeatedfield | optionalfield | field | enum | message | option | oneof | mapfield | reserved
-    | EMPTYSTATEMENT )* "}"
+    | EMPTYSTATEMENT | comments )* "}"
 googleoption: "option" "(google.api.http)"  "=" "{" [ "post:" CONSTANT [ "body:" CONSTANT ] ] "}" ";"
 service: [ comments ] "service" SERVICENAME "{" ( option | rpc | EMPTYSTATEMENT )* "}"
 rpc: [ comments ] "rpc" RPCNAME "(" [ "stream" ] MESSAGETYPE ")" "returns" "(" [ "stream" ] MESSAGETYPE ")" \
