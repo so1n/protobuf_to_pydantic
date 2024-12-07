@@ -771,7 +771,7 @@ class FileDescriptorProtoToCode(BaseP2C):
             ]
         )
         if not any([class_head_content, class_field_content]):
-            content += " " * (indent + self.code_indent) + "pass\n"
+            content += "\n" + " " * (indent + self.code_indent) + "pass\n"
         use_model_cache[class_name] = content
         return content
 
