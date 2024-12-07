@@ -4,7 +4,7 @@ import sys
 from protobuf_to_pydantic.__version__ import __version__
 
 
-def p2p_cli() -> None:
+def p2p_cli(include_sys_path: bool = True, include_executable: bool = True) -> None:
     if not len(sys.argv) > 1:
         return
     if "-V" in sys.argv or "--version" in sys.argv:
@@ -44,8 +44,10 @@ def p2p_cli() -> None:
         print()
         print()
         print("current working directory: " + os.getcwd())
-        print("sys path: " + "\n    -".join([""] + sys.path))
-        print("executable: " + str(sys.executable))
+        if include_sys_path:
+            print("sys path: " + "\n    -".join([""] + sys.path))
+        if include_executable:
+            print("executable: " + str(sys.executable))
         print("python version: " + str(sys.version_info))
         print()
         print("############# dependencies ############## ")

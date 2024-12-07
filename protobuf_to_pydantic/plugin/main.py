@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import logging
 
-from protobuf_to_pydantic.plugin.cli import p2p_cli
+from protobuf_to_pydantic.cli import p2p_cli
 from protobuf_to_pydantic.plugin.code_gen import CodeGen
 from protobuf_to_pydantic.plugin.config import ConfigModel
 
