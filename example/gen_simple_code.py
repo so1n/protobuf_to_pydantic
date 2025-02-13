@@ -16,15 +16,20 @@ if _pydantic_adapter.is_v1:
 else:
     target_p += "_pydanticv2"
 
-module = importlib.import_module(f"example.{target_p}.example.example_proto.demo.demo_pb2")
+module_list = [
+    importlib.import_module(f"example.{target_p}.example.example_proto.demo.demo_pb2"),
+    importlib.import_module(f"example.{target_p}.example.example_proto.demo.diff_pkg_refer_1_pb2"),
+    importlib.import_module(f"example.{target_p}.example.example_proto.demo.diff_pkg_refer_2_pb2"),
+]
 message_class_list = []
-for module_name in dir(module):
-    message_class = getattr(module, module_name)
-    if not inspect.isclass(message_class):
-        continue
-    if not issubclass(message_class, Message):
-        continue
-    message_class_list.append(message_class)
+for module in module_list:
+    for module_name in dir(module):
+        message_class = getattr(module, module_name)
+        if not inspect.isclass(message_class):
+            continue
+        if not issubclass(message_class, Message):
+            continue
+        message_class_list.append(message_class)
 
 now_path: pathlib.Path = pathlib.Path(__file__).absolute()
 

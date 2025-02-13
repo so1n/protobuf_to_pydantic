@@ -295,7 +295,7 @@ class M2P(object):
         for message in descriptor.nested_types:
             if message.name.endswith("Entry"):
                 continue
-            nested_type: Any = self._parse_msg_to_pydantic_model(descriptor=message)
+            nested_type: Any = self._parse_msg_to_pydantic_model(descriptor=message, root_descriptor=descriptor)
             nested_message_dict[message.full_name] = nested_type
         # enum support
         for enum_type in descriptor.enum_types:
@@ -330,7 +330,9 @@ class M2P(object):
                 elif k_v_field.message_type.name in self._message_type_dict_by_type_name:
                     k_v_type = self._message_type_dict_by_type_name[k_v_field.message_type.name]
                 else:
-                    k_v_type = self._parse_msg_to_pydantic_model(descriptor=k_v_field.message_type)
+                    k_v_type = self._parse_msg_to_pydantic_model(
+                        descriptor=k_v_field.message_type, root_descriptor=protobuf_field.message_type
+                    )
                 dict_type_param_list.append(k_v_type)
 
             field_dataclass.field_type = Dict[tuple(dict_type_param_list)]  # type: ignore
@@ -368,21 +370,26 @@ class M2P(object):
                 # so there is no uniform cross-module reference
                 # see issue: https://github.com/protocolbuffers/protobuf/issues/1491
                 is_same_pkg: bool = field_dataclass.descriptor.file.name == protobuf_field.message_type.file.name
-                _class_name: str = protobuf_field.message_type.name
                 if not is_same_pkg:
-                    _class_name = replace_file_name_to_class_name(protobuf_field.message_type.file.name) + _class_name
                     field_dataclass.field_type = self._parse_msg_to_pydantic_model(
                         descriptor=protobuf_field.message_type,
-                        class_name=_class_name,
                         skip_validate_rule=skip_validate_rule,
+                        root_descriptor=field_dataclass.descriptor,
                     )
-                    _class_doc: str = (
-                        "Note: The current class does not belong to the package\n"
-                        f"{_class_name} protobuf path:{protobuf_field.message_type.file.name}"
-                    )
-                    setattr(field_dataclass.field_type, "__doc__", _class_doc)
+                    # _class_name = replace_file_name_to_class_name(protobuf_field.message_type.file.name) + _class_name
+                    # field_dataclass.field_type = self._parse_msg_to_pydantic_model(
+                    #     descriptor=protobuf_field.message_type,
+                    #     class_name=_class_name,
+                    #     skip_validate_rule=skip_validate_rule,
+                    # )
+                    # _class_doc: str = (
+                    #     "Note: The current class does not belong to the package\n"
+                    #     f"{_class_name} protobuf path:{protobuf_field.message_type.file.name}"
+                    # )
+                    # setattr(field_dataclass.field_type, "__doc__", _class_doc)
                 else:
                     # if self-referencing, need use Python type hints postponed annotations
+                    _class_name: str = protobuf_field.message_type.name
                     field_dataclass.field_type = f'"{_class_name}"'
                     if (
                         skip_validate_rule
@@ -527,9 +534,19 @@ class M2P(object):
         return field_class(**field_info_dict)  # type: ignore
 
     def _parse_msg_to_pydantic_model(
-        self, *, descriptor: Descriptor, class_name: str = "", skip_validate_rule: bool = False
+        self,
+        *,
+        descriptor: Descriptor,
+        class_name: str = "",
+        skip_validate_rule: bool = False,
+        root_descriptor: Optional[Descriptor] = None,
     ) -> Type[BaseModel]:
+        is_same_pkg = descriptor.file.name == root_descriptor.file.name if root_descriptor else True
         class_name = class_name or descriptor.name
+
+        if not is_same_pkg:
+            class_name = replace_file_name_to_class_name(descriptor.file.name) + class_name
+
         message_key = (descriptor.full_name, class_name, skip_validate_rule)
         if message_key in self._creat_cache:
             if self._creat_cache[message_key] is None:
@@ -626,6 +643,12 @@ class M2P(object):
             validators=validators,
         )
         setattr(pydantic_model, "_one_of_dict", one_of_dict)
+        if not is_same_pkg:
+            class_doc = (
+                "Note: The current class does not belong to the package\n"
+                f"{class_name} protobuf path:{descriptor.file.name}"
+            )
+            setattr(pydantic_model, "__doc__", class_doc)
         self._creat_cache[message_key] = pydantic_model
         return pydantic_model
 

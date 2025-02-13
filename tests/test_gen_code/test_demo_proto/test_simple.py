@@ -6,14 +6,23 @@ from protobuf_to_pydantic._pydantic_adapter import is_v1
 
 if __version__ > "4.0.0":
     if is_v1:
-        from example.proto_pydanticv1.example.example_proto.demo import demo_pb2
+        from example.proto_pydanticv1.example.example_proto.demo import demo_pb2, diff_pkg_refer_2_pb2
     else:
-        from example.proto_pydanticv2.example.example_proto.demo import demo_pb2  # type: ignore[no-redef]
+        from example.proto_pydanticv2.example.example_proto.demo import (  # type: ignore[no-redef]
+            demo_pb2,
+            diff_pkg_refer_2_pb2,
+        )
 else:
     if is_v1:
-        from example.proto_3_20_pydanticv1.example.example_proto.demo import demo_pb2  # type: ignore[no-redef]
+        from example.proto_3_20_pydanticv1.example.example_proto.demo import (  # type: ignore[no-redef]
+            demo_pb2,
+            diff_pkg_refer_2_pb2,
+        )
     else:
-        from example.proto_3_20_pydanticv2.example.example_proto.demo import demo_pb2  # type: ignore[no-redef]
+        from example.proto_3_20_pydanticv2.example.example_proto.demo import (  # type: ignore[no-redef]
+            demo_pb2,
+            diff_pkg_refer_2_pb2
+        )
 
 from protobuf_to_pydantic import msg_to_pydantic_model, pydantic_model_to_py_code
 from protobuf_to_pydantic.gen_model import clear_create_model_cache
@@ -366,3 +375,14 @@ class TestSameName1(BaseModel):
 
     body: Body = Field()"""
         assert format_content(content) in self._model_output(demo_pb2.TestSameName1)
+
+    def test_diff_pkg_refer(self) -> None:
+        content = """
+class ExampleExampleProtoDemoDiffPkgRefer1Demo1(BaseModel):
+    \"\"\"Note: The current class does not belong to the package
+    ExampleExampleProtoDemoDiffPkgRefer1Demo1 protobuf path:example/example_proto/demo/diff_pkg_refer_1.proto\"\"\"
+
+
+class Demo2(BaseModel):
+    myField: typing.Dict[str, ExampleExampleProtoDemoDiffPkgRefer1Demo1] = Field(default_factory=dict)"""
+        assert format_content(content) in self._model_output(diff_pkg_refer_2_pb2.Demo2)
