@@ -868,12 +868,17 @@ class FileDescriptorProtoToCode(BaseP2C):
                 use_custom_type=use_custom_type,
             )
         else:
+            py_type_str = field.type_name.split(".")[-1]
+            if field.type_name in self._descriptors.message_to_fd:
+                message_fd = self._descriptors.message_to_fd[field.type_name]
+                self._add_other_module_pkg(message_fd, py_type_str)
+
             return ProtobufTypeModel(
                 # When relying on other Messages, it will only be used in the type of pydantic.Model,
                 # and the type_ field will not be used at this time
                 type_factory=None,
                 rule_type_str="message",
-                py_type_str=field.type_name.split(".")[-1],
+                py_type_str=py_type_str,
             )
 
     def _parse_field_descriptor(self) -> None:

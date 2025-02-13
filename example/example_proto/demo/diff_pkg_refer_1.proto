@@ -1,0 +1,4 @@
+syntax = "proto3";
+package diff_pkg_refer_1;
+
+message Demo1{};

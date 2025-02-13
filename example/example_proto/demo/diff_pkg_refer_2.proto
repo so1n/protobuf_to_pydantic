@@ -1,0 +1,8 @@
+syntax = "proto3";
+import "example/example_proto/demo/diff_pkg_refer_1.proto";
+
+package diff_pkg_refer_2;
+
+message Demo2{
+  map<string, diff_pkg_refer_1.Demo1> myField = 1;
+};
