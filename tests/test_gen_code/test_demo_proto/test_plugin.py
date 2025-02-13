@@ -6,14 +6,23 @@ from protobuf_to_pydantic._pydantic_adapter import is_v1
 
 if __version__ > "4.0.0":
     if is_v1:
-        from example.proto_pydanticv1.example.example_proto.demo import demo_p2p
+        from example.proto_pydanticv1.example.example_proto.demo import demo_p2p, diff_pkg_refer_2_p2p
     else:
-        from example.proto_pydanticv2.example.example_proto.demo import demo_p2p  # type: ignore[no-redef]
+        from example.proto_pydanticv2.example.example_proto.demo import (  # type: ignore[no-redef]
+            demo_p2p,
+            diff_pkg_refer_2_p2p,
+        )
 else:
     if is_v1:
-        from example.proto_3_20_pydanticv1.example.example_proto.demo import demo_p2p  # type: ignore[no-redef]
+        from example.proto_3_20_pydanticv1.example.example_proto.demo import (  # type: ignore[no-redef]
+            demo_p2p,
+            diff_pkg_refer_2_p2p,
+        )
     else:
-        from example.proto_3_20_pydanticv2.example.example_proto.demo import demo_p2p  # type: ignore[no-redef]
+        from example.proto_3_20_pydanticv2.example.example_proto.demo import (  # type: ignore[no-redef]
+            demo_p2p,
+            diff_pkg_refer_2_p2p,
+        )
 
 class TestPlugin:
 
@@ -257,3 +266,15 @@ class TestSameName1(BaseModel):
 
     body: "TestSameName1.Body" = Field()"""
         assert content.strip("\n") in getsource(demo_p2p.TestSameName1).strip("\n")
+
+    def test_diff_pkg_refer(self) -> None:
+        content = """
+class Demo2(BaseModel):
+    myField: typing.Dict[str, Demo1] = Field(default_factory=dict)"""
+        assert content.strip("\n") in getsource(diff_pkg_refer_2_p2p.Demo2).strip("\n")
+
+        # If the source code can be obtained, Demo1 can be imported normally
+        content = """
+class Demo1(BaseModel):
+    pass"""
+        assert content.strip("\n") in getsource(diff_pkg_refer_2_p2p.Demo1).strip("\n")
