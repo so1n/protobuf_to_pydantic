@@ -669,3 +669,14 @@ message AfterReferMessage {
   // p2p: {"example": 18, "title": "use age", "ge": 0}
   int32 age=2;
 }
+
+message OptionalMessage{
+    // fix https://github.com/so1n/protobuf_to_pydantic/issues/82
+    // p2p: {"required": true}
+    optional MessageIgnoredTest  my_message1 = 1;
+    // fix https://github.com/so1n/protobuf_to_pydantic/issues/85
+    optional MessageIgnoredTest  my_message2 = 2;
+    // p2p: {"required": true}
+    MessageIgnoredTest  my_message3 = 3;
+    MessageIgnoredTest  my_message4 = 4;
+}

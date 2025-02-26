@@ -75,7 +75,9 @@ class UserMessage(BaseModel):
     demo: ExampleExampleProtoCommonSingleDemoEnum = Field(default=0)
     is_adult: bool = Field(default=False)
     user_name: str = Field(default="")
-    demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field()
+    demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field(
+        default_factory=ExampleExampleProtoCommonSingleDemoMessage
+    )
 """) in self._model_output(demo_pb2.UserMessage)
 
     def test_other_message(self) -> None:
@@ -133,7 +135,9 @@ class UserMessage(BaseModel):
     demo: ExampleExampleProtoCommonSingleDemoEnum = Field(default=0)
     is_adult: bool = Field(default=False)
     user_name: str = Field(default="")
-    demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field()
+    demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field(
+        default_factory=ExampleExampleProtoCommonSingleDemoMessage
+    )
 
 
 class MapMessage(BaseModel):
@@ -174,7 +178,9 @@ class UserMessage(BaseModel):
     demo: ExampleExampleProtoCommonSingleDemoEnum = Field(default=0)
     is_adult: bool = Field(default=False)
     user_name: str = Field(default="")
-    demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field()
+    demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field(
+        default_factory=ExampleExampleProtoCommonSingleDemoMessage
+    )
 
 
 class RepeatedMessage(BaseModel):
@@ -226,7 +232,9 @@ class UserMessage(BaseModel):
     demo: ExampleExampleProtoCommonSingleDemoEnum = Field(default=0)
     is_adult: bool = Field(default=False)
     user_name: str = Field(default="")
-    demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field()
+    demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field(
+        default_factory=ExampleExampleProtoCommonSingleDemoMessage
+    )
 
 
 class RepeatedMessage(BaseModel):
@@ -258,11 +266,11 @@ class NestedMessage(BaseModel):
 
     user_list_map: typing.Dict[str, RepeatedMessage] = Field(default_factory=dict)
     user_map: typing.Dict[str, MapMessage] = Field(default_factory=dict)
-    user_pay: UserPayMessage = Field()
+    user_pay: UserPayMessage = Field(default_factory=UserPayMessage )
     include_enum: IncludeEnum = Field(default=0)
-    not_enable_user_pay: UserPayMessage = Field()
+    not_enable_user_pay: UserPayMessage = Field(default_factory=UserPayMessage )
     empty: typing.Any = Field()
-    after_refer: AfterReferMessage = Field()
+    after_refer: AfterReferMessage = Field(default_factory=AfterReferMessage )
 """) in self._model_output(demo_pb2.NestedMessage)
 
     def test_invoice_item(self) -> None:
@@ -293,7 +301,7 @@ class OptionalMessage(BaseModel):
     y: int = Field(default=0)
     name: typing.Optional[str] = Field(default="")
     age: typing.Optional[int] = Field(default=0)
-    item: typing.Optional[InvoiceItem] = Field()
+    item: typing.Optional[InvoiceItem] = Field(default_factory=InvoiceItem)
     str_list: typing.List[str] = Field(default_factory=list)
     int_map: typing.Dict[str, int] = Field(default_factory=dict)
     default_template_test: float = Field(default=0.0)
@@ -316,7 +324,7 @@ class OptionalMessage(BaseModel):
     y: int = Field(default=0)
     name: typing.Optional[str] = Field(default="")
     age: typing.Optional[int] = Field(default=0)
-    item: typing.Optional[InvoiceItem] = Field(default=None)
+    item: typing.Optional[InvoiceItem] = Field(default_factory=InvoiceItem)
     str_list: typing.List[str] = Field(default_factory=list)
     int_map: typing.Dict[str, int] = Field(default_factory=dict)
     default_template_test: float = Field(default=0.0)
@@ -339,7 +347,7 @@ class InvoiceItem2(BaseModel):
     amount: int = Field(default=0)
     quantity: int = Field(default=0)
     items: typing.List["InvoiceItem2"] = Field(default_factory=list)
-    invoice: Invoice3 = Field()"""
+    invoice: Invoice3 = Field(default_factory=Invoice3)"""
         assert format_content(content) in self._model_output(demo_pb2.InvoiceItem2)
 
     def test_message_reference(self) -> None:
@@ -349,12 +357,12 @@ class AnOtherMessage(BaseModel):
         text: str = Field(default="")
 
     field1: str = Field(default="")
-    field2: SubMessage = Field()
+    field2: SubMessage = Field(default_factory=SubMessage)
 
 class RootMessage(BaseModel):
 
     field1: str = Field(default="")
-    field2: AnOtherMessage = Field()"""
+    field2: AnOtherMessage = Field(default_factory=AnOtherMessage)"""
         assert format_content(content) in self._model_output(demo_pb2.RootMessage)
 
     def test_same_bane_inline_structure(self) -> None:
@@ -365,7 +373,7 @@ class TestSameName0(BaseModel):
         input_model: str = Field(default="")
         input_info: typing.Dict[str, str] = Field(default_factory=dict)
 
-    body: Body = Field()"""
+    body: Body = Field(default_factory=Body)"""
         assert format_content(content) in self._model_output(demo_pb2.TestSameName0)
         content = """
 class TestSameName1(BaseModel):
@@ -373,7 +381,7 @@ class TestSameName1(BaseModel):
         output_model: str = Field(default="")
         output_info: typing.Dict[str, str] = Field(default_factory=dict)
 
-    body: Body = Field()"""
+    body: Body = Field(default_factory=Body)"""
         assert format_content(content) in self._model_output(demo_pb2.TestSameName1)
 
     def test_diff_pkg_refer(self) -> None:

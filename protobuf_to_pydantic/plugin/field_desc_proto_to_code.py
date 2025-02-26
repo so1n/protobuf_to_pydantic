@@ -27,7 +27,7 @@ from protobuf_to_pydantic.field_info_rule.protobuf_option_to_field_info.comment 
 )
 from protobuf_to_pydantic.field_info_rule.protobuf_option_to_field_info.desc import gen_field_info_dict_from_field_desc
 from protobuf_to_pydantic.field_info_rule.types import FieldInfoTypedDict, OneOfTypedDict
-from protobuf_to_pydantic.gen_code import BaseP2C
+from protobuf_to_pydantic.gen_code import BaseP2C, FormatContainer
 from protobuf_to_pydantic.grpc_types import (
     AnyMessage,
     DescriptorProto,
@@ -294,6 +294,7 @@ class FileDescriptorProtoToCode(BaseP2C):
                 rule_type_str = protobuf_type_model.rule_type_str
                 nested_message_name = type_str
                 use_custom_type = protobuf_type_model.use_custom_type
+                field_info_default_factory_value = FormatContainer(protobuf_type_model.type_factory)
 
                 message_fd: FileDescriptorProto = self._descriptors.message_to_fd[field.type_name]
                 self._add_other_module_pkg(message_fd, type_str)
@@ -301,6 +302,7 @@ class FileDescriptorProtoToCode(BaseP2C):
                 desc_nested_type_name = {i.name for i in desc.nested_type}
                 if message == desc:
                     # if self-referencing, need use Python type hints postponed annotations
+                    field_info_default_factory_value = FormatContainer(f"lambda : {type_str}()")
                     type_str = f'"{type_str}"'
                 elif (
                     message_fd.name == self._fd.name
@@ -322,8 +324,10 @@ class FileDescriptorProtoToCode(BaseP2C):
                             )
                         )
                     except WaitingToCompleteException:
+                        field_info_default_factory_value = FormatContainer(f"lambda : {type_str}()")
                         type_str = f'"{type_str}"'
                 elif type_str in root_desc_nested_type_name:
+                    field_info_default_factory_value = FormatContainer(f"lambda : {root_desc.name}.{type_str}()")
                     # I don't want to maintain complex dependencies, so I'll just use strings type hints here
                     type_str = f'"{root_desc.name}.{type_str}"'
         elif field.type == 14:
@@ -391,6 +395,8 @@ class FileDescriptorProtoToCode(BaseP2C):
                 field_type = eval(type_str)
             except NameError:
                 pass
+
+        is_required = field_info_dict.get("required", None)
 
         if (
             field_info_dict
@@ -467,12 +473,16 @@ class FileDescriptorProtoToCode(BaseP2C):
             # pgv or p2p rule no warning required
             field_info_param_dict_migration_v2_handler(field_info_dict, is_warnings=False)  # type: ignore[arg-type]
 
+        # optional handler
         if optional_dict.get(field.name, {}).get("is_proto3_optional", False) or self.config.all_field_set_optional:
             self._add_import_code("typing")
             type_str = f"typing.Optional[{type_str}]"
-            if field_info_dict.get(
-                "default", _pydantic_adapter.PydanticUndefined
-            ) is _pydantic_adapter.PydanticUndefined and not field_info_dict.get("default_factory", None):
+            if (
+                is_required is not True
+                and field_info_dict.get("default", _pydantic_adapter.PydanticUndefined)
+                is _pydantic_adapter.PydanticUndefined
+                and not field_info_dict.get("default_factory", None)
+            ):
                 field_info_dict["default"] = None
 
         # arranging  field info parameters
@@ -876,7 +886,7 @@ class FileDescriptorProtoToCode(BaseP2C):
             return ProtobufTypeModel(
                 # When relying on other Messages, it will only be used in the type of pydantic.Model,
                 # and the type_ field will not be used at this time
-                type_factory=None,
+                type_factory=py_type_str,
                 rule_type_str="message",
                 py_type_str=py_type_str,
             )

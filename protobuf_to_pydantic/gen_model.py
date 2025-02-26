@@ -2,6 +2,7 @@ import dataclasses
 import datetime
 import importlib
 import inspect
+import logging
 import os
 from enum import IntEnum
 from pathlib import Path
@@ -35,6 +36,8 @@ from protobuf_to_pydantic.util import create_pydantic_model, pydantic_allow_vali
 
 if TYPE_CHECKING:
     from protobuf_to_pydantic.field_info_rule.types import FieldInfoTypedDict, MessageOptionTypedDict, UseOneOfTypedDict
+
+logger: logging.Logger = logging.getLogger(__name__)
 
 SKIP_RULE_MESSAGE_SUFFIX = "WithSkipRule"
 ALLOW_ARBITRARY_TYPE = (AnyMessage, FieldMask)
@@ -97,6 +100,7 @@ class FieldDataClass(object):
     field_default: Any
     field_default_factory: Optional[_pydantic_adapter.NoArgAnyCallable]
     # metadate
+    is_required: bool
     protobuf_field: FieldDescriptor
     nested_message_dict: Dict[str, Type[Union[BaseModel, IntEnum]]]
     descriptor: Descriptor
@@ -365,6 +369,7 @@ class M2P(object):
                     field_dataclass.field_type = field_dataclass.nested_message_dict[full_name]
                 # Facilitate the analysis of `gen code`
                 setattr(field_dataclass.field_type, "_is_nested", True)
+                field_dataclass.field_default_factory = field_dataclass.field_type
             else:
                 # Python Protobuf does not solve the namespace problem of modules,
                 # so there is no uniform cross-module reference
@@ -376,6 +381,7 @@ class M2P(object):
                         skip_validate_rule=skip_validate_rule,
                         root_descriptor=field_dataclass.descriptor,
                     )
+                    field_dataclass.field_default_factory = field_dataclass.field_type
                     # _class_name = replace_file_name_to_class_name(protobuf_field.message_type.file.name) + _class_name
                     # field_dataclass.field_type = self._parse_msg_to_pydantic_model(
                     #     descriptor=protobuf_field.message_type,
@@ -403,6 +409,13 @@ class M2P(object):
                             )
                         except WaitingToCompleteException:
                             pass
+                    if isinstance(field_dataclass.field_type, str):
+                        logger.warning(
+                            f"{field_dataclass.protobuf_field.full_name}'s default_factory attr value:{_class_name} "
+                            f"is not generated and cannot be referenced now"
+                        )
+                    else:
+                        field_dataclass.field_default_factory = field_dataclass.field_type
 
     def _protobuf_field_type_is_type_enum_handler(self, field_dataclass: FieldDataClass) -> None:
         # support google.protobuf.Enum
@@ -458,6 +471,11 @@ class M2P(object):
             raw_validator_dict = field_info_dict.get("validator", {})
             field_info_dict: FieldInfoTypedDict = FieldInfoParamModel(**field_info_dict).dict()  # type: ignore
             field_info_dict.pop("skip")
+
+            is_required = field_info_dict.get("required", None)
+            if is_required:
+                field_dataclass.is_required = is_required
+
             # Nested types do not include the `enable`, `field` and `validator`  attributes
             if not field_info_dict.pop("enable"):
                 return None
@@ -569,6 +587,7 @@ class M2P(object):
                 field_type_name=protobuf_common_type_dict.get(protobuf_field.type, None),  # type: ignore
                 field_default=_pydantic_adapter.PydanticUndefined,
                 field_default_factory=None,
+                is_required=False,
                 protobuf_field=protobuf_field,
                 nested_message_dict=nested_message_dict,
                 descriptor=descriptor,
@@ -591,7 +610,11 @@ class M2P(object):
             is_proto3_optional = optional_dict.get(protobuf_field.full_name, {}).get("is_proto3_optional", False)
             if is_proto3_optional or self._all_field_set_optional:
                 field_dataclass.field_type = Optional[field_dataclass.field_type]
-                if field_info.default is _pydantic_adapter.PydanticUndefined and field_info.default_factory is None:
+                if (
+                    field_dataclass.is_required is not True
+                    and field_info.default is _pydantic_adapter.PydanticUndefined
+                    and field_info.default_factory is None
+                ):
                     field_info.default = None
             annotation_dict[field_dataclass.field_name] = (field_dataclass.field_type, field_info)
             if one_of_dict:

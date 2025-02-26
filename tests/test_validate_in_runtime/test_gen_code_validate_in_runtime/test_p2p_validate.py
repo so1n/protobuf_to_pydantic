@@ -74,6 +74,8 @@ class BaseGenCodeP2pModelValidator(BaseTestP2pModelValidator):
     def test_one_of_optional(self) -> None:
         self._test_one_of_optional(self.core_module.OneOfOptionalTest)
 
+    def test_optional_message(self) -> None:
+        self._test_optional_message(self.core_module.OptionalMessage)
 
 class TestP2pModelValidator(BaseGenCodeP2pModelValidator):
     core_module = demo_gen_code_by_p2p

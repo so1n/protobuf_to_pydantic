@@ -332,3 +332,20 @@ class BaseTestP2pModelValidator:
 
         # check other column optional
         self.replace_message_fn(model_class, local_dict=local_dict)(x=None, name=None, age=None)
+
+    def _test_optional_message(self, model_class: Any) -> None:
+        with pytest.raises(ValidationError):
+            self.replace_message_fn(model_class, local_dict=local_dict)()
+
+        with pytest.raises(ValidationError):
+            self.replace_message_fn(model_class, local_dict=local_dict)(my_message1=None)
+
+        if not is_v1:
+            with pytest.raises(ValidationError):
+                self.replace_message_fn(model_class, local_dict=local_dict)(
+                    my_message3={"const_test": 1, "range_e_test": 2, "range_test": 2}
+                )
+
+        self.replace_message_fn(model_class, local_dict=local_dict)(
+            my_message1=None, my_message3={"const_test": 1, "range_e_test": 2, "range_test": 2}
+        )

@@ -1,5 +1,5 @@
 # This is an automatically generated file, please do not change
-# gen by protobuf_to_pydantic[v0.3.0.3](https://github.com/so1n/protobuf_to_pydantic)
+# gen by protobuf_to_pydantic[v0.3.0.4](https://github.com/so1n/protobuf_to_pydantic)
 # Protobuf Version: 3.20.3
 # Pydantic Version: 2.5.3
 import typing
@@ -22,7 +22,7 @@ class AnOtherMessage(BaseModel):
         text: str = Field(default="")
 
     field1: str = Field(default="")
-    field2: SubMessage = Field()
+    field2: SubMessage = Field(default_factory=SubMessage)
 
 
 class EmptyMessage(BaseModel):
@@ -82,7 +82,9 @@ class UserMessage(BaseModel):
     demo: ExampleExampleProtoCommonSingleDemoEnum = Field(default=0)
     is_adult: bool = Field(default=False)
     user_name: str = Field(default="")
-    demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field()
+    demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field(
+        default_factory=ExampleExampleProtoCommonSingleDemoMessage
+    )
 
 
 class MapMessage(BaseModel):
@@ -109,11 +111,11 @@ class NestedMessage(BaseModel):
 
     user_list_map: typing.Dict[str, RepeatedMessage] = Field(default_factory=dict)
     user_map: typing.Dict[str, MapMessage] = Field(default_factory=dict)
-    user_pay: UserPayMessage = Field()
+    user_pay: UserPayMessage = Field(default_factory=UserPayMessage)
     include_enum: IncludeEnum = Field(default=0)
-    not_enable_user_pay: UserPayMessage = Field()
+    not_enable_user_pay: UserPayMessage = Field(default_factory=UserPayMessage)
     empty: typing.Any = Field()
-    after_refer: AfterReferMessage = Field()
+    after_refer: AfterReferMessage = Field(default_factory=AfterReferMessage)
 
 
 class OptionalMessage(BaseModel):
@@ -123,7 +125,7 @@ class OptionalMessage(BaseModel):
     y: int = Field(default=0)
     name: typing.Optional[str] = Field(default="")
     age: typing.Optional[int] = Field(default=0)
-    item: typing.Optional[InvoiceItem] = Field()
+    item: typing.Optional[InvoiceItem] = Field(default_factory=InvoiceItem)
     str_list: typing.List[str] = Field(default_factory=list)
     int_map: typing.Dict[str, int] = Field(default_factory=dict)
     default_template_test: float = Field(default=0.0)
@@ -141,7 +143,7 @@ class OtherMessage(BaseModel):
 
 class RootMessage(BaseModel):
     field1: str = Field(default="")
-    field2: AnOtherMessage = Field()
+    field2: AnOtherMessage = Field(default_factory=AnOtherMessage)
 
 
 class TestSameName0(BaseModel):
@@ -149,7 +151,7 @@ class TestSameName0(BaseModel):
         input_model: str = Field(default="")
         input_info: typing.Dict[str, str] = Field(default_factory=dict)
 
-    body: Body = Field()
+    body: Body = Field(default_factory=Body)
 
 
 class TestSameName1(BaseModel):
@@ -157,7 +159,7 @@ class TestSameName1(BaseModel):
         output_model: str = Field(default="")
         output_info: typing.Dict[str, str] = Field(default_factory=dict)
 
-    body: Body = Field()
+    body: Body = Field(default_factory=Body)
 
 
 class Demo1(BaseModel):

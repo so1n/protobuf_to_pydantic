@@ -1,5 +1,5 @@
 # This is an automatically generated file, please do not change
-# gen by protobuf_to_pydantic[v0.3.0.3](https://github.com/so1n/protobuf_to_pydantic)
+# gen by protobuf_to_pydantic[v0.3.0.4](https://github.com/so1n/protobuf_to_pydantic)
 # Protobuf Version: 3.20.3
 # Pydantic Version: 2.5.3
 import typing
@@ -29,7 +29,7 @@ class UserMessage(BaseModel):
     user info
     """
 
-    uid: typing.Optional[str] = Field(title="UID", description="user union id", default=None, example="10086")
+    uid: typing.Optional[str] = Field(title="UID", description="user union id", example="10086")
     age: typing.Optional[int] = Field(default=0, title="use age", ge=0, example=18)
     height: typing.Optional[float] = Field(default=0.0, ge=0.0, le=2.5)
     sex: typing.Optional[SexType] = Field(default=0)
@@ -38,7 +38,9 @@ class UserMessage(BaseModel):
     user_name: typing.Optional[str] = Field(
         default="", description="user name", min_length=1, max_length=10, example="so1n"
     )
-    demo_message: typing.Optional[DemoMessage] = Field(default=None, customer_string="c1", customer_int=1)
+    demo_message: typing.Optional[DemoMessage] = Field(
+        default_factory=DemoMessage, customer_string="c1", customer_int=1
+    )
 
 
 class OtherMessage(BaseModel):
@@ -68,7 +70,7 @@ class RepeatedMessage(BaseModel):
 
 
 class AfterReferMessage(BaseModel):
-    uid: typing.Optional[str] = Field(title="UID", description="user union id", default=None, example="10086")
+    uid: typing.Optional[str] = Field(title="UID", description="user union id", example="10086")
     age: typing.Optional[int] = Field(default=0, title="use age", ge=0, example=18)
 
 
@@ -89,10 +91,12 @@ class NestedMessage(BaseModel):
 
     user_list_map: typing.Optional[typing.Dict[str, RepeatedMessage]] = Field(default_factory=dict)
     user_map: typing.Optional[typing.Dict[str, MapMessage]] = Field(default_factory=dict)
-    user_pay: typing.Optional["NestedMessage.UserPayMessage"] = Field(default=None)
+    user_pay: typing.Optional["NestedMessage.UserPayMessage"] = Field(
+        default_factory=lambda: NestedMessage.UserPayMessage()
+    )
     include_enum: typing.Optional["NestedMessage.IncludeEnum"] = Field(default=0)
     empty: typing.Optional[None] = Field(default=None)
-    after_refer: typing.Optional[AfterReferMessage] = Field(default=None)
+    after_refer: typing.Optional[AfterReferMessage] = Field(default_factory=AfterReferMessage)
 
 
 class InvoiceItem(BaseModel):
@@ -118,7 +122,7 @@ class OptionalMessage(BaseModel):
     y: typing.Optional[int] = Field(default=0, title="use age", ge=0, example=18)
     name: typing.Optional[str] = Field(default="")
     age: typing.Optional[int] = Field(default=0)
-    item: typing.Optional[InvoiceItem] = Field(default=None)
+    item: typing.Optional[InvoiceItem] = Field(default_factory=InvoiceItem)
     str_list: typing.Optional[typing.List[str]] = Field(default_factory=list)
     int_map: typing.Optional[typing.Dict[str, int]] = Field(default_factory=dict)
     default_template_test: typing.Optional[float] = Field(default=1600000000.0)
@@ -141,7 +145,7 @@ class InvoiceItem2(BaseModel):
     amount: typing.Optional[int] = Field(default=0)
     quantity: typing.Optional[int] = Field(default=0)
     items: typing.Optional[typing.List["InvoiceItem2"]] = Field(default_factory=list)
-    invoice: typing.Optional[Invoice3] = Field(default=None)
+    invoice: typing.Optional[Invoice3] = Field(default_factory=Invoice3)
 
 
 class AnOtherMessage(BaseModel):
@@ -149,7 +153,7 @@ class AnOtherMessage(BaseModel):
         text: typing.Optional[str] = Field(default="")
 
     field1: typing.Optional[str] = Field(default="")
-    field2: typing.Optional[SubMessage] = Field(default=None)
+    field2: typing.Optional[SubMessage] = Field(default_factory=SubMessage)
 
 
 class RootMessage(BaseModel):
@@ -159,4 +163,4 @@ class RootMessage(BaseModel):
     """
 
     field1: typing.Optional[str] = Field(default="")
-    field2: typing.Optional[AnOtherMessage] = Field(default=None)
+    field2: typing.Optional[AnOtherMessage] = Field(default_factory=AnOtherMessage)
