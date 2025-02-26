@@ -864,10 +864,10 @@ class NestedMessage(BaseModel):
 
     string_in_map_test: typing.Dict[str, StringTest] = Field(default_factory=dict)
     map_in_map_test: typing.Dict[str, MapTest] = Field(default_factory=dict)
-    user_pay: UserPayMessage = Field()
-    not_enable_user_pay: NotEnableUserPayMessage = Field()
+    user_pay: UserPayMessage = Field(default_factory=UserPayMessage)
+    not_enable_user_pay: NotEnableUserPayMessage = Field(default_factory=NotEnableUserPayMessage)
     empty: typing.Any = Field()
-    after_refer: AfterReferMessage = Field()
+    after_refer: AfterReferMessage = Field(default_factory=AfterReferMessage)
 """
         if not is_v1:
             content = """
@@ -969,10 +969,10 @@ class NestedMessage(BaseModel):
 
     string_in_map_test: typing.Dict[str, StringTest] = Field(default_factory=dict)
     map_in_map_test: typing.Dict[str, MapTest] = Field(default_factory=dict)
-    user_pay: UserPayMessage = Field()
-    not_enable_user_pay: NotEnableUserPayMessage = Field()
+    user_pay: UserPayMessage = Field(default_factory=UserPayMessage)
+    not_enable_user_pay: NotEnableUserPayMessage = Field(default_factory=NotEnableUserPayMessage)
     empty: typing.Any = Field()
-    after_refer: AfterReferMessage = Field()
+    after_refer: AfterReferMessage = Field(default_factory=AfterReferMessage)
 """
         self.assert_contains(content, self._model_output(demo_pb2.NestedMessage))
 
@@ -1593,3 +1593,13 @@ class Uint64Test(BaseModel):
     not_in_test_not_in_validator = field_validator("not_in_test", mode="after", check_fields=None)(not_in_validator)
 """
         self.assert_contains(content, self._model_output(demo_pb2.Uint64Test))
+
+    def test_optional_message(self):
+        content = """
+ class OptionalMessage(BaseModel):
+    my_message1: typing.Optional[MessageIgnoredTest] = Field()
+    my_message2: typing.Optional[MessageIgnoredTest] = Field(default_factory=MessageIgnoredTest)
+    my_message3: MessageIgnoredTest = Field()
+    my_message4: MessageIgnoredTest = Field(default_factory=MessageIgnoredTest)
+"""
+        self.assert_contains(content, self._model_output(demo_pb2.OptionalMessage))

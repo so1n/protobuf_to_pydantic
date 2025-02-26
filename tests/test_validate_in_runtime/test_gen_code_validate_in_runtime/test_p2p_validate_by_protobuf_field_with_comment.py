@@ -25,7 +25,3 @@ from .test_p2p_validate import BaseGenCodeP2pModelValidator
 
 class TestP2pModelValidator(BaseGenCodeP2pModelValidator):
     core_module = demo_pb2_by_protobuf
-
-    def test_one_of_optional(self) -> None:
-        demo_pb2_by_protobuf.OneOfOptionalTest
-        super().test_one_of_optional()

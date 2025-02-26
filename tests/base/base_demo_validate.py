@@ -45,7 +45,7 @@ class BaseTestAllFieldSetOptionalDemoValidator:
 
     def _test_user_message(self, model_class: Type) -> None:
         model_class = self.replace_message_fn(model_class)
-        model_class()
+        model_class(uid=None)
 
     def _test_other_message(self, model_class: Type) -> None:
         model_class = self.replace_message_fn(model_class)
@@ -61,11 +61,11 @@ class BaseTestAllFieldSetOptionalDemoValidator:
 
     def _test_after_refer_message(self, model_class: Type) -> None:
         model_class = self.replace_message_fn(model_class)
-        model_class()
+        model_class(uid=None)
 
     def _test_nested_message(self, model_class: Type) -> None:
         model_class = self.replace_message_fn(model_class)
-        model_class()
+        model_class(**{"after_refer": {"uid": None}})
 
     def _test_invoice_item(self, model_class: Type) -> None:
         model_class = self.replace_message_fn(model_class)

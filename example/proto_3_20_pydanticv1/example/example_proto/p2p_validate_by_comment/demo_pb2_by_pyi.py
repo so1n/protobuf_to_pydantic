@@ -1,5 +1,5 @@
 # This is an automatically generated file, please do not change
-# gen by protobuf_to_pydantic[v0.3.0.3](https://github.com/so1n/protobuf_to_pydantic)
+# gen by protobuf_to_pydantic[v0.3.0.4](https://github.com/so1n/protobuf_to_pydantic)
 # Protobuf Version: 3.20.3
 # Pydantic Version: 1.10.7
 import typing
@@ -434,10 +434,12 @@ class NestedMessage(BaseModel):
 
     string_in_map_test: typing.Dict[str, StringTest] = Field(default_factory=dict)
     map_in_map_test: typing.Dict[str, MapTest] = Field(default_factory=dict)
-    user_pay: UserPayMessage = Field()
-    not_enable_user_pay: NotEnableUserPayMessageWithSkipRule = Field()
+    user_pay: UserPayMessage = Field(default_factory=UserPayMessage)
+    not_enable_user_pay: NotEnableUserPayMessageWithSkipRule = Field(
+        default_factory=NotEnableUserPayMessageWithSkipRule
+    )
     empty: typing.Any = Field()
-    after_refer: AfterReferMessage = Field()
+    after_refer: AfterReferMessage = Field(default_factory=AfterReferMessage)
 
 
 class OneOfNotTest(BaseModel):
@@ -473,6 +475,13 @@ class OneOfTest(BaseModel):
     y: int = Field(default=0)
 
     one_of_validator = root_validator(pre=True, allow_reuse=True)(check_one_of)
+
+
+class OptionalMessage(BaseModel):
+    my_message1: typing.Optional[MessageIgnoredTest] = Field()
+    my_message2: typing.Optional[MessageIgnoredTest] = Field(default_factory=MessageIgnoredTest)
+    my_message3: MessageIgnoredTest = Field()
+    my_message4: MessageIgnoredTest = Field(default_factory=MessageIgnoredTest)
 
 
 class RepeatedTest(BaseModel):

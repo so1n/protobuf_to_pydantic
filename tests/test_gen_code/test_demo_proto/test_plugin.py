@@ -48,7 +48,7 @@ class UserMessage(BaseModel):
     demo: DemoEnum = Field(default=0)
     is_adult: bool = Field(default=False)
     user_name: str = Field(default="", description="user name", min_length=1, max_length=10, example="so1n")
-    demo_message: DemoMessage = Field(customer_string="c1", customer_int=1)
+    demo_message: DemoMessage = Field(default_factory=DemoMessage, customer_string="c1", customer_int=1)
 """
         else:
             content = """
@@ -64,7 +64,7 @@ class UserMessage(BaseModel):
     demo: DemoEnum = Field(default=0)
     is_adult: bool = Field(default=False)
     user_name: str = Field(default="", example="so1n", description="user name", min_length=1, max_length=10)
-    demo_message: DemoMessage = Field(customer_string="c1", customer_int=1)
+    demo_message: DemoMessage = Field(default_factory=DemoMessage, customer_string="c1", customer_int=1)
 """
         assert content.strip("\n") in getsource(demo_p2p.UserMessage)
 
@@ -145,10 +145,10 @@ class NestedMessage(BaseModel):
 
     user_list_map: typing.Dict[str, RepeatedMessage] = Field(default_factory=dict)
     user_map: typing.Dict[str, MapMessage] = Field(default_factory=dict)
-    user_pay: "NestedMessage.UserPayMessage" = Field()
+    user_pay: "NestedMessage.UserPayMessage" = Field(default_factory=lambda: NestedMessage.UserPayMessage())
     include_enum: "NestedMessage.IncludeEnum" = Field(default=0)
     empty: None = Field()
-    after_refer: AfterReferMessage = Field()
+    after_refer: AfterReferMessage = Field(default_factory=AfterReferMessage)
 """
         assert content.strip("\n") in getsource(demo_p2p.NestedMessage).strip("\n")
 
@@ -176,7 +176,7 @@ class OptionalMessage(BaseModel):
     y: int = Field(default=0, alias="yy", title="use age", ge=0, example=18)
     name: typing.Optional[str] = Field(default="")
     age: typing.Optional[int] = Field(default=0)
-    item: typing.Optional[InvoiceItem] = Field(default=None)
+    item: typing.Optional[InvoiceItem] = Field(default_factory=InvoiceItem)
     str_list: typing.List[str] = Field(default_factory=list)
     int_map: typing.Dict[str, int] = Field(default_factory=dict)
     default_template_test: float = Field(default=1600000000.0)
@@ -190,7 +190,7 @@ class OptionalMessage(BaseModel):
     y: int = Field(default=0, example=18, alias="yy", title="use age", ge=0.0)
     name: typing.Optional[str] = Field(default="")
     age: typing.Optional[int] = Field(default=0)
-    item: typing.Optional[InvoiceItem] = Field(default=None)
+    item: typing.Optional[InvoiceItem] = Field(default_factory=InvoiceItem)
     str_list: typing.List[str] = Field(default_factory=list)
     int_map: typing.Dict[str, int] = Field(default_factory=dict)
     default_template_test: float = Field(default=1600000000.0)
@@ -219,7 +219,7 @@ class InvoiceItem2(BaseModel):
     amount: int = Field(default=0)
     quantity: int = Field(default=0)
     items: typing.List["InvoiceItem2"] = Field(default_factory=list)
-    invoice: Invoice3 = Field()"""
+    invoice: Invoice3 = Field(default_factory=Invoice3)"""
         assert content.strip("\n") in getsource(demo_p2p.InvoiceItem2).strip("\n")
 
     def test_message_reference(self) -> None:
@@ -229,7 +229,7 @@ class AnOtherMessage(BaseModel):
         text: str = Field(default="")
 
     field1: str = Field(default="")
-    field2: SubMessage = Field()"""
+    field2: SubMessage = Field(default_factory=SubMessage)"""
         assert content.strip("\n") in getsource(demo_p2p.AnOtherMessage).strip("\n")
 
         content = """
@@ -240,7 +240,7 @@ class RootMessage(BaseModel):
     \"\"\"
 
     field1: str = Field(default="")
-    field2: AnOtherMessage = Field()"""
+    field2: AnOtherMessage = Field(default_factory=AnOtherMessage)"""
         assert content.strip("\n") in getsource(demo_p2p.RootMessage).strip("\n")
 
 
@@ -256,7 +256,7 @@ class TestSameName0(BaseModel):
         input_model: str = Field(default="")
         input_info: typing.Dict[str, str] = Field(default_factory=dict)
 
-    body: "TestSameName0.Body" = Field()"""
+    body: "TestSameName0.Body" = Field(default_factory=lambda: TestSameName0.Body())"""
         assert content.strip("\n") in getsource(demo_p2p.TestSameName0).strip("\n")
         content = """
 class TestSameName1(BaseModel):
@@ -264,7 +264,7 @@ class TestSameName1(BaseModel):
         output_model: str = Field(default="")
         output_info: typing.Dict[str, str] = Field(default_factory=dict)
 
-    body: "TestSameName1.Body" = Field()"""
+    body: "TestSameName1.Body" = Field(default_factory=lambda: TestSameName1.Body())"""
         assert content.strip("\n") in getsource(demo_p2p.TestSameName1).strip("\n")
 
     def test_diff_pkg_refer(self) -> None:

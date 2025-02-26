@@ -1,5 +1,5 @@
 # This is an automatically generated file, please do not change
-# gen by protobuf_to_pydantic[v0.3.0.3](https://github.com/so1n/protobuf_to_pydantic)
+# gen by protobuf_to_pydantic[v0.3.0.4](https://github.com/so1n/protobuf_to_pydantic)
 # Protobuf Version: 3.20.3
 # Pydantic Version: 1.10.7
 import typing
@@ -25,10 +25,10 @@ class ReportData(MyBaseSchema):
 
     _one_of_dict = {"ReportData.data": {"fields": {"location_value", "time_value"}, "required": True}}
     one_of_validator = root_validator(pre=True, allow_reuse=True)(check_one_of)
-    location_value: typing.Optional[GeoLocation] = Field(default=None)
+    location_value: typing.Optional[GeoLocation] = Field(default_factory=GeoLocation)
     time_value: datetime = Field(default_factory=datetime.now)
 
 
 class Report(MyBaseSchema):
     source_id: typing.Optional[str] = Field(default="")
-    data: ReportData = Field()
+    data: ReportData = Field(default_factory=ReportData)

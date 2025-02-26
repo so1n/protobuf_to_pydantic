@@ -50,6 +50,19 @@ else:
     root_validator_sig = inspect.Signature()
 
 
+class BaseFormatContainer(object):
+    def to_text(self) -> str:
+        raise NotImplementedError
+
+
+class FormatContainer(BaseFormatContainer):
+    def __init__(self, text: str) -> None:
+        self._text = text
+
+    def to_text(self) -> str:
+        return self._text
+
+
 class BaseP2C(object):
     """
     BaseModel objects into corresponding Python code
@@ -281,6 +294,8 @@ class BaseP2C(object):
             if auto_import_type_code:
                 self._parse_type_to_import_code(type_)
             return f"{message_name}({attr_str})"
+        elif isinstance(type_, BaseFormatContainer):
+            return type_.to_text()
         else:
             if auto_import_type_code:
                 self._parse_type_to_import_code(type_)

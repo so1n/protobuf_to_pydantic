@@ -70,7 +70,10 @@ class UserMessage(BaseModel):
     demo: ExampleExampleProtoCommonSingleDemoEnum = Field(default=0)
     is_adult: bool = Field(default=False)
     user_name: str = Field(default="", description="user name", min_length=1, max_length=10, example="so1n")
-    demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field(customer_string="c1", customer_int=1)
+    demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field(
+        default_factory=ExampleExampleProtoCommonSingleDemoMessage,
+        customer_string="c1", customer_int=1
+    )
 """
         if not is_v1:
             content = """
@@ -105,7 +108,10 @@ class UserMessage(BaseModel):
     demo: ExampleExampleProtoCommonSingleDemoEnum = Field(default=0)
     is_adult: bool = Field(default=False)
     user_name: str = Field(default="", description="user name", example="so1n", min_length=1, max_length=10)
-    demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field(customer_string="c1", customer_int=1)
+    demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field(
+        default_factory=ExampleExampleProtoCommonSingleDemoMessage,
+        customer_string="c1", customer_int=1
+    )
 """
         assert format_content(content) in self._model_output(demo_pb2.UserMessage)
 
@@ -164,7 +170,10 @@ class UserMessage(BaseModel):
     demo: ExampleExampleProtoCommonSingleDemoEnum = Field(default=0)
     is_adult: bool = Field(default=False)
     user_name: str = Field(default="", description="user name", min_length=1, max_length=10, example="so1n")
-    demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field(customer_string="c1", customer_int=1)
+    demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field(
+        default_factory=ExampleExampleProtoCommonSingleDemoMessage,
+        customer_string="c1", customer_int=1
+    )
 
 
 class MapMessage(BaseModel):
@@ -204,7 +213,10 @@ class UserMessage(BaseModel):
     demo: ExampleExampleProtoCommonSingleDemoEnum = Field(default=0)
     is_adult: bool = Field(default=False)
     user_name: str = Field(default="", description="user name", example="so1n", min_length=1, max_length=10)
-    demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field(customer_string="c1", customer_int=1)
+    demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field(
+        default_factory=ExampleExampleProtoCommonSingleDemoMessage,
+        customer_string="c1", customer_int=1
+    )
 
 
 class MapMessage(BaseModel):
@@ -246,7 +258,10 @@ class UserMessage(BaseModel):
     demo: ExampleExampleProtoCommonSingleDemoEnum = Field(default=0)
     is_adult: bool = Field(default=False)
     user_name: str = Field(default="", description="user name", min_length=1, max_length=10, example="so1n")
-    demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field(customer_string="c1", customer_int=1)
+    demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field(
+        default_factory=ExampleExampleProtoCommonSingleDemoMessage,
+        customer_string="c1", customer_int=1
+    )
 
 
 class RepeatedMessage(BaseModel):
@@ -287,7 +302,10 @@ class UserMessage(BaseModel):
     demo: ExampleExampleProtoCommonSingleDemoEnum = Field(default=0)
     is_adult: bool = Field(default=False)
     user_name: str = Field(default="", description="user name", example="so1n", min_length=1, max_length=10)
-    demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field(customer_string="c1", customer_int=1)
+    demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field(
+        default_factory=ExampleExampleProtoCommonSingleDemoMessage,
+        customer_string="c1", customer_int=1
+    )
 
 
 class RepeatedMessage(BaseModel):
@@ -331,7 +349,10 @@ class UserMessage(BaseModel):
     demo: ExampleExampleProtoCommonSingleDemoEnum = Field(default=0)
     is_adult: bool = Field(default=False)
     user_name: str = Field(default="", description="user name", min_length=1, max_length=10, example="so1n")
-    demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field(customer_string="c1", customer_int=1)
+    demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field(
+        default_factory=ExampleExampleProtoCommonSingleDemoMessage,
+        customer_string="c1", customer_int=1
+    )
 
 
 class RepeatedMessage(BaseModel):
@@ -363,10 +384,10 @@ class NestedMessage(BaseModel):
 
     user_list_map: typing.Dict[str, RepeatedMessage] = Field(default_factory=dict)
     user_map: typing.Dict[str, MapMessage] = Field(default_factory=dict)
-    user_pay: UserPayMessage = Field()
+    user_pay: UserPayMessage = Field(default_factory=UserPayMessage)
     include_enum: IncludeEnum = Field(default=0)
     empty: typing.Any = Field()
-    after_refer: AfterReferMessage = Field()
+    after_refer: AfterReferMessage = Field(default_factory=AfterReferMessage)
 """
         if not is_v1:
             content = """
@@ -401,7 +422,10 @@ class UserMessage(BaseModel):
     demo: ExampleExampleProtoCommonSingleDemoEnum = Field(default=0)
     is_adult: bool = Field(default=False)
     user_name: str = Field(default="", description="user name", example="so1n", min_length=1, max_length=10)
-    demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field(customer_string="c1", customer_int=1)
+    demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field(
+        default_factory=ExampleExampleProtoCommonSingleDemoMessage,
+        customer_string="c1", customer_int=1
+    )
 
 
 class RepeatedMessage(BaseModel):
@@ -433,10 +457,10 @@ class NestedMessage(BaseModel):
 
     user_list_map: typing.Dict[str, RepeatedMessage] = Field(default_factory=dict)
     user_map: typing.Dict[str, MapMessage] = Field(default_factory=dict)
-    user_pay: UserPayMessage = Field()
+    user_pay: UserPayMessage = Field(default_factory=UserPayMessage)
     include_enum: IncludeEnum = Field(default=0)
     empty: typing.Any = Field()
-    after_refer: AfterReferMessage = Field()
+    after_refer: AfterReferMessage = Field(default_factory=AfterReferMessage)
 """
         assert format_content(content) in self._model_output(demo_pb2.NestedMessage)
 
@@ -467,7 +491,7 @@ class InvoiceItem2(BaseModel):
     amount: int = Field(default=0)
     quantity: int = Field(default=0)
     items: typing.List["InvoiceItem2"] = Field(default_factory=list)
-    invoice: Invoice3 = Field()
+    invoice: Invoice3 = Field(default_factory=Invoice3)
             """
         ) in self._model_output(demo_pb2.InvoiceItem2)
 
@@ -479,13 +503,13 @@ class AnOtherMessage(BaseModel):
         text: str = Field(default="")
 
     field1: str = Field(default="")
-    field2: SubMessage = Field()
+    field2: SubMessage = Field(default_factory=SubMessage)
 
 
 class RootMessage(BaseModel):
 
     field1: str = Field(default="")
-    field2: AnOtherMessage = Field()
+    field2: AnOtherMessage = Field(default_factory=AnOtherMessage)
             """
         ) in self._model_output(demo_pb2.RootMessage)
 
@@ -498,7 +522,7 @@ class TestSameName0(BaseModel):
         input_model: str = Field(default="")
         input_info: typing.Dict[str, str] = Field(default_factory=dict)
 
-    body: Body = Field()
+    body: Body = Field(default_factory=Body)
             """
         ) in self._model_output(demo_pb2.TestSameName0)
 
@@ -509,7 +533,7 @@ class TestSameName1(BaseModel):
         output_model: str = Field(default="")
         output_info: typing.Dict[str, str] = Field(default_factory=dict)
 
-    body: Body = Field()
+    body: Body = Field(default_factory=Body)
             """
         ) in self._model_output(demo_pb2.TestSameName1)
 

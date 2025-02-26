@@ -620,10 +620,10 @@ class NestedMessage(BaseModel):
 
     string_in_map_test: typing.Dict[str, StringTest] = Field(default_factory=dict)
     map_in_map_test: typing.Dict[str, MapTest] = Field(default_factory=dict)
-    user_pay: UserPayMessage = Field()
-    not_enable_user_pay: NotEnableUserPayMessage = Field()
+    user_pay: UserPayMessage = Field(default_factory=UserPayMessage)
+    not_enable_user_pay: NotEnableUserPayMessage = Field(default_factory=NotEnableUserPayMessage)
     empty: typing.Any = Field()
-    after_refer: AfterReferMessage = Field()
+    after_refer: AfterReferMessage = Field(default_factory=AfterReferMessage)
 """
         if not is_v1:
             content = """
@@ -706,10 +706,10 @@ class NestedMessage(BaseModel):
 
     string_in_map_test: typing.Dict[str, StringTest] = Field(default_factory=dict)
     map_in_map_test: typing.Dict[str, MapTest] = Field(default_factory=dict)
-    user_pay: UserPayMessage = Field()
-    not_enable_user_pay: NotEnableUserPayMessage = Field()
+    user_pay: UserPayMessage = Field(default_factory=UserPayMessage)
+    not_enable_user_pay: NotEnableUserPayMessage = Field(default_factory=NotEnableUserPayMessage)
     empty: typing.Any = Field()
-    after_refer: AfterReferMessage = Field()
+    after_refer: AfterReferMessage = Field(default_factory=AfterReferMessage)
 """
         self.assert_contains(content, self._model_output(demo_pb2.NestedMessage))
 
