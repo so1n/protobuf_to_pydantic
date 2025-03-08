@@ -1221,7 +1221,7 @@ message MessageRules {
     oneof default_config {
         // The default value corresponding to the field, if not set,
         // the default value is the default value of the corresponding type of the field
-        float default = 9;
+        string  default = 9;
         // The default value factory function corresponding to the field, supports template variables,
         // such as `p2p@import|uuid|uuid4`
         string  default_factory = 10;

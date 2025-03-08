@@ -1,5 +1,5 @@
 # This is an automatically generated file, please do not change
-# gen by protobuf_to_pydantic[v0.3.0.4](https://github.com/so1n/protobuf_to_pydantic)
+# gen by protobuf_to_pydantic[v0.3.1.0](https://github.com/so1n/protobuf_to_pydantic)
 # Protobuf Version: 3.20.3
 # Pydantic Version: 2.5.3
 import typing
@@ -772,3 +772,4 @@ class OptionalMessage(BaseModel):
     my_message2: typing.Optional[MessageIgnoredTest] = Field(default_factory=MessageIgnoredTest)
     my_message3: MessageIgnoredTest = Field()
     my_message4: MessageIgnoredTest = Field(default_factory=MessageIgnoredTest)
+    my_message_5: typing.Optional[MessageIgnoredTest] = Field(default=None)

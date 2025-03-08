@@ -40,8 +40,8 @@ class TestP2pValidate:
     @staticmethod
     def assert_contains(content: str, other_content: str) -> None:
         content = format_content(content)
-        content = content.replace("typing_extensions.Literal", "typing.Literal")
-        other_content = other_content.replace("typing_extensions.Literal", "typing.Literal")
+        content = content.replace("typing_extensions.Literal", "typing.Literal").replace("AnyUrl", "Url")
+        other_content = other_content.replace("typing_extensions.Literal", "typing.Literal").replace("AnyUrl", "Url")
         assert content in other_content or content.replace(", alias_priority=2", "") in other_content.replace(", alias_priority=2", "")
 
     def test_any(self) -> None:
@@ -1601,5 +1601,6 @@ class Uint64Test(BaseModel):
     my_message2: typing.Optional[MessageIgnoredTest] = Field(default_factory=MessageIgnoredTest)
     my_message3: MessageIgnoredTest = Field()
     my_message4: MessageIgnoredTest = Field(default_factory=MessageIgnoredTest)
+    my_message_5: typing.Optional[MessageIgnoredTest] = Field(default=None)
 """
         self.assert_contains(content, self._model_output(demo_pb2.OptionalMessage))

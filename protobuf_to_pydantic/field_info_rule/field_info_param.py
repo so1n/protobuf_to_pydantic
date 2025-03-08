@@ -72,8 +72,8 @@ def field_info_param_dict_handle(
     """
     # default_template support
     if (
-        field_info_param_dict.get("default", None) is None
-        and field_info_param_dict.get("default_template", None) is not None
+        field_info_param_dict.get("default", MISSING).__class__ == MISSING.__class__
+        and field_info_param_dict.get("default_template", MISSING).__class__ != MISSING.__class__
     ):
         field_info_param_dict["default"] = field_info_param_dict["default_template"]
     field_info_param_dict.pop("default_template", None)
@@ -82,7 +82,7 @@ def field_info_param_dict_handle(
     check_dict_one_of(field_info_param_dict, ["required", "default", "default_factory"])
     if field_info_param_dict.get("default_factory", None) is not None:
         field_info_param_dict.pop("default", "")
-    elif field_info_param_dict.get("default", None) is None:
+    elif field_info_param_dict.get("default", MISSING).__class__ == MISSING.__class__:
         if default_factory:
             field_info_param_dict["default_factory"] = default_factory
             field_info_param_dict.pop("default", "")
@@ -171,9 +171,9 @@ class FieldInfoParamModel(BaseModel):
     field: Optional[Type[FieldInfo]] = Field(None)
     enable: bool = Field(True)
     required: bool = Field(False)
-    default: Optional[Any] = Field(None)
+    default: Optional[Any] = Field(MISSING)
     default_factory: Optional[Callable] = Field(None)
-    default_template: Any = Field(None)
+    default_template: Any = Field(MISSING)
     example: Any = Field(MISSING)
     example_factory: Optional[Callable] = Field(None)
     alias: Optional[str] = Field(None)
