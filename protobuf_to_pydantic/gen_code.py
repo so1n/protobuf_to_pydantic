@@ -583,7 +583,14 @@ class BaseP2C(object):
             field_info = field_info.field_info  # type: ignore[attr-defined]
 
         field_param_dict: Dict[str, Any] = {}
-        for k, v in field_info.__repr_args__():
+
+        field_attr_dict = {k: v for k, v in field_info.__repr_args__()}
+
+        if "default" not in field_attr_dict and field_info.default is None and _pydantic_adapter.VERSION < "2.7":
+            # see issue: https://github.com/pydantic/pydantic/pull/8801
+            field_attr_dict["default"] = None
+
+        for k, v in field_attr_dict.items():
             if k not in field_param_set:
                 continue
             v = getattr(field_info, k)
