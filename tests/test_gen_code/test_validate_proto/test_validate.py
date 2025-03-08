@@ -33,8 +33,8 @@ class TestValidate:
     @staticmethod
     def assert_contains(content: str, other_content: str) -> None:
         content = format_content(content)
-        if sys.version_info >= (3, 10):
-            content = content.replace("typing_extensions.Literal", "typing.Literal")
+        content = content.replace("typing_extensions.Literal", "typing.Literal").replace("AnyUrl", "Url")
+        other_content = other_content.replace("typing_extensions.Literal", "typing.Literal").replace("AnyUrl", "Url")
         assert content in other_content
 
     def test_string(self) -> None:

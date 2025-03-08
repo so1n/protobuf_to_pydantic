@@ -2791,7 +2791,7 @@ class MessageRules(google.protobuf.message.Message):
     enable: builtins.bool
     """Whether to enable this field, if not, the generated Model will not carry this field"""
 
-    default: builtins.float
+    default: typing.Text
     """The default value corresponding to the field, if not set,
     the default value is the default value of the corresponding type of the field
     """
@@ -2838,7 +2838,7 @@ class MessageRules(google.protobuf.message.Message):
         *,
         skip: typing.Optional[builtins.bool] = ...,
         enable: typing.Optional[builtins.bool] = ...,
-        default: builtins.float = ...,
+        default: typing.Text = ...,
         default_factory: typing.Text = ...,
         miss_default: builtins.bool = ...,
         required: builtins.bool = ...,

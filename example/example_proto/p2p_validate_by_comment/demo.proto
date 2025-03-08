@@ -679,4 +679,6 @@ message OptionalMessage{
     // p2p: {"required": true}
     MessageIgnoredTest  my_message3 = 3;
     MessageIgnoredTest  my_message4 = 4;
+    // p2p: {"default_template": "p2p@builtin|None"}
+    optional MessageIgnoredTest my_message_5 = 5;
 }
