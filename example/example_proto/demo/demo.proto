@@ -159,3 +159,15 @@ message TestSameName1 {
     }
     Body body = 1;
 }
+
+// The issue refers to an ungenerated message in the map
+message DemoResp {
+    map<int32, DemoState> demoState = 1;
+    int64 pramsArea = 2;
+    bool paramsSeason = 3;
+}
+
+
+message DemoState  {
+    int64 paramsDID = 4;
+}

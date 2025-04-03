@@ -566,3 +566,48 @@ class TestSameName1(google.protobuf.message.Message):
     def HasField(self, field_name: typing_extensions.Literal["body",b"body"]) -> builtins.bool: ...
     def ClearField(self, field_name: typing_extensions.Literal["body",b"body"]) -> None: ...
 global___TestSameName1 = TestSameName1
+
+class DemoResp(google.protobuf.message.Message):
+    """The issue refers to an ungenerated message in the map"""
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    class DemoStateEntry(google.protobuf.message.Message):
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+        KEY_FIELD_NUMBER: builtins.int
+        VALUE_FIELD_NUMBER: builtins.int
+        key: builtins.int
+        @property
+        def value(self) -> global___DemoState: ...
+        def __init__(self,
+            *,
+            key: builtins.int = ...,
+            value: typing.Optional[global___DemoState] = ...,
+            ) -> None: ...
+        def HasField(self, field_name: typing_extensions.Literal["value",b"value"]) -> builtins.bool: ...
+        def ClearField(self, field_name: typing_extensions.Literal["key",b"key","value",b"value"]) -> None: ...
+
+    DEMOSTATE_FIELD_NUMBER: builtins.int
+    PRAMSAREA_FIELD_NUMBER: builtins.int
+    PARAMSSEASON_FIELD_NUMBER: builtins.int
+    @property
+    def demoState(self) -> google.protobuf.internal.containers.MessageMap[builtins.int, global___DemoState]: ...
+    pramsArea: builtins.int
+    paramsSeason: builtins.bool
+    def __init__(self,
+        *,
+        demoState: typing.Optional[typing.Mapping[builtins.int, global___DemoState]] = ...,
+        pramsArea: builtins.int = ...,
+        paramsSeason: builtins.bool = ...,
+        ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["demoState",b"demoState","paramsSeason",b"paramsSeason","pramsArea",b"pramsArea"]) -> None: ...
+global___DemoResp = DemoResp
+
+class DemoState(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    PARAMSDID_FIELD_NUMBER: builtins.int
+    paramsDID: builtins.int
+    def __init__(self,
+        *,
+        paramsDID: builtins.int = ...,
+        ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["paramsDID",b"paramsDID"]) -> None: ...
+global___DemoState = DemoState

@@ -280,6 +280,9 @@ class FileDescriptorProtoToCode(BaseP2C):
                     f"typing.Dict[{self._get_protobuf_type_model(key_msg).py_type_str},"
                     f" {self._get_protobuf_type_model(value_msg).py_type_str}]"
                 )
+                # TODO This is not the best solution,
+                #  and it should be processed with the same logic as 294, and then optimized
+                type_str = '"' + type_str + '"'
                 field_info_default_factory_value = dict
                 rule_type_str = "map"
             elif field.type_name.startswith(".google.protobuf"):
