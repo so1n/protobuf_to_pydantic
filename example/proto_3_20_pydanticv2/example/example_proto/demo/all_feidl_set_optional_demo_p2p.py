@@ -1,5 +1,5 @@
 # This is an automatically generated file, please do not change
-# gen by protobuf_to_pydantic[v0.3.1.0](https://github.com/so1n/protobuf_to_pydantic)
+# gen by protobuf_to_pydantic[v0.3.1.1](https://github.com/so1n/protobuf_to_pydantic)
 # Protobuf Version: 3.20.3
 # Pydantic Version: 2.5.3
 import typing
@@ -55,8 +55,8 @@ class MapMessage(BaseModel):
     test map message and bad message
     """
 
-    user_map: typing.Optional[typing.Dict[str, UserMessage]] = Field(default_factory=dict)
-    user_flag: typing.Optional[typing.Dict[str, bool]] = Field(default_factory=dict)
+    user_map: typing.Optional["typing.Dict[str, UserMessage]"] = Field(default_factory=dict)
+    user_flag: typing.Optional["typing.Dict[str, bool]"] = Field(default_factory=dict)
 
 
 class RepeatedMessage(BaseModel):
@@ -89,8 +89,8 @@ class NestedMessage(BaseModel):
         one = 1
         two = 2
 
-    user_list_map: typing.Optional[typing.Dict[str, RepeatedMessage]] = Field(default_factory=dict)
-    user_map: typing.Optional[typing.Dict[str, MapMessage]] = Field(default_factory=dict)
+    user_list_map: typing.Optional["typing.Dict[str, RepeatedMessage]"] = Field(default_factory=dict)
+    user_map: typing.Optional["typing.Dict[str, MapMessage]"] = Field(default_factory=dict)
     user_pay: typing.Optional["NestedMessage.UserPayMessage"] = Field(
         default_factory=lambda: NestedMessage.UserPayMessage()
     )
@@ -124,7 +124,7 @@ class OptionalMessage(BaseModel):
     age: typing.Optional[int] = Field(default=0)
     item: typing.Optional[InvoiceItem] = Field(default_factory=InvoiceItem)
     str_list: typing.Optional[typing.List[str]] = Field(default_factory=list)
-    int_map: typing.Optional[typing.Dict[str, int]] = Field(default_factory=dict)
+    int_map: typing.Optional["typing.Dict[str, int]"] = Field(default_factory=dict)
     default_template_test: typing.Optional[float] = Field(default=1600000000.0)
 
 

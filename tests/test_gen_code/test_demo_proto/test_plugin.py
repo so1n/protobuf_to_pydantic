@@ -96,8 +96,8 @@ class MapMessage(BaseModel):
     test map message and bad message
     \"\"\"
 
-    user_map: typing.Dict[str, UserMessage] = Field(default_factory=dict)
-    user_flag: typing.Dict[str, bool] = Field(default_factory=dict)
+    user_map: "typing.Dict[str, UserMessage]" = Field(default_factory=dict)
+    user_flag: "typing.Dict[str, bool]" = Field(default_factory=dict)
 """
         assert content.strip("\n") in getsource(demo_p2p.MapMessage).strip("\n")
 
@@ -143,8 +143,8 @@ class NestedMessage(BaseModel):
         one = 1
         two = 2
 
-    user_list_map: typing.Dict[str, RepeatedMessage] = Field(default_factory=dict)
-    user_map: typing.Dict[str, MapMessage] = Field(default_factory=dict)
+    user_list_map: "typing.Dict[str, RepeatedMessage]" = Field(default_factory=dict)
+    user_map: "typing.Dict[str, MapMessage]" = Field(default_factory=dict)
     user_pay: "NestedMessage.UserPayMessage" = Field(default_factory=lambda: NestedMessage.UserPayMessage())
     include_enum: "NestedMessage.IncludeEnum" = Field(default=0)
     empty: None = Field()
@@ -178,7 +178,7 @@ class OptionalMessage(BaseModel):
     age: typing.Optional[int] = Field(default=0)
     item: typing.Optional[InvoiceItem] = Field(default_factory=InvoiceItem)
     str_list: typing.List[str] = Field(default_factory=list)
-    int_map: typing.Dict[str, int] = Field(default_factory=dict)
+    int_map: "typing.Dict[str, int]" = Field(default_factory=dict)
     default_template_test: float = Field(default=1600000000.0)
 """
         if is_v1:
@@ -192,7 +192,7 @@ class OptionalMessage(BaseModel):
     age: typing.Optional[int] = Field(default=0)
     item: typing.Optional[InvoiceItem] = Field(default_factory=InvoiceItem)
     str_list: typing.List[str] = Field(default_factory=list)
-    int_map: typing.Dict[str, int] = Field(default_factory=dict)
+    int_map: "typing.Dict[str, int]" = Field(default_factory=dict)
     default_template_test: float = Field(default=1600000000.0)
 """
         assert content.strip("\n") in getsource(demo_p2p.OptionalMessage).strip("\n")
@@ -254,7 +254,7 @@ class TestSameName0(BaseModel):
 
     class Body(BaseModel):
         input_model: str = Field(default="")
-        input_info: typing.Dict[str, str] = Field(default_factory=dict)
+        input_info: "typing.Dict[str, str]" = Field(default_factory=dict)
 
     body: "TestSameName0.Body" = Field(default_factory=lambda: TestSameName0.Body())"""
         assert content.strip("\n") in getsource(demo_p2p.TestSameName0).strip("\n")
@@ -262,7 +262,7 @@ class TestSameName0(BaseModel):
 class TestSameName1(BaseModel):
     class Body(BaseModel):
         output_model: str = Field(default="")
-        output_info: typing.Dict[str, str] = Field(default_factory=dict)
+        output_info: "typing.Dict[str, str]" = Field(default_factory=dict)
 
     body: "TestSameName1.Body" = Field(default_factory=lambda: TestSameName1.Body())"""
         assert content.strip("\n") in getsource(demo_p2p.TestSameName1).strip("\n")
@@ -270,7 +270,7 @@ class TestSameName1(BaseModel):
     def test_diff_pkg_refer(self) -> None:
         content = """
 class Demo2(BaseModel):
-    myField: typing.Dict[str, Demo1] = Field(default_factory=dict)"""
+    myField: "typing.Dict[str, Demo1]" = Field(default_factory=dict)"""
         assert content.strip("\n") in getsource(diff_pkg_refer_2_p2p.Demo2).strip("\n")
 
         # If the source code can be obtained, Demo1 can be imported normally

@@ -1,5 +1,5 @@
 # This is an automatically generated file, please do not change
-# gen by protobuf_to_pydantic[v0.3.1.0](https://github.com/so1n/protobuf_to_pydantic)
+# gen by protobuf_to_pydantic[v0.3.1.1](https://github.com/so1n/protobuf_to_pydantic)
 # Protobuf Version: 3.20.3
 # Pydantic Version: 2.5.3
 import typing
@@ -274,8 +274,8 @@ class EnumTest(BaseModel):
 
 
 class MapTest(BaseModel):
-    pair_test: typing.Dict[str, int] = Field(default_factory=dict, map_min_pairs=1, map_max_pairs=5)
-    no_parse_test: typing.Dict[str, int] = Field(default_factory=dict)
+    pair_test: "typing.Dict[str, int]" = Field(default_factory=dict, map_min_pairs=1, map_max_pairs=5)
+    no_parse_test: "typing.Dict[str, int]" = Field(default_factory=dict)
     keys_test: typing.Dict[typing_extensions.Annotated[str, MinLen(min_length=1), MaxLen(max_length=5)], int] = Field(
         default_factory=dict
     )
@@ -284,7 +284,7 @@ class MapTest(BaseModel):
         typing_extensions.Annotated[str, MinLen(min_length=1), MaxLen(max_length=5)],
         typing_extensions.Annotated[DatetimeType, gt_now(True)],
     ] = Field(default_factory=dict)
-    ignore_test: typing.Dict[str, int] = Field(default_factory=dict)
+    ignore_test: "typing.Dict[str, int]" = Field(default_factory=dict)
 
     pair_test_map_min_pairs_validator = field_validator("pair_test", mode="after", check_fields=None)(
         map_min_pairs_validator
@@ -482,8 +482,8 @@ class NestedMessage(BaseModel):
         exp: datetime = Field(default_factory=datetime.now)
         uuid: str = Field(default="")
 
-    string_in_map_test: typing.Dict[str, StringTest] = Field(default_factory=dict)
-    map_in_map_test: typing.Dict[str, MapTest] = Field(default_factory=dict)
+    string_in_map_test: "typing.Dict[str, StringTest]" = Field(default_factory=dict)
+    map_in_map_test: "typing.Dict[str, MapTest]" = Field(default_factory=dict)
     user_pay: "NestedMessage.UserPayMessage" = Field(default_factory=lambda: NestedMessage.UserPayMessage())
     not_enable_user_pay: "NestedMessage.NotEnableUserPayMessage" = Field(
         default_factory=lambda: NestedMessage.NotEnableUserPayMessage()

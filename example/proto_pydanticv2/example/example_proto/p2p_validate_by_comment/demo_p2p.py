@@ -1,5 +1,5 @@
 # This is an automatically generated file, please do not change
-# gen by protobuf_to_pydantic[v0.3.1.0](https://github.com/so1n/protobuf_to_pydantic)
+# gen by protobuf_to_pydantic[v0.3.1.1](https://github.com/so1n/protobuf_to_pydantic)
 # Protobuf Version: 4.24.4
 # Pydantic Version: 2.5.3
 import typing
@@ -469,7 +469,7 @@ class EnumTest(BaseModel):
 
 
 class MapTest(BaseModel):
-    pair_test: typing.Dict[str, int] = Field(default_factory=dict, map_min_pairs=1, map_max_pairs=5)
+    pair_test: "typing.Dict[str, int]" = Field(default_factory=dict, map_min_pairs=1, map_max_pairs=5)
     keys_test: typing.Dict[typing_extensions.Annotated[str, MinLen(min_length=1), MaxLen(max_length=5)], int] = Field(
         default_factory=dict
     )
@@ -478,16 +478,16 @@ class MapTest(BaseModel):
         typing_extensions.Annotated[str, MinLen(min_length=1), MaxLen(max_length=5)],
         typing_extensions.Annotated[DatetimeType, gt_now(True)],
     ] = Field(default_factory=dict)
-    default_factory_test: typing.Dict[str, int] = Field(default_factory=dict)
-    miss_default_test: typing.Dict[str, int] = Field()
-    required_test: typing.Dict[str, int] = Field()
-    alias_test: typing.Dict[str, int] = Field(default_factory=dict, alias="alias")
-    desc_test: typing.Dict[str, int] = Field(default_factory=dict, description="test desc")
-    example_factory_test: typing.Dict[str, int] = Field(default_factory=dict, example=dict)
-    field_test: typing.Dict[str, int] = CustomerField(default_factory=dict)
-    title_test: typing.Dict[str, int] = Field(default_factory=dict, title="title_test")
+    default_factory_test: "typing.Dict[str, int]" = Field(default_factory=dict)
+    miss_default_test: "typing.Dict[str, int]" = Field()
+    required_test: "typing.Dict[str, int]" = Field()
+    alias_test: "typing.Dict[str, int]" = Field(default_factory=dict, alias="alias")
+    desc_test: "typing.Dict[str, int]" = Field(default_factory=dict, description="test desc")
+    example_factory_test: "typing.Dict[str, int]" = Field(default_factory=dict, example=dict)
+    field_test: "typing.Dict[str, int]" = CustomerField(default_factory=dict)
+    title_test: "typing.Dict[str, int]" = Field(default_factory=dict, title="title_test")
     type_test: dict = Field(default_factory=dict)
-    extra_test: typing.Dict[str, int] = Field(default_factory=dict, customer_string="c1", customer_int=1)
+    extra_test: "typing.Dict[str, int]" = Field(default_factory=dict, customer_string="c1", customer_int=1)
 
     pair_test_map_min_pairs_validator = field_validator("pair_test", mode="after", check_fields=None)(
         map_min_pairs_validator
@@ -728,7 +728,7 @@ class OneOfOptionalTest(BaseModel):
     name: typing.Optional[str] = Field(default="")
     age: typing.Optional[int] = Field(default=0)
     str_list: typing.List[str] = Field(default_factory=list)
-    int_map: typing.Dict[str, int] = Field(default_factory=dict)
+    int_map: "typing.Dict[str, int]" = Field(default_factory=dict)
 
 
 class AfterReferMessage(BaseModel):
@@ -755,8 +755,8 @@ class NestedMessage(BaseModel):
         exp: datetime = Field(default_factory=datetime.now)
         uuid: str = Field(default="")
 
-    string_in_map_test: typing.Dict[str, StringTest] = Field(default_factory=dict)
-    map_in_map_test: typing.Dict[str, MapTest] = Field(default_factory=dict)
+    string_in_map_test: "typing.Dict[str, StringTest]" = Field(default_factory=dict)
+    map_in_map_test: "typing.Dict[str, MapTest]" = Field(default_factory=dict)
     user_pay: "NestedMessage.UserPayMessage" = Field(default_factory=lambda: NestedMessage.UserPayMessage())
     not_enable_user_pay: "NestedMessage.NotEnableUserPayMessage" = Field(
         default_factory=lambda: NestedMessage.NotEnableUserPayMessage()
