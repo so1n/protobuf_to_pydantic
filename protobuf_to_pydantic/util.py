@@ -127,8 +127,10 @@ def get_pyproject_content(pyproject_file_path: str) -> str:
 # flake8: noqa: C901
 def format_content(content_str: str, pyproject_file_path: str = "") -> str:
     pyproject_dict: dict = {}
+    toml = None  # type: ignore
+
     try:
-        import tomllib as toml
+        import tomllib as toml  # type: ignore
     except ImportError:
         try:
             import toml  # type: ignore
@@ -137,10 +139,11 @@ def format_content(content_str: str, pyproject_file_path: str = "") -> str:
                 "The toml module is not installed and the configuration information cannot be obtained through"
                 " pyproject.toml"
             )
-        else:
-            pyproject_content = get_pyproject_content(pyproject_file_path)
-            if pyproject_content:
-                pyproject_dict = toml.loads(pyproject_content)
+
+    if toml:
+        pyproject_content = get_pyproject_content(pyproject_file_path)
+        if pyproject_content:
+            pyproject_dict = toml.loads(pyproject_content)
     try:
         p2p_format_dict: dict = pyproject_dict["tool"]["protobuf-to-pydantic"]["format"]
     except KeyError:
