@@ -107,3 +107,22 @@ class BaseTestSingleConfigValidator:
 
         with pytest.raises(ValidationError):
             model_class(**{"uid": "10086", "age": 1, "height": 1, "user_name": ""})
+
+
+class BaseTestCustomCommentHandler:
+    replace_message_fn: Callable = staticmethod(lambda x:x)  # type: ignore[assignment]
+
+    def _test_user_message(self, model_class: Type) -> None:
+        model_class = self.replace_message_fn(model_class)
+        model_class(**{"uid": "10086", "age": 1, "height": 1, "user_name": "aaa"})
+
+        with pytest.raises(ValidationError):
+            model_class(**{"uid": "10086", "age": -1, "height": 1, "user_name": "aaa"})
+
+        with pytest.raises(ValidationError):
+            model_class(**{"uid": "10086", "age": 1, "height": 3, "user_name": "aaa"})
+
+        with pytest.raises(ValidationError):
+            model_class(**{"uid": "10086", "age": 1, "height": 1, "user_name": ""})
+
+        assert model_class.schema()["properties"]["height"]["description"] == "user_height"

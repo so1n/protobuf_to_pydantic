@@ -36,7 +36,7 @@ from protobuf_to_pydantic.grpc_types import (
     FileDescriptorProto,
 )
 from protobuf_to_pydantic.plugin.my_types import ProtobufTypeModel
-from protobuf_to_pydantic.util import camel_to_snake, get_dict_from_comment, pydantic_allow_validation_field_handler
+from protobuf_to_pydantic.util import camel_to_snake, pydantic_allow_validation_field_handler
 
 if TYPE_CHECKING:
     from protobuf_to_pydantic.plugin.config import ConfigModel
@@ -117,24 +117,24 @@ class FileDescriptorProtoToCode(BaseP2C):
         module_name = "." * (len(fd_path_list) - (index + 1)) + module_name
         self._add_import_code(module_name, type_str)
 
-    def _comment_handler(self, leading_comments: str, trailing_comments: str) -> Tuple[dict, str, str]:
-        comment_info_dict: dict = {}
-        if self.config.parse_comment:
-            leading_comments_list: List[str] = []
-            trailing_comments_list: List[str] = []
-            for container, comments in (
-                (leading_comments_list, leading_comments),
-                (trailing_comments_list, trailing_comments),
-            ):
-                for line in comments.split("\n"):
-                    field_dict = get_dict_from_comment(self.config.comment_prefix, line)
-                    if not field_dict:
-                        container.append(line)
-                    else:
-                        comment_info_dict.update(field_dict)
-            leading_comments = "\n".join(leading_comments_list)
-            trailing_comments = "\n".join(trailing_comments_list)
-        return comment_info_dict, leading_comments, trailing_comments
+    # def _comment_handler(self, leading_comments: str, trailing_comments: str) -> Tuple[dict, str, str]:
+    #     comment_info_dict: dict = {}
+    #     if self.config.parse_comment:
+    #         leading_comments_list: List[str] = []
+    #         trailing_comments_list: List[str] = []
+    #         for container, comments in (
+    #             (leading_comments_list, leading_comments),
+    #             (trailing_comments_list, trailing_comments),
+    #         ):
+    #             for line in comments.split("\n"):
+    #                 field_dict = get_dict_from_comment(self.config.comment_prefix, line)
+    #                 if not field_dict:
+    #                     container.append(line)
+    #                 else:
+    #                     comment_info_dict.update(field_dict)
+    #         leading_comments = "\n".join(leading_comments_list)
+    #         trailing_comments = "\n".join(trailing_comments_list)
+    #     return comment_info_dict, leading_comments, trailing_comments
 
     def add_class_desc(self, scl_prefix: SourceCodeLocation, indent: int = 0) -> Tuple[dict, str, str]:
         desc_content = ""
@@ -145,15 +145,22 @@ class FileDescriptorProtoToCode(BaseP2C):
 
         scl = self.source_code_info_by_scl[tuple(scl_prefix)]
         if scl:
-            comment_info_dict, leading_comments, trailing_comments = self._comment_handler(
-                scl.leading_comments, scl.trailing_comments
-            )
+            if self.config.comment_handler:
+                comment_info_dict, leading_comments, trailing_comments = self.config.comment_handler(
+                    scl.leading_comments,
+                    scl.trailing_comments,
+                    self.config,
+                )
+            else:
+                leading_comments = scl.leading_comments
+                trailing_comments = scl.trailing_comments
             if leading_comments:
                 desc_content += " " * (indent + self.code_indent) + '"""\n'
                 desc_content += " " * (indent + self.code_indent) + leading_comments
                 desc_content += " " * (indent + self.code_indent) + '"""\n'
             if trailing_comments:
                 comment_content = "# " + remove_comment_last_n(trailing_comments)
+
         return comment_info_dict, desc_content, comment_content
 
     def _enum(self, enums: Iterable[EnumDescriptorProto], scl_prefix: SourceCodeLocation, indent: int = 0) -> List[str]:
@@ -363,10 +370,15 @@ class FileDescriptorProtoToCode(BaseP2C):
             rule_type_str = "repeated"
 
         field_info_dict: FieldInfoTypedDict = {}  # type: ignore[typeddict-item]
-        comment_field_info_dict, leading_comments, trailing_comments = self._comment_handler(
-            leading_comments,
-            trailing_comments,
-        )
+        if self.config.comment_handler:
+            comment_field_info_dict, leading_comments, trailing_comments = self.config.comment_handler(
+                leading_comments,
+                trailing_comments,
+                self.config,
+            )
+        else:
+            comment_field_info_dict = {}
+
         if not skip_validate_rule:
             field_info_dict.update(comment_field_info_dict)  # type: ignore[typeddict-item]
             if len(field.options.ListFields()) != 0 and rule_type_str:
@@ -625,21 +637,39 @@ class FileDescriptorProtoToCode(BaseP2C):
                             for one_of_optional_name in result:
                                 optional_dict[one_of_optional_name] = {"is_proto3_optional": True}
 
-            comment = self.source_code_info_by_scl.get(tuple(scl_prefix + [index]))
-            if self.config.parse_comment and comment:
-                for line in comment.leading_comments.split("\n"):
-                    one_of_comment_dict = get_dict_from_comment(self.config.comment_prefix, line)
-                    if not one_of_comment_dict:
-                        continue
-                    for one_of_comment_rule_name, one_of_comment_option_value in one_of_comment_dict.items():
-                        if one_of_comment_rule_name in ("required",):
-                            # Now only support `required`
-                            option_dict["required"] = one_of_comment_option_value
-                        elif one_of_comment_rule_name in ("oneof_extend",):
-                            for one_of_extend_key, one_of_extend_value in one_of_comment_option_value.items():
-                                if one_of_extend_key == "optional":
-                                    for one_of_optional_name in one_of_extend_value:
-                                        optional_dict[one_of_optional_name] = {"is_proto3_optional": True}
+            scl = self.source_code_info_by_scl.get(tuple(scl_prefix + [index]))
+            if scl and self.config.comment_handler:
+                comment_info_dict, leading_comments, trailing_comments = self.config.comment_handler(
+                    scl.leading_comments,
+                    scl.trailing_comments,
+                    self.config,
+                )
+            else:
+                comment_info_dict = {}
+
+            for one_of_comment_rule_name, one_of_comment_option_value in comment_info_dict.items():
+                if one_of_comment_rule_name in ("required",):
+                    # Now only support `required`
+                    option_dict["required"] = one_of_comment_option_value
+                elif one_of_comment_rule_name in ("oneof_extend",):
+                    for one_of_extend_key, one_of_extend_value in one_of_comment_option_value.items():
+                        if one_of_extend_key == "optional":
+                            for one_of_optional_name in one_of_extend_value:
+                                optional_dict[one_of_optional_name] = {"is_proto3_optional": True}
+            # if self.config.parse_comment and comment:
+            #     for line in comment.leading_comments.split("\n"):
+            #         one_of_comment_dict = get_dict_from_comment(self.config.comment_prefix, line)
+            #         if not one_of_comment_dict:
+            #             continue
+            #         for one_of_comment_rule_name, one_of_comment_option_value in one_of_comment_dict.items():
+            #             if one_of_comment_rule_name in ("required",):
+            #                 # Now only support `required`
+            #                 option_dict["required"] = one_of_comment_option_value
+            #             elif one_of_comment_rule_name in ("oneof_extend",):
+            #                 for one_of_extend_key, one_of_extend_value in one_of_comment_option_value.items():
+            #                     if one_of_extend_key == "optional":
+            #                         for one_of_optional_name in one_of_extend_value:
+            #                             optional_dict[one_of_optional_name] = {"is_proto3_optional": True}
 
             option_dict["fields"] = index_field_name_dict[index]
             if option_dict:
