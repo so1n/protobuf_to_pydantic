@@ -1,12 +1,14 @@
 import copy
 from collections import deque
-from typing import Any, Deque, Dict, List, Optional, Set, Type, TypeVar
+from typing import Any, Callable, Deque, Dict, List, Optional, Set, Tuple, Type, TypeVar
+from warnings import warn
 
 from pydantic import BaseModel, Field
 
 from protobuf_to_pydantic import _pydantic_adapter
 from protobuf_to_pydantic.plugin.field_desc_proto_to_code import FileDescriptorProtoToCode
 from protobuf_to_pydantic.template import Template
+from protobuf_to_pydantic.util import get_dict_from_comment
 
 ConfigT = TypeVar("ConfigT", bound="ConfigModel")
 
@@ -23,6 +25,28 @@ class ProtobufTypeConfigModel(BaseModel):
 class SubConfigModel(BaseModel):
     module: Any
     use_root_config: bool = Field(default=False, description="If True, the root configuration will be inherited")
+
+
+def default_comment_handler(
+    leading_comments: str, trailing_comments: str, config_model: "ConfigModel"
+) -> Tuple[dict, str, str]:
+    comment_info_dict: dict = {}
+    if config_model.parse_comment:
+        leading_comments_list: List[str] = []
+        trailing_comments_list: List[str] = []
+        for container, comments in (
+            (leading_comments_list, leading_comments),
+            (trailing_comments_list, trailing_comments),
+        ):
+            for line in comments.split("\n"):
+                field_dict = get_dict_from_comment(config_model.comment_prefix, line)
+                if not field_dict:
+                    container.append(line)
+                else:
+                    comment_info_dict.update(field_dict)
+        leading_comments = "\n".join(leading_comments_list)
+        trailing_comments = "\n".join(trailing_comments_list)
+    return comment_info_dict, leading_comments, trailing_comments
 
 
 class ConfigModel(BaseModel):
@@ -46,6 +70,10 @@ class ConfigModel(BaseModel):
     # gen message config
     local_dict: dict = Field(default_factory=dict, description="Dict for local variables")
     template: Type[Template] = Field(default=Template, description="Support more templates by customizing 'Template'")
+    comment_handler: Optional[Callable[[str, str, "ConfigModel"], Tuple[dict, str, str]]] = Field(
+        default=default_comment_handler,
+        description="Customize the comment parsing function. if None, not parse the comment",
+    )
     comment_prefix: str = Field(default="p2p", description="Comment prefix")
     parse_comment: bool = Field(
         default=True,
@@ -130,6 +158,12 @@ class ConfigModel(BaseModel):
 
         if "pkg_config" in values:
             values["pkg_config"] = {k: _validator(v) for k, v in values.get("pkg_config", {}).items()}
+        if "parse_comment" in values or "comment_handler" in values:
+            warning_msg = (
+                "The 'parse_comment' and 'comment_handler' configuration items are deprecated, "
+                "please use the 'comment_handler' configuration item instead"
+            )
+            warn(warning_msg, DeprecationWarning)
         return values
 
 
