@@ -241,8 +241,9 @@ class FileDescriptorProtoToCode(BaseP2C):
         one_of_dict: Dict[str, OneOfTypedDict],
         scl_prefix: SourceCodeLocation,
         this_level_model_cache: Dict[str, str],
+        pydantic_config_dict: dict,
         skip_validate_rule: bool = False,
-    ) -> Optional[Tuple[str, str, bool]]:
+    ) -> Optional[Tuple[str, str]]:
         """generate message's field to Pydantic.FieldInfo code
 
         :param desc: The message to which the field belongs is used to determine whether it is self-referencing
@@ -256,9 +257,14 @@ class FileDescriptorProtoToCode(BaseP2C):
             field optional dict
             e.g: {"{field name}": {"is_proto3_optional": True}}
         :param one_of_dict: one of config dict
+        :param scl_prefix: source code location
+        :param this_level_model_cache:
+            The cache of the model generated at this level,
+            used to prevent the same model from being generated multiple times
+        :param pydantic_config_dict: pydantic config dict: https://docs.pydantic.dev/dev/api/config/
         :param skip_validate_rule: If the value is True, the validation information for the field will not be generated
 
-        :return: validator_handle_content, class_field_content, use_custom_type
+        :return: validator_handle_content, class_field_content
         """
         field_info_default_value = _pydantic_adapter.PydanticUndefined
         field_info_default_factory_value: Any = None
@@ -351,6 +357,7 @@ class FileDescriptorProtoToCode(BaseP2C):
                 type_str = f'"{root_desc.name}.{type_str}"'
             message_fd = self._descriptors.message_to_fd[field.type_name]
             self._add_other_module_pkg(message_fd, type_str)
+            pydantic_config_dict["validate_default"] = True
         elif field.type not in protobuf_desc_python_type_dict:
             logger.error(f"Not found {field.type} in type_dict")
             return None
@@ -412,6 +419,25 @@ class FileDescriptorProtoToCode(BaseP2C):
                 pass
 
         is_required = field_info_dict.get("required", None)
+
+        # if rule_type_str == "enum":
+        #     enum_default_value = field_info_dict.get("default", MISSING)
+        #     if enum_default_value.__class__ == MISSING.__class__:
+        #         enum_default_value = field_info_default_value
+        #
+        #     const_value = field_info_dict.get("const", MISSING)
+        #     enable_const = const_value.__class__ != MISSING.__class__
+        #     if isinstance(enum_default_value, int):
+        #         if "." in type_str:
+        #             field_info_default_factory_value = FormatContainer(
+        #                 "lambda : " + type_str.strip('"') + "(" + str(enum_default_value) + ")"
+        #             )
+        #             if enable_const:
+        #                 field_info_dict["const"] = field_info_default_factory_value
+        #         else:
+        #             field_info_default_value = FormatContainer(type_str + "(" + str(enum_default_value) + ")")
+        #             if enable_const:
+        #                 field_info_dict["const"] = field_info_default_value
 
         if (
             field_info_dict
@@ -541,7 +567,10 @@ class FileDescriptorProtoToCode(BaseP2C):
         if self.config.parse_comment and trailing_comments:
             class_field_content = class_field_content + trailing_comments
         class_field_content = class_field_content + "\n"
-        return validator_handle_content, class_field_content, use_custom_type
+
+        if use_custom_type:
+            pydantic_config_dict["arbitrary_types_allowed"] = use_custom_type
+        return validator_handle_content, class_field_content
 
     def _gen_one_of_dict(
         self, desc: DescriptorProto, scl_prefix: SourceCodeLocation, skip_validate_rule: bool
@@ -712,7 +741,7 @@ class FileDescriptorProtoToCode(BaseP2C):
         class_field_content = ""
         class_head_content = desc_content if desc_content else ""
 
-        use_custom_type: bool = False
+        pydantic_config_dict: dict = {}
         one_of_dict, optional_dict, nested_message_config_dict = {}, {}, {}  # type: dict, dict, dict
 
         if comment_info_dict.get("ignored", False):
@@ -742,13 +771,13 @@ class FileDescriptorProtoToCode(BaseP2C):
                 one_of_dict=one_of_dict,
                 scl_prefix=scl_prefix + [DescriptorProto.FIELD_FIELD_NUMBER, idx],
                 this_level_model_cache=this_level_model_cache,
+                pydantic_config_dict=pydantic_config_dict,
                 skip_validate_rule=skip_validate_rule,
             )
             if _content_tuple:
                 class_validate_handler_content += _content_tuple[0]
                 class_field_content += _content_tuple[1]
-                if _content_tuple[2]:
-                    use_custom_type = True
+
         if desc.nested_type:
             class_sub_c_str_list.extend(
                 self._message_nested_type_handle(
@@ -786,21 +815,39 @@ class FileDescriptorProtoToCode(BaseP2C):
                 )
                 self._add_import_code("pydantic", "model_validator")
 
-        if use_custom_type:
+        if pydantic_config_dict:
             if _pydantic_adapter.is_v1:
                 # Pydantic V1 output:
                 #   class Config:
                 #       arbitrary_types_allowed = False
                 config_content: str = f"{' ' * (indent + self.code_indent)}class Config:\n"
-                config_content += f"{' ' * (indent + self.code_indent * 2)}arbitrary_types_allowed = True\n\n"
+                for k, v in pydantic_config_dict.items():
+                    if k == "validate_default":
+                        k = "validate_all"
+                    config_content += f"{' ' * (indent + self.code_indent * 2)}{k} = {v}\n"
+                config_content += "\n"
                 class_sub_c_str_list.append(config_content)
             else:
                 # Pydantic V2 output:
                 #   model_config = ConfigDict(arbitrary_types_allowed=False)
-                class_var_str_list.append(
-                    f"{' ' * (indent + self.code_indent)}model_config = ConfigDict(arbitrary_types_allowed=True)"
-                )
+                attr_str = ", ".join([f"{k}={v}" for k, v in pydantic_config_dict.items()])
+                class_var_str_list.append(f"{' ' * (indent + self.code_indent)}model_config = ConfigDict({attr_str})")
                 self._add_import_code("pydantic", "ConfigDict")
+
+            # if _pydantic_adapter.is_v1:
+            #     # Pydantic V1 output:
+            #     #   class Config:
+            #     #       arbitrary_types_allowed = False
+            #     config_content: str = f"{' ' * (indent + self.code_indent)}class Config:\n"
+            #     config_content += f"{' ' * (indent + self.code_indent * 2)}arbitrary_types_allowed = True\n\n"
+            #     class_sub_c_str_list.append(config_content)
+            # else:
+            #     # Pydantic V2 output:
+            #     #   model_config = ConfigDict(arbitrary_types_allowed=False)
+            #     class_var_str_list.append(
+            #         f"{' ' * (indent + self.code_indent)}model_config = ConfigDict(arbitrary_types_allowed=True)"
+            #     )
+            #     self._add_import_code("pydantic", "ConfigDict")
 
         class_head_content += "\n".join(class_sub_c_str_list)
         if class_head_content and class_var_str_list:

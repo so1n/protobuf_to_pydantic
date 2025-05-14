@@ -597,6 +597,10 @@ class M2P(object):
                 self._protobuf_field_type_is_type_message_handler(field_dataclass)
             elif protobuf_field.type == FieldDescriptor.TYPE_ENUM:
                 self._protobuf_field_type_is_type_enum_handler(field_dataclass)
+                if _pydantic_adapter.is_v1:
+                    pydantic_model_config_dict["validate_all"] = True
+                else:
+                    pydantic_model_config_dict["validate_default"] = True
             else:
                 field_dataclass.field_default = protobuf_field.default_value
 

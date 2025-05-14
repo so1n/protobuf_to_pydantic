@@ -43,7 +43,47 @@ class EmptyMessage(BaseModel):
 """)in self._model_output(demo_pb2.EmptyMessage)  # type: ignore
 
     def test_user_message(self) -> None:
-        assert format_content("""
+        content = """
+ class SexType(IntEnum):
+    man = 0
+    women = 1
+
+
+class ExampleExampleProtoCommonSingleDemoEnum(IntEnum):
+    \"\"\"Note: The current class does not belong to the package
+    ExampleExampleProtoCommonSingleDemoEnum protobuf path:example/example_proto/common/single.proto\"\"\"
+
+    zero = 0
+    one = 1
+    two = 3
+
+
+class ExampleExampleProtoCommonSingleDemoMessage(BaseModel):
+    \"\"\"Note: The current class does not belong to the package
+    ExampleExampleProtoCommonSingleDemoMessage protobuf path:example/example_proto/common/single.proto\"\"\"
+
+    earth: str = Field(default="")
+    mercury: str = Field(default="")
+    mars: str = Field(default="")
+
+
+class UserMessage(BaseModel):
+    class Config:
+        validate_all = True
+
+    uid: str = Field(default="")
+    age: int = Field(default=0)
+    height: float = Field(default=0.0)
+    sex: SexType = Field(default=0)
+    demo: ExampleExampleProtoCommonSingleDemoEnum = Field(default=0)
+    is_adult: bool = Field(default=False)
+    user_name: str = Field(default="")
+    demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field(
+        default_factory=ExampleExampleProtoCommonSingleDemoMessage
+    )
+        """
+        if not is_v1:
+            content = """
 class SexType(IntEnum):
     man = 0
     women = 1
@@ -68,6 +108,8 @@ class ExampleExampleProtoCommonSingleDemoMessage(BaseModel):
 
 
 class UserMessage(BaseModel):
+    model_config = ConfigDict(validate_default=True)
+
     uid: str = Field(default="")
     age: int = Field(default=0)
     height: float = Field(default=0.0)
@@ -78,7 +120,8 @@ class UserMessage(BaseModel):
     demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field(
         default_factory=ExampleExampleProtoCommonSingleDemoMessage
     )
-""") in self._model_output(demo_pb2.UserMessage)
+"""
+        assert format_content(content) in self._model_output(demo_pb2.UserMessage)
 
     def test_other_message(self) -> None:
         if is_v1:
@@ -103,7 +146,7 @@ class OtherMessage(BaseModel):
         assert format_content(content) in self._model_output(demo_pb2.OtherMessage)
 
     def test_map_message(self) -> None:
-        assert format_content("""
+        content = """
 class SexType(IntEnum):
     man = 0
     women = 1
@@ -128,6 +171,9 @@ class ExampleExampleProtoCommonSingleDemoMessage(BaseModel):
 
 
 class UserMessage(BaseModel):
+    class Config:
+        validate_all = True
+
     uid: str = Field(default="")
     age: int = Field(default=0)
     height: float = Field(default=0.0)
@@ -143,10 +189,9 @@ class UserMessage(BaseModel):
 class MapMessage(BaseModel):
     user_map: typing.Dict[str, UserMessage] = Field(default_factory=dict)
     user_flag: typing.Dict[str, bool] = Field(default_factory=dict)
-""") in self._model_output(demo_pb2.MapMessage)
-
-    def test_repeated_message(self) -> None:
-        assert format_content("""
+"""
+        if not is_v1:
+            content = """
 class SexType(IntEnum):
     man = 0
     women = 1
@@ -171,6 +216,55 @@ class ExampleExampleProtoCommonSingleDemoMessage(BaseModel):
 
 
 class UserMessage(BaseModel):
+    model_config = ConfigDict(validate_default=True)
+
+    uid: str = Field(default="")
+    age: int = Field(default=0)
+    height: float = Field(default=0.0)
+    sex: SexType = Field(default=0)
+    demo: ExampleExampleProtoCommonSingleDemoEnum = Field(default=0)
+    is_adult: bool = Field(default=False)
+    user_name: str = Field(default="")
+    demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field(
+        default_factory=ExampleExampleProtoCommonSingleDemoMessage
+    )
+
+
+class MapMessage(BaseModel):
+    user_map: typing.Dict[str, UserMessage] = Field(default_factory=dict)
+    user_flag: typing.Dict[str, bool] = Field(default_factory=dict)
+"""
+        assert format_content(content) in self._model_output(demo_pb2.MapMessage)
+
+    def test_repeated_message(self) -> None:
+        content = """
+class SexType(IntEnum):
+    man = 0
+    women = 1
+
+
+class ExampleExampleProtoCommonSingleDemoEnum(IntEnum):
+    \"\"\"Note: The current class does not belong to the package
+    ExampleExampleProtoCommonSingleDemoEnum protobuf path:example/example_proto/common/single.proto\"\"\"
+
+    zero = 0
+    one = 1
+    two = 3
+
+
+class ExampleExampleProtoCommonSingleDemoMessage(BaseModel):
+    \"\"\"Note: The current class does not belong to the package
+    ExampleExampleProtoCommonSingleDemoMessage protobuf path:example/example_proto/common/single.proto\"\"\"
+
+    earth: str = Field(default="")
+    mercury: str = Field(default="")
+    mars: str = Field(default="")
+
+
+class UserMessage(BaseModel):
+    class Config:
+        validate_all = True
+
     uid: str = Field(default="")
     age: int = Field(default=0)
     height: float = Field(default=0.0)
@@ -187,18 +281,61 @@ class RepeatedMessage(BaseModel):
     str_list: typing.List[str] = Field(default_factory=list)
     int_list: typing.List[int] = Field(default_factory=list)
     user_list: typing.List[UserMessage] = Field(default_factory=list)
-""") in self._model_output(
-            demo_pb2.RepeatedMessage
-        )
+"""
+        if not is_v1:
+            content = """
+class SexType(IntEnum):
+    man = 0
+    women = 1
+
+
+class ExampleExampleProtoCommonSingleDemoEnum(IntEnum):
+    \"\"\"Note: The current class does not belong to the package
+    ExampleExampleProtoCommonSingleDemoEnum protobuf path:example/example_proto/common/single.proto\"\"\"
+
+    zero = 0
+    one = 1
+    two = 3
+
+
+class ExampleExampleProtoCommonSingleDemoMessage(BaseModel):
+    \"\"\"Note: The current class does not belong to the package
+    ExampleExampleProtoCommonSingleDemoMessage protobuf path:example/example_proto/common/single.proto\"\"\"
+
+    earth: str = Field(default="")
+    mercury: str = Field(default="")
+    mars: str = Field(default="")
+
+
+class UserMessage(BaseModel):
+    model_config = ConfigDict(validate_default=True)
+
+    uid: str = Field(default="")
+    age: int = Field(default=0)
+    height: float = Field(default=0.0)
+    sex: SexType = Field(default=0)
+    demo: ExampleExampleProtoCommonSingleDemoEnum = Field(default=0)
+    is_adult: bool = Field(default=False)
+    user_name: str = Field(default="")
+    demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field(
+        default_factory=ExampleExampleProtoCommonSingleDemoMessage
+    )
+
+
+class RepeatedMessage(BaseModel):
+    str_list: typing.List[str] = Field(default_factory=list)
+    int_list: typing.List[int] = Field(default_factory=list)
+    user_list: typing.List[UserMessage] = Field(default_factory=list)
+"""
+        assert format_content(content) in self._model_output(demo_pb2.RepeatedMessage)
 
     def test_nested_message(self) -> None:
-        assert format_content("""
+        content = """
 import typing
 from datetime import datetime
 from enum import IntEnum
 
-from pydantic import BaseModel, Field
-from pydantic.fields import FieldInfo
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class SexType(IntEnum):
@@ -225,6 +362,9 @@ class ExampleExampleProtoCommonSingleDemoMessage(BaseModel):
 
 
 class UserMessage(BaseModel):
+    class Config:
+        validate_all = True
+
     uid: str = Field(default="")
     age: int = Field(default=0)
     height: float = Field(default=0.0)
@@ -264,14 +404,102 @@ class NestedMessage(BaseModel):
         one = 1
         two = 2
 
+    class Config:
+        validate_all = True
+
     user_list_map: typing.Dict[str, RepeatedMessage] = Field(default_factory=dict)
     user_map: typing.Dict[str, MapMessage] = Field(default_factory=dict)
-    user_pay: UserPayMessage = Field(default_factory=UserPayMessage )
+    user_pay: UserPayMessage = Field(default_factory=UserPayMessage)
     include_enum: IncludeEnum = Field(default=0)
-    not_enable_user_pay: UserPayMessage = Field(default_factory=UserPayMessage )
+    not_enable_user_pay: UserPayMessage = Field(default_factory=UserPayMessage)
     empty: typing.Any = Field()
-    after_refer: AfterReferMessage = Field(default_factory=AfterReferMessage )
-""") in self._model_output(demo_pb2.NestedMessage)
+    after_refer: AfterReferMessage = Field(default_factory=AfterReferMessage)
+        """
+        if not is_v1:
+            content = """
+import typing
+from datetime import datetime
+from enum import IntEnum
+
+from pydantic import BaseModel, ConfigDict, Field
+
+
+class SexType(IntEnum):
+    man = 0
+    women = 1
+
+
+class ExampleExampleProtoCommonSingleDemoEnum(IntEnum):
+    \"\"\"Note: The current class does not belong to the package
+    ExampleExampleProtoCommonSingleDemoEnum protobuf path:example/example_proto/common/single.proto\"\"\"
+
+    zero = 0
+    one = 1
+    two = 3
+
+
+class ExampleExampleProtoCommonSingleDemoMessage(BaseModel):
+    \"\"\"Note: The current class does not belong to the package
+    ExampleExampleProtoCommonSingleDemoMessage protobuf path:example/example_proto/common/single.proto\"\"\"
+
+    earth: str = Field(default="")
+    mercury: str = Field(default="")
+    mars: str = Field(default="")
+
+
+class UserMessage(BaseModel):
+    model_config = ConfigDict(validate_default=True)
+
+    uid: str = Field(default="")
+    age: int = Field(default=0)
+    height: float = Field(default=0.0)
+    sex: SexType = Field(default=0)
+    demo: ExampleExampleProtoCommonSingleDemoEnum = Field(default=0)
+    is_adult: bool = Field(default=False)
+    user_name: str = Field(default="")
+    demo_message: ExampleExampleProtoCommonSingleDemoMessage = Field(
+        default_factory=ExampleExampleProtoCommonSingleDemoMessage
+    )
+
+
+class RepeatedMessage(BaseModel):
+    str_list: typing.List[str] = Field(default_factory=list)
+    int_list: typing.List[int] = Field(default_factory=list)
+    user_list: typing.List[UserMessage] = Field(default_factory=list)
+
+
+class MapMessage(BaseModel):
+    user_map: typing.Dict[str, UserMessage] = Field(default_factory=dict)
+    user_flag: typing.Dict[str, bool] = Field(default_factory=dict)
+
+
+class AfterReferMessage(BaseModel):
+    uid: str = Field(default="")
+    age: int = Field(default=0)
+
+
+class NestedMessage(BaseModel):
+    class UserPayMessage(BaseModel):
+        bank_number: str = Field(default="")
+        exp: datetime = Field(default_factory=datetime.now)
+        uuid: str = Field(default="")
+
+    class IncludeEnum(IntEnum):
+        zero = 0
+        one = 1
+        two = 2
+
+    model_config = ConfigDict(validate_default=True)
+
+    user_list_map: typing.Dict[str, RepeatedMessage] = Field(default_factory=dict)
+    user_map: typing.Dict[str, MapMessage] = Field(default_factory=dict)
+    user_pay: UserPayMessage = Field(default_factory=UserPayMessage)
+    include_enum: IncludeEnum = Field(default=0)
+    not_enable_user_pay: UserPayMessage = Field(default_factory=UserPayMessage)
+    empty: typing.Any = Field()
+    after_refer: AfterReferMessage = Field(default_factory=AfterReferMessage)
+        """
+        assert format_content(content) in self._model_output(demo_pb2.NestedMessage)
 
     def test_invoice_item(self) -> None:
         assert format_content(

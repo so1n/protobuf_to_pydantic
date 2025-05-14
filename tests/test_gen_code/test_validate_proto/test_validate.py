@@ -327,6 +327,9 @@ class State(IntEnum):
 
 
 class EnumTest(BaseModel):
+    class Config:
+        validate_all = True
+
     const_test: State = Field(default=2, const=True)
     defined_only_test: State = Field(default=0)
     in_test: State = Field(default=0, in_=[0, 2])
@@ -344,6 +347,8 @@ class State(IntEnum):
 
 
 class EnumTest(BaseModel):
+    model_config = ConfigDict(validate_default=True)
+
     const_test: typing_extensions.Literal[2] = Field(default=0)
     defined_only_test: State = Field(default=0)
     in_test: State = Field(default=0, in_=[0, 2])

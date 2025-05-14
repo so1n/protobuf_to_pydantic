@@ -1,5 +1,5 @@
 # This is an automatically generated file, please do not change
-# gen by protobuf_to_pydantic[v0.3.1.2](https://github.com/so1n/protobuf_to_pydantic)
+# gen by protobuf_to_pydantic[v0.3.2.0](https://github.com/so1n/protobuf_to_pydantic)
 # Protobuf Version: 4.24.4
 # Pydantic Version: 1.10.7
 import typing
@@ -28,6 +28,9 @@ class UserMessage(BaseModel):
     """
     user info
     """
+
+    class Config:
+        validate_all = True
 
     uid: typing.Optional[str] = Field(example="10086", title="UID", description="user union id")
     age: typing.Optional[int] = Field(default=0, example=18, title="use age", ge=0.0)
@@ -92,6 +95,9 @@ class NestedMessage(BaseModel):
         zero = 0
         one = 1
         two = 2
+
+    class Config:
+        validate_all = True
 
     user_list_map: typing.Optional["typing.Dict[str, RepeatedMessage]"] = Field(default_factory=dict)
     user_map: typing.Optional["typing.Dict[str, MapMessage]"] = Field(default_factory=dict)

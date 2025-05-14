@@ -1,5 +1,5 @@
 # This is an automatically generated file, please do not change
-# gen by protobuf_to_pydantic[v0.3.1.2](https://github.com/so1n/protobuf_to_pydantic)
+# gen by protobuf_to_pydantic[v0.3.2.0](https://github.com/so1n/protobuf_to_pydantic)
 # Protobuf Version: 3.20.3
 # Pydantic Version: 2.5.3
 import typing
@@ -85,6 +85,8 @@ class ExampleExampleProtoCommonSingleDemoMessage(BaseModel):
 
 
 class UserMessage(BaseModel):
+    model_config = ConfigDict(validate_default=True)
+
     uid: str = Field(default="")
     age: int = Field(default=0)
     height: float = Field(default=0.0)
@@ -118,6 +120,8 @@ class NestedMessage(BaseModel):
         zero = 0
         one = 1
         two = 2
+
+    model_config = ConfigDict(validate_default=True)
 
     user_list_map: typing.Dict[str, RepeatedMessage] = Field(default_factory=dict)
     user_map: typing.Dict[str, MapMessage] = Field(default_factory=dict)

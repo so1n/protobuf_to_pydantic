@@ -63,6 +63,9 @@ class ExampleExampleProtoCommonSingleDemoMessage(BaseModel):
 
 
 class UserMessage(BaseModel):
+    class Config:
+        validate_all = True
+
     uid: str = Field(title="UID", description="user union id", example="10086")
     age: int = Field(default=0, title="use age", ge=0.0, example=18)
     height: float = Field(default=0.0, ge=0.0, le=2.5)
@@ -101,6 +104,8 @@ class ExampleExampleProtoCommonSingleDemoMessage(BaseModel):
 
 
 class UserMessage(BaseModel):
+    model_config = ConfigDict(validate_default=True)
+
     uid: str = Field(title="UID", description="user union id", example="10086")
     age: int = Field(default=0, title="use age", example=18, ge=0)
     height: float = Field(default=0.0, ge=0.0, le=2.5)
@@ -163,6 +168,9 @@ class ExampleExampleProtoCommonSingleDemoMessage(BaseModel):
 
 
 class UserMessage(BaseModel):
+    class Config:
+        validate_all = True
+
     uid: str = Field(title="UID", description="user union id", example="10086")
     age: int = Field(default=0, title="use age", ge=0.0, example=18)
     height: float = Field(default=0.0, ge=0.0, le=2.5)
@@ -206,6 +214,8 @@ class ExampleExampleProtoCommonSingleDemoMessage(BaseModel):
 
 
 class UserMessage(BaseModel):
+    model_config = ConfigDict(validate_default=True)
+
     uid: str = Field(title="UID", description="user union id", example="10086")
     age: int = Field(default=0, title="use age", example=18, ge=0)
     height: float = Field(default=0.0, ge=0.0, le=2.5)
@@ -251,6 +261,9 @@ class ExampleExampleProtoCommonSingleDemoMessage(BaseModel):
 
 
 class UserMessage(BaseModel):
+    class Config:
+        validate_all = True
+
     uid: str = Field(title="UID", description="user union id", example="10086")
     age: int = Field(default=0, title="use age", ge=0.0, example=18)
     height: float = Field(default=0.0, ge=0.0, le=2.5)
@@ -295,6 +308,8 @@ class ExampleExampleProtoCommonSingleDemoMessage(BaseModel):
 
 
 class UserMessage(BaseModel):
+    model_config = ConfigDict(validate_default=True)
+
     uid: str = Field(title="UID", description="user union id", example="10086")
     age: int = Field(default=0, title="use age", example=18, ge=0)
     height: float = Field(default=0.0, ge=0.0, le=2.5)
@@ -342,6 +357,9 @@ class ExampleExampleProtoCommonSingleDemoMessage(BaseModel):
 
 
 class UserMessage(BaseModel):
+    class Config:
+        validate_all = True
+
     uid: str = Field(title="UID", description="user union id", example="10086")
     age: int = Field(default=0, title="use age", ge=0.0, example=18)
     height: float = Field(default=0.0, ge=0.0, le=2.5)
@@ -382,6 +400,9 @@ class NestedMessage(BaseModel):
         one = 1
         two = 2
 
+    class Config:
+        validate_all = True
+
     user_list_map: typing.Dict[str, RepeatedMessage] = Field(default_factory=dict)
     user_map: typing.Dict[str, MapMessage] = Field(default_factory=dict)
     user_pay: UserPayMessage = Field(default_factory=UserPayMessage)
@@ -415,6 +436,8 @@ class ExampleExampleProtoCommonSingleDemoMessage(BaseModel):
 
 
 class UserMessage(BaseModel):
+    model_config = ConfigDict(validate_default=True)
+
     uid: str = Field(title="UID", description="user union id", example="10086")
     age: int = Field(default=0, title="use age", example=18, ge=0)
     height: float = Field(default=0.0, ge=0.0, le=2.5)
@@ -454,6 +477,8 @@ class NestedMessage(BaseModel):
         zero = 0
         one = 1
         two = 2
+
+    model_config = ConfigDict(validate_default=True)
 
     user_list_map: typing.Dict[str, RepeatedMessage] = Field(default_factory=dict)
     user_map: typing.Dict[str, MapMessage] = Field(default_factory=dict)

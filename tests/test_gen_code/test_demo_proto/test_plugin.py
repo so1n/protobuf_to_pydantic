@@ -41,6 +41,7 @@ class UserMessage(BaseModel):
     user info
     \"\"\"
 
+    model_config = ConfigDict(validate_default=True)
     uid: str = Field(title="UID", description="user union id", example="10086")
     age: int = Field(default=0, title="use age", ge=0, example=18)
     height: float = Field(default=0.0, ge=0.0, le=2.5)
@@ -56,6 +57,9 @@ class UserMessage(BaseModel):
     \"\"\"
     user info
     \"\"\"
+
+    class Config:
+        validate_all = True
 
     uid: str = Field(example="10086", title="UID", description="user union id")
     age: int = Field(default=0, example=18, title="use age", ge=0.0)
@@ -143,6 +147,9 @@ class NestedMessage(BaseModel):
         one = 1
         two = 2
 
+    class Config:
+        validate_all = True
+
     user_list_map: "typing.Dict[str, RepeatedMessage]" = Field(default_factory=dict)
     user_map: "typing.Dict[str, MapMessage]" = Field(default_factory=dict)
     user_pay: "NestedMessage.UserPayMessage" = Field(default_factory=lambda: NestedMessage.UserPayMessage())
@@ -150,6 +157,32 @@ class NestedMessage(BaseModel):
     empty: None = Field()
     after_refer: AfterReferMessage = Field(default_factory=AfterReferMessage)
 """
+        if not is_v1:
+            content = """
+class NestedMessage(BaseModel):
+    \"\"\"
+    test nested message
+    \"\"\"
+
+    class UserPayMessage(BaseModel):
+        bank_number: PaymentCardNumber = Field(default="")
+        exp: datetime = Field(default_factory=exp_time)
+        uuid: str = Field(default_factory=uuid4)
+
+    class IncludeEnum(IntEnum):
+        zero = 0
+        one = 1
+        two = 2
+
+    model_config = ConfigDict(validate_default=True)
+    user_list_map: "typing.Dict[str, RepeatedMessage]" = Field(default_factory=dict)
+    user_map: "typing.Dict[str, MapMessage]" = Field(default_factory=dict)
+    user_pay: "NestedMessage.UserPayMessage" = Field(default_factory=lambda: NestedMessage.UserPayMessage())
+    include_enum: "NestedMessage.IncludeEnum" = Field(default=0)
+    empty: None = Field()
+    after_refer: AfterReferMessage = Field(default_factory=AfterReferMessage)
+"""
+
         assert content.strip("\n") in getsource(demo_p2p.NestedMessage).strip("\n")
 
     def test_self_referencing(self) -> None:

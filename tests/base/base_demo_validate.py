@@ -45,7 +45,7 @@ class BaseTestAllFieldSetOptionalDemoValidator:
 
     def _test_user_message(self, model_class: Type) -> None:
         model_class = self.replace_message_fn(model_class)
-        model_class(uid=None)
+        model_class(uid=None, user_name="so1n")
 
     def _test_other_message(self, model_class: Type) -> None:
         model_class = self.replace_message_fn(model_class)

@@ -1,5 +1,5 @@
 # This is an automatically generated file, please do not change
-# gen by protobuf_to_pydantic[v0.3.1.2](https://github.com/so1n/protobuf_to_pydantic)
+# gen by protobuf_to_pydantic[v0.3.2.0](https://github.com/so1n/protobuf_to_pydantic)
 # Protobuf Version: 4.24.4
 # Pydantic Version: 2.5.3
 import typing
@@ -163,6 +163,8 @@ class State(IntEnum):
 
 
 class EnumTest(BaseModel):
+    model_config = ConfigDict(validate_default=True)
+
     const_test: typing_extensions.Literal[2] = Field(default=0)
     defined_only_test: State = Field(default=0)
     in_test: State = Field(default=0, in_=[0, 2])

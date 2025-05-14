@@ -1,5 +1,5 @@
 # This is an automatically generated file, please do not change
-# gen by protobuf_to_pydantic[v0.3.1.2](https://github.com/so1n/protobuf_to_pydantic)
+# gen by protobuf_to_pydantic[v0.3.2.0](https://github.com/so1n/protobuf_to_pydantic)
 # Protobuf Version: 3.20.3
 # Pydantic Version: 1.10.7
 import typing
@@ -441,6 +441,9 @@ class BytesTest(BaseModel):
 
 
 class EnumTest(BaseModel):
+    class Config:
+        validate_all = True
+
     const_test: State = Field(default=2, const=True)
     in_test: State = Field(default=0, in_=[0, 2])
     not_in_test: State = Field(default=0, not_in=[0, 2])
