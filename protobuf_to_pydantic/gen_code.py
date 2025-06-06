@@ -381,10 +381,14 @@ class BaseP2C(object):
                 raise RuntimeError("can not load value type")
             # Type Hint handler
             if value_outer_type.__module__ != "builtins":
-                if inspect.isclass(value_type) and issubclass(value_type, IntEnum):
-                    # Parse protobuf enum
+                # Get the actual type to check, handling Optional cases
+                type_to_check = value_type
+                if isinstance(value_outer_type, _GenericAlias) and value_outer_type._name == "Optional":
+                    type_to_check = get_args(value_outer_type)[0]
+                
+                if inspect.isclass(type_to_check) and issubclass(type_to_check, IntEnum):
                     self._import_set.add("from enum import IntEnum")
-                    enum_code: str = self._gen_enum_py_code(value_type, indent=indent - self.code_indent)
+                    enum_code: str = self._gen_enum_py_code(type_to_check, indent=indent - self.code_indent)
                     if enum_code:
                         self._content_deque.append(enum_code)
                 else:
