@@ -224,6 +224,9 @@ class M2P(object):
                 return None
         return None
 
+    def _is_type_a_mapping(self, message_type: Descriptor) -> bool:
+        return message_type.name.endswith("Entry") and message_type.fields_by_name.keys() == ["key", "value"]
+
     def _one_of_handle(self, descriptor: Descriptor) -> Tuple[Dict[str, "UseOneOfTypedDict"], Dict[str, Any]]:
         message_option_dict: "MessageOptionTypedDict" = self._message_option_dict.get(
             descriptor.name, {"message": {}, "one_of": {}, "nested": {}, "metadata": {}}
@@ -297,7 +300,7 @@ class M2P(object):
         # nested support
         nested_message_dict: Dict[str, Type[Union[BaseModel, IntEnum]]] = {}
         for message in descriptor.nested_types:
-            if message.name.endswith("Entry"):
+            if self._is_type_a_mapping(message):
                 continue
             nested_type: Any = self._parse_msg_to_pydantic_model(descriptor=message, root_descriptor=descriptor)
             nested_message_dict[message.full_name] = nested_type
@@ -323,7 +326,7 @@ class M2P(object):
                 field_dataclass.field_default_factory = self._message_default_factory_dict_by_type_name[
                     protobuf_field.message_type.name
                 ]
-        elif protobuf_field.message_type.name.endswith("Entry"):
+        elif self._is_type_a_mapping(protobuf_field.message_type):
             # support google.protobuf.MapEntry
             # key, value = column.message_type.fields
             field_dataclass.field_type_name = "map"
@@ -442,7 +445,7 @@ class M2P(object):
     def _protobuf_field_lable_is_label_repeated_handler(self, field_dataclass: FieldDataClass) -> None:
         # support google.protobuf.array
         protobuf_field = field_dataclass.protobuf_field
-        if not (protobuf_field.message_type and protobuf_field.message_type.name.endswith("Entry")):
+        if not (protobuf_field.message_type and self._is_type_a_mapping(protobuf_field.message_type)):
             # I didn't know that Protobuf's Design of Maps and Lists would be so weird
             field_dataclass.field_type = List[field_dataclass.field_type]  # type: ignore
             field_dataclass.field_default_factory = list
