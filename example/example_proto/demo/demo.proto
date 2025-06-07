@@ -171,3 +171,17 @@ message DemoResp {
 message DemoState  {
     int64 paramsDID = 4;
 }
+
+// Test optional enum are not code gen
+// from:
+// - https://github.com/so1n/protobuf_to_pydantic/issues/101
+// - https://github.com/so1n/protobuf_to_pydantic/issues/99
+message WithOptionalEnumMsgEntry {
+    optional OptionalEnum enum = 1;
+}
+
+enum OptionalEnum {
+    FOO = 0;
+    BAR = 1;
+    BAZ = 2;
+}

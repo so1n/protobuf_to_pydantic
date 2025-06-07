@@ -33,6 +33,23 @@ women: SexType.ValueType  # 1
 global___SexType = SexType
 
 
+class _OptionalEnum:
+    ValueType = typing.NewType('ValueType', builtins.int)
+    V: typing_extensions.TypeAlias = ValueType
+class _OptionalEnumEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_OptionalEnum.ValueType], builtins.type):
+    DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
+    FOO: _OptionalEnum.ValueType  # 0
+    BAR: _OptionalEnum.ValueType  # 1
+    BAZ: _OptionalEnum.ValueType  # 2
+class OptionalEnum(_OptionalEnum, metaclass=_OptionalEnumEnumTypeWrapper):
+    pass
+
+FOO: OptionalEnum.ValueType  # 0
+BAR: OptionalEnum.ValueType  # 1
+BAZ: OptionalEnum.ValueType  # 2
+global___OptionalEnum = OptionalEnum
+
+
 class UserMessage(google.protobuf.message.Message):
     """user info"""
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
@@ -611,3 +628,21 @@ class DemoState(google.protobuf.message.Message):
         ) -> None: ...
     def ClearField(self, field_name: typing_extensions.Literal["paramsDID",b"paramsDID"]) -> None: ...
 global___DemoState = DemoState
+
+class WithOptionalEnumMsgEntry(google.protobuf.message.Message):
+    """Test optional enum are not code gen
+    from:
+    - https://github.com/so1n/protobuf_to_pydantic/issues/101
+    - https://github.com/so1n/protobuf_to_pydantic/issues/99
+    """
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    ENUM_FIELD_NUMBER: builtins.int
+    enum: global___OptionalEnum.ValueType
+    def __init__(self,
+        *,
+        enum: typing.Optional[global___OptionalEnum.ValueType] = ...,
+        ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_enum",b"_enum","enum",b"enum"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_enum",b"_enum","enum",b"enum"]) -> None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_enum",b"_enum"]) -> typing.Optional[typing_extensions.Literal["enum"]]: ...
+global___WithOptionalEnumMsgEntry = WithOptionalEnumMsgEntry

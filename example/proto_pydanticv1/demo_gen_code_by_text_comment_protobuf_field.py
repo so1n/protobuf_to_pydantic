@@ -1,5 +1,5 @@
 # This is an automatically generated file, please do not change
-# gen by protobuf_to_pydantic[v0.3.2.0](https://github.com/so1n/protobuf_to_pydantic)
+# gen by protobuf_to_pydantic[v0.3.3.0](https://github.com/so1n/protobuf_to_pydantic)
 # Protobuf Version: 4.24.4
 # Pydantic Version: 1.10.7
 import typing
@@ -179,3 +179,16 @@ class TestSameName1(BaseModel):
         output_info: typing.Dict[str, str] = Field(default_factory=dict)
 
     body: Body = Field(default_factory=Body)
+
+
+class OptionalEnum(IntEnum):
+    FOO = 0
+    BAR = 1
+    BAZ = 2
+
+
+class WithOptionalEnumMsgEntry(BaseModel):
+    class Config:
+        validate_all = True
+
+    enum: typing.Optional[OptionalEnum] = Field(default=0)

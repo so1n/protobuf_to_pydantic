@@ -622,3 +622,33 @@ class ExampleExampleProtoDemoDiffPkgRefer1Demo1(BaseModel):
 class Demo2(BaseModel):
     myField: typing.Dict[str, ExampleExampleProtoDemoDiffPkgRefer1Demo1] = Field(default_factory=dict)"""
         assert format_content(content) in self._model_output(diff_pkg_refer_2_pb2.Demo2)
+
+    def test_optional_enum(self) -> None:
+        if is_v1:
+            content = """
+class OptionalEnum(IntEnum):
+    FOO = 0
+    BAR = 1
+    BAZ = 2
+
+
+class WithOptionalEnumMsgEntry(BaseModel):
+    class Config:
+        validate_all = True
+
+    enum: typing.Optional[OptionalEnum] = Field(default=0)
+"""
+        else:
+            content = """
+class OptionalEnum(IntEnum):
+    FOO = 0
+    BAR = 1
+    BAZ = 2
+
+
+class WithOptionalEnumMsgEntry(BaseModel):
+    model_config = ConfigDict(validate_default=True)
+
+    enum: typing.Optional[OptionalEnum] = Field(default=0)
+"""
+        assert format_content(content) in self._model_output(demo_pb2.WithOptionalEnumMsgEntry)

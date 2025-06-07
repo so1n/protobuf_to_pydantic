@@ -26,7 +26,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n%example/example_proto/demo/demo.proto\x12\x04user\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a google/protobuf/field_mask.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a)example/example_proto/common/single.proto\"\xc3\x01\n\x0bUserMessage\x12\x0b\n\x03uid\x18\x01 \x01(\t\x12\x0b\n\x03\x61ge\x18\x02 \x01(\x05\x12\x0e\n\x06height\x18\x03 \x01(\x02\x12\x1a\n\x03sex\x18\x04 \x01(\x0e\x32\r.user.SexType\x12\x1e\n\x04\x64\x65mo\x18\x06 \x01(\x0e\x32\x10.single.DemoEnum\x12\x10\n\x08is_adult\x18\x07 \x01(\x08\x12\x11\n\tuser_name\x18\x08 \x01(\t\x12)\n\x0c\x64\x65mo_message\x18\t \x01(\x0b\x32\x13.single.DemoMessage\"\xb1\x01\n\x0cOtherMessage\x12)\n\x08metadata\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\x12\x32\n\x0c\x64ouble_value\x18\x02 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12\x33\n\nfield_mask\x18\x64 \x01(\x0b\x32\x1a.google.protobuf.FieldMaskH\x00\x88\x01\x01\x42\r\n\x0b_field_mask\"\xe4\x01\n\nMapMessage\x12/\n\x08user_map\x18\x01 \x03(\x0b\x32\x1d.user.MapMessage.UserMapEntry\x12\x31\n\tuser_flag\x18\x02 \x03(\x0b\x32\x1e.user.MapMessage.UserFlagEntry\x1a\x41\n\x0cUserMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12 \n\x05value\x18\x02 \x01(\x0b\x32\x11.user.UserMessage:\x02\x38\x01\x1a/\n\rUserFlagEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x08:\x02\x38\x01\"[\n\x0fRepeatedMessage\x12\x10\n\x08str_list\x18\x01 \x03(\t\x12\x10\n\x08int_list\x18\x02 \x03(\x05\x12$\n\tuser_list\x18\x03 \x03(\x0b\x32\x11.user.UserMessage\"\x99\x05\n\rNestedMessage\x12;\n\ruser_list_map\x18\x01 \x03(\x0b\x32$.user.NestedMessage.UserListMapEntry\x12\x32\n\x08user_map\x18\x02 \x03(\x0b\x32 .user.NestedMessage.UserMapEntry\x12\x34\n\x08user_pay\x18\x03 \x01(\x0b\x32\".user.NestedMessage.UserPayMessage\x12\x35\n\x0cinclude_enum\x18\x04 \x01(\x0e\x32\x1f.user.NestedMessage.IncludeEnum\x12?\n\x13not_enable_user_pay\x18\x05 \x01(\x0b\x32\".user.NestedMessage.UserPayMessage\x12%\n\x05\x65mpty\x18\x06 \x01(\x0b\x32\x16.google.protobuf.Empty\x12,\n\x0b\x61\x66ter_refer\x18\x07 \x01(\x0b\x32\x17.user.AfterReferMessage\x1a\\\n\x0eUserPayMessage\x12\x13\n\x0b\x62\x61nk_number\x18\x01 \x01(\t\x12\'\n\x03\x65xp\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x0c\n\x04uuid\x18\x03 \x01(\t\x1aI\n\x10UserListMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12$\n\x05value\x18\x02 \x01(\x0b\x32\x15.user.RepeatedMessage:\x02\x38\x01\x1a@\n\x0cUserMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x1f\n\x05value\x18\x02 \x01(\x0b\x32\x10.user.MapMessage:\x02\x38\x01\")\n\x0bIncludeEnum\x12\x08\n\x04zero\x10\x00\x12\x07\n\x03one\x10\x01\x12\x07\n\x03two\x10\x02\"-\n\x11\x41\x66terReferMessage\x12\x0b\n\x03uid\x18\x01 \x01(\t\x12\x0b\n\x03\x61ge\x18\x02 \x01(\x05\"_\n\x0bInvoiceItem\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0e\n\x06\x61mount\x18\x02 \x01(\x05\x12\x10\n\x08quantity\x18\x03 \x01(\x05\x12 \n\x05items\x18\x04 \x03(\x0b\x32\x11.user.InvoiceItem\"\x0e\n\x0c\x45mptyMessage\"\xa9\x02\n\x0fOptionalMessage\x12\x0b\n\x01x\x18\x01 \x01(\tH\x00\x12\x0b\n\x01y\x18\x02 \x01(\x05H\x00\x12\x11\n\x04name\x18\x03 \x01(\tH\x01\x88\x01\x01\x12\x10\n\x03\x61ge\x18\x04 \x01(\x05H\x02\x88\x01\x01\x12$\n\x04item\x18\x05 \x01(\x0b\x32\x11.user.InvoiceItemH\x03\x88\x01\x01\x12\x10\n\x08str_list\x18\x06 \x03(\t\x12\x32\n\x07int_map\x18\x07 \x03(\x0b\x32!.user.OptionalMessage.IntMapEntry\x12\x1d\n\x15\x64\x65\x66\x61ult_template_test\x18\x08 \x01(\x02\x1a-\n\x0bIntMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\x42\x03\n\x01\x61\x42\x07\n\x05_nameB\x06\n\x04_ageB\x07\n\x05_item\"\x82\x01\n\x0cInvoiceItem2\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0e\n\x06\x61mount\x18\x02 \x01(\x05\x12\x10\n\x08quantity\x18\x03 \x01(\x05\x12!\n\x05items\x18\x04 \x03(\x0b\x32\x12.user.InvoiceItem2\x12\x1f\n\x07invoice\x18\x05 \x01(\x0b\x32\x0e.user.Invoice3\"]\n\x08Invoice3\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0e\n\x06\x61mount\x18\x02 \x01(\x05\x12\x10\n\x08quantity\x18\x03 \x01(\x05\x12!\n\x05items\x18\x04 \x03(\x0b\x32\x12.user.InvoiceItem2\"C\n\x0bRootMessage\x12\x0e\n\x06\x66ield1\x18\x01 \x01(\t\x12$\n\x06\x66ield2\x18\x02 \x01(\x0b\x32\x14.user.AnOtherMessage\"m\n\x0e\x41nOtherMessage\x12\x0e\n\x06\x66ield1\x18\x01 \x01(\t\x12/\n\x06\x66ield2\x18\x02 \x01(\x0b\x32\x1f.user.AnOtherMessage.SubMessage\x1a\x1a\n\nSubMessage\x12\x0c\n\x04text\x18\x01 \x01(\t\"\xc4\x01\n\rTestSameName0\x12&\n\x04\x62ody\x18\x01 \x01(\x0b\x32\x18.user.TestSameName0.Body\x1a\x8a\x01\n\x04\x42ody\x12\x13\n\x0binput_model\x18\x01 \x01(\t\x12;\n\ninput_info\x18\x03 \x03(\x0b\x32\'.user.TestSameName0.Body.InputInfoEntry\x1a\x30\n\x0eInputInfoEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\xc8\x01\n\rTestSameName1\x12&\n\x04\x62ody\x18\x01 \x01(\x0b\x32\x18.user.TestSameName1.Body\x1a\x8e\x01\n\x04\x42ody\x12\x14\n\x0coutput_model\x18\x01 \x01(\t\x12=\n\x0boutput_info\x18\x03 \x03(\x0b\x32(.user.TestSameName1.Body.OutputInfoEntry\x1a\x31\n\x0fOutputInfoEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\xa8\x01\n\x08\x44\x65moResp\x12\x30\n\tdemoState\x18\x01 \x03(\x0b\x32\x1d.user.DemoResp.DemoStateEntry\x12\x11\n\tpramsArea\x18\x02 \x01(\x03\x12\x14\n\x0cparamsSeason\x18\x03 \x01(\x08\x1a\x41\n\x0e\x44\x65moStateEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\x1e\n\x05value\x18\x02 \x01(\x0b\x32\x0f.user.DemoState:\x02\x38\x01\"\x1e\n\tDemoState\x12\x11\n\tparamsDID\x18\x04 \x01(\x03*\x1d\n\x07SexType\x12\x07\n\x03man\x10\x00\x12\t\n\x05women\x10\x01\x62\x06proto3'
+  serialized_pb=b'\n%example/example_proto/demo/demo.proto\x12\x04user\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a google/protobuf/field_mask.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a)example/example_proto/common/single.proto\"\xc3\x01\n\x0bUserMessage\x12\x0b\n\x03uid\x18\x01 \x01(\t\x12\x0b\n\x03\x61ge\x18\x02 \x01(\x05\x12\x0e\n\x06height\x18\x03 \x01(\x02\x12\x1a\n\x03sex\x18\x04 \x01(\x0e\x32\r.user.SexType\x12\x1e\n\x04\x64\x65mo\x18\x06 \x01(\x0e\x32\x10.single.DemoEnum\x12\x10\n\x08is_adult\x18\x07 \x01(\x08\x12\x11\n\tuser_name\x18\x08 \x01(\t\x12)\n\x0c\x64\x65mo_message\x18\t \x01(\x0b\x32\x13.single.DemoMessage\"\xb1\x01\n\x0cOtherMessage\x12)\n\x08metadata\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\x12\x32\n\x0c\x64ouble_value\x18\x02 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12\x33\n\nfield_mask\x18\x64 \x01(\x0b\x32\x1a.google.protobuf.FieldMaskH\x00\x88\x01\x01\x42\r\n\x0b_field_mask\"\xe4\x01\n\nMapMessage\x12/\n\x08user_map\x18\x01 \x03(\x0b\x32\x1d.user.MapMessage.UserMapEntry\x12\x31\n\tuser_flag\x18\x02 \x03(\x0b\x32\x1e.user.MapMessage.UserFlagEntry\x1a\x41\n\x0cUserMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12 \n\x05value\x18\x02 \x01(\x0b\x32\x11.user.UserMessage:\x02\x38\x01\x1a/\n\rUserFlagEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x08:\x02\x38\x01\"[\n\x0fRepeatedMessage\x12\x10\n\x08str_list\x18\x01 \x03(\t\x12\x10\n\x08int_list\x18\x02 \x03(\x05\x12$\n\tuser_list\x18\x03 \x03(\x0b\x32\x11.user.UserMessage\"\x99\x05\n\rNestedMessage\x12;\n\ruser_list_map\x18\x01 \x03(\x0b\x32$.user.NestedMessage.UserListMapEntry\x12\x32\n\x08user_map\x18\x02 \x03(\x0b\x32 .user.NestedMessage.UserMapEntry\x12\x34\n\x08user_pay\x18\x03 \x01(\x0b\x32\".user.NestedMessage.UserPayMessage\x12\x35\n\x0cinclude_enum\x18\x04 \x01(\x0e\x32\x1f.user.NestedMessage.IncludeEnum\x12?\n\x13not_enable_user_pay\x18\x05 \x01(\x0b\x32\".user.NestedMessage.UserPayMessage\x12%\n\x05\x65mpty\x18\x06 \x01(\x0b\x32\x16.google.protobuf.Empty\x12,\n\x0b\x61\x66ter_refer\x18\x07 \x01(\x0b\x32\x17.user.AfterReferMessage\x1a\\\n\x0eUserPayMessage\x12\x13\n\x0b\x62\x61nk_number\x18\x01 \x01(\t\x12\'\n\x03\x65xp\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x0c\n\x04uuid\x18\x03 \x01(\t\x1aI\n\x10UserListMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12$\n\x05value\x18\x02 \x01(\x0b\x32\x15.user.RepeatedMessage:\x02\x38\x01\x1a@\n\x0cUserMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x1f\n\x05value\x18\x02 \x01(\x0b\x32\x10.user.MapMessage:\x02\x38\x01\")\n\x0bIncludeEnum\x12\x08\n\x04zero\x10\x00\x12\x07\n\x03one\x10\x01\x12\x07\n\x03two\x10\x02\"-\n\x11\x41\x66terReferMessage\x12\x0b\n\x03uid\x18\x01 \x01(\t\x12\x0b\n\x03\x61ge\x18\x02 \x01(\x05\"_\n\x0bInvoiceItem\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0e\n\x06\x61mount\x18\x02 \x01(\x05\x12\x10\n\x08quantity\x18\x03 \x01(\x05\x12 \n\x05items\x18\x04 \x03(\x0b\x32\x11.user.InvoiceItem\"\x0e\n\x0c\x45mptyMessage\"\xa9\x02\n\x0fOptionalMessage\x12\x0b\n\x01x\x18\x01 \x01(\tH\x00\x12\x0b\n\x01y\x18\x02 \x01(\x05H\x00\x12\x11\n\x04name\x18\x03 \x01(\tH\x01\x88\x01\x01\x12\x10\n\x03\x61ge\x18\x04 \x01(\x05H\x02\x88\x01\x01\x12$\n\x04item\x18\x05 \x01(\x0b\x32\x11.user.InvoiceItemH\x03\x88\x01\x01\x12\x10\n\x08str_list\x18\x06 \x03(\t\x12\x32\n\x07int_map\x18\x07 \x03(\x0b\x32!.user.OptionalMessage.IntMapEntry\x12\x1d\n\x15\x64\x65\x66\x61ult_template_test\x18\x08 \x01(\x02\x1a-\n\x0bIntMapEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\x42\x03\n\x01\x61\x42\x07\n\x05_nameB\x06\n\x04_ageB\x07\n\x05_item\"\x82\x01\n\x0cInvoiceItem2\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0e\n\x06\x61mount\x18\x02 \x01(\x05\x12\x10\n\x08quantity\x18\x03 \x01(\x05\x12!\n\x05items\x18\x04 \x03(\x0b\x32\x12.user.InvoiceItem2\x12\x1f\n\x07invoice\x18\x05 \x01(\x0b\x32\x0e.user.Invoice3\"]\n\x08Invoice3\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0e\n\x06\x61mount\x18\x02 \x01(\x05\x12\x10\n\x08quantity\x18\x03 \x01(\x05\x12!\n\x05items\x18\x04 \x03(\x0b\x32\x12.user.InvoiceItem2\"C\n\x0bRootMessage\x12\x0e\n\x06\x66ield1\x18\x01 \x01(\t\x12$\n\x06\x66ield2\x18\x02 \x01(\x0b\x32\x14.user.AnOtherMessage\"m\n\x0e\x41nOtherMessage\x12\x0e\n\x06\x66ield1\x18\x01 \x01(\t\x12/\n\x06\x66ield2\x18\x02 \x01(\x0b\x32\x1f.user.AnOtherMessage.SubMessage\x1a\x1a\n\nSubMessage\x12\x0c\n\x04text\x18\x01 \x01(\t\"\xc4\x01\n\rTestSameName0\x12&\n\x04\x62ody\x18\x01 \x01(\x0b\x32\x18.user.TestSameName0.Body\x1a\x8a\x01\n\x04\x42ody\x12\x13\n\x0binput_model\x18\x01 \x01(\t\x12;\n\ninput_info\x18\x03 \x03(\x0b\x32\'.user.TestSameName0.Body.InputInfoEntry\x1a\x30\n\x0eInputInfoEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\xc8\x01\n\rTestSameName1\x12&\n\x04\x62ody\x18\x01 \x01(\x0b\x32\x18.user.TestSameName1.Body\x1a\x8e\x01\n\x04\x42ody\x12\x14\n\x0coutput_model\x18\x01 \x01(\t\x12=\n\x0boutput_info\x18\x03 \x03(\x0b\x32(.user.TestSameName1.Body.OutputInfoEntry\x1a\x31\n\x0fOutputInfoEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\xa8\x01\n\x08\x44\x65moResp\x12\x30\n\tdemoState\x18\x01 \x03(\x0b\x32\x1d.user.DemoResp.DemoStateEntry\x12\x11\n\tpramsArea\x18\x02 \x01(\x03\x12\x14\n\x0cparamsSeason\x18\x03 \x01(\x08\x1a\x41\n\x0e\x44\x65moStateEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\x1e\n\x05value\x18\x02 \x01(\x0b\x32\x0f.user.DemoState:\x02\x38\x01\"\x1e\n\tDemoState\x12\x11\n\tparamsDID\x18\x04 \x01(\x03\"J\n\x18WithOptionalEnumMsgEntry\x12%\n\x04\x65num\x18\x01 \x01(\x0e\x32\x12.user.OptionalEnumH\x00\x88\x01\x01\x42\x07\n\x05_enum*\x1d\n\x07SexType\x12\x07\n\x03man\x10\x00\x12\t\n\x05women\x10\x01*)\n\x0cOptionalEnum\x12\x07\n\x03\x46OO\x10\x00\x12\x07\n\x03\x42\x41R\x10\x01\x12\x07\n\x03\x42\x41Z\x10\x02\x62\x06proto3'
   ,
   dependencies=[google_dot_protobuf_dot_empty__pb2.DESCRIPTOR,google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,google_dot_protobuf_dot_struct__pb2.DESCRIPTOR,google_dot_protobuf_dot_field__mask__pb2.DESCRIPTOR,google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,example_dot_example__proto_dot_common_dot_single__pb2.DESCRIPTOR,])
 
@@ -50,14 +50,48 @@ _SEXTYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=3091,
-  serialized_end=3120,
+  serialized_start=3167,
+  serialized_end=3196,
 )
 _sym_db.RegisterEnumDescriptor(_SEXTYPE)
 
 SexType = enum_type_wrapper.EnumTypeWrapper(_SEXTYPE)
+_OPTIONALENUM = _descriptor.EnumDescriptor(
+  name='OptionalEnum',
+  full_name='user.OptionalEnum',
+  filename=None,
+  file=DESCRIPTOR,
+  create_key=_descriptor._internal_create_key,
+  values=[
+    _descriptor.EnumValueDescriptor(
+      name='FOO', index=0, number=0,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='BAR', index=1, number=1,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='BAZ', index=2, number=2,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+  ],
+  containing_type=None,
+  serialized_options=None,
+  serialized_start=3198,
+  serialized_end=3239,
+)
+_sym_db.RegisterEnumDescriptor(_OPTIONALENUM)
+
+OptionalEnum = enum_type_wrapper.EnumTypeWrapper(_OPTIONALENUM)
 man = 0
 women = 1
+FOO = 0
+BAR = 1
+BAZ = 2
 
 
 _NESTEDMESSAGE_INCLUDEENUM = _descriptor.EnumDescriptor(
@@ -1389,6 +1423,43 @@ _DEMOSTATE = _descriptor.Descriptor(
   serialized_end=3089,
 )
 
+
+_WITHOPTIONALENUMMSGENTRY = _descriptor.Descriptor(
+  name='WithOptionalEnumMsgEntry',
+  full_name='user.WithOptionalEnumMsgEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='enum', full_name='user.WithOptionalEnumMsgEntry.enum', index=0,
+      number=1, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+    _descriptor.OneofDescriptor(
+      name='_enum', full_name='user.WithOptionalEnumMsgEntry._enum',
+      index=0, containing_type=None,
+      create_key=_descriptor._internal_create_key,
+    fields=[]),
+  ],
+  serialized_start=3091,
+  serialized_end=3165,
+)
+
 _USERMESSAGE.fields_by_name['sex'].enum_type = _SEXTYPE
 _USERMESSAGE.fields_by_name['demo'].enum_type = example_dot_example__proto_dot_common_dot_single__pb2._DEMOENUM
 _USERMESSAGE.fields_by_name['demo_message'].message_type = example_dot_example__proto_dot_common_dot_single__pb2._DEMOMESSAGE
@@ -1454,6 +1525,10 @@ _TESTSAMENAME1.fields_by_name['body'].message_type = _TESTSAMENAME1_BODY
 _DEMORESP_DEMOSTATEENTRY.fields_by_name['value'].message_type = _DEMOSTATE
 _DEMORESP_DEMOSTATEENTRY.containing_type = _DEMORESP
 _DEMORESP.fields_by_name['demoState'].message_type = _DEMORESP_DEMOSTATEENTRY
+_WITHOPTIONALENUMMSGENTRY.fields_by_name['enum'].enum_type = _OPTIONALENUM
+_WITHOPTIONALENUMMSGENTRY.oneofs_by_name['_enum'].fields.append(
+  _WITHOPTIONALENUMMSGENTRY.fields_by_name['enum'])
+_WITHOPTIONALENUMMSGENTRY.fields_by_name['enum'].containing_oneof = _WITHOPTIONALENUMMSGENTRY.oneofs_by_name['_enum']
 DESCRIPTOR.message_types_by_name['UserMessage'] = _USERMESSAGE
 DESCRIPTOR.message_types_by_name['OtherMessage'] = _OTHERMESSAGE
 DESCRIPTOR.message_types_by_name['MapMessage'] = _MAPMESSAGE
@@ -1471,7 +1546,9 @@ DESCRIPTOR.message_types_by_name['TestSameName0'] = _TESTSAMENAME0
 DESCRIPTOR.message_types_by_name['TestSameName1'] = _TESTSAMENAME1
 DESCRIPTOR.message_types_by_name['DemoResp'] = _DEMORESP
 DESCRIPTOR.message_types_by_name['DemoState'] = _DEMOSTATE
+DESCRIPTOR.message_types_by_name['WithOptionalEnumMsgEntry'] = _WITHOPTIONALENUMMSGENTRY
 DESCRIPTOR.enum_types_by_name['SexType'] = _SEXTYPE
+DESCRIPTOR.enum_types_by_name['OptionalEnum'] = _OPTIONALENUM
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 UserMessage = _reflection.GeneratedProtocolMessageType('UserMessage', (_message.Message,), {
@@ -1688,6 +1765,13 @@ DemoState = _reflection.GeneratedProtocolMessageType('DemoState', (_message.Mess
   # @@protoc_insertion_point(class_scope:user.DemoState)
   })
 _sym_db.RegisterMessage(DemoState)
+
+WithOptionalEnumMsgEntry = _reflection.GeneratedProtocolMessageType('WithOptionalEnumMsgEntry', (_message.Message,), {
+  'DESCRIPTOR' : _WITHOPTIONALENUMMSGENTRY,
+  '__module__' : 'example.example_proto.demo.demo_pb2'
+  # @@protoc_insertion_point(class_scope:user.WithOptionalEnumMsgEntry)
+  })
+_sym_db.RegisterMessage(WithOptionalEnumMsgEntry)
 
 
 _MAPMESSAGE_USERMAPENTRY._options = None

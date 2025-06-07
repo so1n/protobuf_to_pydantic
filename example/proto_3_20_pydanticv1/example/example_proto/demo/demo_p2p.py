@@ -1,5 +1,5 @@
 # This is an automatically generated file, please do not change
-# gen by protobuf_to_pydantic[v0.3.2.0](https://github.com/so1n/protobuf_to_pydantic)
+# gen by protobuf_to_pydantic[v0.3.3.0](https://github.com/so1n/protobuf_to_pydantic)
 # Protobuf Version: 3.20.3
 # Pydantic Version: 1.10.7
 import typing
@@ -22,6 +22,12 @@ from ..common.single_p2p import DemoEnum, DemoMessage
 class SexType(IntEnum):
     man = 0
     women = 1
+
+
+class OptionalEnum(IntEnum):
+    FOO = 0
+    BAR = 1
+    BAZ = 2
 
 
 class UserMessage(BaseModel):
@@ -201,3 +207,17 @@ class DemoResp(BaseModel):
 
 class DemoState(BaseModel):
     paramsDID: int = Field(default=0)
+
+
+class WithOptionalEnumMsgEntry(BaseModel):
+    """
+        Test optional enum are not code gen
+    from:
+    - https://github.com/so1n/protobuf_to_pydantic/issues/101
+    - https://github.com/so1n/protobuf_to_pydantic/issues/99
+    """
+
+    class Config:
+        validate_all = True
+
+    enum: typing.Optional[OptionalEnum] = Field(default=0)
