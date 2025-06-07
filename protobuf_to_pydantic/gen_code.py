@@ -50,6 +50,14 @@ else:
     root_validator_sig = inspect.Signature()
 
 
+def _is_optional_typing(type_: Any) -> bool:
+    # py version < 3.10
+    # typing.Optional[int] output is: typing.Union[int, None]
+    # py version == ^3.9  Optional[int]._name is None
+    arg_list = list(get_args(type_))
+    return get_origin(type_) in (typing.Optional, typing.Union) and len(arg_list) == 2 and arg_list[1] is type(None)
+
+
 class BaseFormatContainer(object):
     def to_text(self) -> str:
         raise NotImplementedError
@@ -192,11 +200,7 @@ class BaseP2C(object):
             # py version < 3.10
             # typing.Optional[int] output is: typing.Union[int, None]
             # py version == ^3.9  Optional[int]._name is None
-            if (
-                get_origin(type_) in (typing.Optional, typing.Union)
-                and len(arg_list) == 2
-                and arg_list[1] is type(None)
-            ):
+            if _is_optional_typing(type_):
                 type_name = "Optional"
                 sub_type_str = f"[{self._get_value_code(arg_list[0])}]"
             else:
@@ -383,9 +387,11 @@ class BaseP2C(object):
             if value_outer_type.__module__ != "builtins":
                 # Get the actual type to check, handling Optional cases
                 type_to_check = value_type
-                if isinstance(value_outer_type, _GenericAlias) and value_outer_type._name == "Optional":
+                if model.__name__ == "WithOptionalEnumMsgEntry":
+                    print()
+                if _is_optional_typing(value_outer_type):
                     type_to_check = get_args(value_outer_type)[0]
-                
+
                 if inspect.isclass(type_to_check) and issubclass(type_to_check, IntEnum):
                     self._import_set.add("from enum import IntEnum")
                     enum_code: str = self._gen_enum_py_code(type_to_check, indent=indent - self.code_indent)
