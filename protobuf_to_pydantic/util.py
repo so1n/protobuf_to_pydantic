@@ -1,5 +1,6 @@
 import inspect
 import json
+import keyword
 import logging
 import os
 import re
@@ -269,3 +270,46 @@ def pydantic_allow_validation_field_handler(
             alias_generator_func = alias_generator_gte_26
     if alias_generator_func:
         allow_field_set.add(alias_generator_func(field_name))
+
+
+# Python built-in types and functions that should not be used as field names
+PYTHON_BUILTINS = {
+    # Built-in types
+    "bool", "bytes", "bytearray", "complex", "dict", "float", "frozenset", "int", 
+    "list", "memoryview", "object", "range", "set", "slice", "str", "tuple", "type",
+
+    # Common built-in functions that might cause issues
+    "abs", "all", "any", "ascii", "bin", "callable", "chr", "classmethod", 
+    "compile", "delattr", "dir", "divmod", "enumerate", "eval", "exec", "filter",
+    "format", "getattr", "globals", "hasattr", "hash", "help", "hex", "id", 
+    "input", "isinstance", "issubclass", "iter", "len", "locals", "map", "max",
+    "min", "next", "oct", "open", "ord", "pow", "print", "property", "range",
+    "repr", "reversed", "round", "setattr", "sorted", "staticmethod", "sum",
+    "super", "vars", "zip",
+
+    # Other common names to avoid
+    "None", "True", "False", "NotImplemented", "Ellipsis",
+}
+
+
+def is_python_reserved_field_name(field_name: str) -> bool:
+    """Check if a field name conflicts with Python reserved words or built-ins."""
+    return keyword.iskeyword(field_name) or field_name in PYTHON_BUILTINS
+
+
+def get_safe_field_name(field_name: str) -> Tuple[str, bool]:
+    """
+    Get a safe field name that doesn't conflict with Python reserved words or built-ins.
+    
+    Args:
+        field_name: The original field name from protobuf
+        
+    Returns:
+        A tuple of (safe_field_name, needs_alias)
+        - safe_field_name: The field name to use in Python (with suffix if needed)
+        - needs_alias: True if the field name was modified and needs an alias
+    """
+    if is_python_reserved_field_name(field_name):
+        # Add underscore suffix to avoid conflicts
+        return f"{field_name}_", True
+    return field_name, False

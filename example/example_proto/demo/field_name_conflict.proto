@@ -1,0 +1,26 @@
+syntax = "proto3";
+package test_field_name_conflict;
+
+// Test message with field names that conflict with Python standard types
+message ConflictingFieldNames {
+  // Field name conflicts with Python built-in type 'bytes'
+  bytes bytes = 1;
+  
+  // Field name conflicts with Python built-in type 'str'
+  string str = 2;
+  
+  // Field name conflicts with Python built-in type 'int'
+  int32 int = 3;
+  
+  // Field name conflicts with Python built-in type 'float'
+  float float = 4;
+  
+  // Field name conflicts with Python built-in type 'bool'
+  bool bool = 5;
+  
+  // Field name conflicts with Python built-in type 'list'
+  repeated string list = 6;
+  
+  // Field name conflicts with Python built-in type 'dict'
+  map<string, string> dict = 7;
+}
