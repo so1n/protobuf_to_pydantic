@@ -28,6 +28,7 @@ from protobuf_to_pydantic.field_info_rule.protobuf_option_to_field_info.comment 
 from protobuf_to_pydantic.field_info_rule.protobuf_option_to_field_info.desc import gen_field_info_dict_from_field_desc
 from protobuf_to_pydantic.field_info_rule.types import FieldInfoTypedDict, OneOfTypedDict
 from protobuf_to_pydantic.gen_code import BaseP2C, FormatContainer
+from protobuf_to_pydantic.util import get_safe_field_name
 from protobuf_to_pydantic.grpc_types import (
     AnyMessage,
     DescriptorProto,
@@ -557,8 +558,19 @@ class FileDescriptorProtoToCode(BaseP2C):
             )
             or ""
         )
+
+        # Handle field names that conflict with Python built-ins
+        safe_field_name, needs_alias = get_safe_field_name(field.name)
+        if needs_alias:
+            # Add alias to field_info_dict if not already present
+            if 'alias' not in field_info_dict or field_info_dict['alias'] is None:
+                if field_info_str:
+                    field_info_str = f'alias="{field.name}", {field_info_str}'
+                else:
+                    field_info_str = f'alias="{field.name}"'
+
         class_field_content: str = (
-            " " * (self.code_indent + indent) + f"{field.name}: {type_str} = {field_name}({field_info_str})"
+            " " * (self.code_indent + indent) + f"{safe_field_name}: {type_str} = {field_name}({field_info_str})"
         )
         leading_comments = remove_comment_last_n(leading_comments)
         trailing_comments = remove_comment_last_n(trailing_comments)

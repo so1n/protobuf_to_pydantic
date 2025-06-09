@@ -12,7 +12,7 @@ from pydantic import BaseModel
 from pydantic.fields import FieldInfo
 from typing_extensions import Annotated, get_origin
 
-from protobuf_to_pydantic import _pydantic_adapter, constant
+from protobuf_to_pydantic import _pydantic_adapter, constant, util
 from protobuf_to_pydantic.constant import protobuf_common_type_dict
 from protobuf_to_pydantic.customer_validator import check_one_of
 from protobuf_to_pydantic.exceptions import WaitingToCompleteException
@@ -584,8 +584,11 @@ class M2P(object):
 
         # parse field
         for protobuf_field in descriptor.fields:
+            # Handle field names that conflict with Python built-ins
+            safe_field_name, needs_alias = util.get_safe_field_name(protobuf_field.name)
+
             field_dataclass = FieldDataClass(
-                field_name=protobuf_field.name,
+                field_name=safe_field_name,
                 field_type=constant.protobuf_desc_python_type_dict.get(protobuf_field.type, None),
                 field_type_name=protobuf_common_type_dict.get(protobuf_field.type, None),  # type: ignore
                 field_default=_pydantic_adapter.PydanticUndefined,
@@ -613,6 +616,10 @@ class M2P(object):
             field_info = self._gen_field_info(field_dataclass, skip_validate_rule)
             if not field_info:
                 continue
+
+            # If field name was changed due to conflict with Python built-ins, add alias
+            if needs_alias:
+                field_info.alias = protobuf_field.name
 
             is_proto3_optional = optional_dict.get(protobuf_field.full_name, {}).get("is_proto3_optional", False)
             if is_proto3_optional or self._all_field_set_optional:
