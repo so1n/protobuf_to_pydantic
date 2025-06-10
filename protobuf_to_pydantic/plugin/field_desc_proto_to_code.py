@@ -102,9 +102,13 @@ class FileDescriptorProtoToCode(BaseP2C):
         fd_path_list: Tuple[str, ...] = Path(self._fd.name).parts
         message_path_list: Tuple[str, ...] = Path(other_fd.name).parts
         index: int = -1
+        # find the index of the common path starting at root
         for _index in range(min(len(fd_path_list), len(message_path_list))):
             if message_path_list[_index] == fd_path_list[_index]:
                 index = _index
+            # break when the common path diverges
+            else:
+                break
         # common/a/name.proto includes common/b/include.proto
         # The basic name: include_p2p
         module_name: str = message_path_list[-1].replace(".proto", "") + self.config.file_name_suffix
