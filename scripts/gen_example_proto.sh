@@ -26,7 +26,7 @@ do
 
   touch $target_p/$source_p/"$service"/__init__.py
   # fix grpc tools bug
-  sed -i "s/from protos.$service import/from . import/" $target_p/$source_p/$service/*.py
-  sed -i "s/from example_proto./from example.$proto_target.example.example_proto./" $target_p/$source_p/$service/*.py
-  sed -i "s/from example.example_proto/from example.$proto_target.example.example_proto/" $target_p/$source_p/$service/*.py
+  sed -i '' "s/from protos.$service import/from . import/" $target_p/$source_p/$service/*.py
+  sed -i '' "s/from example_proto./from example.$proto_target.example.example_proto./" $target_p/$source_p/$service/*.py
+  sed -i '' "s/from example.example_proto/from example.$proto_target.example.example_proto/" $target_p/$source_p/$service/*.py
 done

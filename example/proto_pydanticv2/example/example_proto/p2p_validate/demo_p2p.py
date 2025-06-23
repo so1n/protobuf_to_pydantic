@@ -1,7 +1,7 @@
 # This is an automatically generated file, please do not change
-# gen by protobuf_to_pydantic[v0.3.3.0](https://github.com/so1n/protobuf_to_pydantic)
-# Protobuf Version: 4.24.4
-# Pydantic Version: 2.5.3
+# gen by protobuf_to_pydantic[v0.3.3](https://github.com/so1n/protobuf_to_pydantic)
+# Protobuf Version: 6.31.1
+# Pydantic Version: 2.11.7
 import typing
 from datetime import datetime, timedelta
 from enum import IntEnum
@@ -13,9 +13,8 @@ from annotated_types import Ge, Gt, Interval, Le, Lt, MaxLen, MinLen
 from google.protobuf.any_pb2 import Any  # type: ignore
 from google.protobuf.message import Message  # type: ignore
 from pydantic import BaseModel, BeforeValidator, ConfigDict, Field, field_validator, model_validator
-from pydantic.networks import EmailStr, IPvAnyAddress
+from pydantic.networks import AnyUrl, EmailStr, IPvAnyAddress
 from pydantic.types import StringConstraints
-from pydantic_core._pydantic_core import Url
 from typing_extensions import Annotated
 
 from example.plugin_config import CustomerField, customer_any
@@ -60,7 +59,7 @@ class State(IntEnum):
 
 
 class FloatTest(BaseModel):
-    const_test: typing_extensions.Literal[1.0] = Field(default=0.0)
+    const_test: typing.Literal[1.0] = Field(default=0.0)
     range_e_test: float = Field(default=0.0, ge=1.0, le=10.0)
     range_test: float = Field(default=0.0, gt=1.0, lt=10.0)
     in_test: float = Field(default=0.0, in_=[1.0, 2.0, 3.0])
@@ -85,7 +84,7 @@ class FloatTest(BaseModel):
 
 
 class DoubleTest(BaseModel):
-    const_test: typing_extensions.Literal[1.0] = Field(default=0.0)
+    const_test: typing.Literal[1.0] = Field(default=0.0)
     range_e_test: float = Field(default=0.0, ge=1.0, le=10.0)
     range_test: float = Field(default=0.0, gt=1.0, lt=10.0)
     in_test: float = Field(default=0.0, in_=[1.0, 2.0, 3.0])
@@ -110,7 +109,7 @@ class DoubleTest(BaseModel):
 
 
 class Int32Test(BaseModel):
-    const_test: typing_extensions.Literal[1] = Field(default=0)
+    const_test: typing.Literal[1] = Field(default=0)
     range_e_test: int = Field(default=0, ge=1, le=10)
     range_test: int = Field(default=0, gt=1, lt=10)
     in_test: int = Field(default=0, in_=[1, 2, 3])
@@ -135,7 +134,7 @@ class Int32Test(BaseModel):
 
 
 class Int64Test(BaseModel):
-    const_test: typing_extensions.Literal[1] = Field(default=0)
+    const_test: typing.Literal[1] = Field(default=0)
     range_e_test: int = Field(default=0, ge=1, le=10)
     range_test: int = Field(default=0, gt=1, lt=10)
     in_test: int = Field(default=0, in_=[1, 2, 3])
@@ -160,7 +159,7 @@ class Int64Test(BaseModel):
 
 
 class Uint32Test(BaseModel):
-    const_test: typing_extensions.Literal[1] = Field(default=0)
+    const_test: typing.Literal[1] = Field(default=0)
     range_e_test: int = Field(default=0, ge=1, le=10)
     range_test: int = Field(default=0, gt=1, lt=10)
     in_test: int = Field(default=0, in_=[1, 2, 3])
@@ -185,7 +184,7 @@ class Uint32Test(BaseModel):
 
 
 class Sint32Test(BaseModel):
-    const_test: typing_extensions.Literal[1] = Field(default=0)
+    const_test: typing.Literal[1] = Field(default=0)
     range_e_test: int = Field(default=0, ge=1, le=10)
     range_test: int = Field(default=0, gt=1, lt=10)
     in_test: int = Field(default=0, in_=[1, 2, 3])
@@ -210,7 +209,7 @@ class Sint32Test(BaseModel):
 
 
 class Uint64Test(BaseModel):
-    const_test: typing_extensions.Literal[1] = Field(default=0)
+    const_test: typing.Literal[1] = Field(default=0)
     range_e_test: int = Field(default=0, ge=1, le=10)
     range_test: int = Field(default=0, gt=1, lt=10)
     in_test: int = Field(default=0, in_=[1, 2, 3])
@@ -235,7 +234,7 @@ class Uint64Test(BaseModel):
 
 
 class Sint64Test(BaseModel):
-    const_test: typing_extensions.Literal[1] = Field(default=0)
+    const_test: typing.Literal[1] = Field(default=0)
     range_e_test: int = Field(default=0, ge=1, le=10)
     range_test: int = Field(default=0, gt=1, lt=10)
     in_test: int = Field(default=0, in_=[1, 2, 3])
@@ -260,7 +259,7 @@ class Sint64Test(BaseModel):
 
 
 class Fixed32Test(BaseModel):
-    const_test: typing_extensions.Literal[1] = Field(default=0.0)
+    const_test: typing.Literal[1] = Field(default=0.0)
     range_e_test: float = Field(default=0.0, ge=1, le=10)
     range_test: float = Field(default=0.0, gt=1, lt=10)
     in_test: float = Field(default=0.0, in_=[1, 2, 3])
@@ -285,7 +284,7 @@ class Fixed32Test(BaseModel):
 
 
 class Fixed64Test(BaseModel):
-    const_test: typing_extensions.Literal[1] = Field(default=0.0)
+    const_test: typing.Literal[1] = Field(default=0.0)
     range_e_test: float = Field(default=0.0, ge=1, le=10)
     range_test: float = Field(default=0.0, gt=1, lt=10)
     in_test: float = Field(default=0.0, in_=[1, 2, 3])
@@ -310,7 +309,7 @@ class Fixed64Test(BaseModel):
 
 
 class Sfixed32Test(BaseModel):
-    const_test: typing_extensions.Literal[1] = Field(default=0.0)
+    const_test: typing.Literal[1] = Field(default=0.0)
     range_e_test: float = Field(default=0.0, ge=1, le=10)
     range_test: float = Field(default=0.0, gt=1, lt=10)
     in_test: float = Field(default=0.0, in_=[1, 2, 3])
@@ -335,7 +334,7 @@ class Sfixed32Test(BaseModel):
 
 
 class Sfixed64Test(BaseModel):
-    const_test: typing_extensions.Literal[1] = Field(default=0.0)
+    const_test: typing.Literal[1] = Field(default=0.0)
     range_e_test: float = Field(default=0.0, ge=1, le=10)
     range_test: float = Field(default=0.0, gt=1, lt=10)
     in_test: float = Field(default=0.0, in_=[1, 2, 3])
@@ -360,8 +359,8 @@ class Sfixed64Test(BaseModel):
 
 
 class BoolTest(BaseModel):
-    bool_1_test: typing_extensions.Literal[True] = Field(default=False)
-    bool_2_test: typing_extensions.Literal[False] = Field(default=False)
+    bool_1_test: typing.Literal[True] = Field(default=False)
+    bool_2_test: typing.Literal[False] = Field(default=False)
     default_test: bool = Field(default=True)
     miss_default_test: bool = Field()
     required_test: bool = Field()
@@ -374,7 +373,7 @@ class BoolTest(BaseModel):
 
 
 class StringTest(BaseModel):
-    const_test: typing_extensions.Literal["aaa"] = Field(default="")
+    const_test: typing.Literal["aaa"] = Field(default="")
     len_test: str = Field(default="", len=3)
     s_range_len_test: str = Field(default="", min_length=1, max_length=3)
     pattern_test: str = Field(default="", pattern="^test")
@@ -389,7 +388,7 @@ class StringTest(BaseModel):
     ip_test: IPvAnyAddress = Field(default="")
     ipv4_test: IPv4Address = Field(default="")
     ipv6_test: IPv6Address = Field(default="")
-    uri_test: Url = Field(default="")
+    uri_test: AnyUrl = Field(default="")
     uri_ref_test: UriRefStr = Field(default="")
     address_test: IPvAnyAddress = Field(default="")
     uuid_test: UUID = Field(default="")
@@ -421,7 +420,7 @@ class StringTest(BaseModel):
 
 
 class BytesTest(BaseModel):
-    const_test: typing_extensions.Literal[b"demo"] = Field(default=b"")
+    const_test: typing.Literal[b"demo"] = Field(default=b"")
     range_len_test: bytes = Field(default=b"", min_length=1, max_length=4)
     prefix_test: bytes = Field(default=b"", prefix=b"prefix")
     suffix_test: bytes = Field(default=b"", suffix=b"suffix")
@@ -452,7 +451,7 @@ class BytesTest(BaseModel):
 
 class EnumTest(BaseModel):
     model_config = ConfigDict(validate_default=True)
-    const_test: typing_extensions.Literal[2] = Field(default=0)
+    const_test: typing.Literal[2] = Field(default=0)
     in_test: State = Field(default=0, in_=[0, 2])
     not_in_test: State = Field(default=0, not_in=[0, 2])
     default_test: State = Field(default=1)
@@ -507,9 +506,9 @@ class MessageTest(BaseModel):
 class RepeatedTest(BaseModel):
     range_test: typing.List[str] = Field(default_factory=list, min_length=1, max_length=5)
     unique_test: typing.Set[str] = Field(default_factory=set)
-    items_string_test: typing.List[
-        typing_extensions.Annotated[str, MinLen(min_length=1), MaxLen(max_length=5)]
-    ] = Field(default_factory=list, min_length=1, max_length=5)
+    items_string_test: typing.List[typing_extensions.Annotated[str, MinLen(min_length=1), MaxLen(max_length=5)]] = (
+        Field(default_factory=list, min_length=1, max_length=5)
+    )
     items_double_test: typing.List[typing_extensions.Annotated[float, Gt(gt=1.0), Lt(lt=5.0)]] = Field(
         default_factory=list, min_length=1, max_length=5
     )
@@ -522,9 +521,9 @@ class RepeatedTest(BaseModel):
     items_duration_test: typing.List[
         typing_extensions.Annotated[TimedeltaType, Ge(ge=timedelta(seconds=10)), Le(le=timedelta(seconds=10))]
     ] = Field(default_factory=list, min_length=1, max_length=5)
-    items_bytes_test: typing.List[
-        typing_extensions.Annotated[bytes, MinLen(min_length=1), MaxLen(max_length=5)]
-    ] = Field(default_factory=list, min_length=1, max_length=5)
+    items_bytes_test: typing.List[typing_extensions.Annotated[bytes, MinLen(min_length=1), MaxLen(max_length=5)]] = (
+        Field(default_factory=list, min_length=1, max_length=5)
+    )
     default_factory_test: typing.List[str] = Field(default_factory=list)
     miss_default_test: typing.List[str] = Field()
     required_test: typing.List[str] = Field()
