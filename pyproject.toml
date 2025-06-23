@@ -1,53 +1,71 @@
-[tool.poetry]
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[project]
 name = "protobuf_to_pydantic"
-version = "0.0.0"
+dynamic = ["version"]
 description = "Generate the `pydantic.BaseModel` class (and the corresponding source code) with parameter verification function through the Protobuf file"
-authors = ["So1n <so1n897046026@gmail.com>"]
-license = "Apache Software License"
-readme = "./README.md"
-repository = "https://github.com/so1n/protobuf_to_pydantic"
-homepage = "https://github.com/so1n/protobuf_to_pydantic"
-packages = [
-    { include = "protobuf_to_pydantic" },
+authors = [
+    {name = "So1n", email = "so1n897046026@gmail.com"}
+]
+license = {text = "Apache Software License"}
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+    "pydantic>=1.9.2,<3.0.0,!=2.5.0,!=2.9.0",
+    "protobuf>=3.20.3",
 ]
 
-[tool.poetry.scripts]
+[project.optional-dependencies]
+lark = ["lark>=1.1.2"]
+mypy-protobuf = ["mypy-protobuf>=3.2.0"]
+toml = ["toml>=0.10.2"]
+all = ["lark>=1.1.2", "mypy-protobuf>=3.2.0", "toml>=0.10.2"]
+dev = [
+    "black>=23.3.0",
+    "mypy==1.0.0",
+    "pytest==6.2.5",
+    "isort==5.6.4",
+    "coverage==5.5",
+    "pre-commit==2.14.0",
+    "autoflake==1.4",
+    "flake8==3.9.2",
+    "email-validator==2.0.0",
+    "importlib-metadata==4.11.4",
+    "grpcio-tools>=1.40.0",
+    "mypy-protobuf==3.2.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/so1n/protobuf_to_pydantic"
+Repository = "https://github.com/so1n/protobuf_to_pydantic"
+
+[project.scripts]
 protoc-gen-protobuf-to-pydantic = "protobuf_to_pydantic.plugin.main:main"
 
+[tool.hatch.version]
+source = "vcs"
+raw-options = { version_scheme = "no-guess-dev" }
 
-[tool.poetry.dependencies]
-python = "^3.7"
-pydantic = ">=1.9.2, <3.0.0, !=2.5.0, !=2.9.0"
-protobuf = ">=3.20.3"
+[tool.hatch.build.targets.wheel]
+packages = ["protobuf_to_pydantic"]
 
-toml = {version = "^0.10.2", optional = true}
-lark = { version = "^1.1.2", optional = true }
-mypy-protobuf = { version = "^3.2.0", optional = true }
-
-[tool.poetry.extras]
-lark = ["lark"]
-mypy-protobuf = ["mypy-protobuf"]
-toml = ["toml"]
-all = ["lark", "mypy-protobuf", "toml"]
-
-[tool.poetry.dev-dependencies]
-black = "^23.3.0"
-mypy = "1.0.0"
-pytest = "6.2.5"
-isort = "5.6.4"
-coverage = "5.5"
-pre-commit = "2.14.0"
-autoflake = "1.4"
-flake8 = "3.9.2"
-# if pydantic version >= 2.0.0, email-validator version must >= 2.0.0
-email-validator = "2.0.0"
-# fix flake8 run bug: https://stackoverflow.com/questions/73929564/entrypoints-object-has-no-attribute-get-digital-ocean
-importlib-metadata = "4.11.4"
-grpcio-tools = ">=1.40.0"
-mypy-protobuf = "3.2.0"
-
-[tool.poetry.group.dev.dependencies]
-pytest = "6.2.5"
+[tool.hatch.build.targets.sdist]
+include = [
+    "/protobuf_to_pydantic",
+    "/README.md",
+    "/LICENSE",
+]
 
 [tool.protobuf-to-pydantic.format]
 black = true
@@ -57,7 +75,6 @@ autoflake = true
 [tool.black]
 line-length = 120
 target-version = ['py37', 'py38', 'py39', 'py310']
-
 
 [tool.isort]
 profile = "black"
@@ -87,9 +104,8 @@ exclude = [
     "^protobuf_to_pydantic/customer_con_type/v2.py",
 ]
 
-
-[tool.pytest]
-testpaths = "tests"
+[tool.pytest.ini_options]
+testpaths = ["tests"]
 
 [tool.coverage.run]
 branch = true
@@ -124,17 +140,5 @@ exclude_lines = [
 
     # error
     "except ImportError:",
-    "except ModuleNotFoundError:"
+    "except ModuleNotFoundError:",
 ]
-
-
-[tool.poetry-dynamic-versioning]
-enable = true
-metadata=false
-vcs = "git"
-# format = "v{base}-{stage}.{revision}"
-format = "v{base}"
-
-[build-system]
-requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning"]
-build-backend = "poetry_dynamic_versioning.backend"

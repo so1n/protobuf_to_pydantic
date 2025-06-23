@@ -10,6 +10,6 @@ for python_file_name in "${python_file_name_list[@]}"
 do
   cd "example" || exit
   echo "=====> run  example/$python_file_name"
-  poetry run python "$python_file_name"
+  uv run python "$python_file_name"
   cd ..
 done
