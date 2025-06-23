@@ -27,6 +27,7 @@ else:
 from protobuf_to_pydantic import msg_to_pydantic_model, pydantic_model_to_py_code
 from protobuf_to_pydantic.gen_model import clear_create_model_cache
 from protobuf_to_pydantic.util import format_content
+from tests.test_gen_code.test_helper import P2CNoHeader
 
 
 class TestSimpleTest:
@@ -34,7 +35,7 @@ class TestSimpleTest:
     def _model_output(msg: Any) -> str:
         # Make sure that the cache pool is clean before each build
         clear_create_model_cache()
-        return pydantic_model_to_py_code(msg_to_pydantic_model(msg, parse_msg_desc_method="ignore"))
+        return pydantic_model_to_py_code(msg_to_pydantic_model(msg, parse_msg_desc_method="ignore"), p2c_class=P2CNoHeader)
 
     def test_empty_message(self) -> None:
         assert format_content("""
@@ -331,13 +332,6 @@ class RepeatedMessage(BaseModel):
 
     def test_nested_message(self) -> None:
         content = """
-import typing
-from datetime import datetime
-from enum import IntEnum
-
-from pydantic import BaseModel, ConfigDict, Field
-
-
 class SexType(IntEnum):
     man = 0
     women = 1
@@ -417,13 +411,6 @@ class NestedMessage(BaseModel):
         """
         if not is_v1:
             content = """
-import typing
-from datetime import datetime
-from enum import IntEnum
-
-from pydantic import BaseModel, ConfigDict, Field
-
-
 class SexType(IntEnum):
     man = 0
     women = 1
@@ -569,8 +556,8 @@ class Invoice3(BaseModel):
     quantity: int = Field(default=0)
     items: typing.List["InvoiceItem2"] = Field(default_factory=list)
 
-class InvoiceItem2(BaseModel):
 
+class InvoiceItem2(BaseModel):
     name: str = Field(default="")
     amount: int = Field(default=0)
     quantity: int = Field(default=0)
@@ -587,8 +574,8 @@ class AnOtherMessage(BaseModel):
     field1: str = Field(default="")
     field2: SubMessage = Field(default_factory=SubMessage)
 
-class RootMessage(BaseModel):
 
+class RootMessage(BaseModel):
     field1: str = Field(default="")
     field2: AnOtherMessage = Field(default_factory=AnOtherMessage)"""
         assert format_content(content) in self._model_output(demo_pb2.RootMessage)
@@ -596,7 +583,6 @@ class RootMessage(BaseModel):
     def test_same_bane_inline_structure(self) -> None:
         content = """
 class TestSameName0(BaseModel):
-
     class Body(BaseModel):
         input_model: str = Field(default="")
         input_info: typing.Dict[str, str] = Field(default_factory=dict)

@@ -19,6 +19,7 @@ else:
 
 from protobuf_to_pydantic import msg_to_pydantic_model, pydantic_model_to_py_code
 from protobuf_to_pydantic.util import format_content
+from tests.test_gen_code.test_helper import P2CNoHeader
 
 
 def exp_time() -> float:
@@ -35,6 +36,7 @@ class BaseTestTextComment:
                 parse_msg_desc_method=demo_pb2,
                 local_dict=local_dict
             ),
+            p2c_class=P2CNoHeader
         )
 
     def test_user_message(self) -> None:
@@ -511,7 +513,6 @@ class Invoice3(BaseModel):
 
 
 class InvoiceItem2(BaseModel):
-
     name: str = Field(default="")
     amount: int = Field(default=0)
     quantity: int = Field(default=0)
@@ -532,7 +533,6 @@ class AnOtherMessage(BaseModel):
 
 
 class RootMessage(BaseModel):
-
     field1: str = Field(default="")
     field2: AnOtherMessage = Field(default_factory=AnOtherMessage)
             """
@@ -542,7 +542,6 @@ class RootMessage(BaseModel):
         assert format_content(
             """
 class TestSameName0(BaseModel):
-
     class Body(BaseModel):
         input_model: str = Field(default="")
         input_info: typing.Dict[str, str] = Field(default_factory=dict)
@@ -572,6 +571,7 @@ class TestTextCommentByPyi(BaseTestTextComment):
                 parse_msg_desc_method=demo_pb2,
                 local_dict=local_dict
             ),
+            p2c_class=P2CNoHeader
         )
 
 
@@ -588,6 +588,7 @@ class TestTextCommentByProtobufFProtobufField(BaseTestTextComment):
                     parse_msg_desc_method=demo_pb2,
                     local_dict=local_dict
                 ),
+                p2c_class=P2CNoHeader
             )
         return pydantic_model_to_py_code(
             msg_to_pydantic_model(
@@ -595,4 +596,5 @@ class TestTextCommentByProtobufFProtobufField(BaseTestTextComment):
                 parse_msg_desc_method=".",
                 local_dict=local_dict
             ),
+            p2c_class=P2CNoHeader
         )
