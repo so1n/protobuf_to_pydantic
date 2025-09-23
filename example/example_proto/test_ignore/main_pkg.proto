@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package test_ignore.main_pkg;
+
+message MainMessage {
+    string normal_field = 1;
+    // These types should be used but NOT imported due to ignore_pkg_list
+    test_ignore.ignored_pkg.IgnoredMessage ignored_field = 2;
+    test_ignore.ignored_pkg.IgnoredEnum ignored_enum = 3;
+}
