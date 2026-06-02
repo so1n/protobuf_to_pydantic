@@ -243,7 +243,7 @@ plugins:
 
     [tool.black]
     line-length = 120
-    target-version = ['py37', 'py38', 'py39', 'py310']
+    target-version = ['py38', 'py39', 'py310']
 
 
     [tool.isort]
