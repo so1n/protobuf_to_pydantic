@@ -41,6 +41,7 @@ logger: logging.Logger = logging.getLogger(__name__)
 
 SKIP_RULE_MESSAGE_SUFFIX = "WithSkipRule"
 ALLOW_ARBITRARY_TYPE = (AnyMessage, FieldMask)
+FIELD_INFO_CLASS_ATTR = "_protobuf_to_pydantic_field_info_class"
 
 
 def replace_file_name_to_class_name(filename: str) -> str:
@@ -113,6 +114,16 @@ _create_model_cache: CREATE_MODEL_CACHE_T = {}
 
 def clear_create_model_cache() -> None:
     _create_model_cache.clear()
+
+
+def _set_field_info_default(field_info: FieldInfo, value: Any) -> None:
+    field_info.default = value
+    if not _pydantic_adapter.is_v1:
+        # Pydantic v2 create_model reads defaults from _attributes_set, so
+        # mutating only FieldInfo.default can still leave the field required.
+        attributes_set = getattr(field_info, "_attributes_set", None)
+        if attributes_set is not None:
+            attributes_set["default"] = value
 
 
 class M2P(object):
@@ -552,7 +563,12 @@ class M2P(object):
             if not field_info_dict.get(remove_key, True):  # type: ignore[misc]
                 field_info_dict.pop(remove_key)  # type: ignore[misc]
 
-        return field_class(**field_info_dict)  # type: ignore
+        field_info = field_class(**field_info_dict)  # type: ignore
+        if not _pydantic_adapter.is_v1 and field_class is not FieldInfo:
+            attributes_set = getattr(field_info, "_attributes_set", None)
+            if attributes_set is not None:
+                attributes_set[FIELD_INFO_CLASS_ATTR] = field_class
+        return field_info
 
     def _parse_msg_to_pydantic_model(
         self,
@@ -622,7 +638,7 @@ class M2P(object):
                     and field_info.default is _pydantic_adapter.PydanticUndefined
                     and field_info.default_factory is None
                 ):
-                    field_info.default = None
+                    _set_field_info_default(field_info, None)
             annotation_dict[field_dataclass.field_name] = (field_dataclass.field_type, field_info)
             if one_of_dict:
                 model_config_dict = _pydantic_adapter.get_model_config_dict(
