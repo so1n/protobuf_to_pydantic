@@ -1,0 +1,23 @@
+syntax = "proto3";
+package nested_enum_scope;
+
+// Reproduces sibling nested enum references used by nested messages.
+message VehiclePosition {
+  enum OccupancyStatus {
+    EMPTY = 0;
+    MANY_SEATS_AVAILABLE = 1;
+    FEW_SEATS_AVAILABLE = 2;
+  }
+
+  message CarriageDetails {
+    string id = 1;
+    OccupancyStatus occupancy_status = 2;
+  }
+
+  OccupancyStatus occupancy_status = 1;
+  repeated CarriageDetails multi_carriage_details = 2;
+}
+
+message FeedMessage {
+  VehiclePosition vehicle = 1;
+}
