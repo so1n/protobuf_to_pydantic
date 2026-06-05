@@ -1,15 +1,25 @@
-"""Tests that nested IntEnums referenced by sibling nested models are injected inside those models."""
+"""Tests sibling nested enum references using the local example proto."""
 
-import pytest
+from google.protobuf import __version__
 
 from protobuf_to_pydantic import msg_to_pydantic_model, pydantic_model_to_py_code
+from protobuf_to_pydantic._pydantic_adapter import is_v1
 from protobuf_to_pydantic.gen_model import clear_create_model_cache
 
-
-gtfs_realtime_pb2 = pytest.importorskip(
-    "google.transit.gtfs_realtime_pb2",
-    reason="gtfs-realtime-bindings not installed",
-)
+if __version__ > "4.0.0":
+    if is_v1:
+        from example.proto_pydanticv1.example.example_proto.demo import nested_enum_scope_pb2
+    else:
+        from example.proto_pydanticv2.example.example_proto.demo import nested_enum_scope_pb2  # type: ignore[no-redef]
+else:
+    if is_v1:
+        from example.proto_3_20_pydanticv1.example.example_proto.demo import (  # type: ignore[no-redef]
+            nested_enum_scope_pb2,
+        )
+    else:
+        from example.proto_3_20_pydanticv2.example.example_proto.demo import (  # type: ignore[no-redef]
+            nested_enum_scope_pb2,
+        )
 
 
 class TestNestedEnumScope:
@@ -20,7 +30,7 @@ class TestNestedEnumScope:
 
     def test_sibling_enum_emitted_inside_nested_model(self) -> None:
         """OccupancyStatus must be defined inside CarriageDetails before the field that uses it."""
-        code = self._model_output(gtfs_realtime_pb2.VehiclePosition)
+        code = self._model_output(nested_enum_scope_pb2.VehiclePosition)
 
         carriage_start = code.find("class CarriageDetails(BaseModel):")
         assert carriage_start != -1, "CarriageDetails not found in output"
@@ -40,7 +50,7 @@ class TestNestedEnumScope:
 
     def test_sibling_enum_still_emitted_at_parent_level(self) -> None:
         """OccupancyStatus must also remain at the VehiclePosition level for VehiclePosition's own fields."""
-        code = self._model_output(gtfs_realtime_pb2.VehiclePosition)
+        code = self._model_output(nested_enum_scope_pb2.VehiclePosition)
 
         vp_start = code.find("class VehiclePosition(BaseModel):")
         assert vp_start != -1, "VehiclePosition not found in output"
@@ -56,17 +66,10 @@ class TestNestedEnumScope:
         occ_at_parent = code.find("class OccupancyStatus(IntEnum):", carriage_end)
         assert occ_at_parent != -1, "OccupancyStatus not found at VehiclePosition level after CarriageDetails"
 
-    def test_generated_code_is_ruff_clean(self) -> None:
-        """Generated FeedMessage code must pass ruff with no F821 errors."""
-        import subprocess
-
+    def test_generated_code_executes_without_forward_reference_errors(self) -> None:
+        """Generated FeedMessage code must not reference a sibling enum before it is defined."""
         clear_create_model_cache()
         code = pydantic_model_to_py_code(
-            msg_to_pydantic_model(gtfs_realtime_pb2.FeedMessage, parse_msg_desc_method="ignore")
+            msg_to_pydantic_model(nested_enum_scope_pb2.FeedMessage, parse_msg_desc_method="ignore")
         )
-        result = subprocess.run(
-            ["ruff", "check", "--select", "F821", "-"],
-            input=code.encode(),
-            capture_output=True,
-        )
-        assert result.returncode == 0, f"ruff reported F821 errors:\n{result.stdout.decode()}"
+        exec(code, {})
