@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package test_ignore.main_pkg;
 
+import "example/example_proto/test_ignore/ignored_pkg.proto";
+
 message MainMessage {
     string normal_field = 1;
     // These types should be used but NOT imported due to ignore_pkg_list
