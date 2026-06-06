@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package test_ignore.ignored_pkg;
+
+message IgnoredMessage {
+    string text = 1;
+}
+
+enum IgnoredEnum {
+    IGNORED_ZERO = 0;
+    IGNORED_ONE = 1;
+}

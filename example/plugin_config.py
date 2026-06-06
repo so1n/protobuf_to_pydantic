@@ -53,7 +53,7 @@ local_dict = {
 }
 comment_prefix = "p2p"
 template: Type[Template] = CustomCommentTemplate
-ignore_pkg_list: List[str] = ["validate", "p2p_validate"]
+ignore_pkg_list: List[str] = ["validate", "p2p_validate", "test_ignore.ignored_pkg"]
 pkg_config: Dict[str, SubConfigModel] = {
     "all_field_set_optional": SubConfigModel(module=all_field_set_option_config, use_root_config=True),
     "single_config": SubConfigModel(module=single_config_pkg_plugin_config),

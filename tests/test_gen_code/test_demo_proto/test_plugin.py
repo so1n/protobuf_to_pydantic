@@ -1,4 +1,5 @@
 from inspect import getsource
+from pathlib import Path
 
 from google.protobuf import __version__
 
@@ -311,3 +312,28 @@ class Demo2(BaseModel):
 class Demo1(BaseModel):
     pass"""
         assert content.strip("\n") in getsource(diff_pkg_refer_2_p2p.Demo1).strip("\n")
+
+    def test_ignore_pkg_list_skips_imports(self) -> None:
+        """Test that packages in ignore_pkg_list do not generate relative imports."""
+        if __version__ > "4.0.0":
+            proto_path = "proto_pydanticv2" if not is_v1 else "proto_pydanticv1"
+        else:
+            proto_path = "proto_3_20_pydanticv2" if not is_v1 else "proto_3_20_pydanticv1"
+
+        test_file_path = Path(f"example/{proto_path}/example/example_proto/test_ignore/main_pkg_p2p.py")
+        source = test_file_path.read_text()
+
+        # Test that NO import statements were generated for ignored package
+        assert "from .ignored_pkg_p2p import" not in source
+        assert "from ..test_ignore.ignored_pkg_p2p import" not in source
+        assert "import IgnoredMessage" not in source
+        assert "import IgnoredEnum" not in source
+        assert not (test_file_path.parent / "ignored_pkg_p2p.py").exists()
+
+        # Test that the class structure exists but types are undefined (demonstrating the ignore works)
+        assert "class MainMessage(BaseModel):" in source
+        assert "ignored_field: IgnoredMessage" in source  # Type used but not imported
+        assert "ignored_enum: IgnoredEnum" in source      # Type used but not imported
+
+        # Verify normal field works fine
+        assert "normal_field: str" in source
