@@ -261,6 +261,11 @@ class BaseP2C(object):
                 if len(sort_list) == 1:
                     return "(" + type_name + ", )"
                 return "(" + type_name + ")"
+        elif getattr(type_, "__module__", None) == "pydantic.functional_validators":
+            # support BeforeValidator(func=xxx)
+            if auto_import_type_code:
+                self._parse_type_to_import_code(type_)
+            return f"{type_.__class__.__name__}(func={self._get_value_code(type_.func)})"
         elif is_dataclass(type_):
             # dataclass support
             field_param_code_list = []
@@ -277,11 +282,6 @@ class BaseP2C(object):
             if auto_import_type_code:
                 self._parse_type_to_import_code(type_)
             return type_.__name__
-        elif getattr(type_, "__module__", None) == "pydantic.functional_validators":
-            # support BeforeValidator(func=xxx)
-            if auto_import_type_code:
-                self._parse_type_to_import_code(type_)
-            return f"{type_.__class__.__name__}(func={self._get_value_code(type_.func)})"
         elif inspect.isclass(type_):
             if type_.__mro__[1] in pydantic_con_dict:
                 # pydantic con class support
@@ -353,14 +353,10 @@ class BaseP2C(object):
             config_str = f"{' ' * indent}model_config = ConfigDict({','.join(config_list)})\n"
         return config_str
 
-    def _find_parent_enums_used_by(
-        self, msg: Type[BaseModel], parent_enum_map: Dict[str, Any]
-    ) -> List[type]:
+    def _find_parent_enums_used_by(self, msg: Type[BaseModel], parent_enum_map: Dict[str, Any]) -> List[type]:
         """Return parent-level IntEnums referenced by any field of msg."""
         parent_enums = {
-            v.__name__: v
-            for v in parent_enum_map.values()
-            if inspect.isclass(v) and issubclass(v, IntEnum)
+            v.__name__: v for v in parent_enum_map.values() if inspect.isclass(v) and issubclass(v, IntEnum)
         }
         if not parent_enums:
             return []
@@ -529,7 +525,9 @@ class BaseP2C(object):
         injected_enum_str: str = ""
         if injected_enums:
             for enum_type in injected_enums:
-                injected_enum_str += self._gen_enum_py_code(enum_type, indent=indent + self.code_indent, ignore_nested_model=False)
+                injected_enum_str += self._gen_enum_py_code(
+                    enum_type, indent=indent + self.code_indent, ignore_nested_model=False
+                )
 
         nested_class_str: str = self._model_nested_handle(model, indent=indent + self.code_indent)
         combined_nested = (injected_enum_str + nested_class_str).rstrip("\n")

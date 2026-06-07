@@ -141,6 +141,7 @@ class M2P(object):
         message_default_factory_dict_by_type_name: Optional[Dict[str, Any]] = None,
         all_field_set_optional: bool = False,
         create_model_cache: Optional[CREATE_MODEL_CACHE_T] = None,
+        enable_enum_name_value_desc: bool = False,
     ):
         proto_file_name = msg.DESCRIPTOR.file.name  # type: ignore
         global_message_option_dict: Dict[str, "MessageOptionTypedDict"] = {}
@@ -190,6 +191,7 @@ class M2P(object):
         self._message_default_factory_dict_by_type_name: Dict[str, Any] = (
             message_default_factory_dict_by_type_name or constant.message_name_default_factory_dict
         )
+        self._enable_enum_name_value_desc = enable_enum_name_value_desc
 
         self._gen_model: Type[BaseModel] = self._parse_msg_to_pydantic_model(
             descriptor=msg if isinstance(msg, Descriptor) else msg.DESCRIPTOR,
@@ -237,6 +239,18 @@ class M2P(object):
 
     def _is_type_a_mapping(self, message_type: Descriptor) -> bool:
         return message_type.name.endswith("Entry") and message_type.fields_by_name.keys() == ["key", "value"]
+
+    def _gen_enum_name_value_desc(self, enum_type: Any) -> str:
+        if not self._enable_enum_name_value_desc:
+            return ""
+        value_desc = "\n".join(f"- {v.name} = {v.number}" for v in enum_type.values)
+        if value_desc:
+            return f"Enumeration {enum_type.name}:\n{value_desc}"
+        return f"Enumeration {enum_type.name}:"
+
+    @staticmethod
+    def _merge_desc(*desc_list: str) -> str:
+        return "\n\n".join(desc for desc in desc_list if desc)
 
     def _one_of_handle(self, descriptor: Descriptor) -> Tuple[Dict[str, "UseOneOfTypedDict"], Dict[str, Any]]:
         message_option_dict: "MessageOptionTypedDict" = self._message_option_dict.get(
@@ -318,7 +332,7 @@ class M2P(object):
         # enum support
         for enum_type in descriptor.enum_types:
             class_dict: dict = {v.name: v.number for v in enum_type.values}
-            class_dict["__doc__"] = ""
+            class_dict["__doc__"] = self._gen_enum_name_value_desc(enum_type)
             nested_type = IntEnum(enum_type.name, class_dict)  # type: ignore
             nested_message_dict[enum_type.full_name] = nested_type
         return nested_message_dict
@@ -443,13 +457,14 @@ class M2P(object):
         else:
             enum_class_dict = {v.name: v.number for v in protobuf_field.enum_type.values}
             _class_name = protobuf_field.enum_type.name
-            _class_doc = ""
+            _class_doc = self._gen_enum_name_value_desc(protobuf_field.enum_type)
             if field_dataclass.descriptor.file.name != protobuf_field.enum_type.file.name:
                 _class_name = replace_file_name_to_class_name(protobuf_field.enum_type.file.name) + _class_name
-                _class_doc = (
+                other_pkg_doc = (
                     "Note: The current class does not belong to the package\n"
                     f"{_class_name} protobuf path:{protobuf_field.enum_type.file.name}"
                 )
+                _class_doc = self._merge_desc(other_pkg_doc, _class_doc)
             enum_class_dict["__doc__"] = _class_doc
             field_dataclass.field_type = IntEnum(_class_name, enum_class_dict)  # type: ignore
 
@@ -584,7 +599,7 @@ class M2P(object):
         if not is_same_pkg:
             class_name = replace_file_name_to_class_name(descriptor.file.name) + class_name
 
-        message_key = (descriptor.full_name, class_name, skip_validate_rule)
+        message_key = (descriptor.full_name, class_name, skip_validate_rule, self._enable_enum_name_value_desc)
         if message_key in self._creat_cache:
             if self._creat_cache[message_key] is None:
                 raise WaitingToCompleteException(f"The model:{message_key} is being generated")
@@ -712,6 +727,7 @@ def msg_to_pydantic_model(
     message_default_factory_dict_by_type_name: Optional[Dict[str, Any]] = None,
     all_field_set_optional: bool = False,
     create_model_cache: Optional[CREATE_MODEL_CACHE_T] = None,
+    enable_enum_name_value_desc: bool = False,
 ) -> Type[BaseModel]:
     """
     Parse a message to a pydantic model
@@ -738,6 +754,7 @@ def msg_to_pydantic_model(
     :param create_model_cache: Cache the generated model
     :param all_field_set_optional: If true, all fields become optional,
         see: https://github.com/so1n/protobuf_to_pydantic/issues/60
+    :param enable_enum_name_value_desc: If true, generated IntEnum docs include protobuf enum name/value pairs.
     """
     return M2P(
         msg=msg,
@@ -752,4 +769,5 @@ def msg_to_pydantic_model(
         message_default_factory_dict_by_type_name=message_default_factory_dict_by_type_name,
         create_model_cache=create_model_cache,
         all_field_set_optional=all_field_set_optional,
+        enable_enum_name_value_desc=enable_enum_name_value_desc,
     ).model

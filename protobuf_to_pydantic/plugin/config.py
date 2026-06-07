@@ -87,6 +87,10 @@ class ConfigModel(BaseModel):
         default=False,
         description="If true, all fields become optional, see: https://github.com/so1n/protobuf_to_pydantic/issues/60",
     )
+    enable_enum_name_value_desc: bool = Field(
+        default=False,
+        description="If true, generated IntEnum docs include protobuf enum name/value pairs",
+    )
 
     # other config
     file_descriptor_proto_to_code: Type[FileDescriptorProtoToCode] = Field(

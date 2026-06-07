@@ -140,11 +140,31 @@ class FileDescriptorProtoToCode(BaseP2C):
     #         trailing_comments = "\n".join(trailing_comments_list)
     #     return comment_info_dict, leading_comments, trailing_comments
 
-    def add_class_desc(self, scl_prefix: SourceCodeLocation, indent: int = 0) -> Tuple[dict, str, str]:
+    def _format_class_desc(self, desc: str, indent: int = 0) -> str:
+        indent_str = " " * (indent + self.code_indent)
+        return f'{indent_str}"""\n{indent_str}' + desc.replace("\n", f"\n{indent_str}") + f'\n{indent_str}"""\n'
+
+    def _gen_enum_name_value_desc(self, enum: EnumDescriptorProto) -> str:
+        if not self.config.enable_enum_name_value_desc:
+            return ""
+        value_desc = "\n".join(f"- {v.name} = {v.number}" for v in enum.value)
+        if value_desc:
+            return f"Enumeration {enum.name}:\n{value_desc}"
+        return f"Enumeration {enum.name}:"
+
+    @staticmethod
+    def _merge_desc(*desc_list: str) -> str:
+        return "\n\n".join(desc for desc in (desc.strip("\n") for desc in desc_list) if desc)
+
+    def add_class_desc(
+        self, scl_prefix: SourceCodeLocation, indent: int = 0, extra_desc: str = ""
+    ) -> Tuple[dict, str, str]:
         desc_content = ""
         comment_content = ""
         comment_info_dict: dict = {}
         if tuple(scl_prefix) not in self.source_code_info_by_scl:
+            if extra_desc:
+                desc_content = self._format_class_desc(extra_desc, indent)
             return comment_info_dict, desc_content, comment_content
 
         scl = self.source_code_info_by_scl[tuple(scl_prefix)]
@@ -158,10 +178,14 @@ class FileDescriptorProtoToCode(BaseP2C):
             else:
                 leading_comments = scl.leading_comments
                 trailing_comments = scl.trailing_comments
-            if leading_comments:
-                desc_content += " " * (indent + self.code_indent) + '"""\n'
-                desc_content += " " * (indent + self.code_indent) + leading_comments
-                desc_content += " " * (indent + self.code_indent) + '"""\n'
+            desc = self._merge_desc(leading_comments, extra_desc)
+            if desc:
+                if extra_desc:
+                    desc_content += self._format_class_desc(desc, indent)
+                else:
+                    desc_content += " " * (indent + self.code_indent) + '"""\n'
+                    desc_content += " " * (indent + self.code_indent) + leading_comments
+                    desc_content += " " * (indent + self.code_indent) + '"""\n'
             if trailing_comments:
                 comment_content = "# " + remove_comment_last_n(trailing_comments)
 
@@ -193,7 +217,9 @@ class FileDescriptorProtoToCode(BaseP2C):
         for i, enum in enumerate(enums):
             class_name = enum.name if enum.name not in PYTHON_RESERVED else "_r_" + enum.name
             content = " " * indent + f"class {class_name}(IntEnum):"
-            _, desc_content, comment_content = self.add_class_desc(scl_prefix + [i], indent)
+            _, desc_content, comment_content = self.add_class_desc(
+                scl_prefix + [i], indent, self._gen_enum_name_value_desc(enum)
+            )
             if comment_content:
                 content += comment_content
             content += "\n" + desc_content
