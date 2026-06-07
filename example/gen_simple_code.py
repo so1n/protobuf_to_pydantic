@@ -20,6 +20,7 @@ module_list = [
     importlib.import_module(f"example.{target_p}.example.example_proto.demo.demo_pb2"),
     importlib.import_module(f"example.{target_p}.example.example_proto.demo.diff_pkg_refer_1_pb2"),
     importlib.import_module(f"example.{target_p}.example.example_proto.demo.diff_pkg_refer_2_pb2"),
+    importlib.import_module(f"example.{target_p}.example.example_proto.demo.nested_enum_scope_pb2"),
 ]
 message_class_list = []
 for module in module_list:

@@ -119,6 +119,8 @@ def clear_create_model_cache() -> None:
 def _set_field_info_default(field_info: FieldInfo, value: Any) -> None:
     field_info.default = value
     if not _pydantic_adapter.is_v1:
+        # Pydantic v2 create_model reads defaults from _attributes_set, so
+        # mutating only FieldInfo.default can still leave the field required.
         attributes_set = getattr(field_info, "_attributes_set", None)
         if attributes_set is not None:
             attributes_set["default"] = value

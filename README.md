@@ -833,7 +833,7 @@ autoflake = true
 # black docc:https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#configuration-format
 [tool.black]
 line-length = 120
-target-version = ['py37']
+target-version = ['py38']
 
 # isort doc:https://pycqa.github.io/isort/docs/configuration/config_files.html#pyprojecttoml-preferred-format
 [tool.isort]

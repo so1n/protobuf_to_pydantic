@@ -353,6 +353,36 @@ class BaseP2C(object):
             config_str = f"{' ' * indent}model_config = ConfigDict({','.join(config_list)})\n"
         return config_str
 
+    def _find_parent_enums_used_by(self, msg: Type[BaseModel], parent_enum_map: Dict[str, Any]) -> List[type]:
+        """Return parent-level IntEnums referenced by any field of msg."""
+        parent_enums = {
+            v.__name__: v for v in parent_enum_map.values() if inspect.isclass(v) and issubclass(v, IntEnum)
+        }
+        if not parent_enums:
+            return []
+
+        def collect_leaf_enum_types(annotation: Any) -> Set[type]:
+            if annotation is None:
+                return set()
+            if get_origin(annotation) is not None:
+                return {leaf for arg in get_args(annotation) for leaf in collect_leaf_enum_types(arg)}
+            if inspect.isclass(annotation) and issubclass(annotation, IntEnum):
+                return {annotation}
+            return set()
+
+        found: List[type] = []
+        seen: Set[str] = set()
+        for field_info in _pydantic_adapter.model_fields(msg).values():
+            for leaf in collect_leaf_enum_types(getattr(field_info, "annotation", None)):
+                name = leaf.__name__
+                if name in parent_enums and name not in seen:
+                    # mark the field annotation's enum so _model_field_handle
+                    # won't also emit it to _content_deque as an orphaned block
+                    setattr(leaf, "_is_nested", True)
+                    seen.add(name)
+                    found.append(parent_enums[name])
+        return found
+
     def _model_nested_handle(self, model: Type[BaseModel], indent: int = 0) -> str:
         code_ref = CodeRefModel.from_model(model)
         if not code_ref.nested_message_dict:
@@ -362,7 +392,10 @@ class BaseP2C(object):
             if issubclass(msg, IntEnum):
                 nested_str += self._gen_enum_py_code(msg, indent=indent, ignore_nested_model=False)
             else:
-                nested_str += self._gen_pydantic_model_py_code(msg, indent=indent, ignore_nested_model=False)
+                injected = self._find_parent_enums_used_by(msg, code_ref.nested_message_dict)
+                nested_str += self._gen_pydantic_model_py_code(
+                    msg, indent=indent, ignore_nested_model=False, injected_enums=injected
+                )
         return nested_str
 
     def _model_attribute_handle(self, model: Type[BaseModel], indent: int = 0) -> str:
@@ -461,7 +494,11 @@ class BaseP2C(object):
         return enum_class_str
 
     def _gen_pydantic_model_py_code(
-        self, model: Type[BaseModel], indent: int = 0, ignore_nested_model: bool = True
+        self,
+        model: Type[BaseModel],
+        indent: int = 0,
+        ignore_nested_model: bool = True,
+        injected_enums: Optional[List[type]] = None,
     ) -> str:
         if ignore_nested_model and getattr(model, "_is_nested", False):
             return ""
@@ -485,9 +522,17 @@ class BaseP2C(object):
         if model.__doc__:
             class_str += " " * (indent + self.code_indent) + '"""' + model.__doc__ + '"""\n'
 
+        injected_enum_str: str = ""
+        if injected_enums:
+            for enum_type in injected_enums:
+                injected_enum_str += self._gen_enum_py_code(
+                    enum_type, indent=indent + self.code_indent, ignore_nested_model=False
+                )
+
         nested_class_str: str = self._model_nested_handle(model, indent=indent + self.code_indent)
-        if nested_class_str:
-            class_str += nested_class_str + "\n"
+        combined_nested = (injected_enum_str + nested_class_str).rstrip("\n")
+        if combined_nested:
+            class_str += combined_nested + "\n\n"
 
         config_class: str = self._model_config_handle(model, indent=indent + self.code_indent)
         if config_class:
@@ -504,7 +549,7 @@ class BaseP2C(object):
         validator_str: str = self._model_validator_handle(model, indent=indent + self.code_indent)
         if validator_str:
             class_str += f"{validator_str}\n"
-        if not any([model.__doc__, config_class, nested_class_str, attribute_str, field_str, validator_str]):
+        if not any([model.__doc__, config_class, combined_nested, attribute_str, field_str, validator_str]):
             class_str += " " * (indent + self.code_indent) + "pass\n"
 
         if class_str.endswith("\n\n"):

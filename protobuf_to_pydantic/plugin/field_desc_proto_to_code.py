@@ -99,6 +99,10 @@ class FileDescriptorProtoToCode(BaseP2C):
         if other_fd.name == self._fd.name:
             return
 
+        # Skip import generation for ignored packages
+        if other_fd.package in self.config.ignore_pkg_list:
+            return
+
         fd_path_list: Tuple[str, ...] = Path(self._fd.name).parts
         message_path_list: Tuple[str, ...] = Path(other_fd.name).parts
         index: int = -1
