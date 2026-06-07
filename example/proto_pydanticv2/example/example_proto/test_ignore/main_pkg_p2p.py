@@ -8,7 +8,7 @@ from pydantic import BaseModel, ConfigDict, Field
 
 class MainMessage(BaseModel):
     model_config = ConfigDict(validate_default=True)
-    normal_field: str = Field(default="")
+    normal_field: str = Field()
     # These types should be used but NOT imported due to ignore_pkg_list
     ignored_field: IgnoredMessage = Field(default_factory=IgnoredMessage)
     ignored_enum: IgnoredEnum = Field(default=0)

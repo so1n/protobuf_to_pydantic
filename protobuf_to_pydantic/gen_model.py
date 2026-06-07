@@ -213,8 +213,13 @@ class M2P(object):
     ###############
     # util method #
     ###############
-    def _get_field_info_dict_by_full_name(self, full_name: str) -> Optional["FieldInfoTypedDict"]:
-        split_full_name = full_name.split(".")
+    def _get_field_info_dict_by_full_name(
+        self, full_name: str, package_name: str = ""
+    ) -> Optional["FieldInfoTypedDict"]:
+        if package_name and full_name.startswith(f"{package_name}."):
+            split_full_name = full_name[len(package_name) + 1 :].split(".")
+        else:
+            split_full_name = full_name.split(".")
         if len(split_full_name) == 2:
             message_name, *key_list = split_full_name
         else:
@@ -340,7 +345,7 @@ class M2P(object):
     ####################
     # field  handler   #
     ####################
-    def _protobuf_field_type_is_type_message_handler(self, field_dataclass: FieldDataClass) -> None:
+    def _protobuf_field_type_is_type_message_handler(self, field_dataclass: FieldDataClass, package_name: str) -> None:
         protobuf_field = field_dataclass.protobuf_field
         if protobuf_field.message_type.name in self._message_type_dict_by_type_name:
             # Timestamp, Struct, Empty, Duration, Any support
@@ -377,7 +382,7 @@ class M2P(object):
         else:
             # support google.protobuf.Message
             field_info_dict: Union[FieldInfoTypedDict, dict] = (
-                self._get_field_info_dict_by_full_name(field_dataclass.protobuf_field.full_name) or {}
+                self._get_field_info_dict_by_full_name(field_dataclass.protobuf_field.full_name, package_name) or {}
             )
             skip_validate_rule = field_info_dict.get("skip", False)
             full_name = protobuf_field.message_type.full_name
@@ -480,9 +485,11 @@ class M2P(object):
             if field_dataclass.field_default is not _pydantic_adapter.PydanticUndefined:
                 field_dataclass.field_default = _pydantic_adapter.PydanticUndefined
 
-    def _gen_field_info(self, field_dataclass: FieldDataClass, skip_validate_rule: bool) -> Optional[FieldInfo]:
+    def _gen_field_info(
+        self, field_dataclass: FieldDataClass, skip_validate_rule: bool, package_name: str
+    ) -> Optional[FieldInfo]:
         field_class = self._default_field
-        field_info_dict = self._get_field_info_dict_by_full_name(field_dataclass.protobuf_field.full_name)
+        field_info_dict = self._get_field_info_dict_by_full_name(field_dataclass.protobuf_field.full_name, package_name)
 
         if field_info_dict is not None and not skip_validate_rule:
             if self._parse_msg_desc_method != "PGV":
@@ -595,6 +602,7 @@ class M2P(object):
     ) -> Type[BaseModel]:
         is_same_pkg = descriptor.file.name == root_descriptor.file.name if root_descriptor else True
         class_name = class_name or descriptor.name
+        package_name = descriptor.file.package or ""  # type: ignore
 
         if not is_same_pkg:
             class_name = replace_file_name_to_class_name(descriptor.file.name) + class_name
@@ -628,7 +636,7 @@ class M2P(object):
                 validators=validators,
             )
             if protobuf_field.type == FieldDescriptor.TYPE_MESSAGE:
-                self._protobuf_field_type_is_type_message_handler(field_dataclass)
+                self._protobuf_field_type_is_type_message_handler(field_dataclass, package_name)
             elif protobuf_field.type == FieldDescriptor.TYPE_ENUM:
                 self._protobuf_field_type_is_type_enum_handler(field_dataclass)
                 if _pydantic_adapter.is_v1:
@@ -641,7 +649,7 @@ class M2P(object):
             # At this time, the field type may be modified by the above logic, so it needs to be handled separately
             if protobuf_field.label == FieldDescriptor.LABEL_REPEATED:
                 self._protobuf_field_lable_is_label_repeated_handler(field_dataclass)
-            field_info = self._gen_field_info(field_dataclass, skip_validate_rule)
+            field_info = self._gen_field_info(field_dataclass, skip_validate_rule, package_name)
             if not field_info:
                 continue
 

@@ -1,5 +1,5 @@
 import logging
-from typing import Dict, Set, Type
+from typing import Dict, Set, Tuple, Type
 
 from protobuf_to_pydantic.constant import protobuf_common_type_dict
 from protobuf_to_pydantic.field_info_rule.protobuf_option_to_field_info.desc import gen_field_info_dict_from_field_desc
@@ -8,7 +8,7 @@ from protobuf_to_pydantic.grpc_types import Descriptor, FieldDescriptor, Message
 
 _logger: logging.Logger = logging.getLogger(__name__)
 
-_global_message_option_dict: Dict[str, Dict[str, MessageOptionTypedDict]] = {}
+_global_message_option_dict: Dict[Tuple[str, str, str], Dict[str, MessageOptionTypedDict]] = {}
 
 
 class ParseFromPbOption(object):
@@ -17,10 +17,12 @@ class ParseFromPbOption(object):
     def __init__(self, message: Type[Message]):
         self.message = message
         self._message_option_dict: Dict[str, MessageOptionTypedDict] = {}
-        if self.protobuf_pkg not in _global_message_option_dict:
-            _global_message_option_dict[self.protobuf_pkg] = self._message_option_dict
+        descriptor: Descriptor = message.DESCRIPTOR
+        cache_key = (self.protobuf_pkg, descriptor.file.package or "", descriptor.file.name)
+        if cache_key not in _global_message_option_dict:
+            _global_message_option_dict[cache_key] = self._message_option_dict
         else:
-            self._message_option_dict = _global_message_option_dict[self.protobuf_pkg]
+            self._message_option_dict = _global_message_option_dict[cache_key]
 
     def parse(self) -> Dict[str, MessageOptionTypedDict]:
         descriptor: Descriptor = self.message.DESCRIPTOR
