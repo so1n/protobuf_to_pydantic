@@ -6,23 +6,31 @@ from protobuf_to_pydantic._pydantic_adapter import is_v1
 
 if __version__ > "4.0.0":
     if is_v1:
-        from example.proto_pydanticv1.example.example_proto.demo import demo_p2p, diff_pkg_refer_2_p2p
+        from example.proto_pydanticv1.example.example_proto.demo import (
+            demo_enum_desc_p2p,
+            demo_p2p,
+            diff_pkg_refer_2_p2p,
+        )
     else:
         from example.proto_pydanticv2.example.example_proto.demo import (  # type: ignore[no-redef]
+            demo_enum_desc_p2p,
             demo_p2p,
             diff_pkg_refer_2_p2p,
         )
 else:
     if is_v1:
         from example.proto_3_20_pydanticv1.example.example_proto.demo import (  # type: ignore[no-redef]
+            demo_enum_desc_p2p,
             demo_p2p,
             diff_pkg_refer_2_p2p,
         )
     else:
         from example.proto_3_20_pydanticv2.example.example_proto.demo import (  # type: ignore[no-redef]
+            demo_enum_desc_p2p,
             demo_p2p,
             diff_pkg_refer_2_p2p,
         )
+
 
 class TestPlugin:
 
@@ -71,6 +79,22 @@ class UserMessage(BaseModel):
     demo_message: DemoMessage = Field(default_factory=DemoMessage, customer_string="c1", customer_int=1)
 """
         assert content.strip("\n") in getsource(demo_p2p.UserMessage)
+
+    def test_enum_name_value_desc_disabled_by_default(self) -> None:
+        assert "Enumeration SexType:" not in getsource(demo_p2p.SexType)
+        assert "- man = 0" not in getsource(demo_p2p.SexType)
+
+    def test_enum_name_value_desc_can_be_enabled(self) -> None:
+        sex_type_content = getsource(demo_enum_desc_p2p.SexType)
+        demo_enum_content = getsource(demo_enum_desc_p2p.DemoEnum)
+
+        assert "Enumeration SexType:" in sex_type_content
+        assert "- man = 0" in sex_type_content
+        assert "- women = 1" in sex_type_content
+        assert "Enumeration DemoEnum:" in demo_enum_content
+        assert "- zero = 0" in demo_enum_content
+        assert "- one = 1" in demo_enum_content
+        assert "- two = 3" in demo_enum_content
 
     def test_other_message(self) -> None:
         if is_v1:

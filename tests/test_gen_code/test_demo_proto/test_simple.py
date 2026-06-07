@@ -21,12 +21,17 @@ else:
     else:
         from example.proto_3_20_pydanticv2.example.example_proto.demo import (  # type: ignore[no-redef]
             demo_pb2,
-            diff_pkg_refer_2_pb2
+            diff_pkg_refer_2_pb2,
         )
 
-from protobuf_to_pydantic import msg_to_pydantic_model, pydantic_model_to_py_code
+from protobuf_to_pydantic import _pydantic_adapter, msg_to_pydantic_model, pydantic_model_to_py_code
 from protobuf_to_pydantic.gen_model import clear_create_model_cache
 from protobuf_to_pydantic.util import format_content
+
+
+def _field_annotation(model: Any, field_name: str) -> Any:
+    field = _pydantic_adapter.model_fields(model)[field_name]
+    return getattr(field, "annotation", getattr(field, "type_", None))
 
 
 class TestSimpleTest:
@@ -41,6 +46,45 @@ class TestSimpleTest:
 class EmptyMessage(BaseModel):
     pass
 """)in self._model_output(demo_pb2.EmptyMessage)  # type: ignore
+
+    def test_enum_name_value_desc_disabled_by_default(self) -> None:
+        clear_create_model_cache()
+        model = msg_to_pydantic_model(demo_pb2.UserMessage, parse_msg_desc_method="ignore")
+
+        sex_doc = _field_annotation(model, "sex").__doc__
+        demo_doc = _field_annotation(model, "demo").__doc__
+
+        assert "Enumeration SexType:" not in sex_doc
+        assert "- man = 0" not in sex_doc
+        assert "Enumeration DemoEnum:" not in demo_doc
+        assert (
+            "ExampleExampleProtoCommonSingleDemoEnum protobuf path:example/example_proto/common/single.proto"
+            in demo_doc
+        )
+
+    def test_enum_name_value_desc_can_be_enabled(self) -> None:
+        clear_create_model_cache()
+        msg_to_pydantic_model(demo_pb2.UserMessage, parse_msg_desc_method="ignore")
+        model = msg_to_pydantic_model(
+            demo_pb2.UserMessage,
+            parse_msg_desc_method="ignore",
+            enable_enum_name_value_desc=True,
+        )
+
+        sex_doc = _field_annotation(model, "sex").__doc__
+        demo_doc = _field_annotation(model, "demo").__doc__
+
+        assert "Enumeration SexType:" in sex_doc
+        assert "- man = 0" in sex_doc
+        assert "- women = 1" in sex_doc
+        assert (
+            "ExampleExampleProtoCommonSingleDemoEnum protobuf path:example/example_proto/common/single.proto"
+            in demo_doc
+        )
+        assert "Enumeration DemoEnum:" in demo_doc
+        assert "- zero = 0" in demo_doc
+        assert "- one = 1" in demo_doc
+        assert "- two = 3" in demo_doc
 
     def test_user_message(self) -> None:
         content = """

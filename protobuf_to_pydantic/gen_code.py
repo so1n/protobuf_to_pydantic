@@ -261,6 +261,11 @@ class BaseP2C(object):
                 if len(sort_list) == 1:
                     return "(" + type_name + ", )"
                 return "(" + type_name + ")"
+        elif getattr(type_, "__module__", None) == "pydantic.functional_validators":
+            # support BeforeValidator(func=xxx)
+            if auto_import_type_code:
+                self._parse_type_to_import_code(type_)
+            return f"{type_.__class__.__name__}(func={self._get_value_code(type_.func)})"
         elif is_dataclass(type_):
             # dataclass support
             field_param_code_list = []
@@ -277,11 +282,6 @@ class BaseP2C(object):
             if auto_import_type_code:
                 self._parse_type_to_import_code(type_)
             return type_.__name__
-        elif getattr(type_, "__module__", None) == "pydantic.functional_validators":
-            # support BeforeValidator(func=xxx)
-            if auto_import_type_code:
-                self._parse_type_to_import_code(type_)
-            return f"{type_.__class__.__name__}(func={self._get_value_code(type_.func)})"
         elif inspect.isclass(type_):
             if type_.__mro__[1] in pydantic_con_dict:
                 # pydantic con class support
@@ -640,12 +640,14 @@ class BaseP2C(object):
         # For different versions of pydantic, their fields are the same, but the position of the parameters is different
         # need to ensure that the generated code is consistent across different versions of pydantic
         # field_param_code_list.sort()
-        if field_info.__class__.__name__ == "FieldInfo":
+        attributes_set = getattr(field_info, "_attributes_set", {}) or {}
+        field_info_class = attributes_set.get(gen_model.FIELD_INFO_CLASS_ATTR, field_info.__class__)
+        if field_info_class.__name__ == "FieldInfo":
             self._add_import_code("pydantic", "Field")
             field_info_str: str = f"Field({', '.join(field_param_code_list)})"
         else:
-            self._parse_type_to_import_code(field_info.__class__)
-            field_info_str = f"{field_info.__class__.__name__}({', '.join(field_param_code_list)})"
+            self._parse_type_to_import_code(field_info_class)
+            field_info_str = f"{field_info_class.__name__}({', '.join(field_param_code_list)})"
         return field_info_str
 
     def _validator_handle(self, validator_dict: Dict[str, classmethod], indent: int) -> str:

@@ -30,3 +30,17 @@ do
   sed -i "s/from example_proto./from example.$proto_target.example.example_proto./" $target_p/$source_p/$service/*.py
   sed -i "s/from example.example_proto/from example.$proto_target.example.example_proto/" $target_p/$source_p/$service/*.py
 done
+
+enum_desc_proto_file_list=("$source_p/common/single.proto" "$source_p/demo/demo.proto")
+for proto_file in "${enum_desc_proto_file_list[@]}"
+do
+  service=$(basename "$(dirname "$proto_file")")
+  echo  "from proto file:" "$proto_file" "gen enum desc pydantic code to" $target_p/$source_p
+  poetry run python -m grpc_tools.protoc \
+    --protobuf-to-pydantic_out=config_path=example/enum_desc_plugin_config.py:./$target_p/ \
+    -I. \
+    "$proto_file"
+
+  sed -i "s/from example_proto./from example.$proto_target.example.example_proto./" $target_p/$source_p/$service/*_enum_desc_p2p.py
+  sed -i "s/from example.example_proto/from example.$proto_target.example.example_proto/" $target_p/$source_p/$service/*_enum_desc_p2p.py
+done
