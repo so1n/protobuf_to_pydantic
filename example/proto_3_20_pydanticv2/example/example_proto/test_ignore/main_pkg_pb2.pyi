@@ -17,6 +17,8 @@ class MainMessage(google.protobuf.message.Message):
     IGNORED_FIELD_FIELD_NUMBER: builtins.int
     IGNORED_ENUM_FIELD_NUMBER: builtins.int
     normal_field: typing.Text
+    """p2p: {"required": true}"""
+
     @property
     def ignored_field(self) -> example.example_proto.test_ignore.ignored_pkg_pb2.IgnoredMessage:
         """These types should be used but NOT imported due to ignore_pkg_list"""
